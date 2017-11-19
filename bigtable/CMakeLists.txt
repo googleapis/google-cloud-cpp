@@ -100,28 +100,35 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
-        bigtable_client_mutations_test
-        bigtable_client_table_apply_test
-        bigtable_client_rpc_retry_policy_test)
-foreach(target ${all_unit_tests})
-    string(REGEX MATCH ".*_test$" is_ut ${target})
-    if(is_ut)
-        string(REGEX REPLACE "^bigtable_client_" "client/" fname ${target})
-        add_executable(${target} ${fname}.cc
-          ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
-          ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
-          ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc
-          )
-        get_target_property(tname ${target} NAME)
-        target_include_directories(${target}
-          PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-          PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-          PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-          PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock
-        )
-        target_link_libraries(${target} bigtable_data_api ${GRPCPP_LIBRARIES}
-          ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-        add_test(${tname} ${target})
-        get_target_property(sources ${target} SOURCES)
-    endif()
+        client/mutations_test.cc
+        client/table_apply_test.cc
+        client/rpc_retry_policy_test.cc)
+foreach (fname ${all_unit_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname}
+            ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
+            ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
+            ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+    get_target_property(tname ${target} NAME)
+    target_include_directories(${target}
+            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+    target_link_libraries(${target} bigtable_data_api googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    add_test(NAME ${tname} COMMAND ${target})
+    get_target_property(sources ${target} SOURCES)
 endforeach()
+
+# ... create a single executable that rolls up all the tests, convenient for CLion and other IDEs ...
+add_executable(bigtable_client_all_tests ${all_unit_tests}
+        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
+        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
+        ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+target_include_directories(bigtable_client_all_tests
+        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
