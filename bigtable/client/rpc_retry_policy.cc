@@ -14,67 +14,69 @@
 
 #include "bigtable/client/rpc_retry_policy.h"
 
-#include <chrono>
 #include <sstream>
 
 namespace {
+#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
+#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::hours(1)
+#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
 
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_FAILURES
-#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_FAILURES 1000
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_FAILURES
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY std::chrono::milliseconds(10)
-#endif  // BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY std::chrono::minutes(5)
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-
-constexpr int maximum_failures = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_FAILURES;
-const auto initial_delay = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
-const auto maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
-
+const auto maximum_retry_period = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
 }  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 
-RPCRetryPolicy::~RPCRetryPolicy() {}
-
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
-  return std::unique_ptr<RPCRetryPolicy>(new ExponentialBackoffPolicy(
-      maximum_failures, initial_delay, maximum_delay));
+  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(
+      maximum_retry_period));
 }
 
-std::unique_ptr<RPCRetryPolicy> ExponentialBackoffPolicy::clone() const {
-  return std::unique_ptr<RPCRetryPolicy>(new ExponentialBackoffPolicy(*this));
+std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
+  return std::unique_ptr<RPCRetryPolicy>(new LimitedErrorCountRetryPolicy(*this));
 }
 
-bool ExponentialBackoffPolicy::on_failure(grpc::Status const& status,
-                                          std::chrono::milliseconds* delay) {
+void LimitedErrorCountRetryPolicy::setup(
+    grpc::ClientContext& /*unused*/) const {}
+
+bool LimitedErrorCountRetryPolicy::on_failure(grpc::Status const& status) {
   using namespace std::chrono;
   if (status.ok()) {
-    *delay = duration_cast<milliseconds>(current_delay_);
     return true;
   }
-  auto code = status.error_code();
-  if (code != grpc::StatusCode::ABORTED and
-      code != grpc::StatusCode::UNAVAILABLE and
-      code != grpc::StatusCode::DEADLINE_EXCEEDED) {
-    // ... this is a non-recoverable error, abort immediately ...
+  if (not can_retry(status.error_code())) {
     return false;
   }
-  if (++failure_count_ > maximum_failures_) {
+  return ++failure_count_ <= maximum_failures_;
+}
+
+bool LimitedErrorCountRetryPolicy::can_retry(grpc::StatusCode code) const {
+  return IsIdempotentStatusCode(code);
+}
+
+std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
+  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(maximum_duration_));
+}
+
+void LimitedTimeRetryPolicy::setup(grpc::ClientContext& context) const {
+  if (context.deadline() >= deadline_) {
+    context.set_deadline(deadline_);
+  }
+}
+
+bool LimitedTimeRetryPolicy::on_failure(grpc::Status const& status) {
+  using namespace std::chrono;
+  if (status.ok()) {
+    return true;
+  }
+  if (not can_retry(status.error_code())) {
     return false;
   }
-  // TODO(coryan) - we need to randomize the sleep period too ...
-  *delay = duration_cast<milliseconds>(current_delay_);
-  current_delay_ *= 2;
-  if (current_delay_ >= maximum_delay_) {
-    current_delay_ = maximum_delay_;
-  }
-  return true;
+  return std::chrono::system_clock::now() < deadline_;
+}
+
+bool LimitedTimeRetryPolicy::can_retry(grpc::StatusCode code) const {
+  return IsIdempotentStatusCode(code);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

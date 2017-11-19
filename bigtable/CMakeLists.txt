@@ -88,13 +88,16 @@ enable_testing()
 
 # the client library
 add_library(bigtable_data_api
-  client/data.h
-  client/data.cc
-  client/rpc_retry_policy.h
-  client/rpc_retry_policy.cc
-  client/mutations.h
-  client/mutations.cc
-  )
+        client/chrono_literals.h
+        client/data.h
+        client/data.cc
+        client/mutations.h
+        client/mutations.cc
+        client/rpc_backoff_policy.h
+        client/rpc_backoff_policy.cc
+        client/rpc_retry_policy.h
+        client/rpc_retry_policy.cc
+        client/version.h)
 target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
@@ -102,6 +105,7 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 set(all_unit_tests
         client/mutations_test.cc
         client/table_apply_test.cc
+        client/rpc_backoff_policy_test.cc
         client/rpc_retry_policy_test.cc)
 foreach (fname ${all_unit_tests})
     string(REPLACE "/" "_" target ${fname})
@@ -116,12 +120,14 @@ foreach (fname ${all_unit_tests})
             PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
             PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
             PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
-    target_link_libraries(${target} bigtable_data_api googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    target_link_libraries(${target} bigtable_data_api googleapis
+            ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach()
 
-# ... create a single executable that rolls up all the tests, convenient for CLion and other IDEs ...
+# Create a single executable that rolls up all the tests, this is convenient
+# for CLion and other IDEs.
 add_executable(bigtable_client_all_tests ${all_unit_tests}
         ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
         ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
@@ -131,4 +137,5 @@ target_include_directories(bigtable_client_all_tests
         PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
         PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
         PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
-target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})

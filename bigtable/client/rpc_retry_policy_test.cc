@@ -13,65 +13,87 @@
 // limitations under the License.
 
 #include "bigtable/client/rpc_retry_policy.h"
+#include "bigtable/client/chrono_literals.h"
 
 #include <gtest/gtest.h>
 #include <chrono>
+#include <thread>
 
-// TODO(coryan) - these are useful when writing tests, consider refactoring.
-// TODO(coryan) - these are generally useful, consider submitting to abseil.io
-namespace bigtable {
-namespace chrono_literals {
-constexpr std::chrono::milliseconds operator "" _ms(unsigned long long ms) {
-  return std::chrono::milliseconds(ms);
-}
-}  // namespace chrono_literals
-}  // namespace bigtable
-
-/**
- * @test A simple test for the ExponentialBackoffRetryPolicy.
- */
-TEST(ExponentialBackoffRetryPolicy, Simple) {
+namespace {
+/// Refactor two test cases ...
+void check_limited_time(bigtable::RPCRetryPolicy& tested) {
   using namespace bigtable::chrono_literals;
-  bigtable::ExponentialBackoffPolicy tested(3, 10_ms, 150_ms);
-  
-  std::chrono::milliseconds delay;
+  auto start = std::chrono::system_clock::now();
+  for (int i = 0; i != 100; ++i) {
+    auto actual = tested.on_failure(
+        grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
+    if (std::chrono::system_clock::now() < start + 50_ms) {
+      EXPECT_TRUE(actual);
+    } else {
+      EXPECT_FALSE(actual);
+      break;
+    }
+    std::this_thread::sleep_for(1_ms);
+  }
+}
+
+/// Refactor two test cases ...
+void check_limited_error_count(bigtable::RPCRetryPolicy& tested) {
   EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
   EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
   EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
   EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
-}
-
-/**
- * @test Verify that non-retryable errors cause an immediate failure.
- */
-TEST(ExponentialBackoffRetryPolicy, OnNonRetryable) {
-  using namespace bigtable::chrono_literals;
-  bigtable::ExponentialBackoffPolicy tested(3, 10_ms, 150_ms);
-
-  std::chrono::milliseconds delay;
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
   EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh oh"), &delay));
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
+}
+}  // anonymous namespace
+
+/// @test A simple test for the LimitedTimeRetryPolicy.
+TEST(LimitedTimeRetryPolicy, Simple) {
+  using namespace bigtable::chrono_literals;
+  bigtable::LimitedTimeRetryPolicy tested(50_ms);
+  check_limited_time(tested);
 }
 
-/**
- * @test Test cloning for ExponentialBackoffRetryPolicy.
- */
-TEST(ExponentialBackoffRetryPolicy, Clone) {
+/// @test Test cloning for LimitedTimeRetryPolicy.
+TEST(LimitedTimeRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
-  bigtable::ExponentialBackoffPolicy original(3, 10_ms, 150_ms);
+  bigtable::LimitedTimeRetryPolicy original(50_ms);
   auto tested = original.clone();
+  check_limited_time(*tested);
+}
 
-  std::chrono::milliseconds delay;
-  EXPECT_TRUE(tested->on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
-  EXPECT_TRUE(tested->on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
-  EXPECT_TRUE(tested->on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
-  EXPECT_FALSE(tested->on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
+/// @test Verify that non-retryable errors cause an immediate failure.
+TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
+  using namespace bigtable::chrono_literals;
+  bigtable::LimitedTimeRetryPolicy tested(10_ms);
+  EXPECT_FALSE(tested.on_failure(
+      grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh oh")));
+}
+
+/// @test A simple test for the LimitedErrorCountRetryPolicy.
+TEST(LimitedErrorCountRetryPolicy, Simple) {
+  using namespace bigtable::chrono_literals;
+  bigtable::LimitedErrorCountRetryPolicy tested(3);
+  check_limited_error_count(tested);
+}
+
+/// @test Test cloning for LimitedErrorCountRetryPolicy.
+TEST(LimitedErrorCountRetryPolicy, Clone) {
+  using namespace bigtable::chrono_literals;
+  bigtable::LimitedErrorCountRetryPolicy original(3);
+  auto tested = original.clone();
+  check_limited_error_count(*tested);
+}
+
+/// @test Verify that non-retryable errors cause an immediate failure.
+TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
+  using namespace bigtable::chrono_literals;
+  bigtable::LimitedErrorCountRetryPolicy tested(3);
+  EXPECT_FALSE(tested.on_failure(
+      grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh oh")));
 }
