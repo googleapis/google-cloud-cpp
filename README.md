@@ -1,17 +1,30 @@
-# C++ Client Libraries for Google Cloud
+# Google Cloud Platform C++ Client Libraries
 
 [![Travis CI status][travis-shield]][travis-link]
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
 
-This repo contains experimental client libraries for:
+This repo contains experimental client libraries for the following APIs:
 
-* [Cloud Bigtable](bigtable/)
+* [Google Cloud Bigtable](bigtable/)
 
 The libraries in this code base likely do not (yet) cover all the available
-calls.  See the [`googleapis` repo](https://github.com/googleapis/googleapis)
+APIs. See the [`googleapis` repo](https://github.com/googleapis/googleapis)
 for the full list of APIs callable using gRPC.
+
+To build the available libraries and run the tests, run the following commands
+after cloning this repo:
+
+```sh
+git submodule init
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
+make all
+make test
+```
 
 ## Contributing changes
 

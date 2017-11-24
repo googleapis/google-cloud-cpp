@@ -1,13 +1,4 @@
-To build and run with the latest protobuf and grpc, follow the steps below.
+# Google Cloud Bigtable
 
-1.  **Compile and Test:**
-    ```sh
-    cd google-cloud-cpp/
-    git submodule init
-    git submodule update --init --recursive
-    mkdir build
-    cd build
-    cmake ..
-    make all
-    make test
-    ```
+This directory contains the implementation of the Google Cloud Bigtable C++
+client. This is a work-in-progress and is not yet suitable for production use.
