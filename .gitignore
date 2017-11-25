@@ -1,2 +1,6 @@
-build
+.build
 *~
+
+# Ignore IDEA / IntelliJ files
+.idea/
+cmake-build-debug/
