@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 # Copyright 2017 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -eu
 
-if [ "x${TRAVIS_OS_NAME}" != "xlinux" ]; then
-  echo "Not a Linux-based build, exit successfully."
+if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
+  echo "Not a Linux-based build; skipping Docker installation and restore from cache."
   exit 0
 fi
 
@@ -24,10 +25,10 @@ sudo apt-get update
 sudo apt-get install -y docker-ce
 sudo docker --version
 
-readonly TARBALL=docker-images/${DISTRO?}/${DISTRO_VERSION?}/saved.tar.gz
-if [ -f ${TARBALL?} ]; then
-  gunzip <${TARBALL?} | sudo docker load \
-    || echo "Could not load saved image, continuing without cache"
+readonly TARBALL="docker-images/${DISTRO}/${DISTRO_VERSION}/saved.tar.gz"
+if [ -f "${TARBALL}" ]; then
+  gunzip < "${TARBALL}" | sudo docker load \
+    || echo "Could not load saved image, continuing without cache."
 fi
 
 sudo docker image ls
