@@ -29,8 +29,12 @@ RUN apt-get install -y \
   tar \
   wget
 
+# Install packages that are required for 14.04, but do not exist in later
+# versions.
 RUN if grep -q 14.04 /etc/lsb-release; then apt-get install -y cmake3; fi
-# Install optional packages that probably fail in 14.04, but we only use in other distributions anyway ...
+
+# Install optional packages.  Their installation fails in 14.04, the matrix
+# is (or will be) setup to only use them for other Ubuntu versions.
 RUN apt-get install -y \
     clang-4.0 \
     clang-format \

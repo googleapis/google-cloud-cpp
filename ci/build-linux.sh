@@ -21,16 +21,16 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO?}-${DISTRO_VERSION?}"
-readonly latest_id=$(sudo docker inspect -f '{{ .Id }}' ${IMAGE?}:latest 2>/dev/null || echo "")
+readonly LATEST_ID=$(sudo docker inspect -f '{{ .Id }}' ${IMAGE?}:latest 2>/dev/null || echo "")
 
 echo IMAGE = ${IMAGE}
-echo IMAGE LATEST ID = ${latest_id}
+echo IMAGE LATEST ID = ${LATEST_ID}
 
 # TODO() - on cron buiids, we would want to disable the cache
 # altogether, to make sure we can still build against recent versions
 # of grpc, protobug, the compilers, etc.
 cacheargs=""
-if [ -z "${latest_id}" ]; then
+if [ -z "${LATEST_ID}" ]; then
   cacheargs="--cache-from ${IMAGE?}:latest"
 fi
 

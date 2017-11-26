@@ -38,7 +38,7 @@ script:
   - ci/build-linux.sh
   - ci/build-macosx.sh
 
-# Cache the (saved) Docker images.  With recent version of Docker one can
+# Cache the (saved) Docker images.  With recent version of Docker, one can
 # reuse a prior image as a source cache, that can speed up the builds, as
 # the dependencies and images can be reused.
 cache:
@@ -50,8 +50,8 @@ cache:
     - docker-images/centos/7
 
 install:
-  # Restore the docker image from the cached directory.  That way we
-  # can reuse the steps in the docker image that install
+  # Restore the Docker image from the cached directory.  That way we
+  # can reuse the steps in the Docker image that install
   # pre-requisites and build dependencies.
   - ci/install-linux.sh
 
