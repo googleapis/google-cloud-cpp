@@ -5,4 +5,5 @@
 .idea/
 .build/
 _build/
-cmake-build-debug/
+build-output/
+cmake-build-*/

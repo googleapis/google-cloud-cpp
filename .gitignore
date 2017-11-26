@@ -1,5 +1,6 @@
 # Common build output directory names
 .build/
+_build/
 build-output/
 
 # Backup files for Emacs
@@ -7,4 +8,4 @@ build-output/
 
 # Ignore IDEA / IntelliJ files
 .idea/
-cmake-build-debug/
+cmake-build-*/
