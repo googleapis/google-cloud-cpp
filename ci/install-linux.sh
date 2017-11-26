@@ -24,11 +24,10 @@ sudo apt-get update
 sudo apt-get install -y docker-ce
 sudo docker --version
 
-TARBALL=docker-images/${DISTRO?}/${DISTRO_VERSION?}/saved.tar.gz
+readonly TARBALL=docker-images/${DISTRO?}/${DISTRO_VERSION?}/saved.tar.gz
 if [ -f ${TARBALL?} ]; then
-  gunzip <${TARBALL?} | sudo docker load || echo "Could not load saved image, continue without cache"
+  gunzip <${TARBALL?} | sudo docker load \
+    || echo "Could not load saved image, continuing without cache"
 fi
 
 sudo docker image ls
-
-exit 0

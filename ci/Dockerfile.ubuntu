@@ -36,24 +36,24 @@ RUN apt-get install -y \
     clang-format \
     clang-tidy \
     gcc-4.8 \
-    g++-4.8 || \
-  /bin/true
+    g++-4.8 \
+  || /bin/true
 
 ARG NCPU=2
 ARG CXX=g++
 ARG CC=gcc
 
-# ... capture the Travis job number, effectively this busts the cache
-# in each build, which we want anyway ...
+# Capture the Travis job number, effectively this busts the cache
+# in each build, which we want anyway.
 ARG TRAVIS_JOB_NUMBER=""
 RUN echo Running build=${TRAVIS_JOB_NUMBER}
 
 # We assume that this is running on a (clean-ish) checkout of
 # google-cloud-cpp, including submodules, and copy the files to a
-# directory where we will build ...
+# directory where we will build.
 COPY . /var/tmp/build/gccpp
 
 WORKDIR /var/tmp/build/gccpp/.build
 RUN cmake ..
-RUN make -j ${NCPU}
+RUN make -j ${NCPU} all
 RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )

@@ -15,26 +15,26 @@
 
 set -e
 
-if [ "x${TRAVIS_OS_NAME}" != "xlinux" ]; then
+if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
   echo "Not a Linux-based build, exit successfully."
   exit 0
 fi
 
-IMAGE="cached-${DISTRO?}-${DISTRO_VERSION?}"
-latest_id=$(sudo docker inspect -f '{{ .Id }}' ${IMAGE?}:latest 2>/dev/null || echo "")
+readonly IMAGE="cached-${DISTRO?}-${DISTRO_VERSION?}"
+readonly latest_id=$(sudo docker inspect -f '{{ .Id }}' ${IMAGE?}:latest 2>/dev/null || echo "")
 
-echo IMAGE = $IMAGE
-echo IMAGE LATEST ID = $latest_id
+echo IMAGE = ${IMAGE}
+echo IMAGE LATEST ID = ${latest_id}
 
 # TODO() - on cron buiids, we would want to disable the cache
 # altogether, to make sure we can still build against recent versions
 # of grpc, protobug, the compilers, etc.
 cacheargs=""
-if [ "x${latest_id}" != "x" ]; then
+if [ -z "${latest_id}" ]; then
   cacheargs="--cache-from ${IMAGE?}:latest"
 fi
 
-echo cache args = $cacheargs
+echo cache args = ${cacheargs}
 
 sudo docker build -t ${IMAGE?}:tip ${cacheargs?} \
      --build-arg DISTRO_VERSION=${DISTRO_VERSION?} \
@@ -42,5 +42,3 @@ sudo docker build -t ${IMAGE?}:tip ${cacheargs?} \
      --build-arg CC=${CC?} \
      --build-arg TRAVIS_JOB_NUMBER=${TRAVIS_JOB_NUMBER} \
      -f ci/Dockerfile.${DISTRO?} .
-
-exit 0

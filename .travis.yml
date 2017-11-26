@@ -22,6 +22,9 @@ matrix:
       compiler: gcc
       env: DISTRO=ubuntu DISTRO_VERSION=17.04
     - os: linux
+      compiler: clang
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04
+    - os: linux
       compiler: gcc
       env: DISTRO=ubuntu DISTRO_VERSION=14.04
     - os: linux
@@ -34,10 +37,9 @@ script:
   - ci/build-linux.sh
   - ci/build-macosx.sh
 
-# Cache the (saved) docker images.
-# With recent version of docker one can reuse a prior image as a
-# source cache, that can speed up the builds, as the dependencies and
-# images can be reused ...
+# Cache the (saved) Docker images.  With recent version of Docker one can
+# reuse a prior image as a source cache, that can speed up the builds, as
+# the dependencies and images can be reused.
 cache:
   directories:
     - docker-images/ubuntu/17.04
@@ -49,9 +51,8 @@ cache:
 install:
   # Restore the docker image from the cached directory.  That way we
   # can reuse the steps in the docker image that install
-  # pre-requisites and build dependencies ...
+  # pre-requisites and build dependencies.
   - ci/install-linux.sh
-  - ci/install-macosx.sh
 
 before_cache:
   - ci/cache-linux.sh

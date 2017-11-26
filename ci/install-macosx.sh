@@ -15,10 +15,7 @@
 
 set -e
 
-if [ "x${TRAVIS_OS_NAME}" != "xosx" ]; then
+if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   echo "Not a Mac OS X build, exit successfully."
   exit 0
 fi
-
-
-exit 0
