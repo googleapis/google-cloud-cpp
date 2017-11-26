@@ -19,8 +19,8 @@ after cloning this repo:
 ```sh
 git submodule init
 git submodule update --init --recursive
-mkdir build
-cd build
+mkdir build-output
+cd build-output
 cmake ..
 make all
 make test

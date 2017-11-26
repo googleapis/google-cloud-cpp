@@ -1,0 +1,63 @@
+# Copyright 2017 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=17.04
+FROM ubuntu:${DISTRO_VERSION}
+MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+
+RUN apt-get update
+RUN apt-get install -y \
+  build-essential \
+  git \
+  gcc \
+  g++ \
+  golang \
+  clang \
+  cmake \
+  make \
+  tar \
+  wget
+
+# Install packages that are required for 14.04, but do not exist in later
+# versions.
+RUN if grep -q 14.04 /etc/lsb-release; then apt-get install -y cmake3; fi
+
+# Install optional packages.  Their installation fails in 14.04, the matrix
+# is (or will be) setup to only use them for other Ubuntu versions.
+RUN apt-get install -y \
+    clang-4.0 \
+    clang-format \
+    clang-tidy \
+    gcc-4.8 \
+    g++-4.8 \
+  || /bin/true
+
+ARG NCPU=2
+ARG CXX=g++
+ARG CC=gcc
+
+# Capture the Travis job number, effectively this busts the cache
+# in each build, which we want anyway.
+ARG TRAVIS_JOB_NUMBER=""
+RUN echo Running build=${TRAVIS_JOB_NUMBER}
+
+# We assume that this is running on a (clean-ish) checkout of
+# google-cloud-cpp, including submodules, and copy the files to a
+# directory where we will build.
+COPY . /var/tmp/build/gccpp
+
+WORKDIR /var/tmp/build/gccpp/build-output
+RUN cmake ..
+RUN make -j ${NCPU} all
+RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )

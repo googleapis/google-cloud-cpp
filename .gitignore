@@ -1,2 +1,11 @@
-build
+# Common build output directory names
+.build/
+_build/
+build-output/
+
+# Backup files for Emacs
 *~
+
+# Ignore IDEA / IntelliJ files
+.idea/
+cmake-build-*/
