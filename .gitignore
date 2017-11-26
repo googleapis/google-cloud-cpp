@@ -1,4 +1,8 @@
-.build
+# Common build output directory names
+.build/
+build-output/
+
+# Backup files for Emacs
 *~
 
 # Ignore IDEA / IntelliJ files

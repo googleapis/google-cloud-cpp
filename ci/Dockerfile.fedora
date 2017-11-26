@@ -53,7 +53,7 @@ RUN echo Running build=${TRAVIS_JOB_NUMBER}
 # directory where we will build.
 COPY . /var/tmp/build/gccpp
 
-WORKDIR /var/tmp/build/gccpp/.build
+WORKDIR /var/tmp/build/gccpp/build-output
 RUN cmake ..
 RUN make -j ${NCPU} all
 RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
