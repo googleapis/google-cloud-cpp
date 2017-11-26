@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 # Copyright 2017 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -eu
 
 if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   echo "Not a Mac OS X build, exit successfully"
@@ -27,5 +28,5 @@ test -d .build || mkdir .build
 
 cd .build
 cmake ..
-make -j ${NCPU:-2}
-make -j ${NCPU:-2} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
+make -j "${NCPU:-2}" all
+make -j "${NCPU:-2}" test || ( cat Testing/Temporary/LastTest.log; exit 1 )

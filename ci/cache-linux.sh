@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 # Copyright 2017 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -eu
 
 if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
-  echo "Not a Linux-based build, exit successfully."
+  echo "Not a Linux-based build; skipping Docker image caching."
   exit 0
 fi
 
-readonly IMAGE=cached-${DISTRO?}-${DISTRO_VERSION?}
-readonly TARBALL=docker-images/${DISTRO?}/${DISTRO_VERSION?}/saved.tar.gz
+readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+readonly TARBALL="docker-images/${DISTRO}/${DISTRO_VERSION}/saved.tar.gz"
 
 # The build creates a new "*:tip" image, we want to save it as
 # "*:latest" so it can be used as a cache source in the next build.
-sudo docker image tag ${IMAGE?}:tip ${IMAGE?}:latest
+sudo docker image tag "${IMAGE}:tip" "${IMAGE}:latest"
 
-sudo docker save ${IMAGE?}:latest | gzip - > ${TARBALL?}
+sudo docker save "${IMAGE}:latest" | gzip - > "${TARBALL}"
