@@ -47,11 +47,6 @@ ARG NCPU=2
 ARG CXX=g++
 ARG CC=gcc
 
-# Capture the Travis job number, effectively this busts the cache
-# in each build, which we want anyway.
-ARG TRAVIS_JOB_NUMBER=""
-RUN echo Running build=${TRAVIS_JOB_NUMBER}
-
 # We assume that this is running on a (clean-ish) checkout of
 # google-cloud-cpp, including submodules, and copy the files to a
 # directory where we will build.
