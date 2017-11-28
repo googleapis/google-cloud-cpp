@@ -58,11 +58,12 @@ class RPCBackoffPolicy {
   virtual void setup(grpc::ClientContext& context) const = 0;
 
   /**
-   * Handle an RPC failure.
+   * Return the delay after an RPC operation has completed.
    *
    * @return true the delay before trying the operation again.
+   * @param s the status returned by the last RPC operation.
    */
-  virtual std::chrono::milliseconds on_failure(grpc::Status const& status) = 0;
+  virtual std::chrono::milliseconds on_completion(grpc::Status const &s) = 0;
 };
 
 /// Return an instance of the default RPCBackoffPolicy.
@@ -83,7 +84,7 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
-  std::chrono::milliseconds on_failure(grpc::Status const& status) override;
+  std::chrono::milliseconds on_completion(grpc::Status const &status) override;
 
  private:
   std::chrono::microseconds current_delay_;

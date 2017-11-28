@@ -23,15 +23,15 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 50_ms);
   
-  EXPECT_EQ(10_ms, tested.on_failure(
+  EXPECT_EQ(10_ms, tested.on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(20_ms, tested.on_failure(
+  EXPECT_EQ(20_ms, tested.on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(40_ms, tested.on_failure(
+  EXPECT_EQ(40_ms, tested.on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(50_ms, tested.on_failure(
+  EXPECT_EQ(50_ms, tested.on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(50_ms, tested.on_failure(
+  EXPECT_EQ(50_ms, tested.on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
 }
 
@@ -41,10 +41,10 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   bigtable::ExponentialBackoffPolicy original(10_ms, 150_ms);
   auto tested = original.clone();
 
-  EXPECT_EQ(10_ms, tested->on_failure(
+  EXPECT_EQ(10_ms, tested->on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(20_ms, tested->on_failure(
+  EXPECT_EQ(20_ms, tested->on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(40_ms, tested->on_failure(
+  EXPECT_EQ(40_ms, tested->on_completion(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
 }

@@ -15,6 +15,9 @@
 #include "bigtable/client/rpc_backoff_policy.h"
 
 namespace {
+// Define the defaults using a pre-processor macro, this allows the application
+// developers to change the defaults for their application by compiling with
+// different values.
 #ifndef BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
 #define BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY std::chrono::milliseconds(10)
 #endif  // BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
@@ -41,8 +44,8 @@ std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
 
 void ExponentialBackoffPolicy::setup(grpc::ClientContext& /*unused*/) const {}
 
-std::chrono::milliseconds ExponentialBackoffPolicy::on_failure(
-    grpc::Status const& status) {
+std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
+    grpc::Status const &status) {
   using namespace std::chrono;
   // TODO(coryan) - we need to randomize the sleep period too ...
   auto delay = duration_cast<milliseconds>(current_delay_);

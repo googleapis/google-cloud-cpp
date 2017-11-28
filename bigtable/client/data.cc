@@ -69,7 +69,7 @@ void Table::Apply(SingleRowMutation&& mut) {
     if (not retry_policy->on_failure(status)) {
       throw std::runtime_error("retry policy exhausted or permanent error");
     }
-    auto delay = backoff_policy->on_failure(status);
+    auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
   }
 }

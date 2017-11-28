@@ -17,6 +17,9 @@
 #include <sstream>
 
 namespace {
+// Define the defaults using a pre-processor macro, this allows the application
+// developers to change the defaults for their application by compiling with
+// different values.
 #ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
 #define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::hours(1)
 #endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
@@ -41,9 +44,6 @@ void LimitedErrorCountRetryPolicy::setup(
 
 bool LimitedErrorCountRetryPolicy::on_failure(grpc::Status const& status) {
   using namespace std::chrono;
-  if (status.ok()) {
-    return true;
-  }
   if (not can_retry(status.error_code())) {
     return false;
   }
@@ -66,9 +66,6 @@ void LimitedTimeRetryPolicy::setup(grpc::ClientContext& context) const {
 
 bool LimitedTimeRetryPolicy::on_failure(grpc::Status const& status) {
   using namespace std::chrono;
-  if (status.ok()) {
-    return true;
-  }
   if (not can_retry(status.error_code())) {
     return false;
   }
