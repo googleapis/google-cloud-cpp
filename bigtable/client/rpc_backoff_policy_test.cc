@@ -18,21 +18,23 @@
 #include <gtest/gtest.h>
 #include <chrono>
 
+namespace {
+/// Create a grpc::Status with a status code for transient errors.
+grpc::Status transient() {
+  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
+}
+}  // anonymous namespace
+
 /// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 50_ms);
   
-  EXPECT_EQ(10_ms, tested.on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(20_ms, tested.on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(40_ms, tested.on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(50_ms, tested.on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(50_ms, tested.on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
+  EXPECT_EQ(10_ms, tested.on_completion(transient()));
+  EXPECT_EQ(20_ms, tested.on_completion(transient()));
+  EXPECT_EQ(40_ms, tested.on_completion(transient()));
+  EXPECT_EQ(50_ms, tested.on_completion(transient()));
+  EXPECT_EQ(50_ms, tested.on_completion(transient()));
 }
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
@@ -41,10 +43,9 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   bigtable::ExponentialBackoffPolicy original(10_ms, 150_ms);
   auto tested = original.clone();
 
-  EXPECT_EQ(10_ms, tested->on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(20_ms, tested->on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_EQ(40_ms, tested->on_completion(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
+  EXPECT_EQ(10_ms, tested->on_completion(transient()));
+  EXPECT_EQ(20_ms, tested->on_completion(transient()));
+  EXPECT_EQ(40_ms, tested->on_completion(transient()));
+  EXPECT_EQ(80_ms, tested->on_completion(transient()));
+  EXPECT_EQ(150_ms, tested->on_completion(transient()));
 }

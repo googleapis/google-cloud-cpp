@@ -37,18 +37,23 @@ void check_limited_time(bigtable::RPCRetryPolicy& tested) {
   }
 }
 
+/// Create a grpc::Status with a status code for transient errors.
+grpc::Status transient() {
+  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
+}
+
+/// Create a grpc::Status with a status code for permanent errors.
+grpc::Status permanent() {
+  return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
+}
+
 /// Refactor two test cases ...
 void check_limited_error_count(bigtable::RPCRetryPolicy& tested) {
-  EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_TRUE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
-  EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again")));
+  EXPECT_TRUE(tested.on_failure(transient()));
+  EXPECT_TRUE(tested.on_failure(transient()));
+  EXPECT_TRUE(tested.on_failure(transient()));
+  EXPECT_FALSE(tested.on_failure(transient()));
+  EXPECT_FALSE(tested.on_failure(transient()));
 }
 }  // anonymous namespace
 
@@ -71,8 +76,7 @@ TEST(LimitedTimeRetryPolicy, Clone) {
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedTimeRetryPolicy tested(10_ms);
-  EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh oh")));
+  EXPECT_FALSE(tested.on_failure(permanent()));
 }
 
 /// @test A simple test for the LimitedErrorCountRetryPolicy.
@@ -94,6 +98,5 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
 TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy tested(3);
-  EXPECT_FALSE(tested.on_failure(
-      grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh oh")));
+  EXPECT_FALSE(tested.on_failure(permanent()));
 }
