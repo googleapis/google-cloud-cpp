@@ -21,7 +21,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes
     - os: linux
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04

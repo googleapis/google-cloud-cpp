@@ -134,6 +134,7 @@ add_library(bigtable_data_api
   client/rpc_retry_policy.cc
   client/mutations.h
   client/mutations.cc
+  client/version.h
   )
 target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
