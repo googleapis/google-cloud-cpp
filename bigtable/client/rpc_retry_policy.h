@@ -23,7 +23,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 /**
  * Define the interface for controlling how the Bigtable client
  * retries RPC operations.
@@ -79,8 +78,7 @@ std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy();
 class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  public:
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
-      : failure_count_(0),
-        maximum_failures_(maximum_failures) {}
+      : failure_count_(0), maximum_failures_(maximum_failures) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
@@ -113,13 +111,14 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
   std::chrono::system_clock::time_point deadline_;
 };
 
-/// The most common retryable codes, refactored because it is used in several places.
+/// The most common retryable codes, refactored because it is used in several
+/// places.
 constexpr bool IsIdempotentStatusCode(grpc::StatusCode code) {
-  return code == grpc::StatusCode::OK or
-      code == grpc::StatusCode::ABORTED or
-      code == grpc::StatusCode::UNAVAILABLE or
-      code == grpc::StatusCode::DEADLINE_EXCEEDED;
+  return code == grpc::StatusCode::OK or code == grpc::StatusCode::ABORTED or
+         code == grpc::StatusCode::UNAVAILABLE or
+         code == grpc::StatusCode::DEADLINE_EXCEEDED;
 }
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

@@ -32,7 +32,6 @@ const auto maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
   return std::unique_ptr<RPCBackoffPolicy>(
       new ExponentialBackoffPolicy(initial_delay, maximum_delay));
@@ -45,7 +44,7 @@ std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
 void ExponentialBackoffPolicy::setup(grpc::ClientContext& /*unused*/) const {}
 
 std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
-    grpc::Status const &status) {
+    grpc::Status const& status) {
   using namespace std::chrono;
   // TODO(coryan) - we need to randomize the sleep period too ...
   auto delay = duration_cast<milliseconds>(current_delay_);
@@ -55,5 +54,6 @@ std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
   }
   return delay;
 }
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

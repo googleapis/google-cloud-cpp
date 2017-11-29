@@ -63,7 +63,7 @@ class RPCBackoffPolicy {
    * @return true the delay before trying the operation again.
    * @param s the status returned by the last RPC operation.
    */
-  virtual std::chrono::milliseconds on_completion(grpc::Status const &s) = 0;
+  virtual std::chrono::milliseconds on_completion(grpc::Status const& s) = 0;
 };
 
 /// Return an instance of the default RPCBackoffPolicy.
@@ -75,8 +75,7 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy();
 class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
   template <typename duration_t1, typename duration_t2>
-  ExponentialBackoffPolicy(duration_t1 initial_delay,
-                           duration_t2 maximum_delay)
+  ExponentialBackoffPolicy(duration_t1 initial_delay, duration_t2 maximum_delay)
       : current_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             initial_delay)),
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
@@ -84,12 +83,13 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
-  std::chrono::milliseconds on_completion(grpc::Status const &status) override;
+  std::chrono::milliseconds on_completion(grpc::Status const& status) override;
 
  private:
   std::chrono::microseconds current_delay_;
   std::chrono::microseconds maximum_delay_;
 };
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

@@ -25,18 +25,19 @@ namespace {
 #endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
 
 const auto maximum_retry_period = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
+
 }  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
-  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(
-      maximum_retry_period));
+  return std::unique_ptr<RPCRetryPolicy>(
+      new LimitedTimeRetryPolicy(maximum_retry_period));
 }
 
 std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
-  return std::unique_ptr<RPCRetryPolicy>(new LimitedErrorCountRetryPolicy(*this));
+  return std::unique_ptr<RPCRetryPolicy>(
+      new LimitedErrorCountRetryPolicy(*this));
 }
 
 void LimitedErrorCountRetryPolicy::setup(
@@ -55,7 +56,8 @@ bool LimitedErrorCountRetryPolicy::can_retry(grpc::StatusCode code) const {
 }
 
 std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
-  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(maximum_duration_));
+  return std::unique_ptr<RPCRetryPolicy>(
+      new LimitedTimeRetryPolicy(maximum_duration_));
 }
 
 void LimitedTimeRetryPolicy::setup(grpc::ClientContext& context) const {

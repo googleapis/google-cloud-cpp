@@ -73,5 +73,6 @@ void Table::Apply(SingleRowMutation&& mut) {
     std::this_thread::sleep_for(delay);
   }
 }
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
