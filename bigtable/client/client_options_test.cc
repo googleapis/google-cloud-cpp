@@ -22,7 +22,7 @@
 #include <gmock/gmock.h>
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 
-TEST(ClientOptionsTest, ClientOptionsDefaultPoint){
+TEST(ClientOptionsTest, ClientOptionsDefaultSettings){
 	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
 	ASSERT_EQ(client_options_object.endpoint(), "bigtable.googleapis.com");
 	ASSERT_EQ(client_options_object.credentials(), grpc::GoogleDefaultCredentials());
