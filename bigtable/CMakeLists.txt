@@ -35,6 +35,46 @@ if(NOT MSVC)
   endif()
 endif()
 
+# For the gcc and clang compiler families enable a Coverage build type.
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
+        "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # But only if the compiler supports the --coverage flag.  Older versions
+    # of these compilers did not support it.
+    set(OLD_CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS}")
+    set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} --coverage")
+    check_cxx_compiler_flag("--coverage" CXX_SUPPORTS_COVERAGE_FLAG)
+    set(CMAKE_REQUIRED_FLAGS "${OLD_CMAKE_REQUIRED_FLAGS}")
+    if(CXX_SUPPORTS_COVERAGE_FLAG)
+        # Coverage build type
+        set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_DEBUG} --coverage"
+                CACHE STRING
+                "Flags used by the C++ compiler during coverage builds."
+                FORCE)
+        # A bit of a hack, we should not assume the C compiler also supports
+        # --coverage
+        set(CMAKE_C_FLAGS_COVERAGE "${CMAKE_C_FLAGS_DEBUG} --coverage"
+                CACHE STRING
+                "Flags used by the C compiler during coverage builds."
+                FORCE)
+        set(CMAKE_EXE_LINKER_FLAGS_COVERAGE
+                "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage" CACHE STRING
+                "Flags used for linking binaries during coverage builds."
+                FORCE)
+        set(CMAKE_SHARED_LINKER_FLAGS_COVERAGE
+                "${CMAKE_SHARED_LINKER_FLAGS_DEBUG} --coverage" CACHE STRING
+                "Flags used by the shared libraries linker during coverage builds."
+                FORCE)
+        mark_as_advanced(
+                CMAKE_CXX_FLAGS_COVERAGE
+                CMAKE_C_FLAGS_COVERAGE
+                CMAKE_EXE_LINKER_FLAGS_COVERAGE
+                CMAKE_SHARED_LINKER_FLAGS_COVERAGE)
+        set(CMAKE_BUILD_TYPE "${CMAKE_BUILD_TYPE}" CACHE STRING
+                "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel Coverage."
+                FORCE)
+    endif(CXX_SUPPORTS_COVERAGE_FLAG)
+endif()
+
 include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
 if(GRPC_ROOT_DIR)

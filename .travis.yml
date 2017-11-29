@@ -27,7 +27,7 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=16.04
     - os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=14.04
+      env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
     - os: linux
       compiler: gcc
       env: DISTRO=fedora DISTRO_VERSION=27
@@ -43,6 +43,9 @@ install:
   # can reuse the steps in the Docker image that install
   # pre-requisites and build dependencies.
   - ci/install-linux.sh
+
+after_success:
+  - ci/upload-codecov.sh
 
 notifications:
   email: false

@@ -28,4 +28,5 @@ sudo docker build -t "${IMAGE}:tip" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
      --build-arg CXX="${CXX}" \
      --build-arg CC="${CC}" \
+     --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
      -f "ci/Dockerfile.${DISTRO}" .
