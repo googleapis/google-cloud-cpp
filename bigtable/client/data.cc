@@ -25,24 +25,6 @@ namespace btproto = ::google::bigtable::v2;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 
-ClientOptions::ClientOptions() {
-  char* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
-  if (emulator != nullptr) {
-    endpoint_ = emulator;
-    credentials_ = grpc::InsecureChannelCredentials();
-  } else {
-    endpoint_ = "bigtable.googleapis.com";
-    credentials_ = grpc::GoogleDefaultCredentials();
-  }
-}
-
-std::unique_ptr<Table> Client::Open(const std::string& table_id) {
-  std::string table_name = std::string("projects/") + project_ + "/instances/" +
-                           instance_ + "/tables/" + table_id;
-  std::unique_ptr<Table> table(new Table(this, table_name));
-  return table;
-}
-
 void Table::Apply(SingleRowMutation&& mut) {
   // This is the RPC Retry Policy in effect for the complete operation ...
   auto rpc_policy = rpc_retry_policy_->clone();
