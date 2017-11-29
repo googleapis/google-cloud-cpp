@@ -35,7 +35,7 @@ if(NOT MSVC)
   endif()
 endif()
 
-# For the gcc and clang compiler families enable a Coverage build type.
+# For the GCC and Clang compiler families enable a Coverage build type.
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
         "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     # But only if the compiler supports the --coverage flag.  Older versions

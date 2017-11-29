@@ -5,7 +5,6 @@
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
-
 [codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
 
