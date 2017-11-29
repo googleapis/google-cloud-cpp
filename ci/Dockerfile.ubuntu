@@ -64,4 +64,5 @@ RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
 
 RUN test "${CHECK_STYLE}" != "yes" || make clang-format
 WORKDIR /var/tmp/build
-RUN test "${CHECK_STYLE}" != "yes" || diff -ru gccpp-orig gccpp -x build-output
+RUN test "${CHECK_STYLE}" != "yes" || \
+    diff -ru gccpp-orig gccpp -x build-output -x third_party
