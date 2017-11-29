@@ -20,7 +20,17 @@
 #include <thread>
 
 namespace {
-/// Refactor two test cases ...
+/// Create a grpc::Status with a status code for transient errors.
+grpc::Status CreateTransientError() {
+  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
+}
+
+/// Create a grpc::Status with a status code for permanent errors.
+grpc::Status CreatePermanentError() {
+  return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
+}
+
+/// Refactor two test cases for bigtable::LimitedTimeRetryPolicy.
 void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   using namespace bigtable::chrono_literals;
   auto start = std::chrono::system_clock::now();
@@ -37,18 +47,8 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   }
 }
 
-/// Create a grpc::Status with a status code for transient errors.
-grpc::Status CreateTransientError() {
-  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
-}
-
-/// Create a grpc::Status with a status code for permanent errors.
-grpc::Status CreatePermanentError() {
-  return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
-}
-
-/// Refactor two test cases ...
-void check_limited_error_count(bigtable::RPCRetryPolicy& tested) {
+/// Refactor two test cases for bigtable::LimitedErrorCountRetryPolicy.
+void CheckLimitedErrorCount(bigtable::RPCRetryPolicy &tested) {
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
@@ -84,7 +84,7 @@ TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
 TEST(LimitedErrorCountRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy tested(3);
-  check_limited_error_count(tested);
+  CheckLimitedErrorCount(tested);
 }
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
@@ -92,7 +92,7 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
-  check_limited_error_count(*tested);
+  CheckLimitedErrorCount(*tested);
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
