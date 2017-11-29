@@ -23,7 +23,7 @@ ClientOptions::ClientOptions() {
     credentials_ = grpc::InsecureChannelCredentials();
   } else {
     endpoint_ = "bigtable.googleapis.com";
-    credentials_ = ::grpc::GoogleDefaultCredentials();
+    credentials_ = grpc::GoogleDefaultCredentials();
   }
   channel_arguments_ = grpc::ChannelArguments();
 }

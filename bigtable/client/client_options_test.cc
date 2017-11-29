@@ -14,24 +14,20 @@
 
 #include "bigtable/client/client_options.h"
 
-#include <array>
-#include <iostream>
-#include <numeric>
-#include <sstream>
-
 #include <gmock/gmock.h>
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings){
 	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
 	ASSERT_EQ(client_options_object.endpoint(), "bigtable.googleapis.com");
-	ASSERT_EQ(client_options_object.credentials(), grpc::GoogleDefaultCredentials());
+	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::GoogleDefaultCredentials()));
 }
 
 TEST(ClientOptionsTest, ClientOptionsCustomEndpoint){
 	setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
 	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
 	ASSERT_EQ(client_options_object.endpoint(), "testendpoint.googleapis.com");
+	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::InsecureChannelCredentials()));
 	unsetenv("BIGTABLE_EMULATOR_HOST");
 }
 
@@ -41,4 +37,8 @@ TEST(ClientOptions, EditEndpoint){
 	ASSERT_EQ(client_options_object.endpoint(), "customendpoint.com");
 }
 
-
+TEST(ClientOptions, EditCredentials){
+	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+	client_options_object = client_options_object.SetCredentials(grpc::InsecureChannelCredentials());
+	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::InsecureChannelCredentials()));
+}
