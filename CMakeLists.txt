@@ -101,19 +101,3 @@ enable_testing()
 
 # subprojects
 add_subdirectory(bigtable)
-
-# Create a target to clang-format all the code, but only if the clang-format(1)
-# program is found.
-find_program(CLANG_FORMAT clang-format)
-if (CLANG_FORMAT)
-  # Only capture files from this project.  Do NOT add third_party/, or any
-  # expression that implicitly adds third_party/, to this glob.
-  file(GLOB_RECURSE ALL_CXX_SOURCE_FILES
-          bigtable/*.h
-          bitable/*.cc)
-  add_custom_target(clang-format
-          COMMAND ${CLANG_FORMAT} -i ${ALL_CXX_SOURCE_FILES})
-else()
-  # Create an empty target to avoid spurious failures.
-  add_custom_target(clang-format)
-endif (CLANG_FORMAT)

@@ -55,14 +55,11 @@ ARG CHECK_STYLE=""
 # directory where we will build.
 WORKDIR /var/tmp/build
 COPY . /var/tmp/build/gccpp
-RUN test "${CHECK_STYLE}" != "yes" || cp -r gccpp gccpp-orig
 
 WORKDIR /var/tmp/build/gccpp/build-output
 RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
 RUN make -j ${NCPU} all
 RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
 
-RUN test "${CHECK_STYLE}" != "yes" || make clang-format
 WORKDIR /var/tmp/build
-RUN test "${CHECK_STYLE}" != "yes" || \
-    diff -ru gccpp-orig gccpp -x build-output -x third_party
+RUN ./gccpp/ci/check-style.sh
