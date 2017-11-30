@@ -21,7 +21,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
                  std::string value) {
   Mutation m;

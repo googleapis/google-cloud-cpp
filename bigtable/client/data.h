@@ -23,7 +23,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 class Table;
 
 class ClientOptions {

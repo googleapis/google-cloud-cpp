@@ -25,7 +25,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 /**
  * Represent a single change to a specific row in a Table.
  *
