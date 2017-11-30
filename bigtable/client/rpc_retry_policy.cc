@@ -39,7 +39,6 @@ const auto maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 RPCRetryPolicy::~RPCRetryPolicy() {}
 
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {

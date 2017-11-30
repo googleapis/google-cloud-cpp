@@ -24,6 +24,12 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+std::unique_ptr<Table> Client::Open(const std::string& table_id) {
+  std::string table_name = std::string("projects/") + project_ + "/instances/" +
+                           instance_ + "/tables/" + table_id;
+  std::unique_ptr<Table> table(new Table(this, table_name));
+  return table;
+}
 
 void Table::Apply(SingleRowMutation&& mut) {
   // This is the RPC Retry Policy in effect for the complete operation ...

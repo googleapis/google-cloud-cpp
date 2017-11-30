@@ -22,27 +22,13 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-readonly LATEST_ID="$(sudo docker inspect -f '{{ .Id }}' ${IMAGE}:latest 2>/dev/null || echo)"
-
 echo "IMAGE = ${IMAGE}"
-echo "IMAGE LATEST ID = ${LATEST_ID}"
 
-# TODO() - on cron buiids, we would want to disable the cache
-# altogether, to make sure we can still build against recent versions
-# of grpc, protobuf, the compilers, etc.
-cacheargs=""
-if [ -z "${LATEST_ID}" ]; then
-  cacheargs="--cache-from ${IMAGE}:latest"
-fi
-
-echo "cache args = ${cacheargs}"
-
-# Note: ${cacheargs} is explicitly not quoted since it may contain multiple
-# arguments, so we want it to be expanded as-is rather than a single arg with
-# spaces.
-sudo docker build -t "${IMAGE}:tip" ${cacheargs} \
+sudo docker build -t "${IMAGE}:tip" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
      --build-arg CXX="${CXX}" \
      --build-arg CC="${CC}" \
-     --build-arg TRAVIS_JOB_NUMBER="${TRAVIS_JOB_NUMBER}" \
+     --build-arg NCPU="${NCPU:-2}" \
+     --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
+     --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
      -f "ci/Dockerfile.${DISTRO}" .
