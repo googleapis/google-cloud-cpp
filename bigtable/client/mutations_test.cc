@@ -72,7 +72,7 @@ TEST(MutationsTest, DeleteFromColumn) {
   auto end = bigtable::DeleteFromColumnEndingAt("family", "col", 1235);
   ASSERT_TRUE(end.op.has_delete_from_column());
   {
-    auto const& mut = full.op.delete_from_column();
+    auto const& mut = end.op.delete_from_column();
     EXPECT_EQ("family", mut.family_name());
     EXPECT_EQ("col", mut.column_qualifier());
     EXPECT_EQ(0, mut.time_range().start_timestamp_micros());
