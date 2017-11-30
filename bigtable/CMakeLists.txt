@@ -75,19 +75,20 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
     endif(CXX_SUPPORTS_COVERAGE_FLAG)
 endif()
 
-include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
-set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
-if(GRPC_ROOT_DIR)
-  list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
-  include_directories("${GRPC_ROOT_DIR}/third_party/protobuf/src")
-  include_directories("${GRPC_ROOT_DIR}/third_party/boringssl/third_party/googletest")
-endif(GRPC_ROOT_DIR)
+# Include the functions to enable clang sanitizers.
+include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
 
 # We use abseil.io .
 include_directories(${PROJECT_THIRD_PARTY_DIR}/abseil)
 
-################################################################
-# Create targets here ...
+# Configure the location of proto files, particulary the googleapi protos.
+include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
+set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
+if(GRPC_ROOT_DIR)
+    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
+    include_directories("${GRPC_ROOT_DIR}/third_party/protobuf/src")
+    include_directories("${GRPC_ROOT_DIR}/third_party/boringssl/third_party/googletest")
+endif(GRPC_ROOT_DIR)
 
 # Include the functions to compile proto files.
 include(${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake)

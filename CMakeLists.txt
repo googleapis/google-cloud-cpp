@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-# ... define the project name, version, and main programming language ...
+# Define the project name, version, and main programming language.
 set(PACKAGE_NAME      "google-cloud-cpp")
 set(PACKAGE_VERSION   "0.1")
 set(PACKAGE_STRING    "${PACKAGE_NAME} ${PACKAGE_VERSION}")
@@ -24,6 +24,13 @@ project(${PACKAGE_NAME} CXX C)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 
+# WARNING: do not change any compiler flags or variables in this
+# CMakeList file.  The grpc subdirectory (and its childer), have
+# carefully crafted flags, and you may break them by using your own
+# settings.  In particular -Werror -Wall breaks protobuf or grpc in many
+# platforms.
+
+# Configure the grpc library.
 set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module" CACHE STRING "How to find the gRPC library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER PROPERTY STRINGS "module" "package")
 
