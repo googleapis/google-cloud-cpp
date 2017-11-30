@@ -15,7 +15,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-/* TODO() resolve issue #52
+// TODO() resolve issue #52
 ClientOptions::ClientOptions() {
   char* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
