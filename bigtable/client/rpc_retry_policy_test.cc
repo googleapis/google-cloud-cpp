@@ -21,7 +21,7 @@
 // TODO(coryan) - these are generally useful, consider submitting to abseil.io
 namespace bigtable {
 namespace chrono_literals {
-constexpr std::chrono::milliseconds operator "" _ms(unsigned long long ms) {
+constexpr std::chrono::milliseconds operator"" _ms(unsigned long long ms) {
   return std::chrono::milliseconds(ms);
 }
 }  // namespace chrono_literals
@@ -33,7 +33,7 @@ constexpr std::chrono::milliseconds operator "" _ms(unsigned long long ms) {
 TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(3, 10_ms, 150_ms);
-  
+
   std::chrono::milliseconds delay;
   EXPECT_TRUE(tested.on_failure(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"), &delay));
