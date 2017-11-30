@@ -15,30 +15,34 @@
 #include "bigtable/client/client_options.h"
 
 #include <gmock/gmock.h>
-#include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 
-TEST(ClientOptionsTest, ClientOptionsDefaultSettings){
-	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-	ASSERT_EQ(client_options_object.endpoint(), "bigtable.googleapis.com");
-	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::GoogleDefaultCredentials()));
+TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  EXPECT_EQ("bigtable.googleapis.com", client_options_object.endpoint());
+  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
+            typeid(client_options_object.credentials()));
 }
 
-TEST(ClientOptionsTest, ClientOptionsCustomEndpoint){
-	setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
-	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-	ASSERT_EQ(client_options_object.endpoint(), "testendpoint.googleapis.com");
-	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::InsecureChannelCredentials()));
-	unsetenv("BIGTABLE_EMULATOR_HOST");
+TEST(ClientOptionsTest, ClientOptionsCustomEndpoint) {
+  setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  EXPECT_EQ("testendpoint.googleapis.com", client_options_object.endpoint());
+  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
+            typeid(client_options_object.credentials()));
+  unsetenv("BIGTABLE_EMULATOR_HOST");
 }
 
-TEST(ClientOptions, EditEndpoint){
-	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-	client_options_object = client_options_object.SetEndpoint("customendpoint.com");
-	ASSERT_EQ(client_options_object.endpoint(), "customendpoint.com");
+TEST(ClientOptionsTest, EditEndpoint) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object =
+      client_options_object.SetEndpoint("customendpoint.com");
+  EXPECT_EQ("customendpoint.com", client_options_object.endpoint());
 }
 
-TEST(ClientOptions, EditCredentials){
-	bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-	client_options_object = client_options_object.SetCredentials(grpc::InsecureChannelCredentials());
-	ASSERT_EQ(typeid(client_options_object.credentials()), typeid(grpc::InsecureChannelCredentials()));
+TEST(ClientOptionsTest, EditCredentials) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object =
+      client_options_object.SetCredentials(grpc::InsecureChannelCredentials());
+  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
+            typeid(client_options_object.credentials()));
 }

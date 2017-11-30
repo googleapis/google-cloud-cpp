@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 #define BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpc++/grpc++.h>
-#include <grpc++/support/channel_arguments.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/**
+ * Configuration options for the Bigtable Client.
+ *
+ * Applications typically configure the client class using:
+ * @code
+ * auto client =
+ * bigtable::Client(bigtable::ClientOptions().SetCredentials(...));
+ * @endcode
+ */
 class ClientOptions {
  public:
   ClientOptions();
@@ -38,12 +44,17 @@ class ClientOptions {
     credentials_ = credentials;
     return *this;
   }
-  const grpc::ChannelArguments channel_arguments() const { return channel_arguments_; }
+  // TODO() create setter/getter for each channel argument. Issue #53
+  const grpc::ChannelArguments channel_arguments() const {
+    return channel_arguments_;
+  }
   ClientOptions& SetChannelArguments(grpc::ChannelArguments channel_arguments) {
     channel_arguments_ = channel_arguments;
     return *this;
   }
+
  private:
+  // Endpoint here stands for data endpoint for fetching data.
   std::string endpoint_;
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
