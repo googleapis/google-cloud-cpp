@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/data.h"
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
+#include "bigtable/client/data.h"
 
 #include <gmock/gmock.h>
 

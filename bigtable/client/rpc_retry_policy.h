@@ -23,7 +23,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 /**
  * Define the interface for controlling how the Bigtable client
  * retries RPC operations.

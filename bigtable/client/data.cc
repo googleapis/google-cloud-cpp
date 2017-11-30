@@ -24,7 +24,6 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 ClientOptions::ClientOptions() {
   char* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
