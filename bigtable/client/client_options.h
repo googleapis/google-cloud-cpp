@@ -25,7 +25,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Applications typically configure the client class using:
  * @code
  * auto client =
- * bigtable::Client(bigtable::ClientOptions().SetCredentials(...));
+ *   bigtable::Client(bigtable::ClientOptions().SetCredentials(...));
  * @endcode
  */
 class ClientOptions {
