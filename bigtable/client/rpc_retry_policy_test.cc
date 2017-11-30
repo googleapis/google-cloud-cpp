@@ -48,7 +48,7 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
 }
 
 /// Refactor two test cases for bigtable::LimitedErrorCountRetryPolicy.
-void CheckLimitedErrorCount(bigtable::RPCRetryPolicy &tested) {
+void CheckLimitedErrorCount(bigtable::RPCRetryPolicy& tested) {
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
   EXPECT_TRUE(tested.on_failure(CreateTransientError()));
