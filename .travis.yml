@@ -24,13 +24,13 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 ADDRESS_SANITIZER=ON
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 ADDRESS_SANITIZER=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 MEMORY_SANITIZER=ON
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 MEMORY_SANITIZER=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 UNDEFINED_SANITIZER=ON
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 UNDEFINED_SANITIZER=yes
     - os: linux
       compiler: gcc
       env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage

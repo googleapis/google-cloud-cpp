@@ -75,13 +75,13 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
     endif(CXX_SUPPORTS_COVERAGE_FLAG)
 endif()
 
-# Include the functions to enable clang sanitizers.
+# Include the functions to enable Clang sanitizers.
 include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
 
 # We use abseil.io .
 include_directories(${PROJECT_THIRD_PARTY_DIR}/abseil)
 
-# Configure the location of proto files, particulary the googleapi protos.
+# Configure the location of proto files, particulary the googleapis protos.
 include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
 if(GRPC_ROOT_DIR)
