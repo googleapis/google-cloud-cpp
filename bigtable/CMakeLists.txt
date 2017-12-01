@@ -128,6 +128,8 @@ enable_testing()
 
 # the client library
 add_library(bigtable_data_api
+  client/client_options.h
+  client/client_options.cc
   client/data.h
   client/data.cc
   client/rpc_retry_policy.h
@@ -141,6 +143,7 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
+        bigtable_client_client_options_test
         bigtable_client_mutations_test
         bigtable_client_table_apply_test
         bigtable_client_rpc_retry_policy_test)

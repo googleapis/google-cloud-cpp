@@ -15,6 +15,7 @@
 #ifndef BIGTABLE_CLIENT_DATA_H_
 #define BIGTABLE_CLIENT_DATA_H_
 
+#include <bigtable/client/client_options.h>
 #include <bigtable/client/mutations.h>
 #include <bigtable/client/rpc_retry_policy.h>
 
@@ -23,30 +24,6 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class Table;
-
-class ClientOptions {
- public:
-  ClientOptions();
-
-  const std::string& endpoint() const { return endpoint_; }
-  ClientOptions& SetEndpoint(const std::string& endpoint) {
-    endpoint_ = endpoint;
-    return *this;
-  }
-
-  std::shared_ptr<grpc::ChannelCredentials> credentials() const {
-    return credentials_;
-  }
-  ClientOptions& SetCredentials(
-      std::shared_ptr<grpc::ChannelCredentials> credentials) {
-    credentials_ = credentials;
-    return *this;
-  }
-
- private:
-  std::string endpoint_;
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
-};
 
 class ClientInterface {
  public:
