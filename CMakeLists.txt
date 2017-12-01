@@ -25,10 +25,11 @@ project(${PACKAGE_NAME} CXX C)
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 
 # WARNING: do not change any compiler flags or variables in this
-# CMakeList file.  The grpc subdirectory (and its childer), have
+# CMakeList file.  The grpc subdirectory (and its children), have
 # carefully crafted flags, and you may break them by using your own
 # settings.  In particular -Werror -Wall breaks protobuf or grpc in many
-# platforms.
+# platforms, for an example of these problems (but not the only one) see:
+#    https://github.com/grpc/grpc/pull/11376
 
 # Configure the grpc library.
 set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module" CACHE STRING "How to find the gRPC library")
@@ -103,8 +104,8 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
   add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif()
 
-# Enable unit tests
+# Enable unit tests.
 enable_testing()
 
-# subprojects
+# Add subprojects here.
 add_subdirectory(bigtable)

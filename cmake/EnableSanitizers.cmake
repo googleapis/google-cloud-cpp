@@ -72,8 +72,8 @@ if (SANITIZE_UNDEFINED)
     sanitizer_test(UndefinedBehaviorSanitizer ${UBSAN_CANDIDATES})
 endif (SANITIZE_UNDEFINED)
 
-# The ugly parenthesis are because cmake does not support association of
-# boolean operators
+# The ugly parentheses are because cmake does not support association of
+# boolean operators.
 if ((${AddressSanitizer_ENABLED} OR ${LeaksSanitizer_ENABLED})
         OR ((${MemorySanitizer_ENABLED} OR ${ThreadSanitizer_ENABLED})
             OR (${UndefinedBehaviorSanitizer_ENABLED})))
