@@ -44,6 +44,11 @@ ARG CXX=g++
 ARG CC=gcc
 ARG BUILD_TYPE=Debug
 ARG CHECK_STYLE=""
+ARG SANITIZE_ADDRESS=""
+ARG SANITIZE_LEAKS=""
+ARG SANITIZE_MEMORY=""
+ARG SANITIZE_THREAD=""
+ARG SANITIZE_UNDEFINED=""
 
 # We assume that this is running on a (clean-ish) checkout of
 # google-cloud-cpp, including submodules, and copy the files to a
@@ -51,10 +56,5 @@ ARG CHECK_STYLE=""
 WORKDIR /var/tmp/build
 COPY . /var/tmp/build/gccpp
 
-WORKDIR /var/tmp/build/gccpp/build-output
-RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
-RUN make -j ${NCPU} all
-RUN make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
-
-WORKDIR /var/tmp/build
+RUN ./gccpp/ci/build-docker.sh
 RUN ./gccpp/ci/check-style.sh

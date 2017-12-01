@@ -31,4 +31,9 @@ sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
      --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
+     --build-arg SANITIZE_ADDRESS="${SANITIZE_ADDRESS:-}" \
+     --build-arg SANITIZE_LEAKS="${SANITIZE_LEAKS:-}" \
+     --build-arg SANITIZE_MEMORY="${SANITIZE_MEMORY:-}" \
+     --build-arg SANITIZE_THREAD="${SANITIZE_THREAD:-}" \
+     --build-arg SANITIZE_UNDEFINED="${SANITIZE_UNDEFINED:-}" \
      -f "ci/Dockerfile.${DISTRO}" .
