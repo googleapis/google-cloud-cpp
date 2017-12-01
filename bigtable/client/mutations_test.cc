@@ -31,7 +31,8 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
   EXPECT_EQ("v", server_set.op.set_cell().value());
-  EXPECT_EQ(bigtable::ServerSetTimestamp(), server_set.op.set_cell().timestamp_micros());
+  EXPECT_EQ(bigtable::ServerSetTimestamp(),
+            server_set.op.set_cell().timestamp_micros());
 
   std::string fam("fam2"), col("col2");
   // ... we want to make sure the strings are efficiently moved.  The

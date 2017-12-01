@@ -98,8 +98,8 @@ TEST(TableApplyTest, RetryIdempotent) {
   MockClient client;
   using namespace ::testing;
   EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
+      .WillRepeatedly(
+          Invoke([&client]() -> google::bigtable::v2::Bigtable::StubInterface& {
             return *client.mock_stub;
           }));
   EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
@@ -111,7 +111,7 @@ TEST(TableApplyTest, RetryIdempotent) {
   try {
     table.Apply(bigtable::SingleRowMutation(
         "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
-  } catch (bigtable::PermanentMutationFailures const &ex) {
+  } catch (bigtable::PermanentMutationFailures const& ex) {
     ASSERT_EQ(ex.failures().size(), 1UL);
     EXPECT_EQ(ex.failures()[0].original_index(), 0);
   } catch (...) {

@@ -17,14 +17,18 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<IdempotentMutationPolicy> DefaultIdempotentMutationPolicy() {
-  return std::unique_ptr<IdempotentMutationPolicy>(new SafeIdempotentMutationPolicy);
+  return std::unique_ptr<IdempotentMutationPolicy>(
+      new SafeIdempotentMutationPolicy);
 }
 
-std::unique_ptr<IdempotentMutationPolicy> SafeIdempotentMutationPolicy::clone() const {
-  return std::unique_ptr<IdempotentMutationPolicy>(new SafeIdempotentMutationPolicy(*this));
+std::unique_ptr<IdempotentMutationPolicy> SafeIdempotentMutationPolicy::clone()
+    const {
+  return std::unique_ptr<IdempotentMutationPolicy>(
+      new SafeIdempotentMutationPolicy(*this));
 }
 
-bool SafeIdempotentMutationPolicy::is_idempotent(const google::bigtable::v2::Mutation &m) {
+bool SafeIdempotentMutationPolicy::is_idempotent(
+    google::bigtable::v2::Mutation const& m) {
   if (not m.has_set_cell()) {
     return true;
   }

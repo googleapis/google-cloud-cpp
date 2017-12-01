@@ -19,11 +19,13 @@
 /// @test Verify that the default policy works as expected.
 TEST(IdempotemntMutationPolicyTest, Simple) {
   auto policy = bigtable::DefaultIdempotentMutationPolicy();
-  EXPECT_TRUE(policy->is_idempotent(bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
+  EXPECT_TRUE(policy->is_idempotent(
+      bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
   EXPECT_TRUE(policy->is_idempotent(bigtable::DeleteFromFamily("fam").op));
 
-  EXPECT_TRUE(policy->is_idempotent(bigtable::SetCell("fam", "col", 0, "v1").op));
+  EXPECT_TRUE(
+      policy->is_idempotent(bigtable::SetCell("fam", "col", 0, "v1").op));
   EXPECT_FALSE(policy->is_idempotent(bigtable::SetCell("fam", "c2", "v2").op));
-  EXPECT_FALSE(policy->is_idempotent(bigtable::SetCell("f", "c", bigtable::ServerSetTimestamp(), "v").op));
+  EXPECT_FALSE(policy->is_idempotent(
+      bigtable::SetCell("f", "c", bigtable::ServerSetTimestamp(), "v").op));
 }
-
