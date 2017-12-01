@@ -52,7 +52,7 @@ bool LimitedErrorCountRetryPolicy::on_failure(grpc::Status const& status) {
 }
 
 bool LimitedErrorCountRetryPolicy::can_retry(grpc::StatusCode code) const {
-  return IsIdempotentStatusCode(code);
+  return IsRetryableStatusCode(code);
 }
 
 std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
@@ -75,7 +75,7 @@ bool LimitedTimeRetryPolicy::on_failure(grpc::Status const& status) {
 }
 
 bool LimitedTimeRetryPolicy::can_retry(grpc::StatusCode code) const {
-  return IsIdempotentStatusCode(code);
+  return IsRetryableStatusCode(code);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

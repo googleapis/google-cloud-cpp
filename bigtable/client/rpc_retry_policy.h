@@ -113,7 +113,7 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
 /// The most common retryable codes, refactored because it is used in several
 /// places.
-constexpr bool IsIdempotentStatusCode(grpc::StatusCode code) {
+constexpr bool IsRetryableStatusCode(grpc::StatusCode code) {
   return code == grpc::StatusCode::OK or code == grpc::StatusCode::ABORTED or
          code == grpc::StatusCode::UNAVAILABLE or
          code == grpc::StatusCode::DEADLINE_EXCEEDED;

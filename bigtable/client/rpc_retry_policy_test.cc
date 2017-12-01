@@ -30,7 +30,11 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
-/// Refactor two test cases for bigtable::LimitedTimeRetryPolicy.
+/**
+ * @test Verify that a retry policy configured to run for 50ms works correctly.
+ *
+ * This eliminates some amount of code duplication in the following tests.
+ */
 void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   using namespace bigtable::chrono_literals;
   auto start = std::chrono::system_clock::now();
@@ -45,15 +49,6 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
     }
     std::this_thread::sleep_for(1_ms);
   }
-}
-
-/// Refactor two test cases for bigtable::LimitedErrorCountRetryPolicy.
-void CheckLimitedErrorCount(bigtable::RPCRetryPolicy& tested) {
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
 }
 
 }  // anonymous namespace
@@ -84,7 +79,11 @@ TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
 TEST(LimitedErrorCountRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy tested(3);
-  CheckLimitedErrorCount(tested);
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
 }
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
@@ -92,7 +91,11 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
-  CheckLimitedErrorCount(*tested);
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
