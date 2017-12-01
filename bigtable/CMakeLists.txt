@@ -129,6 +129,8 @@ enable_testing()
 # the client library
 add_library(bigtable_data_api
         client/chrono_literals.h
+        client/client_options.h
+        client/client_options.cc
         client/data.h
         client/data.cc
         client/mutations.h
@@ -143,6 +145,7 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
+        client/client_options_test.cc
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
