@@ -44,9 +44,9 @@ void Table::Apply(SingleRowMutation&& mut) {
 
   btproto::MutateRowResponse response;
   while (true) {
-    // TODO(coryan) - the RPCRetryPolicy should configure the context.
-    // TODO(coryan) - consider renaming the policy to RPCControlPolicy.
     grpc::ClientContext client_context;
+    retry_policy->setup(client_context);
+    backoff_policy->setup(client_context);
     grpc::Status status =
         client_->Stub().MutateRow(&client_context, request, &response);
     if (status.ok()) {
