@@ -17,6 +17,7 @@
 
 #include <bigtable/client/client_options.h>
 #include <bigtable/client/mutations.h>
+#include <bigtable/client/rpc_backoff_policy.h>
 #include <bigtable/client/rpc_retry_policy.h>
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -110,15 +111,17 @@ class Table {
   Table(const ClientInterface* client, const std::string& table_name)
       : client_(client),
         table_name_(table_name),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()) {}
+        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
+        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()) {}
 
   /// Constructor with explicit policies
-  template <typename RPCRetryPolicy>
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
   Table(const ClientInterface* client, const std::string& table_name,
-        RPCRetryPolicy p1)
+        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : client_(client),
         table_name_(table_name),
-        rpc_retry_policy_(p1.clone()) {}
+        rpc_retry_policy_(retry_policy.clone()),
+        rpc_backoff_policy_(backoff_policy.clone()) {}
 
   const std::string& table_name() const { return table_name_; }
 
@@ -139,6 +142,7 @@ class Table {
   const ClientInterface* client_;
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

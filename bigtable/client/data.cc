@@ -33,7 +33,8 @@ std::unique_ptr<Table> Client::Open(const std::string& table_id) {
 
 void Table::Apply(SingleRowMutation&& mut) {
   // This is the RPC Retry Policy in effect for the complete operation ...
-  auto rpc_policy = rpc_retry_policy_->clone();
+  auto retry_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
 
   // ... build the RPC request, try to minimize copying ...
   btproto::MutateRowRequest request;
@@ -53,10 +54,10 @@ void Table::Apply(SingleRowMutation&& mut) {
     }
     // ... it is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended) ...
-    std::chrono::milliseconds delay;
-    if (not rpc_policy->on_failure(status, &delay)) {
+    if (not retry_policy->on_failure(status)) {
       throw std::runtime_error("retry policy exhausted or permanent error");
     }
+    auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
   }
 }

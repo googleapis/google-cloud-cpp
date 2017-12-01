@@ -41,8 +41,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class RPCRetryPolicy {
  public:
-  //
-  virtual ~RPCRetryPolicy() = 0;
+  virtual ~RPCRetryPolicy() = default;
 
   /**
    * Return a new copy of this object.
@@ -55,43 +54,70 @@ class RPCRetryPolicy {
   virtual std::unique_ptr<RPCRetryPolicy> clone() const = 0;
 
   /**
+   * Update the ClientContext for the next call.
+   */
+  virtual void setup(grpc::ClientContext& context) const = 0;
+
+  /**
    * Handle an RPC failure.
    *
    * @return true if the RPC operation should be retried.
-   * @param delay how long to wait before retrying the operation.
    */
-  virtual bool on_failure(grpc::Status const& status,
-                          std::chrono::milliseconds* delay) = 0;
+  virtual bool on_failure(grpc::Status const& status) = 0;
+
+  /// Return true if the status code is retryable.
+  virtual bool can_retry(grpc::StatusCode code) const = 0;
 };
 
 /// Return an instance of the default RPCRetryPolicy.
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy();
 
 /**
- * Implement a simple exponential backoff policy.
+ * Implement a simple "count errors and then stop" retry policy.
  */
-class ExponentialBackoffPolicy : public RPCRetryPolicy {
+class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  public:
-  template <typename duration_t1, typename duration_t2>
-  ExponentialBackoffPolicy(int maximum_failures, duration_t1 initial_delay,
-                           duration_t2 maximum_delay)
-      : failure_count_(0),
-        maximum_failures_(maximum_failures),
-        current_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            initial_delay)),
-        maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            maximum_delay)) {}
+  explicit LimitedErrorCountRetryPolicy(int maximum_failures)
+      : failure_count_(0), maximum_failures_(maximum_failures) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
-  bool on_failure(grpc::Status const& status,
-                  std::chrono::milliseconds* delay) override;
+  void setup(grpc::ClientContext& context) const override;
+  bool on_failure(grpc::Status const& status) override;
+  bool can_retry(grpc::StatusCode code) const override;
 
  private:
   int failure_count_;
   int maximum_failures_;
-  std::chrono::microseconds current_delay_;
-  std::chrono::microseconds maximum_delay_;
 };
+
+/**
+ * Implement a simple "keep trying for this time" retry policy.
+ */
+class LimitedTimeRetryPolicy : public RPCRetryPolicy {
+ public:
+  template <typename duration_t>
+  explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
+      : maximum_duration_(std::chrono::duration_cast<std::chrono::milliseconds>(
+            maximum_duration)),
+        deadline_(std::chrono::system_clock::now() + maximum_duration_) {}
+
+  std::unique_ptr<RPCRetryPolicy> clone() const override;
+  void setup(grpc::ClientContext& context) const override;
+  bool on_failure(grpc::Status const& status) override;
+  bool can_retry(grpc::StatusCode code) const override;
+
+ private:
+  std::chrono::milliseconds maximum_duration_;
+  std::chrono::system_clock::time_point deadline_;
+};
+
+/// The most common retryable codes, refactored because it is used in several
+/// places.
+constexpr bool IsRetryableStatusCode(grpc::StatusCode code) {
+  return code == grpc::StatusCode::OK or code == grpc::StatusCode::ABORTED or
+         code == grpc::StatusCode::UNAVAILABLE or
+         code == grpc::StatusCode::DEADLINE_EXCEEDED;
+}
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
