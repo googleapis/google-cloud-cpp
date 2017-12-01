@@ -39,6 +39,7 @@ matrix:
       env: DISTRO=fedora DISTRO_VERSION=27
     - os: osx
       compiler: clang
+      if: type = cron
 
 script:
   - ci/build-linux.sh
