@@ -91,11 +91,11 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested->on_failure(CreateTransientError()));
+  EXPECT_FALSE(tested->on_failure(CreateTransientError()));
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
