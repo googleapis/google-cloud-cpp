@@ -39,6 +39,7 @@ matrix:
       env: DISTRO=fedora DISTRO_VERSION=27
     - os: osx
       compiler: clang
+      if: type != pull_request
 
 script:
   - ci/build-linux.sh
