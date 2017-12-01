@@ -32,6 +32,16 @@ Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
   return m;
 }
 
+Mutation SetCell(std::string family, std::string column, std::string value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::move(column));
+  set_cell.set_timestamp_micros(ServerSetTimestamp());
+  set_cell.set_value(std::move(value));
+  return m;
+}
+
 Mutation DeleteFromColumn(std::string family, std::string column,
                           std::int64_t timestamp_begin,
                           std::int64_t timestamp_end) {
@@ -95,6 +105,15 @@ Mutation DeleteFromRow() {
   Mutation m;
   (void)m.op.mutable_delete_from_row();
   return m;
+}
+
+grpc::Status FailedMutation::to_grpc_status(google::rpc::Status const& status) {
+  std::string details;
+  if (not google::protobuf::TextFormat::PrintToString(status, &details)) {
+    details = "error [could not print details as string]";
+  }
+  return grpc::Status(static_cast<grpc::StatusCode>(status.code()),
+                      status.message(), std::move(details));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

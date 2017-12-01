@@ -16,6 +16,7 @@
 #define BIGTABLE_CLIENT_DATA_H_
 
 #include <bigtable/client/client_options.h>
+#include <bigtable/client/idempotent_mutation_policy.h>
 #include <bigtable/client/mutations.h>
 #include <bigtable/client/rpc_backoff_policy.h>
 #include <bigtable/client/rpc_retry_policy.h>
@@ -112,16 +113,21 @@ class Table {
       : client_(client),
         table_name_(table_name),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()) {}
+        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
+        idempotent_mutation_policy_(
+            bigtable::DefaultIdempotentMutationPolicy()) {}
 
   /// Constructor with explicit policies
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+            typename IdempotentMutationPolicy>
   Table(const ClientInterface* client, const std::string& table_name,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
+        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
+        IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(client),
         table_name_(table_name),
         rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()) {}
+        rpc_backoff_policy_(backoff_policy.clone()),
+        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
   const std::string& table_name() const { return table_name_; }
 
@@ -143,6 +149,7 @@ class Table {
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

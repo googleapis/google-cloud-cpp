@@ -92,3 +92,29 @@ TEST(TableApplyTest, Retry) {
   EXPECT_NO_THROW(table.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
 }
+
+/// @test Verify that Table::Apply() retries only idempotent mutations.
+TEST(TableApplyTest, RetryIdempotent) {
+  MockClient client;
+  using namespace ::testing;
+  EXPECT_CALL(client, Stub())
+      .WillRepeatedly(Invoke(
+          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
+            return *client.mock_stub;
+          }));
+  EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  bigtable::Table table(&client, "foo_table");
+
+  try {
+    table.Apply(bigtable::SingleRowMutation(
+        "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
+  } catch (bigtable::PermanentMutationFailures const &ex) {
+    ASSERT_EQ(ex.failures().size(), 1UL);
+    EXPECT_EQ(ex.failures()[0].original_index(), 0);
+  } catch (...) {
+    ADD_FAILURE();
+  }
+}
