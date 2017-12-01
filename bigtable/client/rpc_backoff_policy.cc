@@ -46,7 +46,7 @@ void ExponentialBackoffPolicy::setup(grpc::ClientContext& /*unused*/) const {}
 std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
     grpc::Status const& status) {
   using namespace std::chrono;
-  // TODO(coryan) - we need to randomize the sleep period too ...
+  // TODO(#57) - we also need to randomize the sleep period.
   auto delay = duration_cast<milliseconds>(current_delay_);
   current_delay_ *= 2;
   if (current_delay_ >= maximum_delay_) {
