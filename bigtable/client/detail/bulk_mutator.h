@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGTABLE_CLIENT_MULTIPLE_ROWS_MUTATOR_H_
-#define BIGTABLE_CLIENT_MULTIPLE_ROWS_MUTATOR_H_
+#ifndef BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
+#define BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
 
 #include <bigtable/client/idempotent_mutation_policy.h>
 
@@ -23,9 +23,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace detail {
 /// Keep the state in the Apply(MultipleRowMutations&&) member function.
-class MultipleRowsMutator {
+class BulkMutator {
  public:
-  MultipleRowsMutator(std::string const& table_name,
+  BulkMutator(std::string const& table_name,
                       IdempotentMutationPolicy& idempotent_policy,
                       BulkMutation&& mut);
 
@@ -82,4 +82,4 @@ class MultipleRowsMutator {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // BIGTABLE_CLIENT_MULTIPLE_ROWS_MUTATOR_H_
+#endif  // BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_

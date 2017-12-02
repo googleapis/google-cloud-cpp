@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/multiple_rows_mutator.h"
+#include "bigtable/client/detail/bulk_mutator.h"
 
 #include <absl/memory/memory.h>
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
@@ -71,7 +71,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::MultipleRowsMutator mutator("foo/bar/baz/table",
+  bt::detail::BulkMutator mutator("foo/bar/baz/table",
                                           *policy,
                                           std::move(mut));
 
@@ -139,7 +139,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::MultipleRowsMutator mutator("foo/bar/baz/table",
+  bt::detail::BulkMutator mutator("foo/bar/baz/table",
                                           *policy,
                                           std::move(mut));
 
@@ -210,7 +210,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::MultipleRowsMutator mutator("foo/bar/baz/table",
+  bt::detail::BulkMutator mutator("foo/bar/baz/table",
                                           *policy,
                                           std::move(mut));
 
@@ -280,7 +280,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::MultipleRowsMutator mutator("foo/bar/baz/table",
+  bt::detail::BulkMutator mutator("foo/bar/baz/table",
                                           *policy,
                                           std::move(mut));
 
@@ -362,7 +362,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::MultipleRowsMutator mutator("foo/bar/baz/table",
+  bt::detail::BulkMutator mutator("foo/bar/baz/table",
                                           *policy,
                                           std::move(mut));
 

@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/multiple_rows_mutator.h"
+#include "bigtable/client/detail/bulk_mutator.h"
 
-#include <algorithm>
 #include <numeric>
 
 #include <bigtable/client/rpc_retry_policy.h>
@@ -25,7 +24,7 @@ namespace detail {
 
 namespace btproto = google::bigtable::v2;
 
-MultipleRowsMutator::MultipleRowsMutator(std::string const &table_name,
+BulkMutator::BulkMutator(std::string const &table_name,
                                          IdempotentMutationPolicy &policy,
                                          BulkMutation &&mut) {
   mutations.set_table_name(table_name);
@@ -44,7 +43,7 @@ MultipleRowsMutator::MultipleRowsMutator(std::string const &table_name,
   }
 }
 
-grpc::Status MultipleRowsMutator::make_one_request(
+grpc::Status BulkMutator::make_one_request(
     btproto::Bigtable::StubInterface &stub,
     grpc::ClientContext &client_context) {
   prepare_for_request();
@@ -59,7 +58,7 @@ grpc::Status MultipleRowsMutator::make_one_request(
   return stream->Finish();
 }
 
-void MultipleRowsMutator::prepare_for_request() {
+void BulkMutator::prepare_for_request() {
   mutations.Swap(&pending_mutations);
   original_index.swap(pending_original_index);
   is_idempotent.swap(pending_is_idempotent);
@@ -69,7 +68,7 @@ void MultipleRowsMutator::prepare_for_request() {
   pending_is_idempotent = {};
 }
 
-void MultipleRowsMutator::process_response(
+void BulkMutator::process_response(
     google::bigtable::v2::MutateRowsResponse &response) {
   for (auto &entry : *response.mutable_entries()) {
     auto index = entry.index();
@@ -97,7 +96,7 @@ void MultipleRowsMutator::process_response(
   }
 }
 
-void MultipleRowsMutator::finish_request() {
+void BulkMutator::finish_request() {
   // ... if there are any mutations with unknown state, try again ...
   int index = 0;
   for (auto has_result : has_mutation_result) {
@@ -121,7 +120,7 @@ void MultipleRowsMutator::finish_request() {
   }
 }
 
-std::vector<FailedMutation> MultipleRowsMutator::extract_final_failures() {
+std::vector<FailedMutation> BulkMutator::extract_final_failures() {
   std::vector<FailedMutation> result(std::move(failures));
   google::rpc::Status ok_status;
   ok_status.set_code(grpc::StatusCode::OK);
