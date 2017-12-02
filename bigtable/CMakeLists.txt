@@ -179,7 +179,7 @@ target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis
 
 option(FORCE_SANITIZER_ERRORS
         "If set enable tests that force errors detected by the sanitizers."
-        "yes")
+        "")
 if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
