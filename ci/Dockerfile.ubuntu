@@ -20,10 +20,13 @@ RUN apt-get update
 RUN apt-get install -y \
   build-essential \
   curl \
+  dia \
+  doxygen \
   git \
   gcc \
   g++ \
   golang \
+  graphviz \
   clang \
   cmake \
   make \
@@ -49,6 +52,7 @@ ARG CXX=g++
 ARG CC=gcc
 ARG BUILD_TYPE=Debug
 ARG CHECK_STYLE=""
+ARG GENERATE_DOCS=""
 ARG SANITIZE_ADDRESS=""
 ARG SANITIZE_LEAKS=""
 ARG SANITIZE_MEMORY=""

@@ -21,7 +21,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
     - os: linux
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04 ADDRESS_SANITIZER=yes
@@ -53,6 +53,7 @@ install:
 
 after_success:
   - ci/upload-codecov.sh
+  - ci/upload-docs.sh
 
 notifications:
   email: false
