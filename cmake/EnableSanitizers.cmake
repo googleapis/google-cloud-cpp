@@ -36,6 +36,7 @@ endfunction()
 
 option(SANITIZE_ADDRESS "Enable AddressSanitizer for the build." "")
 if (SANITIZE_ADDRESS)
+    # Try each group of options and pick the first one that works.
     set(ASAN_CANDIDATES "-fsanitize=address -fno-omit-frame-pointer" "-fsanitize=address")
     sanitizer_test(AddressSanitizer ${ASAN_CANDIDATES})
     if (NOT AddressSanitizer_ENABLED)
@@ -51,6 +52,7 @@ endif (SANITIZE_ADDRESS)
 
 option(SANITIZE_LEAKS "Enable LeakSanitizer for the build." "")
 if (SANITIZE_LEAKS)
+    # Try each group of options and pick the first one that works.
     set(ASAN_CANDIDATES "-fsanitize=leaks -fno-omit-frame-pointer" "-fsanitize=leaks")
     sanitizer_test(LeaksSanitizer ${ASAN_CANDIDATES})
     if (NOT LeaksSanitizer_ENABLED)
@@ -69,10 +71,11 @@ if (SANITIZE_MEMORY)
     if (AddressSanitizer_ENABLED)
         message(FATAL_ERROR "Cannot enable MemorySanitizer when AddressSanitizer is enabled")
     else()
+        # Try each group of options and pick the first one that works.
         set(MSAN_CANDIDATES
-	  "-fsanitize=memory -fno-omit-frame-pointer -fsanitize-memory-track-origins=2"
-	  "-fsanitize=memory -fno-omit-frame-pointer"
-	  "-fsanitize=memory")
+                "-fsanitize=memory -fno-omit-frame-pointer -fsanitize-memory-track-origins=2"
+                "-fsanitize=memory -fno-omit-frame-pointer"
+                "-fsanitize=memory")
         sanitizer_test(MemorySanitizer ${MSAN_CANDIDATES})
     endif()
     if (NOT MemorySanitizer_ENABLED)
@@ -91,6 +94,7 @@ if (SANITIZE_THREAD)
     if (AddressSanitizer_ENABLED)
         message(FATAL_ERROR "Cannot enable ThreadSanitizer when AddressSanitizer is enabled")
     else()
+        # Try each group of options and pick the first one that works.
         set(TSAN_CANDIDATES "-fsanitize=thread -fno-omit-frame-pointer" "-fsanitize=thread")
         sanitizer_test(ThreadSanitizer ${TSAN_CANDIDATES})
     endif()
@@ -107,6 +111,7 @@ endif (SANITIZE_THREAD)
 
 option(SANITIZE_UNDEFINED "Enable UndefinedBehaviorSanitizer for the build." "")
 if (SANITIZE_UNDEFINED)
+    # Try each group of options and pick the first one that works.
     set(UBSAN_CANDIDATES "-fsanitize=undefined -fno-omit-frame-pointer" "-fsanitize=undefined")
     sanitizer_test(UndefinedBehaviorSanitizer ${UBSAN_CANDIDATES})
     if (NOT UndefinedBehaviorSanitizer_ENABLED)
