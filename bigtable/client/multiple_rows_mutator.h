@@ -27,7 +27,7 @@ class MultipleRowsMutator {
  public:
   MultipleRowsMutator(std::string const& table_name,
                       IdempotentMutationPolicy& idempotent_policy,
-                      MultipleRowMutations&& mut);
+                      BulkMutation&& mut);
 
   /// Return true if there are pending mutations in the mutator
   bool has_pending_mutations() const {

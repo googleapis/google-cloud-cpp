@@ -37,7 +37,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
 
   // In this test we create a Mutation for two rows, which succeeds in the
   // first RPC request ...
-  bt::MultipleRowMutations mut(
+  bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
@@ -90,7 +90,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows ...
-  bt::MultipleRowMutations mut(
+  bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
@@ -161,7 +161,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows ...
-  bt::MultipleRowMutations mut(
+  bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
@@ -235,7 +235,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows ...
-  bt::MultipleRowMutations mut(
+  bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
@@ -302,7 +302,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   using namespace ::testing;
 
   // In this test we create a Mutation for three rows ...
-  bt::MultipleRowMutations mut(
+  bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}),

@@ -27,7 +27,7 @@ namespace btproto = google::bigtable::v2;
 
 MultipleRowsMutator::MultipleRowsMutator(std::string const &table_name,
                                          IdempotentMutationPolicy &policy,
-                                         MultipleRowMutations &&mut) {
+                                         BulkMutation &&mut) {
   mutations.set_table_name(table_name);
   pending_mutations.set_table_name(table_name);
   mut.MoveTo(&pending_mutations);
@@ -85,7 +85,7 @@ void MultipleRowsMutator::process_response(
       continue;
     }
     auto &original = *mutations.mutable_entries(index);
-    if (IsIdempotentStatusCode(code) and is_idempotent[index]) {
+    if (IsRetryableStatusCode(code) and is_idempotent[index]) {
       pending_mutations.add_entries()->Swap(&original);
       pending_original_index.push_back(original_index[index]);
       pending_is_idempotent.push_back(is_idempotent[index]);
