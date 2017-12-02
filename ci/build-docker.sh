@@ -35,8 +35,14 @@ make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
 
 # Some of the sanitizers only emit errors and do not change the error code
 # of the tests, find any such errors and report them as a build failure.
-if [ grep -e '\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log ]; then
+echo
+echo "Searching for sanitizer errors in the test log:"
+echo
+if grep -e '/var/tmp/build/gccpp/.*\.cc:[0-9][0-9]*' \
+       Testing/Temporary/LastTest.log; then
   echo
-  echo "Sanitizer errors found in the test logs."
+  echo "some sanitizer errors found."
   exit 1
+else
+  echo "no sanitizer errors found."
 fi

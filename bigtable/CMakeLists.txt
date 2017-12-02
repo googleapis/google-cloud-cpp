@@ -87,18 +87,10 @@ set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOUR
 if(GRPC_ROOT_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
     include_directories("${GRPC_ROOT_DIR}/third_party/protobuf/src")
-    include_directories("${GRPC_ROOT_DIR}/third_party/boringssl/third_party/googletest")
 endif(GRPC_ROOT_DIR)
 
 # Include the functions to compile proto files.
 include(${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake)
-
-set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
-if(GRPC_ROOT_DIR)
-  list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
-  include_directories("${GRPC_ROOT_DIR}/third_party/protobuf/src")
-  include_directories("${GRPC_ROOT_DIR}/third_party/boringssl/third_party/googletest")
-endif(GRPC_ROOT_DIR)
 PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
         ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
         ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
@@ -147,6 +139,7 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
         client/client_options_test.cc
+        client/force_sanitizer_failures_test.cc
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
@@ -183,3 +176,11 @@ target_include_directories(bigtable_client_all_tests
         PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
 target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
+option(FORCE_SANITIZER_ERRORS
+        "If set enable tests that force errors detected by the sanitizers."
+        "yes")
+if (FORCE_SANITIZER_ERRORS)
+    target_compile_definitions(client_force_sanitizer_failures_test
+            PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
+endif (FORCE_SANITIZER_ERRORS)
