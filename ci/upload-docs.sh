@@ -26,8 +26,7 @@ if [ "${GENERATE_DOCS:-}" != "yes" ]; then
     exit 0
 fi
 
-# TODO(coryan) - change the branch name to "master" before sending the PR.
-if [ "${TRAVIS_BRANCH:-}" != "issue-18-generate-doxygen-docs" ]; then
+if [ "${TRAVIS_BRANCH:-}" != "master" ]; then
     echo "Skipping document generation as it is disabled for non-master directories."
     exit 0
 fi
