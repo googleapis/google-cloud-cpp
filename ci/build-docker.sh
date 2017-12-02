@@ -41,7 +41,7 @@ echo
 if grep -e '/var/tmp/build/gccpp/.*\.cc:[0-9][0-9]*' \
        Testing/Temporary/LastTest.log; then
   echo
-  echo "Sanitizer errors found in the test logs."
+  echo "some sanitizer errors found."
   exit 1
 else
   echo "no sanitizer errors found."

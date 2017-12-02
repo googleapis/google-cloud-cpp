@@ -17,6 +17,7 @@ sudo: required
 language: cpp
 
 # TODO(#19) - this is a skeleton matrix, needs to be designed and completed.
+# TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
     - os: linux
@@ -24,13 +25,10 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 ADDRESS_SANITIZER=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 SANITIZE_ADDRESS=yes BUILD_TYPE=Debug
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 MEMORY_SANITIZER=yes
-    - os: linux
-      compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 UNDEFINED_SANITIZER=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 SANITIZE_UNDEFINED=yes BUILD_TYPE=Debug
     - os: linux
       compiler: gcc
       env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
