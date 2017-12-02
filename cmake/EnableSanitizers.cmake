@@ -40,10 +40,10 @@ if (SANITIZE_ADDRESS)
     set(ASAN_CANDIDATES "-fsanitize=address -fno-omit-frame-pointer" "-fsanitize=address")
     sanitizer_test(AddressSanitizer ${ASAN_CANDIDATES})
     if (NOT AddressSanitizer_ENABLED)
-        message(FATAL_ERROR "AddressSanitizer requested but could not be enabled."
-                "The most common problems are that your compiler (the CXX"
-                "cmake variable) does not support the AddressSanitizer"
-                "or that you have already setup incompatible flags"
+        message(FATAL_ERROR "AddressSanitizer requested but could not be enabled. "
+                "The most common problems are that your compiler (the CXX "
+                "cmake variable) does not support the AddressSanitizer "
+                "or that you have already setup incompatible flags "
                 "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
     else()
         message(STATUS "AddressSanitizer is enabled.")
