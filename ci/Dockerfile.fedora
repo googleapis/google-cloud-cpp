@@ -24,10 +24,12 @@ RUN dnf install -y \
     clang \
     cmake \
     curl \
+    dia \
     doxygen \
     gcc-c++ \
     git \
     golang \
+    graphviz \
     lcov \
     libtool \
     make \
@@ -44,6 +46,7 @@ ARG CXX=g++
 ARG CC=gcc
 ARG BUILD_TYPE=Debug
 ARG CHECK_STYLE=""
+ARG GENERATE_DOCS=""
 ARG SANITIZE_ADDRESS=""
 ARG SANITIZE_LEAKS=""
 ARG SANITIZE_MEMORY=""
