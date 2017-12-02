@@ -142,6 +142,19 @@ class Table {
    */
   void Apply(SingleRowMutation&& mut);
 
+  /**
+   * Attempts to apply mutations to multiple rows.
+   *
+   * @param mut the mutations, notice that this function takes
+   * ownership (and then discards) the data in the mutation.
+   * @param pol the retry policy, the application can control how many
+   * times the request is retried using this class.
+   *
+   * @throws std::exception based on how the retry policy handles
+   * error conditions.
+   */
+  void BulkApply(BulkMutation&& mut);
+
  private:
   const ClientInterface* client_;
   std::string table_name_;

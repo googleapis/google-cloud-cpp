@@ -149,7 +149,7 @@ set(all_unit_tests
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
-        client/rpc_retry_policy_test.cc)
+        client/rpc_retry_policy_test.cc client/table_bulk_apply_test.cc)
 foreach (fname ${all_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
