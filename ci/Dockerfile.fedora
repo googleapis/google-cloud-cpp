@@ -41,6 +41,13 @@ RUN dnf install -y \
     wget \
     zlib-devel
 
+# Install the bigtable emulator and the bigtable command-line client.  They
+# are used in the integration tests.
+ARG GOPATH=/var/tmp/build/cbt
+WORKDIR ${GOPATH}
+RUN go get cloud.google.com/go/bigtable/cmd/cbt \
+    cloud.google.com/go/bigtable/cmd/emulator
+
 ARG NCPU=2
 ARG CXX=g++
 ARG CC=gcc
@@ -61,3 +68,6 @@ COPY . /var/tmp/build/gccpp
 
 RUN ./gccpp/ci/build-docker.sh
 RUN ./gccpp/ci/check-style.sh
+
+WORKDIR /var/tmp/build/gccpp/build-output/bigtable
+RUN ../../bigtable/tests/run_integration_tests.sh

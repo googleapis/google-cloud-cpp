@@ -19,16 +19,19 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 RUN apt-get update
 RUN apt-get install -y \
   build-essential \
+  clang \
+  cmake \
   curl \
   dia \
   doxygen \
-  git \
   gcc \
   g++ \
+  git \
   golang \
   graphviz \
   clang \
   cmake \
+  lsb-release \
   make \
   tar \
   wget
@@ -46,6 +49,17 @@ RUN apt-get install -y \
     gcc-4.8 \
     g++-4.8 \
   || /bin/true
+
+# Install the bigtable emulator and the bigtable command-line client.  They
+# are used in the integration tests.
+ARG GOPATH=/var/tmp/build/cbt
+WORKDIR ${GOPATH}
+RUN if grep -q 14.04 /etc/lsb-release; then \
+      echo "Skip cloud bigtable client install, go version too old in Ubuntu 14.04."; \
+    else \
+      go get cloud.google.com/go/bigtable/cmd/cbt \
+          cloud.google.com/go/bigtable/cmd/emulator; \
+    fi
 
 ARG NCPU=2
 ARG CXX=g++
@@ -67,3 +81,10 @@ COPY . /var/tmp/build/gccpp
 
 RUN ./gccpp/ci/build-docker.sh
 RUN ./gccpp/ci/check-style.sh
+
+WORKDIR /var/tmp/build/gccpp/build-output/bigtable
+RUN if grep -q 14.04 /etc/lsb-release; then \
+       echo "Skip integration tests, go version too old in Ubuntu 14.04."; \
+    else \
+        ../../bigtable/tests/run_integration_tests.sh; \
+    fi
