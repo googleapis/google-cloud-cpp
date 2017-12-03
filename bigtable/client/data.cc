@@ -42,7 +42,7 @@ void Table::Apply(SingleRowMutation&& mut) {
   request.set_table_name(table_name_);
   request.set_row_key(std::move(mut.row_key_));
   request.mutable_mutations()->Swap(&mut.ops_);
-  bool is_idempotent =
+  bool const is_idempotent =
       std::all_of(request.mutations().begin(), request.mutations().end(),
                   [&idempotent_policy](btproto::Mutation const& m) {
                     return idempotent_policy->is_idempotent(m);
@@ -67,7 +67,7 @@ void Table::Apply(SingleRowMutation&& mut) {
       rpc_status.set_message(status.error_message());
       failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
                             0);
-      throw PermanentMutationFailures(
+      throw PermanentMutationFailure(
           "retry policy exhausted or permanent error", std::move(failures));
     }
     auto delay = backoff_policy->on_completion(status);

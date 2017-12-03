@@ -111,10 +111,12 @@ TEST(TableApplyTest, RetryIdempotent) {
   try {
     table.Apply(bigtable::SingleRowMutation(
         "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
-  } catch (bigtable::PermanentMutationFailures const& ex) {
-    ASSERT_EQ(ex.failures().size(), 1UL);
-    EXPECT_EQ(ex.failures()[0].original_index(), 0);
+  } catch (bigtable::PermanentMutationFailure const& ex) {
+    ASSERT_EQ(1UL, ex.failures().size());
+    EXPECT_EQ(0, ex.failures()[0].original_index());
+  } catch (std::exception const& ex) {
+    FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {
-    ADD_FAILURE();
+    FAIL() << "unexpected exception of unknown type raised";
   }
 }

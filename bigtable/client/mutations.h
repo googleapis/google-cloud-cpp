@@ -184,9 +184,9 @@ class FailedMutation {
 /**
  * Report unrecoverable errors in a partially completed mutation.
  */
-class PermanentMutationFailures : public std::runtime_error {
+class PermanentMutationFailure : public std::runtime_error {
  public:
-  PermanentMutationFailures(char const* msg,
+  PermanentMutationFailure(char const* msg,
                             std::vector<FailedMutation>&& failures)
       : std::runtime_error(msg),
         failures_(std::move(failures)) {}
