@@ -31,7 +31,7 @@ int main() try {
   std::cout << "row-key-1 mutated successfully\n";
 
   return 0;
-} catch(std::exception const& ex) {
+} catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << std::endl;
   return 1;
 }
