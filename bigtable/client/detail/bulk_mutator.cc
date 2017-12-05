@@ -25,8 +25,7 @@ namespace detail {
 namespace btproto = google::bigtable::v2;
 
 BulkMutator::BulkMutator(std::string const &table_name,
-                                         IdempotentMutationPolicy &policy,
-                                         BulkMutation &&mut) {
+                         IdempotentMutationPolicy &policy, BulkMutation &&mut) {
   mutations.set_table_name(table_name);
   pending_mutations.set_table_name(table_name);
   mut.MoveTo(&pending_mutations);
@@ -34,8 +33,7 @@ BulkMutator::BulkMutator(std::string const &table_name,
   std::iota(pending_original_index.begin(), pending_original_index.end(), 0);
   pending_is_idempotent.reserve(pending_mutations.entries_size());
   for (auto const &e : pending_mutations.entries()) {
-    auto r = std::all_of(e.mutations().begin(),
-                         e.mutations().end(),
+    auto r = std::all_of(e.mutations().begin(), e.mutations().end(),
                          [&policy](btproto::Mutation const &m) {
                            return policy.is_idempotent(m);
                          });
@@ -43,22 +41,19 @@ BulkMutator::BulkMutator(std::string const &table_name,
   }
 }
 
-grpc::Status BulkMutator::make_one_request(
-    btproto::Bigtable::StubInterface &stub,
-    grpc::ClientContext &client_context) {
-  prepare_for_request();
-  // ... make the request ...
+grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface &stub,
+                                         grpc::ClientContext &client_context) {
+  PrepareForRequest();
   auto stream = stub.MutateRows(&client_context, mutations);
   btproto::MutateRowsResponse response;
   while (stream->Read(&response)) {
-    process_response(response);
+    ProcessResponse(response);
   }
-  finish_request();
-  // ... close the stream ...
+  FinishRequest();
   return stream->Finish();
 }
 
-void BulkMutator::prepare_for_request() {
+void BulkMutator::PrepareForRequest() {
   mutations.Swap(&pending_mutations);
   original_index.swap(pending_original_index);
   is_idempotent.swap(pending_is_idempotent);
@@ -68,7 +63,7 @@ void BulkMutator::prepare_for_request() {
   pending_is_idempotent = {};
 }
 
-void BulkMutator::process_response(
+void BulkMutator::ProcessResponse(
     google::bigtable::v2::MutateRowsResponse &response) {
   for (auto &entry : *response.mutable_entries()) {
     auto index = entry.index();
@@ -96,7 +91,7 @@ void BulkMutator::process_response(
   }
 }
 
-void BulkMutator::finish_request() {
+void BulkMutator::FinishRequest() {
   // ... if there are any mutations with unknown state, try again ...
   int index = 0;
   for (auto has_result : has_mutation_result) {
@@ -113,14 +108,14 @@ void BulkMutator::finish_request() {
       google::rpc::Status ok_status;
       ok_status.set_code(grpc::StatusCode::OK);
       failures.emplace_back(
-          FailedMutation(SingleRowMutation(std::move(original)),
-                         ok_status, original_index[index]));
+          FailedMutation(SingleRowMutation(std::move(original)), ok_status,
+                         original_index[index]));
     }
     ++index;
   }
 }
 
-std::vector<FailedMutation> BulkMutator::extract_final_failures() {
+std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures));
   google::rpc::Status ok_status;
   ok_status.set_code(grpc::StatusCode::OK);

@@ -109,9 +109,7 @@ TEST(TableApplyMultipleTest, RetryPartialFailure) {
         e1.mutable_status()->set_code(grpc::OK);
         return true;
       }))
-      // ... and then simulate the end of stream response ...
       .WillOnce(Return(false));
-  // ... the code should close the first reader ...
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   auto r2 = absl::make_unique<MockReader>();
@@ -168,14 +166,11 @@ TEST(TableBulkApply, PermanentFailure) {
         {
           auto &e = *r->add_entries();
           e.set_index(1);
-          // ... simulate a permanent failure ...
           e.mutable_status()->set_code(grpc::OUT_OF_RANGE);
         }
         return true;
       }))
-      // ... and then simulate the end of stream response ...
       .WillOnce(Return(false));
-  // ... the code should close the first reader ...
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*client.mock_stub, MutateRowsRaw(_, _))
@@ -206,11 +201,10 @@ TEST(TableBulkApply, CanceledStream) {
           }));
   namespace btproto = ::google::bigtable::v2;
 
-  // ... simulate a stream that returns one success and then
-  // terminates, we expect the Apply() operation to retry the request,
-  // because the mutation is in an undetermined state.  Well, it
-  // should retry assuming it is idempotent, which for this test we
-  // will assume it is true ...
+  // Simulate a stream that returns one success and then terminates.  We expect
+  // the BulkApply() operation to retry the request, because the mutation is in
+  // an undetermined state.  Well, it should retry assuming it is idempotent,
+  // which happens to be the case in this test.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -221,12 +215,10 @@ TEST(TableBulkApply, CanceledStream) {
         }
         return true;
       }))
-      // ... and then simulate the end of stream response ...
       .WillOnce(Return(false));
-  // ... the code should close the first reader ...
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
-  // ... we need a second stream, because Table::Apply() is supposed
-  // to try again ...
+
+  // Create a second stream returned by the mocks when the client retries.
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -237,9 +229,7 @@ TEST(TableBulkApply, CanceledStream) {
         }
         return true;
       }))
-      // ... and then simulate the end of stream response ...
       .WillOnce(Return(false));
-  // ... the code should close the first reader ...
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*client.mock_stub, MutateRowsRaw(_, _))
@@ -272,11 +262,21 @@ TEST(TableBulkApply, TooManyFailures) {
           }));
   namespace btproto = ::google::bigtable::v2;
 
-  // ... simulate a stream that returns one success and then
-  // terminates, we expect the Apply() operation to retry the request,
-  // because the mutation is in an undetermined state.  Well, it
-  // should retry assuming it is idempotent, which for this test we
-  // will assume it is true ...
+  namespace bt = bigtable;
+  using namespace bigtable::chrono_literals;
+  // Create a table with specific policies so we can test the behavior
+  // without having to depend on timers expiring.  In this case tolerate only
+  // 3 failures.
+  bt::Table table(
+      &client, "foo_table",
+      // Configure the Table to stop at 3 failures.
+      bt::LimitedErrorCountRetryPolicy(2),
+      // Use much shorter backoff than the default to test faster.
+      bt::ExponentialBackoffPolicy(10_us, 40_us),
+      // TODO(#66) - it is annoying to set a policy we do not care about.
+      bt::SafeIdempotentMutationPolicy());
+
+  // Setup the mocks to fail more than 3 times.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -287,10 +287,7 @@ TEST(TableBulkApply, TooManyFailures) {
         }
         return true;
       }))
-      // ... and then simulate the end of stream response ...
       .WillOnce(Return(false));
-  // ... the Table::Apply() member function should close the first, we return a
-  // retryable failure ...
   EXPECT_CALL(*r1, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
 
@@ -298,38 +295,18 @@ TEST(TableBulkApply, TooManyFailures) {
                                      btproto::MutateRowsRequest const &) {
     auto stream = absl::make_unique<MockReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    // ... return a retryable failure, or the Member
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
     return stream.release();
   };
-  // ... we are going to configure a policy to tolerate at most 3 errors, and
-  // return the following streams ...
+
   EXPECT_CALL(*client.mock_stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          // ... the first time we return the stream configured above, it
-          // returns some values, then fails ...
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
           }))
-      // ... the second time we return a stream that cancels immediately ...
       .WillOnce(Invoke(create_cancelled_stream))
-      // ... and do it again, at this point we have 3 failures and the Apply()
-      // call should fail ...
       .WillOnce(Invoke(create_cancelled_stream));
-
-  namespace bt = bigtable;
-  using namespace bigtable::chrono_literals;
-  // Create a table with specific policies so we can test the behavior
-  // without having to depend on timers expiring.
-  bt::Table table(
-      &client, "foo_table",
-      // Configure the Table to stop at 3 failures.
-      bt::LimitedErrorCountRetryPolicy(2),
-      // Use much shorter backoff than the default to test faster.
-      bt::ExponentialBackoffPolicy(10_us, 40_us),
-      // TODO(#66) - it is annoying to set a policy we do not care about.
-      bt::SafeIdempotentMutationPolicy());
 
   EXPECT_THROW(table.BulkApply(bt::BulkMutation(
                    bt::SingleRowMutation(
@@ -339,8 +316,7 @@ TEST(TableBulkApply, TooManyFailures) {
                std::exception);
 }
 
-/// @test Verify that Table::BulkApply() retries only idempotent
-/// mutations.
+/// @test Verify that Table::BulkApply() retries only idempotent mutations.
 TEST(TableBulkApply, RetryOnlyIdempotent) {
   MockClient client;
   using namespace ::testing;
@@ -351,16 +327,13 @@ TEST(TableBulkApply, RetryOnlyIdempotent) {
           }));
   namespace btproto = ::google::bigtable::v2;
 
-  // ... we will send both idempotent and non-idempotent operations,
-  // we make the first RPC request fail with an empty stream ...
+  // We will send both idempotent and non-idempotent mutations.  We prepare the
+  // mocks to return an empty stream in the first RPC request.  That will force
+  // the client to only retry the idempotent mutations.
   auto r1 = absl::make_unique<MockReader>();
-  EXPECT_CALL(*r1, Read(_))
-      // ... and then simulate the end of stream response ...
-      .WillOnce(Return(false));
-  // ... the code should close the first reader ...
+  EXPECT_CALL(*r1, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... on the second stream we make the remaining operation successful ...
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -374,7 +347,6 @@ TEST(TableBulkApply, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... first we get a request to mutate two rows ...
   EXPECT_CALL(*client.mock_stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
@@ -393,11 +365,13 @@ TEST(TableBulkApply, RetryOnlyIdempotent) {
                               {bigtable::SetCell("fam", "col", "baz")}),
         bt::SingleRowMutation("is-idempotent",
                               {bigtable::SetCell("fam", "col", 0, "qux")})));
-  } catch (bt::PermanentMutationFailures const &ex) {
+  } catch (bt::PermanentMutationFailure const &ex) {
     ASSERT_EQ(ex.failures().size(), 1L);
     EXPECT_EQ(ex.failures()[0].original_index(), 0);
     EXPECT_EQ(ex.failures()[0].mutation().row_key(), "not-idempotent");
+  } catch (std::exception const &ex) {
+    FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {
-    ADD_FAILURE();
+    FAIL() << "unexpected exception of unknown type raised";
   }
 }

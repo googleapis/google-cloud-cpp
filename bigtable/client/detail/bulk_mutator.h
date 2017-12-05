@@ -22,36 +22,36 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace detail {
-/// Keep the state in the Apply(MultipleRowMutations&&) member function.
+/// Keep the state in the Table::BulkApply() member function.
 class BulkMutator {
  public:
   BulkMutator(std::string const& table_name,
-                      IdempotentMutationPolicy& idempotent_policy,
-                      BulkMutation&& mut);
+              IdempotentMutationPolicy& idempotent_policy, BulkMutation&& mut);
 
   /// Return true if there are pending mutations in the mutator
-  bool has_pending_mutations() const {
+  bool HasPendingMutations() const {
     return pending_mutations.entries_size() != 0;
   }
 
-  /// Send one batch request to the given stub...
-  grpc::Status make_one_request(
+  /// Send one batch request to the given stub.
+  grpc::Status MakeOneRequest(
       google::bigtable::v2::Bigtable::StubInterface& stub,
       grpc::ClientContext& client_context);
 
   /// Give up on any pending mutations, move them to the failures array.
-  std::vector<FailedMutation> extract_final_failures();
+  std::vector<FailedMutation> ExtractFinalFailures();
 
  private:
   /// Get ready for a new request
-  void prepare_for_request();
+  void PrepareForRequest();
 
   /// Process a single response.
-  void process_response(google::bigtable::v2::MutateRowsResponse& response);
+  void ProcessResponse(google::bigtable::v2::MutateRowsResponse& response);
 
   /// A request has finished and we have processed all the responses.
-  void finish_request();
+  void FinishRequest();
 
+ private:
   /// Accumulate any permanent failures and the list of mutations we gave up on.
   std::vector<FailedMutation> failures;
 
@@ -62,7 +62,8 @@ class BulkMutator {
   /// request
   std::vector<int> original_index;
 
-  /// If true, the corresponding mutation is idempotent according to the policies in effect.
+  /// If true, the corresponding mutation is idempotent according to the
+  /// policies in effect.
   std::vector<bool> is_idempotent;
 
   /// If true, the result for that mutation, in the current_request is known,

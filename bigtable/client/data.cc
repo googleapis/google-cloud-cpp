@@ -77,7 +77,6 @@ void Table::Apply(SingleRowMutation&& mut) {
 }
 
 void Table::BulkApply(BulkMutation&& mut) {
-  // Copy the policies in effect for the operation ...
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
@@ -85,23 +84,22 @@ void Table::BulkApply(BulkMutation&& mut) {
   detail::BulkMutator mutator(table_name_, *idemponent_policy,
                               std::forward<BulkMutation>(mut));
 
-  while (mutator.has_pending_mutations()) {
-    // ... use the current policies to configure the context ...
+  while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
     retry_policy->setup(client_context);
 
-    auto status = mutator.make_one_request(client_->Stub(), client_context);
+    auto status = mutator.MakeOneRequest(client_->Stub(), client_context);
     if (not status.ok() and not retry_policy->on_failure(status)) {
       break;
     }
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
   }
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   if (not failures.empty()) {
-    throw PermanentMutationFailures("Permanent errors in Table::BulkApply()",
-                                    std::move(failures));
+    throw PermanentMutationFailure("Permanent errors in Table::BulkApply()",
+                                   std::move(failures));
   }
 }
 

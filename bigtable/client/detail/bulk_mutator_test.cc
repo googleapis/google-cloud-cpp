@@ -20,7 +20,7 @@
 /// Define types and functions used in the tests.
 namespace {
 class MockReader : public grpc::ClientReaderInterface<
-    ::google::bigtable::v2::MutateRowsResponse> {
+                       ::google::bigtable::v2::MutateRowsResponse> {
  public:
   MOCK_METHOD0(WaitForInitialMetadata, void());
   MOCK_METHOD0(Finish, grpc::Status());
@@ -36,14 +36,15 @@ TEST(MultipleRowsMutatorTest, Simple) {
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows, which succeeds in the
-  // first RPC request ...
+  // first RPC request.  First create the mutation.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
 
-  // ... the mutator will issue an RPC which must return a stream of responses,
-  // we prepare the stream first because it is easier to do so ...
+  // Prepare the mocks.  The mutator should issue a RPC which must return a
+  // stream of responses,  we prepare the stream first because it is easier than
+  // to create one of the fly.
   auto reader = absl::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -62,7 +63,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... then prepare the client to receive one request ...
+  // Now prepare the client for the one request.
   btproto::MockBigtableStub stub;
   EXPECT_CALL(stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
@@ -71,15 +72,13 @@ TEST(MultipleRowsMutatorTest, Simple) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table",
-                                          *policy,
-                                          std::move(mut));
+  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  EXPECT_TRUE(mutator.has_pending_mutations());
+  EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;
-  auto status = mutator.make_one_request(stub, context);
+  auto status = mutator.MakeOneRequest(stub, context);
   EXPECT_TRUE(status.ok());
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -89,18 +88,19 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   namespace bt = bigtable;
   using namespace ::testing;
 
-  // In this test we create a Mutation for two rows ...
+  // In this test we create a Mutation for two rows, one of which will fail.
+  // First create the mutation.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
 
-  // ... the first RPC will return a (recoverable) failure for the first
-  // mutation, and success for the second mutation ...
+  // Prepare the mocks for the request.  First create a stream response which
+  // indicates a partial failure.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
-        // ... simulate a partial (recoverable) failure ...
+        // Simulate a partial (and recoverable) failure.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
@@ -112,8 +112,8 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... the Mutator should issue a second request, which will return success
-  // for the remaining mutation ...
+  // Prepare a second stream response, because the client should retry after
+  // the partial failure.
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -127,6 +127,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
+  // Setup the client to response with r1 first, and r2 next.
   btproto::MockBigtableStub stub;
   EXPECT_CALL(stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
@@ -139,18 +140,17 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table",
-                                          *policy,
-                                          std::move(mut));
+  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  // ... we need to call make_one_request() twice of course ...
+  // This work will be in BulkApply(), but this is the test for BulkMutator in
+  // isolation, so call MakeOneRequest() twice.
   for (int i = 0; i != 2; ++i) {
-    EXPECT_TRUE(mutator.has_pending_mutations());
+    EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
-    auto status = mutator.make_one_request(stub, context);
+    auto status = mutator.MakeOneRequest(stub, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -160,14 +160,14 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   namespace bt = bigtable;
   using namespace ::testing;
 
-  // In this test we create a Mutation for two rows ...
+  // In this test we handle a recoverable and one unrecoverable failures.
+  // Create a bulk mutation with two SetCell() mutations.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
 
-  // ... the first RPC will return one recoverable and one unrecoverable
-  // failure ...
+  // Make the first RPC return one recoverable and one unrecoverable failures.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -183,8 +183,8 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... the Mutator should issue a second request, which will return success
-  // for the remaining mutation ...
+  // The BulkMutator should issue a second request, which will return success
+  // for the remaining mutation.
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -210,18 +210,17 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table",
-                                          *policy,
-                                          std::move(mut));
+  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  // ... we need to call make_one_request() twice of course ...
+  // This test is simulating the expected behavior from the BulkApply() member
+  // function.
   for (int i = 0; i != 2; ++i) {
-    EXPECT_TRUE(mutator.has_pending_mutations());
+    EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
-    auto status = mutator.make_one_request(stub, context);
+    auto status = mutator.MakeOneRequest(stub, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   ASSERT_EQ(failures.size(), 1UL);
   EXPECT_EQ(failures[0].original_index(), 1);
   EXPECT_EQ(failures[0].mutation().row_key(), "bar");
@@ -234,17 +233,18 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   namespace bt = bigtable;
   using namespace ::testing;
 
-  // In this test we create a Mutation for two rows ...
+  // We are going to test the case where the stream does not contain a response
+  // for all requests.  Create a BulkMutation with two entries.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0, "qux")}));
 
-  // ... the first RPC will return a short stream ...
+  // This will be the stream returned by the first request.  It is missing
+  // information about one of the mutations.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
-        // ... simulate a partial (recoverable) failure ...
         auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::OK);
@@ -253,8 +253,9 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... the Mutator should issue a second request, which will return success
-  // for the remaining mutation ...
+  // The BulkMutation should issue a second request, this is the stream returned
+  // by the second request, which indicates success for the missed mutation
+  // on r1.
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -280,18 +281,15 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table",
-                                          *policy,
-                                          std::move(mut));
+  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  // ... we need to call make_one_request() twice of course ...
   for (int i = 0; i != 2; ++i) {
-    EXPECT_TRUE(mutator.has_pending_mutations());
+    EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
-    auto status = mutator.make_one_request(stub, context);
+    auto status = mutator.MakeOneRequest(stub, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -301,15 +299,14 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   namespace bt = bigtable;
   using namespace ::testing;
 
-  // In this test we create a Mutation for three rows ...
+  // Create a BulkMutation with a non-idempotent mutation.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}),
+      bt::SingleRowMutation("bar", {bigtable::SetCell("fam", "col", 0, "qux")}),
       bt::SingleRowMutation("baz", {bigtable::SetCell("fam", "col", "v")}));
 
-  // ... the first RPC will return (recoverable) failures for two mutations,
-  // and is missing the last (non-idempotent) mutation ...
+  // We will setup the mock to return recoverable failures for idempotent
+  // mutations.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -325,8 +322,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... the Mutator should issue a second request, with only the idempotent
-  // mutation, this second request will succeed immediately ...
+  // The BulkMutator should issue a second request, with only the idempotent
+  // mutations, make the mocks return success for them.
   auto r2 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
@@ -340,9 +337,10 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  // ... we want to verify the MutateRowsRaw() call has the right contents,
-  // it is easier (or more readable) to write these in a separate small lambda
-  // expression because ASSERT_EQ() has an embedded "return;" in it ...
+  // Verify that the second response has the right contents.  It is easier (and
+  // more readable) to write these in a separate small lambda expression because
+  // ASSERT_EQ() has an embedded "return;" in it, which does not play well with
+  // the rest of the stuff here.
   auto expect_r2 = [](btproto::MutateRowsRequest const& r) {
     ASSERT_EQ(r.entries_size(), 1);
     EXPECT_EQ(r.entries(0).row_key(), "bar");
@@ -354,26 +352,22 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
             EXPECT_EQ(r.entries_size(), 3);
             return r1.release();
           }))
-      .WillOnce(Invoke(
-          [&r2, expect_r2](grpc::ClientContext*,
-                           btproto::MutateRowsRequest const& r) {
-            expect_r2(r);
-            return r2.release();
-          }));
+      .WillOnce(Invoke([&r2, expect_r2](grpc::ClientContext*,
+                                        btproto::MutateRowsRequest const& r) {
+        expect_r2(r);
+        return r2.release();
+      }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table",
-                                          *policy,
-                                          std::move(mut));
+  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  // ... we need to call make_one_request() twice of course ...
   for (int i = 0; i != 2; ++i) {
-    EXPECT_TRUE(mutator.has_pending_mutations());
+    EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
-    auto status = mutator.make_one_request(stub, context);
+    auto status = mutator.MakeOneRequest(stub, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.extract_final_failures();
+  auto failures = mutator.ExtractFinalFailures();
   ASSERT_EQ(failures.size(), 2UL);
   EXPECT_EQ(failures[0].original_index(), 0);
   EXPECT_EQ(failures[0].mutation().row_key(), "foo");
