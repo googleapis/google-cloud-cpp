@@ -39,6 +39,21 @@ struct Mutation {
 Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
                  std::string value);
 
+/**
+ * Create a mutation to set a cell value where the server sets the time.
+ *
+ * These mutations are not idempotent and not retried by default.
+ */
+Mutation SetCell(std::string family, std::string column, std::string value);
+
+/**
+ * A magic value where the server sets the timestamp.
+ *
+ * Notice that using this value in a SetCell() mutation makes it non-idempotent,
+ * and by default the client will not retry such mutations.
+ */
+constexpr std::int64_t ServerSetTimestamp() { return -1; }
+
 //@{
 /**
  * @name Create mutations to delete a range of cells from a column.
@@ -99,9 +114,16 @@ class SingleRowMutation {
   }
 
   /// Create a row mutation from gRPC proto
-  SingleRowMutation(::google::bigtable::v2::MutateRowsRequest::Entry&& entry)
+  explicit SingleRowMutation(
+      ::google::bigtable::v2::MutateRowsRequest::Entry&& entry)
       : row_key_(std::move(*entry.mutable_row_key())), ops_() {
     ops_.Swap(entry.mutable_mutations());
+  }
+
+  /// Create a row mutation from gRPC proto
+  explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest&& request)
+      : row_key_(std::move(*request.mutable_row_key())), ops_() {
+    ops_.Swap(request.mutable_mutations());
   }
 
   // Add a mutation at the end.
@@ -131,6 +153,58 @@ class SingleRowMutation {
   google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> ops_;
 };
 
+/**
+ * A SingleRowMutation that failed.
+ *
+ * A multi-row mutation returns the list of operations that failed,
+ * this class encapsulates both the failure and the original
+ * mutation.  The application can then choose to resend the mutation,
+ * or log it, or save it for processing via some other means.
+ */
+class FailedMutation {
+ public:
+  FailedMutation(SingleRowMutation mut, google::rpc::Status status)
+      : FailedMutation(std::move(mut), std::move(status), -1) {}
+  FailedMutation(SingleRowMutation mut, google::rpc::Status status, int index)
+      : mutation_(std::move(mut)),
+        status_(to_grpc_status(status)),
+        original_index_(index) {}
+
+  FailedMutation(FailedMutation&&) = default;
+  FailedMutation& operator=(FailedMutation&&) = default;
+
+  //@{
+  /// @name accessors
+  SingleRowMutation const& mutation() const { return mutation_; }
+  grpc::Status const& status() const { return status_; }
+  int original_index() const { return original_index_; }
+  //@}
+
+  friend class MultipleRowMutations;
+
+ private:
+  static grpc::Status to_grpc_status(google::rpc::Status const& status);
+
+ private:
+  SingleRowMutation mutation_;
+  grpc::Status status_;
+  int original_index_;
+};
+
+/**
+ * Report unrecoverable errors in a partially completed mutation.
+ */
+class PermanentMutationFailure : public std::runtime_error {
+ public:
+  PermanentMutationFailure(char const* msg,
+                           std::vector<FailedMutation>&& failures)
+      : std::runtime_error(msg), failures_(std::move(failures)) {}
+
+  std::vector<FailedMutation> const& failures() const { return failures_; }
+
+ private:
+  std::vector<FailedMutation> failures_;
+};
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
