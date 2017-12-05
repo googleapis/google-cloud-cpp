@@ -126,6 +126,8 @@ add_library(bigtable_data_api
         client/client_options.cc
         client/data.h
         client/data.cc
+        client/filters.h
+        client/filters.cc
         client/mutations.h
         client/mutations.cc
         client/rpc_backoff_policy.h
@@ -143,7 +145,7 @@ set(all_unit_tests
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
-        client/rpc_retry_policy_test.cc)
+        client/rpc_retry_policy_test.cc client/filters_test.cc)
 foreach (fname ${all_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
