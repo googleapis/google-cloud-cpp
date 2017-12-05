@@ -39,7 +39,11 @@ struct Mutation {
 Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
                  std::string value);
 
-/// Create a mutation to set a cell value where the server sets the time.
+/**
+ * Create a mutation to set a cell value where the server sets the time.
+ *
+ * These mutations are not idempotent and not retried by default.
+ */
 Mutation SetCell(std::string family, std::string column, std::string value);
 
 /// A magic value where the server sets the timestamp.
@@ -105,13 +109,14 @@ class SingleRowMutation {
   }
 
   /// Create a row mutation from gRPC proto
-  explicit SingleRowMutation(::google::bigtable::v2::MutateRowsRequest::Entry &&entry)
+  explicit SingleRowMutation(
+      ::google::bigtable::v2::MutateRowsRequest::Entry&& entry)
       : row_key_(std::move(*entry.mutable_row_key())), ops_() {
     ops_.Swap(entry.mutable_mutations());
   }
 
   /// Create a row mutation from gRPC proto
-  explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest &&request)
+  explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest&& request)
       : row_key_(std::move(*request.mutable_row_key())), ops_() {
     ops_.Swap(request.mutable_mutations());
   }
@@ -160,20 +165,20 @@ class FailedMutation {
         status_(to_grpc_status(status)),
         original_index_(index) {}
 
-  FailedMutation(FailedMutation &&) = default;
-  FailedMutation &operator=(FailedMutation &&) = default;
+  FailedMutation(FailedMutation&&) = default;
+  FailedMutation& operator=(FailedMutation&&) = default;
 
   //@{
   /// @name accessors
-  SingleRowMutation const &mutation() const { return mutation_; }
-  grpc::Status const &status() const { return status_; }
+  SingleRowMutation const& mutation() const { return mutation_; }
+  grpc::Status const& status() const { return status_; }
   int original_index() const { return original_index_; }
   //@}
 
   friend class MultipleRowMutations;
 
  private:
-  static grpc::Status to_grpc_status(google::rpc::Status const &status);
+  static grpc::Status to_grpc_status(google::rpc::Status const& status);
 
  private:
   SingleRowMutation mutation_;
@@ -187,13 +192,10 @@ class FailedMutation {
 class PermanentMutationFailure : public std::runtime_error {
  public:
   PermanentMutationFailure(char const* msg,
-                            std::vector<FailedMutation>&& failures)
-      : std::runtime_error(msg),
-        failures_(std::move(failures)) {}
+                           std::vector<FailedMutation>&& failures)
+      : std::runtime_error(msg), failures_(std::move(failures)) {}
 
-  std::vector<FailedMutation> const& failures() const {
-    return failures_;
-  }
+  std::vector<FailedMutation> const& failures() const { return failures_; }
 
  private:
   std::vector<FailedMutation> failures_;

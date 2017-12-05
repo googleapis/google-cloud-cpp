@@ -37,11 +37,15 @@ class IdempotentMutationPolicy {
   virtual bool is_idempotent(google::bigtable::v2::Mutation const&) = 0;
 };
 
-/// Return an instance of the default MutationRetryPolicy.
+/// Return an instance of the default IdempotentMutationPolicy.
 std::unique_ptr<IdempotentMutationPolicy> DefaultIdempotentMutationPolicy();
 
 /**
- * Implements a safe policy to determine if a mutation is idempotent.
+ * Implements a policy that only accepts truly idempotent mutations.
+ *
+ * This policy accepts only truly idempotent mutations, that is, it rejects
+ * mutations where the server sets the timestamp.  Some applications may find
+ * this too restrictive and can set their own policies if they wish.
  */
 class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
  public:
