@@ -46,7 +46,12 @@ Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
  */
 Mutation SetCell(std::string family, std::string column, std::string value);
 
-/// A magic value where the server sets the timestamp.
+/**
+ * A magic value where the server sets the timestamp.
+ *
+ * Notice that using this value in a SetCell() mutation makes it non-idempotent,
+ * and by default the client will not retry such mutations.
+ */
 constexpr std::int64_t ServerSetTimestamp() { return -1; }
 
 //@{
