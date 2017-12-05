@@ -36,8 +36,7 @@ fi
 # We first do some general git configuration:
 
 # Clone the gh-pages branch into the doc/html subdirectory.
-REPO_URL=$(git config remote.origin.url)
-REPO_REF=${REPO_URL/https:\/\/}
+readonly REPO_URL=$(git config remote.origin.url)
 git clone -b gh-pages "${REPO_URL}" doc/html
 
 # Remove any previous content of the branch.  We will recover any unmodified
@@ -54,8 +53,16 @@ git config user.email "nobody@users.noreply.github.com"
 git add --all .
 git commit -q -m"Automatically generated documentation" || exit 0
 
+if [ "${REPO_URL:0:8}" != "https://" ]; then
+  echo "Repository is not in https:// format, attempting push to ${REPO_URL}"
+  git push
+  exit 0
+fi
+
 if [ -z "${GH_TOKEN:-}" ]; then
   echo "Skipping documentation upload as GH_TOKEN is not configured."
   exit 0
 fi
+
+readonly REPO_REF=${REPO_URL/https:\/\/}
 git push https://${GH_TOKEN}@${REPO_REF} gh-pages
