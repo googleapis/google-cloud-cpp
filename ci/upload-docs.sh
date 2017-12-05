@@ -17,18 +17,18 @@
 set -eu
 
 if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
-    echo "Skipping code generation as it is disabled for pull requests."
-    exit 0
+  echo "Skipping document generation as it is disabled for pull requests."
+  exit 0
 fi
 
 if [ "${GENERATE_DOCS:-}" != "yes" ]; then
-    echo "Skipping document generation as it is disabled for this build."
-    exit 0
+  echo "Skipping document generation as it is disabled for this build."
+  exit 0
 fi
 
 if [ "${TRAVIS_BRANCH:-}" != "master" ]; then
-    echo "Skipping document generation as it is disabled for non-master directories."
-    exit 0
+  echo "Skipping document generation as it is disabled for non-master branches."
+  exit 0
 fi
 
 # The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
@@ -44,7 +44,7 @@ git clone -b gh-pages "${REPO_URL}" doc/html
 # files in a second.
 (cd doc/html && git rm -qfr . || exit 0)
 
-# Copy the build results out of the docker image:
+# Copy the build results out of the Docker image.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 sudo docker run --volume "$PWD/doc:/d" --rm -it "${IMAGE}:tip" cp -r /var/tmp/build/gccpp/bigtable/doc/html /d
 
@@ -55,7 +55,7 @@ git add --all .
 git commit -q -m"Automatically generated documentation" || exit 0
 
 if [ -z "${GH_TOKEN:-}" ]; then
-    echo "Skipping documentation upload as GH_TOKEN is not configured."
-    exit 0
+  echo "Skipping documentation upload as GH_TOKEN is not configured."
+  exit 0
 fi
 git push https://${GH_TOKEN}@${REPO_REF} gh-pages

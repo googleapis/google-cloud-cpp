@@ -1,5 +1,8 @@
 # Doxyfile 1.8.13
 
+# Please do not cut&paste this file when adding subdirectories in
+# google-cloud-cpp.  Look at #71 in github.com for alternatives.
+
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
