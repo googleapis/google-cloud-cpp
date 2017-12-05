@@ -55,7 +55,16 @@ class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
   bool is_idempotent(google::bigtable::v2::Mutation const&) override;
 };
 
-/// Implements a policy that retries all mutations.
+/**
+ * Implements a policy that retries all mutations.
+ *
+ * Notice that this will may result in non-idempotent mutations being resent
+ * to the server.  Re-trying a SetCell() mutation where the server selects the
+ * timestamp can result in multiple copies of the data stored with different
+ * timestamps.  Only use this policy if your application is prepared to handle
+ * such problems, for example, by only querying the last value and setting
+ * garbage collection policies to delete the old values.
+ */
 class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
  public:
   AlwaysRetryMutationPolicy() {}
