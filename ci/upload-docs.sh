@@ -41,7 +41,7 @@ git clone -b gh-pages "${REPO_URL}" doc/html
 
 # Remove any previous content of the branch.  We will recover any unmodified
 # files in a second.
-(cd doc/html && git rm -qfr . || exit 0)
+(cd doc/html && git rm -qfr --ignore-unmatch .)
 
 # Copy the build results out of the Docker image.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
@@ -51,7 +51,13 @@ cd doc/html
 git config user.name "Travis Build Robot"
 git config user.email "nobody@users.noreply.github.com"
 git add --all .
-git commit -q -m"Automatically generated documentation" || exit 0
+
+if git diff --exit-code; then
+  echo "Skipping documentation upload as there are no differences to upload."
+  exit 0
+fi
+
+git commit -q -m"Automatically generated documentation"
 
 if [ "${REPO_URL:0:8}" != "https://" ]; then
   echo "Repository is not in https:// format, attempting push to ${REPO_URL}"
