@@ -34,5 +34,16 @@ bool SafeIdempotentMutationPolicy::is_idempotent(
   }
   return m.set_cell().timestamp_micros() != ServerSetTimestamp();
 }
+
+std::unique_ptr<IdempotentMutationPolicy> AlwaysRetryMutationPolicy::clone()
+    const {
+  return std::unique_ptr<IdempotentMutationPolicy>(
+      new AlwaysRetryMutationPolicy(*this));
+}
+
+bool AlwaysRetryMutationPolicy::is_idempotent(
+    google::bigtable::v2::Mutation const& m) {
+  return true;
+}
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

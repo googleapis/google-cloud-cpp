@@ -54,6 +54,15 @@ class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
   std::unique_ptr<IdempotentMutationPolicy> clone() const override;
   bool is_idempotent(google::bigtable::v2::Mutation const&) override;
 };
+
+/// Implements a policy that retries all mutations.
+class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
+ public:
+  AlwaysRetryMutationPolicy() {}
+
+  std::unique_ptr<IdempotentMutationPolicy> clone() const override;
+  bool is_idempotent(google::bigtable::v2::Mutation const&) override;
+};
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
