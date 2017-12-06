@@ -100,13 +100,17 @@ class Filter {
    *
    * The range is right-open, i.e., it represents [start,end)
    *
-   * @tparam start_time_t the start duration type, typically a
-   *     std::chrono::duration_type<>
-   * @tparam end_time_t the end duration type, typically a
-   *     std::chrono::dyration_type<>
+   * The function accepts any instantiation of std::chrono::duration<> for the
+   * @p start and @p end parameters.
+   *
+   * @tparam Rep1 the Rep tparam for @p start's type.
+   * @tparam Period1 the Period tparam for @p start's type.
+   * @tparam Rep2 the Rep tparam for @p end's type.
+   * @tparam Period2 the Period tparam for @p end's type.
    */
-  template <typename start_time_t, typename end_time_t>
-  static Filter TimestampRange(start_time_t start, end_time_t end) {
+  template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+  static Filter TimestampRange(std::chrono::duration<Rep1, Period1> start,
+                               std::chrono::duration<Rep2, Period2> end) {
     using namespace std::chrono;
     return TimestampRangeMicros(duration_cast<microseconds>(start).count(),
                                 duration_cast<microseconds>(end).count());
