@@ -67,9 +67,8 @@ void BulkMutator::ProcessResponse(
     google::bigtable::v2::MutateRowsResponse &response) {
   for (auto &entry : *response.mutable_entries()) {
     auto index = entry.index();
-    if (index < 0 or has_mutation_result.size() <= index) {
-      // TODO(coryan) we would probably want to log this, it indicates a bug in
-      // the server side.
+    if (index < 0 or has_mutation_result.size() <= std::size_t(index)) {
+      // TODO(#72) - decide how this is logged.
       continue;
     }
     has_mutation_result[index] = true;
