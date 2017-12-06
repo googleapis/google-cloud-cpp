@@ -14,12 +14,9 @@
 
 #include "bigtable/client/data.h"
 
-#include <cstdlib>
-#include <iostream>
 #include <thread>
 
-#include <absl/memory/memory.h>
-#include <bigtable/client/detail/bulk_mutator.h>
+#include "bigtable/client/detail/bulk_mutator.h"
 
 namespace btproto = ::google::bigtable::v2;
 

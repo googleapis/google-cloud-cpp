@@ -41,18 +41,31 @@ class MockReader : public grpc::ClientReaderInterface<
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t *));
   MOCK_METHOD1(Read, bool(::google::bigtable::v2::MutateRowsResponse *));
 };
+
+class TableBulkApplyTest : public ::testing::Test {
+public:
+  void SetUp() override {
+    using namespace ::testing;
+    namespace btproto = ::google::bigtable::v2;
+
+    EXPECT_CALL(client, Stub())
+        .WillRepeatedly(Invoke(
+            [this]() -> btproto::Bigtable::StubInterface & {
+              return *client.mock_stub;
+            }));
+  }
+  void TearDown() override {
+  }
+  MockClient client;
+};
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
-TEST(TableApplyMultipleTest, Simple) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, Simple) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
+
   auto reader = absl::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -77,25 +90,18 @@ TEST(TableApplyMultipleTest, Simple) {
             return reader.release();
           }));
 
-  namespace bt = bigtable;
   bt::Table table(&client, "foo_table");
 
   EXPECT_NO_THROW(table.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}))));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))));
 }
 
 /// @test Verify that Table::BulkApply() retries partial failures.
-TEST(TableApplyMultipleTest, RetryPartialFailure) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, RetryPartialFailure) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
 
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
@@ -135,7 +141,6 @@ TEST(TableApplyMultipleTest, RetryPartialFailure) {
             return r2.release();
           }));
 
-  namespace bt = bigtable;
   bt::Table table(&client, "foo_table");
 
   EXPECT_NO_THROW(table.BulkApply(bt::BulkMutation(
@@ -145,15 +150,10 @@ TEST(TableApplyMultipleTest, RetryPartialFailure) {
 }
 
 /// @test Verify that Table::BulkApply() handles permanent failures.
-TEST(TableBulkApply, PermanentFailure) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, PermanentFailure) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
 
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
@@ -179,27 +179,20 @@ TEST(TableBulkApply, PermanentFailure) {
             return r1.release();
           }));
 
-  namespace bt = bigtable;
   bt::Table table(&client, "foo_table");
 
-  EXPECT_THROW(table.BulkApply(bt::BulkMutation(
-                   bt::SingleRowMutation(
-                       "foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-                   bt::SingleRowMutation(
-                       "bar", {bigtable::SetCell("fam", "col", 0, "qux")}))),
-               std::exception);
+  EXPECT_THROW(
+      table.BulkApply(bt::BulkMutation(
+          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
+      std::exception);
 }
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
-TEST(TableBulkApply, CanceledStream) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, CanceledStream) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
 
   // Simulate a stream that returns one success and then terminates.  We expect
   // the BulkApply() operation to retry the request, because the mutation is in
@@ -242,27 +235,19 @@ TEST(TableBulkApply, CanceledStream) {
             return r2.release();
           }));
 
-  namespace bt = bigtable;
   bt::Table table(&client, "foo_table");
 
   EXPECT_NO_THROW(table.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}))));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))));
 }
 
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
-TEST(TableBulkApply, TooManyFailures) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, TooManyFailures) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
 
-  namespace bt = bigtable;
   using namespace bigtable::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
@@ -310,22 +295,17 @@ TEST(TableBulkApply, TooManyFailures) {
 
   EXPECT_THROW(table.BulkApply(bt::BulkMutation(
                    bt::SingleRowMutation(
-                       "foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
+                       "foo", {bt::SetCell("fam", "col", 0, "baz")}),
                    bt::SingleRowMutation(
-                       "bar", {bigtable::SetCell("fam", "col", 0, "qux")}))),
+                       "bar", {bt::SetCell("fam", "col", 0, "qux")}))),
                std::exception);
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
-TEST(TableBulkApply, RetryOnlyIdempotent) {
-  MockClient client;
+TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(Invoke(
-          [&client]() -> google::bigtable::v2::Bigtable::StubInterface & {
-            return *client.mock_stub;
-          }));
   namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
 
   // We will send both idempotent and non-idempotent mutations.  We prepare the
   // mocks to return an empty stream in the first RPC request.  That will force
@@ -357,14 +337,13 @@ TEST(TableBulkApply, RetryOnlyIdempotent) {
             return r2.release();
           }));
 
-  namespace bt = bigtable;
   bt::Table table(&client, "foo_table");
   try {
     table.BulkApply(bt::BulkMutation(
         bt::SingleRowMutation("not-idempotent",
-                              {bigtable::SetCell("fam", "col", "baz")}),
+                              {bt::SetCell("fam", "col", "baz")}),
         bt::SingleRowMutation("is-idempotent",
-                              {bigtable::SetCell("fam", "col", 0, "qux")})));
+                              {bt::SetCell("fam", "col", 0, "qux")})));
   } catch (bt::PermanentMutationFailure const &ex) {
     ASSERT_EQ(1UL, ex.failures().size());
     EXPECT_EQ(0, ex.failures()[0].original_index());

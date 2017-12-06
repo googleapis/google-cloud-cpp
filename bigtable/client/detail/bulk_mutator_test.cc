@@ -32,18 +32,17 @@ class MockReader : public grpc::ClientReaderInterface<
 /// @test Verify that MultipleRowsMutator handles easy cases.
 TEST(MultipleRowsMutatorTest, Simple) {
   namespace btproto = ::google::bigtable::v2;
-  namespace bt = bigtable;
+  namespace bt = ::bigtable;
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows, which succeeds in the
   // first RPC request.  First create the mutation.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
 
   // Prepare the mocks.  The mutator should issue a RPC which must return a
-  // stream of responses,  we prepare the stream first because it is easier than
+  // stream of responses, we prepare the stream first because it is easier than
   // to create one of the fly.
   auto reader = absl::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
@@ -85,15 +84,14 @@ TEST(MultipleRowsMutatorTest, Simple) {
 /// @test Verify that MultipleRowsMutator retries partial failures.
 TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   namespace btproto = ::google::bigtable::v2;
-  namespace bt = bigtable;
+  namespace bt = ::bigtable;
   using namespace ::testing;
 
   // In this test we create a Mutation for two rows, one of which will fail.
   // First create the mutation.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
 
   // Prepare the mocks for the request.  First create a stream response which
   // indicates a partial failure.
@@ -143,7 +141,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
-  // isolation, so call MakeOneRequest() twice.
+  // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
@@ -157,24 +155,24 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
 /// @test Verify that MultipleRowsMutator handles permanent failures.
 TEST(MultipleRowsMutatorTest, PermanentFailure) {
   namespace btproto = ::google::bigtable::v2;
-  namespace bt = bigtable;
+  namespace bt = ::bigtable;
   using namespace ::testing;
 
   // In this test we handle a recoverable and one unrecoverable failures.
   // Create a bulk mutation with two SetCell() mutations.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
 
   // Make the first RPC return one recoverable and one unrecoverable failures.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
-        // ... simulate a partial (recoverable) failure ...
+        // Simulate a partial failure.  Recoverable for this first element.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
+        // Simulate an unrecoverable failure for the second element.
         auto& e1 = *r->add_entries();
         e1.set_index(1);
         e1.mutable_status()->set_code(grpc::OUT_OF_RANGE);
@@ -212,8 +210,8 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
-  // This test is simulating the expected behavior from the BulkApply() member
-  // function.
+  // This work will be in BulkApply(), but this is the test for BulkMutator in
+  // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
@@ -230,15 +228,14 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
 /// @test Verify that MultipleRowsMutator handles a stream with partial results
 TEST(MultipleRowsMutatorTest, PartialStream) {
   namespace btproto = ::google::bigtable::v2;
-  namespace bt = bigtable;
+  namespace bt = ::bigtable;
   using namespace ::testing;
 
   // We are going to test the case where the stream does not contain a response
   // for all requests.  Create a BulkMutation with two entries.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
 
   // This will be the stream returned by the first request.  It is missing
   // information about one of the mutations.
@@ -283,6 +280,8 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
+  // This work will be in BulkApply(), but this is the test for BulkMutator in
+  // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
@@ -296,21 +295,21 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
 /// @test Verify that MultipleRowsMutator only retries idempotent mutations
 TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   namespace btproto = ::google::bigtable::v2;
-  namespace bt = bigtable;
+  namespace bt = ::bigtable;
   using namespace ::testing;
 
   // Create a BulkMutation with a non-idempotent mutation.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", "baz")}),
-      bt::SingleRowMutation("bar", {bigtable::SetCell("fam", "col", 0, "qux")}),
-      bt::SingleRowMutation("baz", {bigtable::SetCell("fam", "col", "v")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}),
+      bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "v")}));
 
   // We will setup the mock to return recoverable failures for idempotent
   // mutations.
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
-        // ... simulate a partial (recoverable) failure ...
+        // Simulate recoverable failures for both elements.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
@@ -361,6 +360,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
+  // This work will be in BulkApply(), but this is the test for BulkMutator in
+  // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;

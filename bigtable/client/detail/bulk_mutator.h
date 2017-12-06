@@ -15,7 +15,7 @@
 #ifndef BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
 #define BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
 
-#include <bigtable/client/idempotent_mutation_policy.h>
+#include "bigtable/client/idempotent_mutation_policy.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
@@ -30,7 +30,7 @@ class BulkMutator {
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const {
-    return pending_mutations.entries_size() != 0;
+    return pending_mutations_.entries_size() != 0;
   }
 
   /// Send one batch request to the given stub.
@@ -53,31 +53,31 @@ class BulkMutator {
 
  private:
   /// Accumulate any permanent failures and the list of mutations we gave up on.
-  std::vector<FailedMutation> failures;
+  std::vector<FailedMutation> failures_;
 
-  /// The current request
-  google::bigtable::v2::MutateRowsRequest mutations;
+  /// The current request proto.
+  google::bigtable::v2::MutateRowsRequest mutations_;
 
-  /// Mapping from the index in `current_request` to the index in the original
+  /// Mapping from the index in @p mutations_ to the index in the original
   /// request
-  std::vector<int> original_index;
+  std::vector<int> original_index_;
 
   /// If true, the corresponding mutation is idempotent according to the
   /// policies in effect.
-  std::vector<bool> is_idempotent;
+  std::vector<bool> is_idempotent_;
 
   /// If true, the result for that mutation, in the current_request is known,
   /// used to find missing results.
-  std::vector<bool> has_mutation_result;
+  std::vector<bool> has_mutation_result_;
 
   /// Accumulate mutations for the next request.
-  google::bigtable::v2::MutateRowsRequest pending_mutations;
+  google::bigtable::v2::MutateRowsRequest pending_mutations_;
 
   /// Accumulate the indices of mutations for the next request.
-  std::vector<int> pending_original_index;
+  std::vector<int> pending_original_index_;
 
   /// Accumulate the idempotency of mutations for the next request.
-  std::vector<bool> pending_is_idempotent;
+  std::vector<bool> pending_is_idempotent_;
 };
 }  // namespace detail
 }  // namespace BIGTABLE_CLIENT_NS

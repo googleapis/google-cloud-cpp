@@ -15,7 +15,7 @@
 #ifndef BIGTABLE_CLIENT_MUTATIONS_H_
 #define BIGTABLE_CLIENT_MUTATIONS_H_
 
-#include <bigtable/client/version.h>
+#include "bigtable/client/version.h"
 
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
@@ -237,6 +237,7 @@ class BulkMutation {
   explicit BulkMutation(SingleRowMutation&& mutation) : BulkMutation() {
     emplace_back(std::move(mutation));
   }
+
   /// Create a muti-row mutation from two SingleRowMutation
   BulkMutation(SingleRowMutation&& m1, SingleRowMutation&& m2)
       : BulkMutation() {
@@ -269,6 +270,7 @@ class BulkMutation {
     mut.MoveTo(request_.add_entries());
     return *this;
   }
+
   /// Move the contents into a bigtable::v2::MutateRowsRequest
   void MoveTo(google::bigtable::v2::MutateRowsRequest* request) {
     request_.Swap(request);
