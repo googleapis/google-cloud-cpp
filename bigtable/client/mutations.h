@@ -234,8 +234,7 @@ class BulkMutation {
       : BulkMutation(list.begin(), list.end()) {}
 
   /// Create a muti-row mutation from a SingleRowMutation
-  explicit BulkMutation(SingleRowMutation&& mutation)
-      : BulkMutation() {
+  explicit BulkMutation(SingleRowMutation&& mutation) : BulkMutation() {
     emplace_back(std::move(mutation));
   }
   /// Create a muti-row mutation from two SingleRowMutation
