@@ -14,14 +14,14 @@
 
 #include "bigtable/client/data.h"
 
-#include <absl/strings/str_split.h>
-
-int main(int argc, char *argv[]) try {
+int main(int argc, char* argv[]) try {
   // Make sure the arguments are valid.
   if (argc != 5) {
-    // TODO() - we should really use std::experimental::filesystem here.
-    auto cmd = absl::StrSplit(argv[0], '/').back();
-    std::cerr << "Usage: " << argv[0] << " project instance table family";
+    std::string const cmd = argv[0];
+    auto last_slash = std::string(argv[0]).find_last_of("/");
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
+              << " <project> <instance> <table> <family>" << std::endl;
+    return 1;
   }
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) try {
   std::string const family = argv[4];
 
   bigtable::Client client(project_id, instance_id);
-  std::unique_ptr<bigtable::Table> table = client.Open(table);
+  std::unique_ptr<bigtable::Table> table = client.Open(table_name);
 
   // TODO(#29) we should read these rows back when we have a read path
   auto mutation = bigtable::SingleRowMutation("row-key-0");
