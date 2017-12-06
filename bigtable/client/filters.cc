@@ -15,12 +15,5 @@
 #include "bigtable/client/filters.h"
 
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
-Filter Filter::latest(int n) {
-  Filter result;
-  result.filter_.set_cells_per_column_limit_filter(n);
-  return result;
-}
-
-}  // namespace BIGTABLE_CLIENT_NS
+inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
