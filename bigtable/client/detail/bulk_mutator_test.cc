@@ -221,10 +221,10 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
     EXPECT_TRUE(status.ok());
   }
   auto failures = mutator.ExtractFinalFailures();
-  ASSERT_EQ(failures.size(), 1UL);
-  EXPECT_EQ(failures[0].original_index(), 1);
-  EXPECT_EQ(failures[0].mutation().row_key(), "bar");
-  EXPECT_EQ(failures[0].status().error_code(), grpc::StatusCode::OUT_OF_RANGE);
+  ASSERT_EQ(1UL, failures.size());
+  EXPECT_EQ(1, failures[0].original_index());
+  EXPECT_EQ("bar", failures[0].mutation().row_key());
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, failures[0].status().error_code());
 }
 
 /// @test Verify that MultipleRowsMutator handles a stream with partial results
@@ -342,14 +342,14 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   // ASSERT_EQ() has an embedded "return;" in it, which does not play well with
   // the rest of the stuff here.
   auto expect_r2 = [](btproto::MutateRowsRequest const& r) {
-    ASSERT_EQ(r.entries_size(), 1);
-    EXPECT_EQ(r.entries(0).row_key(), "bar");
+    ASSERT_EQ(1, r.entries_size());
+    EXPECT_EQ("bar", r.entries(0).row_key());
   };
   btproto::MockBigtableStub stub;
   EXPECT_CALL(stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
-            EXPECT_EQ(r.entries_size(), 3);
+            EXPECT_EQ(3, r.entries_size());
             return r1.release();
           }))
       .WillOnce(Invoke([&r2, expect_r2](grpc::ClientContext*,
@@ -368,12 +368,12 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
     EXPECT_TRUE(status.ok());
   }
   auto failures = mutator.ExtractFinalFailures();
-  ASSERT_EQ(failures.size(), 2UL);
-  EXPECT_EQ(failures[0].original_index(), 0);
-  EXPECT_EQ(failures[0].mutation().row_key(), "foo");
-  EXPECT_EQ(failures[0].status().error_code(), grpc::StatusCode::UNAVAILABLE);
+  ASSERT_EQ(2UL, failures.size());
+  EXPECT_EQ(0, failures[0].original_index());
+  EXPECT_EQ("foo", failures[0].mutation().row_key());
+  EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, failures[0].status().error_code());
 
-  EXPECT_EQ(failures[1].original_index(), 2);
-  EXPECT_EQ(failures[1].mutation().row_key(), "baz");
-  EXPECT_EQ(failures[1].status().error_code(), grpc::StatusCode::OK);
+  EXPECT_EQ(2, failures[1].original_index());
+  EXPECT_EQ("baz", failures[1].mutation().row_key());
+  EXPECT_EQ(grpc::StatusCode::OK, failures[1].status().error_code());
 }

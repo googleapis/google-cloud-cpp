@@ -366,9 +366,9 @@ TEST(TableBulkApply, RetryOnlyIdempotent) {
         bt::SingleRowMutation("is-idempotent",
                               {bigtable::SetCell("fam", "col", 0, "qux")})));
   } catch (bt::PermanentMutationFailure const &ex) {
-    ASSERT_EQ(ex.failures().size(), 1L);
-    EXPECT_EQ(ex.failures()[0].original_index(), 0);
-    EXPECT_EQ(ex.failures()[0].mutation().row_key(), "not-idempotent");
+    ASSERT_EQ(1UL, ex.failures().size());
+    EXPECT_EQ(0, ex.failures()[0].original_index());
+    EXPECT_EQ("not-idempotent", ex.failures()[0].mutation().row_key());
   } catch (std::exception const &ex) {
     FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {
