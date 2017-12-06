@@ -9,3 +9,7 @@ build-output/
 # Ignore IDEA / IntelliJ files
 .idea/
 cmake-build-*/
+
+# The Doxygen-generated documentation goes here:
+bigtable/doc/html/
+doc/html/

@@ -136,8 +136,6 @@ class Table {
    *
    * @param mut the mutation, notice that this function takes
    * ownership (and then discards) the data in the mutation.
-   * @param pol the retry policy, the application can control how many
-   * times the request is retried using this class.
    *
    * @throws std::exception based on how the retry policy handles
    * error conditions.
