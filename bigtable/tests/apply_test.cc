@@ -12,21 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <bigtable/client/data.h>
+#include "bigtable/client/data.h"
 
-int main() try {
-  bigtable::Client client("emulated", "emulated");
-  std::unique_ptr<bigtable::Table> table = client.Open("test-table");
+#include <absl/strings/str_split.h>
 
+int main(int argc, char *argv[]) try {
+  // Make sure the arguments are valid.
+  if (argc != 5) {
+    // TODO() - we should really use std::experimental::filesystem here.
+    auto cmd = absl::StrSplit(argv[0], '/').back();
+    std::cerr << "Usage: " << argv[0] << " project instance table family";
+  }
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
+  std::string const table_name = argv[3];
+  std::string const family = argv[4];
+
+  bigtable::Client client(project_id, instance_id);
+  std::unique_ptr<bigtable::Table> table = client.Open(table);
+
+  // TODO(#29) we should read these rows back when we have a read path
   auto mutation = bigtable::SingleRowMutation("row-key-0");
-  mutation.emplace_back(bigtable::SetCell("fam", "col0", 0, "value-0-0"));
-  mutation.emplace_back(bigtable::SetCell("fam", "col1", 0, "value-0-1"));
+  mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-0-0"));
+  mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-0-1"));
   table->Apply(std::move(mutation));
   std::cout << "row-key-0 mutated successfully\n";
 
   mutation = bigtable::SingleRowMutation("row-key-1");
-  mutation.emplace_back(bigtable::SetCell("fam", "col0", 0, "value-1-0"));
-  mutation.emplace_back(bigtable::SetCell("fam", "col1", 0, "value-1-1"));
+  mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-1-0"));
+  mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-1-1"));
   table->Apply(std::move(mutation));
   std::cout << "row-key-1 mutated successfully\n";
 

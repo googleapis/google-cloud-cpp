@@ -50,12 +50,12 @@ RUN apt-get install -y \
     g++-4.8 \
   || /bin/true
 
-# Install the bigtable emulator and the bigtable command-line client.  They
-# are used in the integration tests.
+# Install the Cloud Bigtable emulator and the bigtable command-line client.
+# They are used in the integration tests.
 ARG GOPATH=/var/tmp/build/cbt
 WORKDIR ${GOPATH}
 RUN if grep -q 14.04 /etc/lsb-release; then \
-      echo "Skip cloud bigtable client install, go version too old in Ubuntu 14.04."; \
+      echo "Skipping cloud bigtable client install, Go version too old in Ubuntu 14.04."; \
     else \
       go get cloud.google.com/go/bigtable/cmd/cbt \
           cloud.google.com/go/bigtable/cmd/emulator; \
@@ -84,7 +84,7 @@ RUN ./gccpp/ci/check-style.sh
 
 WORKDIR /var/tmp/build/gccpp/build-output/bigtable
 RUN if grep -q 14.04 /etc/lsb-release; then \
-       echo "Skip integration tests, go version too old in Ubuntu 14.04."; \
+       echo "Skipping integration tests, Go version too old in Ubuntu 14.04."; \
     else \
         ../../bigtable/tests/run_integration_tests.sh; \
     fi
