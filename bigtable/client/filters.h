@@ -26,7 +26,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Example:
  * @code
  * // Get only data from the "fam" column family, and only the latest value.
- * auto filter = Filter::chain(Filter::family("fam"), Filter::lastest(1));
+ * auto filter = Filter::Chain(Filter::Family("fam"), Filter::Latest(1));
  * table->ReadRow("foo", std::move(filter));
  * @endcode
  */
@@ -35,12 +35,119 @@ class Filter {
   /// An empty filter, discards all data.
   Filter() : filter_() {}
 
-  /// Create a filter that accepts only the last @a n values.
-  static Filter latest(int n);
+  // TODO() - replace with = default if protobuf gets move constructors.
+  Filter(Filter&& rhs) noexcept : Filter() { filter_.Swap(&rhs.filter_); }
 
-  google::bigtable::v2::RowFilter as_proto() {
-    return filter_;
+  // TODO() - replace with = default if protobuf gets move constructors.
+  Filter& operator=(Filter&& rhs) noexcept {
+    Filter tmp(std::move(rhs));
+    tmp.filter_.Swap(&filter_);
+    return *this;
   }
+
+  Filter(Filter const& rhs) = default;
+  Filter& operator=(Filter const& rhs) = default;
+
+  /// Create a filter that accepts only the last @a n values.
+  static Filter Latest(int n) {
+    Filter result;
+    result.filter_.set_cells_per_column_limit_filter(n);
+    return result;
+  }
+
+  /// Return a filter that matches column families matching the given regexp.
+  static Filter Family(std::string pattern) {
+    Filter tmp;
+    tmp.filter_.set_family_name_regex_filter(std::move(pattern));
+    return tmp;
+  }
+
+  /// Create a filter that accepts only columns matching the given regexp.
+  static Filter Column(std::string pattern) {
+    Filter tmp;
+    tmp.filter_.set_column_qualifier_regex_filter(std::move(pattern));
+    return tmp;
+  }
+
+  /**
+   * Create a filter that accepts columns in the given range.
+   *
+   * Notice that the range is right-open, i.e., it represents [start,end)
+   */
+  static Filter ColumnRange(std::string begin, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_start_qualifier_closed(std::move(begin));
+    range.set_end_qualifier_open(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts cells in the given timestamp range.
+   *
+   * The range is right-open, i.e., it represents [start,end)
+   */
+  static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_timestamp_range_filter();
+    range.set_start_timestamp_micros(start);
+    range.set_end_timestamp_micros(end);
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts cells in the give timestamp range.
+   *
+   * The range is right-open, i.e., it represents [start,end)
+   *
+   * @tparam start_time_t the start duration type, typically a
+   *     std::chrono::duration_type<>
+   * @tparam end_time_t the end duration type, typically a
+   *     std::chrono::dyration_type<>
+   */
+  template <typename start_time_t, typename end_time_t>
+  static Filter TimestampRange(start_time_t start, end_time_t end) {
+    using namespace std::chrono;
+    return TimestampRangeMicros(duration_cast<microseconds>(start).count(),
+                                duration_cast<microseconds>(end).count());
+  }
+
+  /// Return a filter that matches keys matching the given regexp.
+  static Filter MatchingRowKeys(std::string pattern) {
+    Filter tmp;
+    tmp.filter_.set_row_key_regex_filter(std::move(pattern));
+    return tmp;
+  }
+
+  static Filter StripValue() { return Filter(); }
+
+  static Filter StripMatchingValues(std::string pattern) { return Filter(); }
+
+  static Filter ValueRange(std::string begin, std::string end) {
+    return Filter();
+  }
+
+  static Filter Condition(Filter predicate, Filter true_filter,
+                          Filter false_filter) {
+    return Filter();
+  }
+
+  /// Create a chain of filters
+  // TODO(coryan) - document ugly std::enable_if<> hack to ensure they all
+  // are of type Filter.
+  template <typename... FilterTypes>
+  static Filter Chain(FilterTypes&&... a) {
+    return Filter();
+  }
+
+  /// Create a set of parallel interleaved filters
+  // TODO(coryan) - same ugly hack documentation needed ...
+  template <typename... FilterTypes>
+  static Filter Interleave(FilterTypes&&... a) {
+    return Filter();
+  }
+
+  google::bigtable::v2::RowFilter as_proto() const { return filter_; }
 
  private:
   google::bigtable::v2::RowFilter filter_;
@@ -49,4 +156,4 @@ class Filter {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif //GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
