@@ -18,7 +18,7 @@
 
 #include "bigtable/client/chrono_literals.h"
 
-/// @test Verify that simple filters work as expected.
+/// @test Verify that functions to create simple filters work as expected.
 TEST(FiltersTest, Simple) {
   namespace btproto = ::google::bigtable::v2;
 
@@ -51,6 +51,26 @@ TEST(FiltersTest, Simple) {
   proto = bigtable::Filter::MatchingRowKeys("[A-Za-z][A-Za-z0-9_]*").as_proto();
   EXPECT_EQ("[A-Za-z][A-Za-z0-9_]*", proto.row_key_regex_filter());
 
-  proto = bigtable::Filter::StripValueTransformer().as_proto();
+  proto = bigtable::Filter::PassAllFilter().as_proto();
+  EXPECT_TRUE(proto.pass_all_filter());
+
+  proto = bigtable::Filter::BlockAllFilter().as_proto();
+  EXPECT_TRUE(proto.block_all_filter());
+
+  proto = bigtable::Filter::CellsRowLimit(3).as_proto();
+  EXPECT_EQ(3, proto.cells_per_row_limit_filter());
+
+  proto = bigtable::Filter::CellsRowOffset(42).as_proto();
+  EXPECT_EQ(42, proto.cells_per_row_offset_filter());
+}
+
+/// @test Verify that functions to create transformer filters work as expected.
+TEST(FiltersTest, Transformers) {
+  namespace btproto = ::google::bigtable::v2;
+
+  auto proto = bigtable::Filter::StripValueTransformer().as_proto();
   EXPECT_TRUE(proto.strip_value_transformer());
+
+  proto = bigtable::Filter::ApplyLabelTransformer("foo").as_proto();
+  EXPECT_EQ("foo", proto.apply_label_transformer());
 }

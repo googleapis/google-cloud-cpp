@@ -171,25 +171,72 @@ class Filter {
     return tmp;
   }
 
-  static Filter ValueRangeLeftOpen() { return Filter(); }
-  static Filter ValueRangeRightOpen() { return Filter(); }
-  static Filter ValueRangeClosed() { return Filter(); }
-  static Filter ValueRangeOpen() { return Filter(); }
-  static Filter RowKeyRangeLeftOpen() { return Filter(); }
-  static Filter RowKeyRangeRightOpen() { return Filter(); }
-  static Filter RowKeyRangeClosed() { return Filter(); }
-  static Filter RowKeyRangeOpen() { return Filter(); }
-  static Filter RowKeyPrefix() { return Filter(); }
+  /// Return a filter that passes on all data.
+  static Filter PassAllFilter() {
+    Filter tmp;
+    tmp.filter_.set_pass_all_filter(true);
+    return tmp;
+  }
 
-  static Filter SinkFilter() { return Filter(); }
-  static Filter PassAllFilter() { return Filter(); }
-  static Filter BlockAllFilter() { return Filter(); }
+  /// Return a filter that blocks all data.
+  static Filter BlockAllFilter() {
+    Filter tmp;
+    tmp.filter_.set_block_all_filter(true);
+    return tmp;
+  }
 
-  static Filter RowSample(float lambda) { return Filter(); }
-  static Filter Earliest(int n) { return Filter(); }
-  static Filter ColumnLimit(int n) { return Filter(); }
+  /**
+   * Return a filter that only accepts the first @p n cells in a row.
+   *
+   * Notice that cells might be repeated, such as when interleaving the results
+   * of multiple filters via the Union() function (aka Interleaved in the
+   * proto).  Furthermore, notice that this is the cells within a row, if there
+   * are multiple column families and columns, the cells are returned ordered
+   * by first column family, and then by column qualifier, and then by
+   * timestamp.
+   *
+   * TODO(#82) - check the documentation around ordering of columns.
+   */
+  static Filter CellsRowLimit(int n) {
+    Filter tmp;
+    tmp.filter_.set_cells_per_row_limit_filter(n);
+    return tmp;
+  }
 
-  static Filter ApplyLabelTransformer() { return Filter(); }
+  /**
+   * Return a filter that skips the first @p n cells in a row.
+   *
+   * Notice that cells might be repeated, such as when interleaving the results
+   * of multiple filters via the Union() function (aka Interleaved in the
+   * proto).  Furthermore, notice that this is the cells within a row, if there
+   * are multiple column families and columns, the cells are returned ordered
+   * by first column family, and then by column qualifier, and then by
+   * timestamp.
+   *
+   * TODO(#82) - check the documentation around ordering of columns.
+   */
+  static Filter CellsRowOffset(int n)  {
+    Filter tmp;
+    tmp.filter_.set_cells_per_row_offset_filter(n);
+    return tmp;
+  }
+
+  //@{
+  /// @name Unimplemented, wait for the next PR.
+  // TODO(#30) - complete the implementation.
+  static Filter ValueRangeLeftOpen();
+  static Filter ValueRangeRightOpen();
+  static Filter ValueRangeClosed();
+  static Filter ValueRangeOpen();
+  static Filter RowKeyRangeLeftOpen();
+  static Filter RowKeyRangeRightOpen();
+  static Filter RowKeyRangeClosed();
+  static Filter RowKeyRangeOpen();
+  static Filter RowKeyPrefix();
+  static Filter RowSample(float probability);
+  static Filter SinkFilter();
+  //@}
+
   /**
    * Return a filter that transforms any values into the empty string.
    *
@@ -202,6 +249,13 @@ class Filter {
     return tmp;
   }
 
+  static Filter ApplyLabelTransformer(std::string label) {
+    Filter tmp;
+    tmp.filter_.set_apply_label_transformer(std::move(label));
+    return tmp;
+  }
+  //@}
+
 
   //@{
   /**
@@ -211,6 +265,7 @@ class Filter {
    */
   /// Return a filter that selects between two other filters based on a
   /// predicate.
+  // TODO(#30) - implement this one.
   static Filter Condition(Filter predicate, Filter true_filter,
                           Filter false_filter) {
     return Filter();
@@ -219,12 +274,14 @@ class Filter {
   /// Create a chain of filters
   // TODO(coryan) - document ugly std::enable_if<> hack to ensure they all
   // are of type Filter.
+  // TODO(#30) - implement this one.
   template <typename... FilterTypes>
   static Filter Chain(FilterTypes&&... a) {
     return Filter();
   }
 
   // TODO(coryan) - same ugly hack documentation needed ...
+  // TODO(#30) - implement this one.
   /**
    * Return a filter that unions the results of all the other filters.
    * @tparam FilterTypes

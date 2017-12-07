@@ -143,12 +143,13 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
         client/client_options_test.cc
+        client/filters_test.cc
         client/force_sanitizer_failures_test.cc
         client/idempotent_mutation_policy_test.cc
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
-        client/rpc_retry_policy_test.cc client/filters_test.cc)
+        client/rpc_retry_policy_test.cc)
 foreach (fname ${all_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
