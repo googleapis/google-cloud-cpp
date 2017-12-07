@@ -60,7 +60,7 @@ fi
 
 echo "Creating test-table in the emulator."
 "${GOPATH}/bin/cbt" $CBT_ARGS createtable test-table
-echo "Creating family in test-table."
+echo "Creating column family in test-table."
 "${GOPATH}/bin/cbt" $CBT_ARGS createfamily test-table fam
 
 # Run the integration tests
