@@ -24,16 +24,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # breaks submodules (such as gRPC) that do not conform to such an
 # strict setting.
 include(CheckCXXCompilerFlag)
-if(NOT MSVC)
-  CHECK_CXX_COMPILER_FLAG(-Werror COMPILER_SUPPORTS_WERROR)
-  if(COMPILER_SUPPORTS_WERROR)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
-  endif()
-  CHECK_CXX_COMPILER_FLAG(-Wall COMPILER_SUPPORTS_WALL)
-  if(COMPILER_SUPPORTS_WALL)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-  endif()
-endif()
+if (NOT MSVC)
+    CHECK_CXX_COMPILER_FLAG(-Werror COMPILER_SUPPORTS_WERROR)
+    if (COMPILER_SUPPORTS_WERROR)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+    endif ()
+    CHECK_CXX_COMPILER_FLAG(-Wall COMPILER_SUPPORTS_WALL)
+    if (COMPILER_SUPPORTS_WALL)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+    endif ()
+endif ()
 
 # For the GCC and Clang compiler families enable a Coverage build type.
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
