@@ -109,8 +109,8 @@ void BulkMutator::ProcessResponse(
       // we use the original index in the first request, not the one where it
       // failed.
       failures_.emplace_back(SingleRowMutation(std::move(original)),
-                            std::move(*entry.mutable_status()),
-                            original_index_[index]);
+                             std::move(*entry.mutable_status()),
+                             original_index_[index]);
     }
   }
 }
