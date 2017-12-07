@@ -187,3 +187,9 @@ if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
 endif (FORCE_SANITIZER_ERRORS)
+
+# The integration tests, these are simply programs that connect to the
+# Cloud Bigtable emulator.
+add_executable(apply_test tests/apply_test.cc)
+target_link_libraries(apply_test bigtable_data_api googleapis
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
