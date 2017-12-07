@@ -17,6 +17,7 @@
 
 #include <bigtable/client/version.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <chrono>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -29,6 +30,15 @@ inline namespace BIGTABLE_CLIENT_NS {
  * auto filter = Filter::Chain(Filter::Family("fam"), Filter::Latest(1));
  * table->ReadRow("foo", std::move(filter));
  * @endcode
+ *
+ * Those filters that use regular expressions, expect the patterns to be in
+ * the [RE2](https://github.com/google/re2/wiki/Syntax) syntax.
+ *
+ * @note Special care need be used with the expression used. Some of the
+ *   byte sequences matched (e.g. row keys, or values), can contain arbitrary
+ *   bytes, the `\C` escape sequence must be used if a true wildcard is
+ *   desired. The `.` character will not match the new line character `\n`,
+ *   which may be present in a binary value.
  */
 class Filter {
  public:
@@ -58,8 +68,10 @@ class Filter {
   /**
    * Return a filter that matches column families matching the given regexp.
    *
-   * @param pattern the regular expression.  It must be a valid RE2 pattern.
-   *     More details at https://github.com/google/re2/wiki/Syntax
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   *     For technical reasons, the regex must not contain the ':' character,
+   *     even if it is not being used as a literal.
    */
   static Filter Family(std::string pattern) {
     Filter tmp;
@@ -70,8 +82,8 @@ class Filter {
   /**
    * Return a filter that accepts only columns matching the given regexp.
    *
-   * @param pattern the regular expression.  It must be a valid RE2 pattern.
-   *     More details at https://github.com/google/re2/wiki/Syntax
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
    */
   static Filter Column(std::string pattern) {
     Filter tmp;
@@ -138,9 +150,25 @@ class Filter {
     return tmp;
   }
 
-  static Filter StripValue() { return Filter(); }
+  /**
+   * Return a filter that transforms any values into the empty string.
+   *
+   * As the name indicates, this acts as a transformer on the data, replacing
+   * any values with the empty string.
+   */
+  static Filter StripValueTransformer() {
+    Filter tmp;
+    tmp.filter_.set_strip_value_transformer(true);
+    return tmp;
+  }
 
-  static Filter StripMatchingValues(std::string pattern) { return Filter(); }
+  /**
+   * Return a filter that matches keys matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   */
+  static Filter MatchingValue(std::string pattern) { return Filter(); }
 
   static Filter ValueRange(std::string begin, std::string end) {
     return Filter();
