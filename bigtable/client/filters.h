@@ -17,6 +17,7 @@
 
 #include <bigtable/client/version.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <chrono>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -29,6 +30,15 @@ inline namespace BIGTABLE_CLIENT_NS {
  * auto filter = Filter::Chain(Filter::Family("fam"), Filter::Latest(1));
  * table->ReadRow("foo", std::move(filter));
  * @endcode
+ *
+ * Those filters that use regular expressions, expect the patterns to be in
+ * the [RE2](https://github.com/google/re2/wiki/Syntax) syntax.
+ *
+ * @note Special care need be used with the expression used. Some of the
+ *   byte sequences matched (e.g. row keys, or values), can contain arbitrary
+ *   bytes, the `\C` escape sequence must be used if a true wildcard is
+ *   desired. The `.` character will not match the new line character `\n`,
+ *   which may be present in a binary value.
  */
 class Filter {
  public:
@@ -55,14 +65,26 @@ class Filter {
     return result;
   }
 
-  /// Return a filter that matches column families matching the given regexp.
+  /**
+   * Return a filter that matches column families matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   *     For technical reasons, the regex must not contain the ':' character,
+   *     even if it is not being used as a literal.
+   */
   static Filter Family(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_family_name_regex_filter(std::move(pattern));
     return tmp;
   }
 
-  /// Create a filter that accepts only columns matching the given regexp.
+  /**
+   * Return a filter that accepts only columns matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   */
   static Filter Column(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_column_qualifier_regex_filter(std::move(pattern));
@@ -116,21 +138,79 @@ class Filter {
                                 duration_cast<microseconds>(end).count());
   }
 
-  /// Return a filter that matches keys matching the given regexp.
+  /**
+   * Return a filter that matches keys matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid RE2 pattern.
+   *     More details at https://github.com/google/re2/wiki/Syntax
+   */
   static Filter MatchingRowKeys(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_row_key_regex_filter(std::move(pattern));
     return tmp;
   }
 
-  static Filter StripValue() { return Filter(); }
+  /**
+   * Return a filter that matches keys matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   */
+  static Filter MatchingValue(std::string pattern) { return Filter(); }
 
-  static Filter StripMatchingValues(std::string pattern) { return Filter(); }
-
+  /**
+   * Return a filter matching a right-open interval of values.
+   *
+   * This filter matches all the values in the [@p begin,@p end) range.
+   */
   static Filter ValueRange(std::string begin, std::string end) {
-    return Filter();
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_closed(std::move(begin));
+    range.set_end_value_open(std::move(end));
+    return tmp;
   }
 
+  static Filter ValueRangeLeftOpen() { return Filter(); }
+  static Filter ValueRangeRightOpen() { return Filter(); }
+  static Filter ValueRangeClosed() { return Filter(); }
+  static Filter ValueRangeOpen() { return Filter(); }
+  static Filter RowKeyRangeLeftOpen() { return Filter(); }
+  static Filter RowKeyRangeRightOpen() { return Filter(); }
+  static Filter RowKeyRangeClosed() { return Filter(); }
+  static Filter RowKeyRangeOpen() { return Filter(); }
+  static Filter RowKeyPrefix() { return Filter(); }
+
+  static Filter SinkFilter() { return Filter(); }
+  static Filter PassAllFilter() { return Filter(); }
+  static Filter BlockAllFilter() { return Filter(); }
+
+  static Filter RowSample(float lambda) { return Filter(); }
+  static Filter Earliest(int n) { return Filter(); }
+  static Filter ColumnLimit(int n) { return Filter(); }
+
+  static Filter ApplyLabelTransformer() { return Filter(); }
+  /**
+   * Return a filter that transforms any values into the empty string.
+   *
+   * As the name indicates, this acts as a transformer on the data, replacing
+   * any values with the empty string.
+   */
+  static Filter StripValueTransformer() {
+    Filter tmp;
+    tmp.filter_.set_strip_value_transformer(true);
+    return tmp;
+  }
+
+
+  //@{
+  /**
+   * @name Composed filters.
+   *
+   * These filters compose several filters to build complex filter expressions.
+   */
+  /// Return a filter that selects between two other filters based on a
+  /// predicate.
   static Filter Condition(Filter predicate, Filter true_filter,
                           Filter false_filter) {
     return Filter();
@@ -144,13 +224,21 @@ class Filter {
     return Filter();
   }
 
-  /// Create a set of parallel interleaved filters
   // TODO(coryan) - same ugly hack documentation needed ...
+  /**
+   * Return a filter that unions the results of all the other filters.
+   * @tparam FilterTypes
+   * @param a
+   * @return
+   */
   template <typename... FilterTypes>
-  static Filter Interleave(FilterTypes&&... a) {
+  static Filter Union(FilterTypes&&... a) {
     return Filter();
   }
+  //@}
 
+  /// Return the filter expression as a protobuf.
+  // TODO() consider a "move" operation too.
   google::bigtable::v2::RowFilter as_proto() const { return filter_; }
 
  private:

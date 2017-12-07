@@ -32,30 +32,43 @@ std::unique_ptr<Table> Client::Open(const std::string& table_id) {
 }
 
 void Table::Apply(SingleRowMutation&& mut) {
-  // This is the RPC Retry Policy in effect for the complete operation ...
-  auto retry_policy = rpc_retry_policy_->clone();
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
+  auto idempotent_policy = idempotent_mutation_policy_->clone();
 
-  // ... build the RPC request, try to minimize copying ...
+  // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
   request.set_table_name(table_name_);
   request.set_row_key(std::move(mut.row_key_));
   request.mutable_mutations()->Swap(&mut.ops_);
+  bool const is_idempotent =
+      std::all_of(request.mutations().begin(), request.mutations().end(),
+                  [&idempotent_policy](btproto::Mutation const& m) {
+                    return idempotent_policy->is_idempotent(m);
+                  });
 
   btproto::MutateRowResponse response;
   while (true) {
     grpc::ClientContext client_context;
-    retry_policy->setup(client_context);
+    rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
     grpc::Status status =
         client_->Stub().MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return;
     }
-    // ... it is up to the policy to terminate this loop, it could run
-    // forever, but that would be a bad policy (pun intended) ...
-    if (not retry_policy->on_failure(status)) {
-      throw std::runtime_error("retry policy exhausted or permanent error");
+    // It is up to the policy to terminate this loop, it could run
+    // forever, but that would be a bad policy (pun intended).
+    if (not rpc_policy->on_failure(status) or not is_idempotent) {
+      std::vector<FailedMutation> failures;
+      google::rpc::Status rpc_status;
+      rpc_status.set_code(status.error_code());
+      rpc_status.set_message(status.error_message());
+      failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
+                            0);
+      throw PermanentMutationFailure(
+          "retry policy exhausted or permanent error", std::move(failures));
     }
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);

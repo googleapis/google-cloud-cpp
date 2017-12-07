@@ -128,6 +128,8 @@ add_library(bigtable_data_api
         client/data.cc
         client/filters.h
         client/filters.cc
+        client/idempotent_mutation_policy.h
+        client/idempotent_mutation_policy.cc
         client/mutations.h
         client/mutations.cc
         client/rpc_backoff_policy.h
@@ -142,6 +144,7 @@ target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
 set(all_unit_tests
         client/client_options_test.cc
         client/force_sanitizer_failures_test.cc
+        client/idempotent_mutation_policy_test.cc
         client/mutations_test.cc
         client/table_apply_test.cc
         client/rpc_backoff_policy_test.cc
@@ -186,3 +189,9 @@ if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
 endif (FORCE_SANITIZER_ERRORS)
+
+# The integration tests, these are simply programs that connect to the
+# Cloud Bigtable emulator.
+add_executable(apply_test tests/apply_test.cc)
+target_link_libraries(apply_test bigtable_data_api googleapis
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})

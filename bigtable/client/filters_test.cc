@@ -21,6 +21,7 @@
 /// @test Verify that simple filters work as expected.
 TEST(FiltersTest, Simple) {
   namespace btproto = ::google::bigtable::v2;
+
   auto proto = bigtable::Filter::Latest(3).as_proto();
   EXPECT_EQ(3, proto.cells_per_column_limit_filter());
 
@@ -49,4 +50,7 @@ TEST(FiltersTest, Simple) {
 
   proto = bigtable::Filter::MatchingRowKeys("[A-Za-z][A-Za-z0-9_]*").as_proto();
   EXPECT_EQ("[A-Za-z][A-Za-z0-9_]*", proto.row_key_regex_filter());
+
+  proto = bigtable::Filter::StripValueTransformer().as_proto();
+  EXPECT_TRUE(proto.strip_value_transformer());
 }

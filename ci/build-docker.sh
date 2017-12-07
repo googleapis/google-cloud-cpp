@@ -46,3 +46,9 @@ if grep -e '/var/tmp/build/gccpp/.*\.cc:[0-9][0-9]*' \
 else
   echo "no sanitizer errors found."
 fi
+
+# if document generation is enabled, run it now.
+if [ "${GENERATE_DOCS}" = "yes" ]; then
+  cd ../bigtable
+  doxygen doc/Doxyfile
+fi
