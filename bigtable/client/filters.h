@@ -151,6 +151,46 @@ class Filter {
   }
 
   /**
+   * Return a filter that matches keys matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   */
+  static Filter MatchingValue(std::string pattern) { return Filter(); }
+
+  /**
+   * Return a filter matching a right-open interval of values.
+   *
+   * This filter matches all the values in the [@p begin,@p end) range.
+   */
+  static Filter ValueRange(std::string begin, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_closed(std::move(begin));
+    range.set_end_value_open(std::move(end));
+    return tmp;
+  }
+
+  static Filter ValueRangeLeftOpen() { return Filter(); }
+  static Filter ValueRangeRightOpen() { return Filter(); }
+  static Filter ValueRangeClosed() { return Filter(); }
+  static Filter ValueRangeOpen() { return Filter(); }
+  static Filter RowKeyRangeLeftOpen() { return Filter(); }
+  static Filter RowKeyRangeRightOpen() { return Filter(); }
+  static Filter RowKeyRangeClosed() { return Filter(); }
+  static Filter RowKeyRangeOpen() { return Filter(); }
+  static Filter RowKeyPrefix() { return Filter(); }
+
+  static Filter SinkFilter() { return Filter(); }
+  static Filter PassAllFilter() { return Filter(); }
+  static Filter BlockAllFilter() { return Filter(); }
+
+  static Filter RowSample(float lambda) { return Filter(); }
+  static Filter Earliest(int n) { return Filter(); }
+  static Filter ColumnLimit(int n) { return Filter(); }
+
+  static Filter ApplyLabelTransformer() { return Filter(); }
+  /**
    * Return a filter that transforms any values into the empty string.
    *
    * As the name indicates, this acts as a transformer on the data, replacing
@@ -162,38 +202,48 @@ class Filter {
     return tmp;
   }
 
+
+  //@{
   /**
-   * Return a filter that matches keys matching the given regexp.
+   * @name Composed filters.
    *
-   * @param pattern the regular expression.  It must be a valid
-   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   * These filters compose several filters to build complex filter expressions.
    */
-  static Filter MatchingValue(std::string pattern) { return Filter(); }
-
-  static Filter ValueRange(std::string begin, std::string end) {
-    return Filter();
-  }
-
+  /// Return a filter that selects between two other filters based on a
+  /// predicate.
   static Filter Condition(Filter predicate, Filter true_filter,
                           Filter false_filter) {
     return Filter();
   }
 
-  /// Create a chain of filters
   // TODO(coryan) - document ugly std::enable_if<> hack to ensure they all
   // are of type Filter.
+  /**
+   * Return a filter that only accepts the results of a pipeline of filters.
+   * @tparam FilterTypes
+   * @param a
+   * @return
+   */
   template <typename... FilterTypes>
   static Filter Chain(FilterTypes&&... a) {
     return Filter();
   }
 
-  /// Create a set of parallel interleaved filters
   // TODO(coryan) - same ugly hack documentation needed ...
+  /**
+   * Return a filter that unions the results of all the other filters.
+   * @tparam FilterTypes
+   * @param a
+   * @return
+   */
   template <typename... FilterTypes>
-  static Filter Interleave(FilterTypes&&... a) {
+  static Filter Union(FilterTypes&&... a) {
     return Filter();
   }
+  //@}
 
+  /// Return the filter expression as a protobuf.
+  // TODO() consider a "move" operation too.
   google::bigtable::v2::RowFilter as_proto() const { return filter_; }
 
  private:
