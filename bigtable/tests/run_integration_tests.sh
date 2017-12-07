@@ -22,8 +22,8 @@ function kill_emulator {
 }
 
 echo "Launching Cloud Bigtable emulator in the background"
-# The tests typically run on a docker container, where the ports are largely
-# free, when using in manual tests you can set EMULATOR_PORT.
+# The tests typically run in a Docker container, where the ports are largely
+# free; when using in manual tests, you can set EMULATOR_PORT.
 readonly PORT=${EMULATOR_PORT:-9000}
 "${GOPATH}/bin/emulator" -port "${PORT}" >emulator.log 2>&1 </dev/null &
 EMULATOR_PID=$!
