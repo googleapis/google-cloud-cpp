@@ -55,14 +55,24 @@ class Filter {
     return result;
   }
 
-  /// Return a filter that matches column families matching the given regexp.
+  /**
+   * Return a filter that matches column families matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid RE2 pattern.
+   *     More details at https://github.com/google/re2/wiki/Syntax
+   */
   static Filter Family(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_family_name_regex_filter(std::move(pattern));
     return tmp;
   }
 
-  /// Create a filter that accepts only columns matching the given regexp.
+  /**
+   * Return a filter that accepts only columns matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid RE2 pattern.
+   *     More details at https://github.com/google/re2/wiki/Syntax
+   */
   static Filter Column(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_column_qualifier_regex_filter(std::move(pattern));
@@ -116,7 +126,12 @@ class Filter {
                                 duration_cast<microseconds>(end).count());
   }
 
-  /// Return a filter that matches keys matching the given regexp.
+  /**
+   * Return a filter that matches keys matching the given regexp.
+   *
+   * @param pattern the regular expression.  It must be a valid RE2 pattern.
+   *     More details at https://github.com/google/re2/wiki/Syntax
+   */
   static Filter MatchingRowKeys(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_row_key_regex_filter(std::move(pattern));
