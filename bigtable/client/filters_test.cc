@@ -69,7 +69,8 @@ TEST(FiltersTest, TimestampRange) {
 }
 
 TEST(FiltersTest, RowKeysRegex) {
-  auto proto = bigtable::Filter::RowKeysRegex("[A-Za-z][A-Za-z0-9_]*").as_proto();
+  auto proto =
+      bigtable::Filter::RowKeysRegex("[A-Za-z][A-Za-z0-9_]*").as_proto();
   EXPECT_EQ("[A-Za-z][A-Za-z0-9_]*", proto.row_key_regex_filter());
 }
 
