@@ -58,26 +58,34 @@ class BulkMutator {
   /// The current request proto.
   google::bigtable::v2::MutateRowsRequest mutations_;
 
-  /// Mapping from the index in @p mutations_ to the index in the original
-  /// request.
-  std::vector<int> original_index_;
+  /**
+   * A small type to keep the annotations about pending mutations.
+   *
+   * As we process a MutateRows RPC we need to track the partial results for
+   * each mutation in the request.  This object groups them in a small POD-type.
+   */
+  struct Annotations {
+    /**
+     * The index of this mutation in the original request.
+     *
+     * Each time the request is retried the operations might be reordered, but
+     * we want to report any permanent failures using the index in the original
+     * request provided by the application.
+     */
+    int original_index;
+    bool is_idempotent;
+    /// Set to false if the result is unknown.
+    bool has_mutation_result;
+  };
 
-  /// If true, the corresponding mutation is idempotent according to the
-  /// policies in effect.
-  std::vector<bool> is_idempotent_;
-
-  /// If true, the result for that mutation, in the current_request is known,
-  /// used to find missing results.
-  std::vector<bool> has_mutation_result_;
+  /// The annotations about the current bulk request.
+  std::vector<Annotations> annotations_;
 
   /// Accumulate mutations for the next request.
   google::bigtable::v2::MutateRowsRequest pending_mutations_;
 
-  /// Accumulate the indices of mutations for the next request.
-  std::vector<int> pending_original_index_;
-
-  /// Accumulate the idempotency of mutations for the next request.
-  std::vector<bool> pending_is_idempotent_;
+  /// Accumulate annotations for the next request.
+  std::vector<Annotations> pending_annotations_;
 };
 }  // namespace detail
 }  // namespace BIGTABLE_CLIENT_NS
