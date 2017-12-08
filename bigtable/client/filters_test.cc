@@ -42,10 +42,10 @@ TEST(FiltersTest, ColumnRegex) {
 
 TEST(FiltersTest, ColumnRange) {
   auto proto = bigtable::Filter::ColumnRange("colA", "colF").as_proto();
-  ASSERT_EQ(btproto::ColumnRange::kStartQualifierClosed,
+  EXPECT_EQ(btproto::ColumnRange::kStartQualifierClosed,
             proto.column_range_filter().start_qualifier_case());
   EXPECT_EQ("colA", proto.column_range_filter().start_qualifier_closed());
-  ASSERT_EQ(btproto::ColumnRange::kEndQualifierOpen,
+  EXPECT_EQ(btproto::ColumnRange::kEndQualifierOpen,
             proto.column_range_filter().end_qualifier_case());
   EXPECT_EQ("colF", proto.column_range_filter().end_qualifier_open());
 }

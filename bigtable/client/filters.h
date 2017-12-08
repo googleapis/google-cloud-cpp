@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
 
-#include <bigtable/client/version.h>
+#include "bigtable/client/version.h"
+
 #include <google/bigtable/v2/data.pb.h>
+
 #include <chrono>
 
 namespace bigtable {
@@ -105,7 +107,7 @@ class Filter {
   /**
    * Create a filter that accepts columns in the given range.
    *
-   * Notice that the range is right-open, i.e., it represents [start,end)
+   * Notice that the range is right-open, i.e., it represents [start, end).
    */
   static Filter ColumnRange(std::string begin, std::string end) {
     Filter tmp;
@@ -118,7 +120,7 @@ class Filter {
   /**
    * Return a filter that accepts cells in the given timestamp range.
    *
-   * The range is right-open, i.e., it represents [start,end)
+   * The range is right-open, i.e., it represents [start, end).
    */
   static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
     Filter tmp;
@@ -131,7 +133,7 @@ class Filter {
   /**
    * Return a filter that accepts cells in the given timestamp range.
    *
-   * The range is right-open, i.e., it represents [start,end)
+   * The range is right-open, i.e., it represents [start, end).
    *
    * The function accepts any instantiation of std::chrono::duration<> for the
    * @p start and @p end parameters.
