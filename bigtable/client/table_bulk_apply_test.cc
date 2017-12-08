@@ -363,10 +363,8 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 
   try {
     table_.BulkApply(bt::BulkMutation(
-        bt::SingleRowMutation("foo",
-                              {bt::SetCell("fam", "col", 0, "baz")}),
-        bt::SingleRowMutation("bar",
-                              {bt::SetCell("fam", "col", 0, "qux")})));
+        bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+        bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
   } catch (bt::PermanentMutationFailure const &ex) {
     EXPECT_EQ(2UL, ex.failures().size());
     EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, ex.status().error_code());

@@ -115,7 +115,7 @@ void BulkMutator::ProcessResponse(
 
 void BulkMutator::FinishRequest() {
   int index = 0;
-  for (auto const& annotation : annotations_) {
+  for (auto const &annotation : annotations_) {
     if (annotation.has_mutation_result) {
       ++index;
       continue;
