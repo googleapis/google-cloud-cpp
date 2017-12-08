@@ -168,7 +168,8 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
-        // Simulate a partial failure.  Recoverable for this first element.
+        // Simulate a partial failure, which is recoverable for this first
+        // element.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
@@ -281,7 +282,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
-  // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
+  // isolation, so call MakeOneRequest() twice, for the r1 and r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
     grpc::ClientContext context;
