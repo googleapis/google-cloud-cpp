@@ -43,19 +43,17 @@ class MockReader : public grpc::ClientReaderInterface<
 };
 
 class TableBulkApplyTest : public ::testing::Test {
-public:
+ public:
   void SetUp() override {
     using namespace ::testing;
     namespace btproto = ::google::bigtable::v2;
 
     EXPECT_CALL(client, Stub())
-        .WillRepeatedly(Invoke(
-            [this]() -> btproto::Bigtable::StubInterface & {
-              return *client.mock_stub;
-            }));
+        .WillRepeatedly(Invoke([this]() -> btproto::Bigtable::StubInterface & {
+          return *client.mock_stub;
+        }));
   }
-  void TearDown() override {
-  }
+  void TearDown() override {}
   MockClient client;
 };
 }  // anonymous namespace
@@ -293,12 +291,11 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_THROW(table.BulkApply(bt::BulkMutation(
-                   bt::SingleRowMutation(
-                       "foo", {bt::SetCell("fam", "col", 0, "baz")}),
-                   bt::SingleRowMutation(
-                       "bar", {bt::SetCell("fam", "col", 0, "qux")}))),
-               std::exception);
+  EXPECT_THROW(
+      table.BulkApply(bt::BulkMutation(
+          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
+          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
+      std::exception);
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
@@ -340,14 +337,50 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   bt::Table table(&client, "foo_table");
   try {
     table.BulkApply(bt::BulkMutation(
-        bt::SingleRowMutation("not-idempotent",
-                              {bt::SetCell("fam", "col", "baz")}),
         bt::SingleRowMutation("is-idempotent",
-                              {bt::SetCell("fam", "col", 0, "qux")})));
+                              {bt::SetCell("fam", "col", 0, "qux")}),
+        bt::SingleRowMutation("not-idempotent",
+                              {bt::SetCell("fam", "col", "baz")})));
   } catch (bt::PermanentMutationFailure const &ex) {
     ASSERT_EQ(1UL, ex.failures().size());
-    EXPECT_EQ(0, ex.failures()[0].original_index());
+    EXPECT_EQ(1, ex.failures()[0].original_index());
     EXPECT_EQ("not-idempotent", ex.failures()[0].mutation().row_key());
+  } catch (std::exception const &ex) {
+    FAIL() << "unexpected std::exception raised: " << ex.what();
+  } catch (...) {
+    FAIL() << "unexpected exception of unknown type raised";
+  }
+}
+
+/// @test Verify that Table::BulkApply() works when the RPC fails.
+TEST_F(TableBulkApplyTest, FailedRPC) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
+
+  auto reader = absl::make_unique<MockReader>();
+  EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish())
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
+                                    "no such table")));
+
+  EXPECT_CALL(*client.mock_stub, MutateRowsRaw(_, _))
+      .WillOnce(Invoke(
+          [&reader](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+            return reader.release();
+          }));
+
+  bt::Table table(&client, "foo_table");
+  try {
+    table.BulkApply(bt::BulkMutation(
+        bt::SingleRowMutation("foo",
+                              {bt::SetCell("fam", "col", 0, "baz")}),
+        bt::SingleRowMutation("bar",
+                              {bt::SetCell("fam", "col", 0, "qux")})));
+  } catch (bt::PermanentMutationFailure const &ex) {
+    EXPECT_EQ(2UL, ex.failures().size());
+    EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, ex.status().error_code());
+    EXPECT_EQ("no such table", ex.status().error_message());
   } catch (std::exception const &ex) {
     FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {

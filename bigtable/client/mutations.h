@@ -200,10 +200,40 @@ class PermanentMutationFailure : public std::runtime_error {
                            std::vector<FailedMutation>&& failures)
       : std::runtime_error(msg), failures_(std::move(failures)) {}
 
+  PermanentMutationFailure(char const* msg,
+                           grpc::Status status,
+                           std::vector<FailedMutation>&& failures)
+      : std::runtime_error(msg),
+        failures_(std::move(failures)),
+        status_(std::move(status)) {}
+
+  /**
+   * The details of each mutation failure.
+   *
+   * Because BulkApply() and Apply() take ownership of the data in the mutations
+   * the failures are returned with their full contents, in case the application
+   * wants to take further action with them.  Any successful mutations are
+   * discarded.
+   *
+   * Any mutations that fail with an unknown state are included with a
+   * grpc::StatusCode::OK.
+   */
   std::vector<FailedMutation> const& failures() const { return failures_; }
+
+  /// Extract the mutations with zero copy.
+
+
+  /**
+   * The grpc::Status of the request.
+   *
+   * Notice that it can grpc::Status::OK when there are partial failures in
+   * a BulkApply() operation.
+   */
+  grpc::Status const& status() const { return status_; }
 
  private:
   std::vector<FailedMutation> failures_;
+  grpc::Status status_;
 };
 
 /**

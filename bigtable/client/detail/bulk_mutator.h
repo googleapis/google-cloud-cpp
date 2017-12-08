@@ -59,7 +59,7 @@ class BulkMutator {
   google::bigtable::v2::MutateRowsRequest mutations_;
 
   /// Mapping from the index in @p mutations_ to the index in the original
-  /// request
+  /// request.
   std::vector<int> original_index_;
 
   /// If true, the corresponding mutation is idempotent according to the

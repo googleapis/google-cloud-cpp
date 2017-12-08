@@ -26,17 +26,17 @@ namespace btproto = google::bigtable::v2;
 
 BulkMutator::BulkMutator(std::string const &table_name,
                          IdempotentMutationPolicy &policy, BulkMutation &&mut) {
-  // Every time the client library calls MakeOneRequest() the data in the
+  // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
   pending_mutations_.set_table_name(table_name);
   // Move the mutations to the "pending" request proto, this is a zero copy
   // optimization.
   mut.MoveTo(&pending_mutations_);
-  // As we receive successful responses we shrink the size of the request (only
+  // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
   // in the original sequence provided by the user.  So this vector maps from
-  // the index in the current array, to the index in the original array.
+  // the index in the current array to the index in the original array.
   pending_original_index_.resize(pending_mutations_.entries_size());
   std::iota(pending_original_index_.begin(), pending_original_index_.end(), 0);
   // We also want to know which mutations are idempotent.
