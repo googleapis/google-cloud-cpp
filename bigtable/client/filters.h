@@ -42,9 +42,6 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Filter {
  public:
-  /// An empty filter, discards all data.
-  Filter() : filter_() {}
-
   // TODO() - replace with = default if protobuf gets move constructors.
   Filter(Filter&& rhs) noexcept : Filter() { filter_.Swap(&rhs.filter_); }
 
@@ -57,6 +54,20 @@ class Filter {
 
   Filter(Filter const& rhs) = default;
   Filter& operator=(Filter const& rhs) = default;
+
+  /// Return a filter that passes on all data.
+  static Filter PassAllFilter() {
+    Filter tmp;
+    tmp.filter_.set_pass_all_filter(true);
+    return tmp;
+  }
+
+  /// Return a filter that blocks all data.
+  static Filter BlockAllFilter() {
+    Filter tmp;
+    tmp.filter_.set_block_all_filter(true);
+    return tmp;
+  }
 
   /// Create a filter that accepts only the last @a n values.
   static Filter Latest(int n) {
@@ -73,7 +84,7 @@ class Filter {
    *     For technical reasons, the regex must not contain the ':' character,
    *     even if it is not being used as a literal.
    */
-  static Filter Family(std::string pattern) {
+  static Filter FamilyRegex(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_family_name_regex_filter(std::move(pattern));
     return tmp;
@@ -85,7 +96,7 @@ class Filter {
    * @param pattern the regular expression.  It must be a valid
    *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
    */
-  static Filter Column(std::string pattern) {
+  static Filter ColumnRegex(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_column_qualifier_regex_filter(std::move(pattern));
     return tmp;
@@ -118,7 +129,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts cells in the give timestamp range.
+   * Return a filter that accepts cells in the given timestamp range.
    *
    * The range is right-open, i.e., it represents [start,end)
    *
@@ -144,19 +155,19 @@ class Filter {
    * @param pattern the regular expression.  It must be a valid RE2 pattern.
    *     More details at https://github.com/google/re2/wiki/Syntax
    */
-  static Filter MatchingRowKeys(std::string pattern) {
+  static Filter RowKeysRegex(std::string pattern) {
     Filter tmp;
     tmp.filter_.set_row_key_regex_filter(std::move(pattern));
     return tmp;
   }
 
   /**
-   * Return a filter that matches keys matching the given regexp.
+   * Return a filter that matches values matching the given regexp.
    *
    * @param pattern the regular expression.  It must be a valid
    *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
    */
-  static Filter MatchingValue(std::string pattern) { return Filter(); }
+  static Filter ValueRegex(std::string pattern) { return Filter(); }
 
   /**
    * Return a filter matching a right-open interval of values.
@@ -168,20 +179,6 @@ class Filter {
     auto& range = *tmp.filter_.mutable_value_range_filter();
     range.set_start_value_closed(std::move(begin));
     range.set_end_value_open(std::move(end));
-    return tmp;
-  }
-
-  /// Return a filter that passes on all data.
-  static Filter PassAllFilter() {
-    Filter tmp;
-    tmp.filter_.set_pass_all_filter(true);
-    return tmp;
-  }
-
-  /// Return a filter that blocks all data.
-  static Filter BlockAllFilter() {
-    Filter tmp;
-    tmp.filter_.set_block_all_filter(true);
     return tmp;
   }
 
@@ -297,6 +294,10 @@ class Filter {
   /// Return the filter expression as a protobuf.
   // TODO() consider a "move" operation too.
   google::bigtable::v2::RowFilter as_proto() const { return filter_; }
+
+ private:
+  /// An empty filter, discards all data.
+  Filter() : filter_() {}
 
  private:
   google::bigtable::v2::RowFilter filter_;
