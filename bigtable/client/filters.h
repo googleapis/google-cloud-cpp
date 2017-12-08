@@ -44,10 +44,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Filter {
  public:
-  // TODO() - replace with = default if protobuf gets move constructors.
+  // TODO() - replace with `= default` if protobuf gets move constructors.
   Filter(Filter&& rhs) noexcept : Filter() { filter_.Swap(&rhs.filter_); }
 
-  // TODO() - replace with = default if protobuf gets move constructors.
+  // TODO() - replace with `= default` if protobuf gets move constructors.
   Filter& operator=(Filter&& rhs) noexcept {
     Filter tmp(std::move(rhs));
     tmp.filter_.Swap(&filter_);
