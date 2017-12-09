@@ -41,7 +41,8 @@ TEST(FiltersTest, ColumnRegex) {
 }
 
 TEST(FiltersTest, ColumnRange) {
-  auto proto = bigtable::Filter::ColumnRange("colA", "colF").as_proto();
+  auto proto = bigtable::Filter::ColumnRange("fam", "colA", "colF").as_proto();
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
   EXPECT_EQ(btproto::ColumnRange::kStartQualifierClosed,
             proto.column_range_filter().start_qualifier_case());
   EXPECT_EQ("colA", proto.column_range_filter().start_qualifier_closed());

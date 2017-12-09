@@ -105,13 +105,14 @@ class Filter {
   }
 
   /**
-   * Create a filter that accepts columns in the given range.
-   *
-   * Notice that the range is right-open, i.e., it represents [start, end).
+   * Return a filter that accepts columns in the [@p begin, @p end) range
+   * within the @p family column family.
    */
-  static Filter ColumnRange(std::string begin, std::string end) {
+  static Filter ColumnRange(std::string family, std::string begin,
+                            std::string end) {
     Filter tmp;
     auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_family_name(std::move(family));
     range.set_start_qualifier_closed(std::move(begin));
     range.set_end_qualifier_open(std::move(end));
     return tmp;
@@ -214,7 +215,7 @@ class Filter {
    *
    * TODO(#82) - check the documentation around ordering of columns.
    */
-  static Filter CellsRowOffset(int n)  {
+  static Filter CellsRowOffset(int n) {
     Filter tmp;
     tmp.filter_.set_cells_per_row_offset_filter(n);
     return tmp;
@@ -254,7 +255,6 @@ class Filter {
     return tmp;
   }
   //@}
-
 
   //@{
   /**
