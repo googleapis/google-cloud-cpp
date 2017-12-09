@@ -15,6 +15,9 @@
 if (${CMAKE_VERSION} VERSION_LESS "3.6")
     message(STATUS "clang-tidy is not enabled because cmake version is too old")
 else ()
+    if (${CMAKE_VERSION} VERSION_LESS "3.8")
+        message(WARNING "clang-tidy exit code ignored in this version of cmake")
+    endif ()
     find_program(
             CLANG_TIDY_EXE
             NAMES "clang-tidy"

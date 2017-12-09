@@ -42,7 +42,7 @@ matrix:
       if: type != pull_request
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 BUILD_TYPE=Debug \
+      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
             CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
 
 script:
