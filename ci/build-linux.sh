@@ -32,9 +32,5 @@ sudo docker build -t "${IMAGE}:tip" \
      --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
      --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
      --build-arg GENERATE_DOCS="${GENERATE_DOCS:-}" \
-     --build-arg SANITIZE_ADDRESS="${SANITIZE_ADDRESS:-}" \
-     --build-arg SANITIZE_LEAKS="${SANITIZE_LEAKS:-}" \
-     --build-arg SANITIZE_MEMORY="${SANITIZE_MEMORY:-}" \
-     --build-arg SANITIZE_THREAD="${SANITIZE_THREAD:-}" \
-     --build-arg SANITIZE_UNDEFINED="${SANITIZE_UNDEFINED:-}" \
+     --build-arg CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      -f "ci/Dockerfile.${DISTRO}" .

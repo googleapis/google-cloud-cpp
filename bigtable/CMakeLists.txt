@@ -78,6 +78,9 @@ endif()
 # Include the functions to enable Clang sanitizers.
 include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
 
+# Include support for clang-tidy if available
+include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
+
 # We use abseil.io .
 include_directories(${PROJECT_THIRD_PARTY_DIR}/abseil)
 
@@ -137,6 +140,17 @@ add_library(bigtable_data_api
         client/version.h)
 target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
+option(BIGTABLE_CLIENT_CLANG_TIDY
+    "If set compiles the Cloud Bigtable client with clang-tidy."
+    "")
+if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
+    message(STATUS "clang-tidy build enabled.")
+    set_target_properties(
+        bigtable_data_api PROPERTIES
+        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+    )
+endif()
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests

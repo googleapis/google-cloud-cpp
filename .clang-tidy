@@ -1,0 +1,7 @@
+---
+# Configure clang-tidy for this project.
+
+# Disabled:
+#  -google-readability-namespace-comments the BIGTABLE_CLIENT_NS is a macro, and
+#   clang-tidy fails to match it against the initial value.
+Checks: google-readability-*,modernize-*,-google-readability-namespace-comments
