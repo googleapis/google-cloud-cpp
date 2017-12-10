@@ -16,8 +16,7 @@ ARG DISTRO_VERSION=17.04
 FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   build-essential \
   clang \
   cmake \
