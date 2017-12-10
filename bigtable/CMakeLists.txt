@@ -150,7 +150,7 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
         bigtable_data_api PROPERTIES
         CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
-endif()
+endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
