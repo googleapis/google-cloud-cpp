@@ -22,6 +22,7 @@ RUN dnf install -y \
     automake \
     c-ares-devel \
     clang \
+    clang-tools-extra \
     cmake \
     curl \
     dia \
@@ -54,11 +55,7 @@ ARG CC=gcc
 ARG BUILD_TYPE=Debug
 ARG CHECK_STYLE=""
 ARG GENERATE_DOCS=""
-ARG SANITIZE_ADDRESS=""
-ARG SANITIZE_LEAKS=""
-ARG SANITIZE_MEMORY=""
-ARG SANITIZE_THREAD=""
-ARG SANITIZE_UNDEFINED=""
+ARG CMAKE_FLAGS=""
 
 # We assume that this is running on a (clean-ish) checkout of
 # google-cloud-cpp, including submodules, and copy the files to a

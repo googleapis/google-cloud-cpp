@@ -25,10 +25,12 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 SANITIZE_ADDRESS=yes BUILD_TYPE=Debug
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+           CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 SANITIZE_UNDEFINED=yes BUILD_TYPE=Debug
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+           CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
     - os: linux
       compiler: gcc
       env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
@@ -38,6 +40,10 @@ matrix:
     - os: osx
       compiler: clang
       if: type != pull_request
+    - os: linux
+      compiler: clang
+      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
+            CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
 
 script:
   - ci/build-linux.sh

@@ -22,13 +22,7 @@ set -eu
 mkdir -p gccpp/build-output
 cd gccpp/build-output
 
-cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    -DSANITIZE_ADDRESS="${SANITIZE_ADDRESS}" \
-    -DSANITIZE_LEAKS="${SANITIZE_LEAKS}" \
-    -DSANITIZE_MEMORY="${SANITIZE_MEMORY}" \
-    -DSANITIZE_THREAD="${SANITIZE_THREAD}" \
-    -DSANITIZE_UNDEFINED="${SANITIZE_UNDEFINED}" \
-    ..
+cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ..
 
 make -j ${NCPU} all
 make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
