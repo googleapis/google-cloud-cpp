@@ -42,7 +42,7 @@ class BulkMutator {
   std::vector<FailedMutation> ExtractFinalFailures();
 
  private:
-  /// Get ready for a new request
+  /// Get ready for a new request.
   void PrepareForRequest();
 
   /// Process a single response.
