@@ -23,9 +23,10 @@ else ()
             NAMES "clang-tidy"
             DOC "Path to clang-tidy executable"
     )
-    if(NOT CLANG_TIDY_EXE)
+
+    if (NOT CLANG_TIDY_EXE)
         message(STATUS "clang-tidy not found.")
-    else()
+    else ()
         message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-    endif()
-endif()
+    endif ()
+endif ()
