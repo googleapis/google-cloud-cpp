@@ -48,8 +48,8 @@ RUN yum makecache && yum install -y \
 # Install cmake3 as cmake.
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake
 
-# Install the Cloud Bigtable emulator and the bigtable command-line client.
-# They are used in the integration tests.
+# Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
+# client.  They are used in the integration tests.
 ARG GOPATH=/var/tmp/build/cbt
 WORKDIR ${GOPATH}
 RUN go get cloud.google.com/go/bigtable/cmd/cbt \
