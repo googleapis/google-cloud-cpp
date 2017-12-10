@@ -7,7 +7,7 @@
 Checks: google-readability-*,modernize-*,readability-*,-google-readability-namespace-comments
 
 # Enable most warnings as errors.
-WarningsAsErrors: *,-readability-identifier-naming
+WarningsAsErrors: clang-*,google-*,modernize-*,readability-*,-readability-identifier-naming
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,         value: lower_case }
