@@ -17,6 +17,7 @@
 #include <absl/memory/memory.h>
 
 namespace {
+/// An implementation of the bigtable::AdminClient interface.
 class SimpleAdminClient : public bigtable::AdminClient {
  public:
   SimpleAdminClient(std::string project, bigtable::ClientOptions options)
@@ -25,9 +26,12 @@ class SimpleAdminClient : public bigtable::AdminClient {
         channel_(),
         table_admin_stub_() {}
 
-  std::unique_ptr<bigtable::Instance> Open(std::string instance_name) override;
+  absl::string_view project() const override { return project_; }
+  std::unique_ptr<bigtable::TableAdmin> CreateTableAdmin(
+      std::string instance_id) override;
   void OnFailure(grpc::Status const& status) override;
-  ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface& table_admin() override;
+  ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
+  table_admin() override;
 
  private:
   void Refresh();
@@ -47,10 +51,14 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<AdminClient> CreateAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return absl::make_unique<AdminClient>(std::move(project), std::move(options));
+  return absl::make_unique<SimpleAdminClient>(std::move(project), std::move(options));
 }
 
-struct Instance {
+class TableAdmin {
+ public:
+  TableAdmin(AdminClient& cl, std::string name)
+      : client(cl), instance_name(std::move(name)) {}
+
   AdminClient& client;
   std::string instance_name;
 };
@@ -59,10 +67,10 @@ struct Instance {
 }  // namespace bigtable
 
 namespace {
-std::unique_ptr<bigtable::Instance> SimpleAdminClient::Open(
+std::unique_ptr<bigtable::TableAdmin> SimpleAdminClient::CreateTableAdmin(
     std::string instance_id) {
-  return new bigtable::Instance{
-      *this, std::string("project/") + project_ + "/instances/" + instance_id};
+  return absl::make_unique<bigtable::TableAdmin>(
+      *this, std::string("project/") + project_ + "/instances/" + instance_id);
 }
 
 void SimpleAdminClient::OnFailure(grpc::Status const& status) {

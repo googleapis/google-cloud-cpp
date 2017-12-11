@@ -17,23 +17,26 @@
 
 #include "bigtable/client/client_options.h"
 
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
 #include <string>
 
+#include <absl/strings/string_view.h>
+
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class Instance;
+class TableAdmin;
 
 class AdminClient {
  public:
   virtual ~AdminClient() = default;
 
   /// The project that this AdminClient works on.
-  std::string const& project() const;
+  virtual absl::string_view project() const = 0;
 
   /// Create a new object to manage an specific instance.
-  virtual std::unique_ptr<Instance> Open(std::string instance_name) = 0;
+  virtual std::unique_ptr<TableAdmin> CreateTableAdmin(std::string instance_id) = 0;
 
   /**
    * A callback to handle failures in the client.

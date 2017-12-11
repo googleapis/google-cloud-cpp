@@ -20,4 +20,5 @@ TEST(AdminClientTest, Simple) {
   auto admin_client =
       bigtable::CreateAdminClient("test-project", bigtable::ClientOptions());
   EXPECT_TRUE(admin_client);
+  EXPECT_EQ("test-project", admin_client->project());
 }
