@@ -129,6 +129,8 @@ add_library(bigtable_data_api
         client/client_options.cc
         client/data.h
         client/data.cc
+        client/filters.h
+        client/filters.cc
         client/idempotent_mutation_policy.h
         client/idempotent_mutation_policy.cc
         client/mutations.h
@@ -155,6 +157,7 @@ endif ()
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
         client/client_options_test.cc
+        client/filters_test.cc
         client/force_sanitizer_failures_test.cc
         client/idempotent_mutation_policy_test.cc
         client/mutations_test.cc
