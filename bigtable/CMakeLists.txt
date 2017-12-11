@@ -150,8 +150,8 @@ target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
 add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc)
-target_link_libraries(bigtable_admin_client bigtable_protos ${GRPCPP_LIBRARIES}
-    ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
@@ -203,7 +203,7 @@ foreach (fname ${bigtable_client_unit_tests})
         gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
-endforeach()
+endforeach ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_admin_unit_tests
@@ -213,11 +213,12 @@ foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_link_libraries(${target} bigtable_admin_client bigtable_protos
-        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    target_link_libraries(${target} bigtable_admin_client
+        bigtable_client bigtable_protos gmock
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
-endforeach()
+endforeach ()
 
 # Create a single executable that rolls up all the tests, this is convenient
 # for CLion and other IDEs.
