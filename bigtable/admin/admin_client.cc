@@ -91,6 +91,7 @@ void SimpleAdminClient::Refresh() {
   if (table_admin_stub_) {
     return;
   }
+  // Release the lock before executing potentially slow operations.
   lk.unlock();
   auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
                                            options_.credentials(),
