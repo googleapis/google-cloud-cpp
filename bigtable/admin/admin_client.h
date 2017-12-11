@@ -36,7 +36,8 @@ class AdminClient {
   virtual absl::string_view project() const = 0;
 
   /// Create a new object to manage an specific instance.
-  virtual std::unique_ptr<TableAdmin> CreateTableAdmin(std::string instance_id) = 0;
+  virtual std::unique_ptr<TableAdmin> CreateTableAdmin(
+      std::string instance_id) = 0;
 
   /**
    * A callback to handle failures in the client.

@@ -51,7 +51,8 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<AdminClient> CreateAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return absl::make_unique<SimpleAdminClient>(std::move(project), std::move(options));
+  return absl::make_unique<SimpleAdminClient>(std::move(project),
+                                              std::move(options));
 }
 
 class TableAdmin {
