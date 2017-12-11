@@ -25,7 +25,8 @@ namespace detail {
 namespace btproto = google::bigtable::v2;
 
 BulkMutator::BulkMutator(std::string const &table_name,
-                         IdempotentMutationPolicy &policy, BulkMutation &&mut) {
+                         IdempotentMutationPolicy &idempotent_policy,
+                         BulkMutation &&mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
@@ -42,8 +43,8 @@ BulkMutator::BulkMutator(std::string const &table_name,
   for (auto const &e : pending_mutations_.entries()) {
     // This is a giant && across all the mutations for each row.
     auto r = std::all_of(e.mutations().begin(), e.mutations().end(),
-                         [&policy](btproto::Mutation const &m) {
-                           return policy.is_idempotent(m);
+                         [&idempotent_policy](btproto::Mutation const &m) {
+                           return idempotent_policy.is_idempotent(m);
                          });
     pending_annotations_.push_back(Annotations{index++, r, false});
   }
