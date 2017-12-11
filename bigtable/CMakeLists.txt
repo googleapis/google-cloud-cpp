@@ -116,35 +116,42 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
 include_directories("${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 # Create a library with the generated files from the relevant protos.
-add_library(googleapis ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
-target_link_libraries(googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
+target_link_libraries(bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # Enable unit tests
 enable_testing()
 
 # the client library
-add_library(bigtable_data_api
-        client/cell.h
-        client/chrono_literals.h
-        client/client_options.h
-        client/client_options.cc
-        client/data.h
-        client/data.cc
-        client/filters.h
-        client/filters.cc
-        client/idempotent_mutation_policy.h
-        client/idempotent_mutation_policy.cc
-        client/detail/bulk_mutator.h
-        client/detail/bulk_mutator.cc
-        client/mutations.h
-        client/mutations.cc
-        client/rpc_backoff_policy.h
-        client/rpc_backoff_policy.cc
-        client/rpc_retry_policy.h
-        client/rpc_retry_policy.cc
-        client/version.h)
-target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
+add_library(bigtable_client
+    client/cell.h
+    client/chrono_literals.h
+    client/client_options.h
+    client/client_options.cc
+    client/data.h
+    client/data.cc
+    client/detail/bulk_mutator.h
+    client/detail/bulk_mutator.cc
+    client/filters.h
+    client/filters.cc
+    client/idempotent_mutation_policy.h
+    client/idempotent_mutation_policy.cc
+    client/mutations.h
+    client/mutations.cc
+    client/rpc_backoff_policy.h
+    client/rpc_backoff_policy.cc
+    client/rpc_retry_policy.h
+    client/rpc_retry_policy.cc
+    client/version.h)
+target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
+# the admin library
+add_library(bigtable_admin_client
+    admin/admin_client.h
+    admin/admin_client.cc)
+target_link_libraries(bigtable_admin_client bigtable_protos ${GRPCPP_LIBRARIES}
+    ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
@@ -157,8 +164,21 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
+# Compile the googlemock library.  This library is rarely installed or
+# pre-compiled because it should be configured with the same flags as the
+# application.
+add_library(gmock
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+target_include_directories(gmock
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+
 # List the unit tests, then setup the targets and dependencies.
-set(all_unit_tests
+set(bigtable_client_unit_tests
         client/cell_test.cc
         client/client_options_test.cc
         client/filters_test.cc
@@ -170,38 +190,38 @@ set(all_unit_tests
         client/table_bulk_apply_test.cc
         client/rpc_backoff_policy_test.cc
         client/rpc_retry_policy_test.cc)
-foreach (fname ${all_unit_tests})
+foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname}
-            ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
-            ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
-            ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+    add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_include_directories(${target}
-            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-            PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
-    target_link_libraries(${target} bigtable_data_api googleapis
-            ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    target_link_libraries(${target} bigtable_client bigtable_protos
+        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    add_test(NAME ${tname} COMMAND ${target})
+    get_target_property(sources ${target} SOURCES)
+endforeach()
+
+# List the unit tests, then setup the targets and dependencies.
+set(bigtable_admin_unit_tests
+    admin/admin_client_test.cc)
+foreach (fname ${bigtable_admin_unit_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname})
+    get_target_property(tname ${target} NAME)
+    target_link_libraries(${target} bigtable_admin_client bigtable_protos
+        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach()
 
 # Create a single executable that rolls up all the tests, this is convenient
 # for CLion and other IDEs.
-add_executable(bigtable_client_all_tests ${all_unit_tests}
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
-target_include_directories(bigtable_client_all_tests
-        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-        PRIVATE ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
-target_link_libraries(bigtable_client_all_tests bigtable_data_api googleapis
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_executable(bigtable_client_all_tests
+    ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
+target_link_libraries(bigtable_client_all_tests
+    bigtable_client bigtable_admin_client bigtable_protos
+    gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
         "If set enable tests that force errors detected by the sanitizers."
@@ -214,5 +234,5 @@ endif (FORCE_SANITIZER_ERRORS)
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
 add_executable(apply_test tests/apply_test.cc)
-target_link_libraries(apply_test bigtable_data_api googleapis
+target_link_libraries(apply_test bigtable_client bigtable_protos
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
