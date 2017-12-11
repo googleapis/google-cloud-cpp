@@ -15,6 +15,8 @@
 #ifndef BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 #define BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 
+#include "bigtable/client/version.h"
+
 #include <grpc++/grpc++.h>
 
 namespace bigtable {
