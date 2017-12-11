@@ -35,11 +35,10 @@ TEST(MutationsTest, SetCell) {
             server_set.op.set_cell().timestamp_micros());
 
   std::string fam("fam2"), col("col2");
-  // ... we want to make sure the strings are efficiently moved.  The
-  // C++ library often implements the "small string optimization",
-  // where the memory allocation costs are traded off for extra
-  // copies.  Use a large string to work around that optimization and
-  // test the move behavior ...
+  // We want to make sure the strings are efficiently moved.  The C++ library
+  // often implements the "small string optimization", where the memory
+  // allocation costs are traded off for extra copies.  Use a large string to
+  // work around that optimization and test the move behavior.
   std::string val(1000000, 'a');
   auto val_data = val.data();
   auto moved =
@@ -52,7 +51,7 @@ TEST(MutationsTest, SetCell) {
 
 /// @test Verify that DeleteFromColumn() and friends work as expected.
 TEST(MutationsTest, DeleteFromColumn) {
-  // ... invalid ranges should fail ...
+  // Invalid ranges should fail.
   EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 20, 0),
                std::range_error);
   EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 1000, 1000),
@@ -108,4 +107,84 @@ TEST(MutationsTest, DeleteFromFamily) {
 TEST(MutationsTest, DeleteFromRow) {
   auto actual = bigtable::DeleteFromRow();
   ASSERT_TRUE(actual.op.has_delete_from_row());
+}
+
+// @test Verify that FailedMutation works as expected.
+TEST(MutationsTest, FailedMutation) {
+  bigtable::SingleRowMutation mut("foo",
+                                  {bigtable::SetCell("f", "c", 0, "val")});
+
+  // Create an overly complicated detail status, the idea is to make
+  // sure it works in this case.
+  google::rpc::Status status;
+  status.set_message("something failed");
+  status.set_code(grpc::StatusCode::FAILED_PRECONDITION);
+  google::rpc::RetryInfo retry;
+  retry.mutable_retry_delay()->set_seconds(900);
+  retry.mutable_retry_delay()->set_nanos(0);
+  status.add_details()->PackFrom(retry);
+  google::rpc::DebugInfo debug_info;
+  debug_info.add_stack_entries("foo()");
+  debug_info.add_stack_entries("bar()");
+  debug_info.add_stack_entries("main()");
+  debug_info.set_detail("just a test");
+  status.add_details()->PackFrom(retry);
+  status.add_details()->PackFrom(debug_info);
+
+  bigtable::FailedMutation fm(std::move(mut), std::move(status));
+  EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, fm.status().error_code());
+  EXPECT_EQ("something failed", fm.status().error_message());
+  EXPECT_FALSE(fm.status().error_details().empty());
+  EXPECT_EQ("foo", fm.mutation().row_key());
+}
+
+/// @test Verify that MultipleRowMutations works as expected.
+TEST(MutationsTest, MutipleRowMutations) {
+  bigtable::BulkMutation actual;
+
+  // Prepare a non-empty request to verify MoveTo() does something.
+  google::bigtable::v2::MutateRowsRequest request;
+  (void)request.add_entries();
+  ASSERT_FALSE(request.entries().empty());
+
+  actual.MoveTo(&request);
+  ASSERT_TRUE(request.entries().empty());
+
+  actual
+      .emplace_back(bigtable::SingleRowMutation(
+          "foo1", {bigtable::SetCell("f", "c", 0, "v1")}))
+      .push_back(bigtable::SingleRowMutation(
+          "foo2", {bigtable::SetCell("f", "c", 0, "v2")}));
+
+  actual.MoveTo(&request);
+  ASSERT_EQ(2, request.entries_size());
+  EXPECT_EQ("foo1", request.entries(0).row_key());
+  EXPECT_EQ("foo2", request.entries(1).row_key());
+
+  std::vector<bigtable::SingleRowMutation> vec{
+      bigtable::SingleRowMutation("foo1",
+                                  {bigtable::SetCell("f", "c", 0, "v1")}),
+      bigtable::SingleRowMutation("foo2",
+                                  {bigtable::SetCell("f", "c", 0, "v2")}),
+      bigtable::SingleRowMutation("foo3",
+                                  {bigtable::SetCell("f", "c", 0, "v3")}),
+  };
+  bigtable::BulkMutation from_vec(vec.begin(), vec.end());
+
+  from_vec.MoveTo(&request);
+  ASSERT_EQ(3, request.entries_size());
+  EXPECT_EQ("foo1", request.entries(0).row_key());
+  EXPECT_EQ("foo2", request.entries(1).row_key());
+  EXPECT_EQ("foo3", request.entries(2).row_key());
+
+  bigtable::BulkMutation from_il{
+      bigtable::SingleRowMutation("foo2",
+                                  {bigtable::SetCell("f", "c", 0, "v2")}),
+      bigtable::SingleRowMutation("foo3",
+                                  {bigtable::SetCell("f", "c", 0, "v3")}),
+  };
+  from_il.MoveTo(&request);
+  ASSERT_EQ(2, request.entries_size());
+  EXPECT_EQ("foo2", request.entries(0).row_key());
+  EXPECT_EQ("foo3", request.entries(1).row_key());
 }

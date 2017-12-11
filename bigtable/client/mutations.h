@@ -15,7 +15,7 @@
 #ifndef BIGTABLE_CLIENT_MUTATIONS_H_
 #define BIGTABLE_CLIENT_MUTATIONS_H_
 
-#include <bigtable/client/version.h>
+#include "bigtable/client/version.h"
 
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
@@ -180,7 +180,7 @@ class FailedMutation {
   int original_index() const { return original_index_; }
   //@}
 
-  friend class MultipleRowMutations;
+  friend class BulkMutation;
 
  private:
   static grpc::Status to_grpc_status(google::rpc::Status const& status);
@@ -200,11 +200,128 @@ class PermanentMutationFailure : public std::runtime_error {
                            std::vector<FailedMutation>&& failures)
       : std::runtime_error(msg), failures_(std::move(failures)) {}
 
+  PermanentMutationFailure(char const* msg,
+                           grpc::Status status,
+                           std::vector<FailedMutation>&& failures)
+      : std::runtime_error(msg),
+        failures_(std::move(failures)),
+        status_(std::move(status)) {}
+
+  /**
+   * The details of each mutation failure.
+   *
+   * Because BulkApply() and Apply() take ownership of the data in the mutations
+   * the failures are returned with their full contents, in case the application
+   * wants to take further action with them.  Any successful mutations are
+   * discarded.
+   *
+   * Any mutations that fail with an unknown state are included with a
+   * grpc::StatusCode::OK.
+   */
   std::vector<FailedMutation> const& failures() const { return failures_; }
+
+  /**
+   * The grpc::Status of the request.
+   *
+   * Notice that it can return grpc::Status::OK when there are partial failures
+   * in a BulkApply() operation.
+   */
+  grpc::Status const& status() const { return status_; }
 
  private:
   std::vector<FailedMutation> failures_;
+  grpc::Status status_;
 };
+
+/**
+ * Represent a set of mutations across multiple rows.
+ *
+ * Cloud Bigtable can batch multiple mutations in a single request.
+ * The mutations are not atomic, but it is more efficient to send them
+ * in a batch than to make multiple smaller requests.
+ */
+class BulkMutation {
+ public:
+  /// Create an empty set of mutations.
+  BulkMutation() : request_() {}
+
+  /// Create a multi-row mutation from a range of SingleRowMutations.
+  template <typename iterator>
+  BulkMutation(iterator begin, iterator end) {
+    static_assert(
+        std::is_convertible<decltype(*begin), SingleRowMutation>::value,
+        "The iterator value type must be convertible to SingleRowMutation");
+    for (auto i = begin; i != end; ++i) {
+      push_back(*i);
+    }
+  }
+
+  /// Create a multi-row mutation from a initializer list.
+  BulkMutation(std::initializer_list<SingleRowMutation> list)
+      : BulkMutation(list.begin(), list.end()) {}
+
+  /// Create a muti-row mutation from a SingleRowMutation
+  explicit BulkMutation(SingleRowMutation&& mutation) : BulkMutation() {
+    emplace_back(std::move(mutation));
+  }
+
+  /// Create a muti-row mutation from two SingleRowMutation
+  BulkMutation(SingleRowMutation&& m1, SingleRowMutation&& m2)
+      : BulkMutation() {
+    emplace_back(std::move(m1));
+    emplace_back(std::move(m2));
+  }
+
+  /// Create a muti-row mutation from a vargarg of SingleRowMutation
+  /// TODO(coryan) - use the standard tricks to improve error messages here ...
+  template <typename... M>
+  BulkMutation(M&&... m) : BulkMutation() {
+    emplace_many(std::forward<M>(m)...);
+  }
+
+  // Add a mutation to the batch.
+  BulkMutation& emplace_back(SingleRowMutation&& mut) {
+    mut.MoveTo(request_.add_entries());
+    return *this;
+  }
+
+  // Add a failed mutation to the batch.
+  BulkMutation& emplace_back(FailedMutation&& fm) {
+    fm.mutation_.MoveTo(request_.add_entries());
+    fm.status_ = grpc::Status::OK;
+    return *this;
+  }
+
+  // Add a mutation to the batch.
+  BulkMutation& push_back(SingleRowMutation mut) {
+    mut.MoveTo(request_.add_entries());
+    return *this;
+  }
+
+  /// Move the contents into a bigtable::v2::MutateRowsRequest
+  void MoveTo(google::bigtable::v2::MutateRowsRequest* request) {
+    request_.Swap(request);
+    request_ = {};
+  }
+
+  /// Return true if there are no mutations in this set.
+  bool empty() const { return request_.entries().empty(); }
+
+ private:
+  template <typename... M>
+  void emplace_many(SingleRowMutation&& first, M&&... tail) {
+    emplace_back(std::forward<SingleRowMutation>(first));
+    emplace_many(std::forward<M>(tail)...);
+  }
+
+  void emplace_many(SingleRowMutation&& m) {
+    emplace_back(std::forward<SingleRowMutation>(m));
+  }
+
+ private:
+  google::bigtable::v2::MutateRowsRequest request_;
+};
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

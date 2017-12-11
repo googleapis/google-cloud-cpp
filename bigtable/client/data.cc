@@ -14,11 +14,9 @@
 
 #include "bigtable/client/data.h"
 
-#include <cstdlib>
-#include <iostream>
 #include <thread>
 
-#include <absl/memory/memory.h>
+#include "bigtable/client/detail/bulk_mutator.h"
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -68,10 +66,40 @@ void Table::Apply(SingleRowMutation&& mut) {
       failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
                             0);
       throw PermanentMutationFailure(
-          "retry policy exhausted or permanent error", std::move(failures));
+          "Permanent (or too many transient) errors in Table::Apply()", status,
+          std::move(failures));
     }
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
+  }
+}
+
+void Table::BulkApply(BulkMutation&& mut) {
+  auto backoff_policy = rpc_backoff_policy_->clone();
+  auto retry_policy = rpc_retry_policy_->clone();
+  auto idemponent_policy = idempotent_mutation_policy_->clone();
+
+  detail::BulkMutator mutator(table_name_, *idemponent_policy,
+                              std::forward<BulkMutation>(mut));
+
+  grpc::Status status = grpc::Status::OK;
+  while (mutator.HasPendingMutations()) {
+    grpc::ClientContext client_context;
+    backoff_policy->setup(client_context);
+    retry_policy->setup(client_context);
+
+    status = mutator.MakeOneRequest(client_->Stub(), client_context);
+    if (not status.ok() and not retry_policy->on_failure(status)) {
+      break;
+    }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  auto failures = mutator.ExtractFinalFailures();
+  if (not failures.empty()) {
+    throw PermanentMutationFailure(
+        "Permanent (or too many transient) errors in Table::BulkApply()",
+        status, std::move(failures));
   }
 }
 

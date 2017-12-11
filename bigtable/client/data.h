@@ -15,11 +15,11 @@
 #ifndef BIGTABLE_CLIENT_DATA_H_
 #define BIGTABLE_CLIENT_DATA_H_
 
-#include <bigtable/client/client_options.h>
-#include <bigtable/client/idempotent_mutation_policy.h>
-#include <bigtable/client/mutations.h>
-#include <bigtable/client/rpc_backoff_policy.h>
-#include <bigtable/client/rpc_retry_policy.h>
+#include "bigtable/client/client_options.h"
+#include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/mutations.h"
+#include "bigtable/client/rpc_backoff_policy.h"
+#include "bigtable/client/rpc_retry_policy.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
@@ -135,12 +135,26 @@ class Table {
    * Attempts to apply the mutation to a row.
    *
    * @param mut the mutation, notice that this function takes
-   * ownership (and then discards) the data in the mutation.
+   *     ownership (and then discards) the data in the mutation.
    *
    * @throws std::exception based on how the retry policy handles
-   * error conditions.
+   *     error conditions.
    */
   void Apply(SingleRowMutation&& mut);
+
+  /**
+   * Attempts to apply mutations to multiple rows.
+   *
+   * @param mut the mutations, notice that this function takes
+   *     ownership (and then discards) the data in the mutation.
+   *
+   * @throws bigtable::MultipleMutationFailure based on how the retry policy
+   *     handles error conditions.  Notice that not idempotent mutations that
+   *     are not reported as successful or failed by the server are not sent
+   *     to the server more than once, and are reported back with a OK status
+   *     in the exception.
+   */
+  void BulkApply(BulkMutation&& mut);
 
  private:
   const ClientInterface* client_;

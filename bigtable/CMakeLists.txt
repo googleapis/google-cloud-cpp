@@ -133,6 +133,8 @@ add_library(bigtable_data_api
         client/filters.cc
         client/idempotent_mutation_policy.h
         client/idempotent_mutation_policy.cc
+        client/detail/bulk_mutator.h
+        client/detail/bulk_mutator.cc
         client/mutations.h
         client/mutations.cc
         client/rpc_backoff_policy.h
@@ -160,8 +162,10 @@ set(all_unit_tests
         client/filters_test.cc
         client/force_sanitizer_failures_test.cc
         client/idempotent_mutation_policy_test.cc
+        client/detail/bulk_mutator_test.cc
         client/mutations_test.cc
         client/table_apply_test.cc
+        client/table_bulk_apply_test.cc
         client/rpc_backoff_policy_test.cc
         client/rpc_retry_policy_test.cc)
 foreach (fname ${all_unit_tests})
