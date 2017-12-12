@@ -112,7 +112,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the [@p start, @p end) range
+   * Return a filter that accepts columns in the range [@p start, @p end)
    * within the @p family column family.
    */
   static Filter ColumnRange(std::string family, std::string start,
@@ -122,9 +122,8 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts cells in the given timestamp range.
-   *
-   * The range is right-open, i.e., it represents [start, end).
+   * Return a filter that accepts cells with timestamps in the range
+   * [@p start, @p end).
    */
   static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
     Filter tmp;
@@ -135,9 +134,8 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts cells in the given timestamp range.
-   *
-   * The range is right-open, i.e., it represents [start, end).
+   * Return a filter that accepts cells with timestamps in the range
+   * [@p start, @p end).
    *
    * The function accepts any instantiation of std::chrono::duration<> for the
    * @p start and @p end parameters.
@@ -179,7 +177,7 @@ class Filter {
     return tmp;
   }
 
-  /// Return a filter matching values in the [@p start, @p end) range.
+  /// Return a filter matching values in the range [@p start, @p end).
   static Filter ValueRange(std::string start, std::string end) {
     return ValueRangeRightOpen(std::move(start), std::move(end));
   }
@@ -228,7 +226,7 @@ class Filter {
    * TODO(#84) - decide what happens if the probability is out of range.
    *
    * @param probability the probability that any row will be selected.  It
-   *     must be in the [0.0, 1.0] range.
+   *     must be in the range [0.0, 1.0].
    */
   static Filter RowSample(double probability) {
     Filter tmp;
@@ -247,7 +245,7 @@ class Filter {
    * different ranges the following functions are available.
    */
   /**
-   * Return a filter that accepts values in the [@p start, @p end) range.
+   * Return a filter that accepts values in the range [@p start, @p end).
    *
    * TODO(#84) - document what happens if end < start
    */
@@ -260,7 +258,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts values in the [@p start, @p end] range.
+   * Return a filter that accepts values in the range [@p start, @p end].
    *
    * TODO(#84) - document what happens if end < start
    */
@@ -273,7 +271,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts values in the [@p start, @p end] range.
+   * Return a filter that accepts values in the range [@p start, @p end].
    *
    * TODO(#84) - document what happens if end < start
    */
@@ -286,7 +284,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts values in the (@p start, @p end) range.
+   * Return a filter that accepts values in the range (@p start, @p end).
    *
    * TODO(#84) - document what happens if end < start
    */
@@ -299,7 +297,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the [@p start, @p end) range
+   * Return a filter that accepts columns in the range [@p start, @p end)
    * within the @p column_family.
    *
    * TODO(#84) - document what happens if end < start
@@ -315,7 +313,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the (@p start, @p end] range
+   * Return a filter that accepts columns in the range (@p start, @p end]
    * within the @p column_family.
    *
    * TODO(#84) - document what happens if end < start
@@ -331,7 +329,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the [@p start, @p end] range
+   * Return a filter that accepts columns in the range [@p start, @p end]
    * within the @p column_family.
    *
    * TODO(#84) - document what happens if end < start
@@ -347,7 +345,7 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the (@p start, @p end) range
+   * Return a filter that accepts columns in the range (@p start, @p end)
    * within the @p column_family.
    *
    * TODO(#84) - document what happens if end < start
@@ -387,15 +385,16 @@ class Filter {
    * Each value accepted by previous filters in modified to include the @p
    * label.
    *
-   * @note Currently it is not possible to apply more than one label in a
+   * @note Currently, it is not possible to apply more than one label in a
    *     filter expression, that is, a chain can only contain a single
    *     ApplyLabelTransformer() filter.  This limitation may be lifted in
    *     the future.  It is possible to have multiple ApplyLabelTransformer
-   *     filters in a Union() filter, though in this case each copy of a cell
+   *     filters in a Union() filter, though in this case, each copy of a cell
    *     gets a different label.
    *
    * @param label the label applied to each cell.  The labels must be at most 15
    *     characters long, and must match the `[a-z0-9\\-]` pattern.
+   *
    * TODO(#84) - change this if we decide to validate inputs in the client side
    */
   static Filter ApplyLabelTransformer(std::string label) {
