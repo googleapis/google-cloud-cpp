@@ -26,18 +26,12 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class TableAdmin;
-
 class AdminClient {
  public:
   virtual ~AdminClient() = default;
 
   /// The project that this AdminClient works on.
-  virtual absl::string_view project() const = 0;
-
-  /// Create a new object to manage an specific instance.
-  virtual std::unique_ptr<TableAdmin> CreateTableAdmin(
-      std::string instance_id) = 0;
+  virtual const std::string & project() const = 0;
 
   /**
    * A callback to handle failures in the client.
@@ -55,7 +49,7 @@ class AdminClient {
 };
 
 /// Create a new admin client configured via @p options.
-std::unique_ptr<AdminClient> CreateAdminClient(std::string project,
+std::shared_ptr<AdminClient> CreateAdminClient(std::string project,
                                                bigtable::ClientOptions options);
 
 }  // namespace BIGTABLE_CLIENT_NS

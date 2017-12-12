@@ -26,9 +26,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
         channel_(),
         table_admin_stub_() {}
 
-  absl::string_view project() const override { return project_; }
-  std::unique_ptr<bigtable::TableAdmin> CreateTableAdmin(
-      std::string instance_id) override;
+  std::string const& project() const override { return project_; }
   void OnFailure(grpc::Status const& status) override;
   ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
   table_admin() override;
@@ -49,10 +47,10 @@ class SimpleAdminClient : public bigtable::AdminClient {
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::unique_ptr<AdminClient> CreateAdminClient(
+std::shared_ptr<AdminClient> CreateAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return absl::make_unique<SimpleAdminClient>(std::move(project),
-                                              std::move(options));
+  return std::make_shared<SimpleAdminClient>(std::move(project),
+                                             std::move(options));
 }
 
 class TableAdmin {
@@ -68,12 +66,6 @@ class TableAdmin {
 }  // namespace bigtable
 
 namespace {
-std::unique_ptr<bigtable::TableAdmin> SimpleAdminClient::CreateTableAdmin(
-    std::string instance_id) {
-  return absl::make_unique<bigtable::TableAdmin>(
-      *this, std::string("project/") + project_ + "/instances/" + instance_id);
-}
-
 void SimpleAdminClient::OnFailure(grpc::Status const& status) {
   std::unique_lock<std::mutex> lk(mu_);
   channel_.reset();

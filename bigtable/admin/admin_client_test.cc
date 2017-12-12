@@ -25,5 +25,4 @@ TEST(AdminClientTest, Simple) {
   EXPECT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
   EXPECT_NO_THROW(admin_client->OnFailure(grpc::Status::CANCELLED));
-  EXPECT_NO_THROW(admin_client->CreateTableAdmin("the-instance"));
 }
