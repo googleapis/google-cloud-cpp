@@ -53,6 +53,36 @@ class ClientOptions {
     return *this;
   }
 
+  void SetCompressionAlgorithm(grpc::ChannelArguments *channel_arguments,
+                               const grpc_compression_algorithm algorithm);
+
+  void SetGrpclbFallbackTimeout(grpc::ChannelArguments *channel_arguments,
+                                const int fallback_timeout);
+
+  void SetSocketMutator(grpc::ChannelArguments *channel_arguments,
+                        const grpc_socket_mutator* mutator);
+
+  void SetUserAgentPrefix(grpc::ChannelArguments *channel_arguments,
+                          const grpc::string& user_agent_prefix);
+
+  void SetResourceQuota(grpc::ChannelArguments *channel_arguments,
+                        const grpc::ResourceQuota& resource_quota);
+
+  void SetMaxReceiveMessageSize(grpc::ChannelArguments *channel_arguments,
+                                const int size);
+
+  void SetMaxSendMessageSize(grpc::ChannelArguments *channel_arguments,
+                             const int size);
+
+  void SetLoadBalancingPolicyName(grpc::ChannelArguments *channel_arguments,
+                                  const grpc::string& lb_policy_name);
+
+  void SetServiceConfigJSON(grpc::ChannelArguments *channel_arguments,
+                            const grpc::string& service_config_json);
+
+  void SetSslTargetNameOverride(grpc::ChannelArguments *channel_arguments,
+                              const grpc::string &name);
+
  private:
   // Endpoint here stands for data endpoint for fetching data.
   std::string endpoint_;
