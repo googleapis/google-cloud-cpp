@@ -82,7 +82,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
 
 # cctz is a required dependency of Abseil
-include_directories(${PROJECT_THIRD_PARTY_DIR}/cctz)
+include_directories(${PROJECT_THIRD_PARTY_DIR}/cctz/include)
 
 # We use abseil.io .
 include_directories(${PROJECT_THIRD_PARTY_DIR}/abseil)
