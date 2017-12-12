@@ -21,8 +21,7 @@ namespace {
 class SimpleAdminClient : public bigtable::AdminClient {
  public:
   SimpleAdminClient(std::string project, bigtable::ClientOptions options)
-      : project_(std::move(project)),
-        options_(std::move(options)) {}
+      : project_(std::move(project)), options_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
   void on_completion(grpc::Status const& status) override;
