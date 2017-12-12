@@ -150,8 +150,8 @@ target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
 add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc
-    admin/table_admin.cc
-    admin/table_admin.h)
+    admin/table_admin.h
+    admin/table_admin.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 

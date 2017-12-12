@@ -22,9 +22,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
  public:
   SimpleAdminClient(std::string project, bigtable::ClientOptions options)
       : project_(std::move(project)),
-        options_(std::move(options)),
-        channel_(),
-        table_admin_stub_() {}
+        options_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
   void on_completion(grpc::Status const& status) override;
@@ -32,7 +30,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
   table_admin() override;
 
  private:
-  void Refresh();
+  void refresh_credentials_and_channel();
 
  private:
   std::string project_;
@@ -53,15 +51,6 @@ std::shared_ptr<AdminClient> CreateAdminClient(
                                              std::move(options));
 }
 
-class TableAdmin {
- public:
-  TableAdmin(AdminClient& cl, std::string name)
-      : client(cl), instance_name(std::move(name)) {}
-
-  AdminClient& client;
-  std::string instance_name;
-};
-
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
@@ -77,11 +66,11 @@ void SimpleAdminClient::on_completion(grpc::Status const& status) {
 
 ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
 SimpleAdminClient::table_admin() {
-  Refresh();
+  refresh_credentials_and_channel();
   return *table_admin_stub_;
 }
 
-void SimpleAdminClient::Refresh() {
+void SimpleAdminClient::refresh_credentials_and_channel() {
   std::unique_lock<std::mutex> lk(mu_);
   if (table_admin_stub_) {
     return;

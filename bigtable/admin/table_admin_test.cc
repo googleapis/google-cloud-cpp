@@ -56,9 +56,8 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token) {
   return [expected_token, returned_token](
-             grpc::ClientContext* ctx,
-             btproto::ListTablesRequest const& request,
-             btproto::ListTablesResponse* response) {
+      grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
+      btproto::ListTablesResponse* response) {
     EXPECT_EQ("projects/the-project/instances/the-instance", request.parent());
     EXPECT_EQ(btproto::Table::FULL, request.view());
     EXPECT_EQ(expected_token, request.page_token());

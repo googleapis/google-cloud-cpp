@@ -20,8 +20,6 @@
 #include <memory>
 #include <string>
 
-#include <absl/strings/string_view.h>
-
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 
 namespace bigtable {
@@ -31,7 +29,7 @@ class AdminClient {
   virtual ~AdminClient() = default;
 
   /// The project that this AdminClient works on.
-  virtual const std::string& project() const = 0;
+  virtual std::string const& project() const = 0;
 
   /**
    * A callback to report completed RPCs to the client.
