@@ -34,14 +34,15 @@ class AdminClient {
   virtual const std::string& project() const = 0;
 
   /**
-   * A callback to handle failures in the client.
+   * A callback to report completed RPCs to the client.
    *
-   * The client may need to update its data structures (e.g. any grpc channels),
-   * or refresh the credentials used to contact the server.
+   * On failures, he client may need to update its internal data structures,
+   * such as which channels are working, maybe reauthenticate with the server,
+   * or simply count the number of failed operations for monitoring purposes.
    *
    * @param status the grpc error.
    */
-  virtual void OnFailure(grpc::Status const& status) = 0;
+  virtual void on_completion(grpc::Status const& status) = 0;
 
   /// Return a new stub to handle admin operations.
   virtual ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&

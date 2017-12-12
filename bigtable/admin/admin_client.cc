@@ -27,7 +27,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
         table_admin_stub_() {}
 
   std::string const& project() const override { return project_; }
-  void OnFailure(grpc::Status const& status) override;
+  void on_completion(grpc::Status const& status) override;
   ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
   table_admin() override;
 
@@ -66,7 +66,10 @@ class TableAdmin {
 }  // namespace bigtable
 
 namespace {
-void SimpleAdminClient::OnFailure(grpc::Status const& status) {
+void SimpleAdminClient::on_completion(grpc::Status const& status) {
+  if (status.ok()) {
+    return;
+  }
   std::unique_lock<std::mutex> lk(mu_);
   channel_.reset();
   table_admin_stub_.reset();

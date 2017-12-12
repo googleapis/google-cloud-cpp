@@ -49,7 +49,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     backoff_policy->setup(client_context);
     grpc::Status status =
         client_->table_admin().ListTables(&client_context, request, &response);
-    client_->OnFailure(status);
+    client_->on_completion(status);
     if (status.ok()) {
       for (auto& table : response.tables()) {
         result.emplace_back(std::move(table));
@@ -60,6 +60,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
       page_token = std::move(*response.mutable_next_page_token());
       continue;
     }
+    page_token = std::move(*request.mutable_page_token());
     if (not rpc_policy->on_failure(status)) {
       throw std::runtime_error("could not fetch all tables");
     }
