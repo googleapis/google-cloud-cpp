@@ -48,7 +48,12 @@ class TableAdmin {
    * @tparam RPCRetryPolicy control which operations to retry and for how long.
    * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
    *     error.
-   * @param
+   * @param client the interface to create grpc stubs, report errors, etc.
+   * @param instance_id the id of the instance, e.g., "my-instance", the full
+   *   name (e.g. '/projects/my-project/instances/my-instance') is built using
+   *   the project id in the @p client parameter.
+   * @param retry_policy the policy to handle RPC errors.
+   * @param backoff_policy the policy to control backoff after an error.
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
