@@ -62,8 +62,8 @@ ARG CMAKE_FLAGS=""
 WORKDIR /var/tmp/build
 COPY . /var/tmp/build/gccpp
 
-RUN ./gccpp/ci/build-docker.sh
 RUN ./gccpp/ci/check-style.sh
+RUN ./gccpp/ci/build-docker.sh
 
 WORKDIR /var/tmp/build/gccpp/build-output/bigtable
 RUN ../../bigtable/tests/run_integration_tests.sh
