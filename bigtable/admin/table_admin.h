@@ -59,8 +59,8 @@ class TableAdmin {
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
-  absl::string_view instance_id() const { return instance_id_; }
-  absl::string_view instance_name() const { return instance_name_; }
+  std::string const& instance_id() const { return instance_id_; }
+  std::string const& instance_name() const { return instance_name_; }
 
   /**
    * Return all the tables in the instance.
