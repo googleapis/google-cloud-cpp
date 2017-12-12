@@ -31,7 +31,7 @@ class AdminClient {
   virtual ~AdminClient() = default;
 
   /// The project that this AdminClient works on.
-  virtual const std::string & project() const = 0;
+  virtual const std::string& project() const = 0;
 
   /**
    * A callback to handle failures in the client.

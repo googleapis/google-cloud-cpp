@@ -78,12 +78,10 @@ TEST_F(TableAdminTest, ListTables) {
     EXPECT_NE(nullptr, response);
 
     auto& t0 = *response->add_tables();
-    t0.set_name(
-        "projects/the-project/instances/the-instance/tables/t0");
+    t0.set_name("projects/the-project/instances/the-instance/tables/t0");
     t0.set_granularity(btproto::Table::MILLIS);
     auto& t1 = *response->add_tables();
-    t1.set_name(
-        "projects/the-project/instances/the-instance/tables/t1");
+    t1.set_name("projects/the-project/instances/the-instance/tables/t1");
     t1.set_granularity(btproto::Table::MILLIS);
     response->set_next_page_token("");
     return grpc::Status::OK;
