@@ -15,6 +15,7 @@
 #include "bigtable/admin/admin_client.h"
 
 #include <absl/memory/memory.h>
+#include <absl/base/thread_annotations.h>
 
 namespace {
 /// An implementation of the bigtable::AdminClient interface.
@@ -35,10 +36,10 @@ class SimpleAdminClient : public bigtable::AdminClient {
   std::string project_;
   bigtable::ClientOptions options_;
   mutable std::mutex mu_;
-  std::shared_ptr<grpc::Channel> channel_;
+  std::shared_ptr<grpc::Channel> channel_ GUARDED_BY(mu_);
   std::unique_ptr<
-      google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
-      table_admin_stub_;
+      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
+      table_admin_stub_ GUARDED_BY(mu_);
 };
 }  // anonymous namespace
 
@@ -66,24 +67,33 @@ void SimpleAdminClient::on_completion(grpc::Status const& status) {
 ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
 SimpleAdminClient::table_admin() {
   refresh_credentials_and_channel();
+  // TODO() - this is inherently unsafe, returning an object that is supposed
+  // to be locked.  May need to rethink the interface completely, or declare the
+  // class to be not thread-safe.
   return *table_admin_stub_;
 }
 
 void SimpleAdminClient::refresh_credentials_and_channel() {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (table_admin_stub_) {
-    return;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    if (table_admin_stub_) {
+      return;
+    }
+    // Release the lock before executing potentially slow operations.
   }
-  // Release the lock before executing potentially slow operations.
-  lk.unlock();
   auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
                                            options_.credentials(),
                                            options_.channel_arguments());
   auto stub =
       ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
-  lk.lock();
-  table_admin_stub_ = std::move(stub);
-  channel_ = std::move(channel);
+  {
+    // Re-acquire the lock before modifying the objects.  There is a small
+    // chance that we waste cycles creating two channels and stubs, only to
+    // discard one.
+    std::lock_guard<std::mutex> lk(mu_);
+    table_admin_stub_ = std::move(stub);
+    channel_ = std::move(channel);
+  }
 }
 
 }  // anonymous namespace

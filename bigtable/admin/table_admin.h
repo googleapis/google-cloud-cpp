@@ -73,8 +73,8 @@ class TableAdmin {
    * @param view define what
    * @return
    */
-  std::vector<google::bigtable::admin::v2::Table> ListTables(
-      google::bigtable::admin::v2::Table::View view);
+  std::vector<::google::bigtable::admin::v2::Table> ListTables(
+      ::google::bigtable::admin::v2::Table::View view);
 
  private:
   std::string CreateInstanceName() const;

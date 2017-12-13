@@ -29,7 +29,7 @@ std::string TableAdmin::CreateInstanceName() const {
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
-    google::bigtable::admin::v2::Table::View view) {
+    ::google::bigtable::admin::v2::Table::View view) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
