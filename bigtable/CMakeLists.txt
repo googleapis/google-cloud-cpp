@@ -124,6 +124,7 @@ enable_testing()
 
 # the client library
 add_library(bigtable_data_api
+        client/cell.h
         client/chrono_literals.h
         client/client_options.h
         client/client_options.cc
@@ -158,6 +159,7 @@ endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(all_unit_tests
+        client/cell_test.cc
         client/client_options_test.cc
         client/filters_test.cc
         client/force_sanitizer_failures_test.cc
