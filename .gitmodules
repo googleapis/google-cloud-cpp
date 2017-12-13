@@ -12,6 +12,3 @@
 [submodule "third_party/abseil"]
 	path = third_party/abseil
 	url = https://github.com/abseil/abseil-cpp.git
-[submodule "third_party/cctz"]
-	path = third_party/cctz
-	url = https://github.com/google/cctz
