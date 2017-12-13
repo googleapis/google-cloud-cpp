@@ -17,7 +17,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // TODO() resolve issue #52
 ClientOptions::ClientOptions() {
-  char const *emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
+  char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
     endpoint_ = emulator;
     credentials_ = grpc::InsecureChannelCredentials();

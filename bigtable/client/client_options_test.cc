@@ -1,10 +1,10 @@
-// Copyright (size_t)2017 Google Inc.
+// Copyright 2017 Google Inc.
 //
-// Licensed under the Apache License, Version (size_t)2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-(size_t)2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,8 +52,10 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   client_options_object.SetGrpclbFallbackTimeout(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
-  EXPECT_EQ(5, test_args.args[1].value.integer);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
+            grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
@@ -61,8 +63,10 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
-  EXPECT_EQ(GRPC_COMPRESS_NONE, test_args.args[1].value.integer);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM,
+            grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
@@ -70,8 +74,10 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   client_options_object.SetMaxReceiveMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
-  EXPECT_EQ(5, test_args.args[1].value.integer);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH,
+            grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetMaxSendMessageSize) {
@@ -79,8 +85,10 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   client_options_object.SetMaxSendMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
-  EXPECT_EQ(5, test_args.args[1].value.integer);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_MAX_SEND_MESSAGE_LENGTH,
+            grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
@@ -88,7 +96,9 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_LB_POLICY_NAME, grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetServiceConfigJSON) {
@@ -96,7 +106,9 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_SERVICE_CONFIG, grpc::string(test_args.args[1].key));
 }
 
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
@@ -104,7 +116,10 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
   client_options_object.SetUserAgentPrefix("test_prefix");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)1, test_args.num_args);
+  EXPECT_EQ(static_cast<size_t>(1), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_ARG_PRIMARY_USER_AGENT_STRING,
+            grpc::string(test_args.args[0].key));
 }
 
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
@@ -112,5 +127,8 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   client_options_object.SetSslTargetNameOverride("test-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ((size_t)2, test_args.num_args);
+  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
+  // Because no accessors use low level C API.
+  EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
+            grpc::string(test_args.args[1].key));
 }
