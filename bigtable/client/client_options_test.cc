@@ -25,9 +25,24 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
             typeid(client_options_object.credentials()));
 }
 
-TEST(ClientOptionsTest, ClientOptionsCustomEndpoint) {
-  // TODO(#23) - setenv() is a Unix specific call ...
-  setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+namespace {
+class ClientOptionsEmulatorTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    // TODO(#23) - setenv() is a Unix specific call ...
+    setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+    previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
+  }
+  void TearDown() override {
+    unsetenv("BIGTABLE_EMULATOR_HOST");
+  }
+
+ protected:
+  char const *previous_ = nullptr;
+};
+}  // anonymous namespace
+
+TEST_F(ClientOptionsEmulatorTest, Simple) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   EXPECT_EQ("testendpoint.googleapis.com",
             client_options_object.data_endpoint());
@@ -35,7 +50,6 @@ TEST(ClientOptionsTest, ClientOptionsCustomEndpoint) {
             client_options_object.admin_endpoint());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(client_options_object.credentials()));
-  unsetenv("BIGTABLE_EMULATOR_HOST");
 }
 
 TEST(ClientOptionsTest, EditEndpoint) {
