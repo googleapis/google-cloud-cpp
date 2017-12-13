@@ -69,43 +69,6 @@ class Client : public ClientInterface {
   friend class Table;
 };
 
-struct Cell {
-  std::string row;
-  std::string family;
-  std::string column;
-  int64_t timestamp;
-
-  std::string value;
-  std::vector<std::string> labels;
-};
-
-// Row returned by a read call, might not contain all contents
-// of the row -- depending on the filter applied
-class RowPart {
- public:
-  using const_iterator = std::vector<Cell>::const_iterator;
-
-  const std::string& row() const { return row_; }
-
-  // Allow direct iteration over cells.
-  const_iterator begin() const { return cells_.cbegin(); }
-  const_iterator end() const { return cells_.cend(); }
-
-  void set_row(const std::string& row) { row_ = row; }
-
-  // Internal functions; clients should not call these, which is
-  // promoted by always returning const values
-  // Add a cell at the end.
-  RowPart& emplace_back(Cell&& cell) {
-    cells_.emplace_back(std::forward<Cell>(cell));
-    return *this;
-  }
-
- private:
-  std::vector<Cell> cells_;
-  std::string row_;
-};
-
 class Table {
  public:
   /// Constructor with default policies
