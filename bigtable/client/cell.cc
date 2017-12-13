@@ -27,7 +27,6 @@ void Cell::consolidate() const EXCLUSIVE_LOCKS_REQUIRED(mu_) {
   }
   copied_value_ = absl::StrJoin(chunks_, "");
   chunks_.clear();
-  value_ = copied_value_;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

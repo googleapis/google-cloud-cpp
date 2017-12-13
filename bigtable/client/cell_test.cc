@@ -25,8 +25,8 @@ TEST(CellTest, Simple) {
   std::string column_qualifier = "column";
   int64_t timestamp = 42;
 
-  std::vector<absl::string_view> chunks = {"one", "two"};
-  std::vector<absl::string_view> labels;
+  std::vector<std::string> chunks = {"one", "two"};
+  std::vector<std::string> labels;
 
   bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, chunks,
                       labels);
@@ -55,9 +55,9 @@ TEST(CellTest, Consolidation) {
   bigtable::Cell two_chunks("r", "f", "c", 42, {"one", "two"}, {});
   EXPECT_EQ("onetwo", two_chunks.value());
 
-  bigtable::Cell empty_chunk_sandwish("r", "f", "c", 42,
+  bigtable::Cell empty_chunk_sandwich("r", "f", "c", 42,
                                       {"", "one", "", "two", ""}, {});
-  EXPECT_EQ("onetwo", empty_chunk_sandwish.value());
+  EXPECT_EQ("onetwo", empty_chunk_sandwich.value());
 }
 
 /// @test Verify that the cell value is stable.

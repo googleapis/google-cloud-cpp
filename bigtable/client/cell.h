@@ -34,17 +34,15 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Cell {
  public:
-  Cell(absl::string_view row_key, absl::string_view family_name,
-       absl::string_view column_qualifier, int64_t timestamp,
-       // TODO: use something more generic than vector
-       std::vector<absl::string_view> chunks,
-       std::vector<absl::string_view> labels)
-      : row_key_(row_key),
-        family_name_(family_name),
-        column_qualifier_(column_qualifier),
+  Cell(std::string row_key, std::string family_name,
+       std::string column_qualifier, int64_t timestamp,
+       std::vector<std::string> chunks, std::vector<std::string> labels)
+      : row_key_(std::move(row_key)),
+        family_name_(std::move(family_name)),
+        column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        chunks_(chunks),
-        labels_(labels) {}
+        chunks_(std::move(chunks)),
+        labels_(std::move(labels)) {}
 
   absl::string_view row_key() const { return row_key_; }
   absl::string_view family_name() const { return family_name_; }
@@ -56,20 +54,19 @@ class Cell {
     if (not chunks_.empty()) {
       consolidate();
     }
-    return value_;
+    return copied_value_;
   };
-  const std::vector<absl::string_view>& labels() const { return labels_; }
+  const std::vector<std::string>& labels() const { return labels_; }
 
  private:
-  absl::string_view row_key_;
-  absl::string_view family_name_;
-  absl::string_view column_qualifier_;
+  std::string row_key_;
+  std::string family_name_;
+  std::string column_qualifier_;
   int64_t timestamp_;
 
-  mutable absl::string_view value_ GUARDED_BY(mu_);
   mutable std::string copied_value_ GUARDED_BY(mu_);
-  mutable std::vector<absl::string_view> chunks_ GUARDED_BY(mu_);
-  std::vector<absl::string_view> labels_;
+  mutable std::vector<std::string> chunks_ GUARDED_BY(mu_);
+  std::vector<std::string> labels_;
 
   mutable std::mutex mu_;
   void consolidate() const;
