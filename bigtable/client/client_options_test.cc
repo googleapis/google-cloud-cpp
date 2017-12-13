@@ -1,10 +1,10 @@
-// Copyright 2017 Google Inc.
+// Copyright (size_t)2017 Google Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version (size_t)2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-(size_t)2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +52,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   client_options_object.SetGrpclbFallbackTimeout(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
   EXPECT_EQ(5, test_args.args[1].value.integer);
 }
 
@@ -61,7 +61,7 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
   EXPECT_EQ(GRPC_COMPRESS_NONE, test_args.args[1].value.integer);
 }
 
@@ -70,7 +70,7 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   client_options_object.SetMaxReceiveMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
   EXPECT_EQ(5, test_args.args[1].value.integer);
 }
 
@@ -79,7 +79,7 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   client_options_object.SetMaxSendMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
   EXPECT_EQ(5, test_args.args[1].value.integer);
 }
 
@@ -88,7 +88,7 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
 }
 
 TEST(ClientOptionsTest, SetServiceConfigJSON) {
@@ -96,7 +96,7 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
 }
 
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
@@ -104,7 +104,7 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
   client_options_object.SetUserAgentPrefix("test_prefix");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(1, test_args.num_args);
+  EXPECT_EQ((size_t)1, test_args.num_args);
 }
 
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
@@ -112,5 +112,5 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   client_options_object.SetSslTargetNameOverride("test-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ((size_t)2, test_args.num_args);
 }
