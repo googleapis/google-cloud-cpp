@@ -31,9 +31,15 @@ inline namespace BIGTABLE_CLIENT_NS {
  * and each column has multiple cells indexed by timestamp.  Notice that the
  * storage is sparse, column families, columns, and timestamps might contain
  * zero cells.
+ *
+ * The Cell class owns all its data. Its string accessors return
+ * absl::string_view, which is a lightweight pointer to the string contained in
+ * Cell and does not actually hold any data. If those values are needed beyond
+ * the lifetime of the Cell object itself, they need to be copied.
  */
 class Cell {
  public:
+  /// Create a Cell and fill it with data.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, int64_t timestamp,
        std::vector<std::string> chunks, std::vector<std::string> labels)
@@ -44,11 +50,21 @@ class Cell {
         chunks_(std::move(chunks)),
         labels_(std::move(labels)) {}
 
+  /// Return the row key this cell belongs to. The returned value is not valid
+  /// after this object dies.
   absl::string_view row_key() const { return row_key_; }
+  /// Return the family this cell belongs to. The returned value is not valid
+  /// after this object dies.
   absl::string_view family_name() const { return family_name_; }
+  /// Return the column this cell belongs to. The returned value is not valid
+  /// after this object dies.
   absl::string_view column_qualifier() const { return column_qualifier_; }
+
+  /// Return the timestamp of this cell.
   int64_t timestamp() const { return timestamp_; }
 
+  /// Return the contents of this cell. The returned value is not valid after
+  /// this object dies.
   absl::string_view value() const {
     std::lock_guard<std::mutex> l(mu_);
     if (not chunks_.empty()) {
@@ -56,6 +72,8 @@ class Cell {
     }
     return copied_value_;
   };
+
+  /// Return the labels applied to this cell by label transformer read filters.
   const std::vector<std::string>& labels() const { return labels_; }
 
  private:
