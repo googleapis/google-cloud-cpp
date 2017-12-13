@@ -15,9 +15,9 @@
 #ifndef BIGTABLE_CLIENT_CELL_H_
 #define BIGTABLE_CLIENT_CELL_H_
 
+#include "bigtable/client/version.h"
 #include <absl/base/thread_annotations.h>
 #include <absl/strings/string_view.h>
-#include <bigtable/client/version.h>
 #include <mutex>
 #include <vector>
 
@@ -53,9 +53,11 @@ class Cell {
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object dies.
   absl::string_view row_key() const { return row_key_; }
+
   /// Return the family this cell belongs to. The returned value is not valid
   /// after this object dies.
   absl::string_view family_name() const { return family_name_; }
+
   /// Return the column this cell belongs to. The returned value is not valid
   /// after this object dies.
   absl::string_view column_qualifier() const { return column_qualifier_; }
@@ -74,7 +76,7 @@ class Cell {
   };
 
   /// Return the labels applied to this cell by label transformer read filters.
-  const std::vector<std::string>& labels() const { return labels_; }
+  std::vector<std::string> const& labels() const { return labels_; }
 
  private:
   /// consolidate concatenates all the chunks and caches the resulting value. It
