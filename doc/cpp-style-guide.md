@@ -285,7 +285,7 @@ Only very rarely is multiple implementation inheritance actually useful. We allo
 * at  most one of the base classes has an implementation; all other base classes must be pure interface classes, or 
 * in support of [Policy-based design](https://en.wikipedia.org/wiki/Policy-based_design).
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Multiple_Inheritance
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Multiple_Inheritance)
 
 #### Interfaces
 
@@ -606,17 +606,31 @@ Namespace names should be all lowercase with `_` to separate words.  This is als
 
 #### Enumerator Names
 
+Enumerators are named like macros.  All uppercase separated by `_`, as in `MY_FANCY_ENUM_VALUE`.
+
 #### Macro Names
 
-https://google.github.io/styleguide/cppguide.html#Macro_Names
+You're not really going to define a macro, are you? If you do, they're like this: `MY_MACRO_THAT_SCARES_SMALL_CHILDREN`.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Macro_Names)
 
 #### Comments
 
-https://google.github.io/styleguide/cppguide.html#Comments
+Though a pain to write, comments are absolutely vital to keeping our code readable. The following rules describe what
+you should comment and where. But remember: while comments are very important, the best code is self-documenting.
+Giving sensible names to types and variables is much better than using obscure names that you must then explain
+through comments.
+
+When writing your comments, write for your audience: the next contributor who will need to understand your code. Be
+generous — the next one may be you!
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Comments)
 
 #### Comment Style
 
-https://google.github.io/styleguide/cppguide.html#Comment_Style
+Use either the `//` or `/* */` syntax, as long as you are consistent.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Comment_Style)
 
 #### Legal Notice and Author Line
 
@@ -644,32 +658,59 @@ Every file should contain license boilerplate.  The boilerplate for this project
 
 Use Doxygen-style comments to document classes.  Prefer `@directives` over `\directives`.  Do document the template
 parameters for template classes.  Use `///` for one-line Doxygen comments, use `/** */` otherwise.
+Document all classes exposed as part of the API of the library, even obvious ones.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Class_Comments)
 
 #### Function Comments
 
 Like for class comments, use Doxygen-style comments to document functions.
+Declaration comments describe use of the function (when it is non-obvious); comments at the definition of a function
+describe operation.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Comments)
 
 #### Function Definitions
 
-Follow the guidelines in [GSG](https://google.github.io/styleguide/cppguide.html#Function_Comments)
+If there is anything tricky about how a function does its job, the function definition should have an explanatory
+comment. For example, in the definition comment you might describe any coding tricks you use, give an overview of the
+steps you go through, or explain why you chose to implement the function in the way you did rather than using a
+viable alternative. For instance, you might mention why it must acquire a lock for the first half of the function
+but why it is not needed for the second half.
+
+Note you should not just repeat the comments given with the function declaration, in the .h file or wherever. It's
+okay to recapitulate briefly what the function does, but the focus of the comments should be on how it does it.
 
 #### Variable Comments
 
-https://google.github.io/styleguide/cppguide.html#Variable_Comments
-
+In general the actual name of the variable should be descriptive enough to give a good idea of what the variable is
+used for. In certain cases, more comments are required.
 If you need to document the variable, remember to use Doxygen style comments for it.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Variable_Comments)
 
 #### Implementation Comments
 
-https://google.github.io/styleguide/cppguide.html#Implementation_Comments
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Implementation_Comments)
 
 #### Punctuation, Spelling and Grammar
 
-https://google.github.io/styleguide/cppguide.html#Punctuation,_Spelling_and_Grammar
+Pay attention to punctuation, spelling, and grammar; it is easier to read well-written comments than badly written ones.
+
+Comments should be as readable as narrative text, with proper capitalization and punctuation. In many cases, complete
+sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of a line of
+code, can sometimes be less formal, but you should be consistent with your style.
+
+Although it can be frustrating to have a code reviewer point out that you are using a comma when you should be using
+a semicolon, it is very important that source code maintain a high level of clarity and readability. Proper
+punctuation, spelling, and grammar help with that goal.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Punctuation,_Spelling_and_Grammar)
 
 #### TODO Comments
 
-All TODO comments should reference a github issue and a brief description:
+Use `TODO` comments for code that is temporary, a short-term solution, or good-enough but not perfect. All TODO
+comments should reference a github issue and a brief description:
 
 ```
 // TODO(#123) - here we need to randomize the sleep delay….
@@ -677,19 +718,26 @@ All TODO comments should reference a github issue and a brief description:
 
 #### Deprecation Comments
 
-https://google.github.io/styleguide/cppguide.html#Deprecation_Comments
+Mark deprecated interface points with `DEPRECATED` comments.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Deprecation_Comments)
 
 #### Formatting
 
-Do whatever `clang-format` configured for the `Google` style does.
+Coding style and formatting are pretty arbitrary, but a project is much easier to follow if everyone uses the same
+style. Individuals may not agree with every aspect of the formatting rules, and some of the rules may take some
+getting used to, but it is important that all project contributors follow the style rules so that they can all read
+and understand everyone's code easily.
+
+The project enforces formatting using `clang-format`, you may want to configure your editor based on its configuration.
 
 ***Line length:***
 
-We allow up to 120 characters per line.
+Each line of text in your code should be at most 120 characters long.
 
 #### Exceptions to the rules
 
-None at this time.  If you need to get an exception remember that you must also change the tooling that enforces these
+None at this time. If you need to get an exception remember that you must also change the tooling that enforces these
 rules to enforce your exception or at least ignore the section of code where you are not following these guidelines.
 
 #### Parting Words
@@ -706,5 +754,3 @@ local style is also important. If code you add to a file looks drastically diffe
 the discontinuity throws readers out of their rhythm when they go to read it. Try to avoid this.
 
 OK, enough writing about writing code; the code itself is much more interesting. Have fun!
-
-
