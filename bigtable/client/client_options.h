@@ -31,15 +31,15 @@ inline namespace BIGTABLE_CLIENT_NS {
 class ClientOptions {
  public:
   ClientOptions();
-  const std::string &endpoint() const { return endpoint_; }
-  ClientOptions &SetEndpoint(const std::string &endpoint) {
+  const std::string& endpoint() const { return endpoint_; }
+  ClientOptions& SetEndpoint(const std::string& endpoint) {
     endpoint_ = endpoint;
     return *this;
   }
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return credentials_;
   }
-  ClientOptions &SetCredentials(
+  ClientOptions& SetCredentials(
       std::shared_ptr<grpc::ChannelCredentials> credentials) {
     credentials_ = credentials;
     return *this;
@@ -48,7 +48,7 @@ class ClientOptions {
   const grpc::ChannelArguments channel_arguments() const {
     return channel_arguments_;
   }
-  ClientOptions &SetChannelArguments(grpc::ChannelArguments channel_arguments) {
+  ClientOptions& SetChannelArguments(grpc::ChannelArguments channel_arguments) {
     channel_arguments_ = channel_arguments;
     return *this;
   }
