@@ -82,11 +82,11 @@ installed in their system or already part of their application.
 
 ## Guidelines
 
-These guidelines are applicable to all the C++ code in `google-cloud-cpp`.  When this guideline matches the GSG, we 
+These guidelines are applicable to all the C++ code in `google-cloud-cpp`.  When this guideline matches the GSG, we
 only describe the decisions in this document, and link to the GSG for rationale and examples.
 
 ### Header Files
- 
+
 In general, every `.cc` file should have an associated `.h` file. There are some common exceptions, such as unittests
 and small `.cc` files containing just a `main()` function.
 
@@ -101,22 +101,22 @@ The following rules will guide you through the various pitfalls of using header 
 Header files should be self-contained (compile on their own) and end in `.h`. Non-header files that are meant for
 inclusion should end in `.inc` and be used sparingly.
 
-All header files should be self-contained. Users and refactoring tools should not have to adhere to special 
-conditions to include the header. Specifically, a header should have header guards and include all other headers it 
+All header files should be self-contained. Users and refactoring tools should not have to adhere to special
+conditions to include the header. Specifically, a header should have header guards and include all other headers it
 needs.
 
-Prefer placing the definitions for template and inline functions in the same file as their declarations. The 
-definitions of these constructs must be included into every `.cc` file that uses them, or the program may fail to link 
-in some build configurations. If declarations and definitions are in different files, including the former should 
-transitively include the latter. Do not move these definitions to separately included header files (`-inl.h`); this 
+Prefer placing the definitions for template and inline functions in the same file as their declarations. The
+definitions of these constructs must be included into every `.cc` file that uses them, or the program may fail to link
+in some build configurations. If declarations and definitions are in different files, including the former should
+transitively include the latter. Do not move these definitions to separately included header files (`-inl.h`); this
 practice was common in the past, but is no longer allowed.
 
 As an exception, a template that is explicitly instantiated for all relevant sets of template arguments, or that is a
-private implementation detail of a class, is allowed to be defined in the one and only `.cc` file that instantiates 
+private implementation detail of a class, is allowed to be defined in the one and only `.cc` file that instantiates
 the template.
 
 There are rare cases where a file designed to be included is not self-contained. These are typically intended to be
-included at unusual locations, such as the middle of another file. They might not use header guards, and might not 
+included at unusual locations, such as the middle of another file. They might not use header guards, and might not
 include their prerequisites. Name such files with the `.inc` extension. Use sparingly, and prefer self-contained
 headers when possible.
 
@@ -124,7 +124,7 @@ headers when possible.
 
 #### The `#define` Guard
 
-All header files should have #define guards to prevent multiple inclusion. The format of the symbol name should be 
+All header files should have #define guards to prevent multiple inclusion. The format of the symbol name should be
 `<PROJECT>_<PATH>_<FILE>_H_`.
 
 To guarantee uniqueness, they should be based on the full path in a project's source tree. For example, the file
@@ -163,7 +163,7 @@ The project headers should always be included using their full path from the pro
 ```
 
 Files included from other projects, including submodules are included using angle brackets. Files from within the
-`google-cloud-cpp` project are included with quotes. Separate headers from different libraries using a blank line.  For 
+`google-cloud-cpp` project are included with quotes. Separate headers from different libraries using a blank line.  For
 example, a `table.cc` file would have:
 
 ```C++
@@ -191,25 +191,25 @@ All the code should be in a namespace. Namespaces should have unique names based
 path (e.g. `bigtable`, or `spanner`).  Do not use using-directives in headers (e.g. `using namespace foo`).
 For unnamed namespaces, see [Unnamed Namespaces and Static Variables](#unnamed-namespaces-and-static-variables).
 
-This project uses inline namespaces for versioning.  All types, functions and variables are in an inlined versioned 
+This project uses inline namespaces for versioning.  All types, functions and variables are in an inlined versioned
 namespace,
 such as `bigtable::v1`.  Project version numbers follow the semantic versioning guidelines, like all projects in
-`google-cloud-*`.  The namespace is named after the major version.  Each subproject (bigtable, spanner, etc) will use 
+`google-cloud-*`.  The namespace is named after the major version.  Each subproject (bigtable, spanner, etc) will use
 its own versions.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Namespaces)
 
 #### Unnamed Namespaces and Static Variables
 
-When definitions in a `.cc` file do not need to be referenced outside that file, place them in an unnamed namespace 
+When definitions in a `.cc` file do not need to be referenced outside that file, place them in an unnamed namespace
 or declare them `static`. Do not use either of these constructs in `.h` files.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Unnamed_Namespaces_and_Static_Variables)
 
 #### Nonmember, Static Member, and Global Functions
 
-Prefer placing nonmember functions in a namespace; use completely global functions rarely. Prefer grouping functions 
-with a namespace instead of using a class as if it were a namespace. Static methods of a class should generally be 
+Prefer placing nonmember functions in a namespace; use completely global functions rarely. Prefer grouping functions
+with a namespace instead of using a class as if it were a namespace. Static methods of a class should generally be
 closely related to instances of the class or the class's static data.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions
@@ -223,14 +223,14 @@ Place a function's variables in the narrowest scope possible, and initialize var
 #### Static and Global Variables
 
 Variables of class type with static storage duration are forbidden: they cause hard-to-find bugs due to indeterminate
-order of construction and destruction. However, such variables are allowed if they are `constexpr`: they have no 
+order of construction and destruction. However, such variables are allowed if they are `constexpr`: they have no
 dynamic initialization or destruction.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables
 
 #### Classes
 
-Classes are the fundamental unit of code in C++. Naturally, we use them extensively. This section lists the main dos 
+Classes are the fundamental unit of code in C++. Naturally, we use them extensively. This section lists the main dos
 and don'ts you should follow when writing a class.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Classes
@@ -239,10 +239,10 @@ and don'ts you should follow when writing a class.
 
 Avoid virtual method calls in constructors, and avoid initialization that can fail if you can't signal an error.
 
-While we prefer [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) over `Init()` 
-member functions the guideline about avoiding initialization that can fail is particularly relevant if your class is 
-using RAII to acquire and release remote resources.  While signaling error to acquire the resources is easy with 
-exceptions, signaling an error to release the resources requires you to raise exceptions in the destructor, which is 
+While we prefer [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) over `Init()`
+member functions the guideline about avoiding initialization that can fail is particularly relevant if your class is
+using RAII to acquire and release remote resources.  While signaling error to acquire the resources is easy with
+exceptions, signaling an error to release the resources requires you to raise exceptions in the destructor, which is
 not desirable.
 
 #### Raising Exceptions in Destructors
@@ -251,14 +251,14 @@ Do not raise exceptions in destructors.  Declare your destructors as `noexcept`.
 
 #### Implicit Conversions
 
-Do not define implicit conversions. Use the `explicit` keyword for conversion operators and single-argument 
+Do not define implicit conversions. Use the `explicit` keyword for conversion operators and single-argument
 constructors.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Implicit_Conversions
 
 #### Copyable and Movable Types
 
-Support copying and/or moving if these operations are clear and meaningful for your type. Otherwise, disable the 
+Support copying and/or moving if these operations are clear and meaningful for your type. Otherwise, disable the
 implicitly generated special functions that perform copies and moves.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types
@@ -275,21 +275,21 @@ Composition is often more appropriate than inheritance. When using inheritance, 
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Inheritance
 
-It is common practice in the C++ community to use `private` inheritance for composition, in this case, we prefer to 
+It is common practice in the C++ community to use `private` inheritance for composition, in this case, we prefer to
 follow the GSG because it is fairly rare to use private inheritance in any case.
 
 #### Multiple inheritance
 
 Only very rarely is multiple implementation inheritance actually useful. We allow multiple inheritance when:
- 
-* at  most one of the base classes has an implementation; all other base classes must be pure interface classes, or 
+
+* at  most one of the base classes has an implementation; all other base classes must be pure interface classes, or
 * in support of [Policy-based design](https://en.wikipedia.org/wiki/Policy-based_design).
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Multiple_Inheritance)
 
 #### Interfaces
 
-Pure interface classes may have the `Interface` suffix, but we recommend against it.  In general, pure interface 
+Pure interface classes may have the `Interface` suffix, but we recommend against it.  In general, pure interface
 classes *should* be the main class exposed to users of the library.  It is better to make it easy for them to use the
 class without having to say (and type) `Interface` each time.
 
@@ -297,14 +297,14 @@ class without having to say (and type) `Interface` each time.
 
 #### Operator Overloading
 
-Overload operators judiciously. Avoid user-defined literals in the interface of the project; use them as needed in 
+Overload operators judiciously. Avoid user-defined literals in the interface of the project; use them as needed in
 the implementation and tests.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Operator_Overloading)
 
 #### Access Control
 
-Make data members `private`, unless they are `static const` (and follow the naming convention for constants). For 
+Make data members `private`, unless they are `static const` (and follow the naming convention for constants). For
 technical reasons, we allow data members of a test fixture class to be `protected` when using Google Test).
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Access_Control)
@@ -313,7 +313,7 @@ technical reasons, we allow data members of a test fixture class to be `protecte
 
 Group similar declarations together, placing public parts earlier.
 
-A class definition should usually start with a `public:` section, followed by `protected:`, then `private:`. Omit 
+A class definition should usually start with a `public:` section, followed by `protected:`, then `private:`. Omit
 sections that would be empty.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Declaration_Order)
@@ -322,7 +322,7 @@ sections that would be empty.
 
 #### Parameter Order
 
-Prefer return values over output parameters.  Use `std::tuple` if many values are necessary.  If you must use an 
+Prefer return values over output parameters.  Use `std::tuple` if many values are necessary.  If you must use an
 output parameter, the parameter order is: inputs, then outputs.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering)
@@ -331,14 +331,14 @@ output parameter, the parameter order is: inputs, then outputs.
 
 Prefer small and focused functions.
 
-We recognize that long functions are sometimes appropriate, so no hard limit is placed on functions length. If a 
+We recognize that long functions are sometimes appropriate, so no hard limit is placed on functions length. If a
 function exceeds about 40 lines, think about whether it can be broken up without harming the structure of the program.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Write_Short_Functions
 
 #### Reference Arguments
 
-Pass parameters by reference when appropriate. References are preferred over pointers, smart pointers over member 
+Pass parameters by reference when appropriate. References are preferred over pointers, smart pointers over member
 variables of reference type.
 
 This is substantially different from the corresponding
@@ -352,15 +352,15 @@ Use overloaded functions (including constructors) only if a reader looking at a 
 
 #### Default Arguments
 
-Default arguments are allowed on non-virtual functions when the default is guaranteed to always have the same value. 
+Default arguments are allowed on non-virtual functions when the default is guaranteed to always have the same value.
 Follow the same restrictions as for [function overloading](#function-overloading), and prefer overloaded functions if
-the readability gained with default arguments doesn't outweigh the downsides below. 
+the readability gained with default arguments doesn't outweigh the downsides below.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Default_Arguments)
 
 #### Trailing Return Type Syntax
 
-Use trailing return types only where using the ordinary syntax (leading return types) is impractical or much less 
+Use trailing return types only where using the ordinary syntax (leading return types) is impractical or much less
 readable.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#trailing_return)
@@ -392,13 +392,13 @@ This is substantially different from the corresponding
 
 We allow use of `friend` classes and functions, within reason.
 
-Friends should usually be defined in the same file so that the reader does not have to look in another file to find 
-uses of the private members of a class. A common use of `friend` is to have a `FooBuilder` class be a friend of `Foo` so 
-that it can construct the inner state of `Foo` correctly, without exposing this state to the world. In some cases it 
+Friends should usually be defined in the same file so that the reader does not have to look in another file to find
+uses of the private members of a class. A common use of `friend` is to have a `FooBuilder` class be a friend of `Foo` so
+that it can construct the inner state of `Foo` correctly, without exposing this state to the world. In some cases it
 may be useful to make a unittest class a friend of the class it tests.
 
-Friends extend, but do not break, the encapsulation boundary of a class. In some cases this is better than making a 
-member public when you want to give only one other class access to it. However, most classes should interact with 
+Friends extend, but do not break, the encapsulation boundary of a class. In some cases this is better than making a
+member public when you want to give only one other class access to it. However, most classes should interact with
 other classes solely through their public members.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Friends)
@@ -419,9 +419,9 @@ Avoid using Run Time Type Information (RTTI).
 #### Casting
 
 Use C++-style casts like `static_cast<float>(double_value)`, or brace initialization for conversion of arithmetic types
-like `int64 y = int64{1} << 42`. Do not use cast formats like `int y = (int)x` or `int y = int(x)` (but the latter 
+like `int64 y = int64{1} << 42`. Do not use cast formats like `int y = (int)x` or `int y = int(x)` (but the latter
 is okay when invoking a constructor of a class type).
-  
+
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Casting)
 
 #### Streams
@@ -454,7 +454,7 @@ Use `constexpr` to define true constants or to ensure constant initialization.
 #### Integer Types
 
 Use `<cstdint>` over `<stdint.h>`, qualify the integer types as `std::int16_t`.   The libraries in `google-cloud-cpp`
-will be used by external users, who may have more restrictive rules about polluting the global namespace 
+will be used by external users, who may have more restrictive rules about polluting the global namespace
 
 This is substantially different from the corresponding
 [GSG section](https://google.github.io/styleguide/cppguide.html#Integer_Types)
@@ -470,7 +470,7 @@ Code should be 64-bit and 32-bit friendly. Bear in mind problems of printing, co
 Avoid defining macros, especially in headers; prefer inline functions, enums, and const variables. Name macros with a
 project-specific prefix. Do not use macros to define pieces of a C++ API.
 
-Macros mean that the code you see is not the same as the code the compiler sees. This can introduce unexpected 
+Macros mean that the code you see is not the same as the code the compiler sees. This can introduce unexpected
 behavior, especially since macros have global scope.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Preprocessor_Macros)
@@ -489,7 +489,7 @@ Prefer sizeof(varname) to sizeof(type).
 
 #### auto
 
-Use auto to avoid type names that are noisy, obvious, or unimportant - cases where the type doesn't aid in clarity 
+Use auto to avoid type names that are noisy, obvious, or unimportant - cases where the type doesn't aid in clarity
 for the reader. Continue to use manifest type declarations when it helps readability.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#auto)
@@ -514,8 +514,8 @@ Avoid complicated template programming.
 
 #### Boost
 
-We do not use Boost in `google-cloud-cpp`.  We do not want to introduce too many dependencies.  While it is 
-likely that our users are also using Boost, managing Boost versions creates problems for them, we should be a 
+We do not use Boost in `google-cloud-cpp`.  We do not want to introduce too many dependencies.  While it is
+likely that our users are also using Boost, managing Boost versions creates problems for them, we should be a
 source of solutions.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Boost)
@@ -545,7 +545,7 @@ Nonstandard extensions to C++ may not be used unless otherwise specified.
 
 #### Aliases
 
-Public aliases are for the benefit of an API's user, and should be clearly documented. Prefer the `using Foo = Bar;` 
+Public aliases are for the benefit of an API's user, and should be clearly documented. Prefer the `using Foo = Bar;`
 form over `typedef Bar Foo;` because it can be used more consistently.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Aliases)
@@ -562,8 +562,8 @@ All the subsections here are substantially different from the corresponding
 
 Names should be descriptive; avoid abbreviation.
 
-Give as descriptive a name as possible, within reason. Do not worry about saving horizontal space as it is far more 
-important to make your code immediately understandable by a new reader. Do not use abbreviations that are ambiguous 
+Give as descriptive a name as possible, within reason. Do not worry about saving horizontal space as it is far more
+important to make your code immediately understandable by a new reader. Do not use abbreviations that are ambiguous
 or unfamiliar to readers outside your project, and do not abbreviate by deleting letters within a word.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#General_Naming_Rules)
@@ -729,20 +729,166 @@ style. Individuals may not agree with every aspect of the formatting rules, and 
 getting used to, but it is important that all project contributors follow the style rules so that they can all read
 and understand everyone's code easily.
 
-The project enforces formatting using `clang-format`, you may want to configure your editor based on its configuration.
+The project enforces formatting using `clang-format`, configured to follow the `Google` style guide.  Please
+configure your editor or IDE to follow the same guidelines.  When the tool disagrees with this document please file a
+bug either the tool configuration or the document needs adjustment.
+
+In a few cases where the GSG give latitude we have made a choice.
 
 ***Line length:***
 
 Each line of text in your code should be at most 120 characters long.
+
+#### Non-ASCII Characters
+
+Non-ASCII characters should be rare, and must use UTF-8 formatting.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Non-ASCII_Characters)
+
+#### Spaces vs. Tabs
+
+Use only spaces, and indent 2 spaces at a time.
+
+We use spaces for indentation. Do not use tabs in your code. You should set your editor to emit spaces when you hit
+the tab key.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Spaces_vs._Tabs)
+
+#### Function Declarations and Definitions
+
+Return type on the same line as function name, parameters on the same line if they fit. Wrap parameter lists which do not fit on a single line as you would wrap arguments in a function call.
+
+https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions
+#### Lambda Expressions
+
+Format parameters and bodies as for any other function, and capture lists like other comma-separated lists.
+
+For by-reference captures, do not leave a space between the ampersand (&) and the variable name.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Formatting_Lambda_Expressions)
+
+#### Function Calls
+
+Either write the call all on a single line, wrap the arguments at the parenthesis, or start the arguments on a new line indented by four spaces and continue at that 4 space indent. In the absence of other considerations, use the minimum number of lines, including placing multiple arguments on each line where appropriate.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Calls)
+
+#### Braced Initializer List Format
+
+Format a braced initializer list exactly like you would format a function call in its place.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Braced_Initializer_List_Format)
+
+#### Conditionals
+
+Prefer no spaces inside parentheses. The if and else keywords belong on separate lines.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Conditionals)
+
+#### Loops and Switch Statements
+
+Switch statements may use braces for blocks. Annotate non-trivial fall-through between cases. Braces are optional for single-statement loops. Empty loop bodies should use empty braces or continue.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements)
+
+#### Pointer and Reference Expressions
+
+No spaces around period or arrow. Pointer operators do not have trailing spaces. When declaring a pointer variable or
+argument, place the asterisk adjacent to the type:
+
+```C++
+// These are fine, space following.
+char* c;
+string const& str;
+
+// These are not fine, space preceding.
+char *c;
+string const &str;
+```
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions)
+
+#### Boolean Expressions
+
+When you have a boolean expression that is longer than the standard line length, be consistent in how you break up
+the lines.  Use the word operators, such as `and`, `not`, and `or`, rather than the punctuation operators such as
+`&&`, `!`, and `||`.  Word operators are more readable.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Boolean_Expressions)
+
+#### Return Values
+
+Do not needlessly surround the return expression with parentheses.
+
+Use parentheses in `return expr;` only where you would use them in `x = expr;`.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Return_Values)
+
+#### Variable and Array Initialization
+
+Your choice of `=`, `()`, or `{}`.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Variable_and_Array_Initialization)
+
+#### Preprocessor Directives
+
+The hash mark that starts a preprocessor directive should always be at the beginning of the line.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Preprocessor_Directives)
+
+#### Class Format
+
+Sections in public, protected and private order, each indented one space.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Class_Format)
+
+#### Constructor Initializer Lists
+
+Constructor initializer lists can be all on one line or with subsequent lines indented four spaces.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Constructor_Initializer_Lists)
+
+#### Namespace Formatting
+
+The contents of namespaces are not indented.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Namespace_Formatting)
+
+#### Horizontal Whitespace
+
+Use of horizontal whitespace depends on location. Never put trailing whitespace at the end of a line.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Horizontal_Whitespace)
+
+#### Vertical Whitespace
+
+Minimize use of vertical whitespace.
+
+This is more a principle than a rule: don't use blank lines when you don't have to. In particular, don't put more
+than one or two blank lines between functions, resist starting functions with a blank line, don't end functions with
+a blank line, and be discriminating with your use of blank lines inside functions.
+
+The basic principle is: The more code that fits on one screen, the easier it is to follow and understand the control
+flow of the program. Of course, readability can suffer from code being too dense as well as too spread out, so use
+your judgement. But in general, minimize use of vertical whitespace.
+
+Some rules of thumb to help when blank lines may be useful:
+
+* Blank lines at the beginning or end of a function very rarely help readability.
+* Blank lines inside a chain of if-else blocks may well help readability.
+
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Vertical_Whitespace)
 
 #### Exceptions to the rules
 
 None at this time. If you need to get an exception remember that you must also change the tooling that enforces these
 rules to enforce your exception or at least ignore the section of code where you are not following these guidelines.
 
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Exceptions_to_the_Rules)
+
 #### Parting Words
 
-Use common sense and BE CONSISTENT.
+Use common sense and **BE CONSISTENT**.
 
 If you are editing code, take a few minutes to look at the code around you and determine its style. If they use spaces
 around their if clauses, you should, too. If their comments have little boxes of stars around them, make your comments
