@@ -15,11 +15,9 @@
 #ifndef BIGTABLE_CLIENT_CELL_H_
 #define BIGTABLE_CLIENT_CELL_H_
 
-#include "bigtable/client/version.h"
-#include <absl/base/thread_annotations.h>
 #include <absl/strings/string_view.h>
-#include <mutex>
 #include <vector>
+#include "bigtable/client/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -41,13 +39,13 @@ class Cell {
  public:
   /// Create a Cell and fill it with data.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, int64_t timestamp,
-       std::vector<std::string> chunks, std::vector<std::string> labels)
+       std::string column_qualifier, int64_t timestamp, std::string value,
+       std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        chunks_(std::move(chunks)),
+        value_(std::move(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
@@ -67,32 +65,18 @@ class Cell {
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object dies.
-  absl::string_view value() const {
-    std::lock_guard<std::mutex> l(mu_);
-    if (not chunks_.empty()) {
-      consolidate();
-    }
-    return copied_value_;
-  };
+  absl::string_view value() const { return value_; }
 
   /// Return the labels applied to this cell by label transformer read filters.
   std::vector<std::string> const& labels() const { return labels_; }
 
  private:
-  /// consolidate concatenates all the chunks and caches the resulting value. It
-  /// is safe to call it twice, after the first call it becomes a no-op.
-  void consolidate() const;
-
   std::string row_key_;
   std::string family_name_;
   std::string column_qualifier_;
   int64_t timestamp_;
-
-  mutable std::string copied_value_ GUARDED_BY(mu_);
-  mutable std::vector<std::string> chunks_ GUARDED_BY(mu_);
+  std::string value_;
   std::vector<std::string> labels_;
-
-  mutable std::mutex mu_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

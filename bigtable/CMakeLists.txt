@@ -125,7 +125,6 @@ enable_testing()
 # the client library
 add_library(bigtable_data_api
         client/cell.h
-        client/cell.cc
         client/chrono_literals.h
         client/client_options.h
         client/client_options.cc
