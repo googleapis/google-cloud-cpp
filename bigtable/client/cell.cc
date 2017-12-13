@@ -19,8 +19,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-// consolidate concatenates all the chunks and caches the resulting value. It is
-// safe to call it twice, after the first call it becomes a no-op.
 void Cell::consolidate() const EXCLUSIVE_LOCKS_REQUIRED(mu_) {
   if (chunks_.empty()) {
     return;

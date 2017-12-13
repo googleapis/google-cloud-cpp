@@ -59,6 +59,10 @@ class Cell {
   const std::vector<std::string>& labels() const { return labels_; }
 
  private:
+  /// consolidate concatenates all the chunks and caches the resulting value. It
+  /// is safe to call it twice, after the first call it becomes a no-op.
+  void consolidate() const;
+
   std::string row_key_;
   std::string family_name_;
   std::string column_qualifier_;
@@ -69,7 +73,6 @@ class Cell {
   std::vector<std::string> labels_;
 
   mutable std::mutex mu_;
-  void consolidate() const;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
