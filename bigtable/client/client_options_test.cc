@@ -29,7 +29,7 @@ namespace {
 class ClientOptionsEmulatorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    // TODO(#23) - setenv() is a Unix specific call ...
+    // TODO(#100) - setenv() is a Unix specific call ...
     setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
     previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
   }
