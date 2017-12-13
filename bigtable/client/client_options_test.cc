@@ -46,3 +46,71 @@ TEST(ClientOptionsTest, EditCredentials) {
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(client_options_object.credentials()));
 }
+
+TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetGrpclbFallbackTimeout(5);
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ(5, test_args.args[1].value.integer);
+}
+
+TEST(ClientOptionsTest, SetCompressionAlgorithm) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ(GRPC_COMPRESS_NONE, test_args.args[1].value.integer);
+}
+
+TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetMaxReceiveMessageSize(5);
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ(5, test_args.args[1].value.integer);
+}
+
+TEST(ClientOptionsTest, SetMaxSendMessageSize) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetMaxSendMessageSize(5);
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+  EXPECT_EQ(5, test_args.args[1].value.integer);
+}
+
+TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetLoadBalancingPolicyName("test-policy-name");
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+}
+
+TEST(ClientOptionsTest, SetServiceConfigJSON) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetServiceConfigJSON("test-config");
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+}
+
+TEST(ClientOptionsTest, SetUserAgentPrefix) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetUserAgentPrefix("test_prefix");
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(1, test_args.num_args);
+}
+
+TEST(ClientOptionsTest, SetSslTargetNameOverride) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object.SetSslTargetNameOverride("test-name");
+  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  grpc_channel_args test_args = c_args.c_channel_args();
+  EXPECT_EQ(2, test_args.num_args);
+}
