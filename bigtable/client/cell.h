@@ -17,8 +17,8 @@
 
 #include <absl/base/thread_annotations.h>
 #include <absl/strings/string_view.h>
-#include <absl/synchronization/mutex.h>
 #include <bigtable/client/version.h>
+#include <mutex>
 #include <vector>
 
 namespace bigtable {
@@ -52,7 +52,7 @@ class Cell {
   int64_t timestamp() const { return timestamp_; }
 
   absl::string_view value() const {
-    absl::MutexLock l(&mu_);
+    std::lock_guard<std::mutex> l(mu_);
     if (not chunks_.empty()) {
       consolidate();
     }
@@ -71,7 +71,7 @@ class Cell {
   mutable std::vector<absl::string_view> chunks_ GUARDED_BY(mu_);
   std::vector<absl::string_view> labels_;
 
-  mutable absl::Mutex mu_;
+  mutable std::mutex mu_;
   void consolidate() const;
 };
 

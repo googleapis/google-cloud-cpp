@@ -14,6 +14,7 @@
 
 #include "bigtable/client/cell.h"
 
+#include <absl/base/thread_annotations.h>
 #include <absl/strings/str_join.h>
 
 namespace bigtable {

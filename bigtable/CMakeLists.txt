@@ -125,75 +125,6 @@ target_link_libraries(googleapis ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBU
 # Enable unit tests
 enable_testing()
 
-# This is an extremely ugly hack to link with Abseil code
-# TODO(dmahu): CMakeLists need refactoring to allow compiling Abseil
-add_library(hack_abseil
-../third_party/abseil/absl/base/dynamic_annotations.cc
-../third_party/abseil/absl/base/internal/cycleclock.cc
-../third_party/abseil/absl/base/internal/log_severity.cc
-../third_party/abseil/absl/base/internal/low_level_alloc.cc
-../third_party/abseil/absl/base/internal/malloc_extension.cc
-../third_party/abseil/absl/base/internal/malloc_hook.cc
-../third_party/abseil/absl/base/internal/raw_logging.cc
-../third_party/abseil/absl/base/internal/spinlock.cc
-../third_party/abseil/absl/base/internal/spinlock_wait.cc
-../third_party/abseil/absl/base/internal/sysinfo.cc
-../third_party/abseil/absl/base/internal/thread_identity.cc
-../third_party/abseil/absl/base/internal/throw_delegate.cc
-../third_party/abseil/absl/base/internal/unscaledcycleclock.cc
-../third_party/abseil/absl/container/internal/test_instance_tracker.cc
-../third_party/abseil/absl/debugging/internal/address_is_readable.cc
-../third_party/abseil/absl/debugging/internal/elf_mem_image.cc
-../third_party/abseil/absl/debugging/internal/vdso_support.cc
-../third_party/abseil/absl/debugging/leak_check.cc
-../third_party/abseil/absl/debugging/leak_check_disable.cc
-../third_party/abseil/absl/debugging/stacktrace.cc
-../third_party/abseil/absl/numeric/int128.cc
-../third_party/abseil/absl/strings/ascii.cc
-../third_party/abseil/absl/strings/escaping.cc
-../third_party/abseil/absl/strings/internal/memutil.cc
-../third_party/abseil/absl/strings/internal/ostringstream.cc
-../third_party/abseil/absl/strings/internal/utf8.cc
-../third_party/abseil/absl/strings/match.cc
-../third_party/abseil/absl/strings/numbers.cc
-../third_party/abseil/absl/strings/str_cat.cc
-../third_party/abseil/absl/strings/str_replace.cc
-../third_party/abseil/absl/strings/str_split.cc
-../third_party/abseil/absl/strings/string_view.cc
-../third_party/abseil/absl/strings/substitute.cc
-../third_party/abseil/absl/synchronization/barrier.cc
-../third_party/abseil/absl/synchronization/blocking_counter.cc
-../third_party/abseil/absl/synchronization/internal/create_thread_identity.cc
-../third_party/abseil/absl/synchronization/internal/graphcycles.cc
-#../third_party/abseil/absl/synchronization/internal/mutex_nonprod.cc
-../third_party/abseil/absl/synchronization/internal/per_thread_sem.cc
-../third_party/abseil/absl/synchronization/internal/waiter.cc
-../third_party/abseil/absl/synchronization/mutex.cc
-../third_party/abseil/absl/synchronization/notification.cc
-../third_party/abseil/absl/time/clock.cc
-../third_party/abseil/absl/time/duration.cc
-../third_party/abseil/absl/time/format.cc
-#../third_party/abseil/absl/time/internal/test_util.cc
-../third_party/abseil/absl/time/time.cc
-../third_party/abseil/absl/types/bad_any_cast.cc
-../third_party/abseil/absl/types/bad_optional_access.cc
-../third_party/abseil/absl/types/optional.cc
-../third_party/abseil/absl/utility/utility.cc
-
-#../third_party/cctz/src/benchmarks.cc
-../third_party/cctz/src/civil_time_detail.cc
-../third_party/cctz/src/time_tool.cc
-../third_party/cctz/src/time_zone_fixed.cc
-../third_party/cctz/src/time_zone_format.cc
-../third_party/cctz/src/time_zone_if.cc
-../third_party/cctz/src/time_zone_impl.cc
-../third_party/cctz/src/time_zone_info.cc
-../third_party/cctz/src/time_zone_libc.cc
-../third_party/cctz/src/time_zone_lookup.cc
-../third_party/cctz/src/time_zone_posix.cc
-../third_party/cctz/src/zone_info_source.cc
-)
-
 # the client library
 add_library(bigtable_data_api
         client/cell.h
@@ -216,12 +147,8 @@ add_library(bigtable_data_api
         client/rpc_retry_policy.h
         client/rpc_retry_policy.cc
         client/version.h)
-target_link_libraries(bigtable_data_api
-        googleapis
-        hack_abseil
-        ${GRPCPP_LIBRARIES}
-        ${GRPC_LIBRARIES}
-        ${PROTOBUF_LIBRARIES})
+target_link_libraries(bigtable_data_api googleapis ${GRPCPP_LIBRARIES}
+  ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
