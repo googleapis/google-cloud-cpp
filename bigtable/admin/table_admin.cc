@@ -23,7 +23,8 @@ namespace btproto = ::google::bigtable::admin::v2;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::string TableAdmin::CreateInstanceName() const {
-  return absl::StrCat("projects/", client_->project(), "/instances/", instance_id_);
+  return absl::StrCat("projects/", client_->project(), "/instances/",
+                      instance_id_);
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
