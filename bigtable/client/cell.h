@@ -15,9 +15,10 @@
 #ifndef BIGTABLE_CLIENT_CELL_H_
 #define BIGTABLE_CLIENT_CELL_H_
 
+#include "bigtable/client/version.h"
+
 #include <absl/strings/string_view.h>
 #include <vector>
-#include "bigtable/client/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -15,10 +15,12 @@
 #ifndef BIGTABLE_CLIENT_ROW_H_
 #define BIGTABLE_CLIENT_ROW_H_
 
-#include <absl/strings/string_view.h>
-#include <bigtable/client/cell.h>
-#include <vector>
 #include "bigtable/client/version.h"
+
+#include <bigtable/client/cell.h>
+
+#include <absl/strings/string_view.h>
+#include <vector>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
