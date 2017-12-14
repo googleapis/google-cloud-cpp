@@ -22,6 +22,10 @@ if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
     if (NOT EXISTS "${CCTZ_ROOT_DIR}/CMakeLists.txt")
         message(ERROR "GOOGLE_CLOUD_CPP_CCTZ_PROVIDER is \"module\" but CCTZ_ROOT_DIR is wrong")
     endif ()
+    # cctz will include the `CTest` module and always compile the cctz tests, we want to disable that.  The only way is
+    # to include the module first, disable the tests, and then include the cctz CMakeLists.txt files.
+    include(CTest)
+    set(BUILD_TESTING OFF)
     add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz)
     set(CCTZ_LIBRARIES cctz)
     set(CCTZ_INCLUDE_DIRS ${CCTZ_ROOT_DIR}/absl)
