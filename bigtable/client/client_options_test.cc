@@ -29,11 +29,17 @@ namespace {
 class ClientOptionsEmulatorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    // TODO(#100) - setenv() is a Unix specific call ...
-    setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+    // TODO(#100) - setenv() is a Unix specific call.
     previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
+    setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
   }
-  void TearDown() override { unsetenv("BIGTABLE_EMULATOR_HOST"); }
+  void TearDown() override {
+    if (previous_) {
+      setenv("BIGTABLE_EMULATOR_HOST", previous_, 1);
+    } else {
+      unsetenv("BIGTABLE_EMULATOR_HOST");
+    }
+  }
 
  protected:
   char const *previous_ = nullptr;
@@ -53,14 +59,14 @@ TEST_F(ClientOptionsEmulatorTest, Simple) {
 TEST(ClientOptionsTest, EditEndpoint) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object =
-      client_options_object.SetDataEndpoint("customendpoint.com");
+      client_options_object.set_data_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.data_endpoint());
 }
 
 TEST(ClientOptionsTest, EditAdminEndpoint) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object =
-      client_options_object.SetAdminEndpoint("customendpoint.com");
+      client_options_object.set_admin_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
 }
 

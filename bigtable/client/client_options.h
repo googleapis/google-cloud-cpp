@@ -36,14 +36,14 @@ class ClientOptions {
 
   /// Return the current endpoint for data RPCs.
   const std::string& data_endpoint() const { return data_endpoint_; }
-  ClientOptions& SetDataEndpoint(std::string endpoint) {
+  ClientOptions& set_data_endpoint(std::string endpoint) {
     data_endpoint_ = std::move(endpoint);
     return *this;
   }
 
   /// Return the current endpoint for admin RPCs.
   const std::string& admin_endpoint() const { return admin_endpoint_; }
-  ClientOptions& SetAdminEndpoint(std::string endpoint) {
+  ClientOptions& set_admin_endpoint(std::string endpoint) {
     admin_endpoint_ = std::move(endpoint);
     return *this;
   }
@@ -62,7 +62,8 @@ class ClientOptions {
   const grpc::ChannelArguments channel_arguments() const {
     return channel_arguments_;
   }
-  ClientOptions& SetChannelArguments(grpc::ChannelArguments channel_arguments) {
+  ClientOptions& set_channel_arguments(
+      grpc::ChannelArguments channel_arguments) {
     channel_arguments_ = channel_arguments;
     return *this;
   }

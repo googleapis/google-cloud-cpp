@@ -16,16 +16,14 @@
 
 #include <thread>
 
+#include <absl/strings/str_cat.h>
+
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::string TableAdmin::CreateInstanceName() const {
-  std::string result("projects/");
-  result += client_->project();
-  result += "/instances/";
-  result += instance_id_;
-  return result;
+  return absl::StrCat("projects/", client_->project(), "/instances/", instance_id_);
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
