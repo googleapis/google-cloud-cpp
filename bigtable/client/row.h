@@ -32,7 +32,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 class Row {
  public:
   /// Create a row from a list of cells.
-  Row(std::string row_key, std::vector<Cell> cells)
+  Row(std::string row_key, std::vector<Cell const> cells)
       : row_key_(std::move(row_key)), cells_(std::move(cells)) {}
 
   /// Return the row key. The returned value is not valid
@@ -40,11 +40,11 @@ class Row {
   absl::string_view row_key() const { return row_key_; }
 
   /// Return all cells.
-  std::vector<Cell> const& cells() const { return cells_; }
+  std::vector<Cell const> const& cells() const { return cells_; }
 
  private:
   std::string row_key_;
-  std::vector<Cell> cells_;
+  std::vector<Cell const> cells_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
