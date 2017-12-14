@@ -138,6 +138,7 @@ add_library(bigtable_data_api
         client/detail/bulk_mutator.cc
         client/mutations.h
         client/mutations.cc
+        client/row.h
         client/rpc_backoff_policy.h
         client/rpc_backoff_policy.cc
         client/rpc_retry_policy.h
@@ -168,6 +169,7 @@ set(all_unit_tests
         client/mutations_test.cc
         client/table_apply_test.cc
         client/table_bulk_apply_test.cc
+        client/row_test.cc
         client/rpc_backoff_policy_test.cc
         client/rpc_retry_policy_test.cc)
 foreach (fname ${all_unit_tests})
