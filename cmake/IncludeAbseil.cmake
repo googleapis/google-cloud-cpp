@@ -27,7 +27,7 @@ if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
     endif ()
     add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil)
     set(ABSEIL_LIBRARIES abseil)
-    set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR}/absl)
+    set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
 elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
     if (WIN32)
         # On Windows we will probably use the vcpkg port (github.com/Microsoft/vcpkg).

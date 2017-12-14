@@ -84,7 +84,9 @@ include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
 # We use abseil.io .
 set(BUILD_TESTING OFF)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeAbseil.cmake)
-include_directories(${ABSEIL_INCLUDE_DIRS})
+if (ABSEIL_ROOT_DIR)
+    include_directories(${ABSEIL_INCLUDE_DIRS})
+endif (ABSEIL_ROOT_DIR)
 
 # Configure the location of proto files, particulary the googleapis protos.
 include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
