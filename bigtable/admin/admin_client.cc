@@ -37,7 +37,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
   std::shared_ptr<grpc::Channel> channel_;
   std::unique_ptr<
       ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
-      table_admin_stub_ ;
+      table_admin_stub_;
 };
 }  // anonymous namespace
 

@@ -33,9 +33,7 @@ class ClientOptionsEmulatorTest : public ::testing::Test {
     setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
     previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
   }
-  void TearDown() override {
-    unsetenv("BIGTABLE_EMULATOR_HOST");
-  }
+  void TearDown() override { unsetenv("BIGTABLE_EMULATOR_HOST"); }
 
  protected:
   char const *previous_ = nullptr;
