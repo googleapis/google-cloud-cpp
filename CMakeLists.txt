@@ -104,8 +104,5 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif ()
 
-# Enable unit tests.
-enable_testing()
-
 # Add subprojects here.
 add_subdirectory(bigtable)

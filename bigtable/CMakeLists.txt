@@ -82,7 +82,9 @@ include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
 
 # We use abseil.io .
-include_directories(${PROJECT_THIRD_PARTY_DIR}/abseil)
+set(BUILD_TESTING OFF)
+include(${PROJECT_SOURCE_DIR}/cmake/IncludeAbseil.cmake)
+include_directories(${ABSEIL_INCLUDE_DIRS})
 
 # Configure the location of proto files, particulary the googleapis protos.
 include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
@@ -153,7 +155,7 @@ add_library(bigtable_admin_client
     admin/table_admin.h
     admin/table_admin.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
@@ -169,19 +171,6 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
         CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
 endif ()
-
-# Compile the googlemock library.  This library is rarely installed or
-# pre-compiled because it should be configured with the same flags as the
-# application.
-add_library(gmock
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
-target_include_directories(gmock
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
