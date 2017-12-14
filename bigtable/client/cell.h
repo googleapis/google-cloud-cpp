@@ -50,22 +50,22 @@ class Cell {
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
-  /// after this object dies.
+  /// after this object is deleted.
   absl::string_view row_key() const { return row_key_; }
 
   /// Return the family this cell belongs to. The returned value is not valid
-  /// after this object dies.
+  /// after this object is deleted.
   absl::string_view family_name() const { return family_name_; }
 
   /// Return the column this cell belongs to. The returned value is not valid
-  /// after this object dies.
+  /// after this object is deleted.
   absl::string_view column_qualifier() const { return column_qualifier_; }
 
   /// Return the timestamp of this cell.
   int64_t timestamp() const { return timestamp_; }
 
   /// Return the contents of this cell. The returned value is not valid after
-  /// this object dies.
+  /// this object is deleted.
   absl::string_view value() const { return value_; }
 
   /// Return the labels applied to this cell by label transformer read filters.
