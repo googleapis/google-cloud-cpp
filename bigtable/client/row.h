@@ -17,7 +17,7 @@
 
 #include "bigtable/client/version.h"
 
-#include <bigtable/client/cell.h>
+#include "bigtable/client/cell.h"
 
 #include <absl/strings/string_view.h>
 #include <vector>
