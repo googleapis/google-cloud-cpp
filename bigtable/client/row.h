@@ -38,7 +38,7 @@ class Row {
       : row_key_(std::move(row_key)), cells_(std::move(cells)) {}
 
   /// Return the row key. The returned value is not valid
-  /// after this object dies.
+  /// after this object is deleted.
   absl::string_view row_key() const { return row_key_; }
 
   /// Return all cells.
