@@ -144,6 +144,8 @@ add_library(bigtable_client
     client/mutations.h
     client/mutations.cc
     client/row.h
+    client/readrowsparser.h
+    client/readrowsparser.cc
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
@@ -188,6 +190,7 @@ set(bigtable_client_unit_tests
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
+    client/readrowsparser_test.cc
     client/row_test.cc
     client/rpc_backoff_policy_test.cc
     client/rpc_retry_policy_test.cc)
