@@ -18,6 +18,7 @@
 #include "bigtable/admin/admin_client.h"
 
 #include <memory>
+#include <thread>
 
 #include <absl/strings/string_view.h>
 
@@ -128,6 +129,54 @@ class TableAdmin {
 
  private:
   std::string CreateInstanceName() const;
+
+  /// Discover if a pointer to member function has the expected signature.
+  template <typename T>
+  struct check_signature : std::false_type {
+    using response_type = int;
+  };
+
+  /// Discover if a pointer to member function has the expected signature.
+  template <typename Class, typename Request, typename Response>
+  struct check_signature<
+      grpc::Status (Class::*)(grpc::ClientContext*,Request const&,Response*)>
+      : public std::true_type {
+    using response_type = Response;
+    using request_type = Request;
+    using member_function_type = grpc::Status (Class::*)(grpc::ClientContext *, Request const &, Response *);
+  };
+
+  /// Call a simple unary RPC with retries.
+  template <typename MemberFunction>
+  typename std::enable_if<
+      check_signature<MemberFunction>::value,
+      typename check_signature<MemberFunction>::response_type>::type
+  call_with_retry(MemberFunction function,
+                  typename check_signature<MemberFunction>::request_type const& request,
+                  absl::string_view error_message) {
+    // Copy the policies in effect for the operation.
+    auto rpc_policy = rpc_retry_policy_->clone();
+    auto backoff_policy = rpc_backoff_policy_->clone();
+
+    typename check_signature<MemberFunction>::response_type response;
+    while (true) {
+      grpc::ClientContext client_context;
+      rpc_policy->setup(client_context);
+      backoff_policy->setup(client_context);
+      grpc::Status status =
+          (client_->table_admin().*function)(&client_context, request, &response);
+      client_->on_completion(status);
+      if (status.ok()) {
+        break;
+      }
+      if (not rpc_policy->on_failure(status)) {
+        RaiseError(status, error_message);
+      }
+      auto delay = backoff_policy->on_completion(status);
+      std::this_thread::sleep_for(delay);
+    }
+    return response;
+  }
 
   /// Raise an exception representing the given status.
   [[noreturn]] void RaiseError(grpc::Status const& status,
