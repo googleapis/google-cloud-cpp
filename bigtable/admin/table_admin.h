@@ -111,6 +111,7 @@ class TableAdmin {
       ::google::bigtable::admin::v2::Table::View view);
 
   /**
+   * Get information about a single table.
    *
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
@@ -120,14 +121,60 @@ class TableAdmin {
    *   - NAME: return only the name of the table.
    *   - VIEW_SCHEMA: return the name and the schema.
    *   - FULL: return all the information about the table.
-   * @return
+   * @return the information about the table.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
    */
   ::google::bigtable::admin::v2::Table GetTable(
       std::string table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
 
- private:
+  /**
+   * Delete a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the table could not be deleted before the RPC
+   *     policies in effect gave up.
+   */
+  void DeleteTable(std::string table_id);
+
+  /**
+   * Modify the schema for an existing table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param mods the list of modifications to the schema.
+   * @return the resulting table schema.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
+      std::string table_id, std::vector<ColumnFamilyModification> mods);
+
+  /**
+   * Delete all the rows that start with a given prefix.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the operation cannot be completed.
+   */
+  void DeleteRowsByPrefix(std::string table_id, std::string row_key_prefix);
+
+  /**
+   * Delete all the rows in a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the operation cannot be completed.
+   */
+  void DeleteAllRows(std::string table_id);
+
+private:
   std::string CreateInstanceName() const;
 
   /// A shortcut for the grpc stub this class wraps.

@@ -112,3 +112,28 @@ TEST(GcRule, UnionNone) {
   EXPECT_TRUE(proto.has_union_());
   EXPECT_EQ(0, proto.union_().rules_size());
 }
+
+TEST(ColumnFamilyModification, Create) {
+  using M = bigtable::ColumnFamilyModification;
+  using GC = bigtable::GcRule;
+  auto proto = M::Create("foo", GC::MaxNumVersions(2)).as_proto();
+  ASSERT_TRUE(proto.has_create());
+  EXPECT_EQ("foo", proto.id());
+  EXPECT_EQ(2, proto.create().gc_rule().max_num_versions());
+}
+
+TEST(ColumnFamilyModification, Update) {
+  using M = bigtable::ColumnFamilyModification;
+  using GC = bigtable::GcRule;
+  auto proto = M::Update("foo", GC::MaxNumVersions(2)).as_proto();
+  ASSERT_TRUE(proto.has_update());
+  EXPECT_EQ("foo", proto.id());
+  EXPECT_EQ(2, proto.update().gc_rule().max_num_versions());
+}
+
+TEST(ColumnFamilyModification, Drop) {
+  using M = bigtable::ColumnFamilyModification;
+  auto proto = M::Drop("foo").as_proto();
+  EXPECT_TRUE(proto.drop());
+  EXPECT_EQ("foo", proto.id());
+}

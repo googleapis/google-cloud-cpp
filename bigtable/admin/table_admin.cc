@@ -85,6 +85,13 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   return CallWithRetry(&StubType::GetTable, request, std::move(error_message));
 }
 
+void TableAdmin::DeleteTable(std::string table_id) {
+  btproto::DeleteTableRequest request;
+  request.set_name(instance_name() + "/tables/" + table_id);
+
+  CallWithRetry(&StubType::DeleteTable, request, "DeleteTable");
+}
+
 std::string TableAdmin::CreateInstanceName() const {
   return absl::StrCat("projects/", client_->project(), "/instances/",
                       instance_id_);
