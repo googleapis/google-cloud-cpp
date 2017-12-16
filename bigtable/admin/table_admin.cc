@@ -15,7 +15,6 @@
 #include "bigtable/admin/table_admin.h"
 
 #include <sstream>
-#include <thread>
 
 #include <absl/strings/str_cat.h>
 
@@ -33,9 +32,9 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  return call_with_retry(
-      &btproto::BigtableTableAdmin::StubInterface::CreateTable, request,
-      absl::StrCat("CreateTable(", request.table_id(), ")"));
+  auto error_message = absl::StrCat("CreateTable(", request.table_id(), ")");
+  return CallWithRetry(&btproto::BigtableTableAdmin::StubInterface::CreateTable,
+                       request, std::move(error_message));
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -86,9 +85,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   request.set_name(absl::StrCat(instance_name(), "/tables/", table_id));
   request.set_view(view);
 
-  return call_with_retry(&btproto::BigtableTableAdmin::StubInterface::GetTable,
-                         request,
-                         absl::StrCat("GetTable(", request.name(), ")"));
+  auto error_message = absl::StrCat("GetTable(", request.name(), ")");
+  return CallWithRetry(&StubType::GetTable, request, std::move(error_message));
 }
 
 std::string TableAdmin::CreateInstanceName() const {
