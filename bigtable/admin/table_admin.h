@@ -152,7 +152,8 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
-      std::string table_id, std::vector<ColumnFamilyModification> mods);
+      std::string table_id,
+      std::vector<ColumnFamilyModification> modifications);
 
   /**
    * Delete all the rows that start with a given prefix.
@@ -162,7 +163,7 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @throws std::exception if the operation cannot be completed.
    */
-  void DeleteRowsByPrefix(std::string table_id, std::string row_key_prefix);
+  void DropRowsByPrefix(std::string table_id, std::string row_key_prefix);
 
   /**
    * Delete all the rows in a table.
@@ -172,10 +173,16 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @throws std::exception if the operation cannot be completed.
    */
-  void DeleteAllRows(std::string table_id);
+  void DropAllRows(std::string table_id);
 
-private:
+ private:
+  /// Compute the fully qualified instance name.
   std::string CreateInstanceName() const;
+
+  /// Return the fully qualified name of a table in this object's instance.
+  std::string CreateTableName(std::string const& table_id) const {
+    return instance_name() + "/tables/" + table_id;
+  }
 
   /// A shortcut for the grpc stub this class wraps.
   using StubType =
