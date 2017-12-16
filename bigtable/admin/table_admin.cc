@@ -33,8 +33,8 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_table_id(std::move(table_id));
 
   auto error_message = absl::StrCat("CreateTable(", request.table_id(), ")");
-  return CallWithRetry(&btproto::BigtableTableAdmin::StubInterface::CreateTable,
-                       request, std::move(error_message));
+  return CallWithRetry(&StubType::CreateTable, request,
+                       std::move(error_message));
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
