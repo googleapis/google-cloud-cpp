@@ -17,7 +17,19 @@
 #include <absl/memory/memory.h>
 
 namespace {
-/// An implementation of the bigtable::AdminClient interface.
+/**
+ * An AdminClient for single-threaded programs that refreshes credentials on all
+ * gRPC errors.
+ *
+ * This class should not be used by multiple threads, it makes no attempt to
+ * protect its critical sections.  While it is rare that the admin interface
+ * will be used by multiple threads we should use the same approach here and in
+ * the regular client to support multi-threaded programs.
+ *
+ * The class also aggressively reconnects on any gRPC errors. A future version
+ * should only reconnect on those errors that indicate the credentials or
+ * connections need refreshing.
+ */
 class SimpleAdminClient : public bigtable::AdminClient {
  public:
   SimpleAdminClient(std::string project, bigtable::ClientOptions options)
