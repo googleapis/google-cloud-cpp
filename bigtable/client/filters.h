@@ -455,6 +455,18 @@ class Filter {
   /**
    * Return a filter that interleaves the results of many other filters.
    *
+   * This filter executes each stream in parallel and then merges the results by
+   * interleaving the output from each stream.  The proto
+   * [file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * has a nice illustration in the documentation of
+   * google.bigtable.v2.RowFilter.Interleave.
+   *
+   * In brief, if the input cells are c1, c2, c3, ..., and you have three
+   * subfilters S1, S2, and S3, the output of Interleave(S1, S2, S3) is:
+   * S1(c1), S2(c1), S3(c1), S1(d2), S2(d2), S3(c2), S1(c3), S2(c3), S3(c2), ...
+   * where some of the Si(c_j) values may be empty if the filter discards the
+   * cell altogether.
+   *
    * @tparam FilterTypes the type of the filter arguments.  They must all be
    *     convertible for Filter.
    * @param streams the filters to interleave.
@@ -474,11 +486,11 @@ class Filter {
   /**
    * Return a filter that outputs all cells ignoring intermediate filters.
    *
-   * Please read the documentation in the [proto
-   * file](https://github.com/googleapis/googleapis/blob/a2b6df3d21e9cef922cd75ec5af78efdbfcfae31/google/bigtable/v2/data.proto#L291)
+   * Please read the documentation in the proto
+   * [file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
    * for a detailed description.  In short, this is an advanced filter to
    * facilitate debugging.  You can explore the intermediate results of a
-   * complex filter expression.
+   * complex filter expression by injecting a filter of this type.
    */
   static Filter Sink() {
     Filter tmp;
