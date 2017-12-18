@@ -70,8 +70,11 @@ class TableAdmin {
   /**
    * Return all the tables in the instance.
    *
-   * @param view define what
-   * @return
+   * @param view define what information about the tables is retrieved.
+   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
+   *   - NAME: return only the name of the table.
+   *   - VIEW_SCHEMA: return the name and the schema.
+   *   - FULL: return all the information about the table.
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
       ::google::bigtable::admin::v2::Table::View view);

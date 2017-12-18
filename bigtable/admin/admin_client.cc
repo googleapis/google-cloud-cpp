@@ -23,7 +23,7 @@ namespace {
  *
  * This class should not be used by multiple threads, it makes no attempt to
  * protect its critical sections.  While it is rare that the admin interface
- * will be used by multiple threads we should use the same approach here and in
+ * will be used by multiple threads, we should use the same approach here and in
  * the regular client to support multi-threaded programs.
  *
  * The class also aggressively reconnects on any gRPC errors. A future version
@@ -41,7 +41,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
   table_admin() override;
 
  private:
-  void refresh_credentials_and_channel();
+  void RefreshCredentialsAndChannel();
 
  private:
   std::string project_;
@@ -75,7 +75,7 @@ void SimpleAdminClient::on_completion(grpc::Status const& status) {
 
 ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
 SimpleAdminClient::table_admin() {
-  refresh_credentials_and_channel();
+  RefreshCredentialsAndChannel();
   // TODO(#101) - this is inherently unsafe if we plan to support multiple
   // threads, returning an object that is supposed to be locked.  May need to
   // rethink the interface completely, or declare the class to be not
@@ -83,7 +83,7 @@ SimpleAdminClient::table_admin() {
   return *table_admin_stub_;
 }
 
-void SimpleAdminClient::refresh_credentials_and_channel() {
+void SimpleAdminClient::RefreshCredentialsAndChannel() {
   if (table_admin_stub_) {
     return;
   }

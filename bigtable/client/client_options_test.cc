@@ -34,6 +34,7 @@ class ClientOptionsEmulatorTest : public ::testing::Test {
     setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
   }
   void TearDown() override {
+    // TODO(#100) - setenv()/unsetenv() are a Unix specific calls.
     if (previous_) {
       setenv("BIGTABLE_EMULATOR_HOST", previous_, 1);
     } else {
@@ -46,7 +47,7 @@ class ClientOptionsEmulatorTest : public ::testing::Test {
 };
 }  // anonymous namespace
 
-TEST_F(ClientOptionsEmulatorTest, Simple) {
+TEST_F(ClientOptionsEmulatorTest, Default) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   EXPECT_EQ("testendpoint.googleapis.com",
             client_options_object.data_endpoint());
@@ -56,7 +57,7 @@ TEST_F(ClientOptionsEmulatorTest, Simple) {
             typeid(client_options_object.credentials()));
 }
 
-TEST(ClientOptionsTest, EditEndpoint) {
+TEST(ClientOptionsTest, EditDataEndpoint) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object =
       client_options_object.set_data_endpoint("customendpoint.com");

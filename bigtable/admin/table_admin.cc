@@ -61,6 +61,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     }
     page_token = std::move(*request.mutable_page_token());
     if (not rpc_policy->on_failure(status)) {
+      // TODO(#35) - implement non-throwing version of this class.
       throw std::runtime_error("could not fetch all tables");
     }
     auto delay = backoff_policy->on_completion(status);
