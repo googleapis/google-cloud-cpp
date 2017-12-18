@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Copyright 2017 Google Inc.
 #
@@ -22,10 +22,23 @@ set -eu
 mkdir -p gccpp/build-output
 cd gccpp/build-output
 
-cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ..
+CMAKE_COMMAND="cmake"
+if [ "${SCAN_BUILD}" = "yes" ]; then
+    CMAKE_COMMAND="scan-build cmake"
+fi
+${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ..
 
-make -j ${NCPU} all
-make -j ${NCPU} test || ( cat Testing/Temporary/LastTest.log; exit 1 )
+# If scan-build is enabled we need to manually compile the dependencies,
+# otherwise the static analyzer finds issues in them, and there is no way to
+# ignore them.
+if [ "${SCAN_BUILD}" = "yes" ]; then
+    make -j ${NCPU} -C bigtable googleapis
+    scan-build make -j ${NCPU} -C bigtable all
+else
+    make -j ${NCPU} all
+fi
+
+CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
 
 # Some of the sanitizers only emit errors and do not change the error code
 # of the tests, find any such errors and report them as a build failure.
