@@ -40,7 +40,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  *   byte sequences matched (e.g. row keys, or values), can contain arbitrary
  *   bytes, the `\C` escape sequence must be used if a true wildcard is
  *   desired. The `.` character will not match the new line character `\n`,
- *   which may be present in a binary value.
+ *   effectively `.` means `[^\n]` in RE2.  As new line characters may be
+ *   present in a binary value, you may need to explicitly match it using "\\n"
+ *   the double escape is necessary because RE2 needs to get the escape
+ *   sequence.
  */
 class Filter {
  public:
@@ -71,8 +74,12 @@ class Filter {
     return tmp;
   }
 
-  /// Create a filter that accepts only the last @a n values.
-  static Filter Latest(int n) {
+  /**
+   * Return a filter that accepts only the last @p n values of each column.
+   *
+   * TODO(#84) - document what is the effect of n <= 0
+   */
+  static Filter Latest(std::int32_t n) {
     Filter result;
     result.filter_.set_cells_per_column_limit_filter(n);
     return result;
@@ -105,23 +112,18 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts columns in the [@p begin, @p end) range
+   * Return a filter that accepts columns in the range [@p start, @p end)
    * within the @p family column family.
    */
-  static Filter ColumnRange(std::string family, std::string begin,
+  static Filter ColumnRange(std::string family, std::string start,
                             std::string end) {
-    Filter tmp;
-    auto& range = *tmp.filter_.mutable_column_range_filter();
-    range.set_family_name(std::move(family));
-    range.set_start_qualifier_closed(std::move(begin));
-    range.set_end_qualifier_open(std::move(end));
-    return tmp;
+    return ColumnRangeRightOpen(std::move(family), std::move(start),
+                                std::move(end));
   }
 
   /**
-   * Return a filter that accepts cells in the given timestamp range.
-   *
-   * The range is right-open, i.e., it represents [start, end).
+   * Return a filter that accepts cells with timestamps in the range
+   * [@p start, @p end).
    */
   static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
     Filter tmp;
@@ -132,9 +134,8 @@ class Filter {
   }
 
   /**
-   * Return a filter that accepts cells in the given timestamp range.
-   *
-   * The range is right-open, i.e., it represents [start, end).
+   * Return a filter that accepts cells with timestamps in the range
+   * [@p start, @p end).
    *
    * The function accepts any instantiation of std::chrono::duration<> for the
    * @p start and @p end parameters.
@@ -170,19 +171,15 @@ class Filter {
    * @param pattern the regular expression.  It must be a valid
    *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
    */
-  static Filter ValueRegex(std::string pattern) { return Filter(); }
-
-  /**
-   * Return a filter matching a right-open interval of values.
-   *
-   * This filter matches all the values in the [@p begin,@p end) range.
-   */
-  static Filter ValueRange(std::string begin, std::string end) {
+  static Filter ValueRegex(std::string pattern) {
     Filter tmp;
-    auto& range = *tmp.filter_.mutable_value_range_filter();
-    range.set_start_value_closed(std::move(begin));
-    range.set_end_value_open(std::move(end));
+    tmp.filter_.set_value_regex_filter(std::move(pattern));
     return tmp;
+  }
+
+  /// Return a filter matching values in the range [@p start, @p end).
+  static Filter ValueRange(std::string start, std::string end) {
+    return ValueRangeRightOpen(std::move(start), std::move(end));
   }
 
   /**
@@ -196,8 +193,9 @@ class Filter {
    * timestamp.
    *
    * TODO(#82) - check the documentation around ordering of columns.
+   * TODO(#84) - document what is the effect of n <= 0
    */
-  static Filter CellsRowLimit(int n) {
+  static Filter CellsRowLimit(std::int32_t n) {
     Filter tmp;
     tmp.filter_.set_cells_per_row_limit_filter(n);
     return tmp;
@@ -214,26 +212,158 @@ class Filter {
    * timestamp.
    *
    * TODO(#82) - check the documentation around ordering of columns.
+   * TODO(#84) - document what is the effect of n <= 0
    */
-  static Filter CellsRowOffset(int n) {
+  static Filter CellsRowOffset(std::int32_t n) {
     Filter tmp;
     tmp.filter_.set_cells_per_row_offset_filter(n);
     return tmp;
   }
 
+  /**
+   * Return a filter that samples rows with a given probability.
+   *
+   * TODO(#84) - decide what happens if the probability is out of range.
+   *
+   * @param probability the probability that any row will be selected.  It
+   *     must be in the range [0.0, 1.0].
+   */
+  static Filter RowSample(double probability) {
+    Filter tmp;
+    tmp.filter_.set_row_sample_filter(probability);
+    return tmp;
+  }
+
+  //@{
+  /**
+   * @name Less common range filters.
+   *
+   * Cloud Bigtable range filters can include or exclude the limits of the
+   * range.  In most cases applications use [@p start, @p end) ranges, and the
+   * ValueRange() and ColumnRange() functions are offered to support the
+   * common case.  For the less common cases where the application needs
+   * different ranges, the following functions are available.
+   */
+  /**
+   * Return a filter that accepts values in the range [@p start, @p end).
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ValueRangeLeftOpen(std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_open(std::move(start));
+    range.set_end_value_closed(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts values in the range [@p start, @p end].
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ValueRangeRightOpen(std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_closed(std::move(start));
+    range.set_end_value_open(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts values in the range [@p start, @p end].
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ValueRangeClosed(std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_closed(std::move(start));
+    range.set_end_value_closed(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts values in the range (@p start, @p end).
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ValueRangeOpen(std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_value_range_filter();
+    range.set_start_value_open(std::move(start));
+    range.set_end_value_open(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts columns in the range [@p start, @p end)
+   * within the @p column_family.
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ColumnRangeRightOpen(std::string column_family,
+                                     std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_family_name(std::move(column_family));
+    range.set_start_qualifier_closed(std::move(start));
+    range.set_end_qualifier_open(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts columns in the range (@p start, @p end]
+   * within the @p column_family.
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ColumnRangeLeftOpen(std::string column_family,
+                                    std::string start, std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_family_name(std::move(column_family));
+    range.set_start_qualifier_open(std::move(start));
+    range.set_end_qualifier_closed(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts columns in the range [@p start, @p end]
+   * within the @p column_family.
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ColumnRangeClosed(std::string column_family, std::string start,
+                                  std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_family_name(std::move(column_family));
+    range.set_start_qualifier_closed(std::move(start));
+    range.set_end_qualifier_closed(std::move(end));
+    return tmp;
+  }
+
+  /**
+   * Return a filter that accepts columns in the range (@p start, @p end)
+   * within the @p column_family.
+   *
+   * TODO(#84) - document what happens if end < start
+   */
+  static Filter ColumnRangeOpen(std::string column_family, std::string start,
+                                std::string end) {
+    Filter tmp;
+    auto& range = *tmp.filter_.mutable_column_range_filter();
+    range.set_family_name(std::move(column_family));
+    range.set_start_qualifier_open(std::move(start));
+    range.set_end_qualifier_open(std::move(end));
+    return tmp;
+  }
+  //@}
+
   //@{
   /// @name Unimplemented, wait for the next PR.
   // TODO(#30) - complete the implementation.
-  static Filter ValueRangeLeftOpen();
-  static Filter ValueRangeRightOpen();
-  static Filter ValueRangeClosed();
-  static Filter ValueRangeOpen();
-  static Filter RowKeyRangeLeftOpen();
-  static Filter RowKeyRangeRightOpen();
-  static Filter RowKeyRangeClosed();
-  static Filter RowKeyRangeOpen();
-  static Filter RowKeyPrefix();
-  static Filter RowSample(float probability);
   static Filter SinkFilter();
   //@}
 
@@ -249,6 +379,24 @@ class Filter {
     return tmp;
   }
 
+  /**
+   * Returns a filter that applies a label to each value.
+   *
+   * Each value accepted by previous filters in modified to include the @p
+   * label.
+   *
+   * @note Currently, it is not possible to apply more than one label in a
+   *     filter expression, that is, a chain can only contain a single
+   *     ApplyLabelTransformer() filter.  This limitation may be lifted in
+   *     the future.  It is possible to have multiple ApplyLabelTransformer
+   *     filters in a Union() filter, though in this case, each copy of a cell
+   *     gets a different label.
+   *
+   * @param label the label applied to each cell.  The labels must be at most 15
+   *     characters long, and must match the `[a-z0-9\\-]` pattern.
+   *
+   * TODO(#84) - change this if we decide to validate inputs in the client side
+   */
   static Filter ApplyLabelTransformer(std::string label) {
     Filter tmp;
     tmp.filter_.set_apply_label_transformer(std::move(label));
@@ -258,7 +406,7 @@ class Filter {
 
   //@{
   /**
-   * @name Composed filters.
+   * @name Compound filters.
    *
    * These filters compose several filters to build complex filter expressions.
    */

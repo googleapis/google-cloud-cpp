@@ -80,9 +80,108 @@ TEST(FiltersTest, CellsRowLimit) {
   EXPECT_EQ(3, proto.cells_per_row_limit_filter());
 }
 
+TEST(FiltersTest, ValueRegex) {
+  auto proto = bigtable::Filter::ValueRegex("foo:\\n  'bar.*'").as_proto();
+  EXPECT_EQ("foo:\\n  'bar.*'", proto.value_regex_filter());
+}
+
 TEST(FiltersTest, CellsRowOffset) {
   auto proto = bigtable::Filter::CellsRowOffset(42).as_proto();
   EXPECT_EQ(42, proto.cells_per_row_offset_filter());
+}
+
+TEST(FiltersTEst, RowSample) {
+  auto proto = bigtable::Filter::RowSample(0.5).as_proto();
+  ASSERT_DOUBLE_EQ(0.5, proto.row_sample_filter());
+}
+
+TEST(FiltersTest, ValueRangeLeftOpen) {
+  auto proto =
+      bigtable::Filter::ValueRangeLeftOpen("2017-02", "2017-09").as_proto();
+  ASSERT_EQ(btproto::ValueRange::kStartValueOpen,
+            proto.value_range_filter().start_value_case());
+  ASSERT_EQ(btproto::ValueRange::kEndValueClosed,
+            proto.value_range_filter().end_value_case());
+  EXPECT_EQ("2017-02", proto.value_range_filter().start_value_open());
+  EXPECT_EQ("2017-09", proto.value_range_filter().end_value_closed());
+}
+
+TEST(FiltersTest, ValueRangeRightOpen) {
+  auto proto = bigtable::Filter::ValueRangeRightOpen("2017", "2018").as_proto();
+  ASSERT_EQ(btproto::ValueRange::kStartValueClosed,
+            proto.value_range_filter().start_value_case());
+  ASSERT_EQ(btproto::ValueRange::kEndValueOpen,
+            proto.value_range_filter().end_value_case());
+  EXPECT_EQ("2017", proto.value_range_filter().start_value_closed());
+  EXPECT_EQ("2018", proto.value_range_filter().end_value_open());
+}
+
+TEST(FiltersTest, ValueRangeClosed) {
+  auto proto = bigtable::Filter::ValueRangeClosed("2017", "2018").as_proto();
+  ASSERT_EQ(btproto::ValueRange::kStartValueClosed,
+            proto.value_range_filter().start_value_case());
+  ASSERT_EQ(btproto::ValueRange::kEndValueClosed,
+            proto.value_range_filter().end_value_case());
+  EXPECT_EQ("2017", proto.value_range_filter().start_value_closed());
+  EXPECT_EQ("2018", proto.value_range_filter().end_value_closed());
+}
+
+TEST(FiltersTest, ValueRangeOpen) {
+  auto proto = bigtable::Filter::ValueRangeOpen("2016", "2019").as_proto();
+  ASSERT_EQ(btproto::ValueRange::kStartValueOpen,
+            proto.value_range_filter().start_value_case());
+  ASSERT_EQ(btproto::ValueRange::kEndValueOpen,
+            proto.value_range_filter().end_value_case());
+  EXPECT_EQ("2016", proto.value_range_filter().start_value_open());
+  EXPECT_EQ("2019", proto.value_range_filter().end_value_open());
+}
+
+TEST(FiltersTest, ColumnRangeRightOpen) {
+  auto proto =
+      bigtable::Filter::ColumnRangeRightOpen("fam", "col1", "col3").as_proto();
+  ASSERT_EQ(btproto::ColumnRange::kStartQualifierClosed,
+            proto.column_range_filter().start_qualifier_case());
+  ASSERT_EQ(btproto::ColumnRange::kEndQualifierOpen,
+            proto.column_range_filter().end_qualifier_case());
+  EXPECT_EQ("col1", proto.column_range_filter().start_qualifier_closed());
+  EXPECT_EQ("col3", proto.column_range_filter().end_qualifier_open());
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
+}
+
+TEST(FiltersTest, ColumnRangeLeftOpen) {
+  auto proto =
+      bigtable::Filter::ColumnRangeLeftOpen("fam", "col1", "col3").as_proto();
+  ASSERT_EQ(btproto::ColumnRange::kStartQualifierOpen,
+            proto.column_range_filter().start_qualifier_case());
+  ASSERT_EQ(btproto::ColumnRange::kEndQualifierClosed,
+            proto.column_range_filter().end_qualifier_case());
+  EXPECT_EQ("col1", proto.column_range_filter().start_qualifier_open());
+  EXPECT_EQ("col3", proto.column_range_filter().end_qualifier_closed());
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
+}
+
+TEST(FiltersTest, ColumnRangeClosed) {
+  auto proto =
+      bigtable::Filter::ColumnRangeClosed("fam", "col1", "col3").as_proto();
+  ASSERT_EQ(btproto::ColumnRange::kStartQualifierClosed,
+            proto.column_range_filter().start_qualifier_case());
+  ASSERT_EQ(btproto::ColumnRange::kEndQualifierClosed,
+            proto.column_range_filter().end_qualifier_case());
+  EXPECT_EQ("col1", proto.column_range_filter().start_qualifier_closed());
+  EXPECT_EQ("col3", proto.column_range_filter().end_qualifier_closed());
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
+}
+
+TEST(FiltersTest, ColumnRangeOpen) {
+  auto proto =
+      bigtable::Filter::ColumnRangeOpen("fam", "col1", "col3").as_proto();
+  ASSERT_EQ(btproto::ColumnRange::kStartQualifierOpen,
+            proto.column_range_filter().start_qualifier_case());
+  ASSERT_EQ(btproto::ColumnRange::kEndQualifierOpen,
+            proto.column_range_filter().end_qualifier_case());
+  EXPECT_EQ("col1", proto.column_range_filter().start_qualifier_open());
+  EXPECT_EQ("col3", proto.column_range_filter().end_qualifier_open());
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
 }
 
 TEST(FiltersTest, StripValueTransformer) {
