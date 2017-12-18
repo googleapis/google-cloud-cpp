@@ -239,10 +239,10 @@ class Filter {
    * @name Less common range filters.
    *
    * Cloud Bigtable range filters can include or exclude the limits of the
-   * range.  In most cases applications use [start,end) ranges, and the
+   * range.  In most cases applications use [@p start, @p end) ranges, and the
    * ValueRange() and ColumnRange() functions are offered to support the
    * common case.  For the less common cases where the application needs
-   * different ranges the following functions are available.
+   * different ranges, the following functions are available.
    */
   /**
    * Return a filter that accepts values in the range [@p start, @p end).
