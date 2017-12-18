@@ -154,8 +154,8 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   };
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
       .WillOnce(Invoke(mock_unrecoverable_failure));
-  // We expect the TableAdmin to make 5 calls and to let the client know about
-  // them.
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
