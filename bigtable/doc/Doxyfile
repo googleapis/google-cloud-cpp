@@ -119,7 +119,7 @@ WARN_LOGFILE           =
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = README.md doc client
+INPUT                  = README.md doc client admin
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.h *.cc *.md *.proto
 RECURSIVE              = YES

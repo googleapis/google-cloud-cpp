@@ -18,25 +18,57 @@
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  EXPECT_EQ("bigtable.googleapis.com", client_options_object.endpoint());
+  EXPECT_EQ("bigtable.googleapis.com", client_options_object.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com",
+            client_options_object.admin_endpoint());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(client_options_object.credentials()));
 }
 
-TEST(ClientOptionsTest, ClientOptionsCustomEndpoint) {
-  setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+namespace {
+class ClientOptionsEmulatorTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    // TODO(#100) - setenv() is a Unix specific call.
+    previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
+    setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+  }
+  void TearDown() override {
+    // TODO(#100) - setenv()/unsetenv() are a Unix specific calls.
+    if (previous_) {
+      setenv("BIGTABLE_EMULATOR_HOST", previous_, 1);
+    } else {
+      unsetenv("BIGTABLE_EMULATOR_HOST");
+    }
+  }
+
+ protected:
+  char const *previous_ = nullptr;
+};
+}  // anonymous namespace
+
+TEST_F(ClientOptionsEmulatorTest, Default) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  EXPECT_EQ("testendpoint.googleapis.com", client_options_object.endpoint());
+  EXPECT_EQ("testendpoint.googleapis.com",
+            client_options_object.data_endpoint());
+  EXPECT_EQ("testendpoint.googleapis.com",
+            client_options_object.admin_endpoint());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(client_options_object.credentials()));
-  unsetenv("BIGTABLE_EMULATOR_HOST");
 }
 
-TEST(ClientOptionsTest, EditEndpoint) {
+TEST(ClientOptionsTest, EditDataEndpoint) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object =
-      client_options_object.SetEndpoint("customendpoint.com");
-  EXPECT_EQ("customendpoint.com", client_options_object.endpoint());
+      client_options_object.set_data_endpoint("customendpoint.com");
+  EXPECT_EQ("customendpoint.com", client_options_object.data_endpoint());
+}
+
+TEST(ClientOptionsTest, EditAdminEndpoint) {
+  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  client_options_object =
+      client_options_object.set_admin_endpoint("customendpoint.com");
+  EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
 }
 
 TEST(ClientOptionsTest, EditCredentials) {

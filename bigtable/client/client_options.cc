@@ -15,14 +15,15 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-// TODO() resolve issue #52
 ClientOptions::ClientOptions() {
   char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
-    endpoint_ = emulator;
+    data_endpoint_ = emulator;
+    admin_endpoint_ = emulator;
     credentials_ = grpc::InsecureChannelCredentials();
   } else {
-    endpoint_ = "bigtable.googleapis.com";
+    data_endpoint_ = "bigtable.googleapis.com";
+    admin_endpoint_ = "bigtableadmin.googleapis.com";
     credentials_ = grpc::GoogleDefaultCredentials();
   }
   channel_arguments_ = grpc::ChannelArguments();

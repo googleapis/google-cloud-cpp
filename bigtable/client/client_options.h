@@ -15,6 +15,8 @@
 #ifndef BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 #define BIGTABLE_CLIENT_CLIENTOPTIONS_H_
 
+#include "bigtable/client/version.h"
+
 #include <grpc++/grpc++.h>
 
 namespace bigtable {
@@ -31,11 +33,22 @@ inline namespace BIGTABLE_CLIENT_NS {
 class ClientOptions {
  public:
   ClientOptions();
-  const std::string& endpoint() const { return endpoint_; }
-  ClientOptions& SetEndpoint(const std::string& endpoint) {
-    endpoint_ = endpoint;
+
+  /// Return the current endpoint for data RPCs.
+  const std::string& data_endpoint() const { return data_endpoint_; }
+  ClientOptions& set_data_endpoint(std::string endpoint) {
+    data_endpoint_ = std::move(endpoint);
     return *this;
   }
+
+  /// Return the current endpoint for admin RPCs.
+  const std::string& admin_endpoint() const { return admin_endpoint_; }
+  ClientOptions& set_admin_endpoint(std::string endpoint) {
+    admin_endpoint_ = std::move(endpoint);
+    return *this;
+  }
+
+  /// Return the current credentials.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return credentials_;
   }
@@ -44,18 +57,20 @@ class ClientOptions {
     credentials_ = credentials;
     return *this;
   }
-  // TODO() create setter/getter for each channel argument. Issue #53
+
+  // TODO(#53) create setter/getter for each channel argument.
   const grpc::ChannelArguments channel_arguments() const {
     return channel_arguments_;
   }
-  ClientOptions& SetChannelArguments(grpc::ChannelArguments channel_arguments) {
+  ClientOptions& set_channel_arguments(
+      grpc::ChannelArguments channel_arguments) {
     channel_arguments_ = channel_arguments;
     return *this;
   }
 
  private:
-  // Endpoint here stands for data endpoint for fetching data.
-  std::string endpoint_;
+  std::string data_endpoint_;
+  std::string admin_endpoint_;
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
 };
