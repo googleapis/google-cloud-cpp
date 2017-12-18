@@ -52,8 +52,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   client_options_object.SetGrpclbFallbackTimeout(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
             grpc::string(test_args.args[1].key));
 }
@@ -63,8 +64,9 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM,
             grpc::string(test_args.args[1].key));
 }
@@ -74,8 +76,9 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   client_options_object.SetMaxReceiveMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH,
             grpc::string(test_args.args[1].key));
 }
@@ -85,8 +88,9 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   client_options_object.SetMaxSendMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_MAX_SEND_MESSAGE_LENGTH,
             grpc::string(test_args.args[1].key));
 }
@@ -96,8 +100,9 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_LB_POLICY_NAME, grpc::string(test_args.args[1].key));
 }
 
@@ -106,8 +111,9 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_SERVICE_CONFIG, grpc::string(test_args.args[1].key));
 }
 
@@ -116,8 +122,9 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
   client_options_object.SetUserAgentPrefix("test_prefix");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(1), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(1UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_ARG_PRIMARY_USER_AGENT_STRING,
             grpc::string(test_args.args[0].key));
 }
@@ -127,8 +134,9 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   client_options_object.SetSslTargetNameOverride("test-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(static_cast<size_t>(2), test_args.num_args);
-  // Because no accessors use low level C API.
+  EXPECT_EQ(2UL, test_args.num_args);
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
   EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
             grpc::string(test_args.args[1].key));
 }

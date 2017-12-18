@@ -53,11 +53,11 @@ class ClientOptions {
     return *this;
   }
 
-  /*
+  /**
    * Set Compression Algorithm for channel.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#aaf332071bbdff5e4a7f3352f4ad564d5
+   * Please see the docs for grpc::ChannelArguments::SetCompressionAlgorithm()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -65,19 +65,23 @@ class ClientOptions {
     channel_arguments_.SetCompressionAlgorithm(algorithm);
   }
 
-  /*
-   * Set fallback timeout.
+  /**
+   * Set the grpclb fallback timeout (in ms) for the channel.
+   *
+   * Please see the docs for grpc::ChannelArguments::SetGrpclbFallbackTimeout()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
+   * for more details.
    *
    */
   inline void SetGrpclbFallbackTimeout(int fallback_timeout) {
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout);
   }
 
-  /*
+  /**
    * Set Socket Mutator for channel.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#a520690f499be85159a20200ddb986a96
+   * Please see the docs for grpc::ChannelArguments::SetSocketMutator()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -85,11 +89,11 @@ class ClientOptions {
     channel_arguments_.SetSocketMutator(mutator);
   }
 
-  /*
+  /**
    * Set the string to prepend to the user agent.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#a0d6080324cabd7ba0833b95c77c0c907
+   * Please see the docs for grpc::ChannelArguments::SetUserAgentPrefix()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -97,11 +101,11 @@ class ClientOptions {
     channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
   }
 
-  /*
+  /**
    * Set the buffer pool to be attached to the constructed channel.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#af569e816b047a77f08f0e8e0f585a4a5
+   * Please see the docs for grpc::ChannelArguments::SetResourceQuota()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -109,11 +113,11 @@ class ClientOptions {
     channel_arguments_.SetResourceQuota(resource_quota);
   }
 
-  /*
-   * Set the buffer pool to be attached to the constructed channel.
+  /**
+   * Set the max receive message sizes.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#a2629f85664dd2822fe54059c4730baf8
+   * Please see the docs for grpc::ChannelArguments::SetMaxReceiveMessageSize()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -121,11 +125,11 @@ class ClientOptions {
     channel_arguments_.SetMaxReceiveMessageSize(size);
   }
 
-  /*
-   * Set the buffer pool to be attached to the constructed channel.
+  /**
+   * Set the max send message sizes.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#ac1fa513191e8104ec57dfd6598297ce5
+   * Please see the docs for grpc::ChannelArguments::SetMaxSendMessageSize()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -133,11 +137,11 @@ class ClientOptions {
     channel_arguments_.SetMaxSendMessageSize(size);
   }
 
-  /*
-   * Set the buffer pool to be attached to the constructed channel.
+  /**
+   * Set LB policy name.
    *
-   * Please look at
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#a860058f6b9fa340bb2075ae113e423a6
+   * Please see the docs for grpc::ChannelArguments::SetLoadBalancingPolicyName()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -145,11 +149,11 @@ class ClientOptions {
     channel_arguments_.SetLoadBalancingPolicyName(lb_policy_name);
   }
 
-  /*
+  /**
    * Set service config in JSON form.
    *
-   * Please visit
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#a1537a3ed35f0f19d7aa8193fd1a1a513
+   * Please see the docs for grpc::ChannelArguments::SetServiceConfigJSON()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
@@ -157,11 +161,11 @@ class ClientOptions {
     channel_arguments_.SetServiceConfigJSON(service_config_json);
   }
 
-  /*
+  /**
    * Set target name override for SSL host name checking.
    *
-   * Please visit
-   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html#af4182e659448184f9618f079a1570328
+   * Please see the docs for grpc::ChannelArguments::SetSslTargetNameOverride()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
    */
