@@ -448,7 +448,10 @@ class Filter {
         "The arguments passed to Chain(...) must be convertible to Filter");
     Filter tmp;
     auto& chain = *tmp.filter_.mutable_chain();
-    append_stages(chain, std::forward<FilterTypes>(stages)...);
+    std::initializer_list<Filter> list{std::forward<FilterTypes>(stages)...};
+    for (Filter const& f : list) {
+      *chain.add_filters() = f.as_proto();
+    }
     return tmp;
   }
 
@@ -479,7 +482,10 @@ class Filter {
         " to Filter");
     Filter tmp;
     auto& interleave = *tmp.filter_.mutable_interleave();
-    append_streams(interleave, std::forward<FilterTypes>(streams)...);
+    std::initializer_list<Filter> list{std::forward<FilterTypes>(streams)...};
+    for (Filter const& f : list) {
+      *interleave.add_filters() = f.as_proto();
+    }
     return tmp;
   }
 
@@ -506,30 +512,6 @@ class Filter {
  private:
   /// An empty filter, discards all data.
   Filter() : filter_() {}
-
-  /// Append @p head and @p tail to @p chain recursively.
-  template <typename... FilterTypes>
-  static void append_stages(google::bigtable::v2::RowFilter::Chain& chain,
-                            Filter&& head, FilterTypes&&... tail) {
-    chain.add_filters()->Swap(&head.filter_);
-    append_stages(chain, std::forward<FilterTypes>(tail)...);
-  }
-
-  /// Terminate the recursion for append_stages()
-  static void append_stages(google::bigtable::v2::RowFilter::Chain& chain) {}
-
-  /// Append @p head and @p tail top @p interleave recursively.
-  template <typename... FilterTypes>
-  static void append_streams(
-      google::bigtable::v2::RowFilter::Interleave& interleave, Filter&& head,
-      FilterTypes&&... tail) {
-    interleave.add_filters()->Swap(&head.filter_);
-    append_streams(interleave, std::forward<FilterTypes>(tail)...);
-  }
-
-  /// Terminate the recursion for append_streams()
-  static void append_streams(
-      google::bigtable::v2::RowFilter::Interleave& interleave) {}
 
  private:
   google::bigtable::v2::RowFilter filter_;
