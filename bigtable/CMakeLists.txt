@@ -248,6 +248,14 @@ if (FORCE_SANITIZER_ERRORS)
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
 endif (FORCE_SANITIZER_ERRORS)
 
+option(FORCE_STATIC_ANALYZER_ERRORS
+    "If set enable tests that force errors detected by the static analyzer."
+    "")
+if (FORCE_STATIC_ANALYZER_ERRORS)
+    target_compile_definitions(client_force_sanitizer_failures_test
+        PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
+endif (FORCE_STATIC_ANALYZER_ERRORS)
+
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
 add_executable(integration_test tests/integration_test.cc)
