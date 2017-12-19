@@ -156,7 +156,6 @@ add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc
     admin/column_family.h
-    admin/column_family.cc
     admin/table_admin.h
     admin/table_admin.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
@@ -176,6 +175,19 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
         CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
 endif ()
+
+# Compile the googlemock library.  This library is rarely installed or
+# pre-compiled because it should be configured with the same flags as the
+# application.
+add_library(googlemock
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+target_include_directories(googlemock
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests

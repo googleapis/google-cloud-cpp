@@ -97,8 +97,8 @@ TEST(GcRule, UnionSingle) {
 
 TEST(GcRule, UnionMultiple) {
   using GC = bigtable::GcRule;
-  auto proto = GC::Union(GC::MaxNumVersions(42), GC::MaxAge(2_s + 3_us))
-      .as_proto();
+  auto proto =
+      GC::Union(GC::MaxNumVersions(42), GC::MaxAge(2_s + 3_us)).as_proto();
   EXPECT_TRUE(proto.has_union_());
   EXPECT_EQ(2, proto.union_().rules_size());
   EXPECT_EQ(42, proto.union_().rules(0).max_num_versions());

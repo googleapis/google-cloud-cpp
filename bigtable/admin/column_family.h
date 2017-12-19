@@ -47,8 +47,16 @@ class GcRule {
    * The function accepts any instantiation of std::chrono::duration<> for the
    * @p duration parameter.
    *
-   * @tparam Rep the Rep tparam for @p duration type.
-   * @tparam Period the Period tparam for @p duration type.
+   * @tparam Rep a placeholder to match the Rep tparam for @p duration type, the
+   *     semantics of this template parameter are documented in
+   *     std::chrono::duration<> (in brief, the underlying arithmetic type used
+   *     to store the number of ticks), for our purposes it is simply a formal
+   *     parameter.
+   * @tparam Period a placeholder to match the Period tparam for @p duration
+   *     type, the semantics of this template parameter are documented in
+   *     std::chrono::duration<> (in brief, the lenth of the tick in seconds,
+   *     expressed as a std::ratio<>), for our purposes it is simply a formal
+   *     parameter.
    */
   template <typename Rep, typename Period>
   static GcRule MaxAge(std::chrono::duration<Rep, Period> duration) {
@@ -81,7 +89,10 @@ class GcRule {
         "The arguments to Intersection must be convertible to GcRule");
     GcRule tmp;
     auto& intersection = *tmp.gc_rule_.mutable_intersection();
-    append_rules(intersection, std::forward<GcRuleTypes>(gc_rules)...);
+    std::initializer_list<GcRule> list{std::forward<GcRuleTypes>(gc_rules)...};
+    for (GcRule const& rule : list) {
+      *intersection.add_rules() = rule.as_proto();
+    }
     return tmp;
   }
 
@@ -103,7 +114,10 @@ class GcRule {
         "The arguments to Union must be convertible to GcRule");
     GcRule tmp;
     auto& union_ = *tmp.gc_rule_.mutable_union_();
-    append_rules(union_, std::forward<GcRuleTypes>(gc_rules)...);
+    std::initializer_list<GcRule> list{std::forward<GcRuleTypes>(gc_rules)...};
+    for (GcRule const& rule : list) {
+      *union_.add_rules() = rule.as_proto();
+    }
     return tmp;
   }
 
@@ -125,18 +139,6 @@ class GcRule {
 
  private:
   GcRule() {}
-
-  /// Append @p head and recursively append @tail to @p intersection.
-  template <typename GcOperation, typename... GcRuleTypes>
-  static void append_rules(
-      GcOperation& operation, GcRule&& head, GcRuleTypes&&... tail) {
-    operation.add_rules()->Swap(&head.gc_rule_);
-    append_rules(operation, std::forward<GcRuleTypes>(tail)...);
-  }
-
-  /// Terminate the recursion for append_rules().
-  template <typename GcOperation>
-  static void append_rules(GcOperation& operation) {}
 
  private:
   google::bigtable::admin::v2::GcRule gc_rule_;
