@@ -138,7 +138,13 @@ class Filter {
    * [@p start, @p end).
    *
    * The function accepts any instantiation of std::chrono::duration<> for the
-   * @p start and @p end parameters.
+   * @p start and @p end parameters.  For example:
+   *
+   * @code
+   * using namespace std::chrono_literals; // C++14
+   * auto r1 = bigtable::Filter::TimestampRange(10ms, 500ms);
+   * auto r2 = bigtable::Filter::TimestampRange(10min, 10min + 2s);
+   * @encode
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for @p start type,
    *     the semantics of this template parameter are documented in
@@ -148,7 +154,7 @@ class Filter {
    * @tparam Rep2 similar formal parameter for the type of @p end.
    * @tparam Period1 a placeholder to match the Period tparam for @p start
    *     type, the semantics of this template parameter are documented in
-   *     std::chrono::duration<> (in brief, the lenth of the tick in seconds,
+   *     std::chrono::duration<> (in brief, the length of the tick in seconds,
    *     expressed as a std::ratio<>), for our purposes it is simply a formal
    *     parameter.
    * @tparam Period2 similar formal parameter for the type of @p end.

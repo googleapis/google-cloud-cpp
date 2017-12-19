@@ -45,7 +45,12 @@ class GcRule {
    * the given duration.
    *
    * The function accepts any instantiation of std::chrono::duration<> for the
-   * @p duration parameter.
+   * @p duration parameter.  For example:
+   *
+   * @code
+   * auto rule1 = bigtable::GcRule::MaxAge(std::chrono::hours(48));
+   * auto rule2 = bigtable::GcRule::MaxAge(std::chrono::seconds(48 * 3600));
+   * @encode
    *
    * @tparam Rep a placeholder to match the Rep tparam for @p duration type, the
    *     semantics of this template parameter are documented in
@@ -54,7 +59,7 @@ class GcRule {
    *     parameter.
    * @tparam Period a placeholder to match the Period tparam for @p duration
    *     type, the semantics of this template parameter are documented in
-   *     std::chrono::duration<> (in brief, the lenth of the tick in seconds,
+   *     std::chrono::duration<> (in brief, the length of the tick in seconds,
    *     expressed as a std::ratio<>), for our purposes it is simply a formal
    *     parameter.
    */
