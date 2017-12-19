@@ -23,6 +23,8 @@
 
 #include <type_traits>
 
+#include "bigtable/client/detail/conjunction.h"
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -272,10 +274,14 @@ class BulkMutation {
     emplace_back(std::move(m2));
   }
 
-  /// Create a muti-row mutation from a vargarg of SingleRowMutation
-  /// TODO(coryan) - use the standard tricks to improve error messages here ...
+  /// Create a muti-row mutation from a variadic list.
   template <typename... M>
   BulkMutation(M&&... m) : BulkMutation() {
+    static_assert(
+        detail::conjunction<
+            std::is_convertible<M, SingleRowMutation>...>::value,
+        "The arguments passed to BulkMutation(...) must be convertible"
+        " to SingleRowMutation");
     emplace_many(std::forward<M>(m)...);
   }
 
