@@ -102,7 +102,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
   auto r1 = absl::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
-        // ... simulate a partial (recoverable) failure ...
+        // Simulate a partial (recoverable) failure.
         auto &e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
