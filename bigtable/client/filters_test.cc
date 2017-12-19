@@ -194,7 +194,7 @@ TEST(FiltersTest, ApplyLabelTransformer) {
   EXPECT_EQ("foo", proto.apply_label_transformer());
 }
 
-/// @test Verify that bigtable::Filter::Condition works as expected.
+/// @test Verify that `bigtable::Filter::Condition` works as expected.
 TEST(FiltersTest, Condition) {
   using F = bigtable::Filter;
   auto filter = F::Condition(F::ColumnRegex("foo"), F::CellsRowLimit(1),
@@ -209,7 +209,7 @@ TEST(FiltersTest, Condition) {
   EXPECT_EQ(2, false_f.cells_per_row_offset_filter());
 }
 
-/// @test Verify that bigtable::Filter::Chain works as expected.
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainMultipleArgs) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
@@ -224,7 +224,7 @@ TEST(FiltersTest, ChainMultipleArgs) {
   EXPECT_EQ(1, chain.filters(3).cells_per_column_limit_filter());
 }
 
-/// @test Verify that bigtable::Filter::Chain works as expected.
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainNoArgs) {
   using F = bigtable::Filter;
   auto filter = F::Chain();
@@ -234,7 +234,7 @@ TEST(FiltersTest, ChainNoArgs) {
   ASSERT_EQ(0, chain.filters_size());
 }
 
-/// @test Verify that bigtable::Filter::Chain works as expected.
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainOneArg) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::Latest(2));
@@ -245,7 +245,7 @@ TEST(FiltersTest, ChainOneArg) {
   EXPECT_EQ(2, chain.filters(0).cells_per_column_limit_filter());
 }
 
-/// @test Verify that bigtable::Filter::Interleave works as expected.
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveMultipleArgs) {
   using F = bigtable::Filter;
   auto filter = F::Interleave(F::FamilyRegex("fam"), F::ColumnRegex("col"),
@@ -260,7 +260,7 @@ TEST(FiltersTest, InterleaveMultipleArgs) {
   EXPECT_EQ(1, interleave.filters(3).cells_per_column_limit_filter());
 }
 
-/// @test Verify that bigtable::Filter::Interleave works as expected.
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveNoArgs) {
   using F = bigtable::Filter;
   auto filter = F::Interleave();
@@ -270,7 +270,7 @@ TEST(FiltersTest, InterleaveNoArgs) {
   ASSERT_EQ(0, interleave.filters_size());
 }
 
-/// @test Verify that bigtable::Filter::Interleave works as expected.
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveOneArg) {
   using F = bigtable::Filter;
   auto filter = F::Interleave(F::Latest(2));
@@ -281,7 +281,7 @@ TEST(FiltersTest, InterleaveOneArg) {
   EXPECT_EQ(2, interleave.filters(0).cells_per_column_limit_filter());
 }
 
-/// @test Verify that bigtable::Filter::Sink works as expected.
+/// @test Verify that `bigtable::Filter::Sink` works as expected.
 TEST(FiltersTest, Sink) {
   auto filter = bigtable::Filter::Sink();
   auto proto = filter.as_proto();

@@ -459,10 +459,10 @@ class Filter {
    * Return a filter that interleaves the results of many other filters.
    *
    * This filter executes each stream in parallel and then merges the results by
-   * interleaving the output from each stream.  The proto
-   * [file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * interleaving the output from each stream.  The
+   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
    * has a nice illustration in the documentation of
-   * google.bigtable.v2.RowFilter.Interleave.
+   * `google.bigtable.v2.RowFilter.Interleave`.
    *
    * In brief, if the input cells are c1, c2, c3, ..., and you have three
    * subfilters S1, S2, and S3, the output of Interleave(S1, S2, S3) is:
@@ -492,8 +492,8 @@ class Filter {
   /**
    * Return a filter that outputs all cells ignoring intermediate filters.
    *
-   * Please read the documentation in the proto
-   * [file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * Please read the documentation in the
+   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
    * for a detailed description.  In short, this is an advanced filter to
    * facilitate debugging.  You can explore the intermediate results of a
    * complex filter expression by injecting a filter of this type.
