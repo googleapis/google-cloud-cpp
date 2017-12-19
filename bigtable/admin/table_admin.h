@@ -19,6 +19,8 @@
 
 #include <memory>
 
+#include <absl/strings/string_view.h>
+
 #include "bigtable/admin/column_family.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
@@ -112,6 +114,10 @@ class TableAdmin {
 
  private:
   std::string CreateInstanceName() const;
+
+  /// Raise an exception representing the given status.
+  [[noreturn]] void RaiseError(grpc::Status const& status,
+                               absl::string_view error_message) const;
 
  private:
   std::shared_ptr<AdminClient> client_;
