@@ -17,7 +17,7 @@
 
 #include <chrono>
 
-// TODO(coryan) - these are generally useful, consider submitting to abseil.io
+// TODO(#109) - these are generally useful, consider submitting to abseil.io
 namespace bigtable {
 namespace chrono_literals {
 constexpr std::chrono::hours operator "" _h(unsigned long long h) {
