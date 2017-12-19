@@ -17,9 +17,7 @@
 #include <gmock/gmock.h>
 
 TEST(AdminClientTest, Simple) {
-  // TODO() - this is not much of a test because the behavior is not observable.
-  // We should change the AdminClient to have a dependency injection point to
-  // at least verify it is doing something.
+  // TODO(#107) - make the class behavior observable for testing purposes.
   auto admin_client =
       bigtable::CreateAdminClient("test-project", bigtable::ClientOptions());
   EXPECT_TRUE(admin_client);

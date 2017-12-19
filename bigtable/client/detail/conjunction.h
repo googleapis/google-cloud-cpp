@@ -22,7 +22,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace detail {
 
-// TODO() - use std::conjunction on C++17 environments?
+// TODO(#108) - use std::conjunction<> if available.
 /// A metafunction to fold && across a list of types, empty list case.
 template <typename...>
 struct conjunction : std::true_type {};
