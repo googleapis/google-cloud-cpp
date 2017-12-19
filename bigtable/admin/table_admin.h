@@ -19,6 +19,7 @@
 
 #include <memory>
 
+#include "bigtable/admin/column_family.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
@@ -66,6 +67,30 @@ class TableAdmin {
 
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }
+
+  /**
+   * Create a new table.
+   *
+   * This function creates a new table and sets its initial schema, for example:
+   *
+   * @code
+   * bigtable::TableAdmin admin = ...;
+   * admin.CreateTable(
+   *     "my-table", {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {},
+   *     google::bigtable::admin::v2::MILLIS);
+   * @endcode
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.
+   * @param column_families
+   * @param splits
+   * @param granularity
+   * @return
+   */
+  ::google::bigtable::admin::v2::Table CreateTable(
+      std::string table_id, std::map<std::string, GcRule> column_families,
+      std::vector<std::string> splits,
+      ::google::bigtable::admin::v2::Table::TimestampGranularity granularity);
 
   /**
    * Return all the tables in the instance.

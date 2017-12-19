@@ -22,9 +22,45 @@ namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::string TableAdmin::CreateInstanceName() const {
-  return absl::StrCat("projects/", client_->project(), "/instances/",
-                      instance_id_);
+::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
+    std::string table_id, std::map<std::string, GcRule> column_families,
+    std::vector<std::string> splits,
+    ::google::bigtable::admin::v2::Table::TimestampGranularity granularity) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  btproto::CreateTableRequest request;
+  request.set_parent(instance_name());
+  request.set_table_id(std::move(table_id));
+  auto& table = *request.mutable_table();
+  table.set_granularity(granularity);
+  auto& families = *table.mutable_column_families();
+  for (auto& kv : column_families) {
+    *families[kv.first].mutable_gc_rule() = kv.second.as_proto_move();
+  }
+  for (auto& split : splits) {
+    request.add_initial_splits()->set_key(std::move(split));
+  }
+
+  btproto::Table response;
+  while (true) {
+    grpc::ClientContext client_context;
+    rpc_policy->setup(client_context);
+    backoff_policy->setup(client_context);
+    grpc::Status status =
+        client_->table_admin().CreateTable(&client_context, request, &response);
+    client_->on_completion(status);
+    if (status.ok()) {
+      break;
+    }
+    if (not rpc_policy->on_failure(status)) {
+      throw std::runtime_error("could not create table");
+    }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  return response;
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -68,6 +104,11 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     std::this_thread::sleep_for(delay);
   }
   return result;
+}
+
+std::string TableAdmin::CreateInstanceName() const {
+  return absl::StrCat("projects/", client_->project(), "/instances/",
+                      instance_id_);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

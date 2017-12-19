@@ -17,9 +17,13 @@
 #include <gmock/gmock.h>
 
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/message_differencer.h>
 
 #include <absl/memory/memory.h>
 #include <absl/strings/str_cat.h>
+
+#include "bigtable/client/chrono_literals.h"
 
 namespace {
 namespace btproto = ::google::bigtable::admin::v2;
@@ -79,7 +83,7 @@ auto create_list_tables_lambda = [](std::string expected_token,
     return grpc::Status::OK;
   };
 };
-}  // namespace
+}  // anonymous namespace
 
 /// @test Verify basic functionality in the bigtable::TableAdmin class.
 TEST_F(TableAdminTest, Default) {
@@ -160,4 +164,109 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
+}
+
+/// @test Verify that bigtable::TableAdmin::Create works in the easy case.
+TEST_F(TableAdminTest, CreateTableSimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_create_table = [](grpc::ClientContext* ctx,
+                              btproto::CreateTableRequest const& request,
+                              btproto::Table* response) {
+    EXPECT_EQ("projects/the-project/instances/the-instance", request.parent());
+    std::string expected_text = R"""(
+parent: 'projects/the-project/instances/the-instance'
+table_id: 'new-table'
+table {
+  column_families {
+    key: 'f1'
+    value { gc_rule { max_num_versions: 1 }}
+  }
+  column_families {
+    key: 'f2'
+    value { gc_rule { max_age { seconds: 1 }}}
+  }
+  granularity: MILLIS
+}
+initial_splits { key: 'a' }
+initial_splits { key: 'c' }
+initial_splits { key: 'p' }
+)""";
+    btproto::CreateTableRequest expected;
+    EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(expected_text,
+                                                              &expected));
+    std::string delta;
+    google::protobuf::util::MessageDifferencer differencer;
+    differencer.ReportDifferencesToString(&delta);
+    EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.parent() + "/tables/" + request.table_id());
+    return grpc::Status::OK;
+  };
+  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+      .WillOnce(Invoke(mock_create_table));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  using GC = bigtable::GcRule;
+  auto actual = tested.CreateTable(
+      "new-table", {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
+      {"a", "c", "p"}, btproto::Table::MILLIS);
+  EXPECT_EQ("projects/the-project/instances/the-instance/tables/new-table",
+            actual.name());
+}
+
+/// @test Verify that bigtable::TableAdmin::Create works with recoverable
+/// failures.
+TEST_F(TableAdminTest, CreateTableFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_create_table = [](grpc::ClientContext* ctx,
+                              btproto::CreateTableRequest const& request,
+                              btproto::Table* response) {
+    EXPECT_EQ("projects/the-project/instances/the-instance", request.parent());
+    std::string expected_text = R"""(
+parent: 'projects/the-project/instances/the-instance'
+table_id: 'other-table'
+table {
+  column_families {
+    key: 'fam'
+    value { gc_rule { union {
+      rules { max_num_versions: 3 }
+      rules { max_age { seconds: 86400 }}
+    }}}
+  }
+  granularity: MILLIS
+}
+)""";
+    btproto::CreateTableRequest expected;
+    EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(expected_text,
+                                                              &expected));
+    std::string delta;
+    google::protobuf::util::MessageDifferencer differencer;
+    differencer.ReportDifferencesToString(&delta);
+    EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.parent() + "/tables/" + request.table_id());
+    return grpc::Status::OK;
+  };
+  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Invoke(mock_create_table));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+
+  // After all the setup, make the actual call we want to test.
+  using GC = bigtable::GcRule;
+  auto actual = tested.CreateTable(
+      "other-table",
+      {{"fam", GC::Union(GC::MaxNumVersions(3), GC::MaxAge(24_h))}}, {},
+      btproto::Table::MILLIS);
+  EXPECT_EQ("projects/the-project/instances/the-instance/tables/other-table",
+            actual.name());
 }
