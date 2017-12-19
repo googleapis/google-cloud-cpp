@@ -99,24 +99,24 @@ endif(GRPC_ROOT_DIR)
 # Include the functions to compile proto files.
 include(${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake)
 PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/common.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/instance.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/table.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/data.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/status.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/error_details.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/annotations.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/auth.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/http.proto)
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/common.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/instance.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/table.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/data.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/status.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/error_details.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/annotations.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/auth.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/http.proto)
 GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
-        ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto)
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto)
 include_directories("${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 # Create a library with the generated files from the relevant protos.
@@ -155,6 +155,7 @@ target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
 add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc
+    admin/column_family.h
     admin/table_admin.h
     admin/table_admin.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
@@ -175,26 +176,39 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
+# Compile the googlemock library.  This library is rarely installed or
+# pre-compiled because it should be configured with the same flags as the
+# application.
+add_library(googlemock
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
+    ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
+target_include_directories(googlemock
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
-        client/cell_test.cc
-        client/client_options_test.cc
-        client/filters_test.cc
-        client/force_sanitizer_failures_test.cc
-        client/idempotent_mutation_policy_test.cc
-        client/detail/bulk_mutator_test.cc
-        client/mutations_test.cc
-        client/table_apply_test.cc
-        client/table_bulk_apply_test.cc
-        client/rpc_backoff_policy_test.cc
-        client/rpc_retry_policy_test.cc)
+    client/cell_test.cc
+    client/client_options_test.cc
+    client/filters_test.cc
+    client/force_sanitizer_failures_test.cc
+    client/idempotent_mutation_policy_test.cc
+    client/detail/bulk_mutator_test.cc
+    client/mutations_test.cc
+    client/table_apply_test.cc
+    client/table_bulk_apply_test.cc
+    client/rpc_backoff_policy_test.cc
+    client/rpc_retry_policy_test.cc)
 foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target} bigtable_client bigtable_protos
-        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+        googlemock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach ()
@@ -202,14 +216,14 @@ endforeach ()
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
-    admin/table_admin_test.cc)
+    admin/table_admin_test.cc admin/column_family_test.cc)
 foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target} bigtable_admin_client
-        bigtable_client bigtable_protos gmock
+        bigtable_client bigtable_protos googlemock
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
@@ -221,11 +235,11 @@ add_executable(bigtable_client_all_tests
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
     bigtable_client bigtable_admin_client bigtable_protos
-    gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    googlemock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
-        "If set enable tests that force errors detected by the sanitizers."
-        "")
+    "If set enable tests that force errors detected by the sanitizers."
+    "")
 if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
@@ -235,4 +249,4 @@ endif (FORCE_SANITIZER_ERRORS)
 # Cloud Bigtable emulator.
 add_executable(apply_test tests/apply_test.cc)
 target_link_libraries(apply_test bigtable_client bigtable_protos
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
