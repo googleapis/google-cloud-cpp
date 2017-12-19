@@ -146,7 +146,7 @@ class Filter {
    * using namespace std::chrono_literals; // C++14
    * auto r1 = bigtable::Filter::TimestampRange(10ms, 500ms);
    * auto r2 = bigtable::Filter::TimestampRange(10min, 10min + 2s);
-   * @encode
+   * @endcode
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for @p start type,
    *     the semantics of this template parameter are documented in

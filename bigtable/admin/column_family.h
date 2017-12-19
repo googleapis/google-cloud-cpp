@@ -50,7 +50,7 @@ class GcRule {
    * @code
    * auto rule1 = bigtable::GcRule::MaxAge(std::chrono::hours(48));
    * auto rule2 = bigtable::GcRule::MaxAge(std::chrono::seconds(48 * 3600));
-   * @encode
+   * @endcode
    *
    * @tparam Rep a placeholder to match the Rep tparam for @p duration type, the
    *     semantics of this template parameter are documented in
