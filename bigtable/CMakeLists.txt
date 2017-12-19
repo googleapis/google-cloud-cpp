@@ -136,6 +136,7 @@ add_library(bigtable_client
     client/data.cc
     client/detail/bulk_mutator.h
     client/detail/bulk_mutator.cc
+    client/detail/conjunction.h
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h

@@ -21,6 +21,8 @@
 
 #include <chrono>
 
+#include "bigtable/client/detail/conjunction.h"
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -208,8 +210,11 @@ class Filter {
    * of multiple filters via the Union() function (aka Interleaved in the
    * proto).  Furthermore, notice that this is the cells within a row, if there
    * are multiple column families and columns, the cells are returned ordered
-   * by first column family, and then by column qualifier, and then by
-   * timestamp.
+   * by:
+   * - The column family internal ID, which is not necessarily the
+   *   lexicographical order of the column family names.
+   * - The column names, lexicographically.
+   * - Timestamp in reverse order.
    *
    * TODO(#82) - check the documentation around ordering of columns.
    * TODO(#84) - document what is the effect of n <= 0
@@ -361,12 +366,6 @@ class Filter {
   }
   //@}
 
-  //@{
-  /// @name Unimplemented, wait for the next PR.
-  // TODO(#30) - complete the implementation.
-  static Filter SinkFilter();
-  //@}
-
   /**
    * Return a filter that transforms any values into the empty string.
    *
@@ -410,34 +409,99 @@ class Filter {
    *
    * These filters compose several filters to build complex filter expressions.
    */
-  /// Return a filter that selects between two other filters based on a
-  /// predicate.
-  // TODO(#30) - implement this one.
+  /**
+   * Returns a per-row conditional filter expression.
+   *
+   * For each row the @p predicate filter is evaluated, if it returns any
+   * cells, then the cells returned by @p true_filter are returned, otherwise
+   * the cells from @p false_filter are returned.
+   */
   static Filter Condition(Filter predicate, Filter true_filter,
                           Filter false_filter) {
-    return Filter();
+    Filter tmp;
+    auto& condition = *tmp.filter_.mutable_condition();
+    condition.mutable_predicate_filter()->Swap(&predicate.filter_);
+    condition.mutable_true_filter()->Swap(&true_filter.filter_);
+    condition.mutable_false_filter()->Swap(&false_filter.filter_);
+    return tmp;
   }
 
-  /// Create a chain of filters
-  // TODO(coryan) - document ugly std::enable_if<> hack to ensure they all
-  // are of type Filter.
-  // TODO(#30) - implement this one.
-  template <typename... FilterTypes>
-  static Filter Chain(FilterTypes&&... a) {
-    return Filter();
-  }
-
-  // TODO(coryan) - same ugly hack documentation needed ...
-  // TODO(#30) - implement this one.
   /**
-   * Return a filter that unions the results of all the other filters.
-   * @tparam FilterTypes
-   * @param a
-   * @return
+   * Return a chain filter.
+   *
+   * The filter returned by this function acts like a pipeline.  The output
+   * row from each stage is passed on as input for the next stage.
+   *
+   * TODO(#84) - decide what happens when there are no filter arguments.
+   *
+   * @tparam FilterTypes the type of the filter arguments.  They must all be
+   *    convertible to Filter.
+   * @param stages the filter stages.
    */
   template <typename... FilterTypes>
-  static Filter Union(FilterTypes&&... a) {
-    return Filter();
+  static Filter Chain(FilterTypes&&... stages) {
+    // This ugly thing provides a better compile-time error message than
+    // just letting the compiler figure things out 3 levels deep
+    // as it recurses on append_types().
+    static_assert(
+        detail::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
+        "The arguments passed to Chain(...) must be convertible to Filter");
+    Filter tmp;
+    auto& chain = *tmp.filter_.mutable_chain();
+    std::initializer_list<Filter> list{std::forward<FilterTypes>(stages)...};
+    for (Filter const& f : list) {
+      *chain.add_filters() = f.as_proto();
+    }
+    return tmp;
+  }
+
+  /**
+   * Return a filter that interleaves the results of many other filters.
+   *
+   * This filter executes each stream in parallel and then merges the results by
+   * interleaving the output from each stream.  The
+   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * has a nice illustration in the documentation of
+   * `google.bigtable.v2.RowFilter.Interleave`.
+   *
+   * In brief, if the input cells are c1, c2, c3, ..., and you have three
+   * subfilters S1, S2, and S3, the output of Interleave(S1, S2, S3) is:
+   * S1(c1), S2(c1), S3(c1), S1(d2), S2(d2), S3(c2), S1(c3), S2(c3), S3(c2), ...
+   * where some of the Si(c_j) values may be empty if the filter discards the
+   * cell altogether.
+   *
+   * @tparam FilterTypes the type of the filter arguments.  They must all be
+   *     convertible for Filter.
+   * @param streams the filters to interleave.
+   */
+  template <typename... FilterTypes>
+  static Filter Interleave(FilterTypes&&... streams) {
+    static_assert(
+        detail::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
+        "The arguments passed to Interleave(...) must be convertible"
+        " to Filter");
+    Filter tmp;
+    auto& interleave = *tmp.filter_.mutable_interleave();
+    std::initializer_list<Filter> list{std::forward<FilterTypes>(streams)...};
+    for (Filter const& f : list) {
+      *interleave.add_filters() = f.as_proto();
+    }
+    return tmp;
+  }
+
+  /**
+   * Return a filter that outputs all cells ignoring intermediate filters.
+   *
+   * Please read the documentation in the
+   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * for a detailed description.  In short, this is an advanced filter to
+   * facilitate debugging.  You can explore the intermediate results of a
+   * complex filter expression by injecting a filter of this type.
+   */
+  static Filter Sink() {
+    Filter tmp;
+    tmp.filter_.set_sink(true);
+    return tmp;
   }
   //@}
 

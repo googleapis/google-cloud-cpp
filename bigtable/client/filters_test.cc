@@ -193,3 +193,97 @@ TEST(FiltersTest, ApplyLabelTransformer) {
   auto proto = bigtable::Filter::ApplyLabelTransformer("foo").as_proto();
   EXPECT_EQ("foo", proto.apply_label_transformer());
 }
+
+/// @test Verify that `bigtable::Filter::Condition` works as expected.
+TEST(FiltersTest, Condition) {
+  using F = bigtable::Filter;
+  auto filter = F::Condition(F::ColumnRegex("foo"), F::CellsRowLimit(1),
+                             F::CellsRowOffset(2));
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_condition());
+  auto const& predicate = proto.condition().predicate_filter();
+  EXPECT_EQ("foo", predicate.column_qualifier_regex_filter());
+  auto const& true_f = proto.condition().true_filter();
+  EXPECT_EQ(1, true_f.cells_per_row_limit_filter());
+  auto const& false_f = proto.condition().false_filter();
+  EXPECT_EQ(2, false_f.cells_per_row_offset_filter());
+}
+
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
+TEST(FiltersTest, ChainMultipleArgs) {
+  using F = bigtable::Filter;
+  auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
+                         F::CellsRowOffset(2), F::Latest(1));
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(4, chain.filters_size());
+  EXPECT_EQ("fam", chain.filters(0).family_name_regex_filter());
+  EXPECT_EQ("col", chain.filters(1).column_qualifier_regex_filter());
+  EXPECT_EQ(2, chain.filters(2).cells_per_row_offset_filter());
+  EXPECT_EQ(1, chain.filters(3).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
+TEST(FiltersTest, ChainNoArgs) {
+  using F = bigtable::Filter;
+  auto filter = F::Chain();
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(0, chain.filters_size());
+}
+
+/// @test Verify that `bigtable::Filter::Chain` works as expected.
+TEST(FiltersTest, ChainOneArg) {
+  using F = bigtable::Filter;
+  auto filter = F::Chain(F::Latest(2));
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(1, chain.filters_size());
+  EXPECT_EQ(2, chain.filters(0).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
+TEST(FiltersTest, InterleaveMultipleArgs) {
+  using F = bigtable::Filter;
+  auto filter = F::Interleave(F::FamilyRegex("fam"), F::ColumnRegex("col"),
+                              F::CellsRowOffset(2), F::Latest(1));
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(4, interleave.filters_size());
+  EXPECT_EQ("fam", interleave.filters(0).family_name_regex_filter());
+  EXPECT_EQ("col", interleave.filters(1).column_qualifier_regex_filter());
+  EXPECT_EQ(2, interleave.filters(2).cells_per_row_offset_filter());
+  EXPECT_EQ(1, interleave.filters(3).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
+TEST(FiltersTest, InterleaveNoArgs) {
+  using F = bigtable::Filter;
+  auto filter = F::Interleave();
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(0, interleave.filters_size());
+}
+
+/// @test Verify that `bigtable::Filter::Interleave` works as expected.
+TEST(FiltersTest, InterleaveOneArg) {
+  using F = bigtable::Filter;
+  auto filter = F::Interleave(F::Latest(2));
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(1, interleave.filters_size());
+  EXPECT_EQ(2, interleave.filters(0).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::Sink` works as expected.
+TEST(FiltersTest, Sink) {
+  auto filter = bigtable::Filter::Sink();
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.sink());
+}
