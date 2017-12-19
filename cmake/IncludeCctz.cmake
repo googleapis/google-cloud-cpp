@@ -26,7 +26,7 @@ if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
     # to include the module first, disable the tests, and then include the cctz CMakeLists.txt files.
     include(CTest)
     set(BUILD_TESTING OFF)
-    add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz)
+    add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz EXCLUDE_FROM_ALL)
     set(CCTZ_LIBRARIES cctz)
     set(CCTZ_INCLUDE_DIRS ${CCTZ_ROOT_DIR}/absl)
 elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "package")
