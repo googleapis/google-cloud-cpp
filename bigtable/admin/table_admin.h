@@ -65,32 +65,38 @@ class TableAdmin {
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
+  std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }
 
   /**
-   * Create a new table.
+   * Create a new table in the instance.
    *
    * This function creates a new table and sets its initial schema, for example:
    *
    * @code
    * bigtable::TableAdmin admin = ...;
    * admin.CreateTable(
-   *     "my-table", {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {},
-   *     google::bigtable::admin::v2::MILLIS);
+   *     "my-table", {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {});
    * @endcode
    *
    * @param table_id the name of the table relative to the instance managed by
-   *     this object.
-   * @param column_families
-   * @param splits
-   * @param granularity
-   * @return
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param column_families the definition of the column families.
+   * @param splits a (often empty) list of initial splits for the table.
+   * @param granularity the granularity of the timestamps in the new table.
+   * @return the attributes of the newly created table.  Notice that the server
+   *     only populates the table_name() field at this time.
+   * @throws std::exception if the operation cannot be completed.
    */
   ::google::bigtable::admin::v2::Table CreateTable(
       std::string table_id, std::map<std::string, GcRule> column_families,
       std::vector<std::string> splits,
-      ::google::bigtable::admin::v2::Table::TimestampGranularity granularity);
+      ::google::bigtable::admin::v2::Table::TimestampGranularity granularity =
+      ::google::bigtable::admin::v2::Table::TIMESTAMP_GRANULARITY_UNSPECIFIED);
 
   /**
    * Return all the tables in the instance.

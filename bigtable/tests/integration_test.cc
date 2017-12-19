@@ -32,13 +32,12 @@ int main(int argc, char* argv[]) try {
   std::string const table_name = argv[3];
   std::string const family = "fam";
 
-  auto admin_client = bigtable::CreateAdminClient(
-      project_id, bigtable::ClientOptions());
+  auto admin_client =
+      bigtable::CreateAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
   auto created_table = admin.CreateTable(
-      table_name, {{family, bigtable::GcRule::MaxNumVersions(1)}}, {},
-      admin_proto::Table::MILLIS);
+      table_name, {{family, bigtable::GcRule::MaxNumVersions(1)}}, {});
   std::cout << table_name << " created successfully\n";
 
   auto table_list = admin.ListTables(admin_proto::Table::FULL);
