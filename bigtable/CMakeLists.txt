@@ -244,6 +244,7 @@ endif (FORCE_SANITIZER_ERRORS)
 
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
-add_executable(apply_test tests/apply_test.cc)
-target_link_libraries(apply_test bigtable_client bigtable_protos
+add_executable(integration_test tests/integration_test.cc)
+target_link_libraries(integration_test
+    bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
