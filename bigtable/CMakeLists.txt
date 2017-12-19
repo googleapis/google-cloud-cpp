@@ -239,7 +239,7 @@ target_link_libraries(bigtable_client_all_tests
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
-    "If set enable tests that force errors detected by the sanitizers."
+    "If set, enable tests that force errors detected by the sanitizers."
     "")
 if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
@@ -247,7 +247,7 @@ if (FORCE_SANITIZER_ERRORS)
 endif (FORCE_SANITIZER_ERRORS)
 
 option(FORCE_STATIC_ANALYZER_ERRORS
-    "If set enable tests that force errors detected by the static analyzer."
+    "If set, enable tests that force errors detected by the static analyzer."
     "")
 if (FORCE_STATIC_ANALYZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
