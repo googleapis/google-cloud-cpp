@@ -515,8 +515,12 @@ class Filter {
   //@}
 
   /// Return the filter expression as a protobuf.
-  // TODO() consider a "move" operation too.
-  google::bigtable::v2::RowFilter as_proto() const { return filter_; }
+  ::google::bigtable::v2::RowFilter as_proto() const { return filter_; }
+
+  /// Move out the underlying protobuf value.
+  ::google::bigtable::v2::RowFilter as_proto_move() {
+    return std::move(filter_);
+  }
 
  private:
   /// An empty filter, discards all data.
