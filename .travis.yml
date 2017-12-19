@@ -25,7 +25,7 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
     - os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 SCAN_BUILD=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 BUILD_TYPE=Debug SCAN_BUILD=yes
     - os: linux
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
