@@ -32,7 +32,7 @@ ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ..
 # otherwise the static analyzer finds issues in them, and there is no way to
 # ignore them.
 if [ "${SCAN_BUILD}" = "yes" ]; then
-  make -j ${NCPU} -C bigtable googleapis
+  make -j ${NCPU} -C bigtable bigtable_protos
   scan-build make -j ${NCPU} -C bigtable all
 else
   make -j ${NCPU} all
