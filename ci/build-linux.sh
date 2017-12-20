@@ -35,25 +35,20 @@ sudo docker build -t "${IMAGE}:tip" \
      -f "ci/Dockerfile.${DISTRO}" .
 
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
-  # read returns 1 on EOF, so we need to give it a proper delimiter to stop it
-  # from reading until EOF and then exiting the program.  Use '|' because why
-  # not.
-  read -d '|' -r CMD <<'EOF';
-if [ ! -z "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]; then
-  cp -r /tmp/scan-build-* /d/scan-build-output;
-fi|
-EOF
+  # Define a long command to run inside the docker image.
+  readonly CMD='if [ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]; then cp -r /tmp/scan-build-* /d/scan-build-output; fi'
   sudo docker run --rm -it --volume $PWD:/d ${IMAGE}:tip bash -c "${CMD}"
   if [ -r scan-build-output/index.html ]; then
     echo -n $(tput setaf 1)
     echo "scan-build detected errors.  Please read the log for details."
-    echo "To run scan-build locally, and examine the html output please"
+    echo "To run scan-build locally and examine the HTML output"
     echo "install and configure Docker, then run:"
     echo
     echo "DISTRO=ubuntu DISTRO_VERSION=17.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux CXX=clang++ CC=clang ./ci/build-linux.sh"
     echo
-    echo "the html output will be copied into the scan-build-output"
+    echo "the HTML output will be copied into the scan-build-output"
     echo "subdirectory."
+    echo -n $(tput sgr0)
     exit 1
   else
     echo -n $(tput setaf 2)
