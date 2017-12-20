@@ -34,8 +34,9 @@ TEST(TableConfig, Simple) {
   config.set_timestamp_granularity(bigtable::TableConfig::MILLIS);
 
   auto const& families = config.column_families();
-  ASSERT_NE(families.end(), families.find("fam"));
-  EXPECT_EQ(2, families.find("fam")->second.as_proto().max_num_versions());
+  auto it = families.find("fam");
+  ASSERT_NE(families.end(), it);
+  EXPECT_EQ(2, it->second.as_proto().max_num_versions());
   auto const& splits = config.initial_splits();
   ASSERT_EQ(2UL, splits.size());
   EXPECT_EQ("foo", splits[0]);
@@ -62,4 +63,18 @@ initial_splits { key: 'qux' }
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+}
+
+TEST(TableConfig, ComplexConstructor) {
+  bigtable::TableConfig config({{"fam", bigtable::GcRule::MaxNumVersions(3)}},
+                               {"foo", "qux"});
+
+  auto const& families = config.column_families();
+  auto it = families.find("fam");
+  ASSERT_NE(families.end(), it);
+  EXPECT_EQ(3, it->second.as_proto().max_num_versions());
+  auto const& splits = config.initial_splits();
+  ASSERT_EQ(2UL, splits.size());
+  EXPECT_EQ("foo", splits[0]);
+  EXPECT_EQ("qux", splits[1]);
 }
