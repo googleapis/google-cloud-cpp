@@ -61,7 +61,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetCompressionAlgorithm(grpc_compression_algorithm algorithm) {
+  void SetCompressionAlgorithm(grpc_compression_algorithm algorithm) {
     channel_arguments_.SetCompressionAlgorithm(algorithm);
   }
 
@@ -73,7 +73,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetGrpclbFallbackTimeout(int fallback_timeout) {
+  void SetGrpclbFallbackTimeout(int fallback_timeout) {
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout);
   }
 
@@ -85,7 +85,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetSocketMutator(grpc_socket_mutator* mutator) {
+  void SetSocketMutator(grpc_socket_mutator* mutator) {
     channel_arguments_.SetSocketMutator(mutator);
   }
 
@@ -97,7 +97,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetUserAgentPrefix(const grpc::string& user_agent_prefix) {
+  void SetUserAgentPrefix(const grpc::string& user_agent_prefix) {
     channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
   }
 
@@ -109,7 +109,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetResourceQuota(const grpc::ResourceQuota& resource_quota) {
+  void SetResourceQuota(const grpc::ResourceQuota& resource_quota) {
     channel_arguments_.SetResourceQuota(resource_quota);
   }
 
@@ -121,7 +121,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetMaxReceiveMessageSize(int size) {
+  void SetMaxReceiveMessageSize(int size) {
     channel_arguments_.SetMaxReceiveMessageSize(size);
   }
 
@@ -133,7 +133,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetMaxSendMessageSize(int size) {
+  void SetMaxSendMessageSize(int size) {
     channel_arguments_.SetMaxSendMessageSize(size);
   }
 
@@ -145,7 +145,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetLoadBalancingPolicyName(const grpc::string& lb_policy_name) {
+  void SetLoadBalancingPolicyName(const grpc::string& lb_policy_name) {
     channel_arguments_.SetLoadBalancingPolicyName(lb_policy_name);
   }
 
@@ -157,7 +157,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetServiceConfigJSON(const grpc::string& service_config_json) {
+  void SetServiceConfigJSON(const grpc::string& service_config_json) {
     channel_arguments_.SetServiceConfigJSON(service_config_json);
   }
 
@@ -169,7 +169,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  inline void SetSslTargetNameOverride(const grpc::string& name) {
+  void SetSslTargetNameOverride(const grpc::string& name) {
     channel_arguments_.SetSslTargetNameOverride(name);
   }
 
