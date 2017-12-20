@@ -19,7 +19,7 @@ namespace testing {
 
 void TableTestFixture::SetUp() {
   EXPECT_CALL(*client_, Stub())
-      .WillRepeatedly(::testing::Return(*bigtable_stub_));
+      .WillRepeatedly(::testing::ReturnRef(*bigtable_stub_));
 }
 
 }  // namespace testing

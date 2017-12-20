@@ -155,7 +155,8 @@ add_library(bigtable_client_testing
     client/testing/table_test_fixture.h
     client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
-    bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    bigtable_protos googlemock
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # the admin library
 add_library(bigtable_admin_client
