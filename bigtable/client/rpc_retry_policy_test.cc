@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/chrono_literals.h"
+#include "bigtable/client/testing/chrono_literals.h"
 
 #include <gtest/gtest.h>
 #include <chrono>

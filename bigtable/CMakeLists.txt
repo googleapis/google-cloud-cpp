@@ -129,7 +129,6 @@ enable_testing()
 # the client library
 add_library(bigtable_client
     client/cell.h
-    client/chrono_literals.h
     client/client_options.h
     client/client_options.cc
     client/data.h
@@ -150,6 +149,13 @@ add_library(bigtable_client
     client/version.h)
 target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
+add_library(bigtable_client_testing
+    client/testing/chrono_literals.h
+    client/testing/table_test_fixture.h
+    client/testing/table_test_fixture.cc)
+target_link_libraries(bigtable_client_testing
+    bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # the admin library
 add_library(bigtable_admin_client
@@ -194,8 +200,9 @@ foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_link_libraries(${target} bigtable_client bigtable_protos
-        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_client bigtable_protos gmock
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach ()
@@ -209,8 +216,9 @@ foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_link_libraries(${target} bigtable_admin_client
-        bigtable_client bigtable_protos gmock
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_admin_client bigtable_client
+        bigtable_protos gmock
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
@@ -221,8 +229,9 @@ endforeach ()
 add_executable(bigtable_client_all_tests
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
-    bigtable_client bigtable_admin_client bigtable_protos
-    gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    bigtable_client_testing bigtable_admin_client bigtable_client
+    bigtable_protos gmock
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
     "If set enable tests that force errors detected by the sanitizers."

@@ -16,7 +16,7 @@
 
 #include <gmock/gmock.h>
 
-#include "bigtable/client/chrono_literals.h"
+#include "bigtable/client/testing/chrono_literals.h"
 
 using namespace bigtable::chrono_literals;
 
