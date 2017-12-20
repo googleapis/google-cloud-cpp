@@ -176,19 +176,6 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
-# Compile the googlemock library.  This library is rarely installed or
-# pre-compiled because it should be configured with the same flags as the
-# application.
-add_library(googlemock
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
-target_include_directories(googlemock
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
-
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
     client/cell_test.cc
@@ -208,7 +195,7 @@ foreach (fname ${bigtable_client_unit_tests})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target} bigtable_client bigtable_protos
-        googlemock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach ()
@@ -223,7 +210,7 @@ foreach (fname ${bigtable_admin_unit_tests})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target} bigtable_admin_client
-        bigtable_client bigtable_protos googlemock
+        bigtable_client bigtable_protos gmock
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
@@ -235,7 +222,7 @@ add_executable(bigtable_client_all_tests
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
     bigtable_client bigtable_admin_client bigtable_protos
-    googlemock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
     "If set enable tests that force errors detected by the sanitizers."
