@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
+
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 

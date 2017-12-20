@@ -164,7 +164,9 @@ add_library(bigtable_admin_client
     admin/admin_client.cc
     admin/column_family.h
     admin/table_admin.h
-    admin/table_admin.cc)
+    admin/table_admin.cc
+    admin/table_config.h
+    admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
     absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
@@ -211,7 +213,9 @@ endforeach ()
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
-    admin/table_admin_test.cc admin/column_family_test.cc)
+    admin/column_family_test.cc
+    admin/table_admin_test.cc
+    admin/table_config_test.cc)
 foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
