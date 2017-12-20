@@ -16,6 +16,8 @@
 
 #include <gmock/gmock.h>
 
+#include <google/protobuf/util/message_differencer.h>
+
 #include "bigtable/client/chrono_literals.h"
 
 namespace btproto = ::google::bigtable::v2;
@@ -286,4 +288,19 @@ TEST(FiltersTest, Sink) {
   auto filter = bigtable::Filter::Sink();
   auto proto = filter.as_proto();
   ASSERT_TRUE(proto.sink());
+}
+
+/// @test Verify that `bigtable::Filter::as_proto_move` works as expected.
+TEST(FiltersTest, MoveProto) {
+  using F = bigtable::Filter;
+  auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
+                         F::CellsRowOffset(2), F::Latest(1));
+  auto proto_copy = filter.as_proto();
+  auto proto_move = filter.as_proto_move();
+  ASSERT_FALSE(filter.as_proto().has_chain());
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(proto_copy, proto_move)) << delta;
 }
