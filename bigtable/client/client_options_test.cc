@@ -52,7 +52,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   client_options_object.SetGrpclbFallbackTimeout(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetGrpclbFallbackTimeout() inserts new argument to args_ hence comparing
@@ -66,7 +66,7 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetCompressionAlgorithm() inserts new argument to args_ hence comparing 2nd
@@ -80,7 +80,7 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   client_options_object.SetMaxReceiveMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetMaxReceiveMessageSize() inserts new argument to args_ hence comparing
@@ -94,7 +94,7 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   client_options_object.SetMaxSendMessageSize(5);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetMaxSendMessageSize() inserts new argument to args_ hence comparing 2nd
@@ -108,7 +108,7 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetLoadBalancingPolicyName() inserts new argument to args_ hence comparing
@@ -121,7 +121,7 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetServiceConfigJSON() inserts new argument to args_ hence comparing 2nd
@@ -134,7 +134,7 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
   client_options_object.SetUserAgentPrefix("test_prefix");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(1UL, test_args.num_args);
+  ASSERT_EQ(1UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetUserAgentPrefix() appends the new prefix to existing prefix hence
@@ -148,7 +148,7 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   client_options_object.SetSslTargetNameOverride("test-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
-  EXPECT_EQ(2UL, test_args.num_args);
+  ASSERT_EQ(2UL, test_args.num_args);
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // SetSslTargetNameOverride() inserts new argument to args_ hence comparing
