@@ -35,7 +35,7 @@ class TableConfig {
         granularity_(TIMESTAMP_GRANULARITY_UNSPECIFIED) {}
 
   /// Move the contents to the proto to create tables.
-  void MoveTo(::google::bigtable::admin::v2::CreateTableRequest& request);
+  ::google::bigtable::admin::v2::CreateTableRequest as_proto_move();
 
   using TimestampGranularity =
       ::google::bigtable::admin::v2::Table::TimestampGranularity;

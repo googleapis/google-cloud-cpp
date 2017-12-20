@@ -56,8 +56,7 @@ initial_splits { key: 'qux' }
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  ::google::bigtable::admin::v2::CreateTableRequest request;
-  config.MoveTo(request);
+  auto request = config.as_proto_move();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;

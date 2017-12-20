@@ -16,8 +16,8 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-void TableConfig::MoveTo(
-    ::google::bigtable::admin::v2::CreateTableRequest& request) {
+::google::bigtable::admin::v2::CreateTableRequest
+TableConfig::as_proto_move() {
   // As a challenge, we implement the strong exception guarantee in this
   // function.
   // First create a temporary value to hold intermediate computations.
@@ -29,7 +29,8 @@ void TableConfig::MoveTo(
     families[kv.first].mutable_gc_rule()->Clear();
   }
   // Make sure there is space to receive all the values in initial_splits_.
-  tmp.mutable_initial_splits()->Reserve(initial_splits_.size());
+  tmp.mutable_initial_splits()->Reserve(
+      static_cast<int>(initial_splits_.size()));
   // Copy the granularity.
   table.set_granularity(timestamp_granularity());
 
@@ -40,11 +41,10 @@ void TableConfig::MoveTo(
   for (auto& split : initial_splits_) {
     tmp.add_initial_splits()->set_key(std::move(split));
   }
-  request.mutable_table()->Swap(tmp.mutable_table());
-  request.mutable_initial_splits()->Swap(tmp.mutable_initial_splits());
   initial_splits_.clear();
   column_families_.clear();
   granularity_ = TIMESTAMP_GRANULARITY_UNSPECIFIED;
+  return tmp;
 }
 
 constexpr TableConfig::TimestampGranularity TableConfig::MILLIS;

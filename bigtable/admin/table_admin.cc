@@ -29,10 +29,9 @@ inline namespace BIGTABLE_CLIENT_NS {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
-  btproto::CreateTableRequest request;
+  auto request = config.as_proto_move();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
-  config.MoveTo(request);
 
   btproto::Table response;
   while (true) {
@@ -101,14 +100,12 @@ std::string TableAdmin::CreateInstanceName() const {
                       instance_id_);
 }
 
-
 void TableAdmin::RaiseError(grpc::Status const& status,
                             absl::string_view error_message) const {
   std::ostringstream os;
   os << "TableAdmin(" << instance_name() << ") unrecoverable error or too many "
-     << " errors in " << error_message << ": "
-     << status.error_message() << " [" << status.error_code() << "] "
-     << status.error_details();
+     << " errors in " << error_message << ": " << status.error_message() << " ["
+     << status.error_code() << "] " << status.error_details();
   // TODO(#35) - implement non-throwing version of this class.
   throw std::runtime_error(os.str());
 }
