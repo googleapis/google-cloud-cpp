@@ -35,3 +35,89 @@ accept your pull requests.
 
 Samples in this repository follow the [Google C++ Style Guide](
 https://google.github.io/styleguide/cppguide.html).
+
+## Advanced Compilation and Testing
+
+Please see the [README](README.md) for the basic instructions on how to compile
+the code.  In this section we will describe some advanced options.
+
+### Changing the Compiler
+
+If your workstation has multiple compilers (or multiple versions of a compiler)
+installed you can change the compiler using:
+
+```console
+# Run this in your build directory, typically google-cloud-cpp/.build
+$ CXX=clang++ CC=clang cmake ..
+# Then compile and test normally:
+$ make -j 4
+$ make -j 4 test
+```
+
+### Changing the Build Type
+
+By default the system is compiled with optimizations on, if you want to compile
+a debug version use:
+
+```console
+# Run this in your build directory, typically google-cloud-cpp/.build
+$ CXX=clang++ CC=clang cmake -DCMAKE_BUILD_TYPE=Debug ..
+# Then compile and test normally:
+$ make -j 4
+$ make -j 4 test
+```
+
+This project supports `Debug`, `Release`, and `Coverage` builds.
+
+### Using Docker to Compile and Test
+
+This project uses Docker in its CI builds, to test against multiple Linux
+distributions, using the native compiler and library versions included in those
+distributions.
+From time to time you may need to run the same build in your workstation.
+To do so, following these
+[instructions](https://docs.docker.com/engine/installation/)
+to install Docker on your workstation.
+Then compile and test using:
+
+```console
+# Run this from the google-cloud-cpp directory:
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.04 CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/build-linux.sh
+```
+
+You can set any of the following environment variables to control the build.
+Please consult the build matrix in your [.travis.yml](.travis.yml) file to see
+which combinations are tested regularly.
+
+ * **CXX**: the C++ compiler command, you can use a full path if needed.
+ * **CC**: the C compiler command, you can use a full path if needed.
+ * **DISTRO**: the Linux distribution, use `ubuntu`, `fedora`, or `centos`.
+ * **DISTRO_VERSION**: the version of the distribution, e.g. `17.04`.
+ * **CHECK_STYLE**: if set to `yes` the build fails if the code is different
+   than the output from `clang-format(1)`.
+ * **GENERATE_DOCS**: if set to `yes` the build will generate the documentation
+   using [Doxygen](https://www.doxygen.org).  In addition, if `GH_TOKEN` is set
+   it will try to update the `gh-pages` branch on your fork with the new
+   documentation.
+ * **BUILD_TYPE**: if set, override the `CMAKE_BUILD_TYPE` flag when configuring
+   the build.
+ * **CMAKE_FLAGS**: if set, these additional cmake flags are used to configure
+   the build.  The more interesting flags include:
+   * **-DSANITIZE_ADDRESS=yes**: use the
+     [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html),
+     if available, on this build.  Typically use with `CXX=clang++ CC=clang`.
+   * **-DSANITIZE_UNDEFINED=yes**: use the
+     [UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html),
+     if available, on this build.  Typically use with `CXX=clang++ CC=clang`.
+   * **-DSANITIZE_THREAD=yes**: use the
+     [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html),
+     if available, on this build.  Typically use with `CXX=clang++ CC=clang`.
+   * **-DSANITIZE_MEMORY=yes**: use the
+     [MemorySanitizer](https://clang.llvm.org/docs/MemorySanitizer.html),
+     if available, on this build.  Typically use with `CXX=clang++ CC=clang`.
+     This is rarely used because it requires a C++ library compiled with the
+     same options to avoid false positives.
+ * **-DBIGTABLE_CLIENT_CLANG_TIDY=yes**: configure the build to run `clang-tidy`
+   for the code in the `bigtable/` subdirectory.  Check the
+   [configuration file](.clang-tidy) for details on how clang-tidy is
+   configured.
