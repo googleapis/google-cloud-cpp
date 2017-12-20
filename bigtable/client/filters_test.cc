@@ -18,7 +18,7 @@
 
 #include <google/protobuf/util/message_differencer.h>
 
-#include "bigtable/client/chrono_literals.h"
+#include "bigtable/client/testing/chrono_literals.h"
 
 namespace btproto = ::google::bigtable::v2;
 

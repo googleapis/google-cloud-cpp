@@ -12,26 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/chrono_literals.h"
 #include "bigtable/client/data.h"
 
 #include <absl/memory/memory.h>
-#include <gmock/gmock.h>
-#include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
+
+#include "bigtable/client/testing/chrono_literals.h"
+#include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define types and functions used in the tests.
-// TODO(#67) - refactor Mock classes to a testing/ subdirectory.
 namespace {
-class MockClient : public bigtable::ClientInterface {
- public:
-  MockClient() : mock_stub(new google::bigtable::v2::MockBigtableStub) {}
-
-  MOCK_METHOD1(Open,
-               std::unique_ptr<bigtable::Table>(std::string const &table_id));
-  MOCK_CONST_METHOD0(Stub, google::bigtable::v2::Bigtable::StubInterface &());
-
-  std::unique_ptr<google::bigtable::v2::MockBigtableStub> mock_stub;
-};
 
 class MockReader : public grpc::ClientReaderInterface<
                        ::google::bigtable::v2::MutateRowsResponse> {
@@ -42,20 +31,7 @@ class MockReader : public grpc::ClientReaderInterface<
   MOCK_METHOD1(Read, bool(::google::bigtable::v2::MutateRowsResponse *));
 };
 
-class TableBulkApplyTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    using namespace ::testing;
-    namespace btproto = ::google::bigtable::v2;
-
-    EXPECT_CALL(client_, Stub())
-        .WillRepeatedly(Invoke([this]() -> btproto::Bigtable::StubInterface & {
-          return *client_.mock_stub;
-        }));
-  }
-  MockClient client_;
-  bigtable::Table table_ = bigtable::Table(&client_, "foo-table");
-};
+class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
@@ -82,7 +58,7 @@ TEST_F(TableBulkApplyTest, Simple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&reader](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return reader.release();
@@ -127,7 +103,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
@@ -167,7 +143,7 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
@@ -217,7 +193,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
@@ -243,7 +219,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
   bt::Table custom_table(
-      &client_, "foo_table",
+      client_.get(), "foo_table",
       // Configure the Table to stop at 3 failures.
       bt::LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.
@@ -275,7 +251,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
     return stream.release();
   };
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
@@ -316,7 +292,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return r1.release();
@@ -355,7 +331,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
                                     "no such table")));
 
-  EXPECT_CALL(*client_.mock_stub, MutateRowsRaw(_, _))
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
           [&reader](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
             return reader.release();
