@@ -24,9 +24,7 @@ namespace btproto = ::google::bigtable::admin::v2;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
-    std::string table_id, std::map<std::string, GcRule> column_families,
-    std::vector<std::string> splits,
-    ::google::bigtable::admin::v2::Table::TimestampGranularity granularity) {
+    std::string table_id, TableConfig config) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
@@ -34,15 +32,7 @@ inline namespace BIGTABLE_CLIENT_NS {
   btproto::CreateTableRequest request;
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
-  auto& table = *request.mutable_table();
-  table.set_granularity(granularity);
-  auto& families = *table.mutable_column_families();
-  for (auto& kv : column_families) {
-    *families[kv.first].mutable_gc_rule() = kv.second.as_proto_move();
-  }
-  for (auto& split : splits) {
-    request.add_initial_splits()->set_key(std::move(split));
-  }
+  config.MoveTo(request);
 
   btproto::Table response;
   while (true) {

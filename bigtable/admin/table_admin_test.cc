@@ -212,7 +212,7 @@ table {
     key: 'f2'
     value { gc_rule { max_age { seconds: 1 }}}
   }
-  granularity: MILLIS
+  granularity: TIMESTAMP_GRANULARITY_UNSPECIFIED
 }
 initial_splits { key: 'a' }
 initial_splits { key: 'c' }
@@ -241,9 +241,10 @@ initial_splits { key: 'p' }
 
   // After all the setup, make the actual call we want to test.
   using GC = bigtable::GcRule;
-  auto actual = tested.CreateTable(
-      "new-table", {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
-      {"a", "c", "p"}, btproto::Table::MILLIS);
+  bigtable::TableConfig config(
+      {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
+      {"a", "c", "p"});
+  auto actual = tested.CreateTable("new-table", std::move(config));
   EXPECT_EQ("projects/the-project/instances/the-instance/tables/new-table",
             actual.name());
 }
@@ -294,10 +295,11 @@ table {
 
   // After all the setup, make the actual call we want to test.
   using GC = bigtable::GcRule;
-  auto actual = tested.CreateTable(
-      "other-table",
-      {{"fam", GC::Union(GC::MaxNumVersions(3), GC::MaxAge(24_h))}}, {},
-      btproto::Table::MILLIS);
+  bigtable::TableConfig config(
+      {{"fam", GC::Union(GC::MaxNumVersions(3), GC::MaxAge(24_h))}}, {});
+  config.set_timestamp_granularity(bigtable::TableConfig::MILLIS);
+
+  auto actual = tested.CreateTable("other-table", config);
   EXPECT_EQ("projects/the-project/instances/the-instance/tables/other-table",
             actual.name());
 }
@@ -320,9 +322,8 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
-  using GC = bigtable::GcRule;
   EXPECT_THROW(
-      tested.CreateTable("other-table", {{"fam", GC::MaxNumVersions(3)}}, {}),
+      tested.CreateTable("other-table", bigtable::TableConfig()),
       std::runtime_error);
 }
 
@@ -348,8 +349,7 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
-  using GC = bigtable::GcRule;
   EXPECT_THROW(
-      tested.CreateTable("other-table", {{"fam", GC::MaxNumVersions(3)}}, {}),
+      tested.CreateTable("other-table", bigtable::TableConfig()),
       std::runtime_error);
 }

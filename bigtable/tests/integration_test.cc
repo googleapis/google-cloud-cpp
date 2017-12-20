@@ -37,7 +37,8 @@ int main(int argc, char* argv[]) try {
   bigtable::TableAdmin admin(admin_client, instance_id);
 
   auto created_table = admin.CreateTable(
-      table_name, {{family, bigtable::GcRule::MaxNumVersions(1)}}, {});
+      table_name, bigtable::TableConfig(
+                      {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
   std::cout << table_name << " created successfully\n";
 
   auto table_list = admin.ListTables(admin_proto::Table::FULL);
