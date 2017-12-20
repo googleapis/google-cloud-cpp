@@ -42,7 +42,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     if (NOT EXISTS "${GRPC_ROOT_DIR}/CMakeLists.txt")
         message(ERROR "GOOGLE_CLOUD_CPP_GRPC_PROVIDER is \"module\" but GRPC_ROOT_DIR is wrong")
     endif ()
-    add_subdirectory(${GRPC_ROOT_DIR} third_party/grpc)
+    add_subdirectory(${GRPC_ROOT_DIR} third_party/grpc EXCLUDE_FROM_ALL)
     set(GRPCPP_LIBRARIES grpc++)
     set(GRPC_LIBRARIES grpc)
     set(PROTOBUF_LIBRARIES libprotobuf)
@@ -104,7 +104,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif ()
 
-# Enable unit tests.
+# Enable testing in this directory so we can do a top-level `make test`.
 enable_testing()
 
 # Add subprojects here.

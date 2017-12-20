@@ -47,7 +47,7 @@ class Client : public ClientInterface {
         instance_(instance),
         credentials_(options.credentials()),
         channel_(
-            grpc::CreateChannel(options.endpoint(), options.credentials())),
+            grpc::CreateChannel(options.data_endpoint(), options.credentials())),
         bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
 
   Client(const std::string& project, const std::string& instance)
