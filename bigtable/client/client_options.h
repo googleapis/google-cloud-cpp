@@ -114,7 +114,7 @@ class ClientOptions {
   }
 
   /**
-   * Set the max receive message sizes in bytes. -1 means unlimited.
+   * Set the max receive message size in bytes. -1 means unlimited.
    *
    * Please see the docs for grpc::ChannelArguments::SetMaxReceiveMessageSize()
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
@@ -126,7 +126,7 @@ class ClientOptions {
   }
 
   /**
-   * Set the max send message sizes in milliseconds. INT_MAX means unlimited.
+   * Set the max send message size in bytes. -1 means unlimited.
    *
    * Please see the docs for grpc::ChannelArguments::SetMaxSendMessageSize()
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
