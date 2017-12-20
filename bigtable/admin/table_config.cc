@@ -55,7 +55,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 //    http://en.cppreference.com/w/cpp/language/definition
 // In C++17 these would be inline variables and we would not care, but alas! we
 // are sticking to C++11 (for good reasons).
-TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED;
 constexpr TableConfig::TimestampGranularity TableConfig::MILLIS;  // NOLINT
 constexpr TableConfig::TimestampGranularity
     TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED;  // NOLINT
