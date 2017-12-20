@@ -46,9 +46,18 @@ inline namespace BIGTABLE_CLIENT_NS {
   return tmp;
 }
 
-constexpr TableConfig::TimestampGranularity TableConfig::MILLIS;
+// Disable clang-tidy warnings for these two definitions. clang-tidy is confused
+// it claims, for example:
+//   error: redundant 'MILLIS' declaration [readability-redundant-declaration,-warnings-as-errors]
+// But these are not declarations, these are definitions of variables that are
+// odr-used in at least the tests:
+//    http://en.cppreference.com/w/cpp/language/definition
+// In C++17 these would be inline variables and we would not care, but alas! we
+// are sticking to C++11 (for good reasons).
+TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED;
+constexpr TableConfig::TimestampGranularity TableConfig::MILLIS; // NOLINT
 constexpr TableConfig::TimestampGranularity
-    TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED;
+    TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED; // NOLINT
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
