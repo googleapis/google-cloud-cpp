@@ -25,43 +25,43 @@ void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
       throw std::runtime_error("Row keys are expected in increasing order");
     }
-    cell_.row_ = chunk.row_key();
+    cell_.row = chunk.row_key();
   }
 
   if (chunk.has_family_name()) {
     if (not chunk.has_qualifier()) {
       throw std::runtime_error("New column family must specify qualifier");
     }
-    cell_.family_ = chunk.family_name().value();
+    cell_.family = chunk.family_name().value();
   }
 
   if (chunk.has_qualifier()) {
-    cell_.column_ = chunk.qualifier().value();
+    cell_.column = chunk.qualifier().value();
   }
 
   if (cell_first_chunk_) {
-    cell_.timestamp_ = chunk.timestamp_micros();
+    cell_.timestamp = chunk.timestamp_micros();
   }
   cell_first_chunk_ = false;
 
   for (const auto& l : chunk.labels()) {
-    cell_.labels_.push_back(l);
+    cell_.labels.push_back(l);
   }
 
   if (chunk.value_size() > 0) {
-    cell_.value_.reserve(chunk.value_size());
+    cell_.value.reserve(chunk.value_size());
   }
-  cell_.value_.append(chunk.value());
+  cell_.value.append(chunk.value());
 
   // Last chunk in the cell has zero for value size
   if (chunk.value_size() == 0) {
     if (cells_.empty()) {
-      if (cell_.row_.empty()) {
+      if (cell_.row.empty()) {
         throw std::runtime_error("Missing row key at last chunk in cell");
       }
-      row_key_ = cell_.row_;
+      row_key_ = cell_.row;
     } else {
-      if (row_key_.compare(cell_.row_) != 0) {
+      if (row_key_.compare(cell_.row) != 0) {
         throw std::runtime_error("Different row key in cell chunk");
       }
     }
@@ -84,7 +84,7 @@ void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
     }
     row_ready_ = true;
     last_seen_row_key_ = row_key_;
-    cell_.row_ = "";
+    cell_.row.clear();
   }
 }
 

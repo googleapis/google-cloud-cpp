@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGTABLE_CLIENT_READROWSPARSER_H_
-#define BIGTABLE_CLIENT_READROWSPARSER_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READROWSPARSER_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READROWSPARSER_H_
 
 #include "bigtable/client/version.h"
 
@@ -32,14 +32,17 @@ inline namespace BIGTABLE_CLIENT_NS {
  * protobufs into Row objects.
  *
  * Users are expected to do something like:
- *   while (!stream.EOT()) {
- *     chunk = stream.NextChunk();
- *     parser.HandleChunk(chunk);
- *     if (parser.HasNext()) {
- *       row = parser.Next();  // you now own `row`
- *     }
+ *
+ * @code
+ * while (!stream.EOT()) {
+ *   chunk = stream.NextChunk();
+ *   parser.HandleChunk(chunk);
+ *   if (parser.HasNext()) {
+ *     row = parser.Next();  // you now own `row`
  *   }
- *   parser.HandleEOT();
+ * }
+ * parser.HandleEOT();
+ * @endcode
  */
 class ReadRowsParser {
  public:
@@ -89,19 +92,18 @@ class ReadRowsParser {
    public:
     /// Moves partial results into a Cell class.
     Cell MoveToCell() {
-      Cell cell(row_, family_, column_, timestamp_, std::move(value_),
-                std::move(labels_));
-      value_ = "";
-      labels_.clear();
+      Cell cell(row, family, column, timestamp, std::move(value),
+                std::move(labels));
+      value.clear();
       return cell;
     }
 
-    std::string row_;
-    std::string family_;
-    std::string column_;
-    int64_t timestamp_;
-    std::string value_;
-    std::vector<std::string> labels_;
+    std::string row;
+    std::string family;
+    std::string column;
+    int64_t timestamp;
+    std::string value;
+    std::vector<std::string> labels;
   };
 
   // Row key for the current row.
@@ -126,4 +128,4 @@ class ReadRowsParser {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // BIGTABLE_CLIENT_READROWSPARSER_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READROWSPARSER_H_
