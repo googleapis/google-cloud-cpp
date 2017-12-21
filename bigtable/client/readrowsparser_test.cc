@@ -119,7 +119,7 @@ TEST_F(AcceptanceTest, InvalidNoCommit) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -136,7 +136,7 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeCommit) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -155,7 +155,7 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeValue) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -183,7 +183,7 @@ TEST_F(AcceptanceTest, InvalidNewColFamilyMustSpecifyQualifier) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -209,19 +209,19 @@ TEST_F(AcceptanceTest, BareCommitImpliesTs) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -245,12 +245,12 @@ TEST_F(AcceptanceTest, SimpleRowWithTimestamp) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -273,12 +273,12 @@ TEST_F(AcceptanceTest, MissingTimestampImpliedTs) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -300,12 +300,12 @@ TEST_F(AcceptanceTest, EmptyCellValue) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -334,19 +334,19 @@ TEST_F(AcceptanceTest, TwoUnsplitCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -376,19 +376,19 @@ TEST_F(AcceptanceTest, TwoQualifiers) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: D\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: D\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -419,19 +419,19 @@ TEST_F(AcceptanceTest, TwoFamilies) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: B\n"
-    "qual: E\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: B\n"
+      "qual: E\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -462,19 +462,19 @@ TEST_F(AcceptanceTest, WithLabels) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: L_1\n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: L_1\n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: L_2\n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: L_2\n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -506,19 +506,19 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -547,12 +547,12 @@ TEST_F(AcceptanceTest, SplitCell) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -592,12 +592,12 @@ TEST_F(AcceptanceTest, SplitFourWays) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: L\n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: L\n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -636,19 +636,19 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -688,19 +688,19 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: D\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: D\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -750,19 +750,19 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: D\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: D\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -803,19 +803,19 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: B\n"
-    "qual: E\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: B\n"
+      "qual: E\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -846,7 +846,7 @@ TEST_F(AcceptanceTest, InvalidNoCommitBetweenRows) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -876,7 +876,7 @@ TEST_F(AcceptanceTest, InvalidNoCommitAfterFirstRow) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -907,12 +907,12 @@ TEST_F(AcceptanceTest, InvalidLastRowMissingCommit) {
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -944,12 +944,12 @@ TEST_F(AcceptanceTest, InvalidDuplicateRowKey) {
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -978,12 +978,12 @@ TEST_F(AcceptanceTest, InvalidNewRowMissingRowKey) {
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1015,19 +1015,19 @@ TEST_F(AcceptanceTest, TwoRows) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1058,19 +1058,19 @@ TEST_F(AcceptanceTest, TwoRowsImplicitTimestamp) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: value-VAL\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1100,19 +1100,19 @@ TEST_F(AcceptanceTest, TwoRowsEmptyValue) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1149,26 +1149,26 @@ TEST_F(AcceptanceTest, TwoRowsOneWithMultipleCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: B\n"
-    "qual: D\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: B\n"
+      "qual: D\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1212,33 +1212,33 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: D\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: D\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: B\n"
-    "qual: E\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: B\n"
+      "qual: E\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: B\n"
-    "qual: F\n"
-    "ts: 96\n"
-    "value: value-VAL_4\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: B\n"
+      "qual: F\n"
+      "ts: 96\n"
+      "value: value-VAL_4\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1284,33 +1284,33 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCellsMultipleFamilies) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK_1\n"
-    "fm: B\n"
-    "qual: E\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: B\n"
+      "qual: E\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: M\n"
-    "qual: O\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: M\n"
+      "qual: O\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: N\n"
-    "qual: P\n"
-    "ts: 96\n"
-    "value: value-VAL_4\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: N\n"
+      "qual: P\n"
+      "ts: 96\n"
+      "value: value-VAL_4\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1354,33 +1354,33 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 99\n"
-    "value: value-VAL_1\n"
-    "label: L_1\n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 99\n"
+      "value: value-VAL_1\n"
+      "label: L_1\n",
 
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 98\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 98\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: B\n"
-    "qual: D\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: L_3\n",
+      "rk: RK_2\n"
+      "fm: B\n"
+      "qual: D\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: L_3\n",
 
-    "rk: RK_2\n"
-    "fm: B\n"
-    "qual: D\n"
-    "ts: 96\n"
-    "value: value-VAL_4\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: B\n"
+      "qual: D\n"
+      "ts: 96\n"
+      "value: value-VAL_4\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1422,19 +1422,19 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_1\n"
+      "label: \n",
 
-    "rk: RK_2\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1452,7 +1452,7 @@ TEST_F(AcceptanceTest, InvalidBareReset) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1477,7 +1477,7 @@ TEST_F(AcceptanceTest, InvalidBadResetNoCommit) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1507,7 +1507,7 @@ TEST_F(AcceptanceTest, InvalidMissingKeyAfterReset) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1532,7 +1532,7 @@ TEST_F(AcceptanceTest, NoDataAfterReset) {
 
   EXPECT_NO_THROW(FeedChunks(chunks));
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1566,12 +1566,12 @@ TEST_F(AcceptanceTest, SimpleReset) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1606,12 +1606,12 @@ TEST_F(AcceptanceTest, ResetToNewVal) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1646,12 +1646,12 @@ TEST_F(AcceptanceTest, ResetToNewQual) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: D\n"
-    "ts: 100\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: D\n"
+      "ts: 100\n"
+      "value: value-VAL_1\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1691,12 +1691,12 @@ TEST_F(AcceptanceTest, ResetWithSplits) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1736,19 +1736,19 @@ TEST_F(AcceptanceTest, ResetTwoCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1794,12 +1794,12 @@ TEST_F(AcceptanceTest, TwoResets) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_3\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1840,19 +1840,19 @@ TEST_F(AcceptanceTest, ResetThenTwoCells) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: B\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: B\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: B\n"
-    "qual: D\n"
-    "ts: 97\n"
-    "value: value-VAL_3\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: B\n"
+      "qual: D\n"
+      "ts: 97\n"
+      "value: value-VAL_3\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1887,12 +1887,12 @@ TEST_F(AcceptanceTest, ResetToNewRow) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_2\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_2\n"
-    "label: \n",
+      "rk: RK_2\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_2\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1934,12 +1934,12 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK_1\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL_1\n"
-    "label: \n",
+      "rk: RK_1\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL_1\n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -1969,7 +1969,7 @@ TEST_F(AcceptanceTest, InvalidResetWithChunk) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1998,7 +1998,7 @@ TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
 
   EXPECT_THROW(FeedChunks(chunks), std::exception);
 
-  std::vector<std::string> expected_cells = {  };
+  std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -2027,26 +2027,26 @@ TEST_F(AcceptanceTest, EmptyCellChunk) {
   EXPECT_NO_THROW(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 100\n"
-    "value: value-VAL\n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 100\n"
+      "value: value-VAL\n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
 
-    "rk: RK\n"
-    "fm: A\n"
-    "qual: C\n"
-    "ts: 0\n"
-    "value: \n"
-    "label: \n",
+      "rk: RK\n"
+      "fm: A\n"
+      "qual: C\n"
+      "ts: 0\n"
+      "value: \n"
+      "label: \n",
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }

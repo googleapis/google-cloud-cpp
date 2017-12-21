@@ -61,13 +61,16 @@ def print_test(t):
     for r in t['results']:
       if not r['error']:
         o += '\n'
-        o += '    "rk: ' + r['rk'] + '\\n"\n'
-        o += '    "fm: ' + r['fm'] + '\\n"\n'
-        o += '    "qual: ' + r['qual'] + '\\n"\n'
-        o += '    "ts: ' + str(r['ts']) + '\\n"\n'
-        o += '    "value: ' + r['value'] + '\\n"\n'
-        o += '    "label: ' + r['label'] + '\\n",\n'
-  o += '  };\n'
+        o += '      "rk: ' + r['rk'] + '\\n"\n'
+        o += '      "fm: ' + r['fm'] + '\\n"\n'
+        o += '      "qual: ' + r['qual'] + '\\n"\n'
+        o += '      "ts: ' + str(r['ts']) + '\\n"\n'
+        o += '      "value: ' + r['value'] + '\\n"\n'
+        o += '      "label: ' + r['label'] + '\\n",\n'
+
+  if o[-1] == '\n':
+    o += '  '
+  o += '};\n'
 
   o += '  EXPECT_EQ(expected_cells, ExtractCells());\n'
   o += '}\n'
