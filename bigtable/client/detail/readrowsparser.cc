@@ -71,7 +71,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
         throw std::runtime_error("Different row key in cell chunk");
       }
     }
-    cells_.emplace_back(cell_.MoveToCell());
+    cells_.emplace_back(MovePartialToCell());
     cell_first_chunk_ = true;
   }
 
@@ -104,7 +104,7 @@ void ReadRowsParser::HandleEOT() {
   }
 }
 
-bool ReadRowsParser::HasNext() { return row_ready_; }
+bool ReadRowsParser::HasNext() const { return row_ready_; }
 
 Row ReadRowsParser::Next() {
   if (not row_ready_) {
@@ -116,6 +116,13 @@ Row ReadRowsParser::Next() {
   row_key_.clear();
 
   return row;
+}
+
+Cell ReadRowsParser::MovePartialToCell() {
+  Cell cell(cell_.row, cell_.family, cell_.column, cell_.timestamp,
+            std::move(cell_.value), std::move(cell_.labels));
+  cell_.value.clear();
+  return cell;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

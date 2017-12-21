@@ -28,8 +28,8 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * The internal module responsible for transforming ReadRowsResponse
- * protobufs into Row objects.
+ * Transforms a stream of chunks as returned by the ReadRows streaming
+ * RPC into a sequence of rows.
  *
  * Users are expected to do something like:
  *
@@ -55,49 +55,41 @@ class ReadRowsParser {
         row_ready_(false) {}
 
   /**
-   * Pass an input chunk proto to the parser. May throw errors, in
-   * which case valid data read before the error is still accessible.
+   * Pass an input chunk proto to the parser.
+   *
+   * @throws std::runtime_error if validation failed.
    */
-  void HandleChunk(
-      google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
+  void HandleChunk(google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
 
   /**
-   * Signal that the input stream reached the end. May throw errors if
-   * more data was expected, in which case valid data read before the
-   * error is still accessible.
+   * Signal that the input stream reached the end.
+   *
+   * May throw errors, in which case valid data read before the error
+   * is still accessible.
+   *
+   * @throws std::runtime_error if more data was expected.
    */
   void HandleEOT();
 
   /**
-   * True if the data parsed so far yielded a Row. Call Next() to take
-   * the row. Throws an error if there is wrong or incomplete data in
-   * the chunks parsed.
+   * True if the data parsed so far yielded a Row.
+   *
+   * Call Next() to take the row.
    */
-  bool HasNext();
+  bool HasNext() const;
 
   /**
-   *  Extract and take ownership of the data in a row. Use HasNext()
-   *  first to find out if there are rows available.
-   *  Throws runtime_error if HasNext() is false.
+   * Extract and take ownership of the data in a row.
+   *
+   * Use HasNext() first to find out if there are rows available.
+   *
+   * @throws std::runtime_error if HasNext() is false.
    */
   Row Next();
 
  private:
-  /**
-   *  Helper class to handle string ownership correctly. The value is
-   *  moved when converting to a result cell, but the key, family and
-   *  column are copied.
-   */
-  class ParseCell {
-   public:
-    /// Moves partial results into a Cell class.
-    Cell MoveToCell() {
-      Cell cell(row, family, column, timestamp, std::move(value),
-                std::move(labels));
-      value.clear();
-      return cell;
-    }
-
+  /// Holds partially formed data until a full Row is ready.
+  struct ParseCell {
     std::string row;
     std::string family;
     std::string column;
@@ -106,22 +98,31 @@ class ReadRowsParser {
     std::vector<std::string> labels;
   };
 
-  // Row key for the current row.
+  /*
+   * Moves partial results into a Cell class.
+   *
+   * Also helps handle string ownership correctly. The value is moved
+   * when converting to a result cell, but the key, family and column
+   * are copied, because they are possibly reused by following cells.
+   */
+  Cell MovePartialToCell();
+
+  /// Row key for the current row.
   std::string row_key_;
 
-  // Parsed cells of a yet unfinished row.
+  /// Parsed cells of a yet unfinished row.
   std::vector<Cell> cells_;
 
-  // Is the next incoming chunk the first in a cell?
+  /// Is the next incoming chunk the first in a cell?
   bool cell_first_chunk_;
 
-  // Stores partial fields.
+  /// Stores partial fields.
   ParseCell cell_;
 
-  // Set when a row is ready.
+  /// Set when a row is ready.
   std::string last_seen_row_key_;
 
-  // True iff cells_ make up a complete row.
+  /// True iff cells_ make up a complete row.
   bool row_ready_;
 };
 
