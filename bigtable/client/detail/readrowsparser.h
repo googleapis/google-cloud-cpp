@@ -20,7 +20,7 @@
 #include "bigtable/client/cell.h"
 #include "bigtable/client/row.h"
 
-#include "google/bigtable/v2/bigtable.grpc.pb.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 #include <absl/strings/string_view.h>
 #include <vector>
