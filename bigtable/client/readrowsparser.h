@@ -43,6 +43,14 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class ReadRowsParser {
  public:
+  ReadRowsParser()
+      : row_key_(""),
+        cells_(),
+        cell_first_chunk_(true),
+        cell_(),
+        last_seen_row_key_(""),
+        row_ready_(false) {}
+
   /**
    * Pass an input chunk proto to the parser. May throw errors, in
    * which case valid data read before the error is still accessible.
