@@ -20,7 +20,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
-void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk& chunk) {
+void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
   if (not chunk.row_key().empty()) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
       throw std::runtime_error("Row keys are expected in increasing order");
@@ -88,7 +88,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk& chunk) {
   }
 }
 
-void ReadRowsParser::HandleLastRowKey(std::string last_row_key) {
+void ReadRowsParser::HandleLastRowKey(const std::string last_row_key) {
   last_row_key_ = std::move(last_row_key);
 }
 

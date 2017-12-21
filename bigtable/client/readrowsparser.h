@@ -47,12 +47,13 @@ class ReadRowsParser {
    * Pass an input chunk proto to the parser. May throw errors, in
    * which case valid data read before the error is still accessible.
    */
-  void HandleChunk(google::bigtable::v2::ReadRowsResponse_CellChunk& chunk);
+  void HandleChunk(
+      const google::bigtable::v2::ReadRowsResponse_CellChunk& chunk);
 
   /**
    * Set the last scanned row key reported in the response.
    */
-  void HandleLastRowKey(std::string last_row_key);
+  void HandleLastRowKey(const std::string last_row_key);
 
   /**
    * Signal that the input stream reached the end. May throw errors if
