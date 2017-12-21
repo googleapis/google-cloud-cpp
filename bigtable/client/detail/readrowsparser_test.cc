@@ -28,7 +28,7 @@ namespace bigtable {
 namespace {
 
 // Can also be used by gtest to print Cell values
-void PrintTo(const Cell& c, ::std::ostream* os) {
+void PrintTo(Cell const& c, std::ostream* os) {
   *os << "rk: " << std::string(c.row_key()) << "\n";
   *os << "fm: " << std::string(c.family_name()) << "\n";
   *os << "qual: " << std::string(c.column_qualifier()) << "\n";
@@ -37,21 +37,21 @@ void PrintTo(const Cell& c, ::std::ostream* os) {
   *os << "label: " << absl::StrJoin(c.labels(), ",") << "\n";
 }
 
-std::string CellToString(const Cell& cell) {
+std::string CellToString(Cell const& cell) {
   std::stringstream ss;
   PrintTo(cell, &ss);
   return ss.str();
 }
 
-};  // namespace
-};  // namespace bigtable
+}  // namespace
+}  // namespace bigtable
 
 class AcceptanceTest : public ::testing::Test {
  protected:
   std::vector<std::string> ExtractCells() {
     std::vector<std::string> cells;
 
-    for (const auto& r : rows_) {
+    for (auto const& r : rows_) {
       std::transform(r.cells().begin(), r.cells().end(),
                      std::back_inserter(cells), bigtable::CellToString);
     }
@@ -63,7 +63,7 @@ class AcceptanceTest : public ::testing::Test {
     using google::protobuf::TextFormat;
 
     std::vector<ReadRowsResponse_CellChunk> chunks;
-    for (const std::string& chunk_string : chunk_strings) {
+    for (std::string const& chunk_string : chunk_strings) {
       ReadRowsResponse_CellChunk chunk;
       if (not TextFormat::ParseFromString(chunk_string, &chunk)) {
         return {};
@@ -75,7 +75,7 @@ class AcceptanceTest : public ::testing::Test {
   }
 
   void FeedChunks(std::vector<ReadRowsResponse_CellChunk> chunks) {
-    for (const auto& chunk : chunks) {
+    for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk);
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next());
