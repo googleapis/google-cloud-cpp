@@ -67,7 +67,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
       }
       row_key_ = cell_.row;
     } else {
-      if (row_key_.compare(cell_.row) != 0) {
+      if (row_key_ != cell_.row) {
         throw std::runtime_error("Different row key in cell chunk");
       }
     }
@@ -113,8 +113,7 @@ Row ReadRowsParser::Next() {
   row_ready_ = false;
 
   Row row(std::move(row_key_), std::move(cells_));
-  row_key_ = "";
-  cells_.clear();
+  row_key_.clear();
 
   return row;
 }
