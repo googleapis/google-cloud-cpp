@@ -137,6 +137,8 @@ add_library(bigtable_client
     client/detail/bulk_mutator.h
     client/detail/bulk_mutator.cc
     client/detail/conjunction.h
+    client/detail/readrowsparser.h
+    client/detail/readrowsparser.cc
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h
@@ -144,8 +146,6 @@ add_library(bigtable_client
     client/mutations.h
     client/mutations.cc
     client/row.h
-    client/readrowsparser.h
-    client/readrowsparser.cc
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
@@ -187,10 +187,10 @@ set(bigtable_client_unit_tests
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc
     client/detail/bulk_mutator_test.cc
+    client/detail/readrowsparser_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
-    client/readrowsparser_test.cc
     client/row_test.cc
     client/rpc_backoff_policy_test.cc
     client/rpc_retry_policy_test.cc)
