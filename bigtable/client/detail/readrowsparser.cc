@@ -20,23 +20,23 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
-void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
+void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   if (not chunk.row_key().empty()) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
       throw std::runtime_error("Row keys are expected in increasing order");
     }
-    cell_.row = chunk.row_key();
+    chunk.mutable_row_key()->swap(cell_.row);
   }
 
   if (chunk.has_family_name()) {
     if (not chunk.has_qualifier()) {
       throw std::runtime_error("New column family must specify qualifier");
     }
-    cell_.family = chunk.family_name().value();
+    chunk.mutable_family_name()->mutable_value()->swap(cell_.family);
   }
 
   if (chunk.has_qualifier()) {
-    cell_.column = chunk.qualifier().value();
+    chunk.mutable_qualifier()->mutable_value()->swap(cell_.column);
   }
 
   if (cell_first_chunk_) {
@@ -44,14 +44,20 @@ void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
   }
   cell_first_chunk_ = false;
 
-  for (const auto& l : chunk.labels()) {
-    cell_.labels.push_back(l);
+  std::move(chunk.mutable_labels()->begin(), chunk.mutable_labels()->end(),
+            std::back_inserter(cell_.labels));
+
+  if (cell_first_chunk_) {
+    // Most common case, move the value
+    chunk.mutable_value()->swap(cell_.value);
+  } else {
+    cell_.value.append(chunk.value());
   }
 
+  // This is a hint we get about the total size
   if (chunk.value_size() > 0) {
     cell_.value.reserve(chunk.value_size());
   }
-  cell_.value.append(chunk.value());
 
   // Last chunk in the cell has zero for value size
   if (chunk.value_size() == 0) {

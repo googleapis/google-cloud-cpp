@@ -59,7 +59,7 @@ class ReadRowsParser {
    * which case valid data read before the error is still accessible.
    */
   void HandleChunk(
-      const google::bigtable::v2::ReadRowsResponse_CellChunk& chunk);
+      google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
 
   /**
    * Signal that the input stream reached the end. May throw errors if
