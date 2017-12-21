@@ -24,7 +24,7 @@
 #include <absl/memory/memory.h>
 #include <absl/strings/str_cat.h>
 
-#include "bigtable/client/chrono_literals.h"
+#include "bigtable/client/testing/chrono_literals.h"
 
 namespace {
 namespace btproto = ::google::bigtable::admin::v2;
