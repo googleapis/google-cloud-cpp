@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGTABLE_CLIENT_CHRONO_LITERALS_H_
-#define BIGTABLE_CLIENT_CHRONO_LITERALS_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_CHRONO_LITERALS_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_CHRONO_LITERALS_H_
 
 #include <chrono>
 
@@ -47,4 +47,4 @@ constexpr std::chrono::nanoseconds operator "" _ns(unsigned long long ns) {
 }  // namespace chrono_literals
 }  // namespace bigtable
 
-#endif  // BIGTABLE_CLIENT_CHRONO_LITERALS_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_CHRONO_LITERALS_H_

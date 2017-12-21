@@ -12,73 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 #include "bigtable/client/data.h"
-
-#include <gmock/gmock.h>
+#include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define helper types and functions for this test.
 namespace {
-class MockClient : public bigtable::ClientInterface {
- public:
-  MockClient() : mock_stub(new google::bigtable::v2::MockBigtableStub) {}
-
-  MOCK_METHOD1(Open,
-               std::unique_ptr<bigtable::Table>(std::string const& table_id));
-  MOCK_CONST_METHOD0(Stub, google::bigtable::v2::Bigtable::StubInterface&());
-
-  std::unique_ptr<google::bigtable::v2::MockBigtableStub> mock_stub;
-};
+class TableApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::Apply() works in a simplest case.
-TEST(TableApplyTest, Simple) {
-  MockClient client;
+TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(
-          Invoke([&client]() -> google::bigtable::v2::Bigtable::StubInterface& {
-            return *client.mock_stub;
-          }));
-  EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
+
+  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
       .WillOnce(Return(grpc::Status::OK));
 
-  bigtable::Table table(&client, "foo_table");
-
-  EXPECT_NO_THROW(table.Apply(bigtable::SingleRowMutation(
+  EXPECT_NO_THROW(table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
 }
 
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
-TEST(TableApplyTest, Failure) {
-  MockClient client;
+TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(
-          Invoke([&client]() -> google::bigtable::v2::Bigtable::StubInterface& {
-            return *client.mock_stub;
-          }));
-  EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
+
+  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
-  bigtable::Table table(&client, "foo_table");
-
-  EXPECT_THROW(table.Apply(bigtable::SingleRowMutation(
+  EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
                    "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
                std::exception);
 }
 
 /// @test Verify that Table::Apply() retries on partial failures.
-TEST(TableApplyTest, Retry) {
-  MockClient client;
+TEST_F(TableApplyTest, Retry) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(
-          Invoke([&client]() -> google::bigtable::v2::Bigtable::StubInterface& {
-            return *client.mock_stub;
-          }));
-  EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
+
+  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(
@@ -87,29 +57,20 @@ TEST(TableApplyTest, Retry) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Return(grpc::Status::OK));
 
-  bigtable::Table table(&client, "foo_table");
-
-  EXPECT_NO_THROW(table.Apply(bigtable::SingleRowMutation(
+  EXPECT_NO_THROW(table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
 }
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.
-TEST(TableApplyTest, RetryIdempotent) {
-  MockClient client;
+TEST_F(TableApplyTest, RetryIdempotent) {
   using namespace ::testing;
-  EXPECT_CALL(client, Stub())
-      .WillRepeatedly(
-          Invoke([&client]() -> google::bigtable::v2::Bigtable::StubInterface& {
-            return *client.mock_stub;
-          }));
-  EXPECT_CALL(*client.mock_stub, MutateRow(_, _, _))
+
+  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  bigtable::Table table(&client, "foo_table");
-
   try {
-    table.Apply(bigtable::SingleRowMutation(
+    table_.Apply(bigtable::SingleRowMutation(
         "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
   } catch (bigtable::PermanentMutationFailure const& ex) {
     ASSERT_EQ(1UL, ex.failures().size());

@@ -129,7 +129,6 @@ enable_testing()
 # the client library
 add_library(bigtable_client
     client/cell.h
-    client/chrono_literals.h
     client/client_options.h
     client/client_options.cc
     client/data.h
@@ -154,13 +153,23 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
   ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
+add_library(bigtable_client_testing
+    client/testing/chrono_literals.h
+    client/testing/table_test_fixture.h
+    client/testing/table_test_fixture.cc)
+target_link_libraries(bigtable_client_testing
+    bigtable_protos gmock
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
 # the admin library
 add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc
     admin/column_family.h
     admin/table_admin.h
-    admin/table_admin.cc)
+    admin/table_admin.cc
+    admin/table_config.h
+    admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
     absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
@@ -199,8 +208,9 @@ foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_link_libraries(${target} bigtable_client bigtable_protos
-        gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_client bigtable_protos gmock
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
 endforeach ()
@@ -208,14 +218,17 @@ endforeach ()
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
-    admin/table_admin_test.cc admin/column_family_test.cc)
+    admin/column_family_test.cc
+    admin/table_admin_test.cc
+    admin/table_config_test.cc)
 foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
-    target_link_libraries(${target} bigtable_admin_client
-        bigtable_client bigtable_protos gmock
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_admin_client bigtable_client
+        bigtable_protos gmock
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
@@ -226,8 +239,9 @@ endforeach ()
 add_executable(bigtable_client_all_tests
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
-    bigtable_client bigtable_admin_client bigtable_protos
-    gmock ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    bigtable_client_testing bigtable_admin_client bigtable_client
+    bigtable_protos gmock
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 option(FORCE_SANITIZER_ERRORS
     "If set enable tests that force errors detected by the sanitizers."
@@ -239,6 +253,7 @@ endif (FORCE_SANITIZER_ERRORS)
 
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
-add_executable(apply_test tests/apply_test.cc)
-target_link_libraries(apply_test bigtable_client bigtable_protos
+add_executable(integration_test tests/integration_test.cc)
+target_link_libraries(integration_test
+    bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})

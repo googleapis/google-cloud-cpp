@@ -58,13 +58,8 @@ else
   echo "Successfully connected to the Cloud Bigtable emulator."
 fi
 
-echo "Creating test-table in the emulator."
-"${GOPATH}/bin/cbt" $CBT_ARGS createtable test-table
-echo "Creating column family in test-table."
-"${GOPATH}/bin/cbt" $CBT_ARGS createfamily test-table fam
-
 # Run the integration tests
 echo
 echo "Running Table::Apply() integration test."
 # The project and instance do not matter for the Cloud Bigtable emulator.
-./apply_test emulated emulated test-table fam
+./integration_test emulated emulated test-table
