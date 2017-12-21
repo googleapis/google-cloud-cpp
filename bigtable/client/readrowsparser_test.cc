@@ -27,7 +27,9 @@ namespace bigtable {
 namespace {
 
 std::string LabelsToString(const std::vector<std::string>& labels) {
-  if (labels.empty()) return "";
+  if (labels.empty()) {
+    return "";
+  }
   return std::accumulate(
       std::next(labels.begin()), labels.end(), labels[0],
       [](std::string a, std::string b) { return a + ',' + b; });
