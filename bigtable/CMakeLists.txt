@@ -272,4 +272,4 @@ add_executable(integration_test tests/integration_test.cc)
 target_link_libraries(integration_test
     bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-add_dependencies(tests-local apply_test)
+add_dependencies(tests-local integration_test)
