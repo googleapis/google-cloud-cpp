@@ -61,6 +61,7 @@ ARG CC=gcc
 ARG BUILD_TYPE=Debug
 ARG CHECK_STYLE=""
 ARG GENERATE_DOCS=""
+ARG SCAN_BUILD=""
 ARG CMAKE_FLAGS=""
 
 # We assume that this is running on a (clean-ish) checkout of
