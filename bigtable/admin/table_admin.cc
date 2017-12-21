@@ -14,6 +14,7 @@
 
 #include "bigtable/admin/table_admin.h"
 
+#include <sstream>
 #include <thread>
 
 #include <absl/strings/str_cat.h>
@@ -22,9 +23,34 @@ namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::string TableAdmin::CreateInstanceName() const {
-  return absl::StrCat("projects/", client_->project(), "/instances/",
-                      instance_id_);
+::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
+    std::string table_id, TableConfig config) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  auto request = config.as_proto_move();
+  request.set_parent(instance_name());
+  request.set_table_id(std::move(table_id));
+
+  btproto::Table response;
+  while (true) {
+    grpc::ClientContext client_context;
+    rpc_policy->setup(client_context);
+    backoff_policy->setup(client_context);
+    grpc::Status status =
+        client_->table_admin().CreateTable(&client_context, request, &response);
+    client_->on_completion(status);
+    if (status.ok()) {
+      break;
+    }
+    if (not rpc_policy->on_failure(status)) {
+      RaiseError(status, absl::StrCat("CreateTable(", request.table_id(), ")"));
+    }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  return response;
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -61,13 +87,27 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     }
     page_token = std::move(*request.mutable_page_token());
     if (not rpc_policy->on_failure(status)) {
-      // TODO(#35) - implement non-throwing version of this class.
-      throw std::runtime_error("could not fetch all tables");
+      RaiseError(status, "ListTables()");
     }
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
   }
   return result;
+}
+
+std::string TableAdmin::CreateInstanceName() const {
+  return absl::StrCat("projects/", client_->project(), "/instances/",
+                      instance_id_);
+}
+
+void TableAdmin::RaiseError(grpc::Status const& status,
+                            absl::string_view error_message) const {
+  std::ostringstream os;
+  os << "TableAdmin(" << instance_name() << ") unrecoverable error or too many "
+     << " errors in " << error_message << ": " << status.error_message() << " ["
+     << status.error_code() << "] " << status.error_details();
+  // TODO(#35) - implement non-throwing version of this class.
+  throw std::runtime_error(os.str());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

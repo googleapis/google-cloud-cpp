@@ -19,6 +19,10 @@
 
 #include <memory>
 
+#include <absl/strings/string_view.h>
+
+#include "bigtable/admin/column_family.h"
+#include "bigtable/admin/table_config.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
@@ -64,8 +68,33 @@ class TableAdmin {
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
+  std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }
+
+  /**
+   * Create a new table in the instance.
+   *
+   * This function creates a new table and sets its initial schema, for example:
+   *
+   * @code
+   * bigtable::TableAdmin admin = ...;
+   * admin.CreateTable(
+   *     "my-table", {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {});
+   * @endcode
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param config the initial schema for the table.
+   * @return the attributes of the newly created table.  Notice that the server
+   *     only populates the table_name() field at this time.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  ::google::bigtable::admin::v2::Table CreateTable(
+      std::string table_id, TableConfig config);
 
   /**
    * Return all the tables in the instance.
@@ -81,6 +110,10 @@ class TableAdmin {
 
  private:
   std::string CreateInstanceName() const;
+
+  /// Raise an exception representing the given status.
+  [[noreturn]] void RaiseError(grpc::Status const& status,
+                               absl::string_view error_message) const;
 
  private:
   std::shared_ptr<AdminClient> client_;
