@@ -31,7 +31,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Transforms a stream of chunks as returned by the ReadRows streaming
  * RPC into a sequence of rows.
  *
- * Users are expected to do something like:
+ * A simplified example of correctly using this class:
  *
  * @code
  * while (!stream.EOT()) {
