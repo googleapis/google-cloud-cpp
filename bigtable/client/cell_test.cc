@@ -34,5 +34,5 @@ TEST(CellTest, Simple) {
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp());
   EXPECT_EQ(value, cell.value());
-  EXPECT_EQ(0u, cell.labels().size());
+  EXPECT_EQ(0U, cell.labels().size());
 }
