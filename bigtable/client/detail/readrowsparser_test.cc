@@ -14,6 +14,7 @@
 
 #include "bigtable/client/detail/readrowsparser.h"
 
+#include <absl/strings/str_join.h>
 #include <google/protobuf/text_format.h>
 #include <gtest/gtest.h>
 
@@ -26,15 +27,6 @@ using google::bigtable::v2::ReadRowsResponse_CellChunk;
 namespace bigtable {
 namespace {
 
-std::string LabelsToString(const std::vector<std::string>& labels) {
-  if (labels.empty()) {
-    return "";
-  }
-  return std::accumulate(
-      std::next(labels.begin()), labels.end(), labels[0],
-      [](std::string a, std::string b) { return a + ',' + b; });
-}
-
 // Can also be used by gtest to print Cell values
 void PrintTo(const Cell& c, ::std::ostream* os) {
   *os << "rk: " << std::string(c.row_key()) << "\n";
@@ -42,7 +34,7 @@ void PrintTo(const Cell& c, ::std::ostream* os) {
   *os << "qual: " << std::string(c.column_qualifier()) << "\n";
   *os << "ts: " << c.timestamp() << "\n";
   *os << "value: " << std::string(c.value()) << "\n";
-  *os << "label: " << LabelsToString(c.labels()) << "\n";
+  *os << "label: " << absl::StrJoin(c.labels(), ",") << "\n";
 }
 
 std::string CellToString(const Cell& cell) {
