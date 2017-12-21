@@ -51,11 +51,6 @@ class ReadRowsParser {
       const google::bigtable::v2::ReadRowsResponse_CellChunk& chunk);
 
   /**
-   * Set the last scanned row key reported in the response.
-   */
-  void HandleLastRowKey(const std::string last_row_key);
-
-  /**
    * Signal that the input stream reached the end. May throw errors if
    * more data was expected, in which case valid data read before the
    * error is still accessible.
@@ -112,9 +107,6 @@ class ReadRowsParser {
 
   // Stores partial fields.
   ParseCell cell_;
-
-  // Received from the response.
-  std::string last_row_key_;
 
   // Set when a row is ready.
   std::string last_seen_row_key_;

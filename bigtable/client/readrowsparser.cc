@@ -88,10 +88,6 @@ void ReadRowsParser::HandleChunk(const ReadRowsResponse_CellChunk& chunk) {
   }
 }
 
-void ReadRowsParser::HandleLastRowKey(const std::string last_row_key) {
-  last_row_key_ = std::move(last_row_key);
-}
-
 void ReadRowsParser::HandleEOT() {
   if (not cell_first_chunk_) {
     throw std::runtime_error("EOT with unfinished cell");
