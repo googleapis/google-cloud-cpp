@@ -43,6 +43,11 @@ inline namespace BIGTABLE_CLIENT_NS {
  * }
  * parser.HandleEOT();
  * @endcode
+ *
+ * NO RECYCLING of the parser object: This is a stateful class, and a
+ * single and unique parser should be used for each stream of ReadRows
+ * responses. If errors occur, an exception is thrown as documented by
+ * each method and the parser object is left in an undefined state.
  */
 class ReadRowsParser {
  public:
@@ -68,7 +73,8 @@ class ReadRowsParser {
   /**
    * Signal that the input stream reached the end.
    *
-   * @throws std::runtime_error if more data was expected.
+   * @throws std::runtime_error if more data was expected to finish
+   * the current row.
    */
   void HandleEOT();
 
