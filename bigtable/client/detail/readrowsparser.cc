@@ -21,6 +21,14 @@ inline namespace BIGTABLE_CLIENT_NS {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
+  if (eot_) {
+    throw std::runtime_error("HandleChunk after EOT");
+  }
+  if (HasNext()) {
+    throw std::runtime_error(
+        "HandleChunk called before taking the previous row");
+  }
+
   if (not chunk.row_key().empty()) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
       throw std::runtime_error("Row keys are expected in increasing order");
@@ -95,6 +103,11 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
 }
 
 void ReadRowsParser::HandleEOT() {
+  if (eot_) {
+    throw std::runtime_error("HandleEOT called twice");
+  }
+  eot_ = true;
+
   if (not cell_first_chunk_) {
     throw std::runtime_error("EOT with unfinished cell");
   }

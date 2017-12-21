@@ -52,10 +52,14 @@ class ReadRowsParser {
         cell_first_chunk_(true),
         cell_(),
         last_seen_row_key_(""),
-        row_ready_(false) {}
+        row_ready_(false),
+        eot_(false) {}
 
   /**
    * Pass an input chunk proto to the parser.
+   *
+   * @throws std::runtime_error if called while a row is available
+   * (HasNext() is true).
    *
    * @throws std::runtime_error if validation failed.
    */
@@ -63,9 +67,6 @@ class ReadRowsParser {
 
   /**
    * Signal that the input stream reached the end.
-   *
-   * May throw errors, in which case valid data read before the error
-   * is still accessible.
    *
    * @throws std::runtime_error if more data was expected.
    */
@@ -124,6 +125,9 @@ class ReadRowsParser {
 
   /// True iff cells_ make up a complete row.
   bool row_ready_;
+
+  /// Have we received EOT?
+  bool eot_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

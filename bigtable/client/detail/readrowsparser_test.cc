@@ -24,6 +24,102 @@
 
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
+TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
+  bigtable::ReadRowsParser parser;
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleEOT();
+  EXPECT_FALSE(parser.HasNext());
+}
+
+TEST(ReadRowsParserTest, HandleEotCalledTwiceThrows) {
+  bigtable::ReadRowsParser parser;
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleEOT();
+  EXPECT_THROW(parser.HandleEOT(), std::exception);
+  EXPECT_FALSE(parser.HasNext());
+}
+
+TEST(ReadRowsParserTest, HandleChunkAfterEotThrows) {
+  bigtable::ReadRowsParser parser;
+  ReadRowsResponse_CellChunk chunk;
+  chunk.set_value_size(1);
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleEOT();
+  EXPECT_THROW(parser.HandleChunk(chunk), std::exception);
+  EXPECT_FALSE(parser.HasNext());
+}
+
+TEST(ReadRowsParserTest, SingleChunkSucceeds) {
+  using google::protobuf::TextFormat;
+  bigtable::ReadRowsParser parser;
+  ReadRowsResponse_CellChunk chunk;
+  std::string chunk1 = R"(
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    value: "V"
+    commit_row: true
+    )";
+  ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleChunk(chunk);
+  EXPECT_TRUE(parser.HasNext());
+
+  std::vector<bigtable::Row> rows;
+  rows.emplace_back(parser.Next());
+  EXPECT_FALSE(parser.HasNext());
+  ASSERT_EQ(1U, rows[0].cells().size());
+  auto cell_it = rows[0].cells().begin();
+  EXPECT_EQ("RK", cell_it->row_key());
+  EXPECT_EQ("F", cell_it->family_name());
+  EXPECT_EQ("C", cell_it->column_qualifier());
+  EXPECT_EQ("V", cell_it->value());
+  EXPECT_EQ(42, cell_it->timestamp());
+
+  parser.HandleEOT();
+}
+
+TEST(ReadRowsParserTest, NextAfterEotSucceeds) {
+  using google::protobuf::TextFormat;
+  bigtable::ReadRowsParser parser;
+  ReadRowsResponse_CellChunk chunk;
+  std::string chunk1 = R"(
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    value: "V"
+    commit_row: true
+    )";
+  ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleChunk(chunk);
+  parser.HandleEOT();
+
+  EXPECT_TRUE(parser.HasNext());
+  ASSERT_EQ(1U, parser.Next().cells().size());
+
+  EXPECT_FALSE(parser.HasNext());
+}
+
+TEST(ReadRowsParserTest, NextWithNoDataThrows) {
+  bigtable::ReadRowsParser parser;
+
+  EXPECT_FALSE(parser.HasNext());
+  parser.HandleEOT();
+
+  EXPECT_FALSE(parser.HasNext());
+  EXPECT_THROW(parser.Next(), std::exception);
+}
+
+// **** Acceptance tests helpers ****
+
 namespace bigtable {
 namespace {
 
