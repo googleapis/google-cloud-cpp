@@ -132,6 +132,9 @@ Row ReadRowsParser::Next() {
 }
 
 Cell ReadRowsParser::MovePartialToCell() {
+  // The row, family, and column are explicitly copied because the
+  // ReadRows v2 may reuse them in future chunks. See the CellChunk
+  // message comments in bigtable.proto.
   Cell cell(cell_.row, cell_.family, cell_.column, cell_.timestamp,
             std::move(cell_.value), std::move(cell_.labels));
   cell_.value.clear();
