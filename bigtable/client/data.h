@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGTABLE_CLIENT_DATA_H_
-#define BIGTABLE_CLIENT_DATA_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_
 
 #include "bigtable/client/client_options.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
@@ -130,4 +130,4 @@ class Table {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // BIGTABLE_CLIENT_DATA_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGTABLE_CLIENT_VERSION_H_
-#define BIGTABLE_CLIENT_VERSION_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
 #if __cplusplus < 201103L
 #error "Bigtable C++ Client requires C++11"
@@ -35,4 +35,4 @@ int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
 int constexpr version() { return 100 * version_major() + version_minor(); }
 }  // namespace bigtable
 
-#endif  // BIGTABLE_CLIENT_VERSION_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
