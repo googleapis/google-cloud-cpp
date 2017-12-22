@@ -15,7 +15,6 @@
 #include "bigtable/admin/table_admin.h"
 
 #include <sstream>
-#include <thread>
 
 #include <absl/strings/str_cat.h>
 
@@ -25,32 +24,13 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
     std::string table_id, TableConfig config) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
   auto request = config.as_proto_move();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  btproto::Table response;
-  while (true) {
-    grpc::ClientContext client_context;
-    rpc_policy->setup(client_context);
-    backoff_policy->setup(client_context);
-    grpc::Status status =
-        client_->table_admin().CreateTable(&client_context, request, &response);
-    client_->on_completion(status);
-    if (status.ok()) {
-      break;
-    }
-    if (not rpc_policy->on_failure(status)) {
-      RaiseError(status, absl::StrCat("CreateTable(", request.table_id(), ")"));
-    }
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
-  }
-  return response;
+  auto error_message = absl::StrCat("CreateTable(", request.table_id(), ")");
+  return CallWithRetry(&StubType::CreateTable, request,
+                       std::move(error_message));
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -97,32 +77,12 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 
 ::google::bigtable::admin::v2::Table TableAdmin::GetTable(
     std::string table_id, ::google::bigtable::admin::v2::Table::View view) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
   btproto::GetTableRequest request;
   request.set_name(absl::StrCat(instance_name(), "/tables/", table_id));
   request.set_view(view);
 
-  btproto::Table response;
-  while (true) {
-    grpc::ClientContext client_context;
-    rpc_policy->setup(client_context);
-    backoff_policy->setup(client_context);
-    grpc::Status status =
-        client_->table_admin().GetTable(&client_context, request, &response);
-    client_->on_completion(status);
-    if (status.ok()) {
-      break;
-    }
-    if (not rpc_policy->on_failure(status)) {
-      throw std::runtime_error("could not get table");
-    }
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
-  }
-  return response;
+  auto error_message = absl::StrCat("GetTable(", request.name(), ")");
+  return CallWithRetry(&StubType::GetTable, request, std::move(error_message));
 }
 
 std::string TableAdmin::CreateInstanceName() const {
