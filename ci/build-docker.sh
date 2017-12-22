@@ -28,8 +28,8 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
 fi
 ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ..
 
-# If scan-build is enabled we need to manually compile the dependencies,
-# otherwise the static analyzer finds issues in them, and there is no way to
+# If scan-build is enabled we, need to manually compile the dependencies;
+# otherwise, the static analyzer finds issues in them, and there is no way to
 # ignore them.
 if [ "${SCAN_BUILD}" = "yes" ]; then
   make -j ${NCPU} -C bigtable depends-local
