@@ -21,8 +21,8 @@ inline namespace BIGTABLE_CLIENT_NS {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
-  if (eot_) {
-    throw std::runtime_error("HandleChunk after EOT");
+  if (end_of_stream_) {
+    throw std::runtime_error("HandleChunk after end of stream");
   }
   if (HasNext()) {
     throw std::runtime_error(
@@ -102,18 +102,18 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   }
 }
 
-void ReadRowsParser::HandleEOT() {
-  if (eot_) {
-    throw std::runtime_error("HandleEOT called twice");
+void ReadRowsParser::HandleEndOfStream() {
+  if (end_of_stream_) {
+    throw std::runtime_error("HandleEndOfStream called twice");
   }
-  eot_ = true;
+  end_of_stream_ = true;
 
   if (not cell_first_chunk_) {
-    throw std::runtime_error("EOT with unfinished cell");
+    throw std::runtime_error("end of stream with unfinished cell");
   }
 
   if (cells_.begin() != cells_.end() and not row_ready_) {
-    throw std::runtime_error("EOT with unfinished row");
+    throw std::runtime_error("end of stream with unfinished row");
   }
 }
 

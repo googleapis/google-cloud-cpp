@@ -34,14 +34,14 @@ inline namespace BIGTABLE_CLIENT_NS {
  * A simplified example of correctly using this class:
  *
  * @code
- * while (!stream.EOT()) {
+ * while (!stream.End()) {
  *   chunk = stream.NextChunk();
  *   parser.HandleChunk(chunk);
  *   if (parser.HasNext()) {
  *     row = parser.Next();  // you now own `row`
  *   }
  * }
- * parser.HandleEOT();
+ * parser.HandleEndOfStream();
  * @endcode
  *
  * NO RECYCLING of the parser object: This is a stateful class, and a
@@ -58,7 +58,7 @@ class ReadRowsParser {
         cell_(),
         last_seen_row_key_(""),
         row_ready_(false),
-        eot_(false) {}
+        end_of_stream_(false) {}
 
   /**
    * Pass an input chunk proto to the parser.
@@ -76,7 +76,7 @@ class ReadRowsParser {
    * @throws std::runtime_error if more data was expected to finish
    * the current row.
    */
-  void HandleEOT();
+  void HandleEndOfStream();
 
   /**
    * True if the data parsed so far yielded a Row.
@@ -132,8 +132,8 @@ class ReadRowsParser {
   /// True iff cells_ make up a complete row.
   bool row_ready_;
 
-  /// Have we received EOT?
-  bool eot_;
+  /// Have we received the end of stream call?
+  bool end_of_stream_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

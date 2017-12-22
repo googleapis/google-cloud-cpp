@@ -28,26 +28,26 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   bigtable::ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEOT();
+  parser.HandleEndOfStream();
   EXPECT_FALSE(parser.HasNext());
 }
 
-TEST(ReadRowsParserTest, HandleEotCalledTwiceThrows) {
+TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   bigtable::ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEOT();
-  EXPECT_THROW(parser.HandleEOT(), std::exception);
+  parser.HandleEndOfStream();
+  EXPECT_THROW(parser.HandleEndOfStream(), std::exception);
   EXPECT_FALSE(parser.HasNext());
 }
 
-TEST(ReadRowsParserTest, HandleChunkAfterEotThrows) {
+TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   bigtable::ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   chunk.set_value_size(1);
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEOT();
+  parser.HandleEndOfStream();
   EXPECT_THROW(parser.HandleChunk(chunk), std::exception);
   EXPECT_FALSE(parser.HasNext());
 }
@@ -81,10 +81,10 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   EXPECT_EQ("V", cell_it->value());
   EXPECT_EQ(42, cell_it->timestamp());
 
-  parser.HandleEOT();
+  parser.HandleEndOfStream();
 }
 
-TEST(ReadRowsParserTest, NextAfterEotSucceeds) {
+TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
   using google::protobuf::TextFormat;
   bigtable::ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
@@ -100,7 +100,7 @@ TEST(ReadRowsParserTest, NextAfterEotSucceeds) {
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleChunk(chunk);
-  parser.HandleEOT();
+  parser.HandleEndOfStream();
 
   EXPECT_TRUE(parser.HasNext());
   ASSERT_EQ(1U, parser.Next().cells().size());
@@ -112,7 +112,7 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   bigtable::ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEOT();
+  parser.HandleEndOfStream();
 
   EXPECT_FALSE(parser.HasNext());
   EXPECT_THROW(parser.Next(), std::exception);
@@ -177,7 +177,7 @@ class AcceptanceTest : public ::testing::Test {
         rows_.emplace_back(parser_.Next());
       }
     }
-    parser_.HandleEOT();
+    parser_.HandleEndOfStream();
   }
 
  private:
