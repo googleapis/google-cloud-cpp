@@ -80,7 +80,8 @@ class TableAdmin {
    * @code
    * bigtable::TableAdmin admin = ...;
    * admin.CreateTable(
-   *     "my-table", {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {});
+   *     "my-table", bigtable::TableConfig(
+   *         {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {}));
    * @endcode
    *
    * @param table_id the name of the table relative to the instance managed by
@@ -93,8 +94,8 @@ class TableAdmin {
    *     only populates the table_name() field at this time.
    * @throws std::exception if the operation cannot be completed.
    */
-  ::google::bigtable::admin::v2::Table CreateTable(
-      std::string table_id, TableConfig config);
+  ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
+                                                   TableConfig config);
 
   /**
    * Return all the tables in the instance.
@@ -107,6 +108,23 @@ class TableAdmin {
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
       ::google::bigtable::admin::v2::Table::View view);
+
+  /**
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param view describes how much information to get about the name.
+   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
+   *   - NAME: return only the name of the table.
+   *   - VIEW_SCHEMA: return the name and the schema.
+   *   - FULL: return all the information about the table.
+   * @return
+   */
+  ::google::bigtable::admin::v2::Table GetTable(
+      std::string table_id,
+      ::google::bigtable::admin::v2::Table::View view =
+          ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
 
  private:
   std::string CreateInstanceName() const;

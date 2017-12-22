@@ -146,8 +146,10 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   EXPECT_EQ(instance_name + "/tables/t3", actual[3].name());
 }
 
-/// @test Verify that `bigtable::TableAdmin::ListTables` handles unrecoverable
-/// failures.
+/**
+ * @test Verify that `bigtable::TableAdmin::ListTables` handles unrecoverable
+ * failures.
+ */
 TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   using namespace ::testing;
 
@@ -167,8 +169,10 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
 }
 
-/// @test Verify that `bigtable::TableAdmin::ListTables` handles too many
-/// recoverable failures.
+/**
+ * @test Verify that `bigtable::TableAdmin::ListTables` handles too many
+ * recoverable failures.
+ */
 TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
@@ -247,8 +251,10 @@ initial_splits { key: 'p' }
             actual.name());
 }
 
-/// @test Verify that `bigtable::TableAdmin::CreateTable` works with recoverable
-/// failures.
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTable` works with recoverable
+ * failures.
+ */
 TEST_F(TableAdminTest, CreateTableRecoverableFailure) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
@@ -275,7 +281,9 @@ table {
   auto mock_create_table = [expected](
       grpc::ClientContext* ctx, btproto::CreateTableRequest const& request,
       btproto::Table* response) {
-    EXPECT_EQ("projects/the-project/instances/the-instance", request.parent());
+    auto const instance_name =
+        absl::StrCat("projects/", kProjectId, "/instances/", kInstanceId);
+    EXPECT_EQ(instance_name, request.parent());
     std::string delta;
     google::protobuf::util::MessageDifferencer differencer;
     differencer.ReportDifferencesToString(&delta);
@@ -301,8 +309,10 @@ table {
             actual.name());
 }
 
-/// @test Verify that `bigtable::TableAdmin::CreateTable` works with
-/// unrecoverable failures.
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTable` works with
+ * unrecoverable failures.
+ */
 TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
   using namespace ::testing;
 
@@ -323,8 +333,10 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
                std::runtime_error);
 }
 
-/// @test Verify that `bigtable::TableAdmin::CreateTable` works with too many
-/// recoverable failures.
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTable` works with too many
+ * recoverable failures.
+ */
 TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
@@ -347,4 +359,127 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
                std::runtime_error);
+}
+
+/// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
+TEST_F(TableAdminTest, GetTable) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+view: SCHEMA_VIEW
+)""";
+  btproto::GetTableRequest expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  auto mock_create_table = [expected](grpc::ClientContext* ctx,
+                                      btproto::GetTableRequest const& request,
+                                      btproto::Table* response) {
+    std::string delta;
+    google::protobuf::util::MessageDifferencer differencer;
+    differencer.ReportDifferencesToString(&delta);
+    EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillOnce(Invoke(mock_create_table));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  auto actual = tested.GetTable("the-table");
+  EXPECT_EQ("projects/the-project/instances/the-instance/tables/the-table",
+            actual.name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetTable` works with recoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, GetTableRecoverableFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+view: SCHEMA_VIEW
+)""";
+  btproto::GetTableRequest expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  auto mock_create_table = [expected](grpc::ClientContext* ctx,
+                                      btproto::GetTableRequest const& request,
+                                      btproto::Table* response) {
+    std::string delta;
+    google::protobuf::util::MessageDifferencer differencer;
+    differencer.ReportDifferencesToString(&delta);
+    EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock_create_table));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+
+  // After all the setup, make the actual call we want to test.
+  auto actual = tested.GetTable("the-table");
+  EXPECT_EQ(tested.instance_name() + "/tables/the-table", actual.name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetTable` reports unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_unrecoverable_failure = [](grpc::ClientContext* ctx,
+                                       btproto::GetTableRequest const& request,
+                                       btproto::Table* response) {
+    return grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh");
+  };
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillOnce(Invoke(mock_unrecoverable_failure));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetTable` works with too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, GetTableTooManyFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
+                                     btproto::GetTableRequest const& request,
+                                     btproto::Table* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillRepeatedly(Invoke(mock_recoverable_failure));
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
+  // fourth failure that actually raises an error.
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
 }

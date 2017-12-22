@@ -95,6 +95,36 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   return result;
 }
 
+::google::bigtable::admin::v2::Table TableAdmin::GetTable(
+    std::string table_id, ::google::bigtable::admin::v2::Table::View view) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  btproto::GetTableRequest request;
+  request.set_name(absl::StrCat(instance_name(), "/tables/", table_id));
+  request.set_view(view);
+
+  btproto::Table response;
+  while (true) {
+    grpc::ClientContext client_context;
+    rpc_policy->setup(client_context);
+    backoff_policy->setup(client_context);
+    grpc::Status status =
+        client_->table_admin().GetTable(&client_context, request, &response);
+    client_->on_completion(status);
+    if (status.ok()) {
+      break;
+    }
+    if (not rpc_policy->on_failure(status)) {
+      throw std::runtime_error("could not get table");
+    }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  return response;
+}
+
 std::string TableAdmin::CreateInstanceName() const {
   return absl::StrCat("projects/", client_->project(), "/instances/",
                       instance_id_);
