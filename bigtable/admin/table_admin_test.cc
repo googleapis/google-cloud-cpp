@@ -64,26 +64,25 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
-  return
-      [expected_token, returned_token, table_names](
-          grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-          btproto::ListTablesResponse* response) {
-        auto const instance_name =
-            absl::StrCat("projects/", kProjectId, "/instances/", kInstanceId);
-        EXPECT_EQ(instance_name, request.parent());
-        EXPECT_EQ(btproto::Table::FULL, request.view());
-        EXPECT_EQ(expected_token, request.page_token());
+  return [expected_token, returned_token, table_names](
+      grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
+      btproto::ListTablesResponse* response) {
+    auto const instance_name =
+        absl::StrCat("projects/", kProjectId, "/instances/", kInstanceId);
+    EXPECT_EQ(instance_name, request.parent());
+    EXPECT_EQ(btproto::Table::FULL, request.view());
+    EXPECT_EQ(expected_token, request.page_token());
 
-        EXPECT_NE(nullptr, response);
-        for (auto const& table_name : table_names) {
-          auto& table = *response->add_tables();
-          table.set_name(instance_name + "/tables/" + table_name);
-          table.set_granularity(btproto::Table::MILLIS);
-        }
-        // Return the right token.
-        response->set_next_page_token(returned_token);
-        return grpc::Status::OK;
-      };
+    EXPECT_NE(nullptr, response);
+    for (auto const& table_name : table_names) {
+      auto& table = *response->add_tables();
+      table.set_name(instance_name + "/tables/" + table_name);
+      table.set_granularity(btproto::Table::MILLIS);
+    }
+    // Return the right token.
+    response->set_next_page_token(returned_token);
+    return grpc::Status::OK;
+  };
 };
 
 /**
@@ -191,13 +190,9 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  auto mock_unrecoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-         btproto::ListTablesResponse* response) {
-        return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
-      };
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
-      .WillOnce(Invoke(mock_unrecoverable_failure));
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
