@@ -185,8 +185,5 @@ class AcceptanceTest : public ::testing::Test {
   std::vector<bigtable::Row> rows_;
 };
 
-// The tests included below are defined in the file
-// "read-rows-acceptance-test.json" in the cloud-bigtable-client
-// repository and formatted as C++ code using tools/convert_tests.py
-
+// Auto-generated acceptance tests
 #include "bigtable/client/detail/readrowsparser_acceptance_tests.inc"
