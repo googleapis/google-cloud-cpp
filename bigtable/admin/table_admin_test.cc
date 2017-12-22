@@ -89,7 +89,7 @@ auto create_list_tables_lambda = [](std::string expected_token,
  * Helper class to create the expectations for a simple RPC call.
  *
  * Given the type of the request and responses, this struct provides a function
- * to create an mock implementation with the right signature and checks.
+ * to create a mock implementation with the right signature and checks.
  *
  * @tparam RequestType the protobuf type for the request.
  * @tparam ResponseType the protobuf type for the response.
