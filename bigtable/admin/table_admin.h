@@ -142,7 +142,7 @@ class TableAdmin {
    * signature.  The class derives from std::false_type, so
    * CheckSignature<T>::value is `false`.
    *
-   * @tparam T the type to check against the
+   * @tparam T the type to check against the expected signature.
    */
   template <typename T>
   struct CheckSignature : std::false_type {
@@ -181,7 +181,7 @@ class TableAdmin {
    * policies determine that this is an error.
    *
    * We use std::enable_if<> to stop signature errors at compile-time.  The
-   * CheckSignature meta function returns false if given a type that is not
+   * `CheckSignature` meta function returns `false` if given a type that is not
    * a pointer to member with the right signature, that disables this function
    * altogether, and the developer gets a nice-ish error message.
    *
