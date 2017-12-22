@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Copyright 2017 Google Inc.
 #
@@ -22,8 +22,6 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-echo "IMAGE = ${IMAGE}"
-
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
      --build-arg CXX="${CXX}" \
@@ -31,6 +29,30 @@ sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
      --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
+     --build-arg SCAN_BUILD="${SCAN_BUILD:-}" \
      --build-arg GENERATE_DOCS="${GENERATE_DOCS:-}" \
      --build-arg CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      -f "ci/Dockerfile.${DISTRO}" .
+
+if [ "${SCAN_BUILD:-}" = "yes" ]; then
+  # Define a long command to run inside the docker image.
+  readonly CMD='if [ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]; then cp -r /tmp/scan-build-* /d/scan-build-output; fi'
+  sudo docker run --rm -it --volume $PWD:/d ${IMAGE}:tip bash -c "${CMD}"
+  if [ -r scan-build-output/index.html ]; then
+    echo -n $(tput setaf 1)
+    echo "scan-build detected errors.  Please read the log for details."
+    echo "To run scan-build locally and examine the HTML output"
+    echo "install and configure Docker, then run:"
+    echo
+    echo "DISTRO=ubuntu DISTRO_VERSION=17.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux CXX=clang++ CC=clang ./ci/build-linux.sh"
+    echo
+    echo "the HTML output will be copied into the scan-build-output"
+    echo "subdirectory."
+    echo -n $(tput sgr0)
+    exit 1
+  else
+    echo -n $(tput setaf 2)
+    echo "scan-build completed without errors."
+    echo -n $(tput sgr0)
+  fi
+fi

@@ -130,6 +130,9 @@ which combinations are tested regularly.
    documentation.
  * `BUILD_TYPE`: if set, override the `CMAKE_BUILD_TYPE` flag when configuring
    the build.
+ * `SCAN_BUILD`: if set to `yes`, use Clang static analyzer (aka `scan-build`)
+   to compile the code.  Remember to also set the compiler to Clang as described
+   above.  Builds with this configuration can be substantially slower.
  * `CMAKE_FLAGS`: if set, these additional cmake flags are used to configure
    the build.  The more interesting flags include:
    * `-DSANITIZE_ADDRESS=yes`: use the

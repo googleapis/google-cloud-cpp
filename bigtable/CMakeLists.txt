@@ -149,6 +149,13 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
+# Define custom targets to simplify the scan-build scripts.
+add_custom_target(depends-local)
+add_dependencies(depends-local absl::strings gmock bigtable_protos)
+
+# All tests get added to this target below.
+add_custom_target(tests-local)
+
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
     client/cell_test.cc
@@ -173,6 +180,7 @@ foreach (fname ${bigtable_client_unit_tests})
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
+    add_dependencies(tests-local ${target})
 endforeach ()
 
 # List the unit tests, then setup the targets and dependencies.
@@ -192,6 +200,7 @@ foreach (fname ${bigtable_admin_unit_tests})
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
+    add_dependencies(tests-local ${target})
 endforeach ()
 
 # Create a single executable that rolls up all the tests, this is convenient
@@ -202,14 +211,23 @@ target_link_libraries(bigtable_client_all_tests
     bigtable_client_testing bigtable_admin_client bigtable_client
     bigtable_protos gmock
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_dependencies(tests-local bigtable_client_all_tests)
 
 option(FORCE_SANITIZER_ERRORS
-    "If set enable tests that force errors detected by the sanitizers."
+    "If set, enable tests that force errors detected by the sanitizers."
     "")
 if (FORCE_SANITIZER_ERRORS)
     target_compile_definitions(client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
 endif (FORCE_SANITIZER_ERRORS)
+
+option(FORCE_STATIC_ANALYZER_ERRORS
+    "If set, enable tests that force errors detected by the static analyzer."
+    "")
+if (FORCE_STATIC_ANALYZER_ERRORS)
+    target_compile_definitions(client_force_sanitizer_failures_test
+        PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
+endif (FORCE_STATIC_ANALYZER_ERRORS)
 
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
@@ -217,3 +235,4 @@ add_executable(integration_test tests/integration_test.cc)
 target_link_libraries(integration_test
     bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_dependencies(tests-local integration_test)
