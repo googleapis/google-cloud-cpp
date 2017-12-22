@@ -102,7 +102,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   btproto::GetTableRequest request;
-  request.set_name(instance_name() + "/tables/" + table_id);
+  request.set_name(absl::StrCat(instance_name(), "/tables/", table_id));
   request.set_view(view);
 
   btproto::Table response;
