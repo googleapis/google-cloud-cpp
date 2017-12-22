@@ -24,10 +24,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
     std::string table_id, TableConfig config) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
   auto request = config.as_proto_move();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));

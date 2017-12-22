@@ -150,7 +150,6 @@ class TableAdmin {
     using ResponseType = int;
   };
 
-  /// Discover if a pointer to member function has the expected signature.
   /**
    * Determine if a type is a pointer to member function with the correct
    * signature for CallWithRetry()
@@ -167,8 +166,8 @@ class TableAdmin {
   struct CheckSignature<grpc::Status (StubType::*)(grpc::ClientContext*,
                                                    Request const&, Response*)>
       : public std::true_type {
-    using ResponseType = Response;
     using RequestType = Request;
+    using ResponseType = Response;
     using MemberFunctionType = grpc::Status (StubType::*)(grpc::ClientContext*,
                                                           Request const&,
                                                           Response*);
