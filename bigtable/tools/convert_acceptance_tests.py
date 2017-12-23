@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Generate C++ unit tests from json acceptance tests.
+"""Generate C++ unit tests from JSON acceptance tests.
 
 The Bigtable Client ReadRows acceptance tests are specified in the
 file `read-rows-acceptance-test.json` from
@@ -119,5 +119,5 @@ def main():
         print print_test(tt)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

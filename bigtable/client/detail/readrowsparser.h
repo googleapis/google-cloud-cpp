@@ -105,7 +105,7 @@ class ReadRowsParser {
     std::vector<std::string> labels;
   };
 
-  /*
+  /**
    * Moves partial results into a Cell class.
    *
    * Also helps handle string ownership correctly. The value is moved
