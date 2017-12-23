@@ -20,7 +20,7 @@
 #include <chrono>
 #include <memory>
 
-#include <cmake-build-debug/bigtable/google/bigtable/admin/v2/bigtable_table_admin.pb.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 
 #include "bigtable/client/detail/conjunction.h"
