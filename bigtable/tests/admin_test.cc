@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <sstream>
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
@@ -96,6 +97,52 @@ int main(int argc, char* argv[]) try {
     throw std::runtime_error("Expected only table1 to survive");
   }
   std::cout << "ListTables() after DeleteTable() successful" << std::endl;
+
+  using GC = bigtable::GcRule;
+  auto mod1 = admin.ModifyColumnFamilies(
+      table1,
+      {bigtable::ColumnFamilyModification::Create(
+           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
+                                      GC::MaxNumVersions(1))),
+       bigtable::ColumnFamilyModification::Update(
+           "fam", bigtable::GcRule::MaxNumVersions(2)),
+       bigtable::ColumnFamilyModification::Drop("foo")});
+  // The name we need to get, too much of it depends on the command-line
+  // arguments:
+  std::string expected_text = "name: '" + get1.name() + "'\n";
+  // The rest is very deterministic, we control it by the previous operations:
+  expected_text += R"""(
+column_families {
+  key: 'fam'
+  value { gc_rule { max_num_versions: 2 }}
+}
+column_families {
+  key: 'newfam'
+  value { gc_rule { intersection {
+    rules { max_age { seconds: 604800 }}
+    rules { max_num_versions: 1 }
+  }}}
+}
+)""";
+  admin_proto::Table expected;
+  if (not google::protobuf::TextFormat::ParseFromString(expected_text,
+                                                        &expected)) {
+    std::ostringstream os;
+    os << "Could not parse protobuf string <\n" << expected_text << "\n";
+    throw std::runtime_error(os.str());
+  }
+
+  auto actual = admin.GetTable(table1);
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  if (not differencer.Compare(expected, actual)) {
+    std::ostringstream os;
+    os << "Mismatch expected vs. actual after ModifyColumnFamilies(table1):\n"
+       << delta;
+    throw std::runtime_error(os.str());
+  }
+  std::cout << "ModifyTable(table1) was successful" << std::endl;
 
   return 0;
 } catch (std::exception const& ex) {
