@@ -43,8 +43,9 @@ class AdminClient {
   virtual void on_completion(grpc::Status const& status) = 0;
 
   /// Return a new stub to handle admin operations.
-  virtual ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
-  table_admin() = 0;
+  virtual std::shared_ptr<
+      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
+  Stub() = 0;
 };
 
 /// Create a new admin client configured via @p options.

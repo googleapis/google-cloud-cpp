@@ -266,7 +266,7 @@ class TableAdmin {
       rpc_policy->setup(client_context);
       backoff_policy->setup(client_context);
       // Call the pointer to member function.
-      grpc::Status status = (client_->table_admin().*function)(
+      grpc::Status status = ((*client_->Stub()).*function)(
           &client_context, request, &response);
       client_->on_completion(status);
       if (status.ok()) {

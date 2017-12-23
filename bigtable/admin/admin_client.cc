@@ -36,20 +36,39 @@ class SimpleAdminClient : public bigtable::AdminClient {
       : project_(std::move(project)), options_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  void on_completion(grpc::Status const& status) override;
-  ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
-  table_admin() override;
+  void on_completion(grpc::Status const& status) override {
+    if (status.ok()) {
+      return;
+    }
+    channel_.reset();
+    table_admin_stub_.reset();
+  }
+
+  using AdminStubPtr = std::shared_ptr<
+      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>;
+
+  AdminStubPtr Stub() override {
+    RefreshCredentialsAndChannel();
+    return table_admin_stub_;
+  }
 
  private:
-  void RefreshCredentialsAndChannel();
+  void RefreshCredentialsAndChannel() {
+    if (table_admin_stub_) {
+      return;
+    }
+    auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
+                                             options_.credentials(),
+                                             options_.channel_arguments());
+    table_admin_stub_ = ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
+    channel_ = std::move(channel);
+  }
 
  private:
   std::string project_;
   bigtable::ClientOptions options_;
   std::shared_ptr<grpc::Channel> channel_;
-  std::unique_ptr<
-      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
-      table_admin_stub_;
+  AdminStubPtr table_admin_stub_;
 };
 }  // anonymous namespace
 
@@ -63,37 +82,3 @@ std::shared_ptr<AdminClient> CreateAdminClient(
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
-
-namespace {
-void SimpleAdminClient::on_completion(grpc::Status const& status) {
-  if (status.ok()) {
-    return;
-  }
-  channel_.reset();
-  table_admin_stub_.reset();
-}
-
-::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface&
-SimpleAdminClient::table_admin() {
-  RefreshCredentialsAndChannel();
-  // TODO(#101) - this is inherently unsafe if we plan to support multiple
-  // threads, returning an object that is supposed to be locked.  May need to
-  // rethink the interface completely, or declare the class to be not
-  // thread-safe.
-  return *table_admin_stub_;
-}
-
-void SimpleAdminClient::RefreshCredentialsAndChannel() {
-  if (table_admin_stub_) {
-    return;
-  }
-  auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
-                                           options_.credentials(),
-                                           options_.channel_arguments());
-  auto stub =
-      ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
-  table_admin_stub_ = std::move(stub);
-  channel_ = std::move(channel);
-}
-
-}  // anonymous namespace
