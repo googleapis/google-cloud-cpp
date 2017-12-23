@@ -24,17 +24,16 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class Client : public ClientInterface {
  public:
-  Client(const std::string& project, const std::string& instance,
-         const ClientOptions& options)
-      : project_(project),
-        instance_(instance),
+  Client(std::string project, std::string instance, ClientOptions options)
+      : project_(std::move(project)),
+        instance_(std::move(instance)),
         credentials_(options.credentials()),
         channel_(grpc::CreateChannel(options.data_endpoint(),
                                      options.credentials())),
         bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
 
-  Client(const std::string& project, const std::string& instance)
-      : Client(project, instance, ClientOptions()) {}
+  Client(std::string project, std::string instance)
+      : Client(std::move(project), std::move(instance), ClientOptions()) {}
 
   std::string const& ProjectId() const override;
   std::string const& InstanceId() const override;
@@ -57,9 +56,9 @@ std::string const& Client::InstanceId() const { return instance_; }
 
 std::shared_ptr<ClientInterface> CreateDefaultClient(
     std::string project_id, std::string instance_id,
-    bigtable::ClientOptions client_options) {
+    bigtable::ClientOptions options) {
   return std::make_shared<Client>(std::move(project_id), std::move(instance_id),
-                                  std::move(client_options));
+                                  std::move(options));
 }
 
 void Table::Apply(SingleRowMutation&& mut) {
