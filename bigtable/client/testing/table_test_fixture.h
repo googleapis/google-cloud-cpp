@@ -43,11 +43,12 @@ class TableTestFixture : public ::testing::Test {
   std::string const kInstanceId = "bar-instance";
   std::string const kTableId = "baz-table";
 
-  // This is hardcoded and not computed because we want to test the compuation.
+  // These are hardcoded, and not computed, because we want to test the
+  // computation.
   std::string const kInstanceName =
       "projects/foo-project/instances/bar-instance";
   std::string const kTableName =
-          "projects/foo-project/instances/bar-instance/tables/baz-table";
+      "projects/foo-project/instances/bar-instance/tables/baz-table";
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
