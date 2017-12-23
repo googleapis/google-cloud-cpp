@@ -39,7 +39,7 @@ class Client : public ClientInterface {
   std::string const& ProjectId() const override;
   std::string const& InstanceId() const override;
 
-  google::bigtable::v2::Bigtable::StubInterface& Stub() const {
+  google::bigtable::v2::Bigtable::StubInterface& Stub() const override {
     return *bt_stub_;
   }
 

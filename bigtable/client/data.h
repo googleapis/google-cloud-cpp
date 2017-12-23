@@ -45,7 +45,7 @@ std::shared_ptr<ClientInterface> CreateDefaultClient(std::string project_id,
                                                      ClientOptions options);
 
 inline std::string CreateInstanceName(std::shared_ptr<ClientInterface> client) {
-  return absl::StrCat("projects", client->ProjectId(), "/instances/",
+  return absl::StrCat("projects/", client->ProjectId(), "/instances/",
                       client->InstanceId());
 }
 
