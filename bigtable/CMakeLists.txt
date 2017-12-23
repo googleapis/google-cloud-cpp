@@ -94,8 +94,8 @@ add_library(bigtable_client
     client/cell.h
     client/client_options.h
     client/client_options.cc
-    client/data.h
-    client/data.cc
+    client/data_client.h
+    client/data_client.cc
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
     client/internal/conjunction.h
@@ -112,6 +112,8 @@ add_library(bigtable_client
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
     client/rpc_retry_policy.cc
+    client/table.h
+    client/table.cc
     client/version.h)
 target_link_libraries(bigtable_client
     bigtable_protos absl::strings
@@ -195,7 +197,7 @@ set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
     admin/column_family_test.cc
     admin/table_admin_test.cc
-    admin/table_config_test.cc)
+    admin/table_config_test.cc client/data_client.cc client/data_client.h)
 foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})

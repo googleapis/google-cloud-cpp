@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
-#include "bigtable/client/client_options.h"
+#include "bigtable/client/data_client.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
 #include "bigtable/client/mutations.h"
 #include "bigtable/client/rpc_backoff_policy.h"
@@ -28,27 +28,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class DataClient {
- public:
-  virtual ~DataClient() = default;
-
-  virtual std::string const& ProjectId() const = 0;
-  virtual std::string const& InstanceId() const = 0;
-
-  // Access the stub to send RPC calls.
-  virtual google::bigtable::v2::Bigtable::StubInterface& Stub() const = 0;
-};
-
-/// Create the default implementation of ClientInterface.
-std::shared_ptr<DataClient> CreateDefaultClient(std::string project_id,
-                                                std::string instance_id,
-                                                ClientOptions options);
-
-inline std::string InstanceName(std::shared_ptr<DataClient> client) {
-  return absl::StrCat("projects/", client->ProjectId(), "/instances/",
-                      client->InstanceId());
-}
-
 inline std::string TableName(std::shared_ptr<DataClient> client,
                              absl::string_view table_id) {
   return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
@@ -143,4 +122,4 @@ class Table {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_

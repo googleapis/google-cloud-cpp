@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_TEST_FIXTURE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_TEST_FIXTURE_H_
 
-#include "bigtable/client/data.h"
+#include "bigtable/client/table.h"
 #include "bigtable/client/testing/mock_data_client.h"
 
 namespace bigtable {
