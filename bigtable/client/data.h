@@ -28,9 +28,9 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class ClientInterface {
+class DataClient {
  public:
-  virtual ~ClientInterface() = default;
+  virtual ~DataClient() = default;
 
   virtual std::string const& ProjectId() const = 0;
   virtual std::string const& InstanceId() const = 0;
@@ -40,16 +40,16 @@ class ClientInterface {
 };
 
 /// Create the default implementation of ClientInterface.
-std::shared_ptr<ClientInterface> CreateDefaultClient(std::string project_id,
-                                                     std::string instance_id,
-                                                     ClientOptions options);
+std::shared_ptr<DataClient> CreateDefaultClient(std::string project_id,
+                                                std::string instance_id,
+                                                ClientOptions options);
 
-inline std::string InstanceName(std::shared_ptr<ClientInterface> client) {
+inline std::string InstanceName(std::shared_ptr<DataClient> client) {
   return absl::StrCat("projects/", client->ProjectId(), "/instances/",
                       client->InstanceId());
 }
 
-inline std::string TableName(std::shared_ptr<ClientInterface> client,
+inline std::string TableName(std::shared_ptr<DataClient> client,
                              absl::string_view table_id) {
   return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
 }
@@ -64,7 +64,7 @@ class Table {
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
-  Table(std::shared_ptr<ClientInterface> client, absl::string_view table_id)
+  Table(std::shared_ptr<DataClient> client, absl::string_view table_id)
       : client_(std::move(client)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
@@ -96,7 +96,7 @@ class Table {
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<ClientInterface> client, absl::string_view table_id,
+  Table(std::shared_ptr<DataClient> client, absl::string_view table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(std::move(client)),
@@ -133,7 +133,7 @@ class Table {
   void BulkApply(BulkMutation&& mut);
 
  private:
-  std::shared_ptr<ClientInterface> client_;
+  std::shared_ptr<DataClient> client_;
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;

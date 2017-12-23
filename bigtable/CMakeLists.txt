@@ -119,6 +119,7 @@ target_link_libraries(bigtable_client
 
 add_library(bigtable_client_testing
     client/testing/chrono_literals.h
+    client/testing/mock_data_client.h
     client/testing/table_test_fixture.h
     client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing

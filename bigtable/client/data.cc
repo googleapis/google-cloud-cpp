@@ -22,7 +22,7 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class Client : public ClientInterface {
+class Client : public DataClient {
  public:
   Client(std::string project, std::string instance, ClientOptions options)
       : project_(std::move(project)),
@@ -54,7 +54,7 @@ std::string const& Client::ProjectId() const { return project_; }
 
 std::string const& Client::InstanceId() const { return instance_; }
 
-std::shared_ptr<ClientInterface> CreateDefaultClient(
+std::shared_ptr<DataClient> CreateDefaultClient(
     std::string project_id, std::string instance_id,
     bigtable::ClientOptions options) {
   return std::make_shared<Client>(std::move(project_id), std::move(instance_id),
