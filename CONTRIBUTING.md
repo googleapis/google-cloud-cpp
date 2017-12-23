@@ -62,6 +62,14 @@ advised that `clang-format` has been known to generate slightly different
 formatting in different versions, we use version 4.0, use the same version if
 you run into problems.
 
+If you have prepared a Docker image for `ubuntu:17.04` (see below), you can
+verify and fix the format of your code using:
+
+```console
+# Run from google-cloud-cpp:
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.04 CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/build-linux.sh
+```
+
 ## Advanced Compilation and Testing
 
 Please see the [README](README.md) for the basic instructions on how to compile
@@ -104,10 +112,19 @@ distributions, using the native compiler and library versions included in those
 distributions.
 From time to time, you may need to run the same build on your workstation.
 To do so, [install Docker](https://docs.docker.com/engine/installation/)
-on your workstation and then compile and test using:
+on your workstation, then create the build Docker image for the environment you
+intend to use, for example:
 
 ```console
-# Run this from the google-cloud-cpp directory:
+# Run from the google-cloud-cpp directory.
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.04 ./ci/install-linux.sh
+```
+
+Once you create the image for a given combination of `DISTRO` and
+`DISTRO_VERSION`, you can compile the code multiple times, for example:
+
+```console
+# Also run from google-cloud-cpp:
 $ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.04 CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/build-linux.sh
 ```
 
@@ -122,8 +139,9 @@ which combinations are tested regularly.
    * `CXX=g++ CC=gcc` to use GCC.
  * `DISTRO`: the Linux distribution, use `ubuntu`, `fedora`, or `centos`.
  * `DISTRO_VERSION`: the version of the distribution, e.g. `17.04`.
- * `CHECK_STYLE`: if set to `yes` the build fails if the code is different
-   than the output from `clang-format(1)`.
+ * `CHECK_STYLE`: if set to `yes`, the build fails if the code is different
+   than the output from `clang-format(1)`.  Note that this reformats your files,
+   that can be useful to keep the formatting clean.
  * `GENERATE_DOCS`: if set to `yes` the build will generate the documentation
    using [Doxygen](https://www.doxygen.org).  In addition, if `GH_TOKEN` is set
    it will try to update the `gh-pages` branch on your fork with the new

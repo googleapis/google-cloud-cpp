@@ -21,14 +21,22 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
   exit 0
 fi
 
-sudo apt-get update
-sudo apt-get install -y docker-ce
-sudo docker --version
-
-readonly TARBALL="docker-images/${DISTRO}/${DISTRO_VERSION}/saved.tar.gz"
-if [ -f "${TARBALL}" ]; then
-  gunzip < "${TARBALL}" | sudo docker load \
-    || echo "Could not load saved image, continuing without cache."
+if [ "${CI:-}" = "true" ]; then
+  # Running in the CI environment, upgrade Docker.
+  sudo apt-get update
+  sudo apt-get install -y docker-ce
+  sudo docker --version
 fi
 
-sudo docker image ls
+readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+sudo docker build -t "${IMAGE}:tip" \
+     --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
+     --build-arg CXX="${CXX}" \
+     --build-arg CC="${CC}" \
+     --build-arg NCPU="${NCPU:-2}" \
+     --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
+     --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
+     --build-arg SCAN_BUILD="${SCAN_BUILD:-}" \
+     --build-arg GENERATE_DOCS="${GENERATE_DOCS:-}" \
+     --build-arg CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
+     -f "ci/Dockerfile.${DISTRO}" ci

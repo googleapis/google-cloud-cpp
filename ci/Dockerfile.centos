@@ -54,24 +54,3 @@ ARG GOPATH=/var/tmp/build/cbt
 WORKDIR ${GOPATH}
 RUN go get cloud.google.com/go/bigtable/cmd/cbt \
     cloud.google.com/go/bigtable/cmd/emulator
-
-ARG NCPU=2
-ARG CXX=g++
-ARG CC=gcc
-ARG BUILD_TYPE=Debug
-ARG CHECK_STYLE=""
-ARG GENERATE_DOCS=""
-ARG SCAN_BUILD=""
-ARG CMAKE_FLAGS=""
-
-# We assume that this is running on a (clean-ish) checkout of
-# google-cloud-cpp, including submodules, and copy the files to a
-# directory where we will build.
-WORKDIR /var/tmp/build
-COPY . /var/tmp/build/gccpp
-
-RUN ./gccpp/ci/check-style.sh
-RUN ./gccpp/ci/build-docker.sh
-
-WORKDIR /var/tmp/build/gccpp/build-output/bigtable
-RUN ../../bigtable/tests/run_integration_tests.sh
