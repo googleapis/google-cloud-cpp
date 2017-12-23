@@ -147,7 +147,7 @@ class TableAdmin {
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
-   * @param mods the list of modifications to the schema.
+   * @param modifications the list of modifications to the schema.
    * @return the resulting table schema.
    * @throws std::exception if the operation cannot be completed.
    */
@@ -161,6 +161,7 @@ class TableAdmin {
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
+   * @param row_key_prefix drop any rows that start with this prefix.
    * @throws std::exception if the operation cannot be completed.
    */
   void DropRowsByPrefix(std::string table_id, std::string row_key_prefix);
