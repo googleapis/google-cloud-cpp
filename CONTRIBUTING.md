@@ -139,9 +139,9 @@ which combinations are tested regularly.
    * `CXX=g++ CC=gcc` to use GCC.
  * `DISTRO`: the Linux distribution, use `ubuntu`, `fedora`, or `centos`.
  * `DISTRO_VERSION`: the version of the distribution, e.g. `17.04`.
- * `CHECK_STYLE`: if set to `yes` the build fails if the code is different
-   than the output from `clang-format(1)`.  Notice that this reformats your
-   files, that can be useful to keep the formatting clean.
+ * `CHECK_STYLE`: if set to `yes`, the build fails if the code is different
+   than the output from `clang-format(1)`.  Note that this reformats your files,
+   that can be useful to keep the formatting clean.
  * `GENERATE_DOCS`: if set to `yes` the build will generate the documentation
    using [Doxygen](https://www.doxygen.org).  In addition, if `GH_TOKEN` is set
    it will try to update the `gh-pages` branch on your fork with the new

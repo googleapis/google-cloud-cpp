@@ -37,8 +37,8 @@ fi
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-mkdir -p build-output/${IMAGE}
-cd build-output/${IMAGE}
+mkdir -p "build-output/${IMAGE}"
+cd "build-output/${IMAGE}"
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
@@ -53,23 +53,23 @@ echo "travis_fold:end:configure-cmake"
 # otherwise, the static analyzer finds issues in them, and there is no way to
 # ignore them.  When scan-build is not enabled, this is still useful because
 # we can fold the output in Travis and make the log more interesting.
-echo ${COLOR_YELLOW}"Started dependency build at: " $(date) ${COLOR_RESET}
+echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
 make -j ${NCPU} -C bigtable depends-local
 echo "travis_fold:end:build-dependencies"
-echo ${COLOR_YELLOW}"Finished dependency build at: " $(date) ${COLOR_RESET}
+echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 
 # If scan-build is enabled we build the smallest subset of things that is
 # needed; otherwise, we pick errors from things we do not care about. With
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
-echo ${COLOR_YELLOW}"Started build at: " $(date) ${COLOR_RESET}
+echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
 if [ "${SCAN_BUILD}" = "yes" ]; then
   scan-build make -j ${NCPU} -C bigtable tests-local
 else
   make -j ${NCPU} all
 fi
-echo ${COLOR_YELLOW}"Finished build at: " $(date) ${COLOR_RESET}
+echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # Run the tests and output any failures.
 CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
@@ -111,15 +111,15 @@ if [ "${SCAN_BUILD:-}" = "yes" ]; then
 ${COLOR_RED}
 scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
-then run:"
+then run:
 
-DISTRO=ubuntu DISTRO_VERSION=17.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux CXX=clang++ CC=clang ./ci/build-linux.sh"
+DISTRO=ubuntu DISTRO_VERSION=17.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux CXX=clang++ CC=clang ./ci/build-linux.sh
 
-The HTML output will be copied into the scan-build-output subdirectory."
+The HTML output will be copied into the scan-build-output subdirectory.
 ${COLOR_RESET}
 _EOF_
     exit 1
   else
-    echo ${COLOR_GREEN}"scan-build completed without errors."${COLOR_RESET}
+    echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
   fi
 fi
