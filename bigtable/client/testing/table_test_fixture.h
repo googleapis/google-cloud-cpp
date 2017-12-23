@@ -28,16 +28,7 @@ class TableTestFixture : public ::testing::Test {
 
   void SetUp() override;
 
-  std::shared_ptr<MockDataClient> SetupMockClient() {
-    auto client = std::make_shared<MockDataClient>();
-    EXPECT_CALL(*client, project_id())
-        .WillRepeatedly(::testing::ReturnRef(project_id_));
-    EXPECT_CALL(*client, instance_id())
-        .WillRepeatedly(::testing::ReturnRef(instance_id_));
-    EXPECT_CALL(*client, Stub())
-        .WillRepeatedly(::testing::ReturnRef(*bigtable_stub_));
-    return client;
-  }
+  std::shared_ptr<MockDataClient> SetupMockClient();
 
   std::string const kProjectId = "foo-project";
   std::string const kInstanceId = "bar-instance";
