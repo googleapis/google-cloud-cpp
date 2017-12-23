@@ -23,76 +23,89 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
+#include <absl/strings/str_cat.h>
+#include <absl/strings/string_view.h>
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class Table;
-
 class ClientInterface {
  public:
   virtual ~ClientInterface() = default;
 
-  // Create a Table object for use with the Data API. Never fails, all
-  // error checking happens during operations.
-  virtual std::unique_ptr<Table> Open(const std::string& table_id) = 0;
+  virtual std::string const& ProjectId() const = 0;
+  virtual std::string const& InstanceId() const = 0;
 
   // Access the stub to send RPC calls.
   virtual google::bigtable::v2::Bigtable::StubInterface& Stub() const = 0;
 };
 
-class Client : public ClientInterface {
- public:
-  Client(const std::string& project, const std::string& instance,
-         const ClientOptions& options)
-      : project_(project),
-        instance_(instance),
-        credentials_(options.credentials()),
-        channel_(grpc::CreateChannel(options.data_endpoint(),
-                                     options.credentials())),
-        bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
+/// Create the default implementation of ClientInterface.
+std::shared_ptr<ClientInterface> CreateDefaultClient(std::string project_id,
+                                                     std::string instance_id,
+                                                     ClientOptions options);
 
-  Client(const std::string& project, const std::string& instance)
-      : Client(project, instance, ClientOptions()) {}
+inline std::string CreateInstanceName(std::shared_ptr<ClientInterface> client) {
+  return absl::StrCat("projects", client->ProjectId(), "/instances/",
+                      client->InstanceId());
+}
 
-  std::unique_ptr<Table> Open(const std::string& table_id);
-
-  google::bigtable::v2::Bigtable::StubInterface& Stub() const {
-    return *bt_stub_;
-  }
-
- private:
-  std::string project_;
-  std::string instance_;
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
-  std::shared_ptr<grpc::Channel> channel_;
-  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> bt_stub_;
-
-  friend class Table;
-};
+inline std::string CreateTableName(std::shared_ptr<ClientInterface> client,
+                                   absl::string_view table_id) {
+  return absl::StrCat(CreateInstanceName(std::move(client)), "/tables/", table_id);
+}
 
 class Table {
  public:
-  /// Constructor with default policies
-  Table(const ClientInterface* client, const std::string& table_name)
-      : client_(client),
-        table_name_(table_name),
+  /**
+   * Constructor with default policies.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + '/tables/' + table_id`.
+   */
+  Table(std::shared_ptr<ClientInterface> client, absl::string_view table_id)
+      : client_(std::move(client)),
+        table_name_(CreateTableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 
-  /// Constructor with explicit policies
+  /**
+   * Constructor with default policies.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + '/tables/' + table_id`.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + '/tables/' + table_id`.
+   * @param retry_policy the value of the RPCRetryPolicy, for example, the
+   *     policy type may be `bigtable::RPCLimitedErrorCountRetryPolicy` which
+   *     tolerates a maximum number of errors, the value controls how many.
+   * @param backoff_policy the value of the RPCBackoffPolicy, for example, the
+   *     policy type may be `bigtable::ExponentialBackoffPolicy` which will
+   *     double the wait period on each failure, up to a limit.  The value
+   *     controls the initial and maximum wait periods.
+   * @param idempotent_mutation_policy the value of the
+   *     IdempotentMutationPolicy.
+   */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(const ClientInterface* client, const std::string& table_name,
+  Table(std::shared_ptr<ClientInterface> client, absl::string_view table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(client),
-        table_name_(table_name),
+      : client_(std::move(client)),
+        table_name_(CreateTableName(client_, table_id)),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
-  const std::string& table_name() const { return table_name_; }
+  std::string const& table_name() const { return table_name_; }
 
   /**
    * Attempts to apply the mutation to a row.
@@ -120,7 +133,7 @@ class Table {
   void BulkApply(BulkMutation&& mut);
 
  private:
-  const ClientInterface* client_;
+  std::shared_ptr<ClientInterface> client_;
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;

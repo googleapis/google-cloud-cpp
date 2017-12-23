@@ -113,15 +113,16 @@ add_library(bigtable_client
     client/rpc_retry_policy.h
     client/rpc_retry_policy.cc
     client/version.h)
-target_link_libraries(bigtable_client bigtable_protos ${GRPCPP_LIBRARIES}
-  ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_link_libraries(bigtable_client
+    bigtable_protos absl::strings
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 add_library(bigtable_client_testing
     client/testing/chrono_literals.h
     client/testing/table_test_fixture.h
     client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
-    bigtable_protos gmock
+    bigtable_client bigtable_protos absl::strings gmock
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # the admin library
@@ -179,8 +180,9 @@ foreach (fname ${bigtable_client_unit_tests})
     add_executable(${target} ${fname})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target}
-        bigtable_client_testing bigtable_client bigtable_protos gmock
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+        bigtable_client_testing bigtable_client bigtable_protos
+        gmock absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES}
+        ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
     add_dependencies(tests-local ${target})
@@ -199,7 +201,7 @@ foreach (fname ${bigtable_admin_unit_tests})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target}
         bigtable_client_testing bigtable_admin_client bigtable_client
-        bigtable_protos gmock
+        bigtable_protos gmock absl::strings
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
@@ -212,7 +214,7 @@ add_executable(bigtable_client_all_tests
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
     bigtable_client_testing bigtable_admin_client bigtable_client
-    bigtable_protos gmock
+    bigtable_protos gmock absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local bigtable_client_all_tests)
 
@@ -236,6 +238,6 @@ endif (FORCE_STATIC_ANALYZER_ERRORS)
 # Cloud Bigtable emulator.
 add_executable(integration_test tests/integration_test.cc)
 target_link_libraries(integration_test
-    bigtable_admin_client bigtable_client bigtable_protos
+    bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local integration_test)

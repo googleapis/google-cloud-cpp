@@ -26,8 +26,8 @@ namespace testing {
 
 class MockClient : public bigtable::ClientInterface {
  public:
-  MOCK_METHOD1(Open,
-               std::unique_ptr<bigtable::Table>(std::string const& table_id));
+  MOCK_CONST_METHOD0(ProjectId, std::string const&());
+  MOCK_CONST_METHOD0(InstanceId, std::string const&());
   MOCK_CONST_METHOD0(Stub, google::bigtable::v2::Bigtable::StubInterface&());
 };
 
