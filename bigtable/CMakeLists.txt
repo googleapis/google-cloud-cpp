@@ -242,3 +242,9 @@ target_link_libraries(integration_test
     bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local integration_test)
+
+add_executable(admin_test tests/admin_test.cc)
+target_link_libraries(admin_test
+    bigtable_admin_client bigtable_client bigtable_protos
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_dependencies(tests-local admin_test)
