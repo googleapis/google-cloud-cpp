@@ -33,7 +33,7 @@ void CheckInstanceIsEmpty(bigtable::TableAdmin& admin) {
 
 void CheckCreateTable(bigtable::TableAdmin& admin, std::string table_id) {
   auto table = admin.CreateTable(table_id, bigtable::TableConfig());
-  std::cout << "CreateTable(" << table_id < ") successful" << std::endl;
+  std::cout << "CreateTable(" << table_id << ") successful" << std::endl;
 
   auto get_result = admin.GetTable(table_id);
   if (table.name() != get_result.name()) {
@@ -68,13 +68,15 @@ void CheckTableList(bigtable::TableAdmin& admin,
   throw std::runtime_error(os.str());
 }
 
-void CheckTableSchema(admin_proto::Table const& actual, std::string const& expected_text,
+void CheckTableSchema(admin_proto::Table const& actual,
+                      std::string const& expected_text,
                       std::string const& message) {
   admin_proto::Table expected;
   if (not google::protobuf::TextFormat::ParseFromString(expected_text,
                                                         &expected)) {
     std::ostringstream os;
-    os << message << ": could not parse protobuf string <\n" << expected_text << ">\n";
+    os << message << ": could not parse protobuf string <\n"
+       << expected_text << ">\n";
     throw std::runtime_error(os.str());
   }
 
@@ -92,8 +94,10 @@ void CheckTableSchema(admin_proto::Table const& actual, std::string const& expec
 void CheckModifyTable(bigtable::TableAdmin& admin, std::string table_id) {
   using GC = bigtable::GcRule;
   auto table = admin.CreateTable(
-      table_id, bigtable::TableConfig({{"fam", GC::MaxNumVersions(5)}},
-                                      {"foo", "bar", "baz"}));
+      table_id,
+      bigtable::TableConfig({{"fam", GC::MaxNumVersions(5)},
+                             {"foo", GC::MaxAge(std::chrono::hours(24))}},
+                            {"a1000", "a2000", "b3000", "m5000"}));
 
   std::string expected_text_create = "name: '" + table.name() + "'\n";
   // The rest is very deterministic, we control it by the previous operations:
@@ -102,11 +106,18 @@ column_families {
   key: 'fam'
   value { gc_rule { max_num_versions: 5 }}
 }
+column_families {
+  key: 'foo'
+  value { gc_rule { max_age { seconds: 86400 }}}
+}
 )""";
   auto table_detailed = admin.GetTable(table_id, admin_proto::Table::FULL);
-  CheckTableSchema(table_detailed, expected_text_create, "CheckModifyTable/Create");
+  CheckTableSchema(table_detailed, expected_text_create,
+                   "CheckModifyTable/Create");
 
-  std::string expected_text = "name: '" + table.name() + "'\n";
+  // TODO(google-cloud-go#837) - the emulator returns the wrong value.
+  // std::string expected_text = "name: '" + table.name() + "'\n";
+  std::string expected_text;
   // The rest is very deterministic, we control it by the previous operations:
   expected_text += R"""(
 column_families {
@@ -129,6 +140,9 @@ column_families {
        bigtable::ColumnFamilyModification::Update(
            "fam", bigtable::GcRule::MaxNumVersions(2)),
        bigtable::ColumnFamilyModification::Drop("foo")});
+
+  // TODO(google-cloud-go#837) - the emulator returns the wrong value.
+  modified.set_name("");
   CheckTableSchema(modified, expected_text, "CheckModifyTable/Modify");
 }
 }
