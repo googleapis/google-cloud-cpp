@@ -133,6 +133,12 @@ column_families {
 }
 }
 
+/**
+ * @file An integration test for the bigtable::TableAdmin class.
+ *
+ * The continuous integration builds run this test against the Cloud Bigtable
+ * Emulator.
+ */
 int main(int argc, char* argv[]) try {
   // Make sure the arguments are valid.
   if (argc != 3) {
