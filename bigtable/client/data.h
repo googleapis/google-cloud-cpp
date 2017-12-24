@@ -44,14 +44,14 @@ std::shared_ptr<ClientInterface> CreateDefaultClient(std::string project_id,
                                                      std::string instance_id,
                                                      ClientOptions options);
 
-inline std::string CreateInstanceName(std::shared_ptr<ClientInterface> client) {
+inline std::string InstanceName(std::shared_ptr<ClientInterface> client) {
   return absl::StrCat("projects/", client->ProjectId(), "/instances/",
                       client->InstanceId());
 }
 
-inline std::string CreateTableName(std::shared_ptr<ClientInterface> client,
-                                   absl::string_view table_id) {
-  return absl::StrCat(CreateInstanceName(std::move(client)), "/tables/", table_id);
+inline std::string TableName(std::shared_ptr<ClientInterface> client,
+                             absl::string_view table_id) {
+  return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
 }
 
 class Table {
@@ -66,7 +66,7 @@ class Table {
    */
   Table(std::shared_ptr<ClientInterface> client, absl::string_view table_id)
       : client_(std::move(client)),
-        table_name_(CreateTableName(client_, table_id)),
+        table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
         idempotent_mutation_policy_(
@@ -100,7 +100,7 @@ class Table {
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(std::move(client)),
-        table_name_(CreateTableName(client_, table_id)),
+        table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}

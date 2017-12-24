@@ -31,12 +31,12 @@ TEST_F(TableTest, ClientInstanceId) {
   EXPECT_EQ(kInstanceId, client_->InstanceId());
 }
 
-TEST_F(TableTest, CreateInstanceName) {
-  EXPECT_EQ(kInstanceName, bigtable::CreateInstanceName(client_));
+TEST_F(TableTest, StandaloneInstanceName) {
+  EXPECT_EQ(kInstanceName, bigtable::InstanceName(client_));
 }
 
-TEST_F(TableTest, CreateTableName) {
-  EXPECT_EQ(kTableName, bigtable::CreateTableName(client_, kTableId));
+TEST_F(TableTest, StandaloneTableName) {
+  EXPECT_EQ(kTableName, bigtable::TableName(client_, kTableId));
 }
 
 TEST_F(TableTest, TableName) {
@@ -48,7 +48,7 @@ TEST_F(TableTest, TableName) {
 TEST_F(TableTest, TableConstructor) {
   std::string const kOtherTableId = "my-table";
   std::string const kOtherTableName =
-      bigtable::CreateTableName(client_, kOtherTableId);
+      bigtable::TableName(client_, kOtherTableId);
   bigtable::Table table(client_, kOtherTableId);
   EXPECT_EQ(kOtherTableName, table.table_name());
 }
