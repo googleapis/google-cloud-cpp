@@ -415,7 +415,7 @@ modifications {
 }
 modifications {
   id: 'bar'
-  update { gc_rule { max_age { seconds: 172800 }}}
+  update { gc_rule { max_age { seconds: 86400 }}}
 }
 )""";
   auto mock = MockRpcFactory<btproto::ModifyColumnFamiliesRequest,
@@ -431,7 +431,7 @@ modifications {
   using GC = bigtable::GcRule;
   auto actual = tested.ModifyColumnFamilies(
       "the-table",
-      {M::Create("foo", GC::MaxAge(48_h)), M::Update("bar", GC::MaxAge(48_h))});
+      {M::Create("foo", GC::MaxAge(48_h)), M::Update("bar", GC::MaxAge(24_h))});
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.

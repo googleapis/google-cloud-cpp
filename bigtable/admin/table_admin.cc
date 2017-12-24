@@ -78,7 +78,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 ::google::bigtable::admin::v2::Table TableAdmin::GetTable(
     std::string table_id, ::google::bigtable::admin::v2::Table::View view) {
   btproto::GetTableRequest request;
-  request.set_name(CreateTableName(table_id));
+  request.set_name(TableName(table_id));
   request.set_view(view);
 
   auto error_message = absl::StrCat("GetTable(", request.name(), ")");
@@ -87,7 +87,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 
 void TableAdmin::DeleteTable(std::string table_id) {
   btproto::DeleteTableRequest request;
-  request.set_name(CreateTableName(table_id));
+  request.set_name(TableName(table_id));
 
   CallWithRetry(&StubType::DeleteTable, request, "DeleteTable");
 }
@@ -95,7 +95,7 @@ void TableAdmin::DeleteTable(std::string table_id) {
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
     std::string table_id, std::vector<ColumnFamilyModification> modifications) {
   btproto::ModifyColumnFamiliesRequest request;
-  request.set_name(CreateTableName(table_id));
+  request.set_name(TableName(table_id));
   for (auto& m : modifications) {
     *request.add_modifications() = m.as_proto_move();
   }
@@ -108,7 +108,7 @@ void TableAdmin::DeleteTable(std::string table_id) {
 void TableAdmin::DropRowsByPrefix(std::string table_id,
                                   std::string row_key_prefix) {
   btproto::DropRowRangeRequest request;
-  request.set_name(CreateTableName(table_id));
+  request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
 
   CallWithRetry(&StubType::DropRowRange, request, "DropRowsByPrefix");
@@ -116,13 +116,13 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
 
 void TableAdmin::DropAllRows(std::string table_id) {
   btproto::DropRowRangeRequest request;
-  request.set_name(CreateTableName(table_id));
+  request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
 
   CallWithRetry(&StubType::DropRowRange, request, "DropAllRows");
 }
 
-std::string TableAdmin::CreateInstanceName() const {
+std::string TableAdmin::InstanceName() const {
   return absl::StrCat("projects/", client_->project(), "/instances/",
                       instance_id_);
 }

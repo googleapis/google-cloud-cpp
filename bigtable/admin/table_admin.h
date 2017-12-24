@@ -43,7 +43,7 @@ class TableAdmin {
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : client_(client),
         instance_id_(std::move(instance_id)),
-        instance_name_(CreateInstanceName()),
+        instance_name_(InstanceName()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy()) {}
 
@@ -65,7 +65,7 @@ class TableAdmin {
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : client_(client),
         instance_id_(std::move(instance_id)),
-        instance_name_(CreateInstanceName()),
+        instance_name_(InstanceName()),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
@@ -178,10 +178,10 @@ class TableAdmin {
 
  private:
   /// Compute the fully qualified instance name.
-  std::string CreateInstanceName() const;
+  std::string InstanceName() const;
 
   /// Return the fully qualified name of a table in this object's instance.
-  std::string CreateTableName(std::string const& table_id) const {
+  std::string TableName(std::string const& table_id) const {
     return instance_name() + "/tables/" + table_id;
   }
 
