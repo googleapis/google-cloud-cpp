@@ -71,7 +71,8 @@ class Filter {
   /**
    * Return a filter that accepts only the last @p n values of each column.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with grpc::StatusCode::INVALID_ARGUMENT.
    */
   static Filter Latest(std::int32_t n) {
     Filter result;
