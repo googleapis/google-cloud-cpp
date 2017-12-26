@@ -200,10 +200,13 @@ class Filter {
    * of multiple filters via the Union() function (aka Interleaved in the
    * proto).  Furthermore, notice that this is the cells within a row, if there
    * are multiple column families and columns, the cells are returned ordered
-   * by first column family, and then by column qualifier, and then by
-   * timestamp.
+   * by:
+   * - The column family internal ID, which is not necessarily the
+   *   lexicographical order of the column family names.  Also, the ID of each
+   *   column family may change on each row.
+   * - The column names, lexicographically.
+   * - Timestamp in reverse order.
    *
-   * TODO(#82) - check the documentation around ordering of columns.
    * TODO(#84) - document what is the effect of n <= 0
    */
   static Filter CellsRowLimit(std::int32_t n) {
@@ -221,11 +224,11 @@ class Filter {
    * are multiple column families and columns, the cells are returned ordered
    * by:
    * - The column family internal ID, which is not necessarily the
-   *   lexicographical order of the column family names.
+   *   lexicographical order of the column family names.  Also, the ID of each
+   *   column family may change on each row.
    * - The column names, lexicographically.
    * - Timestamp in reverse order.
    *
-   * TODO(#82) - check the documentation around ordering of columns.
    * TODO(#84) - document what is the effect of n <= 0
    */
   static Filter CellsRowOffset(std::int32_t n) {
