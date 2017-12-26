@@ -36,8 +36,12 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
                    std::string const& row_key);
 void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
                  std::string const& row_key);
-void CheckCellsRowLimit(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckCellsRowLimit(bigtable::ClientInterface& client,
+                        bigtable::Table& table,
                         std::string const& row_key_prefix);
+void CheckCellsRowOffset(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
+                         std::string const& row_key_prefix);
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -94,6 +98,7 @@ int main(int argc, char* argv[]) try {
 
   CheckLatest(*client, table, "aaa003-latest");
   CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
+  CheckCellsRowOffset(*client, table, "aaa005-cells-row-offset");
 
   return 0;
 } catch (bigtable::PermanentMutationFailure const& ex) {
@@ -445,6 +450,29 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
 
   CheckEqualRowKeyCount("CheckCellsRowLimit()", expected, actual);
   std::cout << "CheckCellsRowLimit() is successful" << std::endl;
+}
+
+void CheckCellsRowOffset(bigtable::ClientInterface& client, bigtable::Table& table,
+                        std::string const& row_key_prefix) {
+  CreateComplexRows(client, table, row_key_prefix);
+
+  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
+  // the separator and the successor of "/" is "0".
+  auto result =
+      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
+               bigtable::Filter::CellsRowOffset(2));
+
+  std::map<std::string, int> actual;
+  for (auto const& c : result) {
+    auto ins = actual.emplace(c.row_key(), 0);
+    ins.first->second++;
+  }
+  std::map<std::string, int> expected{{row_key_prefix + "/many", 2},
+                                      {row_key_prefix + "/many-columns", 2},
+                                      {row_key_prefix + "/complex", 78}};
+
+  CheckEqualRowKeyCount("CheckCellsRowOffset()", expected, actual);
+  std::cout << "CheckCellsRowOffset() is successful" << std::endl;
 }
 
 }  // anonymous namespace

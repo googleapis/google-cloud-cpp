@@ -209,7 +209,8 @@ class Filter {
    *   column names are sorted lexicographically.
    * - Within a column, the cells appear in descending order by timestamp.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with grpc::StatusCode::INVALID_ARGUMENT.
    */
   static Filter CellsRowLimit(std::int32_t n) {
     Filter tmp;
@@ -231,7 +232,8 @@ class Filter {
    *   column names are sorted lexicographically.
    * - Within a column, the cells appear in descending order by timestamp.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with grpc::StatusCode::INVALID_ARGUMENT.
    */
   static Filter CellsRowOffset(std::int32_t n) {
     Filter tmp;
