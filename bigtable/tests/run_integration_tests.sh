@@ -67,3 +67,7 @@ echo "Running Table::Apply() integration test."
 echo
 echo "Running TableAdmin integration test."
 ./admin_integration_test emulated admin-tests
+
+echo
+echo "Running bigtable::Filters integration tests."
+./filters_integration_test emulated filters filters-table
