@@ -196,16 +196,16 @@ class Filter {
   /**
    * Return a filter that only accepts the first @p n cells in a row.
    *
-   * Notice that cells might be repeated, such as when interleaving the results
-   * of multiple filters via the Union() function (aka Interleaved in the
-   * proto).  Furthermore, notice that this is the cells within a row, if there
-   * are multiple column families and columns, the cells are returned ordered
-   * by:
-   * - The column family internal ID, which is not necessarily the
-   *   lexicographical order of the column family names.  Also, the ID of each
-   *   column family may change on each row.
-   * - The column names, lexicographically.
-   * - Timestamp in reverse order.
+   * Note that cells might be repeated, such as when interleaving the results
+   * of multiple filters via the `Interleave()` function.  Furthermore, this
+   * filter apples to the cells within a row, if there are multiple column
+   * families and/or columns in a row the order is:
+   * - All the cells for a column family appear together, but there is no
+   *   guarantee on the order of the column families.  Furthermore, column
+   *   families may appear in different orders in different rows.
+   * - Within a column family the cells are ordered by column name, column names
+   *   are compared lexicographically.
+   * - With a column, the cells appear in descending order by timestamp.
    *
    * TODO(#84) - document what is the effect of n <= 0
    */
@@ -218,16 +218,16 @@ class Filter {
   /**
    * Return a filter that skips the first @p n cells in a row.
    *
-   * Notice that cells might be repeated, such as when interleaving the results
-   * of multiple filters via the Union() function (aka Interleaved in the
-   * proto).  Furthermore, notice that this is the cells within a row, if there
-   * are multiple column families and columns, the cells are returned ordered
-   * by:
-   * - The column family internal ID, which is not necessarily the
-   *   lexicographical order of the column family names.  Also, the ID of each
-   *   column family may change on each row.
-   * - The column names, lexicographically.
-   * - Timestamp in reverse order.
+   * Note that cells might be repeated, such as when interleaving the results
+   * of multiple filters via the `Interleave()` function.  Furthermore, this
+   * filter apples to the cells within a row, if there are multiple column
+   * families and/or columns in a row the order is:
+   * - All the cells for a column family appear together, but there is no
+   *   guarantee on the order of the column families.  Furthermore, column
+   *   families may appear in different orders in different rows.
+   * - Within a column family the cells are ordered by column name, column names
+   *   are compared lexicographically.
+   * - With a column, the cells appear in descending order by timestamp.
    *
    * TODO(#84) - document what is the effect of n <= 0
    */
