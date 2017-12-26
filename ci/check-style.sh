@@ -22,8 +22,10 @@ if [ "${CHECK_STYLE}" != "yes" ]; then
 fi
 
 # This script assumes it is running the top-level google-cloud-cpp directory.
-find . \( -path ./.git -prune -o -path ./third_party -prune \) \
-     -o -name '*.h' -o -name '*.cc' -print0 \
+find . \( -path ./.git -prune -o -path ./third_party -prune \
+          -o -path './cmake-build-*' -o -path ./build-output -prune \
+          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
+     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
 
 # Report any differences created by running clang-format.

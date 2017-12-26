@@ -63,7 +63,8 @@ class GcRule {
    *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
    *     parameter.
    *
-   * @see [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
+   * @see
+   * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
    */
   template <typename Rep, typename Period>

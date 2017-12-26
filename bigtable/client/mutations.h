@@ -202,8 +202,7 @@ class PermanentMutationFailure : public std::runtime_error {
                            std::vector<FailedMutation>&& failures)
       : std::runtime_error(msg), failures_(std::move(failures)) {}
 
-  PermanentMutationFailure(char const* msg,
-                           grpc::Status status,
+  PermanentMutationFailure(char const* msg, grpc::Status status,
                            std::vector<FailedMutation>&& failures)
       : std::runtime_error(msg),
         failures_(std::move(failures)),
