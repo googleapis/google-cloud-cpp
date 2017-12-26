@@ -20,27 +20,27 @@
 // TODO(#109) - these are generally useful, consider submitting to abseil.io
 namespace bigtable {
 namespace chrono_literals {
-constexpr std::chrono::hours operator "" _h(unsigned long long h) {
+constexpr std::chrono::hours operator"" _h(unsigned long long h) {
   return std::chrono::hours(h);
 }
 
-constexpr std::chrono::minutes operator "" _min(unsigned long long m) {
+constexpr std::chrono::minutes operator"" _min(unsigned long long m) {
   return std::chrono::minutes(m);
 }
 
-constexpr std::chrono::seconds operator "" _s(unsigned long long s) {
+constexpr std::chrono::seconds operator"" _s(unsigned long long s) {
   return std::chrono::seconds(s);
 }
 
-constexpr std::chrono::milliseconds operator "" _ms(unsigned long long ms) {
+constexpr std::chrono::milliseconds operator"" _ms(unsigned long long ms) {
   return std::chrono::milliseconds(ms);
 }
 
-constexpr std::chrono::microseconds operator "" _us(unsigned long long us) {
+constexpr std::chrono::microseconds operator"" _us(unsigned long long us) {
   return std::chrono::microseconds(us);
 }
 
-constexpr std::chrono::nanoseconds operator "" _ns(unsigned long long ns) {
+constexpr std::chrono::nanoseconds operator"" _ns(unsigned long long ns) {
   return std::chrono::nanoseconds(ns);
 }
 

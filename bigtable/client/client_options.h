@@ -155,7 +155,8 @@ class ClientOptions {
   /**
    * Set LB policy name.
    *
-   * Please see the docs for grpc::ChannelArguments::SetLoadBalancingPolicyName()
+   * Please see the docs for
+   * grpc::ChannelArguments::SetLoadBalancingPolicyName()
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *

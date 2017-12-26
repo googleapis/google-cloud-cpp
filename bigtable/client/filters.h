@@ -153,7 +153,8 @@ class Filter {
    *     parameter.
    * @tparam Period2 similar formal parameter for the type of @p end.
    *
-   * @see [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
+   * @see
+   * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
    */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -469,7 +470,8 @@ class Filter {
    *
    * This filter executes each stream in parallel and then merges the results by
    * interleaving the output from each stream.  The
-   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * [proto
+   * file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
    * has a nice illustration in the documentation of
    * `google.bigtable.v2.RowFilter.Interleave`.
    *
@@ -502,7 +504,8 @@ class Filter {
    * Return a filter that outputs all cells ignoring intermediate filters.
    *
    * Please read the documentation in the
-   * [proto file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
+   * [proto
+   * file](https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto)
    * for a detailed description.  In short, this is an advanced filter to
    * facilitate debugging.  You can explore the intermediate results of a
    * complex filter expression by injecting a filter of this type.
