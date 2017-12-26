@@ -36,6 +36,8 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
                    std::string const& row_key);
 void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
                  std::string const& row_key);
+void CheckCellsRowLimit(bigtable::ClientInterface& client, bigtable::Table& table,
+                        std::string const& row_key_prefix);
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -91,6 +93,7 @@ int main(int argc, char* argv[]) try {
   } catch(...) {}
 
   CheckLatest(*client, table, "aaa003-latest");
+  CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
 
   return 0;
 } catch (bigtable::PermanentMutationFailure const& ex) {
@@ -168,6 +171,21 @@ std::vector<bigtable::Cell> ReadRow(bigtable::DataClient& client,
   *row.add_row_keys() = std::move(key);
   *request.mutable_filter() = filter.as_proto_move();
 
+  return ReadRows(client, table, std::move(request));
+}
+
+// TODO(#32) remove this when Table::ReadRow() is a thing.
+std::vector<bigtable::Cell> ReadRows(bigtable::ClientInterface& client,
+                                     bigtable::Table& table, std::string start,
+                                     std::string end, bigtable::Filter filter) {
+  btproto::ReadRowsRequest request;
+  request.set_table_name(table.table_name());
+  auto& row = *request.mutable_rows();
+  btproto::RowRange range;
+  range.set_start_key_closed(std::move(start));
+  range.set_end_key_open(std::move(end));
+  *row.add_row_ranges() = std::move(range);
+  *request.mutable_filter() = filter.as_proto_move();
   return ReadRows(client, table, std::move(request));
 }
 
@@ -276,7 +294,7 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
 }
 
 void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
-                   std::string const& row_key) {
+                 std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam", "c", 0, "v-c-0-0", {}},
       {row_key, "fam", "c", 1000, "v-c-0-1", {}},
@@ -303,10 +321,130 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
       {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
   };
-  auto actual =
-      ReadRow(client, table, row_key, bigtable::Filter::Latest(0));
+  auto actual = ReadRow(client, table, row_key, bigtable::Filter::Latest(2));
   CheckEqual("CheckLatest()", expected, actual);
   std::cout << "CheckLatest() is successful" << std::endl;
+}
+
+void CheckEqualRowKeyCount(absl::string_view where,
+                           std::map<std::string, int> const& expected,
+                           std::map<std::string, int> const& actual) {
+  std::vector<std::pair<std::string, int>> differences;
+  std::set_symmetric_difference(expected.begin(), expected.end(),
+                                actual.begin(), actual.end(),
+                                std::back_inserter(differences));
+  if (differences.empty()) {
+    return;
+  }
+
+  std::ostringstream os;
+  // In C++14 we could use
+  auto stream_map = [&os](std::pair<std::string const, int> const& x) {
+    os << "{" << x.first << "," << x.second << "}, ";
+  };
+  auto stream_vector = [&os](std::pair<std::string, int> const& x) {
+    os << "{" << x.first << "," << x.second << "}, ";
+  };
+
+  os << "Mismatched row key count in " << where << " differences=<\n";
+  std::for_each(differences.begin(), differences.end(), stream_vector);
+  os << ">\nexpected=<";
+  std::for_each(expected.begin(), expected.end(), stream_map);
+  os << ">\nactual=<";
+  std::for_each(actual.begin(), actual.end(), stream_map);
+  os << ">";
+  throw std::runtime_error(os.str());
+}
+
+/**
+ * Create some complex rows in @p table.
+ *
+ * Create the following rows in @p table, the magic values for the column
+ * families are defined above.
+ *
+ *   | Row Key                 | Family | Column | Contents      |
+ *   | :---------------------- | :----- | :----- | :------------ |
+ *   | "{prefix}/one-cell"     | fam    | c      | cell @ 3000 |
+ *   | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
+ *   | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
+ *   | "{prefix}/many"         | fam    | c      | cells @ 0, 1000, 200, 3000 |
+ *   | "{prefix}/many-columns" | fam    | c0     | cell @ 3000 |
+ *   | "{prefix}/many-columns" | fam    | c1     | cell @ 3000 |
+ *   | "{prefix}/many-columns" | fam    | c2     | cell @ 3000 |
+ *   | "{prefix}/many-columns" | fam    | c3     | cell @ 3000 |
+ *   | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
+ *   | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+ *
+ */
+void CreateComplexRows(bigtable::ClientInterface& client,
+                       bigtable::Table& table,
+                       std::string const& prefix) {
+  namespace bt = bigtable;
+  bt::BulkMutation mutation;
+  // Prepare a set of rows, with different numbers of cells, columns, and
+  // column families.
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/one-cell", {bt::SetCell("fam", "c", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/two-cells",
+                            {bt::SetCell("fam0", "c", 3000, "foo"),
+                             bt::SetCell("fam0", "c2", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many",
+      {bt::SetCell("fam", "c", 0, "foo"), bt::SetCell("fam", "c", 1000, "foo"),
+       bt::SetCell("fam", "c", 2000, "foo"),
+       bt::SetCell("fam", "c", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/many-columns",
+                            {bt::SetCell("fam", "c0", 3000, "foo"),
+                             bt::SetCell("fam", "c1", 3000, "foo"),
+                             bt::SetCell("fam", "c2", 3000, "foo"),
+                             bt::SetCell("fam", "c3", 3000, "foo")}));
+  // This one is complicated, create a mutation with several families and
+  // columns
+  bt::SingleRowMutation complex(prefix + "/complex");
+  for (int i = 0; i != 4; ++i) {
+    for (int j = 0; j != 10; ++j) {
+      complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
+                                       "col" + std::to_string(j), 3000, "foo"));
+      complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
+                                       "col" + std::to_string(j), 6000, "bar"));
+    }
+  }
+  mutation.emplace_back(std::move(complex));
+  table.BulkApply(std::move(mutation));
+}
+
+void CheckCellsRowLimit(bigtable::ClientInterface& client,
+                        bigtable::Table& table,
+                        std::string const& row_key_prefix) {
+  CreateComplexRows(client, table, row_key_prefix);
+
+  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
+  // the separator and the successor of "/" is "0".
+  auto result =
+      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
+               bigtable::Filter::CellsRowLimit(3));
+
+  std::map<std::string, int> actual;
+  for (auto const& c : result) {
+    auto ins = actual.emplace(c.row_key(), 0);
+    ins.first->second++;
+  }
+  std::map<std::string, int> expected{{row_key_prefix + "/one-cell", 1},
+                                      {row_key_prefix + "/two-cells", 2},
+                                      {row_key_prefix + "/many", 3},
+                                      {row_key_prefix + "/many-columns", 3},
+                                      {row_key_prefix + "/complex", 3}};
+
+  CheckEqualRowKeyCount("CheckCellsRowLimit()", expected, actual);
+  std::cout << "CheckCellsRowLimit() is successful" << std::endl;
 }
 
 }  // anonymous namespace
