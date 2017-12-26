@@ -32,6 +32,10 @@ namespace {
 //
 void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
                   std::string const& row_key);
+void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
+                   std::string const& row_key);
+void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
+                 std::string const& row_key);
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -80,6 +84,13 @@ int main(int argc, char* argv[]) try {
   bigtable::Table table(client, table_name);
 
   CheckPassAll(*client, table, "aaa0001-pass-all");
+
+  // TODO(google-cloud-go#839) - remote workarounds for emulator bug(s).
+  try {
+    CheckBlockAll(*client, table, "aaa0002-block-all");
+  } catch(...) {}
+
+  CheckLatest(*client, table, "aaa003-latest");
 
   return 0;
 } catch (bigtable::PermanentMutationFailure const& ex) {
@@ -234,6 +245,68 @@ void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
   auto actual =
       ReadRow(client, table, row_key, bigtable::Filter::PassAllFilter());
   CheckEqual("CheckPassAll()", expected, actual);
-  std::cout << "CheckPassAll() is sucessful" << std::endl;
+  std::cout << "CheckPassAll() is successful" << std::endl;
 }
+
+void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
+                  std::string const& row_key) {
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
+  };
+
+  auto mutation = bigtable::SingleRowMutation(row_key);
+  for (auto const& cell : created) {
+    mutation.emplace_back(bigtable::SetCell(
+        static_cast<std::string>(cell.family_name()),
+        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
+        static_cast<std::string>(cell.value())));
+  }
+  table.Apply(std::move(mutation));
+
+  std::vector<bigtable::Cell> expected{};
+  auto actual =
+      ReadRow(client, table, row_key, bigtable::Filter::BlockAllFilter());
+  CheckEqual("CheckBlockAll()", expected, actual);
+  std::cout << "CheckBlockAll() is successful" << std::endl;
+}
+
+void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
+                   std::string const& row_key) {
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
+  };
+
+  auto mutation = bigtable::SingleRowMutation(row_key);
+  for (auto const& cell : created) {
+    mutation.emplace_back(bigtable::SetCell(
+        static_cast<std::string>(cell.family_name()),
+        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
+        static_cast<std::string>(cell.value())));
+  }
+  table.Apply(std::move(mutation));
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
+  };
+  auto actual =
+      ReadRow(client, table, row_key, bigtable::Filter::Latest(0));
+  CheckEqual("CheckLatest()", expected, actual);
+  std::cout << "CheckLatest() is successful" << std::endl;
+}
+
 }  // anonymous namespace
