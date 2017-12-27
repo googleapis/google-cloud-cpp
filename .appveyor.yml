@@ -1,0 +1,20 @@
+version: 1.0.{build}
+
+pull_requests:
+  do_not_increment_build_number: true
+
+image:
+- Visual Studio 2015
+
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+cache:
+  - c:\projects\vcpkg\installed -> ci\install-windows.ps1
+
+install:
+  - git submodule update --init --recursive
+  - powershell -exec bypass ci\install-windows.ps1
+
+build_script:
+  - powershell -exec bypass ci\build-windows.ps1
