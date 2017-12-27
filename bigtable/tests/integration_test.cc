@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) try {
                       {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
   std::cout << table_name << " created successfully\n";
 
-  auto table_list = admin.ListTables(admin_proto::Table::FULL);
+  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   bool found = false;
   for (auto& tbl : table_list) {
     if (tbl.name() == created_table.name()) {
@@ -62,15 +62,32 @@ int main(int argc, char* argv[]) try {
   mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-0-0"));
   mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-0-1"));
   table->Apply(std::move(mutation));
-  std::cout << "row-key-0 mutated successfully\n";
+  std::cout << "row-key-0 mutated successfully" << std::endl;
 
   mutation = bigtable::SingleRowMutation("row-key-1");
   mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-1-0"));
   mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-1-1"));
   table->Apply(std::move(mutation));
-  std::cout << "row-key-1 mutated successfully\n";
+  std::cout << "row-key-1 mutated successfully" << std::endl;
+
+  bigtable::BulkMutation bulk{
+      bigtable::SingleRowMutation("row-key-2",
+                                  {bigtable::SetCell(family, "c0", 0, "v0"),
+                                   bigtable::SetCell(family, "c1", 0, "v1")}),
+      bigtable::SingleRowMutation("row-key-3",
+                                  {bigtable::SetCell(family, "c0", 0, "v2"),
+                                   bigtable::SetCell(family, "c1", 0, "v3")}),
+  };
+  table->BulkApply(std::move(bulk));
+  std::cout << "bulk mutation successful" << std::endl;
 
   return 0;
+} catch (bigtable::PermanentMutationFailure const& ex) {
+  std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
+            << " - " << ex.status().error_message() << " ["
+            << ex.status().error_code()
+            << "], details=" << ex.status().error_details() << std::endl;
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << std::endl;
   return 1;

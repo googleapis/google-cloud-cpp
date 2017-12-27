@@ -129,11 +129,13 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   btproto::MockBigtableStub stub;
   EXPECT_CALL(stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ("foo/bar/baz/table", req.table_name());
             return r1.release();
           }))
       .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
+          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ("foo/bar/baz/table", req.table_name());
             return r2.release();
           }));
 

@@ -30,10 +30,11 @@ BulkMutator::BulkMutator(std::string const &table_name,
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
-  pending_mutations_.set_table_name(table_name);
   // Move the mutations to the "pending" request proto, this is a zero copy
   // optimization.
   mut.MoveTo(&pending_mutations_);
+  // Initialize the table name after that.
+  pending_mutations_.set_table_name(table_name);
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
   // in the original sequence provided by the user.  So this vector maps from
@@ -48,10 +49,6 @@ BulkMutator::BulkMutator(std::string const &table_name,
                          });
     pending_annotations_.push_back(Annotations{index++, r, false});
   }
-
-  // Make a copy of the table name into the request proto, that way we do not
-  // have to initialize it ever again.
-  mutations_.set_table_name(table_name);
 }
 
 grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface &stub,
@@ -74,6 +71,7 @@ void BulkMutator::PrepareForRequest() {
     a.has_mutation_result = false;
   }
   pending_mutations_ = {};
+  pending_mutations_.set_table_name(mutations_.table_name());
   pending_annotations_ = {};
 }
 
