@@ -43,6 +43,8 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
 void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
+void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
+                      std::string const& row_key);
 void CheckCellsRowLimit(bigtable::ClientInterface& client,
                         bigtable::Table& table,
                         std::string const& row_key_prefix);
@@ -109,6 +111,7 @@ int main(int argc, char* argv[]) try {
   CheckLatest(*client, table, "aaa003-latest");
   CheckFamilyRegex(*client, table, "aaa004-family-regex");
   CheckColumnRegex(*client, table, "aaa005-column-regex");
+  CheckColumnRange(*client, table, "aaa006-column-range");
   CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
   CheckCellsRowOffset(*client, table, "aaa005-cells-row-offset");
 
@@ -221,6 +224,24 @@ std::vector<bigtable::Cell> ReadRows(bigtable::ClientInterface& client,
   return ReadRows(client, table, std::move(request));
 }
 
+/// A helper function to create a list of cells.
+void CreateCells(bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
+  std::map<std::string, bigtable::SingleRowMutation> mutations;
+  for (auto const& cell : cells) {
+    std::string key = static_cast<std::string>(cell.row_key());
+    auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
+    inserted.first->second.emplace_back(bigtable::SetCell(
+        static_cast<std::string>(cell.family_name()),
+        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
+        static_cast<std::string>(cell.value())));
+  }
+  bigtable::BulkMutation bulk;
+  for (auto& kv : mutations) {
+    bulk.emplace_back(std::move(kv.second));
+  }
+  table.BulkApply(std::move(bulk));
+}
+
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   auto compare_row_key = lhs.row_key().compare(lhs.row_key());
   if (compare_row_key != 0) {
@@ -235,7 +256,13 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (compare_column_qualifier != 0) {
     return compare_column_qualifier;
   }
-  return rhs.timestamp() - lhs.timestamp();
+  if (lhs.timestamp() < lhs.timestamp()) {
+    return -1;
+  }
+  if (lhs.timestamp() > lhs.timestamp()) {
+    return 1;
+  }
+  return lhs.value().compare(rhs.value());
 }
 
 bool CellLess(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
@@ -282,20 +309,12 @@ void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
       {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
       {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
   };
-
-  auto mutation = bigtable::SingleRowMutation(row_key);
-  for (auto const& cell : expected) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
-  }
-  table.Apply(std::move(mutation));
+  CreateCells(table, expected);
 
   auto actual =
       ReadRow(client, table, row_key, bigtable::Filter::PassAllFilter());
-  CheckEqual("CheckPassAll()", expected, actual);
-  std::cout << "CheckPassAll() is successful" << std::endl;
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
@@ -308,21 +327,13 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
       {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
   };
-
-  auto mutation = bigtable::SingleRowMutation(row_key);
-  for (auto const& cell : created) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
-  }
-  table.Apply(std::move(mutation));
+  CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{};
   auto actual =
       ReadRow(client, table, row_key, bigtable::Filter::BlockAllFilter());
-  CheckEqual("CheckBlockAll()", expected, actual);
-  std::cout << "CheckBlockAll() is successful" << std::endl;
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
@@ -336,15 +347,7 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
       {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
   };
-
-  auto mutation = bigtable::SingleRowMutation(row_key);
-  for (auto const& cell : created) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
-  }
-  table.Apply(std::move(mutation));
+  CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
       {row_key, "fam", "c", 1000, "v-c-0-1", {}},
@@ -354,8 +357,8 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
   };
   auto actual = ReadRow(client, table, row_key, bigtable::Filter::Latest(2));
-  CheckEqual("CheckLatest()", expected, actual);
-  std::cout << "CheckLatest() is successful" << std::endl;
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
@@ -368,15 +371,7 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam2", "c2", 0, "bar", {}},
       {row_key, "fam3", "c2", 0, "bar", {}},
   };
-
-  auto mutation = bigtable::SingleRowMutation(row_key);
-  for (auto const& cell : created) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
-  }
-  table.Apply(std::move(mutation));
+  CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
       {row_key, "fam0", "c", 0, "bar", {}},
@@ -385,8 +380,8 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
   };
   auto actual =
       ReadRow(client, table, row_key, bigtable::Filter::FamilyRegex("fam[02]"));
-  CheckEqual("CheckFamilyRegex()", expected, actual);
-  std::cout << "CheckFamilyRegex() is successful" << std::endl;
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
@@ -399,15 +394,7 @@ void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
       {row_key, "fam0", "fgh", 0, "bar", {}},
       {row_key, "fam1", "hij", 0, "bar", {}},
   };
-
-  auto mutation = bigtable::SingleRowMutation(row_key);
-  for (auto const& cell : created) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
-  }
-  table.Apply(std::move(mutation));
+  CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
       {row_key, "fam0", "abc", 0, "bar", {}},
@@ -417,8 +404,31 @@ void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
   };
   auto actual = ReadRow(client, table, row_key,
                         bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
-  CheckEqual("CheckColumnRegex()", expected, actual);
-  std::cout << "CheckColumnRegex() is successful" << std::endl;
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
+}
+
+void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
+                      std::string const& row_key) {
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "a00", 0, "bar", {}},
+      {row_key, "fam0", "b00", 0, "bar", {}},
+      {row_key, "fam0", "b01", 0, "bar", {}},
+      {row_key, "fam0", "b02", 0, "bar", {}},
+      {row_key, "fam1", "a00", 0, "bar", {}},
+      {row_key, "fam1", "b01", 0, "bar", {}},
+      {row_key, "fam1", "b00", 0, "bar", {}},
+  };
+  CreateCells(table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "b00", 0, "bar", {}},
+      {row_key, "fam0", "b01", 0, "bar", {}},
+  };
+  auto actual = ReadRow(client, table, row_key,
+                        bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckEqualRowKeyCount(absl::string_view where,
@@ -538,8 +548,8 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
                                       {row_key_prefix + "/many-columns", 3},
                                       {row_key_prefix + "/complex", 3}};
 
-  CheckEqualRowKeyCount("CheckCellsRowLimit()", expected, actual);
-  std::cout << "CheckCellsRowLimit() is successful" << std::endl;
+  CheckEqualRowKeyCount(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CheckCellsRowOffset(bigtable::ClientInterface& client,
@@ -562,8 +572,8 @@ void CheckCellsRowOffset(bigtable::ClientInterface& client,
                                       {row_key_prefix + "/many-columns", 2},
                                       {row_key_prefix + "/complex", 78}};
 
-  CheckEqualRowKeyCount("CheckCellsRowOffset()", expected, actual);
-  std::cout << "CheckCellsRowOffset() is successful" << std::endl;
+  CheckEqualRowKeyCount(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 void CreateManyRows(bigtable::ClientInterface& client, bigtable::Table& table,
@@ -636,7 +646,7 @@ void CheckCellsRowSample(bigtable::ClientInterface& client,
        << result.size() << ", expected <= " << kMaxCount;
     throw std::runtime_error(os.str());
   }
-  std::cout << "CheckCellsRowOffset() is successful" << std::endl;
+  std::cout << __func__ << " was successful" << std::endl;
 }
 
 }  // anonymous namespace
