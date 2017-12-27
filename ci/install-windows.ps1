@@ -1,18 +1,18 @@
 #!/usr/bin/env powershell
-
-# Copyright 2017 Google Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+#Copyright 2017 Google Inc.
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#Licensed under the Apache License, Version 2.0(the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#http:  // www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
 
 # Stop on errors, similar (but not quite as useful as) "set -e" on Unix shells ...
 $ErrorActionPreference = "Stop"
@@ -37,6 +37,13 @@ if ($LASTEXITCODE) {
   throw "git setup failed with exit code $LASTEXITCODE"
 }
 
+# ... install cmake because the version in appveyor is too old for some of
+# the packages ...
+choco install -y cmake cmake.portable
+if ($LASTEXITCODE) {
+  throw "choco install cmake failed with exit code $LASTEXITCODE"
+}
+
 # ... build the tool each time, it is fast to do so ...
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LASTEXITCODE) {
@@ -53,6 +60,11 @@ if ($LASTEXITCODE) {
 # so this is not too painful. We explicitly install each dependency
 # because if we run out of time in the appveyor build the cache is at least
 # partially refreshed and a rebuild will complete creating the cache ...
+# ... if necessary, install grpc again.  Normally the packages are
+# cached by the CI system (appveyor) so this is not too painful.
+# We explicitly install each dependency because if we run out of time
+# in the appveyor build the cache is at least partially refreshed and
+# a rebuild will complete creating the cache ...
 $packages = @("zlib:x86-windows-static", "openssl:x86-windows-static",
               "protobuf:x86-windows-static", "c-ares:x86-windows-static",
               "grpc:x86-windows-static")
