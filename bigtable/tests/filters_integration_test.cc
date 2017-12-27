@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <google/protobuf/text_format.h>
+#include <cmath>
 #include <sstream>
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
@@ -24,6 +25,8 @@
 namespace btproto = ::google::bigtable::v2;
 
 namespace {
+void ReportException();
+
 // TODO(#32) - change the function signature when Table::ReadRows() is a thing.
 // All these functions would become:
 //     `Function(bigtable::Table& table, std::string const& row_key)`
@@ -40,6 +43,9 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
                         bigtable::Table& table,
                         std::string const& row_key_prefix);
 void CheckCellsRowOffset(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
+                         std::string const& row_key_prefix);
+void CheckCellsRowSample(bigtable::ClientInterface& client,
                          bigtable::Table& table,
                          std::string const& row_key_prefix);
 }  // anonymous namespace
@@ -100,19 +106,34 @@ int main(int argc, char* argv[]) try {
   CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
   CheckCellsRowOffset(*client, table, "aaa005-cells-row-offset");
 
+  try {
+    CheckCellsRowSample(*client, table, "aaa006-cells-row-sample");
+  } catch (...) {
+    ReportException();
+  }
+
   return 0;
-} catch (bigtable::PermanentMutationFailure const& ex) {
-  std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
-            << " - " << ex.status().error_message() << " ["
-            << ex.status().error_code()
-            << "], details=" << ex.status().error_details() << std::endl;
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+} catch (...) {
+  ReportException();
   return 1;
 }
 
 namespace {
+void ReportException() {
+  try {
+    throw;
+  } catch (bigtable::PermanentMutationFailure const& ex) {
+    std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
+              << " - " << ex.status().error_message() << " ["
+              << ex.status().error_code()
+              << "], details=" << ex.status().error_details() << std::endl;
+  } catch (std::exception const& ex) {
+    std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  } catch (...) {
+    std::cerr << "Unknown exception raised." << std::endl;
+  }
+}
+
 // TODO(#32) remove this when Table::ReadRows() is a thing.
 std::vector<bigtable::Cell> ReadRows(bigtable::DataClient& client,
                                      bigtable::Table& table,
@@ -452,7 +473,8 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
   std::cout << "CheckCellsRowLimit() is successful" << std::endl;
 }
 
-void CheckCellsRowOffset(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckCellsRowOffset(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
                         std::string const& row_key_prefix) {
   CreateComplexRows(client, table, row_key_prefix);
 
@@ -472,6 +494,79 @@ void CheckCellsRowOffset(bigtable::ClientInterface& client, bigtable::Table& tab
                                       {row_key_prefix + "/complex", 78}};
 
   CheckEqualRowKeyCount("CheckCellsRowOffset()", expected, actual);
+  std::cout << "CheckCellsRowOffset() is successful" << std::endl;
+}
+
+void CreateManyRows(bigtable::ClientInterface& client, bigtable::Table& table,
+                    std::string const& prefix, int count) {
+  namespace bt = bigtable;
+  bt::BulkMutation bulk;
+  for (int row = 0; row != count; ++row) {
+    std::string row_key = prefix + "/" + std::to_string(row);
+    bulk.emplace_back(bt::SingleRowMutation(
+        row_key, {bt::SetCell("fam", "col", 4000, "foo")}));
+  }
+  table.BulkApply(std::move(bulk));
+}
+
+void CheckCellsRowSample(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
+                         std::string const& row_key_prefix) {
+  constexpr int row_count = 20000;
+  CreateManyRows(client, table, row_key_prefix, row_count);
+
+  // We want to check that the sampling rate was "more or less" the prescribed
+  // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
+  // get serious about testing the sampling rate we would do some statistics.
+  // We do not really need to, because we are testing the library, not the
+  // server. But for what is worth, the outline would be:
+  //
+  //   - Model sampling as a binomial process.
+  //   - Perform power analysis to decide the size of the sample.
+  //   - Perform hypothesis testing: is the actual sampling rate != that the
+  //     prescribed rate (and sufficiently different, i.e., the effect is large
+  //     enough).
+  //
+  // For what is worth, the sample size is large enough to detect effects of 2%
+  // at the conventional significance and power levels.  In R:
+  //
+  // ```R
+  // require(pwr)
+  // pwr.p.test(h = ES.h(p1 = 0.63, p2 = 0.65), sig.level = 0.05,
+  //            power=0.80, alternative="two.sided")
+  // ```
+  //
+  // h = 0.04167045
+  // n = 4520.123
+  // sig.level = 0.05
+  // power = 0.8
+  // alternative = two.sided
+  //
+  constexpr double kSampleRate = 0.75;
+  constexpr double kAllowedError = 0.05;
+  const int kMinCount =
+      static_cast<int>(std::floor((kSampleRate - kAllowedError) * row_count));
+  const int kMaxCount =
+      static_cast<int>(std::ceil((kSampleRate + kAllowedError) * row_count));
+
+  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
+  // the separator and the successor of "/" is "0".
+  auto result =
+      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
+               bigtable::Filter::RowSample(kSampleRate));
+
+  if (result.size() < static_cast<std::size_t>(kMinCount)) {
+    std::ostringstream os;
+    os << "CheckRowSample() - row sample count is too low, got="
+       << result.size() << ", expected >= " << kMinCount;
+    throw std::runtime_error(os.str());
+  }
+  if (result.size() > static_cast<std::size_t>(kMaxCount)) {
+    std::ostringstream os;
+    os << "CheckRowSample() - row samples count is too high, got="
+       << result.size() << ", expected <= " << kMaxCount;
+    throw std::runtime_error(os.str());
+  }
   std::cout << "CheckCellsRowOffset() is successful" << std::endl;
 }
 
