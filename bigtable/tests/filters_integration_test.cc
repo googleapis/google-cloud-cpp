@@ -41,6 +41,8 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
                  std::string const& row_key);
 void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
+void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+                      std::string const& row_key);
 void CheckCellsRowLimit(bigtable::ClientInterface& client,
                         bigtable::Table& table,
                         std::string const& row_key_prefix);
@@ -106,6 +108,7 @@ int main(int argc, char* argv[]) try {
 
   CheckLatest(*client, table, "aaa003-latest");
   CheckFamilyRegex(*client, table, "aaa004-family-regex");
+  CheckColumnRegex(*client, table, "aaa005-column-regex");
   CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
   CheckCellsRowOffset(*client, table, "aaa005-cells-row-offset");
 
@@ -384,6 +387,38 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
       ReadRow(client, table, row_key, bigtable::Filter::FamilyRegex("fam[02]"));
   CheckEqual("CheckFamilyRegex()", expected, actual);
   std::cout << "CheckFamilyRegex() is successful" << std::endl;
+}
+
+void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+                      std::string const& row_key) {
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "abc", 0, "bar", {}},
+      {row_key, "fam1", "bcd", 0, "bar", {}},
+      {row_key, "fam2", "abc", 0, "bar", {}},
+      {row_key, "fam3", "def", 0, "bar", {}},
+      {row_key, "fam0", "fgh", 0, "bar", {}},
+      {row_key, "fam1", "hij", 0, "bar", {}},
+  };
+
+  auto mutation = bigtable::SingleRowMutation(row_key);
+  for (auto const& cell : created) {
+    mutation.emplace_back(bigtable::SetCell(
+        static_cast<std::string>(cell.family_name()),
+        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
+        static_cast<std::string>(cell.value())));
+  }
+  table.Apply(std::move(mutation));
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "abc", 0, "bar", {}},
+      {row_key, "fam2", "abc", 0, "bar", {}},
+      {row_key, "fam0", "fgh", 0, "bar", {}},
+      {row_key, "fam1", "hij", 0, "bar", {}},
+  };
+  auto actual = ReadRow(client, table, row_key,
+                        bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
+  CheckEqual("CheckColumnRegex()", expected, actual);
+  std::cout << "CheckColumnRegex() is successful" << std::endl;
 }
 
 void CheckEqualRowKeyCount(absl::string_view where,
