@@ -120,6 +120,10 @@ class Filter {
   /**
    * Return a filter that accepts cells with timestamps in the range
    * [@p start, @p end).
+   *
+   * The timestamp range must be non-empty, i.e. @p start must be strictly
+   * smaller than  @p end.  The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error.
    */
   static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
     Filter tmp;
@@ -141,6 +145,10 @@ class Filter {
    * auto r1 = bigtable::Filter::TimestampRange(10ms, 500ms);
    * auto r2 = bigtable::Filter::TimestampRange(10min, 10min + 2s);
    * @endcode
+   *
+   * The timestamp range must be non-empty, i.e. @p start must be strictly
+   * smaller than  @p end.  The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for @p start type,
    *     the semantics of this template parameter are documented in
