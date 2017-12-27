@@ -367,13 +367,33 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
       {row_key, "fam1", "c4", 1000, "v5000", {}},
   };
   using std::chrono::milliseconds;
-  auto actual = ReadRow(*table, row_key, bigtable::Filter::TimestampRange(
-                                             milliseconds(3), milliseconds(6)));
+  auto actual = ReadRow(
+      *table, row_key,
+      bigtable::Filter::TimestampRange(milliseconds(3), milliseconds(6)));
   CheckEqualUnordered(expected, actual);
 }
 
-// TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, RowKeysRegex) {}
+TEST_F(FilterIntegrationTest, RowKeysRegex) {
+  auto table = CreateTable("row-key-regex-filter-table");
+  std::string const row_key = "row-key-regex-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {row_key + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {row_key + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {row_key + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {row_key + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+  };
+  using std::chrono::milliseconds;
+  auto actual =
+      ReadRows(*table, bigtable::Filter::RowKeysRegex(row_key + "/bc.*"));
+  CheckEqualUnordered(expected, actual);
+}
 
 // TODO(#152) - implement the following integration test.
 TEST_F(FilterIntegrationTest, ValueRegex) {}
@@ -618,22 +638,19 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
       prefix + "/one-cell", {bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/two-cells",
-                            {bt::SetCell("fam0", "c", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many",
-                            {bt::SetCell("fam0", "c", 0, "foo"),
-                             bt::SetCell("fam0", "c", 1000, "foo"),
-                             bt::SetCell("fam0", "c", 2000, "foo"),
-                             bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many-columns",
-                            {bt::SetCell("fam0", "c0", 3000, "foo"),
-                             bt::SetCell("fam0", "c1", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo"),
-                             bt::SetCell("fam0", "c3", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/two-cells", {bt::SetCell("fam0", "c", 3000, "foo"),
+                              bt::SetCell("fam0", "c2", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many", {bt::SetCell("fam0", "c", 0, "foo"),
+                         bt::SetCell("fam0", "c", 1000, "foo"),
+                         bt::SetCell("fam0", "c", 2000, "foo"),
+                         bt::SetCell("fam0", "c", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many-columns", {bt::SetCell("fam0", "c0", 3000, "foo"),
+                                 bt::SetCell("fam0", "c1", 3000, "foo"),
+                                 bt::SetCell("fam0", "c2", 3000, "foo"),
+                                 bt::SetCell("fam0", "c3", 3000, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
