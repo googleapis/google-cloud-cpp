@@ -460,7 +460,7 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
 
   std::map<std::string, int> actual;
   for (auto const& c : result) {
-    auto ins = actual.emplace(c.row_key(), 0);
+    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
     ins.first->second++;
   }
   std::map<std::string, int> expected{{row_key_prefix + "/one-cell", 1},
@@ -486,7 +486,7 @@ void CheckCellsRowOffset(bigtable::ClientInterface& client,
 
   std::map<std::string, int> actual;
   for (auto const& c : result) {
-    auto ins = actual.emplace(c.row_key(), 0);
+    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
     ins.first->second++;
   }
   std::map<std::string, int> expected{{row_key_prefix + "/many", 2},
