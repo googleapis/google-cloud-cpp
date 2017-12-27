@@ -45,6 +45,9 @@ void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
 void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
+void CheckTimestampRange(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
+                         std::string const& row_key);
 void CheckCellsRowLimit(bigtable::ClientInterface& client,
                         bigtable::Table& table,
                         std::string const& row_key_prefix);
@@ -103,23 +106,35 @@ int main(int argc, char* argv[]) try {
 
   CheckPassAll(*client, table, "aaa0001-pass-all");
 
-  // TODO(google-cloud-go#839) - remote workarounds for emulator bug(s).
+  // TODO(google-cloud-go#839) - remove workarounds for emulator bug(s).
   try {
     CheckBlockAll(*client, table, "aaa0002-block-all");
-  } catch(...) {}
+  } catch(...) {
+    ReportException();
+  }
 
   CheckLatest(*client, table, "aaa003-latest");
   CheckFamilyRegex(*client, table, "aaa004-family-regex");
   CheckColumnRegex(*client, table, "aaa005-column-regex");
   CheckColumnRange(*client, table, "aaa006-column-range");
-  CheckCellsRowLimit(*client, table, "aaa004-cells-row-limit");
-  CheckCellsRowOffset(*client, table, "aaa005-cells-row-offset");
+  CheckTimestampRange(*client, table, "aaa007-timestamp-range");
+  // CheckRowKeysRegex(*client, table, "aaa008-row-key-regex");
+  // CheckValueRegex(*client, table, "aaa009-value-regex");
+  // CheckValueRange(*client, table, "aaa010-value-range");
+  CheckCellsRowLimit(*client, table, "aaa011-cells-row-limit");
+  CheckCellsRowOffset(*client, table, "aaa012-cells-row-offset");
 
+  // TODO(google-cloud-go#840) - remove workarounds for emulator bug(s).
   try {
     CheckCellsRowSample(*client, table, "aaa006-cells-row-sample");
   } catch (...) {
     ReportException();
   }
+
+  // CheckStripValueTransformer(client, *table, "aaa014-strip-value");
+  // CheckCondition(client, *table, "aaa015-condition");
+  // CheckChain(client, *table, "aaa016-chain");
+  // CheckInterleave(client, *table, "aaa017-interleave");
 
   return 0;
 } catch (...) {
@@ -225,7 +240,8 @@ std::vector<bigtable::Cell> ReadRows(bigtable::ClientInterface& client,
 }
 
 /// A helper function to create a list of cells.
-void CreateCells(bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
+void CreateCells(bigtable::Table& table,
+                 std::vector<bigtable::Cell> const& cells) {
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     std::string key = static_cast<std::string>(cell.row_key());
@@ -427,6 +443,32 @@ void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
   };
   auto actual = ReadRow(client, table, row_key,
                         bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
+  CheckEqual(__func__, expected, actual);
+  std::cout << __func__ << " was successful" << std::endl;
+}
+
+void CheckTimestampRange(bigtable::ClientInterface& client,
+                         bigtable::Table& table,
+                         std::string const& row_key) {
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "c0", 1000, "v1000", {}},
+      {row_key, "fam1", "c1", 2000, "v2000", {}},
+      {row_key, "fam2", "c2", 3000, "v3000", {}},
+      {row_key, "fam0", "c3", 4000, "v4000", {}},
+      {row_key, "fam1", "c4", 4000, "v5000", {}},
+      {row_key, "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam2", "c2", 1000, "v3000", {}},
+      {row_key, "fam0", "c3", 1000, "v4000", {}},
+      {row_key, "fam1", "c4", 1000, "v5000", {}},
+  };
+  using std::chrono::milliseconds;
+  auto actual = ReadRow(
+      client, table, row_key,
+      bigtable::Filter::TimestampRange(milliseconds(3), milliseconds(6)));
   CheckEqual(__func__, expected, actual);
   std::cout << __func__ << " was successful" << std::endl;
 }
