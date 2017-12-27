@@ -85,9 +85,13 @@ class Filter {
    * Return a filter that matches column families matching the given regexp.
    *
    * @param pattern the regular expression.  It must be a valid
-   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
-   *     For technical reasons, the regex must not contain the ':' character,
-   *     even if it is not being used as a literal.
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.  For
+   *     technical reasons, the regex must not contain the ':' character, even
+   *     if it is not being used as a literal. The server rejects filters with
+   *     an invalid patterns, including patterns containing the ':' character.
+   *     The server fails the ReadRows() request with a
+   *     `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes
+   *     no attempt to validate the pattern before sending it to the server.
    */
   static Filter FamilyRegex(std::string pattern) {
     Filter tmp;
@@ -99,7 +103,10 @@ class Filter {
    * Return a filter that accepts only columns matching the given regexp.
    *
    * @param pattern the regular expression.  It must be a valid
-   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern. The server
+   *     rejects filters with an invalid pattern with a
+   *     `grpc::StatusCode::INVALID_ARGUMENT` status code.  This function makes
+   *     no attempt to validate the pattern before sending it to the server.
    */
   static Filter ColumnRegex(std::string pattern) {
     Filter tmp;
@@ -110,6 +117,12 @@ class Filter {
   /**
    * Return a filter that accepts columns in the range [@p start, @p end)
    * within the @p family column family.
+   *
+   * The column range must be non-empty, i.e., @p start must be strictly
+   * smaller than  @p end.  The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes no
+   * attempt to validate the column family or column range before sending them
+   * to the server.
    */
   static Filter ColumnRange(std::string family, std::string start,
                             std::string end) {
@@ -123,7 +136,8 @@ class Filter {
    *
    * The timestamp range must be non-empty, i.e. @p start must be strictly
    * smaller than  @p end.  The server will reject empty ranges with a
-   * `grpc::StatusCode::INVALID_ARGUMENT` error.
+   * `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter TimestampRangeMicros(std::int64_t start, std::int64_t end) {
     Filter tmp;
@@ -148,7 +162,8 @@ class Filter {
    *
    * The timestamp range must be non-empty, i.e. @p start must be strictly
    * smaller than  @p end.  The server will reject empty ranges with a
-   * `grpc::StatusCode::INVALID_ARGUMENT` error.
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for @p start type,
    *     the semantics of this template parameter are documented in
@@ -188,10 +203,14 @@ class Filter {
   }
 
   /**
-   * Return a filter that matches values matching the given regexp.
+   * Return a filter that matches cells with values matching the given regexp.
    *
    * @param pattern the regular expression.  It must be a valid
-   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.
+   *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern. The server
+   *     rejects filters with an invalid pattern with a
+   *     `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes
+   *     no attempt to validate the timestamp range before sending it to
+   *     the server.
    */
   static Filter ValueRegex(std::string pattern) {
     Filter tmp;
