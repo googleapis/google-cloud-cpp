@@ -198,8 +198,8 @@ class ColumnFamilyModification {
   ColumnFamilyModification& operator=(ColumnFamilyModification&& rhs) noexcept =
       default;
   ColumnFamilyModification(ColumnFamilyModification const& rhs) = default;
-  ColumnFamilyModification& operator=(
-      ColumnFamilyModification const& rhs) = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification const& rhs) =
+      default;
   //@}
 
  private:
