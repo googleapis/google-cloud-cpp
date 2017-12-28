@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/detail/bulk_mutator.h"
+#include "bigtable/client/internal/bulk_mutator.h"
 
 #include <numeric>
 
@@ -20,7 +20,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace detail {
+namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
@@ -150,6 +150,6 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   return result;
 }
 
-}  // namespace detail
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

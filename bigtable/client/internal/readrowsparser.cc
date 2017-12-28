@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/detail/readrowsparser.h"
+#include "bigtable/client/internal/readrowsparser.h"
 
 #include <stdexcept>
 

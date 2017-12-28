@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/detail/readrowsparser.h"
+#include "bigtable/client/internal/readrowsparser.h"
 
 #include <absl/strings/str_join.h>
 #include <google/protobuf/text_format.h>
@@ -186,4 +186,4 @@ class AcceptanceTest : public ::testing::Test {
 };
 
 // Auto-generated acceptance tests
-#include "bigtable/client/detail/readrowsparser_acceptance_tests.inc"
+#include "bigtable/client/internal/readrowsparser_acceptance_tests.inc"

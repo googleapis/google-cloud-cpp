@@ -96,11 +96,11 @@ add_library(bigtable_client
     client/client_options.cc
     client/data.h
     client/data.cc
-    client/detail/bulk_mutator.h
-    client/detail/bulk_mutator.cc
-    client/detail/conjunction.h
-    client/detail/readrowsparser.h
-    client/detail/readrowsparser.cc
+    client/internal/bulk_mutator.h
+    client/internal/bulk_mutator.cc
+    client/internal/conjunction.h
+    client/internal/readrowsparser.h
+    client/internal/readrowsparser.cc
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h
@@ -166,8 +166,8 @@ set(bigtable_client_unit_tests
     client/filters_test.cc
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc
-    client/detail/bulk_mutator_test.cc
-    client/detail/readrowsparser_test.cc
+    client/internal/bulk_mutator_test.cc
+    client/internal/readrowsparser_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc

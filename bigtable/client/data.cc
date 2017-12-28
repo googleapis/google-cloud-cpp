@@ -16,7 +16,7 @@
 
 #include <thread>
 
-#include "bigtable/client/detail/bulk_mutator.h"
+#include "bigtable/client/internal/bulk_mutator.h"
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -111,8 +111,8 @@ void Table::BulkApply(BulkMutation&& mut) {
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
-  detail::BulkMutator mutator(table_name_, *idemponent_policy,
-                              std::forward<BulkMutation>(mut));
+  internal::BulkMutator mutator(table_name_, *idemponent_policy,
+                                std::forward<BulkMutation>(mut));
 
   grpc::Status status = grpc::Status::OK;
   while (mutator.HasPendingMutations()) {

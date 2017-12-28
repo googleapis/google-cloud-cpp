@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
 
 #include "bigtable/client/idempotent_mutation_policy.h"
 
@@ -21,7 +21,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace detail {
+namespace internal {
 /// Keep the state in the Table::BulkApply() member function.
 class BulkMutator {
  public:
@@ -87,8 +87,8 @@ class BulkMutator {
   /// Accumulate annotations for the next request.
   std::vector<Annotations> pending_annotations_;
 };
-}  // namespace detail
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DETAIL_BULK_MUTATOR_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
