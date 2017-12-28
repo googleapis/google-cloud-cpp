@@ -375,3 +375,105 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
 }
+
+/// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.
+TEST_F(TableAdminTest, DeleteTable) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+)""";
+  auto mock =
+      MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteTable("the-table");
+}
+
+/**
+ * @test Verify that bigtable::TableAdmin::ModifyColumnFamilies works as
+ * expected.
+ */
+TEST_F(TableAdminTest, ModifyColumnFamilies) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+modifications {
+  id: 'foo'
+  create { gc_rule { max_age { seconds: 172800 }}}
+}
+modifications {
+  id: 'bar'
+  update { gc_rule { max_age { seconds: 86400 }}}
+}
+)""";
+  auto mock = MockRpcFactory<btproto::ModifyColumnFamiliesRequest,
+                             btproto::Table>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, ModifyColumnFamilies(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+
+  // After all the setup, make the actual call we want to test.
+  using M = bigtable::ColumnFamilyModification;
+  using GC = bigtable::GcRule;
+  auto actual = tested.ModifyColumnFamilies(
+      "the-table",
+      {M::Create("foo", GC::MaxAge(48_h)), M::Update("bar", GC::MaxAge(24_h))});
+}
+
+/// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
+TEST_F(TableAdminTest, DropRowsByPrefix) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+row_key_prefix: 'foobar'
+)""";
+  auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+
+  // After all the setup, make the actual call we want to test.
+  tested.DropRowsByPrefix("the-table", "foobar");
+}
+
+/// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
+TEST_F(TableAdminTest, DropAllRows) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+delete_all_data_from_table: true
+)""";
+  auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+
+  // After all the setup, make the actual call we want to test.
+  tested.DropAllRows("the-table");
+}

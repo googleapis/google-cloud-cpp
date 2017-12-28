@@ -43,7 +43,7 @@ class TableAdmin {
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : client_(client),
         instance_id_(std::move(instance_id)),
-        instance_name_(CreateInstanceName()),
+        instance_name_(InstanceName()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy()) {}
 
@@ -65,7 +65,7 @@ class TableAdmin {
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : client_(client),
         instance_id_(std::move(instance_id)),
-        instance_name_(CreateInstanceName()),
+        instance_name_(InstanceName()),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
@@ -111,6 +111,7 @@ class TableAdmin {
       ::google::bigtable::admin::v2::Table::View view);
 
   /**
+   * Get information about a single table.
    *
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
@@ -120,15 +121,69 @@ class TableAdmin {
    *   - NAME: return only the name of the table.
    *   - VIEW_SCHEMA: return the name and the schema.
    *   - FULL: return all the information about the table.
-   * @return
+   * @return the information about the table.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
    */
   ::google::bigtable::admin::v2::Table GetTable(
       std::string table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
 
+  /**
+   * Delete a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the table could not be deleted before the RPC
+   *     policies in effect gave up.
+   */
+  void DeleteTable(std::string table_id);
+
+  /**
+   * Modify the schema for an existing table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param modifications the list of modifications to the schema.
+   * @return the resulting table schema.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
+      std::string table_id,
+      std::vector<ColumnFamilyModification> modifications);
+
+  /**
+   * Delete all the rows that start with a given prefix.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param row_key_prefix drop any rows that start with this prefix.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  void DropRowsByPrefix(std::string table_id, std::string row_key_prefix);
+
+  /**
+   * Delete all the rows in a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the operation cannot be completed.
+   */
+  void DropAllRows(std::string table_id);
+
  private:
-  std::string CreateInstanceName() const;
+  /// Compute the fully qualified instance name.
+  std::string InstanceName() const;
+
+  /// Return the fully qualified name of a table in this object's instance.
+  std::string TableName(std::string const& table_id) const {
+    return instance_name() + "/tables/" + table_id;
+  }
 
   /// A shortcut for the grpc stub this class wraps.
   using StubType =

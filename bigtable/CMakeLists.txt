@@ -237,8 +237,14 @@ endif (FORCE_STATIC_ANALYZER_ERRORS)
 
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
-add_executable(integration_test tests/integration_test.cc)
-target_link_libraries(integration_test
+add_executable(data_integration_test tests/data_integration_test.cc)
+target_link_libraries(data_integration_test
     bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-add_dependencies(tests-local integration_test)
+add_dependencies(tests-local data_integration_test)
+
+add_executable(admin_integration_test tests/admin_integration_test.cc)
+target_link_libraries(admin_integration_test
+    bigtable_admin_client bigtable_client bigtable_protos absl::strings
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_dependencies(tests-local admin_integration_test)

@@ -20,6 +20,7 @@
 #include <chrono>
 #include <memory>
 
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 
 #include "bigtable/client/detail/conjunction.h"
@@ -151,6 +152,61 @@ class GcRule {
 
  private:
   google::bigtable::admin::v2::GcRule gc_rule_;
+};
+
+class ColumnFamilyModification {
+ public:
+  /// Return a modification that creates a new column family.
+  static ColumnFamilyModification Create(std::string id, GcRule gc) {
+    ColumnFamilyModification tmp;
+    tmp.mod_.set_id(std::move(id));
+    *tmp.mod_.mutable_create()->mutable_gc_rule() = gc.as_proto_move();
+    return tmp;
+  }
+
+  /// Return a modification that creates a new column family.
+  static ColumnFamilyModification Update(std::string id, GcRule gc) {
+    ColumnFamilyModification tmp;
+    tmp.mod_.set_id(std::move(id));
+    *tmp.mod_.mutable_update()->mutable_gc_rule() = gc.as_proto_move();
+    return tmp;
+  }
+
+  /// Return a modification that drops the @p id column family.
+  static ColumnFamilyModification Drop(std::string id) {
+    ColumnFamilyModification tmp;
+    tmp.mod_.set_id(std::move(id));
+    tmp.mod_.set_drop(true);
+    return tmp;
+  }
+
+  /// Convert to the proto form.
+  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification
+  as_proto() const {
+    return mod_;
+  }
+
+  /// Move out the underlying proto contents.
+  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification
+  as_proto_move() {
+    return std::move(mod_);
+  }
+
+  //@{
+  /// @name Use default constructors and assignments.
+  ColumnFamilyModification(ColumnFamilyModification&& rhs) noexcept = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification&& rhs) noexcept =
+      default;
+  ColumnFamilyModification(ColumnFamilyModification const& rhs) = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification const& rhs) =
+      default;
+  //@}
+
+ private:
+  ColumnFamilyModification() {}
+
+ private:
+  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification mod_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

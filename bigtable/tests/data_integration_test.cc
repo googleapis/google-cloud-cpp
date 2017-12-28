@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) try {
   auto created_table = admin.CreateTable(
       table_name, bigtable::TableConfig(
                       {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
-  std::cout << table_name << " created successfully\n";
+  std::cout << table_name << " created successfully" << std::endl;
 
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   bool found = false;
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) try {
   if (not found) {
     throw std::runtime_error("Could not find table test table");
   }
-  std::cout << table_name << " found via ListTables()\n";
+  std::cout << table_name << " found via ListTables()" << std::endl;
 
   auto client = bigtable::CreateDefaultClient(project_id, instance_id,
                                               bigtable::ClientOptions());
