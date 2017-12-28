@@ -15,27 +15,18 @@
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeCctz.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
 
-set(GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER "module" CACHE STRING "How to find the abseil libraries")
-set_property(CACHE GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER PROPERTY STRINGS "module" "package")
-
-if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
-    if (NOT ABSEIL_ROOT_DIR)
-        set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
-    endif ()
-    if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
-        message(ERROR "GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER is \"module\" but ABSEIL_ROOT_DIR is wrong")
-    endif ()
-    add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
-    set(ABSEIL_LIBRARIES abseil)
-    set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
-elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
-    if (WIN32)
-        # On Windows we will probably use the vcpkg port (github.com/Microsoft/vcpkg).
-        message(ERROR "TODO() - configure abseil under Windows")
-    else ()
-        # Use pkg-config on Unix and macOS.
-        include(FindPkgConfig)
-        pkg_check_modules(ABSEIL REQUIRED abseil)
-        link_directories(${ABSEIL_LIBRARY_DIRS})
-    endif ()
+# Depending on how gRPC is used (module vs. package) the gtest target may be
+# already defined, if it is, we cannot redefine it.
+if (NOT TARGET gtest)
+    include(${PROJECT_SOURCE_DIR}/cmake/IncludeGTest.cmake)
 endif ()
+
+if (NOT ABSEIL_ROOT_DIR)
+    set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
+endif ()
+if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
+    message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
+endif ()
+add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
+set(ABSEIL_LIBRARIES abseil)
+set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})

@@ -39,6 +39,7 @@ matrix:
       env: DISTRO=fedora DISTRO_VERSION=27
     - os: osx
       compiler: clang
+      script: ci/build-macosx.sh
       if: type != pull_request
     - os: linux
       compiler: clang
@@ -47,15 +48,22 @@ matrix:
     - os: linux
       compiler: gcc
       env: DISTRO=centos DISTRO_VERSION=7 BUILD_TYPE=Release
+    - # This is a fairly specialized entry in the matrix.  It builds the clients
+      # using a pre-installed gRPC package.  To do so, it builds the normal
+      # docker image with all the build tools, and uses that image to build and
+      # install gRPC.
+      os: linux
+      compiler: gcc
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
+            CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+      install:
+        - DISTRO=ubuntu DISTRO_VERSION=16.04 ./ci/install-linux.sh
+        - ./ci/install-linux.sh
 
 script:
   - ci/build-linux.sh
-  - ci/build-macosx.sh
 
 install:
-  # Restore the Docker image from the cached directory.  That way we
-  # can reuse the steps in the Docker image that install
-  # pre-requisites and build dependencies.
   - ci/install-linux.sh
 
 after_success:

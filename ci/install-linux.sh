@@ -31,12 +31,4 @@ fi
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
-     --build-arg CXX="${CXX}" \
-     --build-arg CC="${CC}" \
-     --build-arg NCPU="${NCPU:-2}" \
-     --build-arg BUILD_TYPE="${BUILD_TYPE:-Release}" \
-     --build-arg CHECK_STYLE="${CHECK_STYLE:-}" \
-     --build-arg SCAN_BUILD="${SCAN_BUILD:-}" \
-     --build-arg GENERATE_DOCS="${GENERATE_DOCS:-}" \
-     --build-arg CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      -f "ci/Dockerfile.${DISTRO}" ci
