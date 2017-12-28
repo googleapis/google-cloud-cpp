@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_TEST_FIXTURE_H_
 
 #include "bigtable/client/data.h"
-#include "bigtable/client/testing/mock_client.h"
+#include "bigtable/client/testing/mock_data_client.h"
 
 namespace bigtable {
 namespace testing {
@@ -28,8 +28,8 @@ class TableTestFixture : public ::testing::Test {
 
   void SetUp() override;
 
-  std::shared_ptr<MockClient> SetupMockClient() {
-    auto client = std::make_shared<MockClient>();
+  std::shared_ptr<MockDataClient> SetupMockClient() {
+    auto client = std::make_shared<MockDataClient>();
     EXPECT_CALL(*client, ProjectId())
         .WillRepeatedly(::testing::ReturnRef(project_id_));
     EXPECT_CALL(*client, InstanceId())
@@ -54,7 +54,7 @@ class TableTestFixture : public ::testing::Test {
   std::string instance_id_ = kInstanceId;
   std::shared_ptr<::google::bigtable::v2::MockBigtableStub> bigtable_stub_ =
       std::make_shared<::google::bigtable::v2::MockBigtableStub>();
-  std::shared_ptr<MockClient> client_ = SetupMockClient();
+  std::shared_ptr<MockDataClient> client_ = SetupMockClient();
   bigtable::Table table_ = bigtable::Table(client_, kTableId);
 };
 

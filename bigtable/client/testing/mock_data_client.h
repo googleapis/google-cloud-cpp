@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
 
 #include "bigtable/client/data.h"
 
@@ -24,7 +24,7 @@
 namespace bigtable {
 namespace testing {
 
-class MockClient : public bigtable::ClientInterface {
+class MockDataClient : public bigtable::DataClient {
  public:
   MOCK_CONST_METHOD0(ProjectId, std::string const&());
   MOCK_CONST_METHOD0(InstanceId, std::string const&());
@@ -34,4 +34,4 @@ class MockClient : public bigtable::ClientInterface {
 }  // namespace testing
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
