@@ -46,8 +46,7 @@ void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
 void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key);
 void CheckTimestampRange(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
-                         std::string const& row_key);
+                         bigtable::Table& table, std::string const& row_key);
 void CheckCellsRowLimit(bigtable::ClientInterface& client,
                         bigtable::Table& table,
                         std::string const& row_key_prefix);
@@ -73,7 +72,6 @@ int main(int argc, char* argv[]) try {
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
   std::string const table_name = argv[3];
-  std::string const family = "fam";
   std::string const fam0 = "fam0";
   std::string const fam1 = "fam1";
   std::string const fam2 = "fam2";
@@ -92,8 +90,7 @@ int main(int argc, char* argv[]) try {
 
   auto created_table = admin.CreateTable(
       table_name,
-      bigtable::TableConfig({{family, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam0, bigtable::GcRule::MaxNumVersions(10)},
+      bigtable::TableConfig({{fam0, bigtable::GcRule::MaxNumVersions(10)},
                              {fam1, bigtable::GcRule::MaxNumVersions(10)},
                              {fam2, bigtable::GcRule::MaxNumVersions(10)},
                              {fam3, bigtable::GcRule::MaxNumVersions(10)}},
@@ -109,7 +106,7 @@ int main(int argc, char* argv[]) try {
   // TODO(google-cloud-go#839) - remove workarounds for emulator bug(s).
   try {
     CheckBlockAll(*client, table, "aaa0002-block-all");
-  } catch(...) {
+  } catch (...) {
     ReportException();
   }
 
@@ -126,7 +123,7 @@ int main(int argc, char* argv[]) try {
 
   // TODO(google-cloud-go#840) - remove workarounds for emulator bug(s).
   try {
-    CheckCellsRowSample(*client, table, "aaa006-cells-row-sample");
+    CheckCellsRowSample(*client, table, "aaa013-cells-row-sample");
   } catch (...) {
     ReportException();
   }
@@ -151,6 +148,11 @@ void ReportException() {
               << " - " << ex.status().error_message() << " ["
               << ex.status().error_code()
               << "], details=" << ex.status().error_details() << std::endl;
+    int count = 0;
+    for (auto const& failure : ex.failures()) {
+      std::cerr << "failure[" << count++ << "] {key="
+                << failure.mutation().row_key() << "}" << std::endl;
+    }
   } catch (std::exception const& ex) {
     std::cerr << "Standard exception raised: " << ex.what() << std::endl;
   } catch (...) {
@@ -318,12 +320,12 @@ void CheckEqual(absl::string_view where, std::vector<bigtable::Cell> expected,
 void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
                   std::string const& row_key) {
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
   };
   CreateCells(table, expected);
 
@@ -334,14 +336,14 @@ void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
 }
 
 void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
-                  std::string const& row_key) {
+                   std::string const& row_key) {
   std::vector<bigtable::Cell> created{
-      {row_key, "fam", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
   };
   CreateCells(table, created);
 
@@ -355,22 +357,22 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
 void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
                  std::string const& row_key) {
   std::vector<bigtable::Cell> created{
-      {row_key, "fam", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam0", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
   };
   CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam0", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam0", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam0", "c1", 3000, "v-c1-0-3", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
   };
   auto actual = ReadRow(client, table, row_key, bigtable::Filter::Latest(2));
   CheckEqual(__func__, expected, actual);
@@ -380,7 +382,7 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
 void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
                       std::string const& row_key) {
   std::vector<bigtable::Cell> created{
-      {row_key, "fam", "c2", 0, "bar", {}},
+      {row_key, "fam0", "c2", 0, "bar", {}},
       {row_key, "fam0", "c", 0, "bar", {}},
       {row_key, "fam1", "c", 0, "bar", {}},
       {row_key, "fam2", "c", 0, "bar", {}},
@@ -390,6 +392,7 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
   CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "c2", 0, "bar", {}},
       {row_key, "fam0", "c", 0, "bar", {}},
       {row_key, "fam2", "c", 0, "bar", {}},
       {row_key, "fam2", "c2", 0, "bar", {}},
@@ -448,8 +451,7 @@ void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
 }
 
 void CheckTimestampRange(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
-                         std::string const& row_key) {
+                         bigtable::Table& table, std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c0", 1000, "v1000", {}},
       {row_key, "fam1", "c1", 2000, "v2000", {}},
@@ -530,29 +532,29 @@ void CheckEqualRowKeyCount(absl::string_view where,
  *
  */
 void CreateComplexRows(bigtable::ClientInterface& client,
-                       bigtable::Table& table,
-                       std::string const& prefix) {
+                       bigtable::Table& table, std::string const& prefix) {
   namespace bt = bigtable;
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/one-cell", {bt::SetCell("fam", "c", 3000, "foo")}));
+      prefix + "/one-cell", {bt::SetCell("fam0", "c", 3000, "foo")}));
   mutation.emplace_back(
       bt::SingleRowMutation(prefix + "/two-cells",
                             {bt::SetCell("fam0", "c", 3000, "foo"),
                              bt::SetCell("fam0", "c2", 3000, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many",
-      {bt::SetCell("fam", "c", 0, "foo"), bt::SetCell("fam", "c", 1000, "foo"),
-       bt::SetCell("fam", "c", 2000, "foo"),
-       bt::SetCell("fam", "c", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/many",
+                            {bt::SetCell("fam0", "c", 0, "foo"),
+                             bt::SetCell("fam0", "c", 1000, "foo"),
+                             bt::SetCell("fam0", "c", 2000, "foo"),
+                             bt::SetCell("fam0", "c", 3000, "foo")}));
   mutation.emplace_back(
       bt::SingleRowMutation(prefix + "/many-columns",
-                            {bt::SetCell("fam", "c0", 3000, "foo"),
-                             bt::SetCell("fam", "c1", 3000, "foo"),
-                             bt::SetCell("fam", "c2", 3000, "foo"),
-                             bt::SetCell("fam", "c3", 3000, "foo")}));
+                            {bt::SetCell("fam0", "c0", 3000, "foo"),
+                             bt::SetCell("fam0", "c1", 3000, "foo"),
+                             bt::SetCell("fam0", "c2", 3000, "foo"),
+                             bt::SetCell("fam0", "c3", 3000, "foo")}));
   // This one is complicated, create a mutation with several families and
   // columns
   bt::SingleRowMutation complex(prefix + "/complex");
@@ -596,7 +598,7 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
 
 void CheckCellsRowOffset(bigtable::ClientInterface& client,
                          bigtable::Table& table,
-                        std::string const& row_key_prefix) {
+                         std::string const& row_key_prefix) {
   CreateComplexRows(client, table, row_key_prefix);
 
   // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
@@ -625,7 +627,7 @@ void CreateManyRows(bigtable::ClientInterface& client, bigtable::Table& table,
   for (int row = 0; row != count; ++row) {
     std::string row_key = prefix + "/" + std::to_string(row);
     bulk.emplace_back(bt::SingleRowMutation(
-        row_key, {bt::SetCell("fam", "col", 4000, "foo")}));
+        row_key, {bt::SetCell("fam0", "col", 4000, "foo")}));
   }
   table.BulkApply(std::move(bulk));
 }
