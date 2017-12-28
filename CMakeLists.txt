@@ -79,7 +79,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         include(FindPkgConfig)
         pkg_check_modules(GRPCPP REQUIRED grpc++>=1.4.1)
         pkg_check_modules(GRPC REQUIRED grpc>=4.0)
-        pkg_check_modules(PROTOBUF REQUIRED protobuf>=3.0)
+        pkg_check_modules(PROTOBUF REQUIRED protobuf>=3.4)
         link_directories(${GRPCPP_LIBRARY_DIRS} ${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
     endif ()
     # ... discover protoc and friends ...
@@ -100,8 +100,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug
         )
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
-    # googletest
-    add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`.
