@@ -58,6 +58,7 @@ void CheckCellsRowSample(bigtable::ClientInterface& client,
                          std::string const& row_key_prefix);
 }  // anonymous namespace
 
+// TODO(#153) - consider implementing integration tests with googletest.
 int main(int argc, char* argv[]) try {
   namespace admin_proto = ::google::bigtable::admin::v2;
 
@@ -103,7 +104,7 @@ int main(int argc, char* argv[]) try {
 
   CheckPassAll(*client, table, "aaa0001-pass-all");
 
-  // TODO(google-cloud-go#839) - remove workarounds for emulator bug(s).
+  // TODO(#151) - remove workarounds for emulator bug(s).
   try {
     CheckBlockAll(*client, table, "aaa0002-block-all");
   } catch (...) {
@@ -115,19 +116,21 @@ int main(int argc, char* argv[]) try {
   CheckColumnRegex(*client, table, "aaa005-column-regex");
   CheckColumnRange(*client, table, "aaa006-column-range");
   CheckTimestampRange(*client, table, "aaa007-timestamp-range");
+  // TODO(#152) - implement the following integration tests.
   // CheckRowKeysRegex(*client, table, "aaa008-row-key-regex");
   // CheckValueRegex(*client, table, "aaa009-value-regex");
   // CheckValueRange(*client, table, "aaa010-value-range");
   CheckCellsRowLimit(*client, table, "aaa011-cells-row-limit");
   CheckCellsRowOffset(*client, table, "aaa012-cells-row-offset");
 
-  // TODO(google-cloud-go#840) - remove workarounds for emulator bug(s).
+  // TODO(#151) - remove workarounds for emulator bug(s).
   try {
     CheckCellsRowSample(*client, table, "aaa013-cells-row-sample");
   } catch (...) {
     ReportException();
   }
 
+  // TODO(#152) - implement the following integration tests.
   // CheckStripValueTransformer(client, *table, "aaa014-strip-value");
   // CheckCondition(client, *table, "aaa015-condition");
   // CheckChain(client, *table, "aaa016-chain");
@@ -150,8 +153,9 @@ void ReportException() {
               << "], details=" << ex.status().error_details() << std::endl;
     int count = 0;
     for (auto const& failure : ex.failures()) {
-      std::cerr << "failure[" << count++ << "] {key="
-                << failure.mutation().row_key() << "}" << std::endl;
+      std::cerr << "failure[" << count++
+                << "] {key=" << failure.mutation().row_key() << "}"
+                << std::endl;
     }
   } catch (std::exception const& ex) {
     std::cerr << "Standard exception raised: " << ex.what() << std::endl;
@@ -487,7 +491,7 @@ void CheckEqualRowKeyCount(absl::string_view where,
   }
 
   std::ostringstream os;
-  // In C++14 we could use
+  // In C++14 we could use a single lambda with auto parameters, sigh? meh?
   auto stream_map = [&os](std::pair<std::string const, int> const& x) {
     os << "{" << x.first << "," << x.second << "}, ";
   };
@@ -640,9 +644,9 @@ void CheckCellsRowSample(bigtable::ClientInterface& client,
 
   // We want to check that the sampling rate was "more or less" the prescribed
   // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
-  // get serious about testing the sampling rate we would do some statistics.
+  // get serious about testing the sampling rate, we would do some statistics.
   // We do not really need to, because we are testing the library, not the
-  // server. But for what is worth, the outline would be:
+  // server. But for what it's worth, the outline would be:
   //
   //   - Model sampling as a binomial process.
   //   - Perform power analysis to decide the size of the sample.
