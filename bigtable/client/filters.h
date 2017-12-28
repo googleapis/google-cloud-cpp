@@ -198,14 +198,14 @@ class Filter {
    *
    * Note that cells might be repeated, such as when interleaving the results
    * of multiple filters via the `Interleave()` function.  Furthermore, this
-   * filter apples to the cells within a row, if there are multiple column
-   * families and/or columns in a row the order is:
+   * filter apples to the cells within a row; if there are multiple column
+   * families and/or columns in a row, the order is:
    * - All the cells for a column family appear together, but there is no
    *   guarantee on the order of the column families.  Furthermore, column
    *   families may appear in different orders in different rows.
-   * - Within a column family the cells are ordered by column name, column names
-   *   are compared lexicographically.
-   * - With a column, the cells appear in descending order by timestamp.
+   * - Within a column family, the cells are ordered by column name, where
+   *   column names are sorted lexicographically.
+   * - Within a column, the cells appear in descending order by timestamp.
    *
    * TODO(#84) - document what is the effect of n <= 0
    */
@@ -220,14 +220,14 @@ class Filter {
    *
    * Note that cells might be repeated, such as when interleaving the results
    * of multiple filters via the `Interleave()` function.  Furthermore, this
-   * filter apples to the cells within a row, if there are multiple column
-   * families and/or columns in a row the order is:
+   * filter apples to the cells within a row; if there are multiple column
+   * families and/or columns in a row, the order is:
    * - All the cells for a column family appear together, but there is no
    *   guarantee on the order of the column families.  Furthermore, column
    *   families may appear in different orders in different rows.
-   * - Within a column family the cells are ordered by column name, column names
-   *   are compared lexicographically.
-   * - With a column, the cells appear in descending order by timestamp.
+   * - Within a column family, the cells are ordered by column name, where
+   *   column names are sorted lexicographically.
+   * - Within a column, the cells appear in descending order by timestamp.
    *
    * TODO(#84) - document what is the effect of n <= 0
    */
