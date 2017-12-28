@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/detail/bulk_mutator.h"
+#include "bigtable/client/internal/bulk_mutator.h"
 
 #include <absl/memory/memory.h>
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
@@ -71,7 +71,8 @@ TEST(MultipleRowsMutatorTest, Simple) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;
@@ -140,7 +141,8 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -211,7 +213,8 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -281,7 +284,8 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
@@ -361,7 +365,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::detail::BulkMutator mutator("foo/bar/baz/table", *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.

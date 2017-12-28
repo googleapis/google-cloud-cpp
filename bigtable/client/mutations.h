@@ -23,7 +23,7 @@
 
 #include <type_traits>
 
-#include "bigtable/client/detail/conjunction.h"
+#include "bigtable/client/internal/conjunction.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -277,7 +277,7 @@ class BulkMutation {
   template <typename... M>
   BulkMutation(M&&... m) : BulkMutation() {
     static_assert(
-        detail::conjunction<
+        internal::conjunction<
             std::is_convertible<M, SingleRowMutation>...>::value,
         "The arguments passed to BulkMutation(...) must be convertible"
         " to SingleRowMutation");
