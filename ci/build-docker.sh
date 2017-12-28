@@ -67,7 +67,7 @@ echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
 if [ "${SCAN_BUILD}" = "yes" ]; then
   scan-build make -j ${NCPU} -C bigtable tests-local
 else
-  make -j ${NCPU} all
+  make -j ${NCPU} tests-local
 fi
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 

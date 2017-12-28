@@ -27,3 +27,4 @@ target_include_directories(gmock
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+
