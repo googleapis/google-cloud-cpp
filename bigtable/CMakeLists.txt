@@ -248,3 +248,21 @@ target_link_libraries(admin_integration_test
     bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local admin_integration_test)
+
+# Define the install target
+get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+if ("${LIB64}" STREQUAL "TRUE")
+    set(LIBSUFFIX 64)
+else()
+    set(LIBSUFFIX "")
+endif()
+set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
+install(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+    ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+install(DIRECTORY client/ DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.inc")
+install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/bigtable/google FILES_MATCHING PATTERN "*.h")

@@ -22,7 +22,7 @@
 # application.
 add_library(gtest
         ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc)
-target_include_directories(gmock
+target_include_directories(gtest
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)
 
@@ -31,7 +31,7 @@ target_include_directories(gmock
 # application.
 add_library(gtest_main
         ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc)
-target_include_directories(gmock
+target_include_directories(gtest_main
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)
 add_dependencies(gtest_main gtest)
