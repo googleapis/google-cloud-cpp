@@ -53,11 +53,11 @@ matrix:
       # docker image with all the build tools, and uses that image to build and
       # install gRPC.
       os: linux
-      compiler: gcc
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
-            CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+      compiler: clang
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release
+            SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
       install:
-        - DISTRO=ubuntu DISTRO_VERSION=16.04 ./ci/install-linux.sh
+        - DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=no ./ci/install-linux.sh
         - ./ci/install-linux.sh
 
 script:
