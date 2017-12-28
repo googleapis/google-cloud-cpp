@@ -22,11 +22,43 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::unique_ptr<Table> Client::Open(const std::string& table_id) {
-  std::string table_name = std::string("projects/") + project_ + "/instances/" +
-                           instance_ + "/tables/" + table_id;
-  std::unique_ptr<Table> table(new Table(this, table_name));
-  return table;
+class Client : public ClientInterface {
+ public:
+  Client(std::string project, std::string instance, ClientOptions options)
+      : project_(std::move(project)),
+        instance_(std::move(instance)),
+        credentials_(options.credentials()),
+        channel_(grpc::CreateChannel(options.data_endpoint(),
+                                     options.credentials())),
+        bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
+
+  Client(std::string project, std::string instance)
+      : Client(std::move(project), std::move(instance), ClientOptions()) {}
+
+  std::string const& ProjectId() const override;
+  std::string const& InstanceId() const override;
+
+  google::bigtable::v2::Bigtable::StubInterface& Stub() const override {
+    return *bt_stub_;
+  }
+
+ private:
+  std::string project_;
+  std::string instance_;
+  std::shared_ptr<grpc::ChannelCredentials> credentials_;
+  std::shared_ptr<grpc::Channel> channel_;
+  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> bt_stub_;
+};
+
+std::string const& Client::ProjectId() const { return project_; }
+
+std::string const& Client::InstanceId() const { return instance_; }
+
+std::shared_ptr<ClientInterface> CreateDefaultClient(
+    std::string project_id, std::string instance_id,
+    bigtable::ClientOptions options) {
+  return std::make_shared<Client>(std::move(project_id), std::move(instance_id),
+                                  std::move(options));
 }
 
 void Table::Apply(SingleRowMutation&& mut) {

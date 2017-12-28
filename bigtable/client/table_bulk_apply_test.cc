@@ -219,7 +219,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
   bt::Table custom_table(
-      client_.get(), "foo_table",
+      client_, "foo_table",
       // Configure the Table to stop at 3 failures.
       bt::LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.

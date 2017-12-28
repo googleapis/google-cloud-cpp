@@ -24,12 +24,38 @@ namespace testing {
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
+  TableTestFixture() {}
+
   void SetUp() override;
 
-  std::shared_ptr<MockClient> client_ = std::make_shared<MockClient>();
+  std::shared_ptr<MockClient> SetupMockClient() {
+    auto client = std::make_shared<MockClient>();
+    EXPECT_CALL(*client, ProjectId())
+        .WillRepeatedly(::testing::ReturnRef(project_id_));
+    EXPECT_CALL(*client, InstanceId())
+        .WillRepeatedly(::testing::ReturnRef(instance_id_));
+    EXPECT_CALL(*client, Stub())
+        .WillRepeatedly(::testing::ReturnRef(*bigtable_stub_));
+    return client;
+  }
+
+  std::string const kProjectId = "foo-project";
+  std::string const kInstanceId = "bar-instance";
+  std::string const kTableId = "baz-table";
+
+  // These are hardcoded, and not computed, because we want to test the
+  // computation.
+  std::string const kInstanceName =
+      "projects/foo-project/instances/bar-instance";
+  std::string const kTableName =
+      "projects/foo-project/instances/bar-instance/tables/baz-table";
+
+  std::string project_id_ = kProjectId;
+  std::string instance_id_ = kInstanceId;
   std::shared_ptr<::google::bigtable::v2::MockBigtableStub> bigtable_stub_ =
       std::make_shared<::google::bigtable::v2::MockBigtableStub>();
-  bigtable::Table table_ = bigtable::Table(client_.get(), "foo-table");
+  std::shared_ptr<MockClient> client_ = SetupMockClient();
+  bigtable::Table table_ = bigtable::Table(client_, kTableId);
 };
 
 }  // namespace testing

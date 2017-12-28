@@ -54,20 +54,21 @@ int main(int argc, char* argv[]) try {
   }
   std::cout << table_name << " found via ListTables()\n";
 
-  bigtable::Client client(project_id, instance_id);
-  std::unique_ptr<bigtable::Table> table = client.Open(table_name);
+  auto client = bigtable::CreateDefaultClient(project_id, instance_id,
+                                              bigtable::ClientOptions());
+  bigtable::Table table(client, table_name);
 
   // TODO(#29) we should read these rows back when we have a read path
   auto mutation = bigtable::SingleRowMutation("row-key-0");
   mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-0-0"));
   mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-0-1"));
-  table->Apply(std::move(mutation));
+  table.Apply(std::move(mutation));
   std::cout << "row-key-0 mutated successfully" << std::endl;
 
   mutation = bigtable::SingleRowMutation("row-key-1");
   mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-1-0"));
   mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-1-1"));
-  table->Apply(std::move(mutation));
+  table.Apply(std::move(mutation));
   std::cout << "row-key-1 mutated successfully" << std::endl;
 
   bigtable::BulkMutation bulk{
@@ -78,7 +79,7 @@ int main(int argc, char* argv[]) try {
                                   {bigtable::SetCell(family, "c0", 0, "v2"),
                                    bigtable::SetCell(family, "c1", 0, "v3")}),
   };
-  table->BulkApply(std::move(bulk));
+  table.BulkApply(std::move(bulk));
   std::cout << "bulk mutation successful" << std::endl;
 
   return 0;

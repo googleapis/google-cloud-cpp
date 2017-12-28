@@ -17,10 +17,7 @@
 namespace bigtable {
 namespace testing {
 
-void TableTestFixture::SetUp() {
-  EXPECT_CALL(*client_, Stub())
-      .WillRepeatedly(::testing::ReturnRef(*bigtable_stub_));
-}
+void TableTestFixture::SetUp() {}
 
 }  // namespace testing
 }  // namespace bigtable
