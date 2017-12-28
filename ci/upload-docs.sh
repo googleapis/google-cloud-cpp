@@ -37,22 +37,21 @@ fi
 
 # Clone the gh-pages branch into the doc/html subdirectory.
 readonly REPO_URL=$(git config remote.origin.url)
-git clone -b gh-pages "${REPO_URL}" doc/html
+git clone -b gh-pages "${REPO_URL}" gh-pages
 
 # Remove any previous content of the branch.  We will recover any unmodified
 # files in a second.
-(cd doc/html && git rm -qfr --ignore-unmatch .)
+(cd gh-pages && git rm -qfr --ignore-unmatch .)
 
-# Copy the build results out of the Docker image.
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-sudo docker run --volume "$PWD/doc:/d" --rm -it "${IMAGE}:tip" cp -r /var/tmp/build/gccpp/bigtable/doc/html /d
+# Copy the build results into the gh-pages clone.
+cp -r bigtable/doc/html/. gh-pages
 
-cd doc/html
+cd gh-pages
 git config user.name "Travis Build Robot"
 git config user.email "nobody@users.noreply.github.com"
 git add --all .
 
-if git diff --exit-code; then
+if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
   exit 0
 fi
