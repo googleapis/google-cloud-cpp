@@ -15,8 +15,8 @@
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeCctz.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
 
-# Depending on how gRPC is used (module vs. package) the gtest target may be
-# already defined, if it is, we cannot redefine it.
+# Depending on how gRPC is used (module vs. package), the gtest target may be
+# already defined; if it is, we cannot redefine it.
 if (NOT TARGET gtest)
     include(${PROJECT_SOURCE_DIR}/cmake/IncludeGTest.cmake)
 endif ()

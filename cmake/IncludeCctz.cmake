@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # While the documentation is not clear as to whether cctz can be used as an
-# installed library, we only use it as part of abseil, which is supposed to
+# installed library, we only use it as part of Abseil, which is supposed to
 # be included as a module.
 
 if (NOT CCTZ_ROOT_DIR)

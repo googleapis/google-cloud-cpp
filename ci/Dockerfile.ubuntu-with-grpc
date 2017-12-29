@@ -17,11 +17,9 @@ ARG DISTRO_VERSION=16.04
 FROM cached-${DISTRO}-${DISTRO_VERSION}:tip AS staging
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
-RUN apt-get install -y automake libtool build-essential
-
 ARG NCPU=2
-ARG CXX=g++
-ARG CC=gcc
+ARG CXX=clang++
+ARG CC=clang
 
 WORKDIR /var/tmp/build/
 RUN git clone --depth 50 https://github.com/grpc/grpc.git
