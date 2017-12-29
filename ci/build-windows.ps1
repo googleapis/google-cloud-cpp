@@ -32,9 +32,9 @@ mkdir build
 cd build
 echo $dir
 cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static ..
-# if ($LASTEXITCODE) {
-#   throw "cmake failed with exit code $LASTEXITCODE"
-# }
+if ($LASTEXITCODE) {
+  throw "cmake failed with exit code $LASTEXITCODE"
+}
 
 cmake --build .
 if ($LASTEXITCODE) {
