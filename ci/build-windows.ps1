@@ -28,6 +28,7 @@ if ($LASTEXITCODE) {
   throw "vcpkg integrate failed with exit code $LASTEXITCODE"
 }
 
+cd google-cloud-cpp
 mkdir build
 cd build
 echo $dir
