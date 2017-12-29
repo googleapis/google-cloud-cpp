@@ -22,8 +22,13 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
+// Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
+// successful, or until the policies in effect tell us to stop.
 void Table::Apply(SingleRowMutation&& mut) {
-  // Copy the policies in effect for the operation.
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto idempotent_policy = idempotent_mutation_policy_->clone();
@@ -67,7 +72,14 @@ void Table::Apply(SingleRowMutation&& mut) {
   }
 }
 
+// Call the `google.bigtable.v2.Bigtable.MutateRows` RPC repeatedly until
+// successful, or until the policies in effect tell us to stop.  When the RPC
+// is partially successful, this function retries only the mutations that did
+// not succeed.
 void Table::BulkApply(BulkMutation&& mut) {
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
