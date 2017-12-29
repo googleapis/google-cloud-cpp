@@ -37,8 +37,7 @@ if ($LASTEXITCODE) {
   throw "git setup failed with exit code $LASTEXITCODE"
 }
 
-# ... install cmake because the version in appveyor is too old for some of
-# the packages ...
+# ... install cmake to ensure appveyor is using latest version
 choco install -y cmake cmake.portable
 if ($LASTEXITCODE) {
   throw "choco install cmake failed with exit code $LASTEXITCODE"
@@ -56,11 +55,10 @@ if ($LASTEXITCODE) {
   throw "vcpkg integrate failed with exit code $LASTEXITCODE"
 }
 
-# ... if necessary, install grpc again.  Normally the packages are
-# cached by the CI system (appveyor) so this is not too painful.
-# We explicitly install each dependency because if we run out of time
-# in the appveyor build the cache is at least partially refreshed and
-# a rebuild will complete creating the cache ...
+# ... Normally the packages are cached by the CI system (appveyor)
+# so this is not too painful. We explicitly install each dependency
+# because if we run out of time in the appveyor build the cache is at least
+# partially refreshed and a rebuild will complete creating the cache ...
 $packages = @("zlib:x86-windows-static", "openssl:x86-windows-static",
               "protobuf:x86-windows-static", "c-ares:x86-windows-static",
               "grpc:x86-windows-static")
@@ -72,4 +70,4 @@ foreach ($pkg in $packages) {
   }
 }
 
-cd ..\google-cloud-cpp
+cd ..
