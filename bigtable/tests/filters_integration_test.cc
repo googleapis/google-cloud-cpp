@@ -35,26 +35,23 @@ void ReportException();
 //
 void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
                   std::string const& row_key);
-void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckBlockAll(bigtable::DataClient& client, bigtable::Table& table,
                    std::string const& row_key);
-void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckLatest(bigtable::DataClient& client, bigtable::Table& table,
                  std::string const& row_key);
-void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckFamilyRegex(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key);
-void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckColumnRegex(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key);
-void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckColumnRange(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key);
-void CheckTimestampRange(bigtable::ClientInterface& client,
-                         bigtable::Table& table, std::string const& row_key);
-void CheckCellsRowLimit(bigtable::ClientInterface& client,
-                        bigtable::Table& table,
+void CheckTimestampRange(bigtable::DataClient& client, bigtable::Table& table,
+                         std::string const& row_key);
+void CheckCellsRowLimit(bigtable::DataClient& client, bigtable::Table& table,
                         std::string const& row_key_prefix);
-void CheckCellsRowOffset(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
+void CheckCellsRowOffset(bigtable::DataClient& client, bigtable::Table& table,
                          std::string const& row_key_prefix);
-void CheckCellsRowSample(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
+void CheckCellsRowSample(bigtable::DataClient& client, bigtable::Table& table,
                          std::string const& row_key_prefix);
 }  // anonymous namespace
 
@@ -231,7 +228,7 @@ std::vector<bigtable::Cell> ReadRow(bigtable::DataClient& client,
 }
 
 // TODO(#32) remove this when Table::ReadRow() is a thing.
-std::vector<bigtable::Cell> ReadRows(bigtable::ClientInterface& client,
+std::vector<bigtable::Cell> ReadRows(bigtable::DataClient& client,
                                      bigtable::Table& table, std::string start,
                                      std::string end, bigtable::Filter filter) {
   btproto::ReadRowsRequest request;
@@ -339,7 +336,7 @@ void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckBlockAll(bigtable::DataClient& client, bigtable::Table& table,
                    std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c", 0, "v-c-0-0", {}},
@@ -358,7 +355,7 @@ void CheckBlockAll(bigtable::ClientInterface& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckLatest(bigtable::DataClient& client, bigtable::Table& table,
                  std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c", 0, "v-c-0-0", {}},
@@ -383,7 +380,7 @@ void CheckLatest(bigtable::ClientInterface& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckFamilyRegex(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c2", 0, "bar", {}},
@@ -407,7 +404,7 @@ void CheckFamilyRegex(bigtable::ClientInterface& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckColumnRegex(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "abc", 0, "bar", {}},
@@ -431,7 +428,7 @@ void CheckColumnRegex(bigtable::ClientInterface& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
+void CheckColumnRange(bigtable::DataClient& client, bigtable::Table& table,
                       std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "a00", 0, "bar", {}},
@@ -454,8 +451,8 @@ void CheckColumnRange(bigtable::ClientInterface& client, bigtable::Table& table,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckTimestampRange(bigtable::ClientInterface& client,
-                         bigtable::Table& table, std::string const& row_key) {
+void CheckTimestampRange(bigtable::DataClient& client, bigtable::Table& table,
+                         std::string const& row_key) {
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c0", 1000, "v1000", {}},
       {row_key, "fam1", "c1", 2000, "v2000", {}},
@@ -535,8 +532,8 @@ void CheckEqualRowKeyCount(absl::string_view where,
  *   | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
  *
  */
-void CreateComplexRows(bigtable::ClientInterface& client,
-                       bigtable::Table& table, std::string const& prefix) {
+void CreateComplexRows(bigtable::DataClient& client, bigtable::Table& table,
+                       std::string const& prefix) {
   namespace bt = bigtable;
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
@@ -574,8 +571,7 @@ void CreateComplexRows(bigtable::ClientInterface& client,
   table.BulkApply(std::move(mutation));
 }
 
-void CheckCellsRowLimit(bigtable::ClientInterface& client,
-                        bigtable::Table& table,
+void CheckCellsRowLimit(bigtable::DataClient& client, bigtable::Table& table,
                         std::string const& row_key_prefix) {
   CreateComplexRows(client, table, row_key_prefix);
 
@@ -600,8 +596,7 @@ void CheckCellsRowLimit(bigtable::ClientInterface& client,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CheckCellsRowOffset(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
+void CheckCellsRowOffset(bigtable::DataClient& client, bigtable::Table& table,
                          std::string const& row_key_prefix) {
   CreateComplexRows(client, table, row_key_prefix);
 
@@ -624,7 +619,7 @@ void CheckCellsRowOffset(bigtable::ClientInterface& client,
   std::cout << __func__ << " was successful" << std::endl;
 }
 
-void CreateManyRows(bigtable::ClientInterface& client, bigtable::Table& table,
+void CreateManyRows(bigtable::DataClient& client, bigtable::Table& table,
                     std::string const& prefix, int count) {
   namespace bt = bigtable;
   bt::BulkMutation bulk;
@@ -636,8 +631,7 @@ void CreateManyRows(bigtable::ClientInterface& client, bigtable::Table& table,
   table.BulkApply(std::move(bulk));
 }
 
-void CheckCellsRowSample(bigtable::ClientInterface& client,
-                         bigtable::Table& table,
+void CheckCellsRowSample(bigtable::DataClient& client, bigtable::Table& table,
                          std::string const& row_key_prefix) {
   constexpr int row_count = 20000;
   CreateManyRows(client, table, row_key_prefix, row_count);
