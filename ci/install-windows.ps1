@@ -37,8 +37,7 @@ if ($LASTEXITCODE) {
   throw "git setup failed with exit code $LASTEXITCODE"
 }
 
-# ... install cmake because the version in appveyor is too old for some of
-# the packages ...
+# ... install cmake to ensure appveyor is using latest version
 choco install -y cmake cmake.portable
 if ($LASTEXITCODE) {
   throw "choco install cmake failed with exit code $LASTEXITCODE"
