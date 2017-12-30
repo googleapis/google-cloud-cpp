@@ -35,24 +35,23 @@ fi
 # is to create a branch (gh-pages) and post the documentation in that branch.
 # We first do some general git configuration:
 
-# Clone the gh-pages branch into the doc/html subdirectory.
+# Clone the gh-pages branch into a staging directory.
 readonly REPO_URL=$(git config remote.origin.url)
-git clone -b gh-pages "${REPO_URL}" doc/html
+git clone -b gh-pages "${REPO_URL}" github-io-staging
 
 # Remove any previous content of the branch.  We will recover any unmodified
 # files in a second.
-(cd doc/html && git rm -qfr --ignore-unmatch .)
+(cd github-io-staging && git rm -qfr --ignore-unmatch .)
 
-# Copy the build results out of the Docker image.
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-sudo docker run --volume "$PWD/doc:/d" --rm -it "${IMAGE}:tip" cp -r /var/tmp/build/gccpp/bigtable/doc/html /d
+# Copy the build results into the gh-pages clone.
+cp -r bigtable/doc/html/. github-io-staging
 
-cd doc/html
+cd github-io-staging
 git config user.name "Travis Build Robot"
 git config user.email "nobody@users.noreply.github.com"
 git add --all .
 
-if git diff --exit-code; then
+if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
   exit 0
 fi
