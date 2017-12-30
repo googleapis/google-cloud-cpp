@@ -60,7 +60,8 @@ class SimpleAdminClient : public bigtable::AdminClient {
     auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
                                              options_.credentials(),
                                              options_.channel_arguments());
-    table_admin_stub_ = ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
+    table_admin_stub_ =
+        ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
     channel_ = std::move(channel);
   }
 
