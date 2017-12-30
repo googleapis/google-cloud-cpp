@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/data.h"
+#include "bigtable/client/table.h"
 
 #include <absl/memory/memory.h>
 
@@ -24,11 +24,11 @@ class TableTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 TEST_F(TableTest, ClientProjectId) {
-  EXPECT_EQ(kProjectId, client_->ProjectId());
+  EXPECT_EQ(kProjectId, client_->project_id());
 }
 
 TEST_F(TableTest, ClientInstanceId) {
-  EXPECT_EQ(kInstanceId, client_->InstanceId());
+  EXPECT_EQ(kInstanceId, client_->instance_id());
 }
 
 TEST_F(TableTest, StandaloneInstanceName) {

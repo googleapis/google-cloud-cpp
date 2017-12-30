@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
 
-#include "bigtable/client/data.h"
+#include "bigtable/client/table.h"
 
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 
@@ -26,8 +26,8 @@ namespace testing {
 
 class MockDataClient : public bigtable::DataClient {
  public:
-  MOCK_CONST_METHOD0(ProjectId, std::string const&());
-  MOCK_CONST_METHOD0(InstanceId, std::string const&());
+  MOCK_CONST_METHOD0(project_id, std::string const&());
+  MOCK_CONST_METHOD0(instance_id, std::string const&());
   MOCK_CONST_METHOD0(Stub, google::bigtable::v2::Bigtable::StubInterface&());
 };
 

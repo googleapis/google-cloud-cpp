@@ -14,7 +14,7 @@
 
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
-#include "bigtable/client/data.h"
+#include "bigtable/client/table.h"
 
 int main(int argc, char* argv[]) try {
   namespace admin_proto = ::google::bigtable::admin::v2;

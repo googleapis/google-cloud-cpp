@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/data.h"
+#include "bigtable/client/table.h"
 
 #include <thread>
 
@@ -22,47 +22,12 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-class Client : public DataClient {
- public:
-  Client(std::string project, std::string instance, ClientOptions options)
-      : project_(std::move(project)),
-        instance_(std::move(instance)),
-        credentials_(options.credentials()),
-        channel_(grpc::CreateChannel(options.data_endpoint(),
-                                     options.credentials())),
-        bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
-
-  Client(std::string project, std::string instance)
-      : Client(std::move(project), std::move(instance), ClientOptions()) {}
-
-  std::string const& ProjectId() const override;
-  std::string const& InstanceId() const override;
-
-  google::bigtable::v2::Bigtable::StubInterface& Stub() const override {
-    return *bt_stub_;
-  }
-
- private:
-  std::string project_;
-  std::string instance_;
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
-  std::shared_ptr<grpc::Channel> channel_;
-  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> bt_stub_;
-};
-
-std::string const& Client::ProjectId() const { return project_; }
-
-std::string const& Client::InstanceId() const { return instance_; }
-
-std::shared_ptr<DataClient> CreateDefaultClient(
-    std::string project_id, std::string instance_id,
-    bigtable::ClientOptions options) {
-  return std::make_shared<Client>(std::move(project_id), std::move(instance_id),
-                                  std::move(options));
-}
-
+// Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
+// successful, or until the policies in effect tell us to stop.
 void Table::Apply(SingleRowMutation&& mut) {
-  // Copy the policies in effect for the operation.
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto idempotent_policy = idempotent_mutation_policy_->clone();
@@ -106,7 +71,14 @@ void Table::Apply(SingleRowMutation&& mut) {
   }
 }
 
+// Call the `google.bigtable.v2.Bigtable.MutateRows` RPC repeatedly until
+// successful, or until the policies in effect tell us to stop.  When the RPC
+// is partially successful, this function retries only the mutations that did
+// not succeed.
 void Table::BulkApply(BulkMutation&& mut) {
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
