@@ -35,18 +35,18 @@ fi
 # is to create a branch (gh-pages) and post the documentation in that branch.
 # We first do some general git configuration:
 
-# Clone the gh-pages branch into the doc/html subdirectory.
+# Clone the gh-pages branch into a staging directory.
 readonly REPO_URL=$(git config remote.origin.url)
-git clone -b gh-pages "${REPO_URL}" gh-pages
+git clone -b gh-pages "${REPO_URL}" github-io-staging
 
 # Remove any previous content of the branch.  We will recover any unmodified
 # files in a second.
-(cd gh-pages && git rm -qfr --ignore-unmatch .)
+(cd github-io-staging && git rm -qfr --ignore-unmatch .)
 
 # Copy the build results into the gh-pages clone.
-cp -r bigtable/doc/html/. gh-pages
+cp -r bigtable/doc/html/. github-io-staging
 
-cd gh-pages
+cd github-io-staging
 git config user.name "Travis Build Robot"
 git config user.email "nobody@users.noreply.github.com"
 git add --all .
