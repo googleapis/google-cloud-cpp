@@ -22,7 +22,6 @@ namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.
 void Table::Apply(SingleRowMutation&& mut) {

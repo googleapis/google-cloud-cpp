@@ -42,7 +42,6 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
   return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
 }
 
-
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
  *
