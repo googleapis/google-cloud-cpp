@@ -30,9 +30,9 @@ class TableTestFixture : public ::testing::Test {
 
   std::shared_ptr<MockDataClient> SetupMockClient() {
     auto client = std::make_shared<MockDataClient>();
-    EXPECT_CALL(*client, ProjectId())
+    EXPECT_CALL(*client, project_id())
         .WillRepeatedly(::testing::ReturnRef(project_id_));
-    EXPECT_CALL(*client, InstanceId())
+    EXPECT_CALL(*client, instance_id())
         .WillRepeatedly(::testing::ReturnRef(instance_id_));
     EXPECT_CALL(*client, Stub())
         .WillRepeatedly(::testing::ReturnRef(*bigtable_stub_));

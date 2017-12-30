@@ -40,8 +40,8 @@ class DefaultDataClient : public DataClient {
       : DefaultDataClient(std::move(project), std::move(instance),
                           ClientOptions()) {}
 
-  std::string const& ProjectId() const override;
-  std::string const& InstanceId() const override;
+  std::string const& project_id() const override;
+  std::string const& instance_id() const override;
 
   google::bigtable::v2::Bigtable::StubInterface& Stub() const override {
     return *bt_stub_;
@@ -55,9 +55,9 @@ class DefaultDataClient : public DataClient {
   std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> bt_stub_;
 };
 
-std::string const& DefaultDataClient::ProjectId() const { return project_; }
+std::string const& DefaultDataClient::project_id() const { return project_; }
 
-std::string const& DefaultDataClient::InstanceId() const { return instance_; }
+std::string const& DefaultDataClient::instance_id() const { return instance_; }
 
 std::shared_ptr<DataClient> CreateDefaultClient(
     std::string project_id, std::string instance_id,

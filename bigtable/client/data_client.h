@@ -35,8 +35,8 @@ class DataClient {
  public:
   virtual ~DataClient() = default;
 
-  virtual std::string const& ProjectId() const = 0;
-  virtual std::string const& InstanceId() const = 0;
+  virtual std::string const& project_id() const = 0;
+  virtual std::string const& instance_id() const = 0;
 
   // Access the stub to send RPC calls.
   virtual google::bigtable::v2::Bigtable::StubInterface& Stub() const = 0;
@@ -51,11 +51,11 @@ std::shared_ptr<DataClient> CreateDefaultClient(std::string project_id,
  * Return the fully qualified instance name for the @p client.
  *
  * Compute the full path of the instance associated with the client, i.e.,
- * `projects/instances/<client->ProjectId()>/instances/<client->InstanceId()>`
+ * `projects/instances/<client->project_id()>/instances/<client->instance_id()>`
  */
 inline std::string InstanceName(std::shared_ptr<DataClient> client) {
-  return absl::StrCat("projects/", client->ProjectId(), "/instances/",
-                      client->InstanceId());
+  return absl::StrCat("projects/", client->project_id(), "/instances/",
+                      client->instance_id());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
