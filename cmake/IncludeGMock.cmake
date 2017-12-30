@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Abseil requires a gmock target to be defined.  Unlike the gtest target, gRPC
+# does not define it, so we must define it ourselves.  We do that in this file.
+
 # Compile the googlemock library.  This library is rarely installed or
 # pre-compiled because it should be configured with the same flags as the
 # application.

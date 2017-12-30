@@ -17,6 +17,7 @@ FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 RUN apt-get update && apt-get install -y \
+  automake \
   build-essential \
   clang \
   cmake \
@@ -30,6 +31,7 @@ RUN apt-get update && apt-get install -y \
   graphviz \
   clang \
   cmake \
+  libtool \
   lsb-release \
   make \
   tar \

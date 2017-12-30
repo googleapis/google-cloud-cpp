@@ -12,31 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set(GOOGLE_CLOUD_CPP_CCTZ_PROVIDER "module" CACHE STRING "How to find the cctz libraries")
-set_property(CACHE GOOGLE_CLOUD_CPP_CCTZ_PROVIDER PROPERTY STRINGS "module" "package")
+# While the documentation is not clear as to whether cctz can be used as an
+# installed library, we only use it as part of Abseil, which is supposed to
+# be included as a module.
 
-if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
-    if (NOT CCTZ_ROOT_DIR)
-        set(CCTZ_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/cctz)
-    endif ()
-    if (NOT EXISTS "${CCTZ_ROOT_DIR}/CMakeLists.txt")
-        message(ERROR "GOOGLE_CLOUD_CPP_CCTZ_PROVIDER is \"module\" but CCTZ_ROOT_DIR is wrong")
-    endif ()
-    # cctz will include the `CTest` module and always compile the cctz tests, we want to disable that.  The only way is
-    # to include the module first, disable the tests, and then include the cctz CMakeLists.txt files.
-    include(CTest)
-    set(BUILD_TESTING OFF)
-    add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz EXCLUDE_FROM_ALL)
-    set(CCTZ_LIBRARIES cctz)
-    set(CCTZ_INCLUDE_DIRS ${CCTZ_ROOT_DIR}/absl)
-elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "package")
-    if (WIN32)
-        # On Windows we will probably use the vcpkg port (github.com/Microsoft/vcpkg).
-        message(ERROR "TODO() - configure cctz under Windows")
-    else ()
-        # Use pkg-config on Unix and macOS.
-        include(FindPkgConfig)
-        pkg_check_modules(CCTZ REQUIRED cctz)
-        link_directories(${CCTZ_LIBRARY_DIRS})
-    endif ()
+if (NOT CCTZ_ROOT_DIR)
+    set(CCTZ_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/cctz)
 endif ()
+
+if (NOT EXISTS "${CCTZ_ROOT_DIR}/CMakeLists.txt")
+    message(ERROR "expected a CMakeLists.txt in CCTZ_ROOT_DIR")
+endif ()
+
+# cctz will include the `CTest` module and always compile the cctz tests, we
+# want to disable that.  The only way is to include the module first, disable
+# the tests, and then include the cctz CMakeLists.txt files.
+include(CTest)
+set(BUILD_TESTING OFF)
+
+add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz EXCLUDE_FROM_ALL)
+set(CCTZ_LIBRARIES cctz)
+set(CCTZ_INCLUDE_DIRS ${CCTZ_ROOT_DIR}/absl)

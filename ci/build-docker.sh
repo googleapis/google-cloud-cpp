@@ -97,6 +97,8 @@ fi
 
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
+  echo
+  echo "Generating documentation from source files"
   (cd /v/bigtable ; doxygen doc/Doxyfile)
 fi
 
@@ -108,6 +110,7 @@ if [ "${SCAN_BUILD:-}" = "yes" ]; then
   fi
   if [ -r scan-build-output/index.html ]; then
     cat <<_EOF_;
+
 ${COLOR_RED}
 scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
@@ -120,6 +123,7 @@ ${COLOR_RESET}
 _EOF_
     exit 1
   else
+    echo
     echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
   fi
 fi
