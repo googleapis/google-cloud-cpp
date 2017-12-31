@@ -22,7 +22,7 @@ if (NOT TARGET gtest)
 endif ()
 
 if (NOT ABSEIL_ROOT_DIR)
-    set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
+    set(ABSEIL_ROOT_DIR ${PROJECT_THIRD_PARTY_DIR}/abseil)
 endif ()
 if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
     message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
