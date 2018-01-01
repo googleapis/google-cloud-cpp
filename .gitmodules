@@ -10,7 +10,7 @@
 	branch = master
 	ignore = dirty
 [submodule "third_party/abseil"]
-	path = third_party/abseil
+	path = third_party/abseil/abseil-cpp
 	url = https://github.com/abseil/abseil-cpp.git
 [submodule "third_party/cctz"]
 	path = third_party/cctz

@@ -28,8 +28,6 @@ if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
     message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
 endif ()
 add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
-set(ABSEIL_LIBRARIES abseil)
-set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
 
 if(MSVC)
 target_compile_definitions(absl_base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
