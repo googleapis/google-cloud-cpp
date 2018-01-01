@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/data.h"
+#include "bigtable/client/data_client.h"
+#include "bigtable/client/table.h"
 
 #include <sstream>
 

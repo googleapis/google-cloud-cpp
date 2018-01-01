@@ -98,7 +98,7 @@ fi
 
 echo
 echo "Testing install rule"
-make -C bigtable install
+make install
 
 if [ "${TEST_INSTALL}" = "yes" ]; then
   echo

@@ -16,3 +16,7 @@ doc/html/
 
 # This is a staging directory used to upload the documents to gihub.io
 github-io-staging/
+
+# Files generated during the install test.
+bigtable/tests/install_integration_test
+bigtable/tests/install_integration_test.o
