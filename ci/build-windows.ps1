@@ -30,7 +30,7 @@ if ($LASTEXITCODE) {
 
 mkdir build
 cd build
-cmake ..\bigtable -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package -DGTEST_USE_OWN_TR1_TUPLE=1 -Dgtest_build_tests=OFF
+cmake -G -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package -DGTEST_USE_OWN_TR1_TUPLE=1 -Dgtest_build_tests=OFF
 
 >>>>>>> Tried to point to bigtable CMakeLists.txt .
 if ($LASTEXITCODE) {
