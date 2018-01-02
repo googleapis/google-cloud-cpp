@@ -12,8 +12,8 @@ PREFIX=/usr/local
 # TODO(#44) use pkg-config to configure these flags.
 CPPFLAGS=-I$(PREFIX)/include -I$(PREFIX)/include/bigtable
 CXXLDFLAGS=-L$(PREFIX)/lib -L$(PREFIX)/lib64 # Set both, because why not?
-LIBS=-lbigtable_admin_clientd -lbigtable_clientd -lbigtable_protosd \
-    -labsl_stringsd -lgrpc++ -lgrpc -lprotobuf -lm
+LIBS=-lbigtable_admin_client -lbigtable_client -lbigtable_protos \
+    -labsl_strings -lgrpc++ -lgrpc -lprotobuf -lm
 
 # This is hard-coded because it is intended for a test, applications are
 # expected to configure the files themselves.
@@ -22,8 +22,5 @@ CXXLD=$(CXX)
 
 all: install_integration_test
 
-install_integration_test: install_integration_test.o
-	$(CXXLD) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LIBS)
-
-install_integration_test: install_integration_test.o
+install_integration_test: install_integration_test.cc
 	$(CXXLD) $(CPPFLAGS) $(CXXFLAGS) $(CXXLDFLAGS) -o $@ $^ $(LIBS)
