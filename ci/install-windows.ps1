@@ -37,12 +37,6 @@ if ($LASTEXITCODE) {
   throw "git setup failed with exit code $LASTEXITCODE"
 }
 
-# ... install cmake to ensure appveyor is using latest version
-# choco install -y cmake cmake.portable
-# if ($LASTEXITCODE) {
-#   throw "choco install cmake failed with exit code $LASTEXITCODE"
-# }
-
 # ... build the tool each time, it is fast to do so ...
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LASTEXITCODE) {
