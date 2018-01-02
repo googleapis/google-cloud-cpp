@@ -67,9 +67,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
-        add_subdirectory(third_party/cctz)
-        add_subdirectory(third_party/abseil)
-        add_subdirectory(third_party/googletest)
         if (MSVC)
             add_definitions(/wd4065 /wd4506 /wd4267 /wd4800 /wd4291 /wd4838)
             if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -109,4 +106,7 @@ endif ()
 enable_testing()
 
 # Add subprojects here.
+add_subdirectory(third_party/cctz)
+add_subdirectory(third_party/abseil)
+add_subdirectory(third_party/googletest)
 add_subdirectory(bigtable)
