@@ -50,15 +50,17 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   //   - We do not care about the results from 40ms to 60ms.
   // I know 10ms feels like a long time, but it is not on a loaded VM running
   // the tests inside some container.
-  auto must_be_true_before = start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
-  auto must_be_false_after = start + kLimitedTimeTestPeriod + kLimitedTimeTolerance;
+  auto must_be_true_before =
+      start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
+  auto must_be_false_after =
+      start + kLimitedTimeTestPeriod + kLimitedTimeTolerance;
   for (int i = 0; i != 100; ++i) {
     auto actual = tested.on_failure(
         grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
     auto now = std::chrono::system_clock::now();
     if (now < must_be_true_before) {
       EXPECT_TRUE(actual);
-    } if (must_be_false_after < now) {
+    } else if (must_be_false_after < now) {
       EXPECT_FALSE(actual);
     }
     std::this_thread::sleep_for(1_ms);
