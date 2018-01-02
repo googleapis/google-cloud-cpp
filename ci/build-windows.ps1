@@ -33,7 +33,7 @@ cd build
 cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package -DGTEST_USE_OWN_TR1_TUPLE=0 -Dgtest_build_tests=OFF
 
 echo $dir
-cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package -Dgtest_build_tests=ON -Dgtest_build_samples=ON -Dgmock_build_tests=ON
+cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
 if ($LASTEXITCODE) {
   throw "cmake failed with exit code $LASTEXITCODE"
 }
