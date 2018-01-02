@@ -106,7 +106,4 @@ endif ()
 enable_testing()
 
 # Add subprojects here.
-add_subdirectory(third_party/cctz)
-add_subdirectory(third_party/abseil)
-add_subdirectory(third_party/googletest)
 add_subdirectory(bigtable)
