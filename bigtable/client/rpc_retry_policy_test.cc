@@ -72,14 +72,14 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
-  bigtable::LimitedTimeRetryPolicy tested(50_ms);
+  bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   CheckLimitedTime(tested);
 }
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
-  bigtable::LimitedTimeRetryPolicy original(50_ms);
+  bigtable::LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
 }
