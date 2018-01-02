@@ -69,8 +69,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
         if (MSVC)
             add_definitions(/wd4065 /wd4506 /wd4267 /wd4800 /wd4291 /wd4838)
-            # VS 2017 removed tr1
-            add_definitions(-DGTEST_HAS_TR1_TUPLE=0)
             if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
                 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
                 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
