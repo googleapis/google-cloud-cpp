@@ -99,6 +99,8 @@ add_library(bigtable_client
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
     client/internal/conjunction.h
+    client/internal/prefix_range_end.h
+    client/internal/prefix_range_end.cc
     client/internal/readrowsparser.h
     client/internal/readrowsparser.cc
     client/filters.h
@@ -172,6 +174,7 @@ set(bigtable_client_unit_tests
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc
     client/internal/bulk_mutator_test.cc
+    client/internal/prefix_range_end_test.cc
     client/internal/readrowsparser_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
@@ -180,7 +183,7 @@ set(bigtable_client_unit_tests
     client/row_test.cc
     client/row_range_test.cc
     client/rpc_backoff_policy_test.cc
-    client/rpc_retry_policy_test.cc)
+    client/rpc_retry_policy_test.cc )
 foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
@@ -200,7 +203,7 @@ set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
     admin/column_family_test.cc
     admin/table_admin_test.cc
-    admin/table_config_test.cc client/row_range.cc client/row_range.h)
+    admin/table_config_test.cc )
 foreach (fname ${bigtable_admin_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})

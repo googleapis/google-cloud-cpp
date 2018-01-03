@@ -23,11 +23,19 @@
 
 #include <chrono>
 
-#include "bigtable/client/internal/conjunction.h"
+#include "bigtable/client/internal/prefix_range_end.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
+/**
+ * Define the interfaces to create row key ranges.
+ *
+ * Example:
+ * @code
+ * // Create a range for the keys starting with the given prefix.
+ * auto range = bigtable::RowRange("foo/");
+ * @endcode
+ */
 class RowRange {
  public:
   RowRange(RowRange&& rhs) noexcept = default;
@@ -66,6 +74,12 @@ class RowRange {
   /// Return the range representing the interval [@p begin, @p end).
   static RowRange Range(std::string begin, std::string end) {
     return RightOpen(std::move(begin), std::move(end));
+  }
+
+  /// Return a range that contains all the keys starting with @p prefix.
+  static RowRange Prefix(std::string prefix) {
+    auto end = internal::PrefixRangeEnd(prefix);
+    return RightOpen(std::move(prefix), std::move(end));
   }
 
   //@{

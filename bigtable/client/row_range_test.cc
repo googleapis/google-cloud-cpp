@@ -46,6 +46,14 @@ TEST(RowRangeTest, Range) {
   EXPECT_EQ("foo", proto.end_key_open());
 }
 
+TEST(RowRangeTest, Prefix) {
+  auto proto = bigtable::RowRange::Prefix("bar/baz/").as_proto();
+  EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
+  EXPECT_EQ("bar/baz/", proto.start_key_closed());
+  EXPECT_EQ(btproto::RowRange::kEndKeyOpen, proto.end_key_case());
+  EXPECT_EQ("bar/baz0", proto.end_key_open());
+}
+
 TEST(RowRangeTest, RightOpen) {
   auto proto = bigtable::RowRange::RightOpen("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
