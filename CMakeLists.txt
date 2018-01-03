@@ -105,7 +105,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         )
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
     # googletest
-    add_subdirectory(googletest EXCLUDE_FROM_ALL)
+    # add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`.
