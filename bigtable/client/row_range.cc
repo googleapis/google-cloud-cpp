@@ -23,11 +23,10 @@ bool RowRange::IsEmpty() const {
   // We do not want to copy the strings unnecessarily, so initialize a reference
   // pointing to *_key_closed() or *_key_open(), as needed.
   std::reference_wrapper<const std::string> start(unused);
-  bool start_open;
+  bool start_open = false;
   switch (row_range_.start_key_case()) {
     case btproto::RowRange::kStartKeyClosed:
       start = std::cref(row_range_.start_key_closed());
-      start_open = false;
       break;
     case btproto::RowRange::kStartKeyOpen:
       start = std::cref(row_range_.start_key_open());
@@ -38,11 +37,10 @@ bool RowRange::IsEmpty() const {
       return false;
   }
   std::reference_wrapper<const std::string> end(unused);
-  bool end_open;
+  bool end_open = false;
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
       end = std::cref(row_range_.end_key_closed());
-      end_open = false;
       break;
     case btproto::RowRange::kEndKeyOpen:
       end = std::cref(row_range_.end_key_open());
