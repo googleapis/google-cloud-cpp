@@ -69,7 +69,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         # To avoid conflict on Windows platforms...
         add_compile_options(/W3 /wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
         add_definitions(/DNOMINMAX /DWIN32_LEAN_AND_MEAN=1 /D_CRT_SECURE_NO_WARNINGS)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
