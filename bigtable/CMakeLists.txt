@@ -19,9 +19,9 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Because global set doesn't work for VS C++ before 2015 Update 3.
-if (MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-endif ()
+# if (MSVC)
+#     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+# endif ()
 
 # Turn on all available warnings and turn warnings into errors to
 # stop the build if any warning is emitted.  We do this in each
