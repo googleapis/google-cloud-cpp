@@ -56,15 +56,13 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     # ... find the grpc and grpc++ libraries ...
-    include(cmake/IncludeCctz.cmake)
-    include(cmake/IncludeGMock.cmake)
-    include(cmake/IncludeGTest.cmake)
-    include(cmake/IncludeAbseil.cmake)
     if (WIN32)
         # ... use find_package and vcpkg on Windows ...
         find_package(GRPC REQUIRED grpc>=1.4)
         find_package(PROTOBUF REQUIRED protobuf>=3.0)
-        link_directories(${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
+        find_package(BENCHMARK REQUIRED)
+        find_package(GTEST REQUIRED)
+        link_directories(${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS} ${BENCHMARK_LIBRARY_DIRS} ${GTEST_LIBRARY_DIRS})
         set(GRPCPP_LIBRARIES gRPC::grpc++)
         set(GRPC_LIBRARIES gRPC::grpc)
         set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
@@ -105,9 +103,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         )
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
     # googletest
-    add_subdirectory(third_party/googletest EXCLUDE_FROM_ALL)
-    # cctz
-    add_subdirectory(third_party/cctz EXCLUDE_FROM_ALL)
+    add_subdirectory(googletest EXCLUDE_FROM_ALL)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`.
