@@ -24,7 +24,7 @@ bool RowRange::IsEmpty() const {
   // pointing to *_key_closed() or *_key_open(), as needed.
   std::reference_wrapper<const std::string> start(unused);
   bool start_open;
-  switch(row_range_.start_key_case()) {
+  switch (row_range_.start_key_case()) {
     case btproto::RowRange::kStartKeyClosed:
       start = std::cref(row_range_.start_key_closed());
       start_open = false;
@@ -39,7 +39,7 @@ bool RowRange::IsEmpty() const {
   }
   std::reference_wrapper<const std::string> end(unused);
   bool end_open;
-  switch(row_range_.end_key_case()) {
+  switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
       end = std::cref(row_range_.end_key_closed());
       end_open = false;
@@ -68,7 +68,7 @@ bool RowRange::Contains(absl::string_view key) const {
 }
 
 bool RowRange::BelowStart(absl::string_view key) const {
-  switch(row_range_.start_key_case()) {
+  switch (row_range_.start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
     case btproto::RowRange::kStartKeyClosed:
@@ -80,7 +80,7 @@ bool RowRange::BelowStart(absl::string_view key) const {
 }
 
 bool RowRange::AboveEnd(absl::string_view key) const {
-  switch(row_range_.end_key_case()) {
+  switch (row_range_.end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;
     case btproto::RowRange::kEndKeyClosed:
