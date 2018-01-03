@@ -56,6 +56,10 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     # ... find the grpc and grpc++ libraries ...
+    include(cmake/IncludeCctz.cmake)
+    include(cmake/IncludeGMock.cmake)
+    include(cmake/IncludeGTest.cmake)
+    include(cmake/IncludeAbseil.cmake)
     if (WIN32)
         # ... use find_package and vcpkg on Windows ...
         find_package(GRPC REQUIRED grpc>=1.4)
