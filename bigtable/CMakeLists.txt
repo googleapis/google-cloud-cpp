@@ -48,7 +48,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
 set(BUILD_TESTING OFF)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeAbseil.cmake)
 # config options
-if (MSVC)
+if (WIN32)
   # /wd4005  macro-redefinition
   # /wd4068  unknown pragma
   # /wd4244  conversion from 'type1' to 'type2'
