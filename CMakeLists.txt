@@ -66,7 +66,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         set(GRPCPP_LIBRARIES gRPC::grpc++)
         set(GRPC_LIBRARIES gRPC::grpc)
         set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
-        set(CCTZ_LIBRARIES cctz::cctz)
+        set(CCTZ_DIR cctz)
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
