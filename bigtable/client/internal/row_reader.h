@@ -24,6 +24,7 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 #include <absl/memory/memory.h>
+#include <absl/types/optional.h>
 #include <grpc++/grpc++.h>
 
 #include <iterator>
@@ -89,15 +90,15 @@ class RowReader {
 
     RowReaderIterator& operator++();
 
-    const Row& operator*() { return owner_->rows_[0]; }
-    const Row* operator->() { return &owner_->rows_[0]; }
+    Row const& operator*() { return owner_->row_.value(); }
+    Row const* operator->() { return &owner_->row_.value(); }
 
-    bool operator==(const RowReaderIterator& that) const {
+    bool operator==(RowReaderIterator const& that) const {
       // All non-end iterators are equal.
       return is_end_ == that.is_end_;
     }
 
-    bool operator!=(const RowReaderIterator& that) const {
+    bool operator!=(RowReaderIterator const& that) const {
       return !(*this == that);
     }
 
@@ -116,7 +117,7 @@ class RowReader {
       stream_;
   google::bigtable::v2::ReadRowsResponse response_;
   int processed_chunks_;
-  std::vector<Row> rows_;
+  absl::optional<Row> row_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
