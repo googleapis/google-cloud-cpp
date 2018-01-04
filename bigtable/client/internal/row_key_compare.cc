@@ -32,7 +32,7 @@ int RowKeyCompare(absl::string_view lhs, absl::string_view rhs) {
   };
   auto i = lhs.begin();
   auto j = rhs.begin();
-  for (;i != lhs.end() and j != lhs.end(); ++i, ++j) {
+  for (; i != lhs.end() and j != lhs.end(); ++i, ++j) {
     int c = comp(*i, *j);
     if (c == 0) {
       continue;

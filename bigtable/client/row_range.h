@@ -44,9 +44,7 @@ class RowRange {
   RowRange& operator=(RowRange const& rhs) = default;
 
   /// Return the infinite range, i.e., a range including all possible keys.
-  static RowRange InfiniteRange() {
-    return RowRange();
-  }
+  static RowRange InfiniteRange() { return RowRange(); }
 
   /// Return the range starting at @p begin (included), with no upper limit.
   static RowRange StartingAt(std::string begin) {
