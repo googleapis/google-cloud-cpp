@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/row_range.h"
+#include "bigtable/client/internal/row_key_compare.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -51,14 +52,12 @@ bool RowRange::IsEmpty() const {
       return false;
   }
 
-  // Compare the strings once.
-  int compare = start.get().compare(end.get());
-  if (compare == 0) {
-    // Both endpoints are equal, if any of them is open then the range is empty.
+  // Compare the strings as byte vectors (careful with unsigned chars).
+  int cmp = internal::RowKeyCompare(start.get(), end.get());
+  if (cmp == 0) {
     return start_open or end_open;
   }
-  // The range is empty only if start > end
-  return compare > 0;
+  return cmp > 0;
 }
 
 bool RowRange::Contains(absl::string_view key) const {
@@ -70,9 +69,9 @@ bool RowRange::BelowStart(absl::string_view key) const {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
     case btproto::RowRange::kStartKeyClosed:
-      return key < row_range_.start_key_closed();
+      return internal::RowKeyCompare(key, row_range_.start_key_closed()) < 0;
     case btproto::RowRange::kStartKeyOpen:
-      return key <= row_range_.start_key_open();
+      return internal::RowKeyCompare(key, row_range_.start_key_open()) <= 0;
   }
   return false;
 }
@@ -82,11 +81,12 @@ bool RowRange::AboveEnd(absl::string_view key) const {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;
     case btproto::RowRange::kEndKeyClosed:
-      return key > row_range_.end_key_closed();
+      return internal::RowKeyCompare(key, row_range_.end_key_closed()) > 0;
     case btproto::RowRange::kEndKeyOpen:
-      return key >= row_range_.end_key_open();
+      return internal::RowKeyCompare(key, row_range_.end_key_open()) >= 0;
   }
   return false;
 }
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -45,30 +45,29 @@ class RowRange {
 
   /// Return the infinite range, i.e., a range including all possible keys.
   static RowRange InfiniteRange() {
-    RowRange tmp;
-    return tmp;
+    return RowRange();
   }
 
   /// Return the range starting at @p begin (included), with no upper limit.
   static RowRange StartingAt(std::string begin) {
-    RowRange tmp;
-    tmp.row_range_.set_start_key_closed(std::move(begin));
-    return tmp;
+    RowRange result;
+    result.row_range_.set_start_key_closed(std::move(begin));
+    return result;
   }
 
   /// Return the range ending at @p end (included), with no lower limit.
   static RowRange EndingAt(std::string end) {
-    RowRange tmp;
-    tmp.row_range_.set_end_key_closed(std::move(end));
-    return tmp;
+    RowRange result;
+    result.row_range_.set_end_key_closed(std::move(end));
+    return result;
   }
 
-  /// Return an empty range
+  /// Return an empty range.
   static RowRange Empty() {
-    RowRange tmp;
-    tmp.row_range_.set_start_key_open("");
-    tmp.row_range_.set_end_key_open("");
-    return tmp;
+    RowRange result;
+    result.row_range_.set_start_key_open("");
+    result.row_range_.set_end_key_open("");
+    return result;
   }
 
   /// Return the range representing the interval [@p begin, @p end).
@@ -86,57 +85,57 @@ class RowRange {
   /// @name Less common, yet sometimes useful, ranges.
   /// Return a range representing the interval [@p begin, @p end).
   static RowRange RightOpen(std::string begin, std::string end) {
-    RowRange tmp;
+    RowRange result;
     if (not begin.empty()) {
-      tmp.row_range_.set_start_key_closed(std::move(begin));
+      result.row_range_.set_start_key_closed(std::move(begin));
     }
     if (not end.empty()) {
-      tmp.row_range_.set_end_key_open(std::move(end));
+      result.row_range_.set_end_key_open(std::move(end));
     }
-    return tmp;
+    return result;
   }
 
   /// Return a range representing the interval (@p begin, @p end].
   static RowRange LeftOpen(std::string begin, std::string end) {
-    RowRange tmp;
+    RowRange result;
     if (not begin.empty()) {
-      tmp.row_range_.set_start_key_open(std::move(begin));
+      result.row_range_.set_start_key_open(std::move(begin));
     }
     if (not end.empty()) {
-      tmp.row_range_.set_end_key_closed(std::move(end));
+      result.row_range_.set_end_key_closed(std::move(end));
     }
-    return tmp;
+    return result;
   }
 
   /// Return a range representing the interval (@p begin, @p end).
   static RowRange Open(std::string begin, std::string end) {
-    RowRange tmp;
+    RowRange result;
     if (not begin.empty()) {
-      tmp.row_range_.set_start_key_open(std::move(begin));
+      result.row_range_.set_start_key_open(std::move(begin));
     }
     if (not end.empty()) {
-      tmp.row_range_.set_end_key_open(std::move(end));
+      result.row_range_.set_end_key_open(std::move(end));
     }
-    return tmp;
+    return result;
   }
 
   /// Return a range representing the interval [@p begin, @p end].
   static RowRange Closed(std::string begin, std::string end) {
-    RowRange tmp;
+    RowRange result;
     if (not begin.empty()) {
-      tmp.row_range_.set_start_key_closed(std::move(begin));
+      result.row_range_.set_start_key_closed(std::move(begin));
     }
     if (not end.empty()) {
-      tmp.row_range_.set_end_key_closed(std::move(end));
+      result.row_range_.set_end_key_closed(std::move(end));
     }
-    return tmp;
+    return result;
   }
   //@}
 
   /// Return true if the range is empty, i.e., no valid key will match it.
   bool IsEmpty() const;
 
-  /// Return true if @p key is in the range
+  /// Return true if @p key is in the range.
   bool Contains(absl::string_view key) const;
 
   /// Return the filter expression as a protobuf.

@@ -24,9 +24,8 @@ TEST(PrefixRangeEndTest, Simple) {
 
 TEST(PrefixRangeEndTest, AllFFs) {
   char const* all_ff = "\xFF\xFF\xFF";
-  char const* expected = "\x00\x00\x00\x01";
   auto actual = bigtable::internal::PrefixRangeEnd(std::string(all_ff, 3));
-  EXPECT_EQ(std::string(expected, 4), actual);
+  EXPECT_EQ("", actual);
 }
 
 TEST(PrefixRangeEndTest, MostlyFFs) {

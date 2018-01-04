@@ -97,28 +97,56 @@ TEST(RowRangeTest, IsEmpty) {
 
 TEST(RowRangeTest, ContainsRightOpen) {
   auto range = bigtable::RowRange::RightOpen("bar", "foo");
+  EXPECT_FALSE(range.Contains("baq"));
   EXPECT_TRUE(range.Contains("bar"));
   EXPECT_FALSE(range.Contains("foo"));
+  EXPECT_FALSE(range.Contains("fop"));
   EXPECT_TRUE(range.Contains("bar-foo"));
 }
 
 TEST(RowRangeTest, ContainsLeftOpen) {
   auto range = bigtable::RowRange::LeftOpen("bar", "foo");
+  EXPECT_FALSE(range.Contains("baq"));
   EXPECT_FALSE(range.Contains("bar"));
   EXPECT_TRUE(range.Contains("foo"));
+  EXPECT_FALSE(range.Contains("fop"));
   EXPECT_TRUE(range.Contains("bar-foo"));
 }
 
 TEST(RowRangeTest, ContainsOpen) {
   auto range = bigtable::RowRange::Open("bar", "foo");
+  EXPECT_FALSE(range.Contains("baq"));
   EXPECT_FALSE(range.Contains("bar"));
   EXPECT_FALSE(range.Contains("foo"));
+  EXPECT_FALSE(range.Contains("fop"));
   EXPECT_TRUE(range.Contains("bar-foo"));
 }
 
 TEST(RowRangeTest, ContainsClosed) {
   auto range = bigtable::RowRange::Closed("bar", "foo");
+  EXPECT_FALSE(range.Contains("baq"));
   EXPECT_TRUE(range.Contains("bar"));
   EXPECT_TRUE(range.Contains("foo"));
+  EXPECT_FALSE(range.Contains("fop"));
   EXPECT_TRUE(range.Contains("bar-foo"));
+}
+
+TEST(RowRangeTest, ContainsPrefix) {
+  auto range = bigtable::RowRange::Prefix("foo");
+  EXPECT_FALSE(range.Contains("fop"));
+  EXPECT_TRUE(range.Contains("foo"));
+  EXPECT_TRUE(range.Contains("foo-bar"));
+  EXPECT_TRUE(range.Contains("fooa"));
+  EXPECT_TRUE(range.Contains("foo\xFF"));
+  EXPECT_FALSE(range.Contains("fop"));
+}
+
+TEST(RowRangeTest, ContainsPrefixWithFFFF) {
+  std::string many_ffs("\xFF\xFF\xFF\xFF\xFF", 5);
+  auto range = bigtable::RowRange::Prefix(many_ffs);
+  EXPECT_FALSE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFE", 5)));
+  EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF", 5)));
+  EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF/")));
+  EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF/foo/bar/baz")));
+  EXPECT_FALSE(range.Contains(std::string("\x00\x00\x00\x00\x00\x01", 6)));
 }

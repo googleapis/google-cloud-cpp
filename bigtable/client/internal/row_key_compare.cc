@@ -18,21 +18,35 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-std::string PrefixRangeEnd(absl::string_view key) {
-  auto pos = key.find_last_not_of('\xFF');
-  if (pos == std::string::npos) {
-    // If key is all \xFF then any sequence higher than key starts with the
-    // same number of \xFF.  So the end of the range is +infinity, which is
-    // represented by the empty string.
-    return std::string();
+int RowKeyCompare(absl::string_view lhs, absl::string_view rhs) {
+  auto comp = [](char a, char b) {
+    auto ua = static_cast<unsigned int>(a);
+    auto ub = static_cast<unsigned int>(b);
+    if (ua < ub) {
+      return -1;
+    }
+    if (ua == ub) {
+      return 0;
+    }
+    return 1;
+  };
+  auto i = lhs.begin();
+  auto j = rhs.begin();
+  for (;i != lhs.end() and j != lhs.end(); ++i, ++j) {
+    int c = comp(*i, *j);
+    if (c == 0) {
+      continue;
+    }
+    return c;
   }
-  // Generally just take the last byte and increment by 1, but if there are
-  // trailing \xFF byte we need to turn those into zeroes and increment the last
-  // byte that is not a \xFF.
-  std::string result = static_cast<std::string>(key);
-  std::fill(std::begin(result) + pos + 1, std::end(result), '\0');
-  result[pos]++;
-  return result;
+  if (i == lhs.end()) {
+    if (j != rhs.end()) {
+      return -1;
+    }
+    return 0;
+  }
+  // Note that j == rhs.end() if we reached here.
+  return 1;
 }
 
 }  // namespace internal

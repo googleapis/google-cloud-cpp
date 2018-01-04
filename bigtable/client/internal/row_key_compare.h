@@ -12,29 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/prefix_range_end.h"
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_KEY_COMPARE_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_KEY_COMPARE_H_
+
+#include "bigtable/client/version.h"
+
+#include <absl/strings/string_view.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-
-std::string PrefixRangeEnd(absl::string_view key) {
-  auto pos = key.find_last_not_of('\xFF');
-  if (pos == std::string::npos) {
-    // If key is all \xFF then any sequence higher than key starts with the
-    // same number of \xFF.  So the end of the range is +infinity, which is
-    // represented by the empty string.
-    return std::string();
-  }
-  // Generally just take the last byte and increment by 1, but if there are
-  // trailing \xFF byte we need to turn those into zeroes and increment the last
-  // byte that is not a \xFF.
-  std::string result = static_cast<std::string>(key);
-  std::fill(std::begin(result) + pos + 1, std::end(result), '\0');
-  result[pos]++;
-  return result;
-}
+/**
+ * Return -1, 0, or 1 if `lhs < rhs`, `lhs == rhs`, or `lhs > rhs`
+ * respectively.
+ *
+ * We need to compare row keys as byte vectors, but std::string is (or can)
+ * be based on `signed char` where \xFF is less than \x00.
+ */
+int RowKeyCompare(absl::string_view lhs, absl::string_view rhs);
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_KEY_COMPARE_H_
