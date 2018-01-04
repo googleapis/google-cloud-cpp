@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_READER_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_READER_H_
 
 #include "bigtable/client/version.h"
 
@@ -122,4 +122,4 @@ class RowReader {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROW_READER_H_
