@@ -19,33 +19,19 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 int RowKeyCompare(absl::string_view lhs, absl::string_view rhs) {
-  auto comp = [](char a, char b) {
-    auto ua = static_cast<unsigned int>(a);
-    auto ub = static_cast<unsigned int>(b);
-    if (ua < ub) {
-      return -1;
-    }
-    if (ua == ub) {
-      return 0;
-    }
-    return 1;
-  };
-  auto i = lhs.begin();
-  auto j = rhs.begin();
-  for (; i != lhs.end() and j != lhs.end(); ++i, ++j) {
-    int c = comp(*i, *j);
-    if (c == 0) {
-      continue;
-    }
-    return c;
+  auto len = std::min(lhs.size(), rhs.size());
+  int cmp = std::memcmp(lhs.data(), rhs.data(), len);
+  if (cmp != 0) {
+    return cmp;
   }
-  if (i == lhs.end()) {
-    if (j != rhs.end()) {
+  if (len == lhs.size()) {
+    if (len < rhs.size()) {
       return -1;
     }
+    // Note that len cannot be > than rhs.size().
     return 0;
   }
-  // Note that j == rhs.end() if we reached here.
+  // Note that in this case len == rhs.size() > lhs.size().
   return 1;
 }
 

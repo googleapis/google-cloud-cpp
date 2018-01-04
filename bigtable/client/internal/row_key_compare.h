@@ -23,7 +23,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 /**
- * Return -1, 0, or 1 if `lhs < rhs`, `lhs == rhs`, or `lhs > rhs`
+ * Return `< 0`, `0`, or `> 0` if `lhs < rhs`, `lhs == rhs`, or `lhs > rhs`
  * respectively.
  *
  * We need to compare row keys as byte vectors, but std::string is (or can)

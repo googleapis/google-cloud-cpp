@@ -34,8 +34,7 @@ bool RowRange::IsEmpty() const {
       start_open = true;
       break;
     case btproto::RowRange::START_KEY_NOT_SET:
-      // A range starting at -infinity is never empty.
-      return false;
+      break;
   }
   std::reference_wrapper<const std::string> end(unused);
   bool end_open = false;

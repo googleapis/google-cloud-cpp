@@ -93,6 +93,9 @@ TEST(RowRangeTest, IsEmpty) {
   EXPECT_FALSE(bigtable::RowRange::Range("bar", "foo").IsEmpty());
   EXPECT_TRUE(bigtable::RowRange::Range("foo", "foo").IsEmpty());
   EXPECT_TRUE(bigtable::RowRange::Range("foo", "bar").IsEmpty());
+  EXPECT_FALSE(bigtable::RowRange::StartingAt("").IsEmpty());
+  EXPECT_FALSE(
+      bigtable::RowRange::RightOpen("", std::string("\0", 1)).IsEmpty());
 }
 
 TEST(RowRangeTest, ContainsRightOpen) {
@@ -149,4 +152,20 @@ TEST(RowRangeTest, ContainsPrefixWithFFFF) {
   EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF/")));
   EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF/foo/bar/baz")));
   EXPECT_FALSE(range.Contains(std::string("\x00\x00\x00\x00\x00\x01", 6)));
+}
+
+TEST(RowRangeTest, ContainsStartingAt) {
+  auto range = bigtable::RowRange::StartingAt("foo");
+  EXPECT_FALSE(range.Contains(""));
+  EXPECT_FALSE(range.Contains("fon"));
+  EXPECT_TRUE(range.Contains("foo"));
+  EXPECT_TRUE(range.Contains("fop"));
+}
+
+TEST(RowRangeTest, ContainsEndingAt) {
+  auto range = bigtable::RowRange::EndingAt("foo");
+  EXPECT_TRUE(range.Contains(""));
+  EXPECT_TRUE(range.Contains(std::string("\x01", 1)));
+  EXPECT_TRUE(range.Contains("foo"));
+  EXPECT_FALSE(range.Contains("fop"));
 }

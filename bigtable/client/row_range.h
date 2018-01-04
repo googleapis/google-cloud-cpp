@@ -130,7 +130,12 @@ class RowRange {
   }
   //@}
 
-  /// Return true if the range is empty, i.e., no valid key will match it.
+  /**
+   * Return true if the range is empty.
+   *
+   * Note that some ranges (such as `["", ""]`) are not empty but only include
+   * invalid row keys.
+   */
   bool IsEmpty() const;
 
   /// Return true if @p key is in the range.

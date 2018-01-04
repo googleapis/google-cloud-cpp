@@ -30,7 +30,7 @@ TEST(RowKeyCompareTest, UnsignedRange) {
   std::string xfffe("\xFF\xFE", 2);
   std::string xffff01("\xFF\xFF\x01", 3);
   EXPECT_EQ(0, bigtable::internal::RowKeyCompare(xffff, xffff));
-  EXPECT_EQ(1, bigtable::internal::RowKeyCompare(xffff, xfffe));
-  EXPECT_EQ(-1, bigtable::internal::RowKeyCompare(xfffe, xffff));
-  EXPECT_EQ(-1, bigtable::internal::RowKeyCompare(xffff, xffff01));
+  EXPECT_LT(0, bigtable::internal::RowKeyCompare(xffff, xfffe));
+  EXPECT_GT(0, bigtable::internal::RowKeyCompare(xfffe, xffff));
+  EXPECT_GT(0, bigtable::internal::RowKeyCompare(xffff, xffff01));
 }
