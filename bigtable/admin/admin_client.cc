@@ -37,11 +37,10 @@ class SimpleAdminClient : public bigtable::AdminClient {
 
   std::string const& project() const override { return project_; }
   void on_completion(grpc::Status const& status) override {
-    if (status.ok()) {
-      return;
+    if (not status.ok()) {
+      channel_.reset();
+      table_admin_stub_.reset();
     }
-    channel_.reset();
-    table_admin_stub_.reset();
   }
 
   using AdminStubPtr = std::shared_ptr<
