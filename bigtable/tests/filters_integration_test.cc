@@ -12,68 +12,133 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <google/protobuf/text_format.h>
+#include "bigtable/client/filters.h"
+
 #include <cmath>
+#include <cstdlib>
 #include <sstream>
+
+#include <google/protobuf/text_format.h>
+
+#include <absl/memory/memory.h>
+#include <absl/strings/str_join.h>
+
+#include <gmock/gmock.h>
+
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
 #include "bigtable/client/cell.h"
 #include "bigtable/client/data_client.h"
-#include "bigtable/client/filters.h"
 #include "bigtable/client/table.h"
 
 namespace btproto = ::google::bigtable::v2;
+namespace admin_proto = ::google::bigtable::admin::v2;
 
 namespace {
-void ReportException();
+/// Store the project and instance captured from the command-line arguments.
+class FilterTestEnvironment : public ::testing::Environment {
+ public:
+  FilterTestEnvironment(std::string project, std::string instance) {
+    project_id_ = std::move(project);
+    instance_id_ = std::move(instance);
+  }
 
-// TODO(#32) - change the function signature when Table::ReadRows() is a thing.
-// All these functions would become:
-//     `Function(bigtable::Table& table, std::string const& row_key)`
-//     `Function(bigtable::Table& table, std::string const& begin,
-//               std::string const& end)`
-//
-void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
-                  std::string const& row_key);
-void CheckBlockAll(bigtable::DataClient& client, bigtable::Table& table,
-                   std::string const& row_key);
-void CheckLatest(bigtable::DataClient& client, bigtable::Table& table,
-                 std::string const& row_key);
-void CheckFamilyRegex(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key);
-void CheckColumnRegex(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key);
-void CheckColumnRange(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key);
-void CheckTimestampRange(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key);
-void CheckCellsRowLimit(bigtable::DataClient& client, bigtable::Table& table,
-                        std::string const& row_key_prefix);
-void CheckCellsRowOffset(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key_prefix);
-void CheckCellsRowSample(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key_prefix);
+  void SetUp() override {}
+  void TearDown() override {}
+
+  static std::string const& project_id() { return project_id_; }
+  static std::string const& instance_id() { return instance_id_; }
+
+ private:
+  static std::string project_id_;
+  static std::string instance_id_;
+};
+
+class FilterIntegrationTest : public ::testing::Test {
+ protected:
+  void SetUp() override;
+  void TearDown() override {}
+
+  std::unique_ptr<bigtable::Table> CreateTable(std::string const& table_id);
+
+  /**
+   * Return all the cells included in @p request.
+   *
+   * // TODO(#32) remove this when Table::ReadRows() is a thing.
+   */
+  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                       btproto::ReadRowsRequest request);
+
+  /**
+   * Return all the cells in the row pointed by @p rowkey, applying @p filter.
+   *
+   * TODO(#29) remove this when Table::ReadRow() is a thing.
+   */
+  std::vector<bigtable::Cell> ReadRow(bigtable::Table& table,
+                                      std::string rowkey,
+                                      bigtable::Filter filter);
+
+  /**
+   * Return all the cells in @p table that pass @p filter.
+   */
+  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                       bigtable::Filter filter);
+
+  void CreateCells(bigtable::Table& table,
+                   std::vector<bigtable::Cell> const& cells);
+
+  /**
+   * Create some complex rows in @p table.
+   *
+   * Create the following rows in @p table, the magic values for the column
+   * families are defined above.
+   *
+   *   | Row Key                 | Family | Column | Contents      |
+   *   | :---------------------- | :----- | :----- | :------------ |
+   *   | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
+   *   | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
+   *   | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
+   *   | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 200, 3000
+   * |
+   *   | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
+   *   | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
+   *   | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
+   *   | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
+   *   | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
+   *   | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+   *
+   */
+  void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
+
+  std::shared_ptr<bigtable::AdminClient> admin_client_;
+  std::unique_ptr<bigtable::TableAdmin> table_admin_;
+  std::shared_ptr<bigtable::DataClient> data_client_;
+  std::string fam0 = "fam0";
+  std::string fam1 = "fam1";
+  std::string fam2 = "fam2";
+  std::string fam3 = "fam3";
+};
 }  // anonymous namespace
 
-// TODO(#153) - consider implementing integration tests with googletest.
 int main(int argc, char* argv[]) try {
-  namespace admin_proto = ::google::bigtable::admin::v2;
+  ::testing::InitGoogleTest(&argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 4) {
+  if (argc != 3) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of("/");
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance> <table>" << std::endl;
+              << " <project> <instance>" << std::endl;
     return 1;
   }
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
-  std::string const table_name = argv[3];
-  std::string const fam0 = "fam0";
-  std::string const fam1 = "fam1";
-  std::string const fam2 = "fam2";
-  std::string const fam3 = "fam3";
 
   auto admin_client =
       bigtable::CreateAdminClient(project_id, bigtable::ClientOptions());
@@ -86,88 +151,379 @@ int main(int argc, char* argv[]) try {
     throw std::runtime_error(os.str());
   }
 
-  auto created_table = admin.CreateTable(
-      table_name,
+  (void)::testing::AddGlobalTestEnvironment(
+      new FilterTestEnvironment(project_id, instance_id));
+
+  return RUN_ALL_TESTS();
+} catch (bigtable::PermanentMutationFailure const& ex) {
+  std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
+            << " - " << ex.status().error_message() << " ["
+            << ex.status().error_code()
+            << "], details=" << ex.status().error_details() << std::endl;
+  int count = 0;
+  for (auto const& failure : ex.failures()) {
+    std::cerr << "failure[" << count++
+              << "] {key=" << failure.mutation().row_key() << "}" << std::endl;
+  }
+  return 1;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  return 1;
+} catch (...) {
+  std::cerr << "Unknown exception raised." << std::endl;
+  return 1;
+}
+
+namespace {
+/**
+ * Compare two cells, think about the spaceship operator.
+ *
+ * @return `< 0` if lhs < rhs, `0` if lhs == rhs, and `> 0` otherwise.
+ */
+int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs);
+
+/**
+ * Compare two sets of cells.
+ *
+ * Unordered because ReadRows does not guarantee a particular order.
+ */
+void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
+                         std::vector<bigtable::Cell> actual);
+
+/// Return true if connected to the Cloud Bigtable Emulator.
+bool UsingCloudBigtableEmulator();
+}  // anonymous namespace
+
+namespace bigtable {
+//@{
+/// @name Helpers for GTest.
+bool operator==(Cell const& lhs, Cell const& rhs) {
+  return CellCompare(lhs, rhs) == 0;
+}
+bool operator<(Cell const& lhs, Cell const& rhs) {
+  return CellCompare(lhs, rhs) < 0;
+}
+void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
+  *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
+      << ", column=" << cell.column_qualifier()
+      << ", timestamp=" << cell.timestamp() << ", value=" << cell.value()
+      << ", labels={" << absl::StrJoin(cell.labels(), ",") << "}";
+}
+//@}
+}  // namespace bigtable
+
+TEST_F(FilterIntegrationTest, PassAll) {
+  auto table = CreateTable("pass-all-filter-table");
+  std::string const row_key = "pass-all-row-key";
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+  };
+  CreateCells(*table, expected);
+
+  auto actual = ReadRow(*table, row_key, bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, BlockAll) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  auto table = CreateTable("block-all-filter-table");
+  std::string const row_key = "block-all-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{};
+  auto actual = ReadRow(*table, row_key, bigtable::Filter::BlockAllFilter());
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, Latest) {
+  auto table = CreateTable("latest-filter-table");
+  std::string const row_key = "latest-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
+      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
+  };
+  auto actual = ReadRow(*table, row_key, bigtable::Filter::Latest(2));
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, FamilyRegex) {
+  auto table = CreateTable("family-regex-filter-table");
+  std::string const row_key = "family-regex-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "c2", 0, "bar", {}},
+      {row_key, "fam0", "c", 0, "bar", {}},
+      {row_key, "fam1", "c", 0, "bar", {}},
+      {row_key, "fam2", "c", 0, "bar", {}},
+      {row_key, "fam2", "c2", 0, "bar", {}},
+      {row_key, "fam3", "c2", 0, "bar", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "c2", 0, "bar", {}},
+      {row_key, "fam0", "c", 0, "bar", {}},
+      {row_key, "fam2", "c", 0, "bar", {}},
+      {row_key, "fam2", "c2", 0, "bar", {}},
+  };
+  auto actual =
+      ReadRow(*table, row_key, bigtable::Filter::FamilyRegex("fam[02]"));
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, ColumnRegex) {
+  auto table = CreateTable("column-regex-filter-table");
+  std::string const row_key = "column-regex-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "abc", 0, "bar", {}},
+      {row_key, "fam1", "bcd", 0, "bar", {}},
+      {row_key, "fam2", "abc", 0, "bar", {}},
+      {row_key, "fam3", "def", 0, "bar", {}},
+      {row_key, "fam0", "fgh", 0, "bar", {}},
+      {row_key, "fam1", "hij", 0, "bar", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "abc", 0, "bar", {}},
+      {row_key, "fam2", "abc", 0, "bar", {}},
+      {row_key, "fam0", "fgh", 0, "bar", {}},
+      {row_key, "fam1", "hij", 0, "bar", {}},
+  };
+  auto actual =
+      ReadRow(*table, row_key, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, ColumnRange) {
+  auto table = CreateTable("column-range-filter-table");
+  std::string const row_key = "column-range-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "a00", 0, "bar", {}},
+      {row_key, "fam0", "b00", 0, "bar", {}},
+      {row_key, "fam0", "b01", 0, "bar", {}},
+      {row_key, "fam0", "b02", 0, "bar", {}},
+      {row_key, "fam1", "a00", 0, "bar", {}},
+      {row_key, "fam1", "b01", 0, "bar", {}},
+      {row_key, "fam1", "b00", 0, "bar", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam0", "b00", 0, "bar", {}},
+      {row_key, "fam0", "b01", 0, "bar", {}},
+  };
+  auto actual = ReadRow(*table, row_key,
+                        bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(FilterIntegrationTest, TimestampRange) {
+  auto table = CreateTable("timestamp-range-filter-table");
+  std::string const row_key = "timestamp-range-row-key";
+  std::vector<bigtable::Cell> created{
+      {row_key, "fam0", "c0", 1000, "v1000", {}},
+      {row_key, "fam1", "c1", 2000, "v2000", {}},
+      {row_key, "fam2", "c2", 3000, "v3000", {}},
+      {row_key, "fam0", "c3", 4000, "v4000", {}},
+      {row_key, "fam1", "c4", 4000, "v5000", {}},
+      {row_key, "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, "fam2", "c2", 1000, "v3000", {}},
+      {row_key, "fam0", "c3", 1000, "v4000", {}},
+      {row_key, "fam1", "c4", 1000, "v5000", {}},
+  };
+  using std::chrono::milliseconds;
+  auto actual = ReadRow(*table, row_key, bigtable::Filter::TimestampRange(
+                                             milliseconds(3), milliseconds(6)));
+  CheckEqualUnordered(expected, actual);
+}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, RowKeysRegex) {}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, ValueRegex) {}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, ValueRange) {}
+
+TEST_F(FilterIntegrationTest, CellsRowLimit) {
+  auto table = CreateTable("cells-row-limit-filter-table");
+  std::string const prefix = "cell-row-limit-prefix";
+  CreateComplexRows(*table, prefix);
+
+  auto result = ReadRows(*table, bigtable::Filter::CellsRowLimit(3));
+
+  std::map<std::string, int> actual;
+  for (auto const& c : result) {
+    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
+    ins.first->second++;
+  }
+  std::map<std::string, int> expected{{prefix + "/one-cell", 1},
+                                      {prefix + "/two-cells", 2},
+                                      {prefix + "/many", 3},
+                                      {prefix + "/many-columns", 3},
+                                      {prefix + "/complex", 3}};
+
+  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
+}
+
+TEST_F(FilterIntegrationTest, CellsRowOffset) {
+  auto table = CreateTable("cells-row-offset-filter-table");
+  std::string const prefix = "cell-row-offset-prefix";
+  CreateComplexRows(*table, prefix);
+
+  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
+  // the separator and the successor of "/" is "0".
+  auto result = ReadRows(*table, bigtable::Filter::CellsRowOffset(2));
+
+  std::map<std::string, int> actual;
+  for (auto const& c : result) {
+    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
+    ins.first->second++;
+  }
+  std::map<std::string, int> expected{{prefix + "/many", 2},
+                                      {prefix + "/many-columns", 2},
+                                      {prefix + "/complex", 78}};
+
+  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
+}
+
+TEST_F(FilterIntegrationTest, RowSample) {
+  auto table = CreateTable("row-sample-filter-table");
+  std::string const prefix = "row-sample-prefix";
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+
+  constexpr int row_count = 20000;
+  bigtable::BulkMutation bulk;
+  for (int row = 0; row != row_count; ++row) {
+    std::string row_key = prefix + "/" + std::to_string(row);
+    bulk.emplace_back(bigtable::SingleRowMutation(
+        row_key, {bigtable::SetCell("fam0", "col", 4000, "foo")}));
+  }
+  table->BulkApply(std::move(bulk));
+
+  // We want to check that the sampling rate was "more or less" the prescribed
+  // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
+  // get serious about testing the sampling rate, we would do some statistics.
+  // We do not really need to, because we are testing the library, not the
+  // server. But for what it's worth, the outline would be:
+  //
+  //   - Model sampling as a binomial process.
+  //   - Perform power analysis to decide the size of the sample.
+  //   - Perform hypothesis testing: is the actual sampling rate != that the
+  //     prescribed rate (and sufficiently different, i.e., the effect is large
+  //     enough).
+  //
+  // For what is worth, the sample size is large enough to detect effects of 2%
+  // at the conventional significance and power levels.  In R:
+  //
+  // ```R
+  // require(pwr)
+  // pwr.p.test(h = ES.h(p1 = 0.63, p2 = 0.65), sig.level = 0.05,
+  //            power=0.80, alternative="two.sided")
+  // ```
+  //
+  // h = 0.04167045
+  // n = 4520.123
+  // sig.level = 0.05
+  // power = 0.8
+  // alternative = two.sided
+  //
+  constexpr double kSampleRate = 0.75;
+  constexpr double kAllowedError = 0.05;
+  const std::size_t kMinCount = static_cast<std::size_t>(
+      std::floor((kSampleRate - kAllowedError) * row_count));
+  const std::size_t kMaxCount = static_cast<std::size_t>(
+      std::ceil((kSampleRate + kAllowedError) * row_count));
+
+  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
+  // the separator and the successor of "/" is "0".
+  auto result = ReadRows(*table, bigtable::Filter::RowSample(kSampleRate));
+
+  EXPECT_LE(kMinCount, result.size());
+  EXPECT_GE(kMaxCount, result.size());
+}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, StripValueTransformer) {}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, Condition) {}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, Chain) {}
+
+// TODO(#152) - implement the following integration test.
+TEST_F(FilterIntegrationTest, Interleave) {}
+
+namespace {
+std::string FilterTestEnvironment::project_id_;
+std::string FilterTestEnvironment::instance_id_;
+
+void FilterIntegrationTest::SetUp() {
+  admin_client_ = bigtable::CreateAdminClient(
+      FilterTestEnvironment::project_id(), bigtable::ClientOptions());
+  table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+      admin_client_, FilterTestEnvironment::instance_id());
+  data_client_ = bigtable::CreateDefaultClient(
+      FilterTestEnvironment::project_id(), FilterTestEnvironment::instance_id(),
+      bigtable::ClientOptions());
+}
+
+std::unique_ptr<bigtable::Table> FilterIntegrationTest::CreateTable(
+    std::string const& table_id) {
+  table_admin_->CreateTable(
+      table_id,
       bigtable::TableConfig({{fam0, bigtable::GcRule::MaxNumVersions(10)},
                              {fam1, bigtable::GcRule::MaxNumVersions(10)},
                              {fam2, bigtable::GcRule::MaxNumVersions(10)},
                              {fam3, bigtable::GcRule::MaxNumVersions(10)}},
                             {}));
-  std::cout << table_name << " created successfully" << std::endl;
-
-  auto client = bigtable::CreateDefaultClient(project_id, instance_id,
-                                              bigtable::ClientOptions());
-  bigtable::Table table(client, table_name);
-
-  CheckPassAll(*client, table, "aaa0001-pass-all");
-
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  try {
-    CheckBlockAll(*client, table, "aaa0002-block-all");
-  } catch (...) {
-    ReportException();
-  }
-
-  CheckLatest(*client, table, "aaa003-latest");
-  CheckFamilyRegex(*client, table, "aaa004-family-regex");
-  CheckColumnRegex(*client, table, "aaa005-column-regex");
-  CheckColumnRange(*client, table, "aaa006-column-range");
-  CheckTimestampRange(*client, table, "aaa007-timestamp-range");
-  // TODO(#152) - implement the following integration tests.
-  // CheckRowKeysRegex(*client, table, "aaa008-row-key-regex");
-  // CheckValueRegex(*client, table, "aaa009-value-regex");
-  // CheckValueRange(*client, table, "aaa010-value-range");
-  CheckCellsRowLimit(*client, table, "aaa011-cells-row-limit");
-  CheckCellsRowOffset(*client, table, "aaa012-cells-row-offset");
-
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  try {
-    CheckCellsRowSample(*client, table, "aaa013-cells-row-sample");
-  } catch (...) {
-    ReportException();
-  }
-
-  // TODO(#152) - implement the following integration tests.
-  // CheckStripValueTransformer(client, *table, "aaa014-strip-value");
-  // CheckCondition(client, *table, "aaa015-condition");
-  // CheckChain(client, *table, "aaa016-chain");
-  // CheckInterleave(client, *table, "aaa017-interleave");
-
-  return 0;
-} catch (...) {
-  ReportException();
-  return 1;
+  return absl::make_unique<bigtable::Table>(data_client_, table_id);
 }
 
-namespace {
-void ReportException() {
-  try {
-    throw;
-  } catch (bigtable::PermanentMutationFailure const& ex) {
-    std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
-              << " - " << ex.status().error_message() << " ["
-              << ex.status().error_code()
-              << "], details=" << ex.status().error_details() << std::endl;
-    int count = 0;
-    for (auto const& failure : ex.failures()) {
-      std::cerr << "failure[" << count++
-                << "] {key=" << failure.mutation().row_key() << "}"
-                << std::endl;
-    }
-  } catch (std::exception const& ex) {
-    std::cerr << "Standard exception raised: " << ex.what() << std::endl;
-  } catch (...) {
-    std::cerr << "Unknown exception raised." << std::endl;
-  }
-}
-
-// TODO(#32) remove this when Table::ReadRows() is a thing.
-std::vector<bigtable::Cell> ReadRows(bigtable::DataClient& client,
-                                     bigtable::Table& table,
-                                     btproto::ReadRowsRequest request) {
+std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
+    bigtable::Table& table, btproto::ReadRowsRequest request) {
   std::vector<bigtable::Cell> result;
   grpc::ClientContext client_context;
-  auto stream = client.Stub().ReadRows(&client_context, request);
+  auto stream = data_client_->Stub().ReadRows(&client_context, request);
   btproto::ReadRowsResponse response;
 
   std::string current_row_key;
@@ -213,10 +569,8 @@ std::vector<bigtable::Cell> ReadRows(bigtable::DataClient& client,
   return result;
 }
 
-// TODO(#29) remove this when Table::ReadRow() is a thing.
-std::vector<bigtable::Cell> ReadRow(bigtable::DataClient& client,
-                                    bigtable::Table& table, std::string key,
-                                    bigtable::Filter filter) {
+std::vector<bigtable::Cell> FilterIntegrationTest::ReadRow(
+    bigtable::Table& table, std::string key, bigtable::Filter filter) {
   btproto::ReadRowsRequest request;
   request.set_table_name(table.table_name());
   request.set_rows_limit(1);
@@ -224,27 +578,21 @@ std::vector<bigtable::Cell> ReadRow(bigtable::DataClient& client,
   *row.add_row_keys() = std::move(key);
   *request.mutable_filter() = filter.as_proto_move();
 
-  return ReadRows(client, table, std::move(request));
+  return ReadRows(table, std::move(request));
 }
 
-// TODO(#32) remove this when Table::ReadRow() is a thing.
-std::vector<bigtable::Cell> ReadRows(bigtable::DataClient& client,
-                                     bigtable::Table& table, std::string start,
-                                     std::string end, bigtable::Filter filter) {
+std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
+    bigtable::Table& table, bigtable::Filter filter) {
   btproto::ReadRowsRequest request;
   request.set_table_name(table.table_name());
-  auto& row = *request.mutable_rows();
-  btproto::RowRange range;
-  range.set_start_key_closed(std::move(start));
-  range.set_end_key_open(std::move(end));
-  *row.add_row_ranges() = std::move(range);
   *request.mutable_filter() = filter.as_proto_move();
-  return ReadRows(client, table, std::move(request));
+
+  return ReadRows(table, std::move(request));
 }
 
 /// A helper function to create a list of cells.
-void CreateCells(bigtable::Table& table,
-                 std::vector<bigtable::Cell> const& cells) {
+void FilterIntegrationTest::CreateCells(
+    bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     std::string key = static_cast<std::string>(cell.row_key());
@@ -261,279 +609,8 @@ void CreateCells(bigtable::Table& table,
   table.BulkApply(std::move(bulk));
 }
 
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = lhs.row_key().compare(lhs.row_key());
-  if (compare_row_key != 0) {
-    return compare_row_key;
-  }
-  auto compare_family_name = lhs.family_name().compare(rhs.family_name());
-  if (compare_family_name != 0) {
-    return compare_family_name;
-  }
-  auto compare_column_qualifier =
-      lhs.column_qualifier().compare(rhs.column_qualifier());
-  if (compare_column_qualifier != 0) {
-    return compare_column_qualifier;
-  }
-  if (lhs.timestamp() < lhs.timestamp()) {
-    return -1;
-  }
-  if (lhs.timestamp() > lhs.timestamp()) {
-    return 1;
-  }
-  return lhs.value().compare(rhs.value());
-}
-
-bool CellLess(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  return CellCompare(lhs, rhs) < 0;
-}
-
-void PrintCells(std::ostream& os, std::vector<bigtable::Cell> const& cells) {
-  for (auto const& cell : cells) {
-    os << "  row_key=" << cell.row_key() << "\n  family=" << cell.family_name()
-       << "\n  column=" << cell.column_qualifier()
-       << "\n  timestamp=" << cell.timestamp() << "\n  value=" << cell.value();
-  }
-}
-
-void CheckEqual(absl::string_view where, std::vector<bigtable::Cell> expected,
-                std::vector<bigtable::Cell> actual) {
-  std::sort(expected.begin(), expected.end(), CellLess);
-  std::sort(actual.begin(), actual.end(), CellLess);
-  std::vector<bigtable::Cell> differences;
-  std::set_symmetric_difference(expected.begin(), expected.end(),
-                                actual.begin(), actual.end(),
-                                std::back_inserter(differences), CellLess);
-  if (differences.empty()) {
-    return;
-  }
-  std::ostringstream os;
-  os << "Mismatched cells in " << where << " differences=<\n";
-  PrintCells(os, differences);
-  os << ">\nexpected=<";
-  PrintCells(os, expected);
-  os << ">\nactual=<";
-  PrintCells(os, actual);
-  os << ">";
-  throw std::runtime_error(os.str());
-}
-
-void CheckPassAll(bigtable::DataClient& client, bigtable::Table& table,
-                  std::string const& row_key) {
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-  };
-  CreateCells(table, expected);
-
-  auto actual =
-      ReadRow(client, table, row_key, bigtable::Filter::PassAllFilter());
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckBlockAll(bigtable::DataClient& client, bigtable::Table& table,
-                   std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{};
-  auto actual =
-      ReadRow(client, table, row_key, bigtable::Filter::BlockAllFilter());
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckLatest(bigtable::DataClient& client, bigtable::Table& table,
-                 std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
-  };
-  auto actual = ReadRow(client, table, row_key, bigtable::Filter::Latest(2));
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckFamilyRegex(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c2", 0, "bar", {}},
-      {row_key, "fam0", "c", 0, "bar", {}},
-      {row_key, "fam1", "c", 0, "bar", {}},
-      {row_key, "fam2", "c", 0, "bar", {}},
-      {row_key, "fam2", "c2", 0, "bar", {}},
-      {row_key, "fam3", "c2", 0, "bar", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c2", 0, "bar", {}},
-      {row_key, "fam0", "c", 0, "bar", {}},
-      {row_key, "fam2", "c", 0, "bar", {}},
-      {row_key, "fam2", "c2", 0, "bar", {}},
-  };
-  auto actual =
-      ReadRow(client, table, row_key, bigtable::Filter::FamilyRegex("fam[02]"));
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckColumnRegex(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "abc", 0, "bar", {}},
-      {row_key, "fam1", "bcd", 0, "bar", {}},
-      {row_key, "fam2", "abc", 0, "bar", {}},
-      {row_key, "fam3", "def", 0, "bar", {}},
-      {row_key, "fam0", "fgh", 0, "bar", {}},
-      {row_key, "fam1", "hij", 0, "bar", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "abc", 0, "bar", {}},
-      {row_key, "fam2", "abc", 0, "bar", {}},
-      {row_key, "fam0", "fgh", 0, "bar", {}},
-      {row_key, "fam1", "hij", 0, "bar", {}},
-  };
-  auto actual = ReadRow(client, table, row_key,
-                        bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckColumnRange(bigtable::DataClient& client, bigtable::Table& table,
-                      std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "a00", 0, "bar", {}},
-      {row_key, "fam0", "b00", 0, "bar", {}},
-      {row_key, "fam0", "b01", 0, "bar", {}},
-      {row_key, "fam0", "b02", 0, "bar", {}},
-      {row_key, "fam1", "a00", 0, "bar", {}},
-      {row_key, "fam1", "b01", 0, "bar", {}},
-      {row_key, "fam1", "b00", 0, "bar", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "b00", 0, "bar", {}},
-      {row_key, "fam0", "b01", 0, "bar", {}},
-  };
-  auto actual = ReadRow(client, table, row_key,
-                        bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckTimestampRange(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key) {
-  std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c0", 1000, "v1000", {}},
-      {row_key, "fam1", "c1", 2000, "v2000", {}},
-      {row_key, "fam2", "c2", 3000, "v3000", {}},
-      {row_key, "fam0", "c3", 4000, "v4000", {}},
-      {row_key, "fam1", "c4", 4000, "v5000", {}},
-      {row_key, "fam2", "c5", 6000, "v6000", {}},
-  };
-  CreateCells(table, created);
-
-  std::vector<bigtable::Cell> expected{
-      {row_key, "fam2", "c2", 1000, "v3000", {}},
-      {row_key, "fam0", "c3", 1000, "v4000", {}},
-      {row_key, "fam1", "c4", 1000, "v5000", {}},
-  };
-  using std::chrono::milliseconds;
-  auto actual = ReadRow(
-      client, table, row_key,
-      bigtable::Filter::TimestampRange(milliseconds(3), milliseconds(6)));
-  CheckEqual(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
-}
-
-void CheckEqualRowKeyCount(absl::string_view where,
-                           std::map<std::string, int> const& expected,
-                           std::map<std::string, int> const& actual) {
-  std::vector<std::pair<std::string, int>> differences;
-  std::set_symmetric_difference(expected.begin(), expected.end(),
-                                actual.begin(), actual.end(),
-                                std::back_inserter(differences));
-  if (differences.empty()) {
-    return;
-  }
-
-  std::ostringstream os;
-  // In C++14 we could use a single lambda with auto parameters, sigh? meh?
-  auto stream_map = [&os](std::pair<std::string const, int> const& x) {
-    os << "{" << x.first << "," << x.second << "}, ";
-  };
-  auto stream_vector = [&os](std::pair<std::string, int> const& x) {
-    os << "{" << x.first << "," << x.second << "}, ";
-  };
-
-  os << "Mismatched row key count in " << where << " differences=<\n";
-  std::for_each(differences.begin(), differences.end(), stream_vector);
-  os << ">\nexpected=<";
-  std::for_each(expected.begin(), expected.end(), stream_map);
-  os << ">\nactual=<";
-  std::for_each(actual.begin(), actual.end(), stream_map);
-  os << ">";
-  throw std::runtime_error(os.str());
-}
-
-/**
- * Create some complex rows in @p table.
- *
- * Create the following rows in @p table, the magic values for the column
- * families are defined above.
- *
- *   | Row Key                 | Family | Column | Contents      |
- *   | :---------------------- | :----- | :----- | :------------ |
- *   | "{prefix}/one-cell"     | fam    | c      | cell @ 3000 |
- *   | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
- *   | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
- *   | "{prefix}/many"         | fam    | c      | cells @ 0, 1000, 200, 3000 |
- *   | "{prefix}/many-columns" | fam    | c0     | cell @ 3000 |
- *   | "{prefix}/many-columns" | fam    | c1     | cell @ 3000 |
- *   | "{prefix}/many-columns" | fam    | c2     | cell @ 3000 |
- *   | "{prefix}/many-columns" | fam    | c3     | cell @ 3000 |
- *   | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
- *   | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
- *
- */
-void CreateComplexRows(bigtable::DataClient& client, bigtable::Table& table,
-                       std::string const& prefix) {
+void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
+                                              std::string const& prefix) {
   namespace bt = bigtable;
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
@@ -571,124 +648,38 @@ void CreateComplexRows(bigtable::DataClient& client, bigtable::Table& table,
   table.BulkApply(std::move(mutation));
 }
 
-void CheckCellsRowLimit(bigtable::DataClient& client, bigtable::Table& table,
-                        std::string const& row_key_prefix) {
-  CreateComplexRows(client, table, row_key_prefix);
-
-  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
-  // the separator and the successor of "/" is "0".
-  auto result =
-      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
-               bigtable::Filter::CellsRowLimit(3));
-
-  std::map<std::string, int> actual;
-  for (auto const& c : result) {
-    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
-    ins.first->second++;
+int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
+  auto compare_row_key = lhs.row_key().compare(lhs.row_key());
+  if (compare_row_key != 0) {
+    return compare_row_key;
   }
-  std::map<std::string, int> expected{{row_key_prefix + "/one-cell", 1},
-                                      {row_key_prefix + "/two-cells", 2},
-                                      {row_key_prefix + "/many", 3},
-                                      {row_key_prefix + "/many-columns", 3},
-                                      {row_key_prefix + "/complex", 3}};
-
-  CheckEqualRowKeyCount(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
+  auto compare_family_name = lhs.family_name().compare(rhs.family_name());
+  if (compare_family_name != 0) {
+    return compare_family_name;
+  }
+  auto compare_column_qualifier =
+      lhs.column_qualifier().compare(rhs.column_qualifier());
+  if (compare_column_qualifier != 0) {
+    return compare_column_qualifier;
+  }
+  if (lhs.timestamp() < lhs.timestamp()) {
+    return -1;
+  }
+  if (lhs.timestamp() > lhs.timestamp()) {
+    return 1;
+  }
+  return lhs.value().compare(rhs.value());
 }
 
-void CheckCellsRowOffset(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key_prefix) {
-  CreateComplexRows(client, table, row_key_prefix);
-
-  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
-  // the separator and the successor of "/" is "0".
-  auto result =
-      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
-               bigtable::Filter::CellsRowOffset(2));
-
-  std::map<std::string, int> actual;
-  for (auto const& c : result) {
-    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
-    ins.first->second++;
-  }
-  std::map<std::string, int> expected{{row_key_prefix + "/many", 2},
-                                      {row_key_prefix + "/many-columns", 2},
-                                      {row_key_prefix + "/complex", 78}};
-
-  CheckEqualRowKeyCount(__func__, expected, actual);
-  std::cout << __func__ << " was successful" << std::endl;
+void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
+                         std::vector<bigtable::Cell> actual) {
+  std::sort(expected.begin(), expected.end());
+  std::sort(actual.begin(), actual.end());
+  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
 
-void CreateManyRows(bigtable::DataClient& client, bigtable::Table& table,
-                    std::string const& prefix, int count) {
-  namespace bt = bigtable;
-  bt::BulkMutation bulk;
-  for (int row = 0; row != count; ++row) {
-    std::string row_key = prefix + "/" + std::to_string(row);
-    bulk.emplace_back(bt::SingleRowMutation(
-        row_key, {bt::SetCell("fam0", "col", 4000, "foo")}));
-  }
-  table.BulkApply(std::move(bulk));
-}
-
-void CheckCellsRowSample(bigtable::DataClient& client, bigtable::Table& table,
-                         std::string const& row_key_prefix) {
-  constexpr int row_count = 20000;
-  CreateManyRows(client, table, row_key_prefix, row_count);
-
-  // We want to check that the sampling rate was "more or less" the prescribed
-  // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
-  // get serious about testing the sampling rate, we would do some statistics.
-  // We do not really need to, because we are testing the library, not the
-  // server. But for what it's worth, the outline would be:
-  //
-  //   - Model sampling as a binomial process.
-  //   - Perform power analysis to decide the size of the sample.
-  //   - Perform hypothesis testing: is the actual sampling rate != that the
-  //     prescribed rate (and sufficiently different, i.e., the effect is large
-  //     enough).
-  //
-  // For what is worth, the sample size is large enough to detect effects of 2%
-  // at the conventional significance and power levels.  In R:
-  //
-  // ```R
-  // require(pwr)
-  // pwr.p.test(h = ES.h(p1 = 0.63, p2 = 0.65), sig.level = 0.05,
-  //            power=0.80, alternative="two.sided")
-  // ```
-  //
-  // h = 0.04167045
-  // n = 4520.123
-  // sig.level = 0.05
-  // power = 0.8
-  // alternative = two.sided
-  //
-  constexpr double kSampleRate = 0.75;
-  constexpr double kAllowedError = 0.05;
-  const int kMinCount =
-      static_cast<int>(std::floor((kSampleRate - kAllowedError) * row_count));
-  const int kMaxCount =
-      static_cast<int>(std::ceil((kSampleRate + kAllowedError) * row_count));
-
-  // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
-  // the separator and the successor of "/" is "0".
-  auto result =
-      ReadRows(client, table, row_key_prefix + "/", row_key_prefix + "0",
-               bigtable::Filter::RowSample(kSampleRate));
-
-  if (result.size() < static_cast<std::size_t>(kMinCount)) {
-    std::ostringstream os;
-    os << "CheckRowSample() - row sample count is too low, got="
-       << result.size() << ", expected >= " << kMinCount;
-    throw std::runtime_error(os.str());
-  }
-  if (result.size() > static_cast<std::size_t>(kMaxCount)) {
-    std::ostringstream os;
-    os << "CheckRowSample() - row samples count is too high, got="
-       << result.size() << ", expected <= " << kMaxCount;
-    throw std::runtime_error(os.str());
-  }
-  std::cout << __func__ << " was successful" << std::endl;
+bool UsingCloudBigtableEmulator() {
+  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
 
 }  // anonymous namespace

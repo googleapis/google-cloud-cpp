@@ -62,12 +62,12 @@ fi
 echo
 echo "Running Table::Apply() integration test."
 # The project and instance do not matter for the Cloud Bigtable emulator.
-./data_integration_test emulated emulated test-table
+./data_integration_test emulated data-test test-table
 
 echo
 echo "Running TableAdmin integration test."
-./admin_integration_test emulated admin-tests
+./admin_integration_test emulated admin-test
 
 echo
 echo "Running bigtable::Filters integration tests."
-./filters_integration_test emulated filters filters-table
+./filters_integration_test emulated filters-test
