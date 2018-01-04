@@ -27,7 +27,7 @@ namespace internal {
  * respectively.
  *
  * We need to compare row keys as byte vectors, but std::string is (or can)
- * be based on `signed char` where \xFF is less than \x00.
+ * be based on `signed char` where `\xFF` is less than `\x00`.
  */
 int RowKeyCompare(absl::string_view lhs, absl::string_view rhs);
 
