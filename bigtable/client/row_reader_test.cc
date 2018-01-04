@@ -15,9 +15,25 @@
 #include "bigtable/client/row_reader.h"
 
 #include <gmock/gmock.h>
+#include <grpc++/test/mock_stream.h>
 
-TEST(RowReaderTest, EmptyReaderHasNoRows) {
-  bigtable::RowReader reader;
+#include "bigtable/client/testing/table_test_fixture.h"
+
+using testing::_;
+using testing::ByMove;
+using testing::Return;
+
+using MockResponseStream =
+    grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
+
+class RowReaderTest : public bigtable::testing::TableTestFixture {};
+
+TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
+  auto stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
+  EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+
+  bigtable::RowReader reader(client_, "");
 
   EXPECT_EQ(reader.begin(), reader.end());
 }

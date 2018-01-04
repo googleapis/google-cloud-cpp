@@ -17,7 +17,14 @@
 
 #include "bigtable/client/version.h"
 
+#include "bigtable/client/internal/readrowsparser.h"
 #include "bigtable/client/row.h"
+#include "bigtable/client/table.h"
+
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
+
+#include <absl/memory/memory.h>
+#include <grpc++/grpc++.h>
 
 #include <iterator>
 
@@ -37,7 +44,8 @@ class RowReader {
   class RowReaderIterator;
 
  public:
-  RowReader() : rows_() {}
+  // TODO(#32): Add arguments for RowSet, rows limit, RowFilter
+  RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name);
 
   using iterator = RowReaderIterator;
 
@@ -71,6 +79,8 @@ class RowReader {
    */
   void Advance();
 
+  bool NextChunk();
+
   /// The input iterator returned by begin() and end()
   class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
    public:
@@ -96,6 +106,16 @@ class RowReader {
     bool is_end_;
   };
 
+  std::shared_ptr<DataClient> client_;
+  absl::string_view table_name_;
+  std::unique_ptr<grpc::ClientContext> context_;
+
+  std::unique_ptr<ReadRowsParser> parser_;
+  std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+      stream_;
+  google::bigtable::v2::ReadRowsResponse response_;
+  int processed_chunks_;
   std::vector<Row> rows_;
 };
 

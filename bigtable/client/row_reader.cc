@@ -17,6 +17,20 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 
+RowReader::RowReader(std::shared_ptr<DataClient> client,
+                     absl::string_view table_name)
+    : client_(std::move(client)),
+      table_name_(table_name),
+      context_(absl::make_unique<grpc::ClientContext>()),
+      parser_(absl::make_unique<ReadRowsParser>()),
+      rows_() {
+  google::bigtable::v2::ReadRowsRequest request;
+  request.set_table_name(std::string(table_name_));
+  stream_ = client_->Stub().ReadRows(context_.get(), request);
+  response_ = {};
+  processed_chunks_ = 0;
+}
+
 RowReader::iterator RowReader::begin() {
   Advance();
   if (rows_.empty()) {
@@ -34,6 +48,33 @@ RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
   return *this;
 }
 
-void RowReader::Advance() {}
+bool RowReader::NextChunk() {
+  ++processed_chunks_;
+  while (processed_chunks_ >= response_.chunks_size()) {
+    processed_chunks_ = 0;
+    bool response_is_valid = stream_->Read(&response_);
+    if (not response_is_valid) {
+      response_ = {};
+      return false;
+    }
+  }
+  return true;
+}
+
+void RowReader::Advance() {
+  do {
+    if (NextChunk()) {
+      parser_->HandleChunk(
+          std::move(*(response_.mutable_chunks(processed_chunks_))));
+    } else {
+      parser_->HandleEndOfStream();
+      break;
+    }
+  } while (not parser_->HasNext());
+
+  if (parser_->HasNext()) {
+    rows_.emplace_back(parser_->Next());
+  }
+}
 
 }  // namespace bigtable
