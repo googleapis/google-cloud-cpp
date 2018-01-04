@@ -19,8 +19,8 @@
 #include "bigtable/admin/table_admin.h"
 #include "bigtable/client/cell.h"
 #include "bigtable/client/data_client.h"
-#include "bigtable/client/table.h"
 #include "bigtable/client/filters.h"
+#include "bigtable/client/table.h"
 
 namespace btproto = ::google::bigtable::v2;
 
