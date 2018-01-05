@@ -19,6 +19,30 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 
+// RowReader::iterator must satisfy the requirements of an InputIterator.
+namespace {
+using base_iterator = std::iterator<std::input_iterator_tag, Row>;
+
+static_assert(std::is_base_of<base_iterator, RowReader::iterator>::value,
+              "RowReader::iterator must be an InputIterator");
+static_assert(std::is_copy_constructible<RowReader::iterator>::value,
+              "RowReader::iterator must be CopyConstructible");
+static_assert(std::is_move_constructible<RowReader::iterator>::value,
+              "RowReader::iterator must be MoveConstructible");
+static_assert(std::is_copy_assignable<RowReader::iterator>::value,
+              "RowReader::iterator must be CopyAssignable");
+static_assert(std::is_move_assignable<RowReader::iterator>::value,
+              "RowReader::iterator must be MoveAssignable");
+static_assert(std::is_destructible<RowReader::iterator>::value,
+              "RowReader::iterator must be Destructible");
+
+// TODO(C++17): std::is_swappable
+
+// TODO: check that if o is of type iterator then ++o and *o
+// are valid expressions with the usual return types ...
+
+}  // anonymous namespace
+
 RowReader::RowReader(std::shared_ptr<DataClient> client,
                      absl::string_view table_name, RowSet row_set,
                      int rows_limit, Filter filter,

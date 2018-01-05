@@ -38,17 +38,14 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
  *
- * Read rows can be obtained by iterating on this object via begin()
- * and end().  Once an iterator is incremented, all data in the row it
- * initially pointed to is freed.
- *
+ * Iterate over the results of ReadRows() using the STL idioms.
  */
 class RowReader {
   class RowReaderIterator;
 
  public:
   /// Signifies that there is no limit on the number of rows to read.
-  static int const NO_ROWS_LIMIT = 0;
+  static int constexpr NO_ROWS_LIMIT = 0;
 
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
             RowSet row_set, int rows_limit, Filter filter,
@@ -60,9 +57,17 @@ class RowReader {
   /**
    * Input iterator over rows in the response.
    *
-   * All iterators that do not point to end() are equivalent, that is,
-   * incrementing one iterator will increment all by advancing the
-   * stream.
+   * The returned iterator is a single-pass input iterator that reads
+   * rows from the RowReader when incremented. The first row may be
+   * read when the iterator is constructed.
+   *
+   * Creating, and particularly incrementing, multiple iterators on
+   * the same RowReader is unsupported and can produce incorrect
+   * results.
+   *
+   * Retry and backoff policies are honored.
+   *
+   * @throws std::runtime_error if the read failed after retries.
    */
   iterator begin();
 
@@ -121,12 +126,12 @@ class RowReader {
     }
 
    private:
-    RowReader* const owner_;
+    RowReader* owner_;
     bool is_end_;
   };
 
   std::shared_ptr<DataClient> client_;
-  absl::string_view table_name_;
+  std::string table_name_;
   RowSet row_set_;
   int rows_limit_;
   Filter filter_;
