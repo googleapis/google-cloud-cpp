@@ -51,7 +51,8 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "");
+  bigtable::RowReader reader(client_, "", bigtable::RowSet(), 0,
+                             bigtable::Filter::PassAllFilter());
 
   EXPECT_EQ(reader.begin(), reader.end());
 }
@@ -61,7 +62,8 @@ TEST_F(RowReaderTest, ReadOneRow) {
       .WillOnce(DoAll(SetArgPointee<0>(response_), Return(true)))
       .WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "");
+  bigtable::RowReader reader(client_, "", bigtable::RowSet(), 0,
+                             bigtable::Filter::PassAllFilter());
 
   EXPECT_NE(reader.begin(), reader.end());
 

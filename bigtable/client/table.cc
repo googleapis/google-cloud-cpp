@@ -107,5 +107,8 @@ void Table::BulkApply(BulkMutation&& mut) {
   }
 }
 
+RowReader Table::ReadRows(RowSet row_set, int rows_limit, Filter filter) {
+  return RowReader(client_, table_name(), row_set, rows_limit, filter);
+}
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

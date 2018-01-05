@@ -18,8 +18,12 @@
 #include "bigtable/client/version.h"
 
 #include "bigtable/client/data_client.h"
+#include "bigtable/client/filters.h"
 #include "bigtable/client/internal/readrowsparser.h"
 #include "bigtable/client/row.h"
+#include "bigtable/client/row_set.h"
+#include "bigtable/client/rpc_backoff_policy.h"
+#include "bigtable/client/rpc_retry_policy.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
@@ -46,7 +50,8 @@ class RowReader {
 
  public:
   // TODO(#32): Add arguments for RowSet, rows limit, RowFilter
-  RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name);
+  RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
+            RowSet row_set, int rows_limit, Filter filter);
 
   using iterator = RowReaderIterator;
 

@@ -16,8 +16,11 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
 #include "bigtable/client/data_client.h"
+#include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/internal/row_reader.h"
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
@@ -56,6 +59,9 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  */
 class Table {
  public:
+  /// Signifies that `Table::ReadRows()` should not limit the number of rows.
+  static int const NO_ROWS_LIMIT = 0;
+
   /**
    * Constructor with default policies.
    *
@@ -166,6 +172,20 @@ class Table {
    *     handle the failed mutations.
    */
   void BulkApply(BulkMutation&& mut);
+
+  /**
+   * Reads data from a set of rows.
+   *
+   * @param row_set the rows to read from. This function takes ownership of the
+   * row_set.
+   *
+   * @param rows_limit the maximum number of rows to read. Setting this to
+   * NO_ROWS_LIMIT reads all matching rows in row_set.
+   *
+   * @param filter is applied on the server-side to data in the rows. This
+   * function takes ownership of the filter.
+   */
+  RowReader ReadRows(RowSet row_set, int rows_limit, Filter filter);
 
  private:
   std::shared_ptr<DataClient> client_;

@@ -18,7 +18,8 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 
 RowReader::RowReader(std::shared_ptr<DataClient> client,
-                     absl::string_view table_name)
+                     absl::string_view table_name, RowSet row_set,
+                     int rows_limit, Filter filter)
     : client_(std::move(client)),
       table_name_(table_name),
       context_(absl::make_unique<grpc::ClientContext>()),
