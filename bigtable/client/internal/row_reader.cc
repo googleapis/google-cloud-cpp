@@ -24,15 +24,16 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
                      std::unique_ptr<RPCBackoffPolicy> backoff_policy)
     : client_(std::move(client)),
       table_name_(table_name),
+      row_set_(std::move(row_set)),
+      rows_limit_(rows_limit),
+      filter_(std::move(filter)),
       context_(absl::make_unique<grpc::ClientContext>()),
       parser_(absl::make_unique<ReadRowsParser>()),
       response_(),
       processed_chunks_(0),
       rows_count_(0),
       row_() {
-  google::bigtable::v2::ReadRowsRequest request;
-  request.set_table_name(std::string(table_name_));
-  stream_ = client_->Stub().ReadRows(context_.get(), request);
+  MakeRequest();
   Advance();
 }
 
@@ -53,6 +54,26 @@ RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
     is_end_ = true;
   }
   return *this;
+}
+
+void RowReader::MakeRequest() {
+  response_ = {};
+  processed_chunks_ = 0;
+
+  google::bigtable::v2::ReadRowsRequest request;
+  request.set_table_name(std::string(table_name_));
+
+  auto row_set_proto = row_set_.as_proto();
+  request.mutable_rows()->Swap(&row_set_proto);
+
+  auto filter_proto = filter_.as_proto();
+  request.mutable_filter()->Swap(&filter_proto);
+
+  if (rows_limit_ != NO_ROWS_LIMIT) {
+    request.set_rows_limit(rows_limit_ - rows_count_);
+  }
+
+  stream_ = client_->Stub().ReadRows(context_.get(), request);
 }
 
 bool RowReader::NextChunk() {

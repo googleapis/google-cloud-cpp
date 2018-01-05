@@ -176,14 +176,12 @@ class Table {
   /**
    * Reads data from a set of rows.
    *
-   * @param row_set the rows to read from. This function takes ownership of the
-   * row_set.
+   * @param row_set the rows to read from.
    *
    * @param rows_limit the maximum number of rows to read. Setting this to
    * NO_ROWS_LIMIT reads all matching rows in row_set.
    *
-   * @param filter is applied on the server-side to data in the rows. This
-   * function takes ownership of the filter.
+   * @param filter is applied on the server-side to data in the rows.
    */
   RowReader ReadRows(RowSet row_set, int rows_limit, Filter filter);
 

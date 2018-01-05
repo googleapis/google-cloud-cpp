@@ -38,11 +38,9 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
  *
- *
- *
- * Example:
- * @code
- * @endcode
+ * Read rows can be obtained by iterating on this object via begin()
+ * and end().  Once an iterator is incremented, all data in the row it
+ * initially pointed to is freed.
  *
  */
 class RowReader {
@@ -80,7 +78,7 @@ class RowReader {
 
  private:
   /**
-   * Reads and parses the next row in the response.
+   * Read and parse the next row in the response.
    *
    * Invalidates the previous row and feeds response chunks into the
    * parser until another row is available.
@@ -89,7 +87,15 @@ class RowReader {
    */
   void Advance();
 
+  /**
+   * Move the index to the next chunk, reading data if needed.
+   *
+   * Returns false if no more chunks are available.
+   */
   bool NextChunk();
+
+  /// Sends the ReadRows request to the stub.
+  void MakeRequest();
 
   /// The input iterator returned by begin() and end()
   class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
@@ -118,6 +124,12 @@ class RowReader {
 
   std::shared_ptr<DataClient> client_;
   absl::string_view table_name_;
+  RowSet row_set_;
+  int rows_limit_;
+  Filter filter_;
+  std::unique_ptr<RPCRetryPolicy> retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
+
   std::unique_ptr<grpc::ClientContext> context_;
 
   std::unique_ptr<ReadRowsParser> parser_;
