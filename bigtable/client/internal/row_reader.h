@@ -17,9 +17,9 @@
 
 #include "bigtable/client/version.h"
 
+#include "bigtable/client/data_client.h"
 #include "bigtable/client/internal/readrowsparser.h"
 #include "bigtable/client/row.h"
-#include "bigtable/client/table.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
