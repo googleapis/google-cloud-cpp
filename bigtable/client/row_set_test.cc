@@ -29,18 +29,14 @@ TEST(RowSetTest, AppendRange) {
   row_set.Append(bigtable::RowRange::Range("a", "b"));
   auto proto = row_set.as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
-  EXPECT_EQ(bigtable::RowRange::Range("a", "b").as_proto().start_key_open(),
-            proto.row_ranges(0).start_key_open());
-  EXPECT_EQ(bigtable::RowRange::Range("a", "b").as_proto().end_key_closed(),
-            proto.row_ranges(0).end_key_closed());
+  EXPECT_EQ("a", proto.row_ranges(0).start_key_closed());
+  EXPECT_EQ("b", proto.row_ranges(0).end_key_open());
 
   row_set.Append(bigtable::RowRange::Range("f", "k"));
   proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_ranges_size());
-  EXPECT_EQ(bigtable::RowRange::Range("f", "k").as_proto().start_key_open(),
-            proto.row_ranges(1).start_key_open());
-  EXPECT_EQ(bigtable::RowRange::Range("f", "k").as_proto().end_key_closed(),
-            proto.row_ranges(1).end_key_closed());
+  EXPECT_EQ("f", proto.row_ranges(1).start_key_closed());
+  EXPECT_EQ("k", proto.row_ranges(1).end_key_open());
 }
 
 TEST(RowSetTest, AppendRowKey) {
@@ -65,4 +61,18 @@ TEST(RowSetTest, AppendMixed) {
   auto proto = row_set.as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
   ASSERT_EQ(1, proto.row_keys_size());
+}
+
+TEST(RowSetTest, VariadicConstructor) {
+  bigtable::RowSet row_set(bigtable::RowRange::Range("a", "b"), "foo",
+                           bigtable::RowRange::Range("k", "m"), "bar");
+  auto proto = row_set.as_proto();
+  ASSERT_EQ(2, proto.row_ranges_size());
+  EXPECT_EQ("a", proto.row_ranges(0).start_key_closed());
+  EXPECT_EQ("b", proto.row_ranges(0).end_key_open());
+  EXPECT_EQ("k", proto.row_ranges(1).start_key_closed());
+  EXPECT_EQ("m", proto.row_ranges(1).end_key_open());
+  ASSERT_EQ(2, proto.row_keys_size());
+  EXPECT_EQ("foo", proto.row_keys(0));
+  EXPECT_EQ("bar", proto.row_keys(1));
 }

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_SET_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_SET_H_
 
+#include "bigtable/client/internal/conjunction.h"
 #include "bigtable/client/row_range.h"
 
 namespace bigtable {
@@ -26,7 +27,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * a mix of specific row keys and ranges as defined by `bigtable::RowRange`.
  */
 class RowSet {
-public:
+ public:
   /// Create an empty set.
   RowSet() {}
 
@@ -34,6 +35,15 @@ public:
   RowSet& operator=(RowSet&& rhs) noexcept = default;
   RowSet(RowSet const& rhs) = default;
   RowSet& operator=(RowSet const& rhs) = default;
+
+  template <typename... Arg>
+  RowSet(Arg&&... a) {
+    // Generate a better error message when the parameters do not match.
+    static_assert(internal::conjunction<IsValidAppendAllArg<Arg>...>::value,
+                  "RowSet variadic constructor arguments must be convertible "
+                  "to bigtable::RowRange or absl::string_view");
+    AppendAll(std::forward<Arg&&>(a)...);
+  }
 
   /// Add @p range to the set.
   void Append(RowRange range) {
@@ -51,12 +61,33 @@ public:
   }
 
   /// Add @p row_key to the set.
-  void Append(char const* row_key) {
-    Append(absl::string_view(row_key));
-  }
+  void Append(char const* row_key) { Append(absl::string_view(row_key)); }
 
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
   ::google::bigtable::v2::RowSet as_proto_move() { return std::move(row_set_); }
+
+ private:
+  template <typename T>
+  struct IsValidAppendAllArg {
+    using value_type = T;
+    using type = std::integral_constant<
+        bool,
+        std::is_convertible<T, absl::string_view>::value or
+            std::is_convertible<T, RowRange>::value>;
+    static constexpr bool value = type::value;
+  };
+
+  /// Append the arguments to the rowset.
+  template <typename H, typename... Tail>
+  void AppendAll(H&& head, Tail&&... a) {
+    // We cannot use the initializer list expression here because the types
+    // may be all different.
+    Append(std::forward<H>(head));
+    AppendAll(std::forward<Tail&&>(a)...);
+  }
+
+  /// Terminate the recursion.
+  void AppendAll() {}
 
  private:
   ::google::bigtable::v2::RowSet row_set_;
