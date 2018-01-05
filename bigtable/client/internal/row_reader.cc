@@ -19,7 +19,9 @@ inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 
 RowReader::RowReader(std::shared_ptr<DataClient> client,
                      absl::string_view table_name, RowSet row_set,
-                     int rows_limit, Filter filter)
+                     int rows_limit, Filter filter,
+                     std::unique_ptr<RPCRetryPolicy> retry_policy,
+                     std::unique_ptr<RPCBackoffPolicy> backoff_policy)
     : client_(std::move(client)),
       table_name_(table_name),
       context_(absl::make_unique<grpc::ClientContext>()),

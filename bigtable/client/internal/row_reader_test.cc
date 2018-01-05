@@ -15,11 +15,10 @@
 #include "bigtable/client/internal/row_reader.h"
 
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/table_test_fixture.h"
 
 #include <gmock/gmock.h>
 #include <grpc++/test/mock_stream.h>
-
-#include "bigtable/client/testing/table_test_fixture.h"
 
 using testing::_;
 using testing::DoAll;
@@ -31,7 +30,11 @@ using MockResponseStream =
 
 class RowReaderTest : public bigtable::testing::TableTestFixture {
  public:
-  RowReaderTest() : stream_(new MockResponseStream()), response_() {
+  RowReaderTest()
+      : stream_(new MockResponseStream()),
+        response_(),
+        no_retry_policy_(0),
+        backoff_policy_(std::chrono::seconds(0), std::chrono::seconds(0)) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
 
     auto chunk = response_.add_chunks();
@@ -48,6 +51,9 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 
   // a simple fake response
   google::bigtable::v2::ReadRowsResponse response_;
+
+  bigtable::LimitedErrorCountRetryPolicy no_retry_policy_;
+  bigtable::ExponentialBackoffPolicy backoff_policy_;
 };
 
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
@@ -55,7 +61,8 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 
   bigtable::RowReader reader(client_, "", bigtable::RowSet(),
                              bigtable::Table::NO_ROWS_LIMIT,
-                             bigtable::Filter::PassAllFilter());
+                             bigtable::Filter::PassAllFilter(),
+                             no_retry_policy_.clone(), backoff_policy_.clone());
 
   EXPECT_EQ(reader.begin(), reader.end());
 }
@@ -67,7 +74,8 @@ TEST_F(RowReaderTest, ReadOneRow) {
 
   bigtable::RowReader reader(client_, "", bigtable::RowSet(),
                              bigtable::Table::NO_ROWS_LIMIT,
-                             bigtable::Filter::PassAllFilter());
+                             bigtable::Filter::PassAllFilter(),
+                             no_retry_policy_.clone(), backoff_policy_.clone());
 
   EXPECT_NE(reader.begin(), reader.end());
 

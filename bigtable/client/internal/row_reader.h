@@ -53,7 +53,9 @@ class RowReader {
   static int const NO_ROWS_LIMIT = 0;
 
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
-            RowSet row_set, int rows_limit, Filter filter);
+            RowSet row_set, int rows_limit, Filter filter,
+            std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy);
 
   using iterator = RowReaderIterator;
 

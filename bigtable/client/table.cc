@@ -108,7 +108,8 @@ void Table::BulkApply(BulkMutation&& mut) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, int rows_limit, Filter filter) {
-  return RowReader(client_, table_name(), row_set, rows_limit, filter);
+  return RowReader(client_, table_name(), row_set, rows_limit, filter,
+                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone());
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
