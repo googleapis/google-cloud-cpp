@@ -99,6 +99,8 @@ add_library(bigtable_client
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
     client/internal/conjunction.h
+    client/internal/prefix_range_end.h
+    client/internal/prefix_range_end.cc
     client/internal/readrowsparser.h
     client/internal/readrowsparser.cc
     client/filters.h
@@ -108,6 +110,8 @@ add_library(bigtable_client
     client/mutations.h
     client/mutations.cc
     client/row.h
+    client/row_range.h
+    client/row_range.cc
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
@@ -170,12 +174,14 @@ set(bigtable_client_unit_tests
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc
     client/internal/bulk_mutator_test.cc
+    client/internal/prefix_range_end_test.cc
     client/internal/readrowsparser_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
     client/table_test.cc
     client/row_test.cc
+    client/row_range_test.cc
     client/rpc_backoff_policy_test.cc
     client/rpc_retry_policy_test.cc)
 foreach (fname ${bigtable_client_unit_tests})
