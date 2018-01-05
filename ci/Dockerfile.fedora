@@ -46,5 +46,5 @@ RUN dnf makecache && dnf install -y \
 # client.  They are used in the integration tests.
 ARG GOPATH=/var/tmp/build/cbt
 WORKDIR ${GOPATH}
-RUN go get cloud.google.com/go/bigtable/cmd/cbt \
-    cloud.google.com/go/bigtable/cmd/emulator
+COPY go-get-emulator.sh /var/tmp/build
+RUN /var/tmp/build/go-get-emulator.sh
