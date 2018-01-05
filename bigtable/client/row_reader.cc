@@ -34,12 +34,13 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       response_(),
       processed_chunks_(0),
       rows_count_(0),
-      row_() {
-  MakeRequest();
-  Advance();
-}
+      row_() {}
 
 RowReader::iterator RowReader::begin() {
+  if (not stream_) {
+    MakeRequest();
+    Advance();
+  }
   if (not row_) {
     return end();
   }
