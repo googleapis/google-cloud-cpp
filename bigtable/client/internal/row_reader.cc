@@ -23,16 +23,17 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       table_name_(table_name),
       context_(absl::make_unique<grpc::ClientContext>()),
       parser_(absl::make_unique<ReadRowsParser>()),
+      response_(),
+      processed_chunks_(0),
+      rows_count_(0),
       row_() {
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(std::string(table_name_));
   stream_ = client_->Stub().ReadRows(context_.get(), request);
-  response_ = {};
-  processed_chunks_ = 0;
+  Advance();
 }
 
 RowReader::iterator RowReader::begin() {
-  Advance();
   if (not row_) {
     return end();
   }
@@ -45,6 +46,9 @@ RowReader::iterator RowReader::end() {
 
 RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
   owner_->Advance();
+  if (not owner_->row_) {
+    is_end_ = true;
+  }
   return *this;
 }
 
@@ -74,6 +78,9 @@ void RowReader::Advance() {
 
   if (parser_->HasNext()) {
     row_.emplace(parser_->Next());
+    ++rows_count_;
+  } else {
+    row_.reset();
   }
 }
 

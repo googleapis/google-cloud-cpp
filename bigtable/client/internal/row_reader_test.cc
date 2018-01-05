@@ -20,20 +20,52 @@
 #include "bigtable/client/testing/table_test_fixture.h"
 
 using testing::_;
-using testing::ByMove;
+using testing::DoAll;
 using testing::Return;
+using testing::SetArgPointee;
 
 using MockResponseStream =
     grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
 
-class RowReaderTest : public bigtable::testing::TableTestFixture {};
+class RowReaderTest : public bigtable::testing::TableTestFixture {
+ public:
+  RowReaderTest() : stream_(new MockResponseStream()), response_() {
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+
+    auto chunk = response_.add_chunks();
+    chunk->set_row_key("r1");
+    chunk->mutable_family_name()->set_value("fam");
+    chunk->mutable_qualifier()->set_value("qual");
+    chunk->set_timestamp_micros(42000);
+    chunk->set_value("value");
+    chunk->set_commit_row(true);
+  }
+
+  // must be a new pointer, it is wrapped in unique_ptr by ReadRows
+  MockResponseStream *stream_;
+
+  // a simple fake response
+  google::bigtable::v2::ReadRowsResponse response_;
+};
 
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
-  auto stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+  EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
 
   bigtable::RowReader reader(client_, "");
 
   EXPECT_EQ(reader.begin(), reader.end());
+}
+
+TEST_F(RowReaderTest, ReadOneRow) {
+  EXPECT_CALL(*stream_, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response_), Return(true)))
+      .WillOnce(Return(false));
+
+  bigtable::RowReader reader(client_, "");
+
+  EXPECT_NE(reader.begin(), reader.end());
+
+  EXPECT_EQ(reader.begin()->row_key(), response_.chunks(0).row_key());
+
+  EXPECT_EQ(std::next(reader.begin()), reader.end());
 }

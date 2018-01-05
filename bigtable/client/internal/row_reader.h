@@ -90,8 +90,8 @@ class RowReader {
 
     RowReaderIterator& operator++();
 
-    Row const& operator*() { return owner_->row_.value(); }
-    Row const* operator->() { return &owner_->row_.value(); }
+    Row const& operator*() { return owner_->row_.operator*(); }
+    Row const* operator->() { return owner_->row_.operator->(); }
 
     bool operator==(RowReaderIterator const& that) const {
       // All non-end iterators are equal.
@@ -115,8 +115,16 @@ class RowReader {
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;
+
+  /// The last received response, chunks are being parsed one by one from it.
   google::bigtable::v2::ReadRowsResponse response_;
+  /// Number of chunks already parsed in response_.
   int processed_chunks_;
+
+  /// Number of rows read so far, used to set row_limit in retries.
+  int rows_count_;
+
+  /// Holds the last read row, non-end() iterators all point to it.
   absl::optional<Row> row_;
 };
 
