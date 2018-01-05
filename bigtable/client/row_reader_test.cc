@@ -77,9 +77,11 @@ TEST_F(RowReaderTest, ReadOneRow) {
                              bigtable::Filter::PassAllFilter(),
                              no_retry_policy_.clone(), backoff_policy_.clone());
 
-  EXPECT_NE(reader.begin(), reader.end());
+  auto it = reader.begin();
 
-  EXPECT_EQ(reader.begin()->row_key(), response_.chunks(0).row_key());
+  EXPECT_NE(it, reader.end());
 
-  EXPECT_EQ(std::next(reader.begin()), reader.end());
+  EXPECT_EQ(it->row_key(), response_.chunks(0).row_key());
+
+  EXPECT_EQ(std::next(it), reader.end());
 }
