@@ -35,11 +35,13 @@ bool RowRange::IsEmpty() const {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
   }
-  std::string const* end;
+  // We need to initialize this to something to make g++ happy, but it cannot
+  // be a value that is discarded in all switch() cases to make Clang happy.
+  std::string const* end = &row_range_.end_key_closed();
   bool end_open = false;
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
-      end = &row_range_.end_key_closed();
+      // Already initialized.
       break;
     case btproto::RowRange::kEndKeyOpen:
       end = &row_range_.end_key_open();
