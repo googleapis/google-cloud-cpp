@@ -31,6 +31,14 @@ class RowSet {
   /// All rows.
   RowSet() : row_set_() {}
 
+  /// Clip by discarding all row keys up to and including this one.
+  void ClipUpTo(absl::string_view row_key) {
+    // This is a stub implementation!!
+    row_set_.mutable_row_ranges()->Clear();
+    auto* range = row_set_.add_row_ranges();
+    range->set_start_key_open(std::string(row_key));
+  }
+
   /// Return as a protobuf.
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
 

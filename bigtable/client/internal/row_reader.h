@@ -87,6 +87,9 @@ class RowReader {
    */
   void Advance();
 
+  /// Called by Advance(), does not handle retries.
+  grpc::Status AdvanceOrFail();
+
   /**
    * Move the index to the next chunk, reading data if needed.
    *

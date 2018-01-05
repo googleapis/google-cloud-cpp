@@ -14,6 +14,8 @@
 
 #include "bigtable/client/internal/row_reader.h"
 
+#include <thread>
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
 
@@ -63,6 +65,12 @@ void RowReader::MakeRequest() {
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(std::string(table_name_));
 
+  if (row_) {
+    // There is a previous read row, so this is a restarted call and
+    // we need to clip the RowSet at the last seen row key.
+    row_set_.ClipUpTo(row_->row_key());
+  }
+
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 
@@ -90,13 +98,45 @@ bool RowReader::NextChunk() {
 }
 
 void RowReader::Advance() {
+  while (true) {
+    grpc::Status status = grpc::Status::OK;
+
+    try {
+      status = AdvanceOrFail();
+    } catch (std::exception ex) {
+      // Parser exceptions arrive here
+      status = grpc::Status(grpc::INTERNAL, ex.what());
+    }
+
+    if (status.ok()) {
+      return;
+    }
+
+    if (not status.ok() and not retry_policy_->on_failure(status)) {
+      throw std::runtime_error("Unretriable error: " + status.error_message());
+    }
+
+    auto delay = backoff_policy_->on_completion(status);
+    std::this_thread::sleep_for(delay);
+
+    // If we reach this place, we failed and need to restart the call
+    MakeRequest();
+  }
+}
+
+grpc::Status RowReader::AdvanceOrFail() {
   do {
     if (NextChunk()) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_))));
     } else {
-      parser_->HandleEndOfStream();
-      break;
+      grpc::Status status = stream_->Finish();
+      if (status.ok()) {
+        parser_->HandleEndOfStream();
+        break;
+      } else {
+        return status;
+      }
     }
   } while (not parser_->HasNext());
 
@@ -106,6 +146,8 @@ void RowReader::Advance() {
   } else {
     row_.reset();
   }
+
+  return grpc::Status::OK;
 }
 
 }  // namespace bigtable
