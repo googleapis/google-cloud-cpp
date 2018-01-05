@@ -60,7 +60,7 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
 class Table {
  public:
   /// Signifies that `Table::ReadRows()` should not limit the number of rows.
-  static int const NO_ROWS_LIMIT = 0;
+  static int const NO_ROWS_LIMIT = RowReader::NO_ROWS_LIMIT;
 
   /**
    * Constructor with default policies.

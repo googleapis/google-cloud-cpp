@@ -49,7 +49,9 @@ class RowReader {
   class RowReaderIterator;
 
  public:
-  // TODO(#32): Add arguments for RowSet, rows limit, RowFilter
+  /// Signifies that there is no limit on the number of rows to read.
+  static int const NO_ROWS_LIMIT = 0;
+
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
             RowSet row_set, int rows_limit, Filter filter);
 

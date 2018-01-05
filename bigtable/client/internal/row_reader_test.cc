@@ -14,6 +14,8 @@
 
 #include "bigtable/client/internal/row_reader.h"
 
+#include "bigtable/client/table.h"
+
 #include <gmock/gmock.h>
 #include <grpc++/test/mock_stream.h>
 
@@ -51,7 +53,8 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "", bigtable::RowSet(), 0,
+  bigtable::RowReader reader(client_, "", bigtable::RowSet(),
+                             bigtable::Table::NO_ROWS_LIMIT,
                              bigtable::Filter::PassAllFilter());
 
   EXPECT_EQ(reader.begin(), reader.end());
@@ -62,7 +65,8 @@ TEST_F(RowReaderTest, ReadOneRow) {
       .WillOnce(DoAll(SetArgPointee<0>(response_), Return(true)))
       .WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "", bigtable::RowSet(), 0,
+  bigtable::RowReader reader(client_, "", bigtable::RowSet(),
+                             bigtable::Table::NO_ROWS_LIMIT,
                              bigtable::Filter::PassAllFilter());
 
   EXPECT_NE(reader.begin(), reader.end());
