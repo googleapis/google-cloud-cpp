@@ -21,11 +21,14 @@ function kill_emulator {
   wait >/dev/null 2>&1
 }
 
+readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
+readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+
 echo "Launching Cloud Bigtable emulator in the background"
 # The tests typically run in a Docker container, where the ports are largely
 # free; when using in manual tests, you can set EMULATOR_PORT.
 readonly PORT=${EMULATOR_PORT:-9000}
-"${GOPATH}/bin/emulator" -port "${PORT}" >emulator.log 2>&1 </dev/null &
+"${CBT_EMULATOR}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
 EMULATOR_PID=$!
 if [ $? -ne 0 ]; then
   echo "Cloud Bigtable emulator failed; aborting test." >&2
@@ -43,7 +46,7 @@ delay=1
 connected=no
 readonly ATTEMPTS=$(seq 1 8)
 for attempt in $ATTEMPTS; do
-  if "${GOPATH}/bin/cbt" $CBT_ARGS ls >/dev/null 2>&1; then
+  if "${CBT_CMD}" $CBT_ARGS ls >/dev/null 2>&1; then
     connected=yes
     break
   fi

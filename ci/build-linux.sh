@@ -34,6 +34,7 @@ sudo docker run -it \
      --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
      --env TEST_INSTALL="${TEST_INSTALL:-}" \
      --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
-     --env GOPATH=/var/tmp/build/cbt \
+     --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
+     --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
      --env TERM=${TERM:-dumb} \
      --volume $PWD:/v --workdir /v "${IMAGE}:tip" /v/ci/build-docker.sh

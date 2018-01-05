@@ -22,7 +22,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 GENERATE_DOCS=yes
     - os: linux
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
@@ -36,7 +36,7 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
     - os: linux
       compiler: gcc
-      env: DISTRO=fedora DISTRO_VERSION=27
+      env: DISTRO=fedora DISTRO_VERSION=27 CHECK_STYLE=yes
     - os: osx
       compiler: clang
       script: ci/build-macosx.sh

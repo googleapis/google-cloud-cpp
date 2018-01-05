@@ -41,19 +41,8 @@ RUN apt-get update && apt-get install -y \
 # versions.
 RUN if grep -q 14.04 /etc/lsb-release; then apt-get install -y cmake3; fi
 
-# Install optional packages.  Their installation fails in 14.04, the matrix
-# is (or will be) setup to only use them for other Ubuntu versions.
-RUN apt-get install -y \
-    clang-4.0 \
-    clang-format \
-    clang-tidy \
-    gcc-4.8 \
-    g++-4.8 \
-  || /bin/true
-
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
-ARG GOPATH=/var/tmp/build/cbt
-WORKDIR ${GOPATH}
-COPY go-get-emulator.sh /var/tmp/build
-RUN /var/tmp/build/go-get-emulator.sh
+WORKDIR /var/tmp/install/cbt-components
+RUN curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir=/usr/local
+RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
