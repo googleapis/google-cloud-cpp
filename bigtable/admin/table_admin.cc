@@ -53,7 +53,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
     grpc::Status status =
-        client_->table_admin().ListTables(&client_context, request, &response);
+        client_->Stub()->ListTables(&client_context, request, &response);
     client_->on_completion(status);
     if (status.ok()) {
       for (auto& table : response.tables()) {

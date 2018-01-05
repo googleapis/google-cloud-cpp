@@ -21,7 +21,6 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 
-#include <absl/memory/memory.h>
 #include <absl/strings/str_cat.h>
 
 #include "bigtable/client/testing/chrono_literals.h"
@@ -33,7 +32,8 @@ class MockAdminClient : public bigtable::AdminClient {
  public:
   MOCK_CONST_METHOD0(project, std::string const&());
   MOCK_METHOD1(on_completion, void(grpc::Status const& status));
-  MOCK_METHOD0(table_admin, btproto::BigtableTableAdmin::StubInterface&());
+  MOCK_METHOD0(Stub,
+               std::shared_ptr<btproto::BigtableTableAdmin::StubInterface>());
 };
 
 std::string const kProjectId = "the-project";
@@ -46,17 +46,13 @@ class TableAdminTest : public ::testing::Test {
     using namespace ::testing;
 
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, table_admin())
-        .WillRepeatedly(
-            Invoke([this]() -> btproto::BigtableTableAdmin::StubInterface& {
-              return *table_admin_stub_;
-            }));
+    EXPECT_CALL(*client_, Stub()).WillRepeatedly(Return(table_admin_stub_));
   }
 
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
-  std::unique_ptr<btproto::MockBigtableTableAdminStub> table_admin_stub_ =
-      absl::make_unique<btproto::MockBigtableTableAdminStub>();
+  std::shared_ptr<btproto::MockBigtableTableAdminStub> table_admin_stub_ =
+      std::make_shared<btproto::MockBigtableTableAdminStub>();
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same

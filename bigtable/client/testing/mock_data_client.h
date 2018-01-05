@@ -28,7 +28,8 @@ class MockDataClient : public bigtable::DataClient {
  public:
   MOCK_CONST_METHOD0(project_id, std::string const&());
   MOCK_CONST_METHOD0(instance_id, std::string const&());
-  MOCK_CONST_METHOD0(Stub, google::bigtable::v2::Bigtable::StubInterface&());
+  MOCK_METHOD0(
+      Stub, std::shared_ptr<::google::bigtable::v2::Bigtable::StubInterface>());
 };
 
 }  // namespace testing

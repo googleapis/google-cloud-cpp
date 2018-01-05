@@ -43,16 +43,17 @@ class DefaultDataClient : public DataClient {
   std::string const& project_id() const override;
   std::string const& instance_id() const override;
 
-  google::bigtable::v2::Bigtable::StubInterface& Stub() const override {
-    return *bt_stub_;
-  }
+  using BigtableStubPtr =
+      std::shared_ptr<google::bigtable::v2::Bigtable::StubInterface>;
+
+  BigtableStubPtr Stub() override { return bt_stub_; }
 
  private:
   std::string project_;
   std::string instance_;
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::shared_ptr<grpc::Channel> channel_;
-  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> bt_stub_;
+  BigtableStubPtr bt_stub_;
 };
 
 std::string const& DefaultDataClient::project_id() const { return project_; }

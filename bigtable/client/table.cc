@@ -49,7 +49,7 @@ void Table::Apply(SingleRowMutation&& mut) {
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
     grpc::Status status =
-        client_->Stub().MutateRow(&client_context, request, &response);
+        client_->Stub()->MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return;
     }
@@ -92,7 +92,7 @@ void Table::BulkApply(BulkMutation&& mut) {
     backoff_policy->setup(client_context);
     retry_policy->setup(client_context);
 
-    status = mutator.MakeOneRequest(client_->Stub(), client_context);
+    status = mutator.MakeOneRequest(*client_->Stub(), client_context);
     if (not status.ok() and not retry_policy->on_failure(status)) {
       break;
     }
