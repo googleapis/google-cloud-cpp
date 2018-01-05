@@ -110,6 +110,7 @@ add_library(bigtable_client
     client/mutations.h
     client/mutations.cc
     client/row.h
+    client/row_set.h
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
