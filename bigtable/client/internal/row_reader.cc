@@ -112,6 +112,15 @@ void RowReader::Advance() {
       return;
     }
 
+    // In the unlikely case when we have already reached the requested
+    // number of rows and still receive an error (the parser can throw
+    // an error at end of stream for example), there is no need to
+    // retry and we have no good value for rows_limit anyway.
+    if (rows_limit_ != NO_ROWS_LIMIT and rows_limit_ <= rows_count_) {
+      row_.reset();
+      return;
+    }
+
     if (not status.ok() and not retry_policy_->on_failure(status)) {
       throw std::runtime_error("Unretriable error: " + status.error_message());
     }
