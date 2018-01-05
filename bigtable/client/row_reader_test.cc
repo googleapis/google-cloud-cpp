@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/row_reader.h"
+#include "bigtable/client/row_reader.h"
 
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
