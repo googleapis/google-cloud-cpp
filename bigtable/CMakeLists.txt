@@ -118,7 +118,7 @@ add_library(bigtable_client
     client/rpc_retry_policy.cc
     client/table.h
     client/table.cc
-    client/version.h client/internal/row_key_compare.cc client/internal/row_key_compare.h)
+    client/version.h)
 target_link_libraries(bigtable_client
     bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
@@ -176,7 +176,6 @@ set(bigtable_client_unit_tests
     client/internal/bulk_mutator_test.cc
     client/internal/prefix_range_end_test.cc
     client/internal/readrowsparser_test.cc
-    client/internal/row_key_compare_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc

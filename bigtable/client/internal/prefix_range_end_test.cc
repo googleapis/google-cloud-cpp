@@ -17,7 +17,7 @@
 #include <gmock/gmock.h>
 
 TEST(PrefixRangeEndTest, Simple) {
-  // We assume ASCII in this test, sue me.
+  // This test assumes ASCII.
   EXPECT_EQ("foo0", bigtable::internal::PrefixRangeEnd("foo/"));
   EXPECT_EQ("fop", bigtable::internal::PrefixRangeEnd("foo"));
 }

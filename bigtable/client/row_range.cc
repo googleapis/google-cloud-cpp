@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/client/row_range.h"
-#include "bigtable/client/internal/row_key_compare.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -23,27 +22,27 @@ bool RowRange::IsEmpty() const {
   std::string unused;
   // We do not want to copy the strings unnecessarily, so initialize a reference
   // pointing to *_key_closed() or *_key_open(), as needed.
-  std::reference_wrapper<const std::string> start(unused);
+  std::string const* start = &unused;
   bool start_open = false;
   switch (row_range_.start_key_case()) {
     case btproto::RowRange::kStartKeyClosed:
-      start = std::cref(row_range_.start_key_closed());
+      start = &row_range_.start_key_closed();
       break;
     case btproto::RowRange::kStartKeyOpen:
-      start = std::cref(row_range_.start_key_open());
+      start = &row_range_.start_key_open();
       start_open = true;
       break;
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
   }
-  std::reference_wrapper<const std::string> end(unused);
+  std::string const* end = &unused;
   bool end_open = false;
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
-      end = std::cref(row_range_.end_key_closed());
+      end = &row_range_.end_key_closed();
       break;
     case btproto::RowRange::kEndKeyOpen:
-      end = std::cref(row_range_.end_key_open());
+      end = &row_range_.end_key_open();
       end_open = true;
       break;
     case btproto::RowRange::END_KEY_NOT_SET:
@@ -52,7 +51,7 @@ bool RowRange::IsEmpty() const {
   }
 
   // Compare the strings as byte vectors (careful with unsigned chars).
-  int cmp = internal::RowKeyCompare(start.get(), end.get());
+  int cmp = start->compare(*end);
   if (cmp == 0) {
     return start_open or end_open;
   }
@@ -68,9 +67,9 @@ bool RowRange::BelowStart(absl::string_view key) const {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
     case btproto::RowRange::kStartKeyClosed:
-      return internal::RowKeyCompare(key, row_range_.start_key_closed()) < 0;
+      return key < row_range_.start_key_closed();
     case btproto::RowRange::kStartKeyOpen:
-      return internal::RowKeyCompare(key, row_range_.start_key_open()) <= 0;
+      return key <= row_range_.start_key_open();
   }
   return false;
 }
@@ -80,9 +79,9 @@ bool RowRange::AboveEnd(absl::string_view key) const {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;
     case btproto::RowRange::kEndKeyClosed:
-      return internal::RowKeyCompare(key, row_range_.end_key_closed()) > 0;
+      return key > row_range_.end_key_closed();
     case btproto::RowRange::kEndKeyOpen:
-      return internal::RowKeyCompare(key, row_range_.end_key_open()) >= 0;
+      return key >= row_range_.end_key_open();
   }
   return false;
 }
