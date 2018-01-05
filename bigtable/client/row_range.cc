@@ -35,7 +35,7 @@ bool RowRange::IsEmpty() const {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
   }
-  std::string const* end = &unused;
+  std::string const* end;
   bool end_open = false;
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
