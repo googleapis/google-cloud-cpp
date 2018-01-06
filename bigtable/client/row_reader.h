@@ -85,15 +85,15 @@ class RowReader {
   /**
    * Read and parse the next row in the response.
    *
-   * Invalidates the previous row and feeds response chunks into the
-   * parser until another row is available.
+   * @param row receives the next row on success, and is reset on failure or if
+   * there are no more rows.
    *
-   * This call possibly blocks waiting for data.
+   * This call possibly blocks waiting for data until a full row is available.
    */
-  void Advance();
+  void Advance(absl::optional<Row>& row);
 
   /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail();
+  grpc::Status AdvanceOrFail(absl::optional<Row>& row);
 
   /**
    * Move the index to the next chunk, reading data if needed.
@@ -108,17 +108,28 @@ class RowReader {
   /// The input iterator returned by begin() and end()
   class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
    public:
-    RowReaderIterator(RowReader* owner, bool is_end)
-        : owner_(owner), is_end_(is_end) {}
+    RowReaderIterator(RowReader* owner, bool is_end) : owner_(owner), row_() {}
 
     RowReaderIterator& operator++();
+    RowReaderIterator operator++(int) {
+      RowReaderIterator tmp(*this);
+      operator++();
+      return tmp;
+    }
 
-    Row const& operator*() { return owner_->row_.operator*(); }
-    Row const* operator->() { return owner_->row_.operator->(); }
+    constexpr const Row* operator->() const { return row_.operator->(); }
+    Row* operator->() { return row_.operator->(); }
+
+    constexpr const Row& operator*() const & { return row_.operator*(); }
+    Row& operator*() & { return row_.operator*(); }
+    constexpr const Row&& operator*() const && {
+      return absl::move(row_.operator*());
+    }
+    Row&& operator*() && { return std::move(row_.operator*()); }
 
     bool operator==(RowReaderIterator const& that) const {
       // All non-end iterators are equal.
-      return is_end_ == that.is_end_;
+      return bool(row_) == bool(that.row_);
     }
 
     bool operator!=(RowReaderIterator const& that) const {
@@ -127,7 +138,7 @@ class RowReader {
 
    private:
     RowReader* owner_;
-    bool is_end_;
+    absl::optional<Row> row_;
   };
 
   std::shared_ptr<DataClient> client_;
@@ -152,9 +163,8 @@ class RowReader {
 
   /// Number of rows read so far, used to set row_limit in retries.
   int rows_count_;
-
-  /// Holds the last read row, non-end() iterators all point to it.
-  absl::optional<Row> row_;
+  /// Holds the last read row key, for retries.
+  std::string last_read_row_key_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

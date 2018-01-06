@@ -58,17 +58,14 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       response_(),
       processed_chunks_(0),
       rows_count_(0),
-      row_() {}
+      last_read_row_key_() {}
 
 RowReader::iterator RowReader::begin() {
   if (not stream_) {
     MakeRequest();
-    Advance();
   }
-  if (not row_) {
-    return end();
-  }
-  return RowReader::RowReaderIterator(this, false);
+  // Increment the iterator to read a row.
+  return ++RowReader::RowReaderIterator(this, false);
 }
 
 RowReader::iterator RowReader::end() {
@@ -76,10 +73,7 @@ RowReader::iterator RowReader::end() {
 }
 
 RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
-  owner_->Advance();
-  if (not owner_->row_) {
-    is_end_ = true;
-  }
+  owner_->Advance(row_);
   return *this;
 }
 
@@ -90,10 +84,10 @@ void RowReader::MakeRequest() {
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(std::string(table_name_));
 
-  if (row_) {
+  if (not last_read_row_key_.empty()) {
     // There is a previous read row, so this is a restarted call and
-    // we need to clip the RowSet at the last seen row key.
-    row_set_.ClipUpTo(row_->row_key());
+    // we need to clip the RowSet at the last read row key.
+    row_set_.ClipUpTo(last_read_row_key_);
   }
 
   auto row_set_proto = row_set_.as_proto();
@@ -122,12 +116,12 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-void RowReader::Advance() {
+void RowReader::Advance(absl::optional<Row>& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
     try {
-      status = AdvanceOrFail();
+      status = AdvanceOrFail(row);
     } catch (std::exception ex) {
       // Parser exceptions arrive here
       status = grpc::Status(grpc::INTERNAL, ex.what());
@@ -142,7 +136,7 @@ void RowReader::Advance() {
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT and rows_limit_ <= rows_count_) {
-      row_.reset();
+      row.reset();
       return;
     }
 
@@ -158,7 +152,7 @@ void RowReader::Advance() {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail() {
+grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
   do {
     if (NextChunk()) {
       parser_->HandleChunk(
@@ -175,10 +169,10 @@ grpc::Status RowReader::AdvanceOrFail() {
   } while (not parser_->HasNext());
 
   if (parser_->HasNext()) {
-    row_.emplace(parser_->Next());
+    row.emplace(parser_->Next());
     ++rows_count_;
   } else {
-    row_.reset();
+    row.reset();
   }
 
   return grpc::Status::OK;
