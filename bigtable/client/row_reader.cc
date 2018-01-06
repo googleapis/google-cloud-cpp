@@ -171,6 +171,7 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
   if (parser_->HasNext()) {
     row.emplace(parser_->Next());
     ++rows_count_;
+    last_read_row_key_ = std::string(row->row_key());
   } else {
     row.reset();
   }
