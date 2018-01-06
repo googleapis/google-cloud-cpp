@@ -98,6 +98,7 @@ add_library(bigtable_client
     client/data_client.cc
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
+    client/internal/common_client.h
     client/internal/conjunction.h
     client/internal/prefix_range_end.h
     client/internal/prefix_range_end.cc
@@ -177,6 +178,7 @@ add_custom_target(tests-local)
 set(bigtable_client_unit_tests
     client/cell_test.cc
     client/client_options_test.cc
+    client/data_client_test.cc
     client/filters_test.cc
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc

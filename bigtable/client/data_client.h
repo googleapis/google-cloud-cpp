@@ -40,6 +40,23 @@ class DataClient {
 
   virtual std::shared_ptr<google::bigtable::v2::Bigtable::StubInterface>
   Stub() = 0;
+
+  /**
+   * Reset and create a new Stub().
+   *
+   * Currently this is only used in testing.  In the future, we expect this,
+   * or a similar member function, will be needed to handle errors that require
+   * a new connection, or an explicit refresh of the credentials.
+   */
+  virtual void reset() = 0;
+
+  /**
+   * A callback for completed RPCs.
+   *
+   * Currently this is only used in testing.  In the future, we expect that
+   * some errors may require the class to update its state.
+   */
+  virtual void on_completion(grpc::Status const&) = 0;
 };
 
 /// Create the default implementation of ClientInterface.
