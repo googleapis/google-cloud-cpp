@@ -50,7 +50,7 @@ class CommonClient {
 
   StubPtr Stub() {
     if (not stub_) {
-      auto channel = grpc::CreateCustomChannel(Traits::endpoint(options_),
+      auto channel = grpc::CreateCustomChannel(Traits::Endpoint(options_),
                                                options_.credentials(),
                                                options_.channel_arguments());
       stub_ = Interface::NewStub(channel);

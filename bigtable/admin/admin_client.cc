@@ -34,7 +34,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct AdminTraits {
-    static std::string const& endpoint(bigtable::ClientOptions& options) {
+    static std::string const& Endpoint(bigtable::ClientOptions& options) {
       return options.admin_endpoint();
     }
   };
@@ -51,7 +51,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
   std::string const& project() const override { return project_; }
   AdminStubPtr Stub() override { return impl_.Stub(); }
   void reset() override { return impl_.reset(); }
-  void on_completion(grpc::Status const&) override {}
+  void on_completion(grpc::Status const& status) override {}
 
  private:
   std::string project_;

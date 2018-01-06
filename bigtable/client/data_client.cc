@@ -30,7 +30,7 @@ class DefaultDataClient : public DataClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct DataTraits {
-    static std::string const& endpoint(bigtable::ClientOptions& options) {
+    static std::string const& Endpoint(bigtable::ClientOptions& options) {
       return options.data_endpoint();
     }
   };
@@ -58,7 +58,7 @@ class DefaultDataClient : public DataClient {
 
   BigtableStubPtr Stub() override { return impl_.Stub(); }
   void reset() override { impl_.reset(); }
-  void on_completion(grpc::Status const&) override {}
+  void on_completion(grpc::Status const& status) override {}
 
  private:
   std::string project_;
