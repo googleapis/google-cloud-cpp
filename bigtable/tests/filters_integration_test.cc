@@ -200,6 +200,10 @@ bool operator<(Cell const& lhs, Cell const& rhs) {
   return CellCompare(lhs, rhs) < 0;
 }
 
+/**
+ * This function is not used in this file, but it is used by GoogleTest; without
+ * it, failing tests will output binary blobs instead of human-readable text.
+ */
 void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
