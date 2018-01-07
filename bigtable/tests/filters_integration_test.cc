@@ -43,9 +43,6 @@ class FilterTestEnvironment : public ::testing::Environment {
     instance_id_ = std::move(instance);
   }
 
-  void SetUp() override {}
-  void TearDown() override {}
-
   static std::string const& project_id() { return project_id_; }
   static std::string const& instance_id() { return instance_id_; }
 
@@ -57,14 +54,13 @@ class FilterTestEnvironment : public ::testing::Environment {
 class FilterIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override;
-  void TearDown() override {}
 
   std::unique_ptr<bigtable::Table> CreateTable(std::string const& table_id);
 
   /**
    * Return all the cells included in @p request.
    *
-   * // TODO(#32) remove this when Table::ReadRows() is a thing.
+   * TODO(#32) remove this when Table::ReadRows() is a thing.
    */
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
                                        btproto::ReadRowsRequest request);
@@ -93,25 +89,24 @@ class FilterIntegrationTest : public ::testing::Test {
    * Create the following rows in @p table, the magic values for the column
    * families are defined above.
    *
-   *   | Row Key                 | Family | Column | Contents      |
-   *   | :---------------------- | :----- | :----- | :------------ |
-   *   | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
-   *   | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
-   *   | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
-   *   | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 200, 3000
-   * |
-   *   | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
-   *   | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
-   *   | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
-   *   | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
-   *   | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
-   *   | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+   * | Row Key                 | Family | Column | Contents      |
+   * | :---------------------- | :----- | :----- | :------------ |
+   * | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
+   * | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
+   * | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
+   * | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
+   * | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
+   * | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
    *
    */
   void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
@@ -200,9 +195,11 @@ namespace bigtable {
 bool operator==(Cell const& lhs, Cell const& rhs) {
   return CellCompare(lhs, rhs) == 0;
 }
+
 bool operator<(Cell const& lhs, Cell const& rhs) {
   return CellCompare(lhs, rhs) < 0;
 }
+
 void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
@@ -633,8 +630,8 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
                              bt::SetCell("fam0", "c1", 3000, "foo"),
                              bt::SetCell("fam0", "c2", 3000, "foo"),
                              bt::SetCell("fam0", "c3", 3000, "foo")}));
-  // This one is complicated, create a mutation with several families and
-  // columns
+  // This one is complicated: create a mutation with several families and
+  // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
   for (int i = 0; i != 4; ++i) {
     for (int j = 0; j != 10; ++j) {
