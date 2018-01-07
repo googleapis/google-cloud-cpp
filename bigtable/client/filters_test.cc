@@ -37,6 +37,11 @@ TEST(FiltersTest, Latest) {
   EXPECT_EQ(3, proto.cells_per_column_limit_filter());
 }
 
+TEST(FiltersTest, FamilyRegex) {
+  auto proto = bigtable::Filter::FamilyRegex("fam[123]").as_proto();
+  EXPECT_EQ("fam[123]", proto.family_name_regex_filter());
+}
+
 TEST(FiltersTest, ColumnRegex) {
   auto proto = bigtable::Filter::ColumnRegex("col[A-E]").as_proto();
   EXPECT_EQ("col[A-E]", proto.column_qualifier_regex_filter());
@@ -51,11 +56,6 @@ TEST(FiltersTest, ColumnRange) {
   EXPECT_EQ(btproto::ColumnRange::kEndQualifierOpen,
             proto.column_range_filter().end_qualifier_case());
   EXPECT_EQ("colF", proto.column_range_filter().end_qualifier_open());
-}
-
-TEST(FiltersTest, FamilyRegex) {
-  auto proto = bigtable::Filter::FamilyRegex("fam[123]").as_proto();
-  EXPECT_EQ("fam[123]", proto.family_name_regex_filter());
 }
 
 TEST(FiltersTest, TimestampRangeMicros) {
