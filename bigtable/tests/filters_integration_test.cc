@@ -520,7 +520,7 @@ std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
     bigtable::Table& table, btproto::ReadRowsRequest request) {
   std::vector<bigtable::Cell> result;
   grpc::ClientContext client_context;
-  auto stream = data_client_->Stub().ReadRows(&client_context, request);
+  auto stream = data_client_->Stub()->ReadRows(&client_context, request);
   btproto::ReadRowsResponse response;
 
   std::string current_row_key;
