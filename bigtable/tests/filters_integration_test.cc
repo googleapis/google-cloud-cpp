@@ -618,8 +618,28 @@ TEST_F(FilterIntegrationTest, Condition) {
   CheckEqualUnordered(expected, actual);
 }
 
-// TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, Chain) {}
+TEST_F(FilterIntegrationTest, Chain) {
+  auto table = CreateTable("chain-filter-table");
+  std::string const prefix = "chain-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
+  };
+  using F = bigtable::Filter;
+  auto actual =
+      ReadRows(*table, F::Chain(F::ValueRangeClosed("v2000", "v5000"),
+                                F::StripValueTransformer(),
+                                F::ColumnRangeClosed("fam0", "c2", "c3")));
+  CheckEqualUnordered(expected, actual);
+}
 
 // TODO(#152) - implement the following integration test.
 TEST_F(FilterIntegrationTest, Interleave) {
