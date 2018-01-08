@@ -36,10 +36,16 @@ static_assert(std::is_move_assignable<RowReader::iterator>::value,
 static_assert(std::is_destructible<RowReader::iterator>::value,
               "RowReader::iterator must be Destructible");
 
-// TODO(C++17): std::is_swappable
+static_assert(
+    std::is_convertible<decltype(*std::declval<RowReader::iterator>()),
+                        RowReader::iterator::value_type>::value,
+    "*it when it is of RowReader::iterator type must be convertible to "
+    "RowReader::iterator::value_type>");
 
-// TODO: check that if o is of type iterator then ++o and *o
-// are valid expressions with the usual return types ...
+static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
+                           RowReader::iterator&>::value,
+              "++it when it is of RowReader::iterator type must be a "
+              "RowReader::iterator &>");
 
 }  // anonymous namespace
 
