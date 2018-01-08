@@ -562,14 +562,56 @@ TEST_F(FilterIntegrationTest, StripValueTransformer) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  auto table = CreateTable("apply-label-transformer-filter-table");
+  std::string const prefix = "apply-label-transformer-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {"foo"}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {"foo"}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {"foo"}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {"foo"}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {"foo"}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {"foo"}},
+  };
+  auto actual =
+      ReadRows(*table, bigtable::Filter::ApplyLabelTransformer("foo"));
+  CheckEqualUnordered(expected, actual);
+}
+
 // TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, Condition) {}
+TEST_F(FilterIntegrationTest, Condition) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+
+}
 
 // TODO(#152) - implement the following integration test.
 TEST_F(FilterIntegrationTest, Chain) {}
 
 // TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, Interleave) {}
+TEST_F(FilterIntegrationTest, Interleave) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+
+}
 
 namespace {
 std::string FilterTestEnvironment::project_id_;
@@ -743,14 +785,24 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (lhs.timestamp() > lhs.timestamp()) {
     return 1;
   }
-  return lhs.value().compare(rhs.value());
+  auto compare_value = lhs.value().compare(rhs.value());
+  if (compare_value != 0) {
+    return compare_value;
+  }
+  if (lhs.labels() < rhs.labels()) {
+    return -1;
+  }
+  if (lhs.labels() == rhs.labels()) {
+    return 0;
+  }
+  return 1;
 }
 
 void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
                          std::vector<bigtable::Cell> actual) {
   std::sort(expected.begin(), expected.end());
   std::sort(actual.begin(), actual.end());
-  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
+  EXPECT_THAT(actual, ::testing::ContainerEq(expected));
 }
 
 bool UsingCloudBigtableEmulator() {

@@ -461,9 +461,10 @@ class Filter {
    *     gets a different label.
    *
    * @param label the label applied to each cell.  The labels must be at most 15
-   *     characters long, and must match the `[a-z0-9\\-]` pattern.
-   *
-   * TODO(#84) - change this if we decide to validate inputs in the client side
+   *     characters long, and must match the `[a-z0-9\\-]+` pattern.  The server
+   *     validates the filter and will return a
+   *     `grpc::StatusCode::INVALID_ARGUMENT` if the label does not meet these
+   *     requirements.
    */
   static Filter ApplyLabelTransformer(std::string label) {
     Filter tmp;
