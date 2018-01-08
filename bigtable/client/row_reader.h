@@ -20,6 +20,7 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/internal/readrowsparser.h"
+#include "bigtable/client/internal/rowreaderiterator.h"
 #include "bigtable/client/row.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
@@ -42,7 +43,6 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Iterate over the results of ReadRows() using the STL idioms.
  */
 class RowReader {
-  class RowReaderIterator;
 
  public:
   /**
@@ -58,7 +58,8 @@ class RowReader {
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy);
 
-  using iterator = RowReaderIterator;
+  using iterator = internal::RowReaderIterator;
+  friend class internal::RowReaderIterator;
 
   /**
    * Input iterator over rows in the response.
@@ -116,40 +117,6 @@ class RowReader {
 
   /// Sends the ReadRows request to the stub.
   void MakeRequest();
-
-  /// The input iterator returned by begin() and end()
-  class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
-   public:
-    RowReaderIterator(RowReader* owner, bool is_end) : owner_(owner), row_() {}
-
-    RowReaderIterator& operator++();
-    RowReaderIterator operator++(int) {
-      RowReaderIterator tmp(*this);
-      operator++();
-      return tmp;
-    }
-
-    Row const* operator->() const { return row_.operator->(); }
-    Row* operator->() { return row_.operator->(); }
-
-    Row const& operator*() const & { return row_.operator*(); }
-    Row& operator*() & { return row_.operator*(); }
-    Row const&& operator*() const && { return std::move(row_.operator*()); }
-    Row&& operator*() && { return std::move(row_.operator*()); }
-
-    bool operator==(RowReaderIterator const& that) const {
-      // All non-end iterators are equal.
-      return (owner_ == that.owner_) and (bool(row_) == bool(that.row_));
-    }
-
-    bool operator!=(RowReaderIterator const& that) const {
-      return !(*this == that);
-    }
-
-   private:
-    RowReader* owner_;
-    absl::optional<Row> row_;
-  };
 
   std::shared_ptr<DataClient> client_;
   std::string table_name_;

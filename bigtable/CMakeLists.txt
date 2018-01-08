@@ -101,6 +101,8 @@ add_library(bigtable_client
     client/internal/conjunction.h
     client/internal/readrowsparser.h
     client/internal/readrowsparser.cc
+    client/internal/rowreaderiterator.h
+    client/internal/rowreaderiterator.cc
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h

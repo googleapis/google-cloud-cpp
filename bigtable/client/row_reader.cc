@@ -73,16 +73,11 @@ RowReader::iterator RowReader::begin() {
     MakeRequest();
   }
   // Increment the iterator to read a row.
-  return ++RowReader::RowReaderIterator(this, false);
+  return ++internal::RowReaderIterator(this, false);
 }
 
 RowReader::iterator RowReader::end() {
-  return RowReader::RowReaderIterator(this, true);
-}
-
-RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
-  owner_->Advance(row_);
-  return *this;
+  return internal::RowReaderIterator(this, true);
 }
 
 void RowReader::MakeRequest() {
