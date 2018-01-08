@@ -157,28 +157,29 @@ void RowReader::Advance(absl::optional<Row>& row) {
 }
 
 grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
-  do {
+  row.reset();
+  while (not parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_))));
-    } else {
-      grpc::Status status = stream_->Finish();
-      if (status.ok()) {
-        parser_->HandleEndOfStream();
-        break;
-      } else {
-        return status;
-      }
+      continue;
     }
-  } while (not parser_->HasNext());
 
-  if (parser_->HasNext()) {
-    row.emplace(parser_->Next());
-    ++rows_count_;
-    last_read_row_key_ = std::string(row->row_key());
-  } else {
-    row.reset();
+    // Here, there are no more chunks to look at. Close the stream,
+    // finalize the parser and return OK with no rows unless something
+    // fails during cleanup.
+    grpc::Status status = stream_->Finish();
+    if (not status.ok()) {
+      return status;
+    }
+    parser_->HandleEndOfStream();
+    return grpc::Status::OK;
   }
+
+  // We have a complete row in the parser.
+  row.emplace(parser_->Next());
+  ++rows_count_;
+  last_read_row_key_ = std::string(row->row_key());
 
   return grpc::Status::OK;
 }
