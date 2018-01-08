@@ -218,7 +218,11 @@ class Filter {
     return tmp;
   }
 
-  /// Return a filter matching values in the range [@p start, @p end).
+  /**
+   * Return filter matching values in the range [@p start, @p end).
+   *
+   * @see ValueRangeRightOpen() for more details.
+   */
   static Filter ValueRange(std::string start, std::string end) {
     return ValueRangeRightOpen(std::move(start), std::move(end));
   }
@@ -301,7 +305,9 @@ class Filter {
   /**
    * Return a filter that accepts values in the range [@p start, @p end).
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ValueRangeLeftOpen(std::string start, std::string end) {
     Filter tmp;
@@ -314,7 +320,9 @@ class Filter {
   /**
    * Return a filter that accepts values in the range [@p start, @p end].
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ValueRangeRightOpen(std::string start, std::string end) {
     Filter tmp;
@@ -327,7 +335,9 @@ class Filter {
   /**
    * Return a filter that accepts values in the range [@p start, @p end].
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ValueRangeClosed(std::string start, std::string end) {
     Filter tmp;
@@ -340,7 +350,9 @@ class Filter {
   /**
    * Return a filter that accepts values in the range (@p start, @p end).
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ValueRangeOpen(std::string start, std::string end) {
     Filter tmp;
@@ -354,7 +366,9 @@ class Filter {
    * Return a filter that accepts columns in the range [@p start, @p end)
    * within the @p column_family.
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ColumnRangeRightOpen(std::string column_family,
                                      std::string start, std::string end) {
@@ -370,7 +384,9 @@ class Filter {
    * Return a filter that accepts columns in the range (@p start, @p end]
    * within the @p column_family.
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ColumnRangeLeftOpen(std::string column_family,
                                     std::string start, std::string end) {
@@ -386,7 +402,9 @@ class Filter {
    * Return a filter that accepts columns in the range [@p start, @p end]
    * within the @p column_family.
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ColumnRangeClosed(std::string column_family, std::string start,
                                   std::string end) {
@@ -402,7 +420,9 @@ class Filter {
    * Return a filter that accepts columns in the range (@p start, @p end)
    * within the @p column_family.
    *
-   * TODO(#84) - document what happens if end < start
+   * The range must be non-empty. The server will reject empty ranges with a
+   * `grpc::StatusCode::INVALID_ARGUMENT` error. This function makes no
+   * attempt to validate the timestamp range before sending it to the server.
    */
   static Filter ColumnRangeOpen(std::string column_family, std::string start,
                                 std::string end) {

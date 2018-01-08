@@ -389,7 +389,6 @@ TEST_F(FilterIntegrationTest, RowKeysRegex) {
   std::vector<bigtable::Cell> expected{
       {row_key + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
   };
-  using std::chrono::milliseconds;
   auto actual =
       ReadRows(*table, bigtable::Filter::RowKeysRegex(row_key + "/bc.*"));
   CheckEqualUnordered(expected, actual);
@@ -406,18 +405,37 @@ TEST_F(FilterIntegrationTest, ValueRegex) {
       {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
       {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
   };
-  CreateCells(table, created);
+  CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
       {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
       {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
   };
-  using std::chrono::milliseconds;
   auto actual = ReadRows(*table, bigtable::Filter::ValueRegex("v[34][0-9].*"));
   CheckEqualUnordered(expected, actual);
 }
 
-// TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, ValueRange) {}
+TEST_F(FilterIntegrationTest, ValueRange) {
+  auto table = CreateTable("value-range-filter-table");
+  std::string const prefix = "value-range-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+  };
+  auto actual =
+      ReadRows(*table, bigtable::Filter::ValueRange("v2000", "v6000"));
+  CheckEqualUnordered(expected, actual);
+}
 
 TEST_F(FilterIntegrationTest, CellsRowLimit) {
   auto table = CreateTable("cells-row-limit-filter-table");
