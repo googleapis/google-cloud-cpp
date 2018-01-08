@@ -72,8 +72,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
-        set(CMAKE_CXX_STANDARD 11)
-        set(CMAKE_CXX_STANDARD_REQUIRED ON)
         if (MSVC)
             add_definitions(/wd4065 /wd4506 /wd4267 /wd4800 /wd4291 /wd4838)
             if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
