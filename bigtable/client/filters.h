@@ -513,9 +513,9 @@ class Filter {
    * @param stages the filter stages.  The filter must contain at least two
    *    stages. The server validates each stage, and will reject them as
    *    described in their corresponding function. The server may also impose
-   *    additional restrictions, for example, only one of the stages can be an
-   *    ApplyLabelTransformer().  This function makes no attempt at validating
-   *    the chain before sending it to the server.
+   *    additional restrictions on the composition of the Chain. This function
+   *    makes no attempt at validating the stages locally, the Chain filter is
+   *    sent as-is it to the server.
    */
   template <typename... FilterTypes>
   static Filter Chain(FilterTypes&&... stages) {
@@ -552,8 +552,13 @@ class Filter {
    * cell altogether.
    *
    * @tparam FilterTypes the type of the filter arguments.  They must all be
-   *     convertible for Filter.
-   * @param streams the filters to interleave.
+   *    convertible for Filter.
+   * @param streams the filters to interleave. The filter must contain at least
+   *    two streams. The server validates each stream, and will reject them as
+   *    described in their corresponding function. The server may also impose
+   *    additional restrictions on the overall composition of the Interleave
+   *    filter. This function makes no attempt at validating the streams
+   *    locally, the Interleave filter is sent as-is to the server.
    */
   template <typename... FilterTypes>
   static Filter Interleave(FilterTypes&&... streams) {
