@@ -81,7 +81,7 @@ class RowReader {
   iterator end();
 
   /**
-   * Stop the read call and clean up the connection.
+   * Gracefully terminate a streaming read.
    *
    * Invalidates iterators.
    */
