@@ -112,6 +112,7 @@ add_library(bigtable_client
     client/row.h
     client/row_range.h
     client/row_range.cc
+    client/row_set.h
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
@@ -182,6 +183,7 @@ set(bigtable_client_unit_tests
     client/table_test.cc
     client/row_test.cc
     client/row_range_test.cc
+    client/row_set_test.cc
     client/rpc_backoff_policy_test.cc
     client/rpc_retry_policy_test.cc)
 foreach (fname ${bigtable_client_unit_tests})
