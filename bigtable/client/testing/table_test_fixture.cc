@@ -14,10 +14,19 @@
 
 #include "bigtable/client/testing/table_test_fixture.h"
 
+#include <google/protobuf/text_format.h>
+
 namespace bigtable {
 namespace testing {
 
-void TableTestFixture::SetUp() {}
+google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
+    std::string repr) {
+  google::bigtable::v2::ReadRowsResponse response;
+  if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
+    throw std::runtime_error("Failed to parse " + repr);
+  }
+  return response;
+}
 
 }  // namespace testing
 }  // namespace bigtable

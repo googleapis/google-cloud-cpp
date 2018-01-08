@@ -53,6 +53,8 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       row_set_(std::move(row_set)),
       rows_limit_(rows_limit),
       filter_(std::move(filter)),
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)),
       context_(absl::make_unique<grpc::ClientContext>()),
       parser_(absl::make_unique<ReadRowsParser>()),
       response_(),
@@ -100,6 +102,8 @@ void RowReader::MakeRequest() {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
+  retry_policy_->setup(*context_.get());
+  backoff_policy_->setup(*context_.get());
   stream_ = client_->Stub().ReadRows(context_.get(), request);
 }
 

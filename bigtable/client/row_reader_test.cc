@@ -32,25 +32,13 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
  public:
   RowReaderTest()
       : stream_(new MockResponseStream()),
-        response_(),
         no_retry_policy_(0),
         backoff_policy_(std::chrono::seconds(0), std::chrono::seconds(0)) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
-
-    auto chunk = response_.add_chunks();
-    chunk->set_row_key("r1");
-    chunk->mutable_family_name()->set_value("fam");
-    chunk->mutable_qualifier()->set_value("qual");
-    chunk->set_timestamp_micros(42000);
-    chunk->set_value("value");
-    chunk->set_commit_row(true);
   }
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
   MockResponseStream *stream_;
-
-  // a simple fake response
-  google::bigtable::v2::ReadRowsResponse response_;
 
   bigtable::LimitedErrorCountRetryPolicy no_retry_policy_;
   bigtable::ExponentialBackoffPolicy backoff_policy_;
@@ -68,8 +56,18 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 }
 
 TEST_F(RowReaderTest, ReadOneRow) {
+  auto response = bigtable::testing::ReadRowsResponseFromString(R"(
+      chunks {
+        row_key: "r1"
+        family_name { value: "fam" }
+        qualifier { value: "qual" }
+        timestamp_micros: 42000
+        value: "value"
+        commit_row: true
+      }
+      )");
   EXPECT_CALL(*stream_, Read(_))
-      .WillOnce(DoAll(SetArgPointee<0>(response_), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
 
   bigtable::RowReader reader(client_, "", bigtable::RowSet(),
@@ -81,7 +79,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
 
   EXPECT_NE(it, reader.end());
 
-  EXPECT_EQ(it->row_key(), response_.chunks(0).row_key());
+  EXPECT_EQ(it->row_key(), "r1");
 
   EXPECT_EQ(std::next(it), reader.end());
 }
