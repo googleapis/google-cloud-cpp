@@ -362,9 +362,9 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
   CreateCells(*table, created);
 
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam2", "c2", 1000, "v3000", {}},
-      {row_key, "fam0", "c3", 1000, "v4000", {}},
-      {row_key, "fam1", "c4", 1000, "v5000", {}},
+      {row_key, "fam2", "c2", 3000, "v3000", {}},
+      {row_key, "fam0", "c3", 4000, "v4000", {}},
+      {row_key, "fam1", "c4", 4000, "v5000", {}},
   };
   using std::chrono::milliseconds;
   auto actual = ReadRow(
@@ -578,7 +578,6 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
       {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
   };
   CreateCells(*table, created);
-
   std::vector<bigtable::Cell> expected{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {"foo"}},
       {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {"foo"}},
@@ -592,13 +591,31 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
   CheckEqualUnordered(expected, actual);
 }
 
-// TODO(#152) - implement the following integration test.
 TEST_F(FilterIntegrationTest, Condition) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
-
+  auto table = CreateTable("condition-filter-table");
+  std::string const prefix = "condition-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+  };
+  using F = bigtable::Filter;
+  auto actual =
+      ReadRows(*table, F::Condition(F::ValueRangeClosed("v2000", "v4000"),
+                                    F::StripValueTransformer(),
+                                    F::FamilyRegex("fam[01]")));
+  CheckEqualUnordered(expected, actual);
 }
 
 // TODO(#152) - implement the following integration test.
@@ -610,7 +627,6 @@ TEST_F(FilterIntegrationTest, Interleave) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
-
 }
 
 namespace {
@@ -766,7 +782,7 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
 }
 
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = lhs.row_key().compare(lhs.row_key());
+  auto compare_row_key = lhs.row_key().compare(rhs.row_key());
   if (compare_row_key != 0) {
     return compare_row_key;
   }
@@ -779,10 +795,10 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (compare_column_qualifier != 0) {
     return compare_column_qualifier;
   }
-  if (lhs.timestamp() < lhs.timestamp()) {
+  if (lhs.timestamp() < rhs.timestamp()) {
     return -1;
   }
-  if (lhs.timestamp() > lhs.timestamp()) {
+  if (lhs.timestamp() > rhs.timestamp()) {
     return 1;
   }
   auto compare_value = lhs.value().compare(rhs.value());

@@ -464,7 +464,8 @@ class Filter {
    *     characters long, and must match the `[a-z0-9\\-]+` pattern.  The server
    *     validates the filter and will return a
    *     `grpc::StatusCode::INVALID_ARGUMENT` if the label does not meet these
-   *     requirements.
+   *     requirements. This function makes no attempt to validate the @p label
+   *     parameter before sending it to the server.
    */
   static Filter ApplyLabelTransformer(std::string label) {
     Filter tmp;
@@ -485,6 +486,11 @@ class Filter {
    * For each row the @p predicate filter is evaluated, if it returns any
    * cells, then the cells returned by @p true_filter are returned, otherwise
    * the cells from @p false_filter are returned.
+   *
+   * The server validates the tree of filters, and rejects them if any contain
+   * invalid values. The server may impose additional restrictions on the
+   * resulting collection of filters.  This function makes no attempt to
+   * validate the input before sending it to the server.
    */
   static Filter Condition(Filter predicate, Filter true_filter,
                           Filter false_filter) {
@@ -502,11 +508,14 @@ class Filter {
    * The filter returned by this function acts like a pipeline.  The output
    * row from each stage is passed on as input for the next stage.
    *
-   * TODO(#84) - decide what happens when there are no filter arguments.
-   *
    * @tparam FilterTypes the type of the filter arguments.  They must all be
    *    convertible to Filter.
-   * @param stages the filter stages.
+   * @param stages the filter stages.  The filter must contain at least two
+   *    stages. The server validates each stage, and will reject them as
+   *    described in their corresponding function. The server may also impose
+   *    additional restrictions, for example, only one of the stages can be an
+   *    ApplyLabelTransformer().  This function makes no attempt at validating
+   *    the chain before sending it to the server.
    */
   template <typename... FilterTypes>
   static Filter Chain(FilterTypes&&... stages) {
