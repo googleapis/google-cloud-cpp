@@ -21,7 +21,7 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Represent (possibly non-continuous) set of row keys.
+ * Represent a (possibly non-continuous) set of row keys.
  *
  * Cloud Bigtable can scan non-continuous sets of rows, these sets can include
  * a mix of specific row keys and ranges as defined by `bigtable::RowRange`.
@@ -51,16 +51,26 @@ class RowSet {
   }
 
   /// Add @p row_key to the set.
-  void Append(std::string row_key) {
-    *row_set_.add_row_keys() = std::move(row_key);
-  }
-
-  /// Add @p row_key to the set.
   void Append(absl::string_view row_key) {
     *row_set_.add_row_keys() = static_cast<std::string>(row_key);
   }
 
-  /// Add @p row_key to the set.
+  /**
+   * Add @p row_key to the set, minimize copies when possible.
+   *
+   * Unlike `Append(absl::string_view)` this overload can avoid copies of the
+   * @p row_key parameter.
+   */
+  void Append(std::string row_key) {
+    *row_set_.add_row_keys() = std::move(row_key);
+  }
+
+  /**
+   * Add @p row_key to the set, resolve ambiguous overloads.
+   *
+   * This overload is needed to resolve ambiguity between
+   * `Append(absl::string_view)` and `Append(std::string)`.
+   */
   void Append(char const* row_key) { Append(absl::string_view(row_key)); }
 
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }

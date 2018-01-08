@@ -113,7 +113,6 @@ add_library(bigtable_client
     client/row_range.h
     client/row_range.cc
     client/row_set.h
-    client/row_set.cc
     client/rpc_backoff_policy.h
     client/rpc_backoff_policy.cc
     client/rpc_retry_policy.h
