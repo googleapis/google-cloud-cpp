@@ -30,6 +30,7 @@ if ($LASTEXITCODE) {
 
 mkdir build
 cd build
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package -DGTEST_USE_OWN_TR1_TUPLE=0 -Dgtest_build_tests=OFF
 
 >>>>>>> Tried to point to bigtable CMakeLists.txt .

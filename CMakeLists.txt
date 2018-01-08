@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 
 # Define the project name, version, and main programming language.
 set(PACKAGE_NAME      "google-cloud-cpp")
@@ -78,6 +78,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
         if (_cpp_latest_flag_supported)
             add_compile_options("/std:c++latest")
+        endif()
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
