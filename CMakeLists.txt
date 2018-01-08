@@ -74,8 +74,6 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         # /wd4800  force value to bool 'true' or 'false' (performance warning)
         add_compile_options(/W3 /wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
         add_definitions(/DNOMINMAX /DWIN32_LEAN_AND_MEAN=1 /D_CRT_SECURE_NO_WARNINGS)
-        include(CheckCXXCompilerFlag)
-        add_compile_options("/std:c++latest")
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
