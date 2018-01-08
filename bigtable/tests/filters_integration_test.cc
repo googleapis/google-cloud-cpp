@@ -538,8 +538,29 @@ TEST_F(FilterIntegrationTest, RowSample) {
   EXPECT_GE(kMaxCount, result.size());
 }
 
-// TODO(#152) - implement the following integration test.
-TEST_F(FilterIntegrationTest, StripValueTransformer) {}
+TEST_F(FilterIntegrationTest, StripValueTransformer) {
+  auto table = CreateTable("strip-value-transformer-filter-table");
+  std::string const prefix = "strip-value-transformer-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+  };
+  CreateCells(*table, created);
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/abc0", "fam0", "c0", 1000, "", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
+      {prefix + "/hij0", "fam1", "c4", 4000, "", {}},
+      {prefix + "/hij1", "fam2", "c5", 6000, "", {}},
+  };
+  auto actual = ReadRows(*table, bigtable::Filter::StripValueTransformer());
+  CheckEqualUnordered(expected, actual);
+}
 
 // TODO(#152) - implement the following integration test.
 TEST_F(FilterIntegrationTest, Condition) {}
