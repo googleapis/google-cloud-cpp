@@ -174,14 +174,22 @@ class Table {
   void BulkApply(BulkMutation&& mut);
 
   /**
-   * Reads data from a set of rows.
+   * Reads a set of rows from the table.
    *
    * @param row_set the rows to read from.
-   *
-   * @param rows_limit the maximum number of rows to read. Setting this to
-   * NO_ROWS_LIMIT reads all matching rows in row_set.
-   *
    * @param filter is applied on the server-side to data in the rows.
+   */
+  RowReader ReadRows(RowSet row_set, Filter filter);
+
+  /**
+   * Reads a limited set of rows from the table.
+   *
+   * @param row_set the rows to read from.
+   * @param rows_limit the maximum number of rows to read. Must be larger than
+   *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @throws std::invalid_argument if rows_limit is <= 0.
    */
   RowReader ReadRows(RowSet row_set, int rows_limit, Filter filter);
 
