@@ -66,13 +66,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         set(GRPCPP_LIBRARIES gRPC::grpc++)
         set(GRPC_LIBRARIES gRPC::grpc)
         set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
-        # To avoid conflict on Windows platforms...
-        # /wd4005  macro-redefinition
-        # /wd4068  unknown pragma
-        # /wd4244  conversion from 'type1' to 'type2'
-        # /wd4267  conversion from 'size_t' to 'type2'
-        # /wd4800  force value to bool 'true' or 'false' (performance warning)
-        add_compile_options(/W3 /wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
+        # To avoid macro conflict on windows.
         add_definitions(/DNOMINMAX /DWIN32_LEAN_AND_MEAN=1 /D_CRT_SECURE_NO_WARNINGS)
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
