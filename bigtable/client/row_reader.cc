@@ -58,7 +58,7 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       context_(absl::make_unique<grpc::ClientContext>()),
       parser_(absl::make_unique<ReadRowsParser>()),
       response_(),
-      processed_chunks_(0),
+      processed_chunks_count_(0),
       rows_count_(0),
       last_read_row_key_() {}
 
@@ -81,7 +81,7 @@ RowReader::RowReaderIterator& RowReader::RowReaderIterator::operator++() {
 
 void RowReader::MakeRequest() {
   response_ = {};
-  processed_chunks_ = 0;
+  processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(std::string(table_name_));
@@ -108,9 +108,9 @@ void RowReader::MakeRequest() {
 }
 
 bool RowReader::NextChunk() {
-  ++processed_chunks_;
-  while (processed_chunks_ >= response_.chunks_size()) {
-    processed_chunks_ = 0;
+  ++processed_chunks_count_;
+  while (processed_chunks_count_ >= response_.chunks_size()) {
+    processed_chunks_count_ = 0;
     bool response_is_valid = stream_->Read(&response_);
     if (not response_is_valid) {
       response_ = {};
@@ -161,7 +161,7 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
   while (not parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
-          std::move(*(response_.mutable_chunks(processed_chunks_))));
+          std::move(*(response_.mutable_chunks(processed_chunks_count_))));
       continue;
     }
 

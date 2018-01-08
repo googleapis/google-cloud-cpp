@@ -109,8 +109,8 @@ class RowReader {
    *
    * This call is used internally by AdvanceOrFail to prepare data for
    * parsing. When it returns true, the value of
-   * `response_.chunks(processed_chunks_)` is valid and holds the next
-   * chunk to parse.
+   * `response_.chunks(processed_chunks_count_)` is valid and holds
+   * the next chunk to parse.
    */
   bool NextChunk();
 
@@ -169,7 +169,7 @@ class RowReader {
   /// The last received response, chunks are being parsed one by one from it.
   google::bigtable::v2::ReadRowsResponse response_;
   /// Number of chunks already parsed in response_.
-  int processed_chunks_;
+  int processed_chunks_count_;
 
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_;
