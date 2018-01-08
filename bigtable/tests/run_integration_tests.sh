@@ -28,7 +28,7 @@ echo "Launching Cloud Bigtable emulator in the background"
 # The tests typically run in a Docker container, where the ports are largely
 # free; when using in manual tests, you can set EMULATOR_PORT.
 readonly PORT=${EMULATOR_PORT:-9000}
-"${CBT_EMULATOR}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
+"${CBT_EMULATOR_CMD}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
 EMULATOR_PID=$!
 if [ $? -ne 0 ]; then
   echo "Cloud Bigtable emulator failed; aborting test." >&2
