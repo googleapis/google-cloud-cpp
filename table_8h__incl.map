@@ -1,0 +1,10 @@
+<map id="client/table.h" name="client/table.h">
+<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="325,80,455,121"/>
+<area shape="rect" id="node9" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="1011,80,1182,121"/>
+<area shape="rect" id="node11" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="477,177,652,203"/>
+<area shape="rect" id="node16" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="985,169,1109,211"/>
+<area shape="rect" id="node18" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="837,169,961,211"/>
+<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="676,169,813,211"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="752,348,911,375"/>
+<area shape="rect" id="node15" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="195,259,343,300"/>
+</map>
