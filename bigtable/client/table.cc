@@ -108,12 +108,13 @@ void Table::BulkApply(BulkMutation&& mut) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  return RowReader(client_, table_name(), std::move(row_set), NO_ROWS_LIMIT,
-                   std::move(filter), rpc_retry_policy_->clone(),
-                   rpc_backoff_policy_->clone());
+  return RowReader(client_, table_name(), std::move(row_set),
+                   RowReader::NO_ROWS_LIMIT, std::move(filter),
+                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone());
 }
 
-RowReader Table::ReadRows(RowSet row_set, int rows_limit, Filter filter) {
+RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
+                          Filter filter) {
   if (rows_limit <= 0) {
     throw std::invalid_argument("rows_limit must be >0");
   }

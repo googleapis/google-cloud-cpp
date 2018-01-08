@@ -48,7 +48,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
 
   bigtable::RowReader reader(client_, "", bigtable::RowSet(),
-                             bigtable::Table::NO_ROWS_LIMIT,
+                             bigtable::RowReader::NO_ROWS_LIMIT,
                              bigtable::Filter::PassAllFilter(),
                              no_retry_policy_.clone(), backoff_policy_.clone());
 
@@ -71,7 +71,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
       .WillOnce(Return(false));
 
   bigtable::RowReader reader(client_, "", bigtable::RowSet(),
-                             bigtable::Table::NO_ROWS_LIMIT,
+                             bigtable::RowReader::NO_ROWS_LIMIT,
                              bigtable::Filter::PassAllFilter(),
                              no_retry_policy_.clone(), backoff_policy_.clone());
 

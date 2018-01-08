@@ -31,6 +31,7 @@
 #include <absl/types/optional.h>
 #include <grpc++/grpc++.h>
 
+#include <cinttypes>
 #include <iterator>
 
 namespace bigtable {
@@ -45,10 +46,10 @@ class RowReader {
 
  public:
   /// Signifies that there is no limit on the number of rows to read.
-  static int constexpr NO_ROWS_LIMIT = 0;
+  static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
-            RowSet row_set, int rows_limit, Filter filter,
+            RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy);
 
@@ -99,6 +100,11 @@ class RowReader {
    * Move the index to the next chunk, reading data if needed.
    *
    * Returns false if no more chunks are available.
+   *
+   * This call is used internally by AdvanceOrFail to prepare data for
+   * parsing. When it returns true, the value of
+   * `response_.chunks(processed_chunks_)` is valid and holds the next
+   * chunk to parse.
    */
   bool NextChunk();
 
@@ -117,19 +123,17 @@ class RowReader {
       return tmp;
     }
 
-    constexpr const Row* operator->() const { return row_.operator->(); }
+    Row const* operator->() const { return row_.operator->(); }
     Row* operator->() { return row_.operator->(); }
 
-    constexpr const Row& operator*() const & { return row_.operator*(); }
+    Row const& operator*() const & { return row_.operator*(); }
     Row& operator*() & { return row_.operator*(); }
-    constexpr const Row&& operator*() const && {
-      return absl::move(row_.operator*());
-    }
+    Row const&& operator*() const && { return std::move(row_.operator*()); }
     Row&& operator*() && { return std::move(row_.operator*()); }
 
     bool operator==(RowReaderIterator const& that) const {
       // All non-end iterators are equal.
-      return bool(row_) == bool(that.row_);
+      return (owner_ == that.owner_) and (bool(row_) == bool(that.row_));
     }
 
     bool operator!=(RowReaderIterator const& that) const {
@@ -144,7 +148,7 @@ class RowReader {
   std::shared_ptr<DataClient> client_;
   std::string table_name_;
   RowSet row_set_;
-  int rows_limit_;
+  std::int64_t rows_limit_;
   Filter filter_;
   std::unique_ptr<RPCRetryPolicy> retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
@@ -162,7 +166,7 @@ class RowReader {
   int processed_chunks_;
 
   /// Number of rows read so far, used to set row_limit in retries.
-  int rows_count_;
+  std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
   std::string last_read_row_key_;
 };
