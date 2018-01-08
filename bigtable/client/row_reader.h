@@ -45,7 +45,12 @@ class RowReader {
   class RowReaderIterator;
 
  public:
-  /// Signifies that there is no limit on the number of rows to read.
+  /**
+   * A constant for the magic value that means "no limit, get all rows".
+   *
+   * Zero is used as a magic value that means "get all rows" in the
+   * Cloud Bigtable RPC protocol.
+   */
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
