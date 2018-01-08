@@ -102,7 +102,8 @@ class RowReader {
   grpc::Status AdvanceOrFail(absl::optional<Row>& row);
 
   /**
-   * Move the index to the next chunk, reading data if needed.
+   * Move the `processed_chunks_count_` index to the next chunk,
+   * reading data if needed.
    *
    * Returns false if no more chunks are available.
    *
