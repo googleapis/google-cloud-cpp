@@ -47,8 +47,8 @@ git clone -b gh-pages "${REPO_URL}" github-io-staging
 cp -r bigtable/doc/html/. github-io-staging
 
 cd github-io-staging
-git config user.name "Travis Build Robot"
-git config user.email "nobody@users.noreply.github.com"
+git config user.name "Google Cloud C++ Project Robot"
+git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
 git add --all .
 
 if git diff --quiet HEAD; then
