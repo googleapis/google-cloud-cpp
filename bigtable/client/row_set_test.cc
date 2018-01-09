@@ -76,3 +76,6 @@ TEST(RowSetTest, VariadicConstructor) {
   EXPECT_EQ("foo", proto.row_keys(0));
   EXPECT_EQ("bar", proto.row_keys(1));
 }
+
+TEST(RowSetTest, IntersectRightOpen) {
+}

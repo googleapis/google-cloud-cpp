@@ -169,3 +169,126 @@ TEST(RowRangeTest, ContainsEndingAt) {
   EXPECT_TRUE(range.Contains("foo"));
   EXPECT_FALSE(range.Contains("fop"));
 }
+
+TEST(RowRangeTest, StreamingRightOpen) {
+  std::ostringstream os;
+  os << bigtable::RowRange::RightOpen("a", "b");
+  EXPECT_EQ("['a', 'b')", os.str());
+}
+
+TEST(RowRangeTest, StreamingLeftOpen) {
+  std::ostringstream os;
+  os << bigtable::RowRange::LeftOpen("a", "b");
+  EXPECT_EQ("('a', 'b']", os.str());
+}
+
+TEST(RowRangeTest, StreamingClosed) {
+  std::ostringstream os;
+  os << bigtable::RowRange::Closed("a", "b");
+  EXPECT_EQ("['a', 'b']", os.str());
+}
+
+TEST(RowRangeTest, StreamingOpen) {
+  std::ostringstream os;
+  os << bigtable::RowRange::Open("a", "b");
+  EXPECT_EQ("('a', 'b')", os.str());
+}
+
+TEST(RowRangeTest, StreamingStartingAt) {
+  std::ostringstream os;
+  os << bigtable::RowRange::StartingAt("a");
+  EXPECT_EQ("['a', '')", os.str());
+}
+
+TEST(RowRangeTest, StreamingEndingAt) {
+  std::ostringstream os;
+  os << bigtable::RowRange::EndingAt("a");
+  EXPECT_EQ("['', 'a']", os.str());
+}
+
+TEST(RowRangeTest, EqualsRightOpen) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::RightOpen("a", "d"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::RightOpen("a", "d"), R::RightOpen("a", "c"));
+  EXPECT_NE(R::RightOpen("a", "d"), R::RightOpen("b", "d"));
+  EXPECT_NE(R::RightOpen("a", "d"), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::RightOpen("a", "d"), R::Closed("a", "d"));
+  EXPECT_NE(R::RightOpen("a", "d"), R::Open("a", "d"));
+}
+
+TEST(RowRangeTest, EqualsLeftOpen) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::LeftOpen("a", "d"), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::LeftOpen("a", "d"), R::LeftOpen("a", "c"));
+  EXPECT_NE(R::LeftOpen("a", "d"), R::LeftOpen("b", "d"));
+  EXPECT_NE(R::LeftOpen("a", "d"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::LeftOpen("a", "d"), R::Closed("a", "d"));
+  EXPECT_NE(R::LeftOpen("a", "d"), R::Open("a", "d"));
+}
+
+TEST(RowRangeTest, EqualsClosed) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::Closed("a", "d"), R::Closed("a", "d"));
+  EXPECT_NE(R::Closed("a", "d"), R::Closed("a", "c"));
+  EXPECT_NE(R::Closed("a", "d"), R::Closed("b", "d"));
+  EXPECT_NE(R::Closed("a", "d"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::Closed("a", "d"), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::Closed("a", "d"), R::Open("a", "d"));
+}
+
+TEST(RowRangeTest, EqualsOpen) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::Open("a", "d"), R::Open("a", "d"));
+  EXPECT_NE(R::Open("a", "d"), R::Open("a", "c"));
+  EXPECT_NE(R::Open("a", "d"), R::Open("b", "d"));
+  EXPECT_NE(R::Open("a", "d"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::Open("a", "d"), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::Open("a", "d"), R::Closed("a", "d"));
+}
+
+TEST(RowRangeTest, EqualsStartingAt) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::StartingAt("a"), R::StartingAt("a"));
+  EXPECT_NE(R::StartingAt("a"), R::StartingAt("b"));
+  EXPECT_NE(R::StartingAt("a"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::StartingAt("a"), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::StartingAt("a"), R::Open("a", "d"));
+  EXPECT_NE(R::StartingAt("a"), R::Closed("a", "d"));
+}
+
+TEST(RowRangeTest, EqualsEndingAt) {
+  using R = bigtable::RowRange;
+  EXPECT_EQ(R::EndingAt("b"), R::EndingAt("b"));
+  EXPECT_NE(R::EndingAt("b"), R::EndingAt("a"));
+  EXPECT_NE(R::EndingAt("b"), R::RightOpen("a", "b"));
+  EXPECT_NE(R::EndingAt("b"), R::LeftOpen("a", "b"));
+  EXPECT_NE(R::EndingAt("b"), R::Open("a", "b"));
+  EXPECT_NE(R::EndingAt("b"), R::Closed("a", "b"));
+}
+
+TEST(RowRangeTest, IntersectRightOpen) {
+  using R = bigtable::RowRange;
+
+  auto range = R::RightOpen("c", "m");
+  auto tuple = range.Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+  tuple = range.Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+  tuple = range.Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+  tuple = range.Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+  tuple = range.Intersect(R::RightOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+
+  tuple = range.Intersect(R::RightOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("c", "d"), std::get<1>(tuple));
+  tuple = range.Intersect(R::LeftOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("c", "d"), std::get<1>(tuple));
+
+  tuple = range.Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}

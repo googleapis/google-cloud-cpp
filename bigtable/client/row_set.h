@@ -73,6 +73,15 @@ class RowSet {
    */
   void Append(char const* row_key) { Append(absl::string_view(row_key)); }
 
+  /**
+   * Modify this object to contain the ranges and keys inside @p range.
+   *
+   * This function removes any rowkeys outside @p range, it removes any row
+   * ranges that do not insersect with @p range, and keeps only the intersection
+   * for those ranges that do intersect @p range.
+   */
+  void Intersect(bigtable::RowRange const& range);
+
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
   ::google::bigtable::v2::RowSet as_proto_move() { return std::move(row_set_); }
 
