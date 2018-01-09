@@ -94,71 +94,68 @@ std::pair<bool, RowRange> RowRange::Intersect(RowRange const& range) const {
   }
   std::string empty;
 
-  // The algorithm is simple.  The two ranges have no intersection only if
-  // @p range is completely below this range or complete above this range.
+  // The algorithm is simple: start with *this as a the resulting range.  Update
+  // both endpoints based on the value of @p range.  If the resulting range is
+  // empty there is no intersection.
+  RowRange intersection(*this);
 
-  // First check if the start of @p range is below *this.
-  std::string const* start = &empty;
-  bool start_closed = true;
   switch (range.row_range_.start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
-    case btproto::RowRange::kStartKeyClosed:
-      if (AboveEnd(range.row_range_.start_key_closed())) {
+    case btproto::RowRange::kStartKeyClosed: {
+      auto const& start = range.row_range_.start_key_closed();
+      // If `range` starts above the current range then there is no
+      // intersection.
+      if (intersection.AboveEnd(start)) {
         return std::make_pair(false, Empty());
       }
-      start = &range.row_range_.start_key_closed();
-      break;
-    case btproto::RowRange::kStartKeyOpen:
-      if (AboveEnd(range.row_range_.start_key_open())) {
+      // If `start` is inside the intersection (as computed so far), then the
+      // intersection must start at `start`, and it would be closed if `range`
+      // is closed at the start.
+      if (intersection.Contains(start)) {
+        intersection.row_range_.set_start_key_closed(start);
+      }
+    } break;
+    case btproto::RowRange::kStartKeyOpen: {
+      // The case where `range` is open on the start point is analogous.
+      auto const& start = range.row_range_.start_key_open();
+      if (intersection.AboveEnd(start)) {
         return std::make_pair(false, Empty());
       }
-      start = &range.row_range_.start_key_open();
-      start_closed = false;
-      break;
+      if (intersection.Contains(start)) {
+        intersection.row_range_.set_start_key_open(start);
+      }
+    } break;
   }
 
   // Then check if the end limit of @p range is below *this.
-  std::string const* end = &empty;
-  bool end_closed = true;
   switch (range.row_range_.end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;
-    case btproto::RowRange::kEndKeyClosed:
-      if (BelowStart(range.row_range_.end_key_closed())) {
+    case btproto::RowRange::kEndKeyClosed: {
+      // If `range` ends before the start of the intersection there is no
+      // intersection and we can return immediately.
+      auto const& end = range.row_range_.end_key_closed();
+      if (intersection.BelowStart(end)) {
         return std::make_pair(false, Empty());
       }
-      end = &range.row_range_.end_key_closed();
-      break;
-    case btproto::RowRange::kEndKeyOpen:
-      if (BelowStart(range.row_range_.end_key_open())) {
+      // If `end` is inside the intersection as computed so far, then the
+      // intersection must end at `end` and it is closed if `range` is closed
+      // at the end.
+      if (intersection.Contains(end)) {
+        intersection.row_range_.set_end_key_closed(end);
+      }
+    } break;
+    case btproto::RowRange::kEndKeyOpen: {
+      // Do the analogous thing for `end` being a open endpoint.
+      auto const& end = range.row_range_.end_key_open();
+      if (intersection.BelowStart(end)) {
         return std::make_pair(false, Empty());
       }
-      end = &range.row_range_.end_key_open();
-      end_closed = false;
-      break;
-  }
-
-  // If we hit this point there is some intersection.  Start with the current
-  // range and clip it as needed.
-  RowRange intersection(*this);
-  // If *start is inside, then the intersection must start at *start, and it is
-  // a closed interval on the left.  Note that otherwise the existing start is
-  // the right place for the intersection.
-  if (intersection.Contains(*start)) {
-    if (start_closed) {
-      intersection.row_range_.set_start_key_closed(*start);
-    } else {
-      intersection.row_range_.set_start_key_open(*start);
-    }
-  }
-  // Do the analogous thing for *end.
-  if (intersection.Contains(*end)) {
-    if (end_closed) {
-      intersection.row_range_.set_end_key_closed(*end);
-    } else {
-      intersection.row_range_.set_end_key_open(*end);
-    }
+      if (intersection.Contains(end)) {
+        intersection.row_range_.set_end_key_open(end);
+      }
+    } break;
   }
 
   bool is_empty = intersection.IsEmpty();
