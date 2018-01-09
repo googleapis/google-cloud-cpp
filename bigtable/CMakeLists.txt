@@ -99,6 +99,8 @@ add_library(bigtable_client
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
     client/internal/conjunction.h
+    client/internal/prefix_range_end.h
+    client/internal/prefix_range_end.cc
     client/internal/readrowsparser.h
     client/internal/readrowsparser.cc
     client/internal/rowreaderiterator.h
@@ -110,6 +112,8 @@ add_library(bigtable_client
     client/mutations.h
     client/mutations.cc
     client/row.h
+    client/row_range.h
+    client/row_range.cc
     client/row_reader.h
     client/row_reader.cc
     client/row_set.h
@@ -175,6 +179,7 @@ set(bigtable_client_unit_tests
     client/force_sanitizer_failures_test.cc
     client/idempotent_mutation_policy_test.cc
     client/internal/bulk_mutator_test.cc
+    client/internal/prefix_range_end_test.cc
     client/internal/readrowsparser_test.cc
     client/mutations_test.cc
     client/table_apply_test.cc
@@ -183,6 +188,8 @@ set(bigtable_client_unit_tests
     client/table_test.cc
     client/row_reader_test.cc
     client/row_test.cc
+    client/row_range_test.cc
+    client/row_set_test.cc
     client/rpc_backoff_policy_test.cc
     client/rpc_retry_policy_test.cc)
 foreach (fname ${bigtable_client_unit_tests})
@@ -253,11 +260,19 @@ target_link_libraries(data_integration_test
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local data_integration_test)
 
+# An integration test for bigtable::TableAdmin.
 add_executable(admin_integration_test tests/admin_integration_test.cc)
 target_link_libraries(admin_integration_test
     bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local admin_integration_test)
+
+# An integration test for bigtable::Filter.
+add_executable(filters_integration_test tests/filters_integration_test.cc)
+target_link_libraries(filters_integration_test
+    gmock bigtable_admin_client bigtable_client bigtable_protos
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+add_dependencies(tests-local filters_integration_test)
 
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)

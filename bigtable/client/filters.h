@@ -71,7 +71,9 @@ class Filter {
   /**
    * Return a filter that accepts only the last @p n values of each column.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with `grpc::StatusCode::INVALID_ARGUMENT`.
+   * This function does not perform any local validation of @p n.
    */
   static Filter Latest(std::int32_t n) {
     Filter result;
@@ -208,7 +210,9 @@ class Filter {
    *   column names are sorted lexicographically.
    * - Within a column, the cells appear in descending order by timestamp.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with `grpc::StatusCode::INVALID_ARGUMENT`.
+   * This function does not perform any local validation of @p n.
    */
   static Filter CellsRowLimit(std::int32_t n) {
     Filter tmp;
@@ -230,7 +234,9 @@ class Filter {
    *   column names are sorted lexicographically.
    * - Within a column, the cells appear in descending order by timestamp.
    *
-   * TODO(#84) - document what is the effect of n <= 0
+   * The server rejects filters where @p n <= 0, any ReadRows() request
+   * containing such a filter fails with `grpc::StatusCode::INVALID_ARGUMENT`.
+   * This function does not perform any local validation of @p n.
    */
   static Filter CellsRowOffset(std::int32_t n) {
     Filter tmp;
@@ -241,10 +247,13 @@ class Filter {
   /**
    * Return a filter that samples rows with a given probability.
    *
-   * TODO(#84) - decide what happens if the probability is out of range.
+   * The server rejects filters where @p probability is outside the range
+   * (0.0, 1.0).  Any ReadRows() request containing such a filter fails with
+   * `grpc::StatusCode::INVALID_ARGUMENT`. This function does not perform any
+   * local validation of @p probability.
    *
    * @param probability the probability that any row will be selected.  It
-   *     must be in the range [0.0, 1.0].
+   *     must be in the range (0.0, 1.0).
    */
   static Filter RowSample(double probability) {
     Filter tmp;

@@ -38,8 +38,8 @@ class DataClient {
   virtual std::string const& project_id() const = 0;
   virtual std::string const& instance_id() const = 0;
 
-  // Access the stub to send RPC calls.
-  virtual google::bigtable::v2::Bigtable::StubInterface& Stub() const = 0;
+  virtual std::shared_ptr<google::bigtable::v2::Bigtable::StubInterface>
+  Stub() = 0;
 };
 
 /// Create the default implementation of ClientInterface.

@@ -22,7 +22,7 @@ TEST(AdminClientTest, Simple) {
       bigtable::CreateAdminClient("test-project", bigtable::ClientOptions());
   EXPECT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
-  EXPECT_NO_THROW(admin_client->table_admin());
+  EXPECT_NO_THROW(admin_client->Stub());
   EXPECT_NO_THROW(admin_client->on_completion(grpc::Status::CANCELLED));
-  EXPECT_NO_THROW(admin_client->table_admin());
+  EXPECT_NO_THROW(admin_client->Stub());
 }

@@ -3,7 +3,7 @@
 [![Travis CI status][travis-shield]][travis-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
 
-[travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg
+[travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
 [codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
