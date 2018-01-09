@@ -88,9 +88,8 @@ void RowReader::MakeRequest() {
   request.set_table_name(std::string(table_name_));
 
   if (not last_read_row_key_.empty()) {
-    // There is a previous read row, so this is a restarted call and
-    // we need to clip the RowSet at the last read row key.
-    row_set_.ClipUpTo(last_read_row_key_);
+    // There is a previous read row, so this is a restarted call
+    // TODO(dmahu): intersect row_set_ with (last_read_row_key_, infty)
   }
 
   auto row_set_proto = row_set_.as_proto();
@@ -105,7 +104,7 @@ void RowReader::MakeRequest() {
 
   retry_policy_->setup(*context_.get());
   backoff_policy_->setup(*context_.get());
-  stream_ = client_->Stub().ReadRows(context_.get(), request);
+  stream_ = client_->Stub()->ReadRows(context_.get(), request);
 }
 
 bool RowReader::NextChunk() {
