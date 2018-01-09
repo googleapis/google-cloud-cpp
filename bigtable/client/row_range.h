@@ -39,7 +39,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 class RowRange {
  public:
   explicit RowRange(::google::bigtable::v2::RowRange rhs)
-    : row_range_(std::move(rhs)) {}
+      : row_range_(std::move(rhs)) {}
 
   RowRange(RowRange&& rhs) noexcept = default;
   RowRange& operator=(RowRange&& rhs) noexcept = default;
@@ -152,7 +152,7 @@ class RowRange {
    *     If there is no intersection the first element is `false` and the second
    *     element has a valid, but unspecified value.
    */
-  std::pair<bool,RowRange> Intersect(RowRange const& range) const;
+  std::pair<bool, RowRange> Intersect(RowRange const& range) const;
 
   bool operator==(RowRange const& rhs) const;
   bool operator!=(RowRange const& rhs) const { return !(*this == rhs); }
