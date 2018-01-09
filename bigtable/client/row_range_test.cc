@@ -266,29 +266,417 @@ TEST(RowRangeTest, EqualsEndingAt) {
   EXPECT_NE(R::EndingAt("b"), R::Closed("a", "b"));
 }
 
-TEST(RowRangeTest, IntersectRightOpen) {
-  using R = bigtable::RowRange;
+// This is a fairly exhausting (and maybe exhaustive) set of cases for
+// intersecting a RightOpen range against other ranges.
+using R = bigtable::RowRange;
 
-  auto range = R::RightOpen("c", "m");
-  auto tuple = range.Intersect(R::Empty());
+TEST(RowRangeTest, InterserctRightOpen_Empty) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::Empty());
   EXPECT_FALSE(std::get<0>(tuple));
-  tuple = range.Intersect(R::RightOpen("a", "b"));
-  EXPECT_FALSE(std::get<0>(tuple));
-  tuple = range.Intersect(R::RightOpen("a", "c"));
-  EXPECT_FALSE(std::get<0>(tuple));
-  tuple = range.Intersect(R::RightOpen("n", "q"));
-  EXPECT_FALSE(std::get<0>(tuple));
-  tuple = range.Intersect(R::RightOpen("m", "q"));
-  EXPECT_FALSE(std::get<0>(tuple));
+}
 
-  tuple = range.Intersect(R::RightOpen("a", "d"));
+TEST(RowRangeTest, InterserctRightOpen_CompletelyBelow) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_MatchingBoundariesBelow) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_CompletelyAbove) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_MatchingBoundariesAbove) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_StartBelowEndInside) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("a", "d"));
   EXPECT_TRUE(std::get<0>(tuple));
   EXPECT_EQ(R::RightOpen("c", "d"), std::get<1>(tuple));
-  tuple = range.Intersect(R::LeftOpen("a", "d"));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_StartBelowEndInsideClosed) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::LeftOpen("a", "d"));
   EXPECT_TRUE(std::get<0>(tuple));
   EXPECT_EQ(R::Closed("c", "d"), std::get<1>(tuple));
+}
 
-  tuple = range.Intersect(R::Open("d", "k"));
+TEST(RowRangeTest, InterserctRightOpen_CompletelyInsideRightOpen) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_CompletelyInsideLeftOpen) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_CompletelyInsideOpen) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::Open("d", "k"));
   EXPECT_TRUE(std::get<0>(tuple));
   EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_CompletelyInsideClosed) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_StartInsideEndAbove) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::RightOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctRightOpen_StartInsideEndAboveOpen) {
+  auto tuple = R::RightOpen("c", "m").Intersect(R::LeftOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("k", "m"), std::get<1>(tuple));
+}
+
+// The cases for a LeftOpen interval.
+TEST(RowRangeTest, InterserctLeftOpen_Empty) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyBelow) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_MatchingBoundariesBelow) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyAbove) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_MatchingBoundariesAbove) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::LeftOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_StartBelowEndInside) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_StartBelowEndInsideClosed) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::LeftOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyInsideRightOpen) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyInsideLeftOpen) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyInsideOpen) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_CompletelyInsideClosed) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_StartInsideEndAbove) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::RightOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctLeftOpen_StartInsideEndAboveOpen) {
+  auto tuple = R::LeftOpen("c", "m").Intersect(R::LeftOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("k", "m"), std::get<1>(tuple));
+}
+
+// The cases for a Open interval.
+TEST(RowRangeTest, IntersectOpen_Empty) {
+  auto tuple = R::Open("c", "m").Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyBelow) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_MatchingBoundariesBelow) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyAbove) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_MatchingBoundariesAbove) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_StartBelowEndInside) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_StartBelowEndInsideClosed) {
+  auto tuple = R::Open("c", "m").Intersect(R::LeftOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyInsideRightOpen) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyInsideLeftOpen) {
+  auto tuple = R::Open("c", "m").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyInsideOpen) {
+  auto tuple = R::Open("c", "m").Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_CompletelyInsideClosed) {
+  auto tuple = R::Open("c", "m").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_StartInsideEndAbove) {
+  auto tuple = R::Open("c", "m").Intersect(R::RightOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectOpen_StartInsideEndAboveOpen) {
+  auto tuple = R::Open("c", "m").Intersect(R::LeftOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("k", "m"), std::get<1>(tuple));
+}
+
+// The cases for a Closed interval.
+TEST(RowRangeTest, IntersectClosed_Empty) {
+  auto tuple = R::Closed("c", "m").Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyBelow) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_MatchingBoundariesBelow) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyAbove) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_MatchingBoundariesAbove) {
+  auto tuple = R::Closed("c", "m").Intersect(R::LeftOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_StartBelowEndInside) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_StartBelowEndInsideClosed) {
+  auto tuple = R::Closed("c", "m").Intersect(R::LeftOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyInsideRightOpen) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyInsideLeftOpen) {
+  auto tuple = R::Closed("c", "m").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyInsideOpen) {
+  auto tuple = R::Closed("c", "m").Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_CompletelyInsideClosed) {
+  auto tuple = R::Closed("c", "m").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_StartInsideEndAbove) {
+  auto tuple = R::Closed("c", "m").Intersect(R::RightOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectClosed_StartInsideEndAboveOpen) {
+  auto tuple = R::Closed("c", "m").Intersect(R::LeftOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("k", "m"), std::get<1>(tuple));
+}
+
+// The cases for a StartingAt interval.
+TEST(RowRangeTest, InterserctStartingAt_Empty) {
+  auto tuple = R::StartingAt("c").Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_CompletelyBelow) {
+  auto tuple = R::StartingAt("c").Intersect(R::RightOpen("a", "b"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_MatchingBoundariesBelow) {
+  auto tuple = R::StartingAt("c").Intersect(R::RightOpen("a", "c"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_StartBelowEndInside) {
+  auto tuple = R::StartingAt("c").Intersect(R::RightOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_StartBelowEndInsideClosed) {
+  auto tuple = R::StartingAt("c").Intersect(R::LeftOpen("a", "d"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("c", "d"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_CompletelyInsideRightOpen) {
+  auto tuple = R::StartingAt("c").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_CompletelyInsideLeftOpen) {
+  auto tuple = R::StartingAt("c").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_CompletelyInsideOpen) {
+  auto tuple = R::StartingAt("c").Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_CompletelyInsideClosed) {
+  auto tuple = R::StartingAt("c").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_StartInsideEndAbove) {
+  auto tuple = R::StartingAt("c").Intersect(R::StartingAt("k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::StartingAt("k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, InterserctStartingAt_StartInsideEndAboveOpen) {
+  auto tuple = R::StartingAt("c").Intersect(R::LeftOpen("k", ""));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("k", ""), std::get<1>(tuple));
+}
+
+// The cases for a EndingAt interval.
+TEST(RowRangeTest, IntersectEndingAt_Empty) {
+  auto tuple = R::EndingAt("m").Intersect(R::Empty());
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_CompletelyAbove) {
+  auto tuple = R::EndingAt("m").Intersect(R::RightOpen("n", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_MatchingBoundariesAbove) {
+  auto tuple = R::EndingAt("m").Intersect(R::LeftOpen("m", "q"));
+  EXPECT_FALSE(std::get<0>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_CompletelyInsideRightOpen) {
+  auto tuple = R::EndingAt("m").Intersect(R::RightOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::RightOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_CompletelyInsideLeftOpen) {
+  auto tuple = R::EndingAt("m").Intersect(R::LeftOpen("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_CompletelyInsideOpen) {
+  auto tuple = R::EndingAt("m").Intersect(R::Open("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Open("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_CompletelyInsideClosed) {
+  auto tuple = R::EndingAt("m").Intersect(R::Closed("d", "k"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("d", "k"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_StartInsideEndAbove) {
+  auto tuple = R::EndingAt("m").Intersect(R::RightOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::Closed("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectEndingAt_StartInsideEndAboveOpen) {
+  auto tuple = R::EndingAt("m").Intersect(R::LeftOpen("k", "z"));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen("k", "m"), std::get<1>(tuple));
 }

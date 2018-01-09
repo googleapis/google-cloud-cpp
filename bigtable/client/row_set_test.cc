@@ -64,18 +64,27 @@ TEST(RowSetTest, AppendMixed) {
 }
 
 TEST(RowSetTest, VariadicConstructor) {
-  bigtable::RowSet row_set(bigtable::RowRange::Range("a", "b"), "foo",
-                           bigtable::RowRange::Range("k", "m"), "bar");
+  using R = bigtable::RowRange;
+  bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
+                           "bar");
   auto proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_ranges_size());
-  EXPECT_EQ("a", proto.row_ranges(0).start_key_closed());
-  EXPECT_EQ("b", proto.row_ranges(0).end_key_open());
-  EXPECT_EQ("k", proto.row_ranges(1).start_key_closed());
-  EXPECT_EQ("m", proto.row_ranges(1).end_key_open());
+  EXPECT_EQ(R::Range("a", "b"), R(proto.row_ranges(0)));
+  EXPECT_EQ(R::LeftOpen("k", "m"), R(proto.row_ranges(1)));
   ASSERT_EQ(2, proto.row_keys_size());
   EXPECT_EQ("foo", proto.row_keys(0));
   EXPECT_EQ("bar", proto.row_keys(1));
 }
 
 TEST(RowSetTest, IntersectRightOpen) {
+  using R = bigtable::RowRange;
+  bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
+                           "zzz");
+  row_set.Intersect(R::StartingAt("l"));
+
+  auto proto = row_set.as_proto();
+  ASSERT_EQ(1, proto.row_ranges_size());
+  EXPECT_EQ(R::Closed("l", "m"), R(proto.row_ranges(0)));
+  ASSERT_EQ(1, proto.row_keys_size());
+  EXPECT_EQ("zzz", proto.row_keys(0));
 }
