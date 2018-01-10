@@ -16,9 +16,16 @@
 
 # Configure the Compiler options, we will be using C++11 features.
 if (NOT WIN32)
-    message("Setting CXX Standard")
     set(CMAKE_CXX_STANDARD 11)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif ()
+
+if (MSVC)
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
+    if (_cpp_latest_flag_supported)
+        add_compile_options("/std:c++latest")
+    endif ()
 endif ()
 
 
