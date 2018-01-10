@@ -20,6 +20,8 @@
 #include <gmock/gmock.h>
 #include <grpc++/test/mock_stream.h>
 
+#include <deque>
+
 using testing::_;
 using testing::DoAll;
 using testing::Return;
@@ -28,8 +30,34 @@ using testing::SetArgPointee;
 using MockResponseStream =
     grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
 
+using bigtable::Row;
+
 namespace {
-class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {};
+class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
+ public:
+  MOCK_METHOD1(HandleChunkHook,
+               void(google::bigtable::v2::ReadRowsResponse_CellChunk chunk));
+  void HandleChunk(
+      google::bigtable::v2::ReadRowsResponse_CellChunk chunk) override {
+    HandleChunkHook(chunk);
+  }
+
+  MOCK_METHOD0(HandleEndOfStreamHook, void());
+  void HandleEndOfStream() override { HandleEndOfStreamHook(); }
+
+  bool HasNext() const override { return not rows_.empty(); }
+
+  Row Next() override {
+    Row row = rows_.front();
+    rows_.pop_front();
+    return row;
+  }
+
+  void SetRows(std::deque<Row> rows) { rows_ = std::move(rows); }
+
+ private:
+  std::deque<Row> rows_;
+};
 }  // anonymous namespace
 
 class RowReaderTest : public bigtable::testing::TableTestFixture {
@@ -60,30 +88,18 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 }
 
 TEST_F(RowReaderTest, ReadOneRow) {
-  auto response = bigtable::testing::ReadRowsResponseFromString(R"(
-      chunks {
-        row_key: "r1"
-        family_name { value: "fam" }
-        qualifier { value: "qual" }
-        timestamp_micros: 42000
-        value: "value"
-        commit_row: true
-      }
-      )");
-  EXPECT_CALL(*stream_, Read(_))
-      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
-      .WillOnce(Return(false));
-
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto rows = std::deque<Row>();
+  rows.emplace_back("r1", std::vector<bigtable::Cell>());
+  parser->SetRows(std::move(rows));
+  EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true)).WillOnce(Return(false));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), no_retry_policy_.clone(),
-      backoff_policy_.clone(), absl::make_unique<ReadRowsParserMock>());
+      backoff_policy_.clone(), std::move(parser));
 
   auto it = reader.begin();
-
   EXPECT_NE(it, reader.end());
-
   EXPECT_EQ(it->row_key(), "r1");
-
   EXPECT_EQ(std::next(it), reader.end());
 }
