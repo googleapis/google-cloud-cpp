@@ -206,6 +206,11 @@ TEST(RowRangeTest, StreamingEndingAt) {
   EXPECT_EQ("['', 'a']", os.str());
 }
 
+std::string const a_00 = std::string("a\x00", 2);
+std::string const d_00 = std::string("d\x00", 2);
+std::string const c_00 = std::string("c\x00", 2);
+std::string const a_ffff00 = std::string("a\xFF\xFF\x00", 4);
+
 TEST(RowRangeTest, EqualsRightOpen) {
   using R = bigtable::RowRange;
   EXPECT_EQ(R::RightOpen("a", "d"), R::RightOpen("a", "d"));
@@ -214,6 +219,11 @@ TEST(RowRangeTest, EqualsRightOpen) {
   EXPECT_NE(R::RightOpen("a", "d"), R::LeftOpen("a", "d"));
   EXPECT_NE(R::RightOpen("a", "d"), R::Closed("a", "d"));
   EXPECT_NE(R::RightOpen("a", "d"), R::Open("a", "d"));
+
+  EXPECT_EQ(R::RightOpen(a_00, d_00), R::RightOpen(a_00, d_00));
+  EXPECT_NE(R::RightOpen(a_00, d_00), R::RightOpen(a_00, c_00));
+  EXPECT_NE(R::RightOpen(a_00, d_00), R::RightOpen("a", "d"));
+  EXPECT_NE(R::RightOpen(a_ffff00, d_00), R::RightOpen("a", d_00));
 }
 
 TEST(RowRangeTest, EqualsLeftOpen) {
@@ -224,6 +234,11 @@ TEST(RowRangeTest, EqualsLeftOpen) {
   EXPECT_NE(R::LeftOpen("a", "d"), R::RightOpen("a", "d"));
   EXPECT_NE(R::LeftOpen("a", "d"), R::Closed("a", "d"));
   EXPECT_NE(R::LeftOpen("a", "d"), R::Open("a", "d"));
+
+  EXPECT_EQ(R::LeftOpen(a_00, d_00), R::LeftOpen(a_00, d_00));
+  EXPECT_NE(R::LeftOpen(a_00, d_00), R::LeftOpen(a_00, c_00));
+  EXPECT_NE(R::LeftOpen(a_00, d_00), R::LeftOpen("a", "d"));
+  EXPECT_NE(R::LeftOpen(a_ffff00, d_00), R::LeftOpen("a", d_00));
 }
 
 TEST(RowRangeTest, EqualsClosed) {
@@ -234,6 +249,11 @@ TEST(RowRangeTest, EqualsClosed) {
   EXPECT_NE(R::Closed("a", "d"), R::RightOpen("a", "d"));
   EXPECT_NE(R::Closed("a", "d"), R::LeftOpen("a", "d"));
   EXPECT_NE(R::Closed("a", "d"), R::Open("a", "d"));
+
+  EXPECT_EQ(R::Closed(a_00, d_00), R::Closed(a_00, d_00));
+  EXPECT_NE(R::Closed(a_00, d_00), R::Closed(a_00, c_00));
+  EXPECT_NE(R::Closed(a_00, d_00), R::Closed("a", "d"));
+  EXPECT_NE(R::Closed(a_ffff00, d_00), R::Closed("a", d_00));
 }
 
 TEST(RowRangeTest, EqualsOpen) {
@@ -241,29 +261,44 @@ TEST(RowRangeTest, EqualsOpen) {
   EXPECT_EQ(R::Open("a", "d"), R::Open("a", "d"));
   EXPECT_NE(R::Open("a", "d"), R::Open("a", "c"));
   EXPECT_NE(R::Open("a", "d"), R::Open("b", "d"));
-  EXPECT_NE(R::Open("a", "d"), R::RightOpen("a", "d"));
+  EXPECT_NE(R::Open("a", "d"), R::Closed("a", "d"));
   EXPECT_NE(R::Open("a", "d"), R::LeftOpen("a", "d"));
   EXPECT_NE(R::Open("a", "d"), R::Closed("a", "d"));
+
+  EXPECT_EQ(R::Open(a_00, d_00), R::Open(a_00, d_00));
+  EXPECT_NE(R::Open(a_00, d_00), R::Open(a_00, c_00));
+  EXPECT_NE(R::Open(a_00, d_00), R::Open("a", "d"));
+  EXPECT_NE(R::Open(a_ffff00, d_00), R::Open("a", d_00));
 }
 
 TEST(RowRangeTest, EqualsStartingAt) {
   using R = bigtable::RowRange;
   EXPECT_EQ(R::StartingAt("a"), R::StartingAt("a"));
+  EXPECT_EQ(R::StartingAt("a"), R::RightOpen("a", ""));
   EXPECT_NE(R::StartingAt("a"), R::StartingAt("b"));
   EXPECT_NE(R::StartingAt("a"), R::RightOpen("a", "d"));
   EXPECT_NE(R::StartingAt("a"), R::LeftOpen("a", "d"));
   EXPECT_NE(R::StartingAt("a"), R::Open("a", "d"));
   EXPECT_NE(R::StartingAt("a"), R::Closed("a", "d"));
+
+  EXPECT_EQ(R::StartingAt(a_00), R::StartingAt(a_00));
+  EXPECT_NE(R::StartingAt(a_00), R::StartingAt("a"));
+  EXPECT_NE(R::StartingAt(a_00), R::StartingAt(a_ffff00));
 }
 
 TEST(RowRangeTest, EqualsEndingAt) {
   using R = bigtable::RowRange;
   EXPECT_EQ(R::EndingAt("b"), R::EndingAt("b"));
+  EXPECT_EQ(R::EndingAt("b"), R::Closed("", "b"));
   EXPECT_NE(R::EndingAt("b"), R::EndingAt("a"));
   EXPECT_NE(R::EndingAt("b"), R::RightOpen("a", "b"));
   EXPECT_NE(R::EndingAt("b"), R::LeftOpen("a", "b"));
   EXPECT_NE(R::EndingAt("b"), R::Open("a", "b"));
   EXPECT_NE(R::EndingAt("b"), R::Closed("a", "b"));
+
+  EXPECT_EQ(R::EndingAt(a_00), R::EndingAt(a_00));
+  EXPECT_NE(R::EndingAt(a_00), R::EndingAt("a"));
+  EXPECT_NE(R::EndingAt(a_00), R::EndingAt(a_ffff00));
 }
 
 // This is a fairly exhausting (and maybe exhaustive) set of cases for
@@ -341,6 +376,12 @@ TEST(RowRangeTest, IntersectRightOpen_StartInsideEndAboveOpen) {
   auto tuple = R::RightOpen("c", "m").Intersect(R::LeftOpen("k", "z"));
   EXPECT_TRUE(std::get<0>(tuple));
   EXPECT_EQ(R::Open("k", "m"), std::get<1>(tuple));
+}
+
+TEST(RowRangeTest, IntersectRightOpen_NonAsciiEndpoints) {
+  auto tuple = R::RightOpen(a_00, d_00).Intersect(R::LeftOpen(a_ffff00, c_00));
+  EXPECT_TRUE(std::get<0>(tuple));
+  EXPECT_EQ(R::LeftOpen(a_ffff00, c_00), std::get<1>(tuple));
 }
 
 // The cases for a LeftOpen interval.

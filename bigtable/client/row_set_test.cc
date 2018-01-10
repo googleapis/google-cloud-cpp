@@ -80,9 +80,8 @@ TEST(RowSetTest, IntersectRightOpen) {
   using R = bigtable::RowRange;
   bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
                            "zzz");
-  row_set.Intersect(R::StartingAt("l"));
 
-  auto proto = row_set.as_proto();
+  auto proto = row_set.Intersect(R::StartingAt("l")).as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
   EXPECT_EQ(R::Closed("l", "m"), R(proto.row_ranges(0)));
   ASSERT_EQ(1, proto.row_keys_size());

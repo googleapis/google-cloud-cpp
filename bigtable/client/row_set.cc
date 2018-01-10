@@ -18,20 +18,20 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace btproto = ::google::bigtable::v2;
 
-void RowSet::Intersect(bigtable::RowRange const& range) {
-  btproto::RowSet result;
+RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
+  RowSet result;
   for (auto const& key : row_set_.row_keys()) {
     if (range.Contains(key)) {
-      *result.add_row_keys() = key;
+      *result.row_set_.add_row_keys() = key;
     }
   }
   for (auto const& r : row_set_.row_ranges()) {
     auto i = range.Intersect(RowRange(r));
     if (std::get<0>(i)) {
-      *result.add_row_ranges() = std::get<1>(i).as_proto_move();
+      *result.row_set_.add_row_ranges() = std::get<1>(i).as_proto_move();
     }
   }
-  row_set_.Swap(&result);
+  return result;
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

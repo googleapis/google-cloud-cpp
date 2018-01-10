@@ -80,7 +80,7 @@ class RowSet {
    * ranges that do not insersect with @p range, and keeps only the intersection
    * for those ranges that do intersect @p range.
    */
-  void Intersect(bigtable::RowRange const& range);
+  RowSet Intersect(bigtable::RowRange const& range) const;
 
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
   ::google::bigtable::v2::RowSet as_proto_move() { return std::move(row_set_); }
