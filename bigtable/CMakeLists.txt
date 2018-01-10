@@ -18,10 +18,14 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (MSVC_VERSION GREATER_EQUAL "1900")
+if (MSVC)
     include(CheckCXXCompilerFlag)
-    add_compile_options("/std:c++latest")
+    check_cxx_compiler_flag(-std=c++11 HAS_STD_CPP11_FLAG)
+    if(HAS_STD_CPP11_FLAG)
+      add_compile_options(-std=c++11)
+    endif()
 endif()
+
 
 # Turn on all available warnings and turn warnings into errors to
 # stop the build if any warning is emitted.  We do this in each
