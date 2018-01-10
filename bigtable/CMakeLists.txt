@@ -15,8 +15,11 @@
 # This should be included from the top level CMakeLists file
 
 # Configure the Compiler options, we will be using C++11 features.
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if (NOT WIN32)
+    message("Setting CXX Standard")
+    set(CMAKE_CXX_STANDARD 11)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif ()
 
 
 # Turn on all available warnings and turn warnings into errors to
