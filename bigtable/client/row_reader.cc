@@ -53,7 +53,8 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
                      absl::string_view table_name, RowSet row_set,
                      std::int64_t rows_limit, Filter filter,
                      std::unique_ptr<RPCRetryPolicy> retry_policy,
-                     std::unique_ptr<RPCBackoffPolicy> backoff_policy)
+                     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+                     std::unique_ptr<internal::ReadRowsParser> parser)
     : client_(std::move(client)),
       table_name_(table_name),
       row_set_(std::move(row_set)),
@@ -62,7 +63,7 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
       context_(absl::make_unique<grpc::ClientContext>()),
-      parser_(absl::make_unique<ReadRowsParser>()),
+      parser_(std::move(parser)),
       processed_chunks_count_(0),
       rows_count_(0) {}
 

@@ -28,6 +28,10 @@ using testing::SetArgPointee;
 using MockResponseStream =
     grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
 
+namespace {
+class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {};
+}  // anonymous namespace
+
 class RowReaderTest : public bigtable::testing::TableTestFixture {
  public:
   RowReaderTest()
@@ -47,10 +51,10 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "", bigtable::RowSet(),
-                             bigtable::RowReader::NO_ROWS_LIMIT,
-                             bigtable::Filter::PassAllFilter(),
-                             no_retry_policy_.clone(), backoff_policy_.clone());
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), no_retry_policy_.clone(),
+      backoff_policy_.clone(), absl::make_unique<ReadRowsParserMock>());
 
   EXPECT_EQ(reader.begin(), reader.end());
 }
@@ -70,10 +74,10 @@ TEST_F(RowReaderTest, ReadOneRow) {
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
 
-  bigtable::RowReader reader(client_, "", bigtable::RowSet(),
-                             bigtable::RowReader::NO_ROWS_LIMIT,
-                             bigtable::Filter::PassAllFilter(),
-                             no_retry_policy_.clone(), backoff_policy_.clone());
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), no_retry_policy_.clone(),
+      backoff_policy_.clone(), absl::make_unique<ReadRowsParserMock>());
 
   auto it = reader.begin();
 

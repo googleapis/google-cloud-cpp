@@ -23,9 +23,10 @@
 #include <vector>
 
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
+using bigtable::internal::ReadRowsParser;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream();
@@ -33,7 +34,7 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
 }
 
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream();
@@ -42,7 +43,7 @@ TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
 }
 
 TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   chunk.set_value_size(1);
 
@@ -54,7 +55,7 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   using google::protobuf::TextFormat;
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
     row_key: "RK"
@@ -86,7 +87,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
 
 TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
   using google::protobuf::TextFormat;
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
     row_key: "RK"
@@ -109,7 +110,7 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
 }
 
 TEST(ReadRowsParserTest, NextWithNoDataThrows) {
-  bigtable::ReadRowsParser parser;
+  ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream();
@@ -181,7 +182,7 @@ class AcceptanceTest : public ::testing::Test {
   }
 
  private:
-  bigtable::ReadRowsParser parser_;
+  ReadRowsParser parser_;
   std::vector<bigtable::Row> rows_;
 };
 

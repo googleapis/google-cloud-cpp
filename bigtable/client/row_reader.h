@@ -43,7 +43,6 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Iterate over the results of ReadRows() using the STL idioms.
  */
 class RowReader {
-
  public:
   /**
    * A constant for the magic value that means "no limit, get all rows".
@@ -56,7 +55,8 @@ class RowReader {
   RowReader(std::shared_ptr<DataClient> client, absl::string_view table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy);
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            std::unique_ptr<internal::ReadRowsParser> parser);
 
   using iterator = internal::RowReaderIterator;
   friend class internal::RowReaderIterator;
@@ -128,7 +128,7 @@ class RowReader {
 
   std::unique_ptr<grpc::ClientContext> context_;
 
-  std::unique_ptr<ReadRowsParser> parser_;
+  std::unique_ptr<internal::ReadRowsParser> parser_;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;

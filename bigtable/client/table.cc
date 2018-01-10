@@ -17,6 +17,7 @@
 #include <thread>
 
 #include "bigtable/client/internal/bulk_mutator.h"
+#include "bigtable/client/internal/readrowsparser.h"
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -110,7 +111,8 @@ void Table::BulkApply(BulkMutation&& mut) {
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
   return RowReader(client_, table_name(), std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
-                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone());
+                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+                   absl::make_unique<bigtable::internal::ReadRowsParser>());
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
@@ -120,7 +122,8 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
   }
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
-                   rpc_backoff_policy_->clone());
+                   rpc_backoff_policy_->clone(),
+                   absl::make_unique<bigtable::internal::ReadRowsParser>());
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

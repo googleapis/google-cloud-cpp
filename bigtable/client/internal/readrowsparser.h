@@ -27,6 +27,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 /**
  * Transforms a stream of chunks as returned by the ReadRows streaming
  * RPC into a sequence of rows.
@@ -60,6 +61,8 @@ class ReadRowsParser {
         row_ready_(false),
         end_of_stream_(false) {}
 
+  virtual ~ReadRowsParser() = default;
+
   /**
    * Pass an input chunk proto to the parser.
    *
@@ -68,7 +71,8 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if validation failed.
    */
-  void HandleChunk(google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
+  virtual void HandleChunk(
+      google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
 
   /**
    * Signal that the input stream reached the end.
@@ -76,14 +80,14 @@ class ReadRowsParser {
    * @throws std::runtime_error if more data was expected to finish
    * the current row.
    */
-  void HandleEndOfStream();
+  virtual void HandleEndOfStream();
 
   /**
    * True if the data parsed so far yielded a Row.
    *
    * Call Next() to take the row.
    */
-  bool HasNext() const;
+  virtual bool HasNext() const;
 
   /**
    * Extract and take ownership of the data in a row.
@@ -92,7 +96,7 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if HasNext() is false.
    */
-  Row Next();
+  virtual Row Next();
 
  private:
   /// Holds partially formed data until a full Row is ready.
@@ -135,7 +139,7 @@ class ReadRowsParser {
   /// Have we received the end of stream call?
   bool end_of_stream_;
 };
-
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
