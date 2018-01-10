@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
+#ifdef __linux
 #if __cplusplus < 201103L
 #error "Bigtable C++ Client requires C++11"
 #endif  // __cplusplus < 201103L
+#endif
 
 #define BIGTABLE_CLIENT_VERSION_MAJOR 0
 #define BIGTABLE_CLIENT_VERSION_MINOR 1
