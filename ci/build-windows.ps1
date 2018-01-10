@@ -30,7 +30,7 @@ if ($LASTEXITCODE) {
 
 mkdir build
 cd build
-cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+cmake -G "Visual Studio 14 2015" -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x86-windows-static .. -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
 
 >>>>>>> Tried to point to bigtable CMakeLists.txt .
 if ($LASTEXITCODE) {
