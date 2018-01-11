@@ -76,8 +76,23 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
   bool can_retry(grpc::StatusCode code) const override { return true; }
 };
 
+class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
+ public:
+  BackoffPolicyMock() {}
+  std::unique_ptr<RPCBackoffPolicy> clone() const override {
+    throw std::runtime_error("Mocks cannot be copied.");
+  }
+  void setup(grpc::ClientContext& context) const override {}
+  MOCK_METHOD1(on_completion_impl,
+               std::chrono::milliseconds(grpc::Status const& s));
+  std::chrono::milliseconds on_completion(grpc::Status const& s) override {
+    return on_completion_impl(s);
+  }
+};
+
 // Match the number of expected row keys in a request in EXPECT_CALL
-Matcher<const google::bigtable::v2::ReadRowsRequest&> RequestRowKeysCount(int n) {
+Matcher<const google::bigtable::v2::ReadRowsRequest&> RequestRowKeysCount(
+    int n) {
   return Property(
       &google::bigtable::v2::ReadRowsRequest::rows,
       Property(&google::bigtable::v2::RowSet::row_keys_size, Eq(n)));
@@ -113,6 +128,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 
 TEST_F(RowReaderTest, ReadOneRow) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto backoff_policy = absl::make_unique<BackoffPolicyMock>();
   auto rows = std::deque<Row>();
   rows.emplace_back("r1", std::vector<bigtable::Cell>());
   parser->SetRows(std::move(rows));
@@ -126,7 +142,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), no_retry_policy_.clone(),
-      backoff_policy_.clone(), std::move(parser));
+      std::move(backoff_policy), std::move(parser));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -136,6 +152,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
 
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
   auto retry_policy = absl::make_unique<RetryPolicyMock>();
+  auto backoff_policy = absl::make_unique<BackoffPolicyMock>();
   auto parser = absl::make_unique<ReadRowsParserMock>();
   auto rows = std::deque<Row>();
   rows.emplace_back("r1", std::vector<bigtable::Cell>());
@@ -160,7 +177,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy),
-      backoff_policy_.clone(), std::move(parser));
+      std::move(backoff_policy), std::move(parser));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -170,6 +187,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
 
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   auto retry_policy = absl::make_unique<RetryPolicyMock>();
+  auto backoff_policy = absl::make_unique<BackoffPolicyMock>();
   auto parser = absl::make_unique<ReadRowsParserMock>();
 
   {
@@ -185,13 +203,14 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy),
-      backoff_policy_.clone(), std::move(parser));
+      std::move(backoff_policy), std::move(parser));
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
 
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   auto retry_policy = absl::make_unique<RetryPolicyMock>();
+  auto backoff_policy = absl::make_unique<BackoffPolicyMock>();
   auto parser = absl::make_unique<ReadRowsParserMock>();
   auto rows = std::deque<Row>();
   rows.emplace_back("r1", std::vector<bigtable::Cell>());
@@ -220,7 +239,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy), backoff_policy_.clone(), std::move(parser));
+      std::move(retry_policy), std::move(backoff_policy), std::move(parser));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
