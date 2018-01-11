@@ -15,12 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_RETRY_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_RETRY_POLICY_H_
 
-// #ifdef __WINDOWS
-#include <ciso646>
-// #endif  //__WINDOWS
-
 #include <bigtable/client/version.h>
 
+#include <ciso646>
 #include <grpc++/grpc++.h>
 #include <chrono>
 #include <memory>

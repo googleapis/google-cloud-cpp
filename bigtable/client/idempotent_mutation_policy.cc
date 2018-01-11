@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef __WINDOWS
-#include <ciso646>
-#endif  //__WINDOWS
-
 #include "bigtable/client/idempotent_mutation_policy.h"
+
+#include <ciso646>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

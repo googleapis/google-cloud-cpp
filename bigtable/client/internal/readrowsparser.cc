@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef __WINDOWS
-#include <ciso646>
-#endif  //__WINDOWS
-
 #include "bigtable/client/internal/readrowsparser.h"
 
+#include <ciso646>
 #include <stdexcept>
 
 namespace bigtable {
