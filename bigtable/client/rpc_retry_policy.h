@@ -17,9 +17,9 @@
 
 #include <bigtable/client/version.h>
 
-#include <ciso646>
 #include <grpc++/grpc++.h>
 #include <chrono>
+#include <ciso646>
 #include <memory>
 
 namespace bigtable {
