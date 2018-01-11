@@ -15,10 +15,8 @@
 # This should be included from the top level CMakeLists file
 
 # Configure the Compiler options, we will be using C++11 features.
-if (NOT WIN32)
-    set(CMAKE_CXX_STANDARD 11)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
-endif ()
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
     include(CheckCXXCompilerFlag)
