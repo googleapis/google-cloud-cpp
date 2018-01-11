@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef __WINDOWS
+// #ifdef __WINDOWS
 #include <ciso646>
-#endif  //__WINDOWS
+// #endif  //__WINDOWS
 
 #include "bigtable/client/internal/bulk_mutator.h"
 
