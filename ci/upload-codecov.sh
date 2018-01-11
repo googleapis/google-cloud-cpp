@@ -31,10 +31,6 @@ if [ -z "${CODECOV_TOKEN:-}" ]; then
     exit 1
 fi
 
-# Copy the build results out of the docker image
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-sudo docker run --volume "$PWD:/d" --rm -it "${IMAGE}:tip" cp -r /var/tmp/build/gccpp/build-output /d
-
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
 bash <(curl -s https://codecov.io/bash) >codecov.log 2>&1 \
