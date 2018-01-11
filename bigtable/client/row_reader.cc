@@ -88,7 +88,7 @@ void RowReader::MakeRequest() {
 
   if (not last_read_row_key_.empty()) {
     // There is a previous read row, so this is a restarted call
-    // TODO(dmahu): intersect row_set_ with (last_read_row_key_, infty)
+    row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
   }
 
   auto row_set_proto = row_set_.as_proto();
