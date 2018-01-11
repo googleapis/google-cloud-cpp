@@ -21,6 +21,7 @@
 #include <grpc++/test/mock_stream.h>
 
 #include <deque>
+#include <iterator>
 
 using testing::_;
 using testing::DoAll;
