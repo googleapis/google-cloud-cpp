@@ -21,7 +21,6 @@
 #include <grpc++/test/mock_stream.h>
 
 #include <deque>
-#include <iterator>
 
 using testing::_;
 using testing::DoAll;
@@ -102,5 +101,5 @@ TEST_F(RowReaderTest, ReadOneRow) {
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r1");
-  EXPECT_EQ(std::next(it), reader.end());
+  EXPECT_EQ(++it, reader.end());
 }
