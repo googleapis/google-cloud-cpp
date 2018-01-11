@@ -38,6 +38,9 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class RowRange {
  public:
+  explicit RowRange(::google::bigtable::v2::RowRange rhs)
+      : row_range_(std::move(rhs)) {}
+
   RowRange(RowRange&& rhs) noexcept = default;
   RowRange& operator=(RowRange&& rhs) noexcept = default;
   RowRange(RowRange const& rhs) = default;
@@ -141,6 +144,19 @@ class RowRange {
   /// Return true if @p key is in the range.
   bool Contains(absl::string_view key) const;
 
+  /**
+   * Compute the intersection against another RowRange.
+   *
+   * @return a 2-tuple, the first element is a boolean, with value `true` if
+   *     there is some intersection, the second element is the intersection.
+   *     If there is no intersection the first element is `false` and the second
+   *     element has a valid, but unspecified value.
+   */
+  std::pair<bool, RowRange> Intersect(RowRange const& range) const;
+
+  bool operator==(RowRange const& rhs) const;
+  bool operator!=(RowRange const& rhs) const { return !(*this == rhs); }
+
   /// Return the filter expression as a protobuf.
   ::google::bigtable::v2::RowRange as_proto() const { return row_range_; }
 
@@ -149,8 +165,11 @@ class RowRange {
     return std::move(row_range_);
   }
 
+  /// Streaming operator, mostly used for testing.
+  friend std::ostream& operator<<(std::ostream& os, RowRange const& x);
+
  private:
-  /// Private to avoid mistaken creation of unitialized ranges.
+  /// Private to avoid mistaken creation of uninitialized ranges.
   RowRange() {}
 
   /// Return true if @p key is below the start.
