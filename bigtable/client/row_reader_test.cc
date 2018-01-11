@@ -184,6 +184,29 @@ TEST_F(RowReaderTest, ReadOneRow) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  // This postincrement is what we are testing
+  EXPECT_EQ((it++)->row_key(), "r1");
+  EXPECT_EQ(it, reader.end());
+}
+
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
