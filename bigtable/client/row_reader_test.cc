@@ -170,6 +170,8 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockResponseStream();  // the stub will free it
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
@@ -198,6 +200,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
   }
 
   bigtable::RowReader reader(
@@ -222,6 +225,8 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockResponseStream();  // the stub will free it
     // First row should be removed from the retried request, leaving one row
@@ -267,6 +272,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockResponseStream();  // the stub will free it
     // 41 instead of 42
