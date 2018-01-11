@@ -54,7 +54,7 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
                      std::int64_t rows_limit, Filter filter,
                      std::unique_ptr<RPCRetryPolicy> retry_policy,
                      std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-                     std::unique_ptr<internal::ReadRowsParser> parser)
+                     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
       table_name_(table_name),
       row_set_(std::move(row_set)),
@@ -63,7 +63,7 @@ RowReader::RowReader(std::shared_ptr<DataClient> client,
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
       context_(absl::make_unique<grpc::ClientContext>()),
-      parser_(std::move(parser)),
+      parser_factory_(std::move(parser_factory)),
       processed_chunks_count_(0),
       rows_count_(0) {}
 
@@ -104,6 +104,8 @@ void RowReader::MakeRequest() {
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
   stream_ = client_->Stub()->ReadRows(context_.get(), request);
+
+  parser_ = parser_factory_->Create();
 }
 
 bool RowReader::NextChunk() {

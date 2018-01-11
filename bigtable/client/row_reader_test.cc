@@ -30,6 +30,7 @@ using testing::Matcher;
 using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
+using testing::Throw;
 
 using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse;
@@ -67,6 +68,27 @@ class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
 
  private:
   std::deque<Row> rows_;
+};
+
+// Returns a preconfigured set of parsers, so expectations can be set on each.
+class ReadRowsParserMockFactory
+    : public bigtable::internal::ReadRowsParserFactory {
+  using ParserPtr = std::unique_ptr<bigtable::internal::ReadRowsParser>;
+
+ public:
+  void AddParser(ParserPtr parser) { parsers_.emplace_back(std::move(parser)); }
+
+  ParserPtr Create() override {
+    if (parsers_.empty()) {
+      return absl::make_unique<bigtable::internal::ReadRowsParser>();
+    }
+    ParserPtr parser = std::move(parsers_.front());
+    parsers_.pop_front();
+    return parser;
+  }
+
+ private:
+  std::deque<ParserPtr> parsers_;
 };
 
 class RetryPolicyMock : public bigtable::RPCRetryPolicy {
@@ -117,7 +139,7 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
       : stream_(new MockResponseStream()),
         retry_policy_(absl::make_unique<RetryPolicyMock>()),
         backoff_policy_(absl::make_unique<BackoffPolicyMock>()),
-        parser_(absl::make_unique<ReadRowsParserMock>()) {}
+        parser_factory_(absl::make_unique<ReadRowsParserMockFactory>()) {}
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
   MockResponseStream* stream_;
@@ -125,7 +147,7 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
   std::unique_ptr<RetryPolicyMock> retry_policy_;
   std::unique_ptr<BackoffPolicyMock> backoff_policy_;
 
-  std::unique_ptr<ReadRowsParserMock> parser_;
+  std::unique_ptr<ReadRowsParserMockFactory> parser_factory_;
 };
 
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
@@ -135,13 +157,14 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-      std::move(backoff_policy_), std::move(parser_));
+      std::move(backoff_policy_), std::move(parser_factory_));
 
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
 TEST_F(RowReaderTest, ReadOneRow) {
-  parser_->SetRows({"r1"});
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
@@ -149,10 +172,11 @@ TEST_F(RowReaderTest, ReadOneRow) {
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-      std::move(backoff_policy_), std::move(parser_));
+      std::move(backoff_policy_), std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -161,7 +185,8 @@ TEST_F(RowReaderTest, ReadOneRow) {
 }
 
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
-  parser_->SetRows({"r1"});
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
@@ -180,10 +205,11 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-      std::move(backoff_policy_), std::move(parser_));
+      std::move(backoff_policy_), std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -192,6 +218,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
 }
 
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
@@ -203,16 +230,18 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
     EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-      std::move(backoff_policy_), std::move(parser_));
+      std::move(backoff_policy_), std::move(parser_factory_));
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
 
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
-  parser_->SetRows({"r1"});
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
   {
     testing::InSequence s;
     // For sanity, check we have two rows in the initial request
@@ -235,10 +264,108 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(RowReaderTest, FailedParseIsRetried) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  auto response = bigtable::testing::ReadRowsResponseFromString("chunks {}");
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+    EXPECT_CALL(*stream_, Read(_))
+        .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+    EXPECT_CALL(*parser, HandleChunkHook(_))
+        .WillOnce(Throw(std::runtime_error("parser exception")));
+
+    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
+
+    auto stream_retry = new MockResponseStream();  // the stub will free it
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*parser, HandleEndOfStreamHook())
+        .WillOnce(Throw(std::runtime_error("parser exception")));
+
+    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  EXPECT_THROW(reader.begin(), std::exception);
+}
+
+TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    // For sanity, check we have two rows in the initial request
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(2)))
+        .WillOnce(Return(stream_));
+
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*parser, HandleEndOfStreamHook())
+        .WillOnce(Throw(std::runtime_error("parser exception")));
+
+    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
+
+    auto stream_retry = new MockResponseStream();  // the stub will free it
+    // First row should be removed from the retried request, leaving one row
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
+        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet("r1", "r2"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -253,14 +380,16 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
 
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), 442, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_EQ(it, reader.end());
 }
 
 TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
-  parser_->SetRows({"r1"});
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(42)))
@@ -282,9 +411,11 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), 42, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -293,7 +424,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
 }
 
 TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
-  parser_->SetRows({"r1"});
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(1)))
@@ -309,9 +441,11 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
     // row limit reaches zero.
   }
 
+  parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), 1, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());

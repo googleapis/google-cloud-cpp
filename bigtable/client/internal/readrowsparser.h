@@ -22,6 +22,7 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
+#include <absl/memory/memory.h>
 #include <absl/strings/string_view.h>
 #include <vector>
 
@@ -138,6 +139,17 @@ class ReadRowsParser {
 
   /// Have we received the end of stream call?
   bool end_of_stream_;
+};
+
+/// Factory for creating parser instances, defined for testability.
+class ReadRowsParserFactory {
+ public:
+  virtual ~ReadRowsParserFactory() = default;
+
+  /// Returns a newly created parser instance.
+  virtual std::unique_ptr<ReadRowsParser> Create() {
+    return absl::make_unique<ReadRowsParser>();
+  }
 };
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

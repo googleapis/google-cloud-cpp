@@ -56,7 +56,7 @@ class RowReader {
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            std::unique_ptr<internal::ReadRowsParser> parser);
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   using iterator = internal::RowReaderIterator;
   friend class internal::RowReaderIterator;
@@ -128,6 +128,7 @@ class RowReader {
 
   std::unique_ptr<grpc::ClientContext> context_;
 
+  std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
   std::unique_ptr<internal::ReadRowsParser> parser_;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
