@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['r',['R',['../row__range__test_8cc.html#aabbb8bdbf288611797e825b07c46238c',1,'row_range_test.cc']]],
   ['range',['Range',['../classbigtable_1_1v0_1_1RowRange.html#a5e9aa048a862cb9b175985f247b89e32',1,'bigtable::v0::RowRange']]],
   ['readme_2emd',['README.md',['../README_8md.html',1,'(Global Namespace)'],['../client_2internal_2README_8md.html',1,'(Global Namespace)'],['../client_2testing_2README_8md.html',1,'(Global Namespace)']]],
   ['readrowsparser',['ReadRowsParser',['../classbigtable_1_1v0_1_1ReadRowsParser.html',1,'bigtable::v0::ReadRowsParser'],['../classbigtable_1_1v0_1_1ReadRowsParser.html#a14053c1d96d28fdcce97552f197217f8',1,'bigtable::v0::ReadRowsParser::ReadRowsParser()']]],
@@ -13,11 +14,12 @@ var searchData=
   ['row_5frange_2ecc',['row_range.cc',['../row__range_8cc.html',1,'']]],
   ['row_5frange_2eh',['row_range.h',['../row__range_8h.html',1,'']]],
   ['row_5frange_5ftest_2ecc',['row_range_test.cc',['../row__range__test_8cc.html',1,'']]],
+  ['row_5fset_2ecc',['row_set.cc',['../row__set_8cc.html',1,'']]],
   ['row_5fset_2eh',['row_set.h',['../row__set_8h.html',1,'']]],
   ['row_5fset_5ftest_2ecc',['row_set_test.cc',['../row__set__test_8cc.html',1,'']]],
   ['row_5ftest_2ecc',['row_test.cc',['../row__test_8cc.html',1,'']]],
   ['rowkeysregex',['RowKeysRegex',['../classbigtable_1_1v0_1_1Filter.html#af656dc0d3a38681101ea832e754b206b',1,'bigtable::v0::Filter']]],
-  ['rowrange',['RowRange',['../classbigtable_1_1v0_1_1RowRange.html',1,'bigtable::v0::RowRange'],['../classbigtable_1_1v0_1_1RowRange.html#ac7288c3db26197486fc348009d142d57',1,'bigtable::v0::RowRange::RowRange(RowRange &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1RowRange.html#ad2cfb259218d684283b07d3521e70c3a',1,'bigtable::v0::RowRange::RowRange(RowRange const &amp;rhs)=default']]],
+  ['rowrange',['RowRange',['../classbigtable_1_1v0_1_1RowRange.html',1,'bigtable::v0::RowRange'],['../classbigtable_1_1v0_1_1RowRange.html#ad820d58ba68bb585b626d0ad8fbf977a',1,'bigtable::v0::RowRange::RowRange(::google::bigtable::v2::RowRange rhs)'],['../classbigtable_1_1v0_1_1RowRange.html#ac7288c3db26197486fc348009d142d57',1,'bigtable::v0::RowRange::RowRange(RowRange &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1RowRange.html#ad2cfb259218d684283b07d3521e70c3a',1,'bigtable::v0::RowRange::RowRange(RowRange const &amp;rhs)=default']]],
   ['rowsample',['RowSample',['../classbigtable_1_1v0_1_1Filter.html#ad367611eb9fc20bcb0672c8c54f49d09',1,'bigtable::v0::Filter']]],
   ['rowset',['RowSet',['../classbigtable_1_1v0_1_1RowSet.html',1,'bigtable::v0::RowSet'],['../classbigtable_1_1v0_1_1RowSet.html#adb9e0761914a1528a795dc39cf894846',1,'bigtable::v0::RowSet::RowSet()'],['../classbigtable_1_1v0_1_1RowSet.html#a4bf39fa960c399c1a275013e51b9d375',1,'bigtable::v0::RowSet::RowSet(RowSet &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1RowSet.html#abbd140b99d24e70dd6b6ed15cb80d087',1,'bigtable::v0::RowSet::RowSet(RowSet const &amp;rhs)=default'],['../classbigtable_1_1v0_1_1RowSet.html#ae5bc80c235643563de828f0126dbb69e',1,'bigtable::v0::RowSet::RowSet(Arg &amp;&amp;... a)']]],
   ['rpc_5fbackoff_5fpolicy_2ecc',['rpc_backoff_policy.cc',['../rpc__backoff__policy_8cc.html',1,'']]],

@@ -5,9 +5,9 @@ var indexSectionsWithContent =
   2: "b",
   3: "abcdfimprtv",
   4: "abcdefghilmnoprstuv~",
-  5: "bcikmopt",
-  6: "bt",
-  7: "bt",
+  5: "abcdikmopt",
+  6: "brt",
+  7: "bot",
   8: "b",
   9: "cgi"
 };

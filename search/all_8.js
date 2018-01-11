@@ -11,6 +11,7 @@ var searchData=
   ['instance_5fname',['instance_name',['../classbigtable_1_1v0_1_1TableAdmin.html#ad8291bbcf6c9603123adfabe01133267',1,'bigtable::v0::TableAdmin']]],
   ['instancename',['InstanceName',['../namespacebigtable_1_1v0.html#a36b5c0eb551f34dc3f1b1b720e1a0607',1,'bigtable::v0']]],
   ['interleave',['Interleave',['../classbigtable_1_1v0_1_1Filter.html#af0f02d97b4f3c55d8bd9cc04f41c09ff',1,'bigtable::v0::Filter']]],
+  ['intersect',['Intersect',['../classbigtable_1_1v0_1_1RowRange.html#a1ca42a4fd06ecc7018482246c95d9048',1,'bigtable::v0::RowRange::Intersect()'],['../classbigtable_1_1v0_1_1RowSet.html#aaf7ca8e97e7d12f33018a36a0188079a',1,'bigtable::v0::RowSet::Intersect()']]],
   ['intersection',['Intersection',['../classbigtable_1_1v0_1_1GcRule.html#abd3b1c6974fa8c6d41b7cc9e3585b7b8',1,'bigtable::v0::GcRule']]],
   ['is_5fidempotent',['is_idempotent',['../classbigtable_1_1v0_1_1IdempotentMutationPolicy.html#a99f1a941d2e123254df00345434445ad',1,'bigtable::v0::IdempotentMutationPolicy::is_idempotent()'],['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a7d0544676cef8d1c7b294e714800b442',1,'bigtable::v0::SafeIdempotentMutationPolicy::is_idempotent()'],['../classbigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html#a23ae22701665f8b130c2038d7d853af1',1,'bigtable::v0::AlwaysRetryMutationPolicy::is_idempotent()']]],
   ['isempty',['IsEmpty',['../classbigtable_1_1v0_1_1RowRange.html#adcfdf88aa491df942d1403a49a901a7f',1,'bigtable::v0::RowRange']]],

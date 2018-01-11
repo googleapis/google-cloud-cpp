@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['d_5f00',['d_00',['../row__range__test_8cc.html#a7f45b1c92632d29990709040704dbd99',1,'row_range_test.cc']]],
   ['data_5fclient_2ecc',['data_client.cc',['../data__client_8cc.html',1,'']]],
   ['data_5fclient_2eh',['data_client.h',['../data__client_8h.html',1,'']]],
   ['data_5fendpoint',['data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a80a4bc5707558ce37744c4d6f200687b',1,'bigtable::v0::ClientOptions']]],
