@@ -31,18 +31,19 @@ using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
 
-using MockResponseStream =
-    grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
+using google::bigtable::v2::ReadRowsRequest;
+using google::bigtable::v2::ReadRowsResponse;
+using google::bigtable::v2::ReadRowsResponse_CellChunk;
+
+using MockResponseStream = grpc::testing::MockClientReader<ReadRowsResponse>;
 
 using bigtable::Row;
 
 namespace {
 class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
  public:
-  MOCK_METHOD1(HandleChunkHook,
-               void(google::bigtable::v2::ReadRowsResponse_CellChunk chunk));
-  void HandleChunk(
-      google::bigtable::v2::ReadRowsResponse_CellChunk chunk) override {
+  MOCK_METHOD1(HandleChunkHook, void(ReadRowsResponse_CellChunk chunk));
+  void HandleChunk(ReadRowsResponse_CellChunk chunk) override {
     HandleChunkHook(chunk);
   }
 
@@ -97,11 +98,15 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 };
 
 // Match the number of expected row keys in a request in EXPECT_CALL
-Matcher<const google::bigtable::v2::ReadRowsRequest&> RequestRowKeysCount(
-    int n) {
+Matcher<const ReadRowsRequest&> RequestWithRowKeysCount(int n) {
   return Property(
-      &google::bigtable::v2::ReadRowsRequest::rows,
+      &ReadRowsRequest::rows,
       Property(&google::bigtable::v2::RowSet::row_keys_size, Eq(n)));
+}
+
+// Match the row limit in a request
+Matcher<const ReadRowsRequest&> RequestWithRowsLimit(std::int64_t n) {
+  return Property(&ReadRowsRequest::rows_limit, Eq(n));
 }
 
 }  // anonymous namespace
@@ -208,7 +213,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   {
     testing::InSequence s;
     // For sanity, check we have two rows in the initial request
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestRowKeysCount(2)))
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(2)))
         .WillOnce(Return(stream_));
 
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
@@ -220,7 +225,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
 
     auto stream_retry = new MockResponseStream();  // the stub will free it
     // First row should be removed from the retried request, leaving one row
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestRowKeysCount(1)))
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
   }
@@ -228,6 +233,77 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(RowReaderTest, RowLimitIsSent) {
+  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(442)))
+      .WillOnce(Return(stream_));
+  EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), 442, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+
+  auto it = reader.begin();
+  EXPECT_EQ(it, reader.end());
+}
+
+TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
+  parser_->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(42)))
+        .WillOnce(Return(stream_));
+
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish())
+        .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
+
+    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+
+    auto stream_retry = new MockResponseStream();  // the stub will free it
+    // 41 instead of 42
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(41)))
+        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+  }
+
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), 42, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
+  parser_->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(1)))
+        .WillOnce(Return(stream_));
+
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish())
+        .WillOnce(Return(
+            grpc::Status(grpc::INTERNAL, "this exception must be ignored")));
+
+    // Note there is no expectation of a new connection, because the
+    // row limit reaches zero.
+  }
+
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), 1, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_), std::move(parser_));
 
   auto it = reader.begin();
