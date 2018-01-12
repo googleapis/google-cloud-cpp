@@ -44,7 +44,7 @@ void UnsetEnv(char const* variable) {
   unsetenv(variable);
 #endif  // WIN32
 }
-    
+
 void SetEnv(char const* variable, char const* value) {
 #ifdef WIN32
   // Use _putenv_s() instead of SetEnvironmentVariable() because std::getenv()
@@ -74,7 +74,7 @@ class ClientOptionsEmulatorTest : public ::testing::Test {
   }
 
  protected:
-  char const *previous_ = nullptr;
+  char const* previous_ = nullptr;
 };
 }  // anonymous namespace
 
