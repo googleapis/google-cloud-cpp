@@ -20,7 +20,7 @@
 #if __cplusplus < 201103L
 #error "Bigtable C++ Client requires C++11"
 #endif  // __cplusplus < 201103L
-#elif _MSC_VER < 1700
+#elif _MSC_VER < 1900
 #error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
 #endif  // _MSC_VER
 
