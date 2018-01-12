@@ -15,8 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 
-#include "bigtable/client/version.h"
-
 #include "bigtable/client/row.h"
 
 #include <absl/types/optional.h>
