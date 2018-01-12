@@ -396,6 +396,38 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST_F(RowReaderTest, FailedParseRetriesWithAllRequiedRowsSeenShouldStop) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r2"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish())
+        .WillOnce(Return(
+            grpc::Status(grpc::INTERNAL, "this exception must be ignored")));
+
+    // Note there is no expectation of a new connection, because the
+    // set of rows to read should become empty after reading "r2" and
+    // intersecting the requested ["r1", "r2"] with ("r2", "") for the
+    // retry.
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(bigtable::RowRange::Closed("r1", "r2")),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r2");
+  EXPECT_EQ(++it, reader.end());
+}
+
 TEST_F(RowReaderTest, RowLimitIsSent) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(442)))
       .WillOnce(Return(stream_));
