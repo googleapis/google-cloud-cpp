@@ -172,8 +172,10 @@ class FailedMutation {
         status_(to_grpc_status(status)),
         original_index_(index) {}
 
-  FailedMutation(FailedMutation&&) = default;
-  FailedMutation& operator=(FailedMutation&&) = default;
+  FailedMutation(FailedMutation&&) noexcept = default;
+  FailedMutation& operator=(FailedMutation&&) noexcept = default;
+  FailedMutation(FailedMutation const&) = default;
+  FailedMutation& operator=(FailedMutation const&) = default;
 
   //@{
   /// @name accessors
