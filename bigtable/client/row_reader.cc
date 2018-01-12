@@ -17,13 +17,10 @@
 #include <thread>
 
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {}  // namespace BIGTABLE_CLIENT_NS
-
+inline namespace BIGTABLE_CLIENT_NS {
 // RowReader::iterator must satisfy the requirements of an InputIterator.
-namespace {
-using base_iterator = std::iterator<std::input_iterator_tag, Row>;
-
-static_assert(std::is_base_of<base_iterator, RowReader::iterator>::value,
+static_assert(std::is_base_of<std::iterator<std::input_iterator_tag, Row>,
+                              RowReader::iterator>::value,
               "RowReader::iterator must be an InputIterator");
 static_assert(std::is_copy_constructible<RowReader::iterator>::value,
               "RowReader::iterator must be CopyConstructible");
@@ -35,19 +32,15 @@ static_assert(std::is_move_assignable<RowReader::iterator>::value,
               "RowReader::iterator must be MoveAssignable");
 static_assert(std::is_destructible<RowReader::iterator>::value,
               "RowReader::iterator must be Destructible");
-
 static_assert(
     std::is_convertible<decltype(*std::declval<RowReader::iterator>()),
                         RowReader::iterator::value_type>::value,
     "*it when it is of RowReader::iterator type must be convertible to "
     "RowReader::iterator::value_type>");
-
 static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
                            RowReader::iterator&>::value,
               "++it when it is of RowReader::iterator type must be a "
               "RowReader::iterator &>");
-
-}  // anonymous namespace
 
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, absl::string_view table_name,
@@ -184,5 +177,5 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
 
   return grpc::Status::OK;
 }
-
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
