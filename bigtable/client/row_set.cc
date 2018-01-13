@@ -20,6 +20,11 @@ namespace btproto = ::google::bigtable::v2;
 
 RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   RowSet result;
+  // Special case: "all rows", return the argument range
+  if (row_set_.row_keys().empty() and row_set_.row_ranges().empty()) {
+    return RowSet(range);
+  }
+  // Normal case
   for (auto const& key : row_set_.row_keys()) {
     if (range.Contains(key)) {
       *result.row_set_.add_row_keys() = key;
@@ -31,7 +36,26 @@ RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
       *result.row_set_.add_row_ranges() = std::get<1>(i).as_proto_move();
     }
   }
+  // Another special case: intersection is empty, return empty range
+  if (result.row_set_.row_keys().empty() and
+      result.row_set_.row_ranges().empty()) {
+    return RowSet(bigtable::RowRange::Empty());
+  }
   return result;
+}
+
+bool RowSet::IsEmpty() const {
+  if (row_set_.row_keys_size() > 0) {
+    return false;
+  }
+  for (auto const& r : row_set_.row_ranges()) {
+    if (not RowRange(r).IsEmpty()) {
+      return false;
+    }
+  }
+  // We are left with only empty ranges (empty) or nothing at all
+  // (meaning "all rows").
+  return row_set_.row_ranges_size() > 0;
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

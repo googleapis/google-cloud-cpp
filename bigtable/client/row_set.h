@@ -82,6 +82,18 @@ class RowSet {
    */
   RowSet Intersect(bigtable::RowRange const& range) const;
 
+  /**
+   * Returns true if the set is empty.
+   *
+   * A row set is empty iff passing it to a ReadRows call would never
+   * cause it to return rows. This is true if the set consists of only
+   * empty ranges.
+   *
+   * Note that a default constructed RowSet is not empty, since it
+   * matches all rows in the table.
+   */
+  bool IsEmpty() const;
+
   ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
   ::google::bigtable::v2::RowSet as_proto_move() { return std::move(row_set_); }
 

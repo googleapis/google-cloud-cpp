@@ -396,7 +396,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
-TEST_F(RowReaderTest, FailedParseRetriesWithAllRequiedRowsSeenShouldStop) {
+TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r2"});
   {

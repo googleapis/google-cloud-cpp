@@ -79,11 +79,6 @@ void RowReader::MakeRequest() {
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(std::string(table_name_));
 
-  if (not last_read_row_key_.empty()) {
-    // There is a previous read row, so this is a restarted call
-    row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
-  }
-
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 
@@ -121,7 +116,7 @@ void RowReader::Advance(absl::optional<Row>& row) {
     try {
       status = AdvanceOrFail(row);
     } catch (std::exception ex) {
-      // Parser exceptions arrive here
+      // Parser exceptions arrive here.
       status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 
@@ -134,7 +129,17 @@ void RowReader::Advance(absl::optional<Row>& row) {
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT and rows_limit_ <= rows_count_) {
-      row.reset();
+      return;
+    }
+
+    if (not last_read_row_key_.empty()) {
+      // We've returned some rows and need to make sure we don't
+      // request them again.
+      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
+    }
+
+    // If we receive an error, but the retriable set is empty, stop.
+    if (row_set_.IsEmpty()) {
       return;
     }
 
@@ -145,7 +150,7 @@ void RowReader::Advance(absl::optional<Row>& row) {
     auto delay = backoff_policy_->on_completion(status);
     std::this_thread::sleep_for(delay);
 
-    // If we reach this place, we failed and need to restart the call
+    // If we reach this place, we failed and need to restart the call.
     MakeRequest();
   }
 }
