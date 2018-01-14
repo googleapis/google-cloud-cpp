@@ -147,14 +147,18 @@ tutorial on how to configure it.  Generate a private/public key pair with
 C:\...> puttygen
 ```
 
-Then store the key in your [GitHub Settings](https://github.com/settings/keys),
-run the PuTTY ssh agent:
+Then store the public key in your
+[GitHub Settings](https://github.com/settings/keys).
+
+Once you have generated the public/private key pair, start the SSH agent in the
+background:
 
 ```commandline
 C:\...> pageant
 ```
 
-and use the menu to load the key you generated above.  Test the keys with:
+and use the menu to load the privvate key you generated above. Test the keys
+with:
 
 ```commandline
 C:\...> plink -T git@github.com
