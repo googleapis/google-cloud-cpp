@@ -40,11 +40,11 @@ RUN dnf makecache && dnf install -y \
     shtool \
     unzip \
     wget \
+    which \
     zlib-devel
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
-ARG GOPATH=/var/tmp/build/cbt
-WORKDIR ${GOPATH}
-RUN go get cloud.google.com/go/bigtable/cmd/cbt \
-    cloud.google.com/go/bigtable/cmd/emulator
+WORKDIR /var/tmp/install/cbt-components
+RUN curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir=/usr/local
+RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
