@@ -88,7 +88,7 @@ class Filter {
    *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern.  For
    *     technical reasons, the regex must not contain the ':' character, even
    *     if it is not being used as a literal. The server rejects filters with
-   *     an invalid patterns, including patterns containing the ':' character.
+   *     invalid patterns, including patterns containing the ':' character.
    *     The server fails the ReadRows() request with a
    *     `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes
    *     no attempt to validate the pattern before sending it to the server.
