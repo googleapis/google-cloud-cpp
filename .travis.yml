@@ -20,9 +20,31 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
-    - os: linux
+    - # This is a fairly specialized entry in the matrix.  It builds the clients
+      # using a pre-installed gRPC package.  To do so, it builds the normal
+      # Docker image with all the build tools, and uses that image to build and
+      # install gRPC.  We put it first in the matrix because it takes the
+      # longest to run, we can hide some of the latency this way.  It is
+      # disabled on pull requests because it takes over 30 minutes to run.
+      os: linux
+      compiler: clang
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
+            SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+      install:
+        - DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=no ./ci/install-linux.sh
+        - ./ci/install-linux.sh
+      if: type != pull_request
+    - # This is the only macOS entry in the matrix.  It is disabled on
+      # pull requests because Travis often has long backlogs for macOS.
+      os: osx
+      compiler: clang
+      script: ci/build-macosx.sh
+      if: type != pull_request
+    - # The following entries are pretty similar to each other.  They compile
+      # the code using different Docker images and settings.
+      os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 GENERATE_DOCS=yes
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
     - os: linux
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
@@ -36,11 +58,7 @@ matrix:
       env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
     - os: linux
       compiler: gcc
-      env: DISTRO=fedora DISTRO_VERSION=27 CHECK_STYLE=yes
-    - os: osx
-      compiler: clang
-      script: ci/build-macosx.sh
-      if: type != pull_request
+      env: DISTRO=fedora DISTRO_VERSION=27
     - os: linux
       compiler: clang
       env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
@@ -48,18 +66,6 @@ matrix:
     - os: linux
       compiler: gcc
       env: DISTRO=centos DISTRO_VERSION=7 BUILD_TYPE=Release
-    - # This is a fairly specialized entry in the matrix.  It builds the clients
-      # using a pre-installed gRPC package.  To do so, it builds the normal
-      # Docker image with all the build tools, and uses that image to build and
-      # install gRPC.
-      os: linux
-      compiler: clang
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
-            SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
-      install:
-        - DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=no ./ci/install-linux.sh
-        - ./ci/install-linux.sh
-      if: type != pull_request
 
 script:
   - ci/build-linux.sh
