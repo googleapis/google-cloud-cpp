@@ -18,7 +18,7 @@
 
 namespace btproto = ::google::bigtable::v2;
 
-TEST(RowSetTest, Empty) {
+TEST(RowSetTest, DefaultConstructor) {
   auto proto = bigtable::RowSet().as_proto();
   EXPECT_EQ(0, proto.row_keys_size());
   EXPECT_EQ(0, proto.row_ranges_size());
@@ -86,4 +86,32 @@ TEST(RowSetTest, IntersectRightOpen) {
   EXPECT_EQ(R::Closed("l", "m"), R(proto.row_ranges(0)));
   ASSERT_EQ(1, proto.row_keys_size());
   EXPECT_EQ("zzz", proto.row_keys(0));
+}
+
+TEST(RowSetTest, DefaultSetNotEmpty) {
+  bigtable::RowSet row_set;
+  EXPECT_FALSE(row_set.IsEmpty());
+}
+
+TEST(RowSetTest, IntersectDefaultSetKeepsArgument) {
+  using R = bigtable::RowRange;
+  using bigtable::RowSet;
+  auto proto = RowSet().Intersect(R::Range("a", "b")).as_proto();
+  EXPECT_TRUE(proto.row_keys().empty());
+  ASSERT_EQ(1, proto.row_ranges_size());
+  EXPECT_EQ(R::Range("a", "b"), R(proto.row_ranges(0)));
+}
+
+TEST(RowSetTest, IntersectWithEmptyIsEmpty) {
+  using R = bigtable::RowRange;
+  using bigtable::RowSet;
+  EXPECT_TRUE(RowSet().Intersect(R::Empty()).IsEmpty());
+  EXPECT_TRUE(RowSet("a", R::Range("a", "b")).Intersect(R::Empty()).IsEmpty());
+}
+
+TEST(RowSetTest, IntersectWithDisjointIsEmpty) {
+  using R = bigtable::RowRange;
+  using bigtable::RowSet;
+  EXPECT_TRUE(
+      RowSet("a", R::Range("a", "b")).Intersect(R::Range("c", "d")).IsEmpty());
 }

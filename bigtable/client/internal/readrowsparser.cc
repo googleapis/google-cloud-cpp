@@ -18,6 +18,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
@@ -140,6 +141,6 @@ Cell ReadRowsParser::MovePartialToCell() {
   cell_.value.clear();
   return cell;
 }
-
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -26,8 +26,6 @@ class TableTestFixture : public ::testing::Test {
  protected:
   TableTestFixture() {}
 
-  void SetUp() override;
-
   std::shared_ptr<MockDataClient> SetupMockClient();
 
   std::string const kProjectId = "foo-project";
@@ -48,6 +46,9 @@ class TableTestFixture : public ::testing::Test {
   std::shared_ptr<MockDataClient> client_ = SetupMockClient();
   bigtable::Table table_ = bigtable::Table(client_, kTableId);
 };
+
+google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
+    std::string repr);
 
 }  // namespace testing
 }  // namespace bigtable

@@ -1,0 +1,186 @@
+// Copyright 2017 Google Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "bigtable/client/row_reader.h"
+
+#include <thread>
+
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+// RowReader::iterator must satisfy the requirements of an InputIterator.
+static_assert(std::is_base_of<std::iterator<std::input_iterator_tag, Row>,
+                              RowReader::iterator>::value,
+              "RowReader::iterator must be an InputIterator");
+static_assert(std::is_copy_constructible<RowReader::iterator>::value,
+              "RowReader::iterator must be CopyConstructible");
+static_assert(std::is_move_constructible<RowReader::iterator>::value,
+              "RowReader::iterator must be MoveConstructible");
+static_assert(std::is_copy_assignable<RowReader::iterator>::value,
+              "RowReader::iterator must be CopyAssignable");
+static_assert(std::is_move_assignable<RowReader::iterator>::value,
+              "RowReader::iterator must be MoveAssignable");
+static_assert(std::is_destructible<RowReader::iterator>::value,
+              "RowReader::iterator must be Destructible");
+static_assert(
+    std::is_convertible<decltype(*std::declval<RowReader::iterator>()),
+                        RowReader::iterator::value_type>::value,
+    "*it when it is of RowReader::iterator type must be convertible to "
+    "RowReader::iterator::value_type>");
+static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
+                           RowReader::iterator&>::value,
+              "++it when it is of RowReader::iterator type must be a "
+              "RowReader::iterator &>");
+
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, absl::string_view table_name,
+    RowSet row_set, std::int64_t rows_limit, Filter filter,
+    std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    : client_(std::move(client)),
+      table_name_(table_name),
+      row_set_(std::move(row_set)),
+      rows_limit_(rows_limit),
+      filter_(std::move(filter)),
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)),
+      context_(absl::make_unique<grpc::ClientContext>()),
+      parser_factory_(std::move(parser_factory)),
+      processed_chunks_count_(0),
+      rows_count_(0) {}
+
+RowReader::iterator RowReader::begin() {
+  if (not stream_) {
+    MakeRequest();
+  }
+  // Increment the iterator to read a row.
+  return ++internal::RowReaderIterator(this, false);
+}
+
+RowReader::iterator RowReader::end() {
+  return internal::RowReaderIterator(this, true);
+}
+
+void RowReader::MakeRequest() {
+  response_ = {};
+  processed_chunks_count_ = 0;
+
+  google::bigtable::v2::ReadRowsRequest request;
+  request.set_table_name(std::string(table_name_));
+
+  auto row_set_proto = row_set_.as_proto();
+  request.mutable_rows()->Swap(&row_set_proto);
+
+  auto filter_proto = filter_.as_proto();
+  request.mutable_filter()->Swap(&filter_proto);
+
+  if (rows_limit_ != NO_ROWS_LIMIT) {
+    request.set_rows_limit(rows_limit_ - rows_count_);
+  }
+
+  retry_policy_->setup(*context_);
+  backoff_policy_->setup(*context_);
+  stream_ = client_->Stub()->ReadRows(context_.get(), request);
+
+  parser_ = parser_factory_->Create();
+}
+
+bool RowReader::NextChunk() {
+  ++processed_chunks_count_;
+  while (processed_chunks_count_ >= response_.chunks_size()) {
+    processed_chunks_count_ = 0;
+    bool response_is_valid = stream_->Read(&response_);
+    if (not response_is_valid) {
+      response_ = {};
+      return false;
+    }
+  }
+  return true;
+}
+
+void RowReader::Advance(absl::optional<Row>& row) {
+  while (true) {
+    grpc::Status status = grpc::Status::OK;
+
+    try {
+      status = AdvanceOrFail(row);
+    } catch (std::exception ex) {
+      // Parser exceptions arrive here.
+      status = grpc::Status(grpc::INTERNAL, ex.what());
+    }
+
+    if (status.ok()) {
+      return;
+    }
+
+    // In the unlikely case when we have already reached the requested
+    // number of rows and still receive an error (the parser can throw
+    // an error at end of stream for example), there is no need to
+    // retry and we have no good value for rows_limit anyway.
+    if (rows_limit_ != NO_ROWS_LIMIT and rows_limit_ <= rows_count_) {
+      return;
+    }
+
+    if (not last_read_row_key_.empty()) {
+      // We've returned some rows and need to make sure we don't
+      // request them again.
+      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
+    }
+
+    // If we receive an error, but the retriable set is empty, stop.
+    if (row_set_.IsEmpty()) {
+      return;
+    }
+
+    if (not status.ok() and not retry_policy_->on_failure(status)) {
+      throw std::runtime_error("Unretriable error: " + status.error_message());
+    }
+
+    auto delay = backoff_policy_->on_completion(status);
+    std::this_thread::sleep_for(delay);
+
+    // If we reach this place, we failed and need to restart the call.
+    MakeRequest();
+  }
+}
+
+grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
+  row.reset();
+  while (not parser_->HasNext()) {
+    if (NextChunk()) {
+      parser_->HandleChunk(
+          std::move(*(response_.mutable_chunks(processed_chunks_count_))));
+      continue;
+    }
+
+    // Here, there are no more chunks to look at. Close the stream,
+    // finalize the parser and return OK with no rows unless something
+    // fails during cleanup.
+    grpc::Status status = stream_->Finish();
+    if (not status.ok()) {
+      return status;
+    }
+    parser_->HandleEndOfStream();
+    return grpc::Status::OK;
+  }
+
+  // We have a complete row in the parser.
+  row.emplace(parser_->Next());
+  ++rows_count_;
+  last_read_row_key_ = std::string(row->row_key());
+
+  return grpc::Status::OK;
+}
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable

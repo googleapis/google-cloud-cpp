@@ -22,11 +22,13 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
+#include <absl/memory/memory.h>
 #include <absl/strings/string_view.h>
 #include <vector>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 /**
  * Transforms a stream of chunks as returned by the ReadRows streaming
  * RPC into a sequence of rows.
@@ -60,6 +62,8 @@ class ReadRowsParser {
         row_ready_(false),
         end_of_stream_(false) {}
 
+  virtual ~ReadRowsParser() = default;
+
   /**
    * Pass an input chunk proto to the parser.
    *
@@ -68,7 +72,8 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if validation failed.
    */
-  void HandleChunk(google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
+  virtual void HandleChunk(
+      google::bigtable::v2::ReadRowsResponse_CellChunk chunk);
 
   /**
    * Signal that the input stream reached the end.
@@ -76,14 +81,14 @@ class ReadRowsParser {
    * @throws std::runtime_error if more data was expected to finish
    * the current row.
    */
-  void HandleEndOfStream();
+  virtual void HandleEndOfStream();
 
   /**
    * True if the data parsed so far yielded a Row.
    *
    * Call Next() to take the row.
    */
-  bool HasNext() const;
+  virtual bool HasNext() const;
 
   /**
    * Extract and take ownership of the data in a row.
@@ -92,7 +97,7 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if HasNext() is false.
    */
-  Row Next();
+  virtual Row Next();
 
  private:
   /// Holds partially formed data until a full Row is ready.
@@ -136,6 +141,17 @@ class ReadRowsParser {
   bool end_of_stream_;
 };
 
+/// Factory for creating parser instances, defined for testability.
+class ReadRowsParserFactory {
+ public:
+  virtual ~ReadRowsParserFactory() = default;
+
+  /// Returns a newly created parser instance.
+  virtual std::unique_ptr<ReadRowsParser> Create() {
+    return absl::make_unique<ReadRowsParser>();
+  }
+};
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

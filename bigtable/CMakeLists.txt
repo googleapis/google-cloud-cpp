@@ -103,6 +103,8 @@ add_library(bigtable_client
     client/internal/prefix_range_end.cc
     client/internal/readrowsparser.h
     client/internal/readrowsparser.cc
+    client/internal/rowreaderiterator.h
+    client/internal/rowreaderiterator.cc
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h
@@ -112,6 +114,8 @@ add_library(bigtable_client
     client/row.h
     client/row_range.h
     client/row_range.cc
+    client/row_reader.h
+    client/row_reader.cc
     client/row_set.h
     client/row_set.cc
     client/rpc_backoff_policy.h
@@ -181,7 +185,9 @@ set(bigtable_client_unit_tests
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
+    client/table_readrows_test.cc
     client/table_test.cc
+    client/row_reader_test.cc
     client/row_test.cc
     client/row_range_test.cc
     client/row_set_test.cc

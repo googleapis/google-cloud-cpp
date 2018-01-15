@@ -16,8 +16,11 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
 #include "bigtable/client/data_client.h"
+#include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/row_reader.h"
+#include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
@@ -166,6 +169,26 @@ class Table {
    *     handle the failed mutations.
    */
   void BulkApply(BulkMutation&& mut);
+
+  /**
+   * Reads a set of rows from the table.
+   *
+   * @param row_set the rows to read from.
+   * @param filter is applied on the server-side to data in the rows.
+   */
+  RowReader ReadRows(RowSet row_set, Filter filter);
+
+  /**
+   * Reads a limited set of rows from the table.
+   *
+   * @param row_set the rows to read from.
+   * @param rows_limit the maximum number of rows to read. Must be larger than
+   *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @throws std::invalid_argument if rows_limit is <= 0.
+   */
+  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
  private:
   std::shared_ptr<DataClient> client_;
