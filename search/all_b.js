@@ -8,6 +8,7 @@ var searchData=
   ['mock_5fdata_5fclient_2eh',['mock_data_client.h',['../mock__data__client_8h.html',1,'']]],
   ['mock_5fmethod0',['MOCK_METHOD0',['../classbigtable_1_1testing_1_1MockDataClient.html#a624682fd4839be76131c9ac66621ab4d',1,'bigtable::testing::MockDataClient']]],
   ['mockdataclient',['MockDataClient',['../classbigtable_1_1testing_1_1MockDataClient.html',1,'bigtable::testing']]],
+  ['mockresponsestream',['MockResponseStream',['../row__reader__test_8cc.html#a03d0fde6476d1f29e2566a8225502fe2',1,'MockResponseStream():&#160;row_reader_test.cc'],['../table__readrows__test_8cc.html#a3a93623c35ecf18b95df4a85b3c25307',1,'MockResponseStream():&#160;table_readrows_test.cc']]],
   ['modifycolumnfamilies',['ModifyColumnFamilies',['../classbigtable_1_1v0_1_1TableAdmin.html#a18be6d39746e6795fc82efb59cd6e34c',1,'bigtable::v0::TableAdmin']]],
   ['moveto',['MoveTo',['../classbigtable_1_1v0_1_1SingleRowMutation.html#a98c413192936e24f1e7bac032f11b360',1,'bigtable::v0::SingleRowMutation::MoveTo()'],['../classbigtable_1_1v0_1_1BulkMutation.html#a74e230d288cdb2713bde8be2e2323886',1,'bigtable::v0::BulkMutation::MoveTo()']]],
   ['mutation',['Mutation',['../structbigtable_1_1v0_1_1Mutation.html',1,'bigtable::v0::Mutation'],['../classbigtable_1_1v0_1_1FailedMutation.html#adb9afb3d9544de3e67e20e0ac88ac1eb',1,'bigtable::v0::FailedMutation::mutation()']]],

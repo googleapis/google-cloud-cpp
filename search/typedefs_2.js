@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timestampgranularity',['TimestampGranularity',['../classbigtable_1_1v0_1_1TableConfig.html#a84929395dfbe1dbcd4e6d4abbddee46d',1,'bigtable::v0::TableConfig']]]
+  ['mockresponsestream',['MockResponseStream',['../row__reader__test_8cc.html#a03d0fde6476d1f29e2566a8225502fe2',1,'MockResponseStream():&#160;row_reader_test.cc'],['../table__readrows__test_8cc.html#a3a93623c35ecf18b95df4a85b3c25307',1,'MockResponseStream():&#160;table_readrows_test.cc']]]
 ];

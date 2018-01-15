@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['r',['R',['../row__range__test_8cc.html#aabbb8bdbf288611797e825b07c46238c',1,'row_range_test.cc']]]
+  ['iterator',['iterator',['../classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430',1,'bigtable::v0::RowReader']]]
 ];

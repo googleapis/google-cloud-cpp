@@ -1,6 +1,7 @@
 var searchData=
 [
   ['can_5fretry',['can_retry',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html#a4d53aa7f16dda1187f0bd72c40716b45',1,'bigtable::v0::RPCRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a83e1faa5fc4c6e306077b7082407000c',1,'bigtable::v0::LimitedErrorCountRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#aec1939c7298faaf6359ae9b16e6779b6',1,'bigtable::v0::LimitedTimeRetryPolicy::can_retry()']]],
+  ['cancel',['Cancel',['../classbigtable_1_1v0_1_1RowReader.html#a59457f0baf7d6dc4f42a8a5d53d00295',1,'bigtable::v0::RowReader']]],
   ['cell',['Cell',['../classbigtable_1_1v0_1_1Cell.html#afd76f5a24fea82bc10f65f8eba450576',1,'bigtable::v0::Cell']]],
   ['cells',['cells',['../classbigtable_1_1v0_1_1Row.html#a2cf226032c6f85de0151ba2024811200',1,'bigtable::v0::Row']]],
   ['cellsrowlimit',['CellsRowLimit',['../classbigtable_1_1v0_1_1Filter.html#a7892e342330e4df57ce7f3260ebb0030',1,'bigtable::v0::Filter']]],
@@ -22,7 +23,7 @@ var searchData=
   ['condition',['Condition',['../classbigtable_1_1v0_1_1Filter.html#a76642b5d2bf738fcc909b0e92bfaf321',1,'bigtable::v0::Filter']]],
   ['contains',['Contains',['../classbigtable_1_1v0_1_1RowRange.html#a22c072fcd75b3379d74535190dc0ceb1',1,'bigtable::v0::RowRange']]],
   ['convertchunks',['ConvertChunks',['../classAcceptanceTest.html#a28d260fba39f4a805ba26b34ced8c43d',1,'AcceptanceTest']]],
-  ['create',['Create',['../classbigtable_1_1v0_1_1ColumnFamilyModification.html#a86bf5ee8a1b4fc16a27535bc3e4701d3',1,'bigtable::v0::ColumnFamilyModification']]],
+  ['create',['Create',['../classbigtable_1_1v0_1_1internal_1_1ReadRowsParserFactory.html#a94ba39058f9a83ece6d69b7c12942243',1,'bigtable::v0::internal::ReadRowsParserFactory::Create()'],['../classbigtable_1_1v0_1_1ColumnFamilyModification.html#a86bf5ee8a1b4fc16a27535bc3e4701d3',1,'bigtable::v0::ColumnFamilyModification::Create()']]],
   ['createadminclient',['CreateAdminClient',['../namespacebigtable_1_1v0.html#a7691ebbb61a63556315975171fcc0bbf',1,'bigtable::v0']]],
   ['createdefaultclient',['CreateDefaultClient',['../namespacebigtable_1_1v0.html#a4ff02a9311220fdb55a35e2440b0ddd9',1,'bigtable::v0::CreateDefaultClient(std::string project_id, std::string instance_id, bigtable::ClientOptions options)'],['../namespacebigtable_1_1v0.html#a6c9bfde8a7dc9d3b1e6f83ab00aeed2f',1,'bigtable::v0::CreateDefaultClient(std::string project_id, std::string instance_id, ClientOptions options)']]],
   ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin']]],

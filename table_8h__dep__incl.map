@@ -1,9 +1,11 @@
 <map id="client/table.h" name="client/table.h">
-<area shape="rect" id="node2" href="$table_8cc.html" title="client/table.cc" alt="" coords="5,87,108,114"/>
-<area shape="rect" id="node3" href="$table__apply__test_8cc.html" title="client/table_apply\l_test.cc" alt="" coords="29,259,151,300"/>
-<area shape="rect" id="node4" href="$table__bulk__apply__test_8cc.html" title="client/table_bulk_apply\l_test.cc" alt="" coords="327,259,482,300"/>
-<area shape="rect" id="node5" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="507,266,639,293"/>
-<area shape="rect" id="node6" href="$mock__data__client_8h.html" title="client/testing/mock\l_data_client.h" alt="" coords="235,80,367,121"/>
-<area shape="rect" id="node7" href="$table__test__fixture_8h.html" title="client/testing/table\l_test_fixture.h" alt="" coords="210,169,338,211"/>
-<area shape="rect" id="node8" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="175,259,303,300"/>
+<area shape="rect" id="node2" href="$row__reader__test_8cc.html" title="client/row_reader_test.cc" alt="" coords="5,266,173,293"/>
+<area shape="rect" id="node3" href="$table_8cc.html" title="client/table.cc" alt="" coords="713,87,815,114"/>
+<area shape="rect" id="node4" href="$table__apply__test_8cc.html" title="client/table_apply\l_test.cc" alt="" coords="197,259,320,300"/>
+<area shape="rect" id="node5" href="$table__bulk__apply__test_8cc.html" title="client/table_bulk_apply\l_test.cc" alt="" coords="496,259,651,300"/>
+<area shape="rect" id="node6" href="$table__readrows__test_8cc.html" title="client/table_readrows\l_test.cc" alt="" coords="675,259,821,300"/>
+<area shape="rect" id="node7" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="845,266,977,293"/>
+<area shape="rect" id="node8" href="$mock__data__client_8h.html" title="client/testing/mock\l_data_client.h" alt="" coords="403,80,535,121"/>
+<area shape="rect" id="node9" href="$table__test__fixture_8h.html" title="client/testing/table\l_test_fixture.h" alt="" coords="375,169,503,211"/>
+<area shape="rect" id="node10" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="344,259,472,300"/>
 </map>

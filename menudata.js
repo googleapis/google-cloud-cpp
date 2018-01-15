@@ -65,6 +65,7 @@ var menudata={children:[
 {text:"b",url:"globals_b.html#index_b"},
 {text:"c",url:"globals_c.html#index_c"},
 {text:"d",url:"globals_d.html#index_d"},
+{text:"m",url:"globals_m.html#index_m"},
 {text:"r",url:"globals_r.html#index_r"},
 {text:"t",url:"globals_t.html#index_t"}]},
 {text:"Functions",url:"globals_func.html",children:[
