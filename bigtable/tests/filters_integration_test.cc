@@ -15,10 +15,7 @@
 #include "bigtable/client/filters.h"
 
 #include <cmath>
-#include <cstdlib>
 #include <sstream>
-
-#include <google/protobuf/text_format.h>
 
 #include <absl/memory/memory.h>
 #include <absl/strings/str_join.h>
@@ -56,23 +53,6 @@ class FilterIntegrationTest : public ::testing::Test {
   void SetUp() override;
 
   std::unique_ptr<bigtable::Table> CreateTable(std::string const& table_id);
-
-  /**
-   * Return all the cells included in @p request.
-   *
-   * TODO(#32) remove this when Table::ReadRows() is a thing.
-   */
-  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
-                                       btproto::ReadRowsRequest request);
-
-  /**
-   * Return all the cells in the row pointed by @p rowkey, applying @p filter.
-   *
-   * TODO(#29) remove this when Table::ReadRow() is a thing.
-   */
-  std::vector<bigtable::Cell> ReadRow(bigtable::Table& table,
-                                      std::string rowkey,
-                                      bigtable::Filter filter);
 
   /**
    * Return all the cells in @p table that pass @p filter.
@@ -226,7 +206,7 @@ TEST_F(FilterIntegrationTest, PassAll) {
   };
   CreateCells(*table, expected);
 
-  auto actual = ReadRow(*table, row_key, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -248,7 +228,7 @@ TEST_F(FilterIntegrationTest, BlockAll) {
   CreateCells(*table, created);
 
   std::vector<bigtable::Cell> expected{};
-  auto actual = ReadRow(*table, row_key, bigtable::Filter::BlockAllFilter());
+  auto actual = ReadRows(*table, bigtable::Filter::BlockAllFilter());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -273,7 +253,7 @@ TEST_F(FilterIntegrationTest, Latest) {
       {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
       {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
   };
-  auto actual = ReadRow(*table, row_key, bigtable::Filter::Latest(2));
+  auto actual = ReadRows(*table, bigtable::Filter::Latest(2));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -296,8 +276,7 @@ TEST_F(FilterIntegrationTest, FamilyRegex) {
       {row_key, "fam2", "c", 0, "bar", {}},
       {row_key, "fam2", "c2", 0, "bar", {}},
   };
-  auto actual =
-      ReadRow(*table, row_key, bigtable::Filter::FamilyRegex("fam[02]"));
+  auto actual = ReadRows(*table, bigtable::Filter::FamilyRegex("fam[02]"));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -320,8 +299,7 @@ TEST_F(FilterIntegrationTest, ColumnRegex) {
       {row_key, "fam0", "fgh", 0, "bar", {}},
       {row_key, "fam1", "hij", 0, "bar", {}},
   };
-  auto actual =
-      ReadRow(*table, row_key, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
+  auto actual = ReadRows(*table, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -343,8 +321,8 @@ TEST_F(FilterIntegrationTest, ColumnRange) {
       {row_key, "fam0", "b00", 0, "bar", {}},
       {row_key, "fam0", "b01", 0, "bar", {}},
   };
-  auto actual = ReadRow(*table, row_key,
-                        bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
+  auto actual =
+      ReadRows(*table, bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -367,8 +345,8 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
       {row_key, "fam1", "c4", 4000, "v5000", {}},
   };
   using std::chrono::milliseconds;
-  auto actual = ReadRow(*table, row_key, bigtable::Filter::TimestampRange(
-                                             milliseconds(3), milliseconds(6)));
+  auto actual = ReadRows(*table, bigtable::Filter::TimestampRange(
+                                     milliseconds(3), milliseconds(6)));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -694,74 +672,15 @@ std::unique_ptr<bigtable::Table> FilterIntegrationTest::CreateTable(
 }
 
 std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
-    bigtable::Table& table, btproto::ReadRowsRequest request) {
+    bigtable::Table& table, bigtable::Filter filter) {
+  auto reader = table.ReadRows(
+      bigtable::RowSet(bigtable::RowRange::Range("", "")), std::move(filter));
   std::vector<bigtable::Cell> result;
-  grpc::ClientContext client_context;
-  auto stream = data_client_->Stub()->ReadRows(&client_context, request);
-  btproto::ReadRowsResponse response;
-
-  std::string current_row_key;
-  std::string current_family;
-  std::string current_column;
-  std::string current_value;
-  std::vector<std::string> current_labels;
-  while (stream->Read(&response)) {
-    for (btproto::ReadRowsResponse::CellChunk const& chunk :
-         response.chunks()) {
-      if (not chunk.row_key().empty()) {
-        current_row_key = chunk.row_key();
-      }
-      if (chunk.has_family_name()) {
-        current_family = chunk.family_name().value();
-      }
-      if (chunk.has_qualifier()) {
-        current_column = chunk.qualifier().value();
-      }
-      // Most of the time `chunk.labels()` is empty, but the following copy is
-      // fast in that case.
-      std::copy(chunk.labels().begin(), chunk.labels().end(),
-                std::back_inserter(current_labels));
-      if (chunk.value_size() > 0) {
-        current_value.reserve(chunk.value_size());
-      }
-      current_value.append(chunk.value());
-      if (chunk.value_size() == 0 or chunk.commit_row()) {
-        // This was the last chunk.
-        result.emplace_back(current_row_key, current_family, current_column,
-                            chunk.timestamp_micros(), std::move(current_value),
-                            std::move(current_labels));
-      }
-    }
-  }
-  auto status = stream->Finish();
-  if (not status.ok()) {
-    std::ostringstream os;
-    os << "gRPC error in ReadRow() - " << status.error_message() << " ["
-       << status.error_code() << "] details=" << status.error_details();
-    throw std::runtime_error(os.str());
+  for (auto const& row : reader) {
+    std::copy(row.cells().begin(), row.cells().end(),
+              std::back_inserter(result));
   }
   return result;
-}
-
-std::vector<bigtable::Cell> FilterIntegrationTest::ReadRow(
-    bigtable::Table& table, std::string key, bigtable::Filter filter) {
-  btproto::ReadRowsRequest request;
-  request.set_table_name(table.table_name());
-  request.set_rows_limit(1);
-  auto& row = *request.mutable_rows();
-  *row.add_row_keys() = std::move(key);
-  *request.mutable_filter() = filter.as_proto_move();
-
-  return ReadRows(table, std::move(request));
-}
-
-std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
-    bigtable::Table& table, bigtable::Filter filter) {
-  btproto::ReadRowsRequest request;
-  request.set_table_name(table.table_name());
-  *request.mutable_filter() = filter.as_proto_move();
-
-  return ReadRows(table, std::move(request));
 }
 
 /// A helper function to create a list of cells.
