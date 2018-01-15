@@ -1,8 +1,8 @@
 <map id="client/internal/bulk_mutator.cc" name="client/internal/bulk_mutator.cc">
 <area shape="rect" id="node2" href="$bulk__mutator_8h.html" title="bigtable/client/internal\l/bulk_mutator.h" alt="" coords="665,95,813,136"/>
-<area shape="rect" id="node14" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="849,184,973,225"/>
+<area shape="rect" id="node15" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="849,184,973,225"/>
 <area shape="rect" id="node3" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="654,184,825,225"/>
 <area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="563,437,721,464"/>
-<area shape="rect" id="node6" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="356,273,531,300"/>
-<area shape="rect" id="node11" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,348,356,389"/>
+<area shape="rect" id="node7" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="356,273,531,300"/>
+<area shape="rect" id="node12" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,348,356,389"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="client/idempotent_mutation_policy.cc" name="client/idempotent_mutation_policy.cc">
 <area shape="rect" id="node2" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="62,95,233,136"/>
 <area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="5,348,164,375"/>
-<area shape="rect" id="node5" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="249,184,424,211"/>
-<area shape="rect" id="node10" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="567,259,715,300"/>
+<area shape="rect" id="node6" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="249,184,424,211"/>
+<area shape="rect" id="node11" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="567,259,715,300"/>
 </map>
