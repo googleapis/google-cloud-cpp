@@ -157,7 +157,7 @@ background:
 C:\...> pageant
 ```
 
-and use the menu to load the privvate key you generated above. Test the keys
+and use the menu to load the private key you generated above. Test the keys
 with:
 
 ```commandline
