@@ -22,7 +22,6 @@
 #include <deque>
 #include <initializer_list>
 
-using testing::_;
 using testing::DoAll;
 using testing::Eq;
 using testing::Matcher;
@@ -30,6 +29,7 @@ using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
 using testing::Throw;
+using testing::_;
 
 using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse;

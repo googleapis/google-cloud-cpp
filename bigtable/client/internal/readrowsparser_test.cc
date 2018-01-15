@@ -22,8 +22,8 @@
 #include <sstream>
 #include <vector>
 
-using google::bigtable::v2::ReadRowsResponse_CellChunk;
 using bigtable::internal::ReadRowsParser;
+using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   ReadRowsParser parser;

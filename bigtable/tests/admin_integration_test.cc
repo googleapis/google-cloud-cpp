@@ -145,7 +145,7 @@ column_families {
   modified.set_name("");
   CheckTableSchema(modified, expected_text, "CheckModifyTable/Modify");
 }
-}
+}  // anonymous namespace
 
 /**
  * @file An integration test for the bigtable::TableAdmin class.
@@ -179,9 +179,8 @@ int main(int argc, char* argv[]) try {
   CheckTableList(admin, {absl::StrCat(instance_name, "/tables/", table0)});
 
   CheckCreateTable(admin, table1);
-  CheckTableList(admin,
-                 {absl::StrCat(instance_name, "/tables/", table0),
-                  absl::StrCat(instance_name, "/tables/", table1)});
+  CheckTableList(admin, {absl::StrCat(instance_name, "/tables/", table0),
+                         absl::StrCat(instance_name, "/tables/", table1)});
 
   admin.DeleteTable(table0);
   CheckTableList(admin, {absl::StrCat(instance_name, "/tables/", table1)});

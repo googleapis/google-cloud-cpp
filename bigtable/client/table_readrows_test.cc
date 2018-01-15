@@ -17,10 +17,10 @@
 
 #include <grpc++/test/mock_stream.h>
 
-using testing::_;
 using testing::DoAll;
 using testing::Return;
 using testing::SetArgPointee;
+using testing::_;
 
 using MockResponseStream =
     grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
