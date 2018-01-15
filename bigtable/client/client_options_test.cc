@@ -14,6 +14,15 @@
 
 #include "bigtable/client/client_options.h"
 
+#include <cstdlib>
+#ifdef WIN32
+// We need _putenv_s(), which is defined here:
+#include <stdlib.h>
+#else
+// On Unix-like systems we need setenv()/unsetenv(), which are defined here:
+#include <unistd.h>
+#endif  // WIN32
+
 #include <gmock/gmock.h>
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
@@ -26,24 +35,46 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
 }
 
 namespace {
+void UnsetEnv(char const* variable) {
+#ifdef WIN32
+  // Use _putenv_s() instead of SetEnvironmentVariable() because std::getenv()
+  // caches the environment during program startup.
+  (void)_putenv_s(variable, "");
+#else
+  unsetenv(variable);
+#endif  // WIN32
+}
+
+void SetEnv(char const* variable, char const* value) {
+#ifdef WIN32
+  // Use _putenv_s() instead of SetEnvironmentVariable() because std::getenv()
+  // caches the environment during program startup.
+  if (value != nullptr) {
+    (void)_putenv_s(variable, value);
+  } else {
+    UnsetEnv(variable);
+  }
+#else
+  (void)setenv(variable, value, 1);
+#endif  // WIN32
+}
+
 class ClientOptionsEmulatorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    // TODO(#100) - setenv() is a Unix specific call.
     previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
-    setenv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com", 1);
+    SetEnv("BIGTABLE_EMULATOR_HOST", "testendpoint.googleapis.com");
   }
   void TearDown() override {
-    // TODO(#100) - setenv()/unsetenv() are a Unix specific calls.
     if (previous_) {
-      setenv("BIGTABLE_EMULATOR_HOST", previous_, 1);
+      SetEnv("BIGTABLE_EMULATOR_HOST", previous_);
     } else {
-      unsetenv("BIGTABLE_EMULATOR_HOST");
+      UnsetEnv("BIGTABLE_EMULATOR_HOST");
     }
   }
 
  protected:
-  char const *previous_ = nullptr;
+  char const* previous_ = nullptr;
 };
 }  // anonymous namespace
 

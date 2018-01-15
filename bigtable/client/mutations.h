@@ -174,6 +174,8 @@ class FailedMutation {
 
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;
+  FailedMutation(FailedMutation const&) = default;
+  FailedMutation& operator=(FailedMutation const&) = default;
 
   //@{
   /// @name accessors

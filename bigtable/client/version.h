@@ -15,9 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
+#ifndef _MSC_VER
+// Microsoft Vistual Studio does not define __cplusplus correctly for C++11.
 #if __cplusplus < 201103L
 #error "Bigtable C++ Client requires C++11"
 #endif  // __cplusplus < 201103L
+#elif _MSC_VER < 1900
+#error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
+#endif  // _MSC_VER
+
+#include <ciso646>
 
 #define BIGTABLE_CLIENT_VERSION_MAJOR 0
 #define BIGTABLE_CLIENT_VERSION_MINOR 1
