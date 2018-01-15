@@ -66,7 +66,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">row_reader_test.cc File Reference</div>  </div>
@@ -76,7 +75,6 @@ $(function() {
 <code>#include &quot;<a class="el" href="table_8h_source.html">bigtable/client/table.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="table__test__fixture_8h_source.html">bigtable/client/testing/table_test_fixture.h</a>&quot;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
-<code>#include &lt;grpc++/test/mock_stream.h&gt;</code><br />
 <code>#include &lt;deque&gt;</code><br />
 <code>#include &lt;initializer_list&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -109,13 +107,10 @@ Include dependency graph for row_reader_test.cc:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMockResponseStream.html">MockResponseStream</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRowReaderTest.html">RowReaderTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a03d0fde6476d1f29e2566a8225502fe2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="row__reader__test_8cc.html#a03d0fde6476d1f29e2566a8225502fe2">MockResponseStream</a> = grpc::testing::MockClientReader&lt; ReadRowsResponse &gt;</td></tr>
-<tr class="separator:a03d0fde6476d1f29e2566a8225502fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -146,21 +141,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a2ebac1324e18fd9ff6a45779f2d9b7ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="row__reader__test_8cc.html#a2ebac1324e18fd9ff6a45779f2d9b7ee">TEST_F</a> (<a class="el" href="classRowReaderTest.html">RowReaderTest</a>, RowLimitIsNotDecreasedToZero)</td></tr>
 <tr class="separator:a2ebac1324e18fd9ff6a45779f2d9b7ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a03d0fde6476d1f29e2566a8225502fe2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03d0fde6476d1f29e2566a8225502fe2">&#9670;&nbsp;</a></span>MockResponseStream</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="row__reader__test_8cc.html#a03d0fde6476d1f29e2566a8225502fe2">MockResponseStream</a> =  grpc::testing::MockClientReader&lt;ReadRowsResponse&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="af724865192ebcf07e5f465a170cdfad0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af724865192ebcf07e5f465a170cdfad0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/13]</span></h2>
@@ -529,7 +509,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 15 2018 16:46:17 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 15 2018 23:11:41 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

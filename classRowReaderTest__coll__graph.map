@@ -1,5 +1,6 @@
 <map id="RowReaderTest" name="RowReaderTest">
-<area shape="rect" id="node2" href="$classbigtable_1_1testing_1_1TableTestFixture.html" title="Common fixture for the bigtable::Table tests. " alt="" coords="463,105,586,146"/>
-<area shape="rect" id="node4" title="STL class. " alt="" coords="195,128,275,155"/>
+<area shape="rect" id="node2" href="$classbigtable_1_1testing_1_1TableTestFixture.html" title="Common fixture for the bigtable::Table tests. " alt="" coords="538,105,661,146"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="233,128,313,155"/>
 <area shape="rect" id="node5" title="STL class. " alt="" coords="5,121,132,162"/>
+<area shape="rect" id="node8" href="$classMockResponseStream.html" title="MockResponseStream" alt="" coords="522,367,677,393"/>
 </map>
