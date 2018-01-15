@@ -126,5 +126,23 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
       rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
 }
+
+std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
+  RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  RowReader reader =
+      ReadRows(std::move(row_set), rows_limit, std::move(filter));
+  auto it = reader.begin();
+  if (it == reader.end()) {
+    return std::make_pair(false, Row("", {}));
+  }
+  auto result = std::make_pair(true, std::move(*it));
+  if (++it != reader.end()) {
+    throw std::runtime_error(
+        "internal error - RowReader returned 2 rows in ReadRow()");
+  }
+  return result;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

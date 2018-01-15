@@ -185,6 +185,7 @@ set(bigtable_client_unit_tests
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
+    client/table_readrow_test.cc
     client/table_readrows_test.cc
     client/table_test.cc
     client/row_reader_test.cc
