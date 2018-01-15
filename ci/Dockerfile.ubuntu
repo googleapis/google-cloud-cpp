@@ -39,7 +39,11 @@ RUN apt-get update && apt-get install -y \
 
 # Install packages that are required for 14.04, but do not exist in later
 # versions.
-RUN if grep -q 14.04 /etc/lsb-release; then apt-get install -y cmake3; fi
+RUN if grep -q 14.04 /etc/lsb-release; then \
+      apt-get install -y cmake3; \
+    else \
+      apt-get install -y clang-format; \
+    fi
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

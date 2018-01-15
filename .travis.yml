@@ -20,46 +20,76 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
-    - os: linux
-      compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=17.04 GENERATE_DOCS=yes
-    - os: linux
-      compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
-           CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
-    - os: linux
-      compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
-           CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
-    - os: linux
-      compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
-    - os: linux
-      compiler: gcc
-      env: DISTRO=fedora DISTRO_VERSION=27 CHECK_STYLE=yes
-    - os: osx
-      compiler: clang
-      script: ci/build-macosx.sh
-      if: type != pull_request
-    - os: linux
-      compiler: clang
-      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
-            CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
-    - os: linux
-      compiler: gcc
-      env: DISTRO=centos DISTRO_VERSION=7 BUILD_TYPE=Release
-    - # This is a fairly specialized entry in the matrix.  It builds the clients
-      # using a pre-installed gRPC package.  To do so, it builds the normal
-      # Docker image with all the build tools, and uses that image to build and
-      # install gRPC.
+    - # This is a fairly specialized entry in the matrix.  It compiles the code
+      # using Clang's static analyzer.  The static analyzer slows down the build
+      # so much that it can consume the full 50 minutes allocated by Travis for
+      # a build.  Most of this time is spent building gRPC and other
+      # dependencies, but unfortunately the static analyzer inserts itself into
+      # the build process when cmake(1) creates the Makefiles.  The only
+      # workaround that reliably works is to first build and install gRPC
+      # without static analysis, and then compile our code against that
+      # pre-installed version.  Even so, this particular entry takes nearly
+      # 30 minutes to run, so we put it first in the matrix to start it as early
+      # as possible.  We also disable the build on pull-requests.
       os: linux
       compiler: clang
       env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
             SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
       install:
-        - DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=no ./ci/install-linux.sh
+        - # First build the usual Ubuntu image, then use that to build an image
+          # with gRPC already compiled and installed.
+        - DISTRO=ubuntu SCAN_BUILD=no ./ci/install-linux.sh
         - ./ci/install-linux.sh
       if: type != pull_request
+    - # This is the only macOS entry in the matrix.  It is disabled on pull
+      # requests because Travis often has long backlogs for macOS.
+      os: osx
+      compiler: clang
+      script: ci/build-macosx.sh
+      if: type != pull_request
+    - # Compile against an installed version of gRPC.
+      os: linux
+      compiler: clang
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=17.04 BUILD_TYPE=Release \
+            CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+      install:
+        - # First build the usual Ubuntu image, then use that to build an image
+          # with gRPC already compiled and installed.
+        - DISTRO=ubuntu ./ci/install-linux.sh
+        - ./ci/install-linux.sh
+    - # Check the code formatting using clang-format, and generate the Doxygen
+      # documentation.
+      os: linux
+      compiler: gcc
+      env: DISTRO=ubuntu DISTRO_VERSION=17.04 CHECK_STYLE=yes GENERATE_DOCS=yes
+    - # Build with the AddressSanitizer.
+      os: linux
+      compiler: clang
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+           CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
+    - # Build with the UndefinedBehaviorSanitizer.
+      os: linux
+      compiler: clang
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+           CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
+    - # Generate code coverage information and upload to codecov.io.
+      os: linux
+      compiler: gcc
+      env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
+    - # Compile on Fedora.
+      os: linux
+      compiler: gcc
+      env: DISTRO=fedora DISTRO_VERSION=27
+    - # Compile with clang-tidy enabled.  We use Fedora for this build because
+      # it has a version of cmake(1) that reports clang-tidy errors.
+      os: linux
+      compiler: clang
+      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
+            CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
+    - # Compile on CentOS.
+      os: linux
+      compiler: gcc
+      env: DISTRO=centos DISTRO_VERSION=7 BUILD_TYPE=Release
 
 script:
   - ci/build-linux.sh

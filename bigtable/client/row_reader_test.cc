@@ -18,12 +18,10 @@
 #include "bigtable/client/testing/table_test_fixture.h"
 
 #include <gmock/gmock.h>
-#include <grpc++/test/mock_stream.h>
 
 #include <deque>
 #include <initializer_list>
 
-using testing::_;
 using testing::DoAll;
 using testing::Eq;
 using testing::Matcher;
@@ -31,12 +29,20 @@ using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
 using testing::Throw;
+using testing::_;
 
 using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
-using MockResponseStream = grpc::testing::MockClientReader<ReadRowsResponse>;
+class MockResponseStream
+    : public grpc::ClientReaderInterface<ReadRowsResponse> {
+ public:
+  MOCK_METHOD0(WaitForInitialMetadata, void());
+  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD1(Read, bool(ReadRowsResponse*));
+};
 
 using bigtable::Row;
 

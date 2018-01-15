@@ -145,7 +145,7 @@ column_families {
   modified.set_name("");
   CheckTableSchema(modified, expected_text, "CheckModifyTable/Modify");
 }
-}
+}  // anonymous namespace
 
 /**
  * @file An integration test for the bigtable::TableAdmin class.

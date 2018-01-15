@@ -15,15 +15,19 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
-#include <grpc++/test/mock_stream.h>
-
-using testing::_;
 using testing::DoAll;
 using testing::Return;
 using testing::SetArgPointee;
+using testing::_;
 
-using MockResponseStream =
-    grpc::testing::MockClientReader<google::bigtable::v2::ReadRowsResponse>;
+class MockResponseStream : public grpc::ClientReaderInterface<
+                               ::google::bigtable::v2::ReadRowsResponse> {
+ public:
+  MOCK_METHOD0(WaitForInitialMetadata, void());
+  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD1(Read, bool(::google::bigtable::v2::ReadRowsResponse*));
+};
 
 /// Define helper types and functions for this test.
 class TableReadRowsTest : public bigtable::testing::TableTestFixture {};
