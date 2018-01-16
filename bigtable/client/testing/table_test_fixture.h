@@ -17,6 +17,7 @@
 
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/mock_data_client.h"
+#include "bigtable/client/testing/mock_response_stream.h"
 
 namespace bigtable {
 namespace testing {

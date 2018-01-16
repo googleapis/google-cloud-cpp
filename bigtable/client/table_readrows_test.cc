@@ -20,17 +20,10 @@ using testing::Return;
 using testing::SetArgPointee;
 using testing::_;
 
-class MockResponseStream : public grpc::ClientReaderInterface<
-                               ::google::bigtable::v2::ReadRowsResponse> {
- public:
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::ReadRowsResponse*));
-};
-
 /// Define helper types and functions for this test.
+namespace {
 class TableReadRowsTest : public bigtable::testing::TableTestFixture {};
+}  // anonymous namespace
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(
@@ -45,7 +38,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  MockResponseStream* stream = new MockResponseStream();
+  auto stream = new bigtable::testing::MockResponseStream;
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -94,8 +87,8 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  MockResponseStream* stream = new MockResponseStream();
-  MockResponseStream* stream_retry = new MockResponseStream();
+  auto stream = new bigtable::testing::MockResponseStream;
+  auto stream_retry = new bigtable::testing::MockResponseStream;
 
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
       .WillOnce(Return(stream))
@@ -130,7 +123,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
       .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
-        MockResponseStream* stream = new MockResponseStream();
+        auto stream = new bigtable::testing::MockResponseStream;
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
             .WillOnce(
