@@ -58,7 +58,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r1");
-  EXPECT_EQ(std::next(it), reader.end());
+  EXPECT_EQ(++it, reader.end());
 }
 
 TEST_F(TableReadRowsTest, ReadRowsFailsForIllegalRowLimit) {
@@ -124,7 +124,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   ++it;
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r2");
-  EXPECT_EQ(std::next(it), reader.end());
+  EXPECT_EQ(++it, reader.end());
 }
 
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
