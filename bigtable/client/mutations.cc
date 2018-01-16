@@ -16,6 +16,7 @@
 
 #include <google/protobuf/text_format.h>
 
+#include <ciso646>
 #include <sstream>
 #include <stdexcept>
 

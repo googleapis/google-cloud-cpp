@@ -14,6 +14,7 @@
 
 #include "bigtable/client/internal/bulk_mutator.h"
 
+#include <ciso646>
 #include <numeric>
 
 #include "bigtable/client/rpc_retry_policy.h"

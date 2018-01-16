@@ -19,6 +19,7 @@
 
 #include <grpc++/grpc++.h>
 #include <chrono>
+#include <ciso646>
 #include <memory>
 
 namespace bigtable {
