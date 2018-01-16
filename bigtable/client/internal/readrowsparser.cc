@@ -14,7 +14,6 @@
 
 #include "bigtable/client/internal/readrowsparser.h"
 
-#include <ciso646>
 #include <stdexcept>
 
 namespace bigtable {

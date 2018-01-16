@@ -14,8 +14,6 @@
 
 #include "bigtable/client/idempotent_mutation_policy.h"
 
-#include <ciso646>
-
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<IdempotentMutationPolicy> DefaultIdempotentMutationPolicy() {

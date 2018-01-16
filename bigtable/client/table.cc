@@ -14,7 +14,6 @@
 
 #include "bigtable/client/table.h"
 
-#include <ciso646>
 #include <thread>
 
 #include "bigtable/client/internal/bulk_mutator.h"
