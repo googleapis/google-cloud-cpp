@@ -230,13 +230,12 @@ endforeach ()
 
 # Create a single executable that rolls up all the tests, this is convenient
 # for CLion and other IDEs.
-add_executable(bigtable_client_all_tests
+add_executable(bigtable_client_all_tests EXCLUDE_FROM_ALL
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
     bigtable_client_testing bigtable_admin_client bigtable_client
     bigtable_protos gmock absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-add_dependencies(tests-local bigtable_client_all_tests)
 
 option(FORCE_SANITIZER_ERRORS
     "If set, enable tests that force errors detected by the sanitizers."
