@@ -55,6 +55,9 @@ class RowReader {
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+  RowReader(RowReader&& rhs) noexcept = default;
+
+  ~RowReader();
 
   using iterator = internal::RowReaderIterator;
   friend class internal::RowReaderIterator;
@@ -131,6 +134,8 @@ class RowReader {
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;
+  bool stream_is_open_;
+  bool operation_cancelled_;
 
   /// The last received response, chunks are being parsed one by one from it.
   google::bigtable::v2::ReadRowsResponse response_;

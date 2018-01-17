@@ -218,6 +218,32 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   EXPECT_EQ(it, reader.end());
 }
 
+TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_NE(it, reader.end());
+  // Do not finish iterating, and expect the stream to be finalized anyway.
+}
+
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
@@ -524,4 +550,43 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
+}
+
+TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_NE(it, reader.end());
+  // Manually cancel the call.
+  reader.Cancel();
+  EXPECT_THROW(reader.begin(), std::runtime_error);
+}
+
+TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancel) {
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+  // Manually cancel the call before a stream was created.
+  reader.Cancel();
+
+  EXPECT_THROW(reader.begin(), std::runtime_error);
 }
