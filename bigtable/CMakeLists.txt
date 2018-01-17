@@ -132,6 +132,7 @@ target_link_libraries(bigtable_client
 add_library(bigtable_client_testing
     client/testing/chrono_literals.h
     client/testing/mock_data_client.h
+    client/testing/mock_response_stream.h
     client/testing/table_test_fixture.h
     client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
@@ -185,6 +186,7 @@ set(bigtable_client_unit_tests
     client/mutations_test.cc
     client/table_apply_test.cc
     client/table_bulk_apply_test.cc
+    client/table_readrow_test.cc
     client/table_readrows_test.cc
     client/table_test.cc
     client/row_reader_test.cc
@@ -229,13 +231,12 @@ endforeach ()
 
 # Create a single executable that rolls up all the tests, this is convenient
 # for CLion and other IDEs.
-add_executable(bigtable_client_all_tests
+add_executable(bigtable_client_all_tests EXCLUDE_FROM_ALL
     ${bigtable_client_unit_tests} ${bigtable_admin_unit_tests})
 target_link_libraries(bigtable_client_all_tests
     bigtable_client_testing bigtable_admin_client bigtable_client
     bigtable_protos gmock absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-add_dependencies(tests-local bigtable_client_all_tests)
 
 option(FORCE_SANITIZER_ERRORS
     "If set, enable tests that force errors detected by the sanitizers."

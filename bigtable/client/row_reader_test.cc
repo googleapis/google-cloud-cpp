@@ -159,6 +159,7 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
 
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
@@ -171,11 +172,13 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 TEST_F(RowReaderTest, ReadOneRow) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
+  EXPECT_CALL(*parser, HandleEndOfStreamHook()).Times(1);
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -193,11 +196,13 @@ TEST_F(RowReaderTest, ReadOneRow) {
 TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
+  EXPECT_CALL(*parser, HandleEndOfStreamHook()).Times(1);
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream_));
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -232,6 +237,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -291,6 +297,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -327,6 +334,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -375,6 +383,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
     EXPECT_CALL(*parser, HandleEndOfStreamHook())
         .WillOnce(Throw(std::runtime_error("parser exception")));
 
@@ -387,6 +396,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -438,6 +448,7 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(442)))
       .WillOnce(Return(stream_));
   EXPECT_CALL(*stream_, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*stream_, Finish()).WillOnce(Return(grpc::Status::OK));
 
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), 442, bigtable::Filter::PassAllFilter(),
@@ -470,6 +481,7 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(41)))
         .WillOnce(Return(stream_retry));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
