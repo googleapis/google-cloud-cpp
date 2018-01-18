@@ -84,7 +84,11 @@ class ReadRowsParserMockFactory
  public:
   void AddParser(ParserPtr parser) { parsers_.emplace_back(std::move(parser)); }
 
+  // We only need a hook here because MOCK_METHOD0 would not add the
+  // 'override' keyword that a compiler warning expects for Create().
+  MOCK_METHOD0(CreateHook, void());
   ParserPtr Create() override {
+    CreateHook();
     if (parsers_.empty()) {
       return absl::make_unique<bigtable::internal::ReadRowsParser>();
     }
@@ -241,7 +245,8 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_NE(it, reader.end());
-  // Do not finish iterating, and expect the stream to be finalized anyway.
+  // Do not finish the iteration.  We still expect the stream to be finalized,
+  // and the previously setup expectations on the mock `stream_` check that.
 }
 
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
@@ -589,4 +594,17 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancel) {
   reader.Cancel();
 
   EXPECT_THROW(reader.begin(), std::runtime_error);
+}
+
+TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
+  // The RowReader constructor/destructor by themselves should not
+  // invoke the RPC or create parsers (the latter restriction because
+  // parsers are per-connection and non-reusable).
+  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).Times(0);
+  EXPECT_CALL(*parser_factory_, CreateHook()).Times(0);
+
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
 }
