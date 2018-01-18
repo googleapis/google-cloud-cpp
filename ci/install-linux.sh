@@ -24,14 +24,14 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-# Make three attempts to build the Docker image.  From time to time the image
-# creation fails because some apt server times out, and more often than not
+# Make three attempts to build the Docker image.  From time to time, the image
+# creation fails because some apt server times out, and more often than not,
 # restarting the build is successful.
 
-# Initially wait at least 3 minutes (the times are in seconds), because it makes
-# no sense to try faster.  We currently have 20+ minutes of remaining budget to
-# complete a build, and we should be as nice as possible to the servers that
-# provide the packages.
+# Initially, wait at least 3 minutes (the times are in seconds), because it
+# makes no sense to try faster.  We currently have 20+ minutes of remaining
+# budget to complete a build, and we should be as nice as possible to the
+# servers that provide the packages.
 min_wait=180
 for i in 1 2 3; do
   sudo docker build -t "${IMAGE}:tip" \
@@ -42,7 +42,7 @@ for i in 1 2 3; do
   fi
   # Sleep for a few minutes before trying again.
   readonly PERIOD=$[ (${RANDOM} % 60) + min_wait ]
-  echo "Fetch failed trying again in ${PERIOD} seconds"
+  echo "Fetch failed; trying again in ${PERIOD} seconds."
   sleep ${PERIOD}s
   min_wait=$[ min_wait * 2 ]
 done
