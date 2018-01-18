@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Stop on errors, similar "set -e" on Unix shells...
+Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
 $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName

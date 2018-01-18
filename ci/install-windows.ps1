@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Stop on errors, similar (but not quite as useful as) "set -e" on Unix shells ...
+# Stop on errors. This has a similar effect as `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-# Using relative paths works both on appveyor and in development workstations
+# Using relative paths works both on appveyor and in development workstations.
 cd ..
 
-# ... update or clone the vcpkg package manager ...
+# Update or clone the 'vcpkg' package manager.
 if (Test-Path vcpkg\.git) {
   cd vcpkg
   git pull
@@ -37,27 +37,23 @@ if ($LASTEXITCODE) {
   throw "git setup failed with exit code $LASTEXITCODE"
 }
 
-# ... build the tool each time, it is fast to do so ...
+# Build the tool each time, it is fast to do so.
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LASTEXITCODE) {
   throw "vcpkg bootstrap failed with exit code $LASTEXITCODE"
 }
 
-# ... integrate installed packages into the build environment ...
+# Integrate installed packages into the build environment.
 .\vcpkg integrate install
 if ($LASTEXITCODE) {
   throw "vcpkg integrate failed with exit code $LASTEXITCODE"
 }
 
-# ... Normally the packages are cached by the CI system (appveyor)
-# so this is not too painful. We explicitly install each dependency
-# because if we run out of time in the appveyor build the cache is at least
-# partially refreshed and a rebuild will complete creating the cache ...
-# ... if necessary, install grpc again.  Normally the packages are
-# cached by the CI system (appveyor) so this is not too painful.
-# We explicitly install each dependency because if we run out of time
-# in the appveyor build the cache is at least partially refreshed and
-# a rebuild will complete creating the cache ...
+# AppVeyor limits builds to 60 minutes.  Building all the dependencies takes longer than
+# that.  Cache the dependencies to work around the build time restrictions.
+# Explicitly install each dependency because if we run out of time in the AppVeyor build
+# the cache is at least partially refreshed, a rebuild will start with some dependencies
+# already cached, and likely complete before the AppVeyor build time limit.
 $packages = @("zlib:x86-windows-static", "openssl:x86-windows-static",
               "protobuf:x86-windows-static", "c-ares:x86-windows-static",
               "grpc:x86-windows-static")
