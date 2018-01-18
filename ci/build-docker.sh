@@ -67,6 +67,7 @@ echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
 if [ "${SCAN_BUILD}" = "yes" ]; then
   scan-build make -j ${NCPU} -C bigtable tests-local
 else
+  make -j VERBOSE=1 gtest
   make -j ${NCPU} all
 fi
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
@@ -93,6 +94,16 @@ if grep -e '/v/.*\.cc:[0-9][0-9]*' \
   exit 1
 else
   echo "no sanitizer errors found."
+fi
+
+echo
+echo "Testing install rule"
+make install
+
+if [ "${TEST_INSTALL}" = "yes" ]; then
+  echo
+  echo "Test building against installed Bigtable C++ Client."
+  make -C /v/bigtable/tests all
 fi
 
 # If document generation is enabled, run it now.
