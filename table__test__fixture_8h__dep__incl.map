@@ -2,7 +2,8 @@
 <area shape="rect" id="node2" href="$row__reader__test_8cc.html" title="client/row_reader_test.cc" alt="" coords="5,102,173,129"/>
 <area shape="rect" id="node3" href="$table__apply__test_8cc.html" title="client/table_apply\l_test.cc" alt="" coords="197,95,320,136"/>
 <area shape="rect" id="node4" href="$table__bulk__apply__test_8cc.html" title="client/table_bulk_apply\l_test.cc" alt="" coords="344,95,499,136"/>
-<area shape="rect" id="node5" href="$table__readrows__test_8cc.html" title="client/table_readrows\l_test.cc" alt="" coords="523,95,669,136"/>
-<area shape="rect" id="node6" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="693,102,825,129"/>
-<area shape="rect" id="node7" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="849,95,977,136"/>
+<area shape="rect" id="node5" href="$table__readrow__test_8cc.html" title="client/table_readrow\l_test.cc" alt="" coords="523,95,661,136"/>
+<area shape="rect" id="node6" href="$table__readrows__test_8cc.html" title="client/table_readrows\l_test.cc" alt="" coords="686,95,831,136"/>
+<area shape="rect" id="node7" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="855,102,987,129"/>
+<area shape="rect" id="node8" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="1012,95,1140,136"/>
 </map>

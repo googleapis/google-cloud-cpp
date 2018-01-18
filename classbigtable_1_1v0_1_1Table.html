@@ -100,6 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a156d76ffb347bc7422b16d5ae932a483"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html">RowReader</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a156d76ffb347bc7422b16d5ae932a483">ReadRows</a> (<a class="el" href="classbigtable_1_1v0_1_1RowSet.html">RowSet</a> row_set, std::int64_t rows_limit, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter)</td></tr>
 <tr class="memdesc:a156d76ffb347bc7422b16d5ae932a483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a limited set of rows from the table.  <a href="#a156d76ffb347bc7422b16d5ae932a483">More...</a><br /></td></tr>
 <tr class="separator:a156d76ffb347bc7422b16d5ae932a483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdb527ed7c658c736ccb973ff49f051a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; bool, <a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a">ReadRow</a> (std::string row_key, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter)</td></tr>
+<tr class="memdesc:abdb527ed7c658c736ccb973ff49f051a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and return a single row from the table.  <a href="#abdb527ed7c658c736ccb973ff49f051a">More...</a><br /></td></tr>
+<tr class="separator:abdb527ed7c658c736ccb973ff49f051a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main interface to interact with data in a Cloud Bigtable table. </p>
@@ -294,6 +297,44 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
 
 </div>
 </div>
+<a id="abdb527ed7c658c736ccb973ff49f051a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdb527ed7c658c736ccb973ff49f051a">&#9670;&nbsp;</a></span>ReadRow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; bool, <a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a> &gt; bigtable::v0::Table::ReadRow </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>row_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a>&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read and return a single row from the table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">row_key</td><td>the row to read. </td></tr>
+    <tr><td class="paramname">filter</td><td>a filter expression, can be used to select a subset of the column families and columns in the row. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a tuple, the first element is a boolean, with value <code>false</code> if the row does not exist. If the first element is <code>true</code> the second element has the contents of the <a class="el" href="classbigtable_1_1v0_1_1Row.html" title="The in-memory representation of a Bigtable row. ">Row</a>. Note that the contents may be empty if the filter expression removes all column families and columns. </dd></dl>
+
+</div>
+</div>
 <a id="a07bf1327a1e247881ae98537e722812d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07bf1327a1e247881ae98537e722812d">&#9670;&nbsp;</a></span>ReadRows() <span class="overload">[1/2]</span></h2>
 
@@ -413,7 +454,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 16 2018 21:46:30 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 18 2018 03:11:52 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
