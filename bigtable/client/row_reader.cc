@@ -57,10 +57,15 @@ RowReader::RowReader(
       backoff_policy_(std::move(backoff_policy)),
       context_(absl::make_unique<grpc::ClientContext>()),
       parser_factory_(std::move(parser_factory)),
+      stream_is_open_(false),
+      operation_cancelled_(false),
       processed_chunks_count_(0),
       rows_count_(0) {}
 
 RowReader::iterator RowReader::begin() {
+  if (operation_cancelled_) {
+    throw std::runtime_error("Operation already cancelled.");
+  }
   if (not stream_) {
     MakeRequest();
   }
@@ -92,6 +97,7 @@ void RowReader::MakeRequest() {
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
   stream_ = client_->Stub()->ReadRows(context_.get(), request);
+  stream_is_open_ = true;
 
   parser_ = parser_factory_->Create();
 }
@@ -167,6 +173,7 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
     // Here, there are no more chunks to look at. Close the stream,
     // finalize the parser and return OK with no rows unless something
     // fails during cleanup.
+    stream_is_open_ = false;
     grpc::Status status = stream_->Finish();
     if (not status.ok()) {
       return status;
@@ -181,6 +188,27 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
   last_read_row_key_ = std::string(row->row_key());
 
   return grpc::Status::OK;
+}
+
+void RowReader::Cancel() {
+  operation_cancelled_ = true;
+  if (not stream_is_open_) {
+    return;
+  }
+  context_->TryCancel();
+
+  // Also drain any data left unread
+  google::bigtable::v2::ReadRowsResponse response;
+  while (stream_->Read(&response)) {
+  }
+
+  stream_is_open_ = false;
+  (void)stream_->Finish();  // ignore errors
+}
+
+RowReader::~RowReader() {
+  // Make sure we don't leave open streams.
+  Cancel();
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
