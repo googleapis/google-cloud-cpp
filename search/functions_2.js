@@ -20,12 +20,13 @@ var searchData=
   ['columnrangeopen',['ColumnRangeOpen',['../classbigtable_1_1v0_1_1Filter.html#ab732d65f0fda80be67c1d62083d6e1ae',1,'bigtable::v0::Filter']]],
   ['columnrangerightopen',['ColumnRangeRightOpen',['../classbigtable_1_1v0_1_1Filter.html#a2a9c356f7cd4cedbeff9f26081e1331b',1,'bigtable::v0::Filter']]],
   ['columnregex',['ColumnRegex',['../classbigtable_1_1v0_1_1Filter.html#aa4f42934550674a6a73b97138fe9345b',1,'bigtable::v0::Filter']]],
+  ['commonclient',['CommonClient',['../classbigtable_1_1v0_1_1internal_1_1CommonClient.html#aa9cafdb5ca57425d94be7dcde60d9fe5',1,'bigtable::v0::internal::CommonClient']]],
   ['condition',['Condition',['../classbigtable_1_1v0_1_1Filter.html#a76642b5d2bf738fcc909b0e92bfaf321',1,'bigtable::v0::Filter']]],
   ['contains',['Contains',['../classbigtable_1_1v0_1_1RowRange.html#a22c072fcd75b3379d74535190dc0ceb1',1,'bigtable::v0::RowRange']]],
   ['convertchunks',['ConvertChunks',['../classAcceptanceTest.html#a28d260fba39f4a805ba26b34ced8c43d',1,'AcceptanceTest']]],
   ['create',['Create',['../classbigtable_1_1v0_1_1internal_1_1ReadRowsParserFactory.html#a94ba39058f9a83ece6d69b7c12942243',1,'bigtable::v0::internal::ReadRowsParserFactory::Create()'],['../classbigtable_1_1v0_1_1ColumnFamilyModification.html#a86bf5ee8a1b4fc16a27535bc3e4701d3',1,'bigtable::v0::ColumnFamilyModification::Create()']]],
-  ['createadminclient',['CreateAdminClient',['../namespacebigtable_1_1v0.html#a7691ebbb61a63556315975171fcc0bbf',1,'bigtable::v0']]],
-  ['createdefaultclient',['CreateDefaultClient',['../namespacebigtable_1_1v0.html#a4ff02a9311220fdb55a35e2440b0ddd9',1,'bigtable::v0::CreateDefaultClient(std::string project_id, std::string instance_id, bigtable::ClientOptions options)'],['../namespacebigtable_1_1v0.html#a6c9bfde8a7dc9d3b1e6f83ab00aeed2f',1,'bigtable::v0::CreateDefaultClient(std::string project_id, std::string instance_id, ClientOptions options)']]],
+  ['createdefaultadminclient',['CreateDefaultAdminClient',['../namespacebigtable_1_1v0.html#a47ed425d2e8281836e0222e8993b828c',1,'bigtable::v0']]],
+  ['createdefaultdataclient',['CreateDefaultDataClient',['../namespacebigtable_1_1v0.html#ad671db278ce6fb606c4fea3391e5745d',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, bigtable::ClientOptions options)'],['../namespacebigtable_1_1v0.html#a5fad7f14ac136fae05048446aa30d13b',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, ClientOptions options)']]],
   ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]]
 ];

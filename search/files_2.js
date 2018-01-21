@@ -8,5 +8,6 @@ var searchData=
   ['client_5foptions_5ftest_2ecc',['client_options_test.cc',['../client__options__test_8cc.html',1,'']]],
   ['column_5ffamily_2eh',['column_family.h',['../column__family_8h.html',1,'']]],
   ['column_5ffamily_5ftest_2ecc',['column_family_test.cc',['../column__family__test_8cc.html',1,'']]],
+  ['common_5fclient_2eh',['common_client.h',['../common__client_8h.html',1,'']]],
   ['conjunction_2eh',['conjunction.h',['../conjunction_8h.html',1,'']]]
 ];

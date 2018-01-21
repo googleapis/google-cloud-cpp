@@ -11,6 +11,7 @@ var searchData=
   ['readrowsparser_5ftest_2ecc',['readrowsparser_test.cc',['../readrowsparser__test_8cc.html',1,'']]],
   ['readrowsparserfactory',['ReadRowsParserFactory',['../classbigtable_1_1v0_1_1internal_1_1ReadRowsParserFactory.html',1,'bigtable::v0::internal']]],
   ['readrowsresponsefromstring',['ReadRowsResponseFromString',['../namespacebigtable_1_1testing.html#a9ddd81edf115ebc34a0e7a822a32cc65',1,'bigtable::testing']]],
+  ['reset',['reset',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a8f41bf50d41e4708be77eb6f516551bd',1,'bigtable::v0::DefaultDataClient::reset()'],['../classbigtable_1_1v0_1_1DataClient.html#a1cecc82be93db3654998b482826d58d1',1,'bigtable::v0::DataClient::reset()'],['../classbigtable_1_1v0_1_1internal_1_1CommonClient.html#aab5a2374d2845c86eff9d50353208509',1,'bigtable::v0::internal::CommonClient::reset()'],['../classbigtable_1_1v0_1_1AdminClient.html#a638c50fc43a4ec6c34eca80b9f42a123',1,'bigtable::v0::AdminClient::reset()']]],
   ['retry_5fpolicy_5f',['retry_policy_',['../classRowReaderTest.html#a066591346cbb352c5d43de0e3e1ebeea',1,'RowReaderTest']]],
   ['rightopen',['RightOpen',['../classbigtable_1_1v0_1_1RowRange.html#a17408567e1f35ed49a657ca06a74c897',1,'bigtable::v0::RowRange']]],
   ['row',['Row',['../classbigtable_1_1v0_1_1Row.html',1,'bigtable::v0::Row'],['../classbigtable_1_1v0_1_1Row.html#a5ac93c6b8674ddbb059a649c7bc955b3',1,'bigtable::v0::Row::Row()']]],

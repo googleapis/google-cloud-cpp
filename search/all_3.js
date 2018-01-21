@@ -3,6 +3,7 @@ var searchData=
   ['d_5f00',['d_00',['../row__range__test_8cc.html#a7f45b1c92632d29990709040704dbd99',1,'row_range_test.cc']]],
   ['data_5fclient_2ecc',['data_client.cc',['../data__client_8cc.html',1,'']]],
   ['data_5fclient_2eh',['data_client.h',['../data__client_8h.html',1,'']]],
+  ['data_5fclient_5ftest_2ecc',['data_client_test.cc',['../data__client__test_8cc.html',1,'']]],
   ['data_5fendpoint',['data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a80a4bc5707558ce37744c4d6f200687b',1,'bigtable::v0::ClientOptions']]],
   ['dataclient',['DataClient',['../classbigtable_1_1v0_1_1DataClient.html',1,'bigtable::v0']]],
   ['defaultdataclient',['DefaultDataClient',['../classbigtable_1_1v0_1_1DefaultDataClient.html',1,'bigtable::v0::DefaultDataClient'],['../classbigtable_1_1v0_1_1DefaultDataClient.html#a06282ef754f75ba17ce4cabfc1d85f60',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance, ClientOptions options)'],['../classbigtable_1_1v0_1_1DefaultDataClient.html#a9bd9f51ec2f1517ef9931b06a6c2a370',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance)']]],

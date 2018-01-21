@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timestampgranularity',['TimestampGranularity',['../classbigtable_1_1v0_1_1TableConfig.html#a84929395dfbe1dbcd4e6d4abbddee46d',1,'bigtable::v0::TableConfig']]]
+  ['stubptr',['StubPtr',['../classbigtable_1_1v0_1_1internal_1_1CommonClient.html#a23ae6714f7e5d6db7d86f93cc115b1f5',1,'bigtable::v0::internal::CommonClient']]]
 ];
