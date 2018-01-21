@@ -17,7 +17,7 @@
 #include <gmock/gmock.h>
 
 TEST(DataClientTest, Default) {
-  auto data_client = bigtable::CreateDefaultClient(
+  auto data_client = bigtable::CreateDefaultDataClient(
       "test-project", "test-instance", bigtable::ClientOptions());
   ASSERT_TRUE(data_client);
   EXPECT_EQ("test-project", data_client->project_id());

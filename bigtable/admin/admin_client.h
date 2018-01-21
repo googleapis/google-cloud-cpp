@@ -55,8 +55,8 @@ class AdminClient {
 };
 
 /// Create a new admin client configured via @p options.
-std::shared_ptr<AdminClient> CreateAdminClient(std::string project,
-                                               bigtable::ClientOptions options);
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
+    std::string project, bigtable::ClientOptions options);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

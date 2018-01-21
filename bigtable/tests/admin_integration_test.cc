@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) try {
   std::string const table2 = "table2";
 
   auto admin_client =
-      bigtable::CreateAdminClient(project_id, bigtable::ClientOptions());
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
   auto instance_name = admin.instance_name();

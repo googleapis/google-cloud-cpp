@@ -17,8 +17,8 @@
 #include <gmock/gmock.h>
 
 TEST(AdminClientTest, Default) {
-  auto admin_client =
-      bigtable::CreateAdminClient("test-project", bigtable::ClientOptions());
+  auto admin_client = bigtable::CreateDefaultAdminClient(
+      "test-project", bigtable::ClientOptions());
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 

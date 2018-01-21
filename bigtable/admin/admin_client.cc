@@ -29,7 +29,7 @@ namespace {
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class SimpleAdminClient : public bigtable::AdminClient {
+class DefaultAdminClient : public bigtable::AdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
@@ -45,7 +45,7 @@ class SimpleAdminClient : public bigtable::AdminClient {
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  SimpleAdminClient(std::string project, bigtable::ClientOptions options)
+  DefaultAdminClient(std::string project, bigtable::ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -61,10 +61,10 @@ class SimpleAdminClient : public bigtable::AdminClient {
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::shared_ptr<AdminClient> CreateAdminClient(
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return std::make_shared<SimpleAdminClient>(std::move(project),
-                                             std::move(options));
+  return std::make_shared<DefaultAdminClient>(std::move(project),
+                                              std::move(options));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -70,7 +70,7 @@ std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
 
-std::shared_ptr<DataClient> CreateDefaultClient(
+std::shared_ptr<DataClient> CreateDefaultDataClient(
     std::string project_id, std::string instance_id,
     bigtable::ClientOptions options) {
   return std::make_shared<DefaultDataClient>(

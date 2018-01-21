@@ -60,9 +60,9 @@ class DataClient {
 };
 
 /// Create the default implementation of ClientInterface.
-std::shared_ptr<DataClient> CreateDefaultClient(std::string project_id,
-                                                std::string instance_id,
-                                                ClientOptions options);
+std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
+                                                    std::string instance_id,
+                                                    ClientOptions options);
 
 /**
  * Return the fully qualified instance name for the @p client.
