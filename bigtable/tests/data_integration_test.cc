@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) try {
   std::string const family = "fam";
 
   auto admin_client =
-      bigtable::CreateAdminClient(project_id, bigtable::ClientOptions());
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
   auto created_table = admin.CreateTable(
@@ -54,8 +54,8 @@ int main(int argc, char* argv[]) try {
   }
   std::cout << table_name << " found via ListTables()" << std::endl;
 
-  auto client = bigtable::CreateDefaultClient(project_id, instance_id,
-                                              bigtable::ClientOptions());
+  auto client = bigtable::CreateDefaultDataClient(project_id, instance_id,
+                                                  bigtable::ClientOptions());
   bigtable::Table table(client, table_name);
 
   // TODO(#29) we should read these rows back when we have a read path

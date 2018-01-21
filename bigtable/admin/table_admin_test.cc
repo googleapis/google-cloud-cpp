@@ -31,9 +31,10 @@ namespace btproto = ::google::bigtable::admin::v2;
 class MockAdminClient : public bigtable::AdminClient {
  public:
   MOCK_CONST_METHOD0(project, std::string const&());
-  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
   MOCK_METHOD0(Stub,
                std::shared_ptr<btproto::BigtableTableAdmin::StubInterface>());
+  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
+  MOCK_METHOD0(reset, void());
 };
 
 std::string const kProjectId = "the-project";

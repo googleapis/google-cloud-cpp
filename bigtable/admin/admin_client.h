@@ -31,26 +31,32 @@ class AdminClient {
   /// The project that this AdminClient works on.
   virtual std::string const& project() const = 0;
 
-  /**
-   * A callback to report completed RPCs to the client.
-   *
-   * On failures, he client may need to update its internal data structures,
-   * such as which channels are working, maybe reauthenticate with the server,
-   * or simply count the number of failed operations for monitoring purposes.
-   *
-   * @param status the grpc error.
-   */
-  virtual void on_completion(grpc::Status const& status) = 0;
-
   /// Return a new stub to handle admin operations.
   virtual std::shared_ptr<
       ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
   Stub() = 0;
+
+  /**
+   * Reset and create a new Stub().
+   *
+   * Currently this is only used in testing.  In the future, we expect this,
+   * or a similar member function, will be needed to handle errors that require
+   * a new connection, or an explicit refresh of the credentials.
+   */
+  virtual void reset() = 0;
+
+  /**
+   * A callback for completed RPCs.
+   *
+   * Currently this is only used in testing.  In the future, we expect that
+   * some errors may require the class to update its state.
+   */
+  virtual void on_completion(grpc::Status const&) = 0;
 };
 
 /// Create a new admin client configured via @p options.
-std::shared_ptr<AdminClient> CreateAdminClient(std::string project,
-                                               bigtable::ClientOptions options);
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
+    std::string project, bigtable::ClientOptions options);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

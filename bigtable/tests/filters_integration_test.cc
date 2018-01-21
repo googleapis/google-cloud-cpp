@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
 
   auto admin_client =
-      bigtable::CreateAdminClient(project_id, bigtable::ClientOptions());
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
@@ -650,11 +650,11 @@ std::string FilterTestEnvironment::project_id_;
 std::string FilterTestEnvironment::instance_id_;
 
 void FilterIntegrationTest::SetUp() {
-  admin_client_ = bigtable::CreateAdminClient(
+  admin_client_ = bigtable::CreateDefaultAdminClient(
       FilterTestEnvironment::project_id(), bigtable::ClientOptions());
   table_admin_ = absl::make_unique<bigtable::TableAdmin>(
       admin_client_, FilterTestEnvironment::instance_id());
-  data_client_ = bigtable::CreateDefaultClient(
+  data_client_ = bigtable::CreateDefaultDataClient(
       FilterTestEnvironment::project_id(), FilterTestEnvironment::instance_id(),
       bigtable::ClientOptions());
 }

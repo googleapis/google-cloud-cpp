@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/data_client.h"
+#include "bigtable/client/internal/common_client.h"
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -21,20 +22,29 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Implement a simple DataClient.
  *
- * This implementation does not support multiple threads, handle GOAWAY
- * responses, nor does it refresh authorization tokens.  In other words, it is
- * extremely bare bones.
+ * This implementation does not support multiple threads, or refresh
+ * authorization tokens.  In other words, it is extremely bare bones.
  */
 class DefaultDataClient : public DataClient {
+ private:
+  // Introduce an early `private:` section because this type is used to define
+  // the public interface, it should not be part of the public interface.
+  struct DataTraits {
+    static std::string const& Endpoint(bigtable::ClientOptions& options) {
+      return options.data_endpoint();
+    }
+  };
+
+  using Impl =
+      bigtable::internal::CommonClient<DataTraits,
+                                       ::google::bigtable::v2::Bigtable>;
+
  public:
   DefaultDataClient(std::string project, std::string instance,
                     ClientOptions options)
       : project_(std::move(project)),
         instance_(std::move(instance)),
-        credentials_(options.credentials()),
-        channel_(grpc::CreateChannel(options.data_endpoint(),
-                                     options.credentials())),
-        bt_stub_(google::bigtable::v2::Bigtable::NewStub(channel_)) {}
+        impl_(std::move(options)) {}
 
   DefaultDataClient(std::string project, std::string instance)
       : DefaultDataClient(std::move(project), std::move(instance),
@@ -46,21 +56,21 @@ class DefaultDataClient : public DataClient {
   using BigtableStubPtr =
       std::shared_ptr<google::bigtable::v2::Bigtable::StubInterface>;
 
-  BigtableStubPtr Stub() override { return bt_stub_; }
+  BigtableStubPtr Stub() override { return impl_.Stub(); }
+  void reset() override { impl_.reset(); }
+  void on_completion(grpc::Status const& status) override {}
 
  private:
   std::string project_;
   std::string instance_;
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
-  std::shared_ptr<grpc::Channel> channel_;
-  BigtableStubPtr bt_stub_;
+  Impl impl_;
 };
 
 std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
 
-std::shared_ptr<DataClient> CreateDefaultClient(
+std::shared_ptr<DataClient> CreateDefaultDataClient(
     std::string project_id, std::string instance_id,
     bigtable::ClientOptions options) {
   return std::make_shared<DefaultDataClient>(

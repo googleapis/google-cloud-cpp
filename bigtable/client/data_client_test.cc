@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/admin_client.h"
+#include "bigtable/client/data_client.h"
 
 #include <gmock/gmock.h>
 
-TEST(AdminClientTest, Default) {
-  auto admin_client = bigtable::CreateDefaultAdminClient(
-      "test-project", bigtable::ClientOptions());
-  ASSERT_TRUE(admin_client);
-  EXPECT_EQ("test-project", admin_client->project());
+TEST(DataClientTest, Default) {
+  auto data_client = bigtable::CreateDefaultDataClient(
+      "test-project", "test-instance", bigtable::ClientOptions());
+  ASSERT_TRUE(data_client);
+  EXPECT_EQ("test-project", data_client->project_id());
+  EXPECT_EQ("test-instance", data_client->instance_id());
 
-  auto stub0 = admin_client->Stub();
+  auto stub0 = data_client->Stub();
   EXPECT_TRUE(stub0);
 
-  auto stub1 = admin_client->Stub();
+  auto stub1 = data_client->Stub();
   EXPECT_EQ(stub0.get(), stub1.get());
 
-  admin_client->reset();
-  stub1 = admin_client->Stub();
+  data_client->reset();
+  stub1 = data_client->Stub();
   EXPECT_TRUE(stub1);
   EXPECT_NE(stub0.get(), stub1.get());
 }

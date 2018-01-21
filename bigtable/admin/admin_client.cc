@@ -13,8 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/admin/admin_client.h"
-
-#include <absl/memory/memory.h>
+#include "bigtable/client/internal/common_client.h"
 
 namespace {
 /**
@@ -30,54 +29,42 @@ namespace {
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class SimpleAdminClient : public bigtable::AdminClient {
+class DefaultAdminClient : public bigtable::AdminClient {
+ private:
+  // Introduce an early `private:` section because this type is used to define
+  // the public interface, it should not be part of the public interface.
+  struct AdminTraits {
+    static std::string const& Endpoint(bigtable::ClientOptions& options) {
+      return options.admin_endpoint();
+    }
+  };
+
+  using Impl = bigtable::internal::CommonClient<
+      AdminTraits, ::google::bigtable::admin::v2::BigtableTableAdmin>;
+
  public:
-  SimpleAdminClient(std::string project, bigtable::ClientOptions options)
-      : project_(std::move(project)), options_(std::move(options)) {}
+  using AdminStubPtr = Impl::StubPtr;
+
+  DefaultAdminClient(std::string project, bigtable::ClientOptions options)
+      : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  void on_completion(grpc::Status const& status) override {
-    if (not status.ok()) {
-      channel_.reset();
-      table_admin_stub_.reset();
-    }
-  }
-
-  using AdminStubPtr = std::shared_ptr<
-      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>;
-
-  AdminStubPtr Stub() override {
-    RefreshCredentialsAndChannel();
-    return table_admin_stub_;
-  }
-
- private:
-  void RefreshCredentialsAndChannel() {
-    if (table_admin_stub_) {
-      return;
-    }
-    auto channel = grpc::CreateCustomChannel(options_.admin_endpoint(),
-                                             options_.credentials(),
-                                             options_.channel_arguments());
-    table_admin_stub_ =
-        ::google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
-    channel_ = std::move(channel);
-  }
+  AdminStubPtr Stub() override { return impl_.Stub(); }
+  void reset() override { return impl_.reset(); }
+  void on_completion(grpc::Status const& status) override {}
 
  private:
   std::string project_;
-  bigtable::ClientOptions options_;
-  std::shared_ptr<grpc::Channel> channel_;
-  AdminStubPtr table_admin_stub_;
+  Impl impl_;
 };
 }  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::shared_ptr<AdminClient> CreateAdminClient(
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return std::make_shared<SimpleAdminClient>(std::move(project),
-                                             std::move(options));
+  return std::make_shared<DefaultAdminClient>(std::move(project),
+                                              std::move(options));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
