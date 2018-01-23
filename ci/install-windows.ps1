@@ -49,11 +49,12 @@ if ($LASTEXITCODE) {
   throw "vcpkg integrate failed with exit code $LASTEXITCODE"
 }
 
-# AppVeyor limits builds to 60 minutes.  Building all the dependencies takes longer than
-# that.  Cache the dependencies to work around the build time restrictions.
-# Explicitly install each dependency because if we run out of time in the AppVeyor build
-# the cache is at least partially refreshed, a rebuild will start with some dependencies
-# already cached, and likely complete before the AppVeyor build time limit.
+# AppVeyor limits builds to 60 minutes. Building all the dependencies takes
+# longer than that. Cache the dependencies to work around the build time
+# restrictions. Explicitly install each dependency because if we run out of
+# time in the AppVeyor build the cache is at least partially refreshed, a
+# rebuild will start with some dependencies already cached, and likely
+# complete before the AppVeyor build time limit.
 $packages = @("zlib:x86-windows-static", "openssl:x86-windows-static",
               "protobuf:x86-windows-static", "c-ares:x86-windows-static",
               "grpc:x86-windows-static")

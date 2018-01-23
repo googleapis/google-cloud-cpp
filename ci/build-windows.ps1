@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-Stop on errors. This is similar to `set -e` on Unix shells.
+# Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
 $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
@@ -38,4 +38,9 @@ if ($LASTEXITCODE) {
 cmake --build .
 if ($LASTEXITCODE) {
   throw "cmake build failed with exit code $LASTEXITCODE"
+}
+
+ctest -C Debug .
+if ($LASTEXITCODE) {
+  throw "ctest failed with exit code $LASTEXITCODE"
 }

@@ -33,5 +33,5 @@ set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
 set(ABSL_STD_CXX_FLAG "-std=c++11" CACHE STRING "c++ std flag (default: c++11)")
 
 if(MSVC)
-target_compile_definitions(absl_base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
+    target_compile_definitions(absl_base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
 endif(MSVC)
