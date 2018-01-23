@@ -1,15 +1,15 @@
 # Google Cloud Platform C++ Client Libraries
 
 [![Travis CI status][travis-shield]][travis-link]
-[![Codecov Coverage status][codecov-shield]][codecov-link]
 [![AppVeyor CI status][appveyor-shield]][appveyor-link]
+[![Codecov Coverage status][codecov-shield]][codecov-link]
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
-[codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
-[codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
 [appveyor-shield]: https://ci.appveyor.com/api/projects/status/d6srbtprnie4ufrx/branch/master?svg=true
 [appveyor-link]: https://ci.appveyor.com/project/coryan/google-cloud-cpp/branch/master
+[codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
 
 This repo contains experimental client libraries for the following APIs:
 
