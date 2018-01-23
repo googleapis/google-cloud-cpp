@@ -60,10 +60,14 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
         # ... use find_package and vcpkg on Windows ...
         find_package(GRPC REQUIRED grpc>=1.4)
         find_package(PROTOBUF REQUIRED protobuf>=3.0)
+        find_path(GTEST_INCLUDE_DIR googletest)
+        find_library(GTEST_LIBRARY googletest)
         link_directories(${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
         set(GRPCPP_LIBRARIES gRPC::grpc++)
         set(GRPC_LIBRARIES gRPC::grpc)
         set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
+        # To avoid macro conflict on windows.
+        add_compile_options(/wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
         # Use the same settings that gRPC uses...
         add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)

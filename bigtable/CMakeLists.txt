@@ -18,6 +18,14 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (MSVC)
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
+    if (_cpp_latest_flag_supported)
+        add_compile_options("/std:c++latest")
+    endif ()
+endif ()
+
 # Turn on all available warnings and turn warnings into errors to
 # stop the build if any warning is emitted.  We do this in each
 # subdirectory because setting this for the top-level CMakeLists
@@ -47,6 +55,15 @@ include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
 # We use abseil.io .
 set(BUILD_TESTING OFF)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeAbseil.cmake)
+# config options
+if (MSVC)
+  # /wd4005  macro-redefinition
+  # /wd4068  unknown pragma
+  # /wd4244  conversion from 'type1' to 'type2'
+  # /wd4267  conversion from 'size_t' to 'type2'
+  # /wd4800  force value to bool 'true' or 'false' (performance warning)
+  add_compile_options(/W3 /wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
+endif()
 if (ABSEIL_ROOT_DIR)
     include_directories(${ABSEIL_INCLUDE_DIRS})
 endif (ABSEIL_ROOT_DIR)
