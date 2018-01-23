@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
+#include <string>
+
 #ifndef _MSC_VER
 // Microsoft Vistual Studio does not define __cplusplus correctly for C++11.
 #if __cplusplus < 201103L
@@ -28,6 +30,7 @@
 
 #define BIGTABLE_CLIENT_VERSION_MAJOR 0
 #define BIGTABLE_CLIENT_VERSION_MINOR 1
+#define BIGTABLE_CLIENT_VERSION_PATCH 0
 
 #define BIGTABLE_CLIENT_VCONCAT(Ma, Mi) v##Ma
 #define BIGTABLE_CLIENT_VEVAL(Ma, Mi) BIGTABLE_CLIENT_VCONCAT(Ma, Mi)
@@ -38,8 +41,12 @@
 namespace bigtable {
 int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
 int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
+int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
 /// A single integer representing the Major/Minor version
-int constexpr version() { return 100 * version_major() + version_minor(); }
+int constexpr version() {
+  return 100 * (100 * version_major() + version_minor()) + version_patch();
+}
+std::string version_string();
 }  // namespace bigtable
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_

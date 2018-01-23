@@ -89,8 +89,22 @@ target_link_libraries(bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PR
 # Enable unit tests
 enable_testing()
 
+# Capture the compiler version and the git revision into variables, then
+# generate a config file with the values.
+if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
+    execute_process(COMMAND git rev-parse --short HEAD
+            OUTPUT_VARIABLE GIT_HEAD_LOG ERROR_VARIABLE GIT_HEAD_LOG)
+else ()
+    set(GIT_HEAD_LOG "(unknown-git-commit)")
+endif ()
+string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
+string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE_UPPER)
+configure_file(client/build_info.cc.in client/build_info.cc)
+
 # the client library
 add_library(bigtable_client
+    client/build_info.h
+    ${PROJECT_BINARY_DIR}/bigtable/client/build_info.cc
     client/cell.h
     client/client_options.h
     client/client_options.cc
@@ -125,7 +139,8 @@ add_library(bigtable_client
     client/rpc_retry_policy.cc
     client/table.h
     client/table.cc
-    client/version.h)
+    client/version.h
+    client/version.cc)
 target_link_libraries(bigtable_client
     bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})

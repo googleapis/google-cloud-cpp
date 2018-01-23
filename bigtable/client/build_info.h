@@ -10,25 +10,25 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
+// limitations under the License.
 
-#include "bigtable/client/client_options.h"
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
+
+#include "bigtable/client/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-ClientOptions::ClientOptions() {
-  char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
-  if (emulator != nullptr) {
-    data_endpoint_ = emulator;
-    admin_endpoint_ = emulator;
-    credentials_ = grpc::InsecureChannelCredentials();
-  } else {
-    data_endpoint_ = "bigtable.googleapis.com";
-    admin_endpoint_ = "bigtableadmin.googleapis.com";
-    credentials_ = grpc::GoogleDefaultCredentials();
-  }
-  channel_arguments_ = grpc::ChannelArguments();
-  channel_arguments_.SetUserAgentPrefix("cbt-c++/" + version_string());
-}
+/// The git revision at compile time
+extern char const gitrev[];
+
+/// The compiler version
+extern char const compiler[];
+
+/// The compiler flags
+extern char const compiler_flags[];
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
