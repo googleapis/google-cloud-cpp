@@ -316,7 +316,7 @@ std::pair<std::string, std::string> TestAnnotations() {
 std::string SampleWithRepetition(std::mt19937_64& generator,
                                  std::size_t sample_size,
                                  std::string const& values) {
-  std::uniform_int_distribution<std::size_t> rd(0, values.size());
+  std::uniform_int_distribution<std::size_t> rd(0, values.size() - 1);
 
   std::string result(sample_size, '0');
   std::generate(result.begin(), result.end(),
