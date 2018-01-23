@@ -1,5 +1,5 @@
 <map id="client/internal/readrowsparser.h" name="client/internal/readrowsparser.h">
 <area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="101,251,259,278"/>
-<area shape="rect" id="node4" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="123,169,261,196"/>
-<area shape="rect" id="node7" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="123,87,261,114"/>
+<area shape="rect" id="node5" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="123,169,261,196"/>
+<area shape="rect" id="node8" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="123,87,261,114"/>
 </map>

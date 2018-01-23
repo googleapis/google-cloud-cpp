@@ -1,6 +1,6 @@
 <map id="client/row_set.h" name="client/row_set.h">
 <area shape="rect" id="node2" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="5,80,153,121"/>
-<area shape="rect" id="node6" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="287,80,413,121"/>
+<area shape="rect" id="node7" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="287,80,413,121"/>
 <area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,266,237,293"/>
-<area shape="rect" id="node10" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="196,169,344,211"/>
+<area shape="rect" id="node11" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="196,169,344,211"/>
 </map>

@@ -1,10 +1,10 @@
 <map id="admin/table_admin.h" name="admin/table_admin.h">
-<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="261,80,406,121"/>
-<area shape="rect" id="node12" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="895,169,1047,211"/>
-<area shape="rect" id="node18" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="1031,80,1169,121"/>
-<area shape="rect" id="node21" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="546,169,670,211"/>
-<area shape="rect" id="node22" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="746,169,870,211"/>
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="254,169,391,211"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="729,348,887,375"/>
-<area shape="rect" id="node16" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1069,259,1217,300"/>
+<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="281,80,426,121"/>
+<area shape="rect" id="node12" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="844,169,996,211"/>
+<area shape="rect" id="node18" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="895,80,1033,121"/>
+<area shape="rect" id="node21" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="446,169,570,211"/>
+<area shape="rect" id="node22" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="594,169,718,211"/>
+<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="285,169,422,211"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="417,348,575,375"/>
+<area shape="rect" id="node16" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1033,259,1181,300"/>
 </map>

@@ -9,5 +9,7 @@ var searchData=
   ['valueregex',['ValueRegex',['../classbigtable_1_1v0_1_1Filter.html#a6d7c78b76e0d15a113170885bfa7cc22',1,'bigtable::v0::Filter']]],
   ['version',['version',['../namespacebigtable.html#a7513cbf1ea60ee7e66ce0e4c4668a1f6',1,'bigtable']]],
   ['version_5fmajor',['version_major',['../namespacebigtable.html#a175e7fcd1d3df57cc709a297a2972953',1,'bigtable']]],
-  ['version_5fminor',['version_minor',['../namespacebigtable.html#a96454bbc1931499ebbefc66e542ad2c3',1,'bigtable']]]
+  ['version_5fminor',['version_minor',['../namespacebigtable.html#a96454bbc1931499ebbefc66e542ad2c3',1,'bigtable']]],
+  ['version_5fpatch',['version_patch',['../namespacebigtable.html#a8aa69bd525638cc3d857921f5ae93d0c',1,'bigtable']]],
+  ['version_5fstring',['version_string',['../namespacebigtable.html#a4bdc8385fc902be2921b6f4d40967a88',1,'bigtable']]]
 ];
