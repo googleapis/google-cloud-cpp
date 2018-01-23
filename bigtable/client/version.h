@@ -18,7 +18,7 @@
 #include <string>
 
 #ifndef _MSC_VER
-// Microsoft Vistual Studio does not define __cplusplus correctly for C++11.
+// Microsoft Visual Studio does not define __cplusplus correctly for C++11.
 #if __cplusplus < 201103L
 #error "Bigtable C++ Client requires C++11"
 #endif  // __cplusplus < 201103L

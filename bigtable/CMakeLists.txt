@@ -98,7 +98,7 @@ else ()
     set(GIT_HEAD_LOG "(unknown-git-commit)")
 endif ()
 string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
-string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE_UPPER)
+string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
 configure_file(client/build_info.cc.in client/build_info.cc)
 
 # the client library
