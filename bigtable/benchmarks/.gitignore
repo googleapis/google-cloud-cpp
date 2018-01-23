@@ -1,7 +1,0 @@
-pkg/
-bin/
-src/github.com/
-src/golang.org/
-src/google.golang.org/
-src/cloud.google.com/
-./ping_client_go
