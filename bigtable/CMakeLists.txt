@@ -310,6 +310,13 @@ target_link_libraries(filters_integration_test
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local filters_integration_test)
 
+# A benchmark to measure the latency of Apply() and ReadRow() operations.
+add_executable(apply_read_latency_benchmark
+    benchmarks/apply_read_latency_benchmark.cc)
+target_link_libraries(apply_read_latency_benchmark
+    bigtable_admin_client bigtable_client bigtable_protos
+    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 if ("${LIB64}" STREQUAL "TRUE")
