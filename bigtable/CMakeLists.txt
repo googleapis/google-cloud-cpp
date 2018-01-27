@@ -64,16 +64,11 @@ if (MSVC)
   # /wd4800  force value to bool 'true' or 'false' (performance warning)
   add_compile_options(/W3 /wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
 endif()
-if (ABSEIL_ROOT_DIR)
-    include_directories(${ABSEIL_INCLUDE_DIRS})
-endif (ABSEIL_ROOT_DIR)
 
 # Configure the location of proto files, particulary the googleapis protos.
-include_directories(${GRPCPP_INCLUDE_DIRS} ${GRPC_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
 if(GRPC_ROOT_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
-    include_directories("${GRPC_ROOT_DIR}/third_party/protobuf/src")
 endif(GRPC_ROOT_DIR)
 
 # Include the functions to compile proto files.
@@ -97,11 +92,12 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto)
-include_directories("${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
 target_link_libraries(bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_include_directories(bigtable_protos PUBLIC "${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
 enable_testing()
@@ -161,6 +157,8 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client
     bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
+add_library(bigtable::client ALIAS bigtable_client)
 
 add_library(bigtable_client_testing
     client/testing/chrono_literals.h
@@ -183,6 +181,8 @@ add_library(bigtable_admin_client
     admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
     absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
+add_library(bigtable::admin_client ALIAS bigtable_admin_client)
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
