@@ -22,6 +22,7 @@ image:
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  GENERATOR: "Visual Studio 15 2017 Win64"
 
 cache:
   - c:\projects\vcpkg\installed -> ci\install-windows.ps1

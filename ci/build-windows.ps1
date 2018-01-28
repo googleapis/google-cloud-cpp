@@ -32,7 +32,8 @@ mkdir build
 cd build
 cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" `
     -DVCPKG_TARGET_TRIPLET=x64-windows-static `
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package ..
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package `
+    -G $env:GENERATOR ..
 if ($LASTEXITCODE) {
   throw "cmake failed with exit code $LASTEXITCODE"
 }
