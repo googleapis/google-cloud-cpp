@@ -108,12 +108,16 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
     throw std::runtime_error("Mocks cannot be copied.");
   }
 
-  MOCK_CONST_METHOD1(setup, void(grpc::ClientContext&));
+  MOCK_CONST_METHOD1(setup_impl, void(grpc::ClientContext&));
+  void setup(grpc::ClientContext& context) const override {
+    setup_impl(context);
+  }
 
   MOCK_METHOD1(on_failure_impl, bool(grpc::Status const& status));
   bool on_failure(grpc::Status const& status) override {
     return on_failure_impl(status);
   }
+
   bool can_retry(grpc::StatusCode code) const override { return true; }
 };
 
@@ -630,7 +634,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   parser->SetRows({"r1"});
 
   void* previous_context = nullptr;
-  EXPECT_CALL(*retry_policy_, setup(_))
+  EXPECT_CALL(*retry_policy_, setup_impl(_))
       .Times(2)
       .WillRepeatedly(Invoke([&previous_context](grpc::ClientContext& context) {
         // This is a big hack, we want to make sure the context is new,
