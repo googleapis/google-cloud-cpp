@@ -19,6 +19,7 @@ set -eu
 function kill_emulator {
   kill "${EMULATOR_PID}"
   wait >/dev/null 2>&1
+  cat emulator.log >&2
 }
 
 readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
@@ -30,11 +31,6 @@ echo "Launching Cloud Bigtable emulator in the background"
 readonly PORT=${EMULATOR_PORT:-9000}
 "${CBT_EMULATOR_CMD}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
 EMULATOR_PID=$!
-if [ $? -ne 0 ]; then
-  echo "Cloud Bigtable emulator failed; aborting test." >&2
-  cat emulator.log >&2
-  exit 1
-fi
 
 trap kill_emulator EXIT
 
@@ -62,15 +58,20 @@ else
 fi
 
 # Run the integration tests
+
+# The project and instance do not matter for the Cloud Bigtable emulator.
+# Use a unique project name to allow multiple runs of the test with
+# an externally launched emulator.
+NONCE=$(date +%s)
+
 echo
 echo "Running Table::Apply() integration test."
-# The project and instance do not matter for the Cloud Bigtable emulator.
-./data_integration_test emulated data-test test-table
+./data_integration_test emulated$NONCE data-test test-table
 
 echo
 echo "Running TableAdmin integration test."
-./admin_integration_test emulated admin-test
+./admin_integration_test emulated$NONCE admin-test
 
 echo
 echo "Running bigtable::Filters integration tests."
-./filters_integration_test emulated filters-test
+./filters_integration_test emulated$NONCE filters-test
