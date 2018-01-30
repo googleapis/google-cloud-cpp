@@ -107,11 +107,17 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
   std::unique_ptr<RPCRetryPolicy> clone() const override {
     throw std::runtime_error("Mocks cannot be copied.");
   }
-  void setup(grpc::ClientContext& context) const override {}
+
+  MOCK_CONST_METHOD1(setup_impl, void(grpc::ClientContext&));
+  void setup(grpc::ClientContext& context) const override {
+    setup_impl(context);
+  }
+
   MOCK_METHOD1(on_failure_impl, bool(grpc::Status const& status));
   bool on_failure(grpc::Status const& status) override {
     return on_failure_impl(status);
   }
+
   bool can_retry(grpc::StatusCode code) const override { return true; }
 };
 
@@ -618,4 +624,52 @@ TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), std::move(parser_factory_));
+}
+
+TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
+  using namespace ::testing;
+  // Every retry should use a new ClientContext object.
+  auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+
+  void* previous_context = nullptr;
+  EXPECT_CALL(*retry_policy_, setup_impl(_))
+      .Times(2)
+      .WillRepeatedly(Invoke([&previous_context](grpc::ClientContext& context) {
+        // This is a big hack, we want to make sure the context is new,
+        // but there is no easy way to check that, so we compare addresses.
+        EXPECT_NE(previous_context, &context);
+        previous_context = &context;
+      }));
+
+  {
+    testing::InSequence s;
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish())
+        .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
+
+    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
+
+    auto stream_retry = new MockResponseStream;  // the stub will free it
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
 }
