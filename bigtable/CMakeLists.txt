@@ -181,7 +181,7 @@ add_library(bigtable_admin_client
     admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
     absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
+target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
 add_library(bigtable::admin_client ALIAS bigtable_admin_client)
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
