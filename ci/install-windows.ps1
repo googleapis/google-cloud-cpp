@@ -55,9 +55,9 @@ if ($LASTEXITCODE) {
 # time in the AppVeyor build the cache is at least partially refreshed, a
 # rebuild will start with some dependencies already cached, and likely
 # complete before the AppVeyor build time limit.
-$packages = @("zlib:x86-windows-static", "openssl:x86-windows-static",
-              "protobuf:x86-windows-static", "c-ares:x86-windows-static",
-              "grpc:x86-windows-static")
+$packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
+              "protobuf:x64-windows-static", "c-ares:x64-windows-static",
+              "grpc:x64-windows-static")
 foreach ($pkg in $packages) {
   $cmd = ".\vcpkg.exe install $pkg"
   Invoke-Expression $cmd
