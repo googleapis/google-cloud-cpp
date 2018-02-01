@@ -314,6 +314,8 @@ add_dependencies(tests-local filters_integration_test)
 
 add_library(bigtable_benchmark_common
     benchmarks/constants.h
+    benchmarks/embedded_server.h
+    benchmarks/embedded_server.cc
     benchmarks/random.h
     benchmarks/random.cc
     benchmarks/setup.h
