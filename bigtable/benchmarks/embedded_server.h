@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_EMBEDDED_SERVER_H_
 
 #include <memory>
+#include <string>
 
 namespace bigtable {
 namespace benchmarks {
