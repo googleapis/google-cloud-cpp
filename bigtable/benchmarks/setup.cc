@@ -14,6 +14,7 @@
 
 #include "bigtable/benchmarks/setup.h"
 #include <absl/strings/str_cat.h>
+#include <cctype>
 #include <iomanip>
 #include <sstream>
 #include "bigtable/benchmarks/random.h"
