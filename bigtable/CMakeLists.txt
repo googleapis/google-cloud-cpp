@@ -315,14 +315,17 @@ add_dependencies(tests-local filters_integration_test)
 add_library(bigtable_benchmark_common
     benchmarks/constants.h
     benchmarks/random.h
-    benchmarks/random.cc)
+    benchmarks/random.cc
+    benchmarks/setup.h
+    benchmarks/setup.cc)
 target_link_libraries(bigtable_benchmark_common
     absl::time bigtable_admin_client bigtable_client bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests
-    benchmarks/random_test.cc)
+    benchmarks/random_test.cc
+    benchmarks/setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
