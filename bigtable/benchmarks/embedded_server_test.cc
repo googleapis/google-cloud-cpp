@@ -67,8 +67,9 @@ TEST(EmbeddedServer, TableApply) {
                         "fake-table");
 
   bigtable::SingleRowMutation mutation(
-      "row1", {bigtable::SetCell("fam", "col", 0, "val"),
-               bigtable::SetCell("fam", "col", 0, "val")});
+      "row1",
+      {bigtable::SetCell("fam", "col", 0, "val"),
+       bigtable::SetCell("fam", "col", 0, "val")});
 
   EXPECT_NO_THROW(table.Apply(std::move(mutation)));
 
@@ -130,15 +131,11 @@ TEST(EmbeddedServer, ReadRows100) {
                             "fake-project", "fake-instance", options),
                         "fake-table");
 
-  try {
-    auto reader =
-        table.ReadRows(bigtable::RowSet(bigtable::RowRange::StartingAt("foo")),
-                       100, bigtable::Filter::PassAllFilter());
-    auto count = std::distance(reader.begin(), reader.end());
-    EXPECT_EQ(100, count);
-  } catch(std::exception const& ex) {
-    std::cerr << ex.what() << std::endl;
-  }
+  auto reader =
+      table.ReadRows(bigtable::RowSet(bigtable::RowRange::StartingAt("foo")),
+                     100, bigtable::Filter::PassAllFilter());
+  auto count = std::distance(reader.begin(), reader.end());
+  EXPECT_EQ(100, count);
 
   server->Shutdown();
   wait_thread.join();
