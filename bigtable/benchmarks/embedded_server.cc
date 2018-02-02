@@ -26,7 +26,7 @@ namespace benchmarks {
  * Implement the portions of the `google.bigtable.v2.Bigtable` interface
  * necessary for the benchmarks.
  *
- * This is not a Mock (use `google::bigtable;:v2::MockBigtableStub` for that,
+ * This is not a Mock (use `google::bigtable::v2::MockBigtableStub` for that,
  * nor is this a Fake implementation (use the Cloud Bigtable Emulator for that),
  * this is an implementation of the interface that returns hardcoded values.
  * It is suitable for the benchmarks, but for nothing else.

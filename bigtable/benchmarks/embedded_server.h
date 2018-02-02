@@ -25,7 +25,7 @@ namespace benchmarks {
  *
  * Sometimes it is interesting to run performance benchmarks against an
  * embedded server, as this eliminates sources of variation when measuring
- * small changes to the library.  This class is used to run (using Wait()), and
+ * small changes to the library.  This class is used to run (using Wait()) and
  * stop (using Shutdown()) such a server, without exposing the implementation
  * details to the application.
  */
