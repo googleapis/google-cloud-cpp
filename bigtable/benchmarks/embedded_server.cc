@@ -105,27 +105,28 @@ class BigtableImpl final : public btproto::Bigtable::Service {
       std::size_t idx = 0;
       char const* cf = kColumnFamily;
       std::string row_key = "user" + std::to_string(i);
-      for (int i = 0; i != kNumFields; ++i) {
+      for (int j = 0; j != kNumFields; ++j) {
         auto& chunk = *msg.add_chunks();
         // This is neither the real format of the keys, nor the keys requested,
         // but it is good enough for a simulation.
-        chunk.set_row_key(std::move(row_key));
-        row_key = "";
+        chunk.set_row_key(row_key);
         chunk.set_timestamp_micros(0);
         chunk.mutable_family_name()->set_value(cf);
-        chunk.mutable_qualifier()->set_value("field" + std::to_string(i));
+        chunk.mutable_qualifier()->set_value("field" + std::to_string(j));
         chunk.set_value(values_[idx]);
+        chunk.set_value_size(static_cast<std::int32_t>(values_[idx].size()));
         ++idx;
         if (idx >= values_.size()) {
           idx = 0;
         }
         cf = "";
         if (i == kNumFields - 1) {
+          chunk.set_value_size(0);
           chunk.set_commit_row(true);
         }
       }
       if (i != request->rows_limit() - 1) {
-        writer->Write(std::move(msg));
+        writer->Write(msg);
         msg = {};
       }
     }

@@ -326,6 +326,7 @@ target_link_libraries(bigtable_benchmark_common
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests
+    benchmarks/embedded_server_test.cc
     benchmarks/random_test.cc
     benchmarks/setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
