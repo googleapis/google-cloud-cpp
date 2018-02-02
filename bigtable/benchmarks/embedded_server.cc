@@ -13,9 +13,14 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/embedded_server.h"
+
+#include <iomanip>
+#include <sstream>
+
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
+
 #include "bigtable/benchmarks/random.h"
 #include "bigtable/benchmarks/setup.h"
-#include "google/bigtable/v2/bigtable.grpc.pb.h"
 
 namespace btproto = google::bigtable::v2;
 namespace adminproto = google::bigtable::admin::v2;
@@ -104,7 +109,9 @@ class BigtableImpl final : public btproto::Bigtable::Service {
     for (std::int64_t i = 0; i != request->rows_limit(); ++i) {
       std::size_t idx = 0;
       char const* cf = kColumnFamily;
-      std::string row_key = "user" + std::to_string(i);
+      std::ostringstream os;
+      os << "user" << std::setw(12) << std::setfill('0') << i;
+      std::string row_key = os.str();
       for (int j = 0; j != kNumFields; ++j) {
         auto& chunk = *msg.add_chunks();
         // This is neither the real format of the keys, nor the keys requested,
@@ -115,12 +122,11 @@ class BigtableImpl final : public btproto::Bigtable::Service {
         chunk.mutable_qualifier()->set_value("field" + std::to_string(j));
         chunk.set_value(values_[idx]);
         chunk.set_value_size(static_cast<std::int32_t>(values_[idx].size()));
-        ++idx;
-        if (idx >= values_.size()) {
+        if (++idx >= values_.size()) {
           idx = 0;
         }
         cf = "";
-        if (i == kNumFields - 1) {
+        if (j == kNumFields - 1) {
           chunk.set_value_size(0);
           chunk.set_commit_row(true);
         }
@@ -165,13 +171,13 @@ class DefaultEmbeddedServer : public EmbeddedServer {
  public:
   explicit DefaultEmbeddedServer() {
     int port;
-    std::string server_address("localhost:0");
+    std::string server_address("[::]:0");
     builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
                               &port);
     builder_.RegisterService(&bigtable_service_);
     builder_.RegisterService(&admin_service_);
     server_ = builder_.BuildAndStart();
-    address_ = "ipv4:///localhost:" + std::to_string(port);
+    address_ = "localhost:" + std::to_string(port);
   }
 
   std::string address() const override { return address_; }
