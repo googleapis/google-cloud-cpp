@@ -73,40 +73,13 @@ class BigtableImpl final : public btproto::Bigtable::Service {
       google::bigtable::v2::ReadRowsRequest const* request,
       grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>* writer)
       override {
-    if (request->rows_limit() == 0) {
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not-yet");
+    std::int64_t rows_limit = 10000;
+    if (request->rows_limit() != 0) {
+      rows_limit = request->rows_limit();
     }
 
-    if (request->rows_limit() == 1) {
-      if (request->rows().row_keys_size() != 1) {
-        return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not-yet");
-      }
-      auto const& row_key = request->rows().row_keys(0);
-      btproto::ReadRowsResponse msg;
-      msg.set_last_scanned_row_key(row_key);
-      std::size_t idx = 0;
-      char const* cf = kColumnFamily;
-      for (int i = 0; i != kNumFields; ++i) {
-        auto& chunk = *msg.add_chunks();
-        chunk.set_row_key(row_key);
-        chunk.set_timestamp_micros(0);
-        chunk.mutable_family_name()->set_value(cf);
-        chunk.mutable_qualifier()->set_value("field" + std::to_string(i));
-        chunk.set_value(values_[idx]);
-        ++idx;
-        if (idx >= values_.size()) {
-          idx = 0;
-        }
-        cf = "";
-        if (i == kNumFields - 1) {
-          chunk.set_commit_row(true);
-        }
-      }
-      writer->WriteLast(msg, grpc::WriteOptions());
-      return grpc::Status::OK;
-    }
     btproto::ReadRowsResponse msg;
-    for (std::int64_t i = 0; i != request->rows_limit(); ++i) {
+    for (std::int64_t i = 0; i != rows_limit; ++i) {
       std::size_t idx = 0;
       char const* cf = kColumnFamily;
       std::ostringstream os;
