@@ -423,7 +423,7 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
 
   std::map<std::string, int> actual;
   for (auto const& c : result) {
-    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
+    auto ins = actual.emplace(c.row_key(), 0);
     ins.first->second++;
   }
   std::map<std::string, int> expected{{prefix + "/one-cell", 1},
@@ -446,7 +446,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 
   std::map<std::string, int> actual;
   for (auto const& c : result) {
-    auto ins = actual.emplace(static_cast<std::string>(c.row_key()), 0);
+    auto ins = actual.emplace(c.row_key(), 0);
     ins.first->second++;
   }
   std::map<std::string, int> expected{{prefix + "/many", 2},
@@ -688,12 +688,12 @@ void FilterIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
-    std::string key = static_cast<std::string>(cell.row_key());
+    std::string key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
     inserted.first->second.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
+        cell.family_name(),
+        cell.column_qualifier(), cell.timestamp(),
+        cell.value()));
   }
   bigtable::BulkMutation bulk;
   for (auto& kv : mutations) {

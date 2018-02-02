@@ -31,10 +31,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * storage is sparse, column families, columns, and timestamps might contain
  * zero cells.
  *
- * The Cell class owns all its data. Its string accessors return
- * absl::string_view, which is a lightweight pointer to the string contained in
- * Cell and does not actually hold any data. If those values are needed beyond
- * the lifetime of the Cell object itself, they need to be copied.
+ * The Cell class owns all its data.
  */
 class Cell {
  public:
@@ -51,22 +48,22 @@ class Cell {
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  absl::string_view row_key() const { return row_key_; }
+  std::string const& row_key() const { return row_key_; }
 
   /// Return the family this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  absl::string_view family_name() const { return family_name_; }
+  std::string const& family_name() const { return family_name_; }
 
   /// Return the column this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  absl::string_view column_qualifier() const { return column_qualifier_; }
+  std::string const& column_qualifier() const { return column_qualifier_; }
 
   /// Return the timestamp of this cell.
   int64_t timestamp() const { return timestamp_; }
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
-  absl::string_view value() const { return value_; }
+  std::string const& value() const { return value_; }
 
   /// Return the labels applied to this cell by label transformer read filters.
   std::vector<std::string> const& labels() const { return labels_; }

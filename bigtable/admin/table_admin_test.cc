@@ -141,7 +141,7 @@ TEST_F(TableAdminTest, ListTables) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btproto::Table::FULL);
-  std::string instance_name = static_cast<std::string>(tested.instance_name());
+  std::string instance_name = tested.instance_name();
   ASSERT_EQ(2UL, actual.size());
   EXPECT_EQ(instance_name + "/tables/t0", actual[0].name());
   EXPECT_EQ(instance_name + "/tables/t1", actual[1].name());
@@ -171,7 +171,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btproto::Table::FULL);
-  std::string instance_name = static_cast<std::string>(tested.instance_name());
+  std::string instance_name = tested.instance_name();
   ASSERT_EQ(4UL, actual.size());
   EXPECT_EQ(instance_name + "/tables/t0", actual[0].name());
   EXPECT_EQ(instance_name + "/tables/t1", actual[1].name());
