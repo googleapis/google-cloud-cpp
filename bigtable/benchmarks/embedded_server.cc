@@ -171,7 +171,7 @@ class DefaultEmbeddedServer : public EmbeddedServer {
     builder_.RegisterService(&bigtable_service_);
     builder_.RegisterService(&admin_service_);
     server_ = builder_.BuildAndStart();
-    address_ = "localhost:" + std::to_string(port);
+    address_ = "ipv4:///localhost:" + std::to_string(port);
   }
 
   std::string address() const override { return address_; }
