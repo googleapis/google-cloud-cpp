@@ -314,6 +314,8 @@ add_dependencies(tests-local filters_integration_test)
 
 add_library(bigtable_benchmark_common
     benchmarks/constants.h
+    benchmarks/embedded_server.h
+    benchmarks/embedded_server.cc
     benchmarks/random.h
     benchmarks/random.cc
     benchmarks/setup.h
@@ -324,6 +326,7 @@ target_link_libraries(bigtable_benchmark_common
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests
+    benchmarks/embedded_server_test.cc
     benchmarks/random_test.cc
     benchmarks/setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
