@@ -48,9 +48,7 @@ int main(int argc, char *argv[]) try {
 
   EchoImpl echo_impl;
 
-  auto start = std::chrono::system_clock::now();
-  auto end = start + std::chrono::hours(24);
-  for (auto now = start; now < end; now = std::chrono::system_clock::now()) {
+  while (true) {
     grpc::ServerBuilder builder;
     builder.AddListeningPort(address, grpc::InsecureServerCredentials());
     builder.RegisterService(&echo_impl);
