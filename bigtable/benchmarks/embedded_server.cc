@@ -14,6 +14,7 @@
 
 #include "bigtable/benchmarks/embedded_server.h"
 
+#include <atomic>
 #include <iomanip>
 #include <sstream>
 
@@ -38,7 +39,8 @@ namespace benchmarks {
  */
 class BigtableImpl final : public btproto::Bigtable::Service {
  public:
-  BigtableImpl() {
+  BigtableImpl()
+      : mutate_row_count_(0), mutate_rows_count_(0), read_rows_count_(0) {
     // Prepare a list of random values to use at run-time.  This is because we
     // want the overhead of this implementation to be as small as possible.
     // Using a single value is an option, but compresses too well and makes the
@@ -52,12 +54,14 @@ class BigtableImpl final : public btproto::Bigtable::Service {
   grpc::Status MutateRow(grpc::ServerContext* context,
                          btproto::MutateRowRequest const* request,
                          btproto::MutateRowResponse* response) override {
+    ++mutate_row_count_;
     return grpc::Status::OK;
   }
 
   grpc::Status MutateRows(
       grpc::ServerContext* context, btproto::MutateRowsRequest const* request,
       grpc::ServerWriter<btproto::MutateRowsResponse>* writer) override {
+    ++mutate_rows_count_;
     btproto::MutateRowsResponse msg;
     for (int index = 0; index != request->entries_size(); ++index) {
       auto& entry = *msg.add_entries();
@@ -73,6 +77,7 @@ class BigtableImpl final : public btproto::Bigtable::Service {
       google::bigtable::v2::ReadRowsRequest const* request,
       grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>* writer)
       override {
+    ++read_rows_count_;
     std::int64_t rows_limit = 10000;
     if (request->rows_limit() != 0) {
       rows_limit = request->rows_limit();
@@ -113,8 +118,15 @@ class BigtableImpl final : public btproto::Bigtable::Service {
     return grpc::Status::OK;
   }
 
+  int mutate_row_count() const { return mutate_row_count_.load(); }
+  int mutate_rows_count() const { return mutate_rows_count_.load(); }
+  int read_rows_count() const { return read_rows_count_.load(); }
+
  private:
   std::vector<std::string> values_;
+  std::atomic<int> mutate_row_count_;
+  std::atomic<int> mutate_rows_count_;
+  std::atomic<int> read_rows_count_;
 };
 
 /**
@@ -123,10 +135,13 @@ class BigtableImpl final : public btproto::Bigtable::Service {
  */
 class TableAdminImpl final : public adminproto::BigtableTableAdmin::Service {
  public:
+  TableAdminImpl() : create_table_count_(0), delete_table_count_(0) {}
+
   grpc::Status CreateTable(
       grpc::ServerContext* context,
       google::bigtable::admin::v2::CreateTableRequest const* request,
       google::bigtable::admin::v2::Table* response) override {
+    ++create_table_count_;
     response->set_name(request->parent() + "/tables/" + request->table_id());
     return grpc::Status::OK;
   }
@@ -135,8 +150,16 @@ class TableAdminImpl final : public adminproto::BigtableTableAdmin::Service {
       grpc::ServerContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const* request,
       ::google::protobuf::Empty* response) override {
+    ++delete_table_count_;
     return grpc::Status::OK;
   }
+
+  int create_table_count() const { return create_table_count_.load(); }
+  int delete_table_count() const { return delete_table_count_.load(); }
+
+ private:
+  std::atomic<int> create_table_count_;
+  std::atomic<int> delete_table_count_;
 };
 
 /// The implementation of EmbeddedServer.
@@ -156,6 +179,22 @@ class DefaultEmbeddedServer : public EmbeddedServer {
   std::string address() const override { return address_; }
   void Shutdown() override { server_->Shutdown(); }
   void Wait() override { server_->Wait(); }
+
+  int create_table_count() const override {
+    return admin_service_.create_table_count();
+  }
+  int delete_table_count() const override {
+    return admin_service_.delete_table_count();
+  }
+  int mutate_row_count() const override {
+    return bigtable_service_.mutate_row_count();
+  }
+  int mutate_rows_count() const override {
+    return bigtable_service_.mutate_rows_count();
+  }
+  int read_rows_count() const override {
+    return bigtable_service_.read_rows_count();
+  }
 
  private:
   BigtableImpl bigtable_service_;

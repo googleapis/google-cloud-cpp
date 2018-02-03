@@ -36,6 +36,12 @@ class EmbeddedServer {
   virtual std::string address() const = 0;
   virtual void Shutdown() = 0;
   virtual void Wait() = 0;
+
+  virtual int create_table_count() const = 0;
+  virtual int delete_table_count() const = 0;
+  virtual int mutate_row_count() const = 0;
+  virtual int mutate_rows_count() const = 0;
+  virtual int read_rows_count() const = 0;
 };
 
 /// Create an embedded server.
