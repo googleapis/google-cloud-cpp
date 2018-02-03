@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/readrowsparser.h"
+#include "bigtable/client/row.h"
 
 #include <absl/strings/str_join.h>
 #include <google/protobuf/text_format.h>
+
 #include <gtest/gtest.h>
 
 #include <numeric>
@@ -117,6 +119,36 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
 
   EXPECT_FALSE(parser.HasNext());
   EXPECT_THROW(parser.Next(), std::exception);
+}
+
+TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
+  using google::protobuf::TextFormat;
+  ReadRowsParser parser;
+  ReadRowsResponse_CellChunk chunk;
+  std::string chunk1 = R"(
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    commit_row: true
+    )";
+  ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
+
+  // This is a bit hacky, we check that the buffer holding the chunk's
+  // value has been moved to the Row created by the parser by matching
+  // the original string data address with the address of the returned
+  // string_view of the Cell's value.
+  std::string value(1024, 'a');  // avoid any small value optimizations
+  auto* data_ptr = value.data();
+  chunk.mutable_value()->swap(value);
+
+  ASSERT_FALSE(parser.HasNext());
+  parser.HandleChunk(std::move(chunk));
+  ASSERT_TRUE(parser.HasNext());
+  bigtable::Row r = parser.Next();
+  ASSERT_EQ(1U, r.cells().size());
+
+  EXPECT_EQ(data_ptr, r.cells().begin()->value().data());
 }
 
 // **** Acceptance tests helpers ****
