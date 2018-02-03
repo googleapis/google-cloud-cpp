@@ -111,3 +111,5 @@ enable_testing()
 
 # Add subprojects here.
 add_subdirectory(bigtable)
+
+add_subdirectory(tests/grpc-crash)
