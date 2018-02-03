@@ -51,7 +51,6 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   if (cell_first_chunk_) {
     cell_.timestamp = chunk.timestamp_micros();
   }
-  cell_first_chunk_ = false;
 
   std::move(chunk.mutable_labels()->begin(), chunk.mutable_labels()->end(),
             std::back_inserter(cell_.labels));
@@ -62,6 +61,8 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   } else {
     cell_.value.append(chunk.value());
   }
+
+  cell_first_chunk_ = false;
 
   // This is a hint we get about the total size
   if (chunk.value_size() > 0) {
