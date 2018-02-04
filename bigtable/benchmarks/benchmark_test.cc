@@ -57,7 +57,7 @@ TEST(BenchmarkTest, Populate) {
   bm.CreateTable();
   EXPECT_EQ(0, bm.mutate_rows_count());
   EXPECT_NO_THROW(bm.PopulateTable());
-  // The magic 10000 comes from arg5, and we accept 5% error.
+  // The magic 10000 comes from arg5 and we accept 5% error.
   EXPECT_GE(int(10000 * 1.05 / kBulkSize), bm.mutate_rows_count());
   EXPECT_LE(int(10000 * 0.95 / kBulkSize), bm.mutate_rows_count());
   bm.DeleteTable();
@@ -71,7 +71,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
   Benchmark bm(setup);
   auto gen = MakeDefaultPRNG();
 
-  // First make sure that the keys are not always the same:
+  // First make sure that the keys are not always the same.
   auto make_some_keys = [&bm, &gen]() {
     std::vector<std::string> keys(100);
     std::generate(keys.begin(), keys.end(),
@@ -82,7 +82,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
   auto round1 = make_some_keys();
   EXPECT_NE(round0, round1);
 
-  // Also make sure the keys have the right format:
+  // Also make sure the keys have the right format.
   for (auto const& k : round0) {
     EXPECT_EQ("user", k.substr(0, 4));
     std::string suffix = k.substr(5);
@@ -106,9 +106,12 @@ TEST(BenchmarkTest, PrintThroughputResult) {
   bm.PrintThroughputResult(os, "foo", "bar", result);
   std::string output = os.str();
 
-  // We do not want a change detector test, we only expect:
-  // The output includes "XX ops/s" where XX is the operations count:
+  // We do not want a change detector test, so the following assertions are
+  // fairly minimal.
+
+  // The output includes "XX ops/s" where XX is the operations count.
   EXPECT_NE(std::string::npos, output.find("345 ops/s"));
+
   // The output includes "YY rows/s" where YY is the row count.
   EXPECT_NE(std::string::npos, output.find("123 rows/s"));
 }
@@ -132,9 +135,12 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   bm.PrintLatencyResult(os, "foo", "bar", result);
   std::string output = os.str();
 
-  // We do not want a change detector test, we only expect:
-  // The output includes "XX ops/s" where XX is the operations count:
+  // We do not want a change detector test, so the following assertions are
+  // fairly minimal.
+
+  // The output includes "XX ops/s" where XX is the operations count.
   EXPECT_NE(std::string::npos, output.find("100 ops/s"));
+
   // And the percentiles are easy to estimate for the generated data. Note that
   // this test depends on the duration formatting as specified by the absl::time
   // library.
@@ -168,20 +174,19 @@ TEST(BenchmarkTest, PrintCsv) {
   auto const actual_count = std::count(output.begin(), output.end(), ',');
   EXPECT_EQ(field_count, actual_count);
 
-  // We do not want a change detector test, we only expect:
+  // We do not want a change detector test, so the following assertions are
+  // fairly minimal.
+
   // The output includes the version and compiler info.
   EXPECT_NE(std::string::npos, output.find(bigtable::version_string()));
   EXPECT_NE(std::string::npos, output.find(bigtable::compiler));
   EXPECT_NE(std::string::npos, output.find(bigtable::compiler_flags));
 
-  // The output includes the latency results:
+  // The output includes the latency results.
   EXPECT_NE(std::string::npos, output.find(",100,"));    // p0
   EXPECT_NE(std::string::npos, output.find(",9500,"));   // p95
   EXPECT_NE(std::string::npos, output.find(",10000,"));  // p100
 
-  // The output includes the throughput
+  // The output includes the throughput.
   EXPECT_NE(std::string::npos, output.find(",123,"));
-
-  std::cout << header << std::endl;
-  std::cout << output << std::endl;
 }
