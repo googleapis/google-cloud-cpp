@@ -28,6 +28,15 @@ RUN git submodule update --init --recursive
 RUN (make -j "${NCPU}" HAS_SYSTEM_PROTOBUF=false && make install && \
      cd third_party/protobuf && make install)
 
+WORKDIR /var/tmp/build/abseil
+RUN git clone --depth 50 https://github.com/abseil/abseil-cpp.git
+RUN git clone --depth 50 https://github.com/google/cctz.git
+RUN (cd cctz && git submodule update --init --recursive)
+COPY abseil/CMakeLists.txt .
+RUN (mkdir .build && cd .build && cmake -DBUILD_TESTING=OFF ..)
+RUN (cd .build && make -j ${NCPU})
+RUN (cd .build && make install)
+
 FROM cached-${DISTRO}-${DISTRO_VERSION}:tip
 COPY --from=staging /usr/local/include /usr/local/include
 COPY --from=staging /usr/local/bin /usr/local/bin
