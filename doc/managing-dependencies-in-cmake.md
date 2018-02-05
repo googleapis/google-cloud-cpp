@@ -173,12 +173,13 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
 else ()
     # Find the packages using `pkg-config`:
     include(FindPkgConfig)
-    pkg_check_modules(gRPCPP REQUIRED IMPORTED_TARGET grpc++ >= 1.9.0)
-    pkg_check_modules(gRPC REQUIRED IMPORTED_TARGET )
-    # Define the target as an imported target, such targets can have properties
-    # but they cannot be compiled:
-    add_library(gRPC::grpc++ ALIAS PkgConfig::gRPCPP)
-    add_library(gRPC::grpc ALIAS PkgConfig::gRPC)
+    pkg_check_modules(gRPC++ REQUIRED IMPORTED_TARGET grpc++ >= 1.9.0)
+    add_library(gRPC::grpc++ INTERFACE IMPORTED)
+    set_property(TARGET gRPC::grpc++ PROPERTY INTERFACE_LINK_LIBRARIES
+            PkgConfig::gRPC++)
+    # Use a similar pattern for other libraries: discover them with
+    # pkg_check_modules() define an imported interface library for them, then
+    # set the dependencies in the library.
 endif ()
 ```
 
