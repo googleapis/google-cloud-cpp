@@ -12,9 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configure the gRPC dependency.
-set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module" CACHE STRING "How to find the gRPC library")
-set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER PROPERTY STRINGS "module" "package")
+# gRPC always requires thread support.
+include(FindThreads)
+
+# Configure the gRPC dependency, this can be found as a submodule, package, or
+# installed with pkg-config support.
+set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module"
+        CACHE STRING "How to find the gRPC library")
+set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
+        PROPERTY STRINGS "module" "package" "pkg-config")
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     if (NOT GRPC_ROOT_DIR)
@@ -24,51 +30,48 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
         message(ERROR "GOOGLE_CLOUD_CPP_GRPC_PROVIDER is \"module\" but GRPC_ROOT_DIR is wrong")
     endif ()
     add_subdirectory(${GRPC_ROOT_DIR} third_party/grpc EXCLUDE_FROM_ALL)
-    set(GRPCPP_LIBRARIES grpc++)
-    set(GRPC_LIBRARIES grpc)
-    set(PROTOBUF_LIBRARIES libprotobuf)
+    add_library(gRPC::grpc++ ALIAS grpc++)
+    add_library(gRPC::grpc ALIAS grpc)
+    add_library(protobuf::libprotobuf ALIAS libprotobuf)
     set(GRPC_BINDIR "${PROJECT_BINARY_DIR}/third_party/grpc")
-    set(GRPC_INCLUDE_DIRS ${GRPC_ROOT_DIR}/include)
-    set(GRPCPP_INCLUDE_DIRS ${GRPC_ROOT_DIR}/include)
-    set(PROTOBUF_INCLUDE_DIRS ${GRPC_ROOT_DIR}/third_party/protobuf/include)
     set(PROTOBUF_PROTOC_EXECUTABLE "${GRPC_BINDIR}/third_party/protobuf/protoc")
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
     set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE "${GRPC_BINDIR}/grpc_cpp_plugin")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
+    find_package(GRPC REQUIRED grpc>=1.8)
+    find_package(PROTOBUF REQUIRED protobuf>=3.5)
+
     # ... find the grpc and grpc++ libraries ...
-    if (WIN32)
-        # ... use find_package and vcpkg on Windows ...
-        find_package(GRPC REQUIRED grpc>=1.4)
-        find_package(PROTOBUF REQUIRED protobuf>=3.0)
-        find_path(GTEST_INCLUDE_DIR googletest)
-        find_library(GTEST_LIBRARY googletest)
-        link_directories(${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
-        set(GRPCPP_LIBRARIES gRPC::grpc++)
-        set(GRPC_LIBRARIES gRPC::grpc)
-        set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
-        # To avoid macro conflict on windows.
-        add_compile_options(/wd4005 /wd4068 /wd4244 /wd4267 /wd4800)
+    if (MSVC)
         # Use the same settings that gRPC uses...
-        add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS)
-        add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
-        if (MSVC)
-            add_definitions(/wd4065 /wd4506 /wd4267 /wd4800 /wd4291 /wd4838)
-            if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
-                set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-                set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-            endif ()
+        target_compile_options(gRPC::grpc++ PUBLIC
+                /wd4005 /wd4068 /wd4065 /wd4244 /wd4267 /wd4291 /wd4506 /wd4800
+                /wd4838)
+        target_compile_definitions(gRPC::grpc++ PUBLIC
+                -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
+                -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
+        if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
+            set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+            set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
         endif ()
-    else ()
-        # ... use pkg-config on Linux and Mac OSX ...
-        include(FindPkgConfig)
-        pkg_check_modules(GRPCPP REQUIRED grpc++>=1.4.1)
-        pkg_check_modules(GRPC REQUIRED grpc>=4.0)
-        pkg_check_modules(PROTOBUF REQUIRED protobuf>=3.4)
-        link_directories(${GRPCPP_LIBRARY_DIRS} ${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
     endif ()
+elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
+    # Use pkg-config to find the libraries.
+    include(FindPkgConfig)
+    find_package(Protobuf 3.5 REQUIRED)
+
+    pkg_check_modules(gRPC++ REQUIRED IMPORTED_TARGET grpc++>=1.8)
+    add_library(gRPC::grpc++ INTERFACE IMPORTED)
+    set_property(TARGET gRPC::grpc++ PROPERTY INTERFACE_LINK_LIBRARIES
+            PkgConfig::gRPC++)
+
+    pkg_check_modules(gRPC REQUIRED IMPORTED_TARGET grpc)
+    add_library(gRPC::grpc INTERFACE IMPORTED)
+    set_property(TARGET gRPC::grpc PROPERTY INTERFACE_LINK_LIBRARIES
+            PkgConfig::gRPC)
+
     # ... discover protoc and friends ...
-    include(FindProtobuf)
     find_program(PROTOBUF_PROTOC_EXECUTABLE
             NAMES protoc
             DOC "The Google Protocol Buffers Compiler"

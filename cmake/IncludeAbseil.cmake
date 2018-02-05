@@ -15,23 +15,56 @@
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeCctz.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
 
-# Depending on how gRPC is used (module vs. package), the gtest target may be
-# already defined; if it is, we cannot redefine it.
-if (NOT TARGET gtest)
-    include(${PROJECT_SOURCE_DIR}/cmake/IncludeGTest.cmake)
-endif ()
+# Configure the Abseil dependency, this can be found as a submodule, package, or
+# installed with pkg-config support.
+set(GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER "module"
+        CACHE STRING "How to find the Abseil library")
+set_property(CACHE GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER
+        PROPERTY STRINGS "module" "package" "pkg-config")
 
-if (NOT ABSEIL_ROOT_DIR)
-    set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
-endif ()
-if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
-    message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
-endif ()
-add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
-set(ABSEIL_LIBRARIES abseil)
-set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
-set(ABSL_STD_CXX_FLAG "-std=c++11" CACHE STRING "c++ std flag (default: c++11)")
+if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
+    if (NOT "${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
+        message(ERROR "Both Abseil and gRPC must be submodules or both must"
+                " be installed libraries.  Currently gRPC is configured as "
+                ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ". Consider installing gRPC too.")
+    endif ()
+    if (NOT ABSEIL_ROOT_DIR)
+        set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
+    endif ()
+    if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
+        message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
+    endif ()
+    add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
+    set(ABSL_STD_CXX_FLAG "-std=c++11" CACHE STRING "c++ std flag (default: c++11)")
 
-if(MSVC)
-    target_compile_definitions(absl_base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
-endif(MSVC)
+    if(MSVC)
+        target_compile_definitions(absl::base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
+    endif(MSVC)
+elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
+    if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
+        message(ERROR "Both Abseil and gRPC must be submodules or both must"
+                " be installed libraries.  Currently gRPC is configured as "
+                ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ".  Consider installing gRPC too.")
+    endif ()
+    find_package(absl REQUIRED)
+elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "pkg-config")
+    if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
+        message(ERROR "Both Abseil and gRPC must be submodules or both must"
+                " be installed libraries.  Currently gRPC is configured as "
+                ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ".  Consider installing gRPC too.")
+    endif ()
+    # Use pkg-config to find the libraries.
+    include(FindPkgConfig)
+    foreach(LIB time dynamic_annotations spinlock_wait stacktrace int128 base strings)
+        pkg_check_modules(absl_${LIB} REQUIRED IMPORTED_TARGET absl_${LIB})
+        add_library(absl::${LIB} INTERFACE IMPORTED)
+        set_property(TARGET absl::${LIB} PROPERTY INTERFACE_LINK_LIBRARIES
+                PkgConfig::absl_${LIB})
+    endforeach ()
+endif ()

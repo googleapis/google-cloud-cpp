@@ -33,8 +33,11 @@ matrix:
       # as possible.  We also disable the build on pull-requests.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release \
-            SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=16.04 BUILD_TYPE=Release
+            SCAN_BUILD=yes
+            CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config
+            -DGOOGLE_CLOUD_CPP_ABSEIL_PROVIDER=pkg-config
+            -DGOOGLE_CLOUD_CPP_CCTZ_PROVIDER=pkg-config"
       install:
         - # First build the usual Ubuntu image, then use that to build an image
           # with gRPC already compiled and installed.
@@ -50,7 +53,7 @@ matrix:
     - # Compile against an installed version of gRPC.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=17.10 BUILD_TYPE=Release \
+      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=17.10 BUILD_TYPE=Release
             CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
       install:
         - # First build the usual Ubuntu image, then use that to build an image
@@ -65,12 +68,12 @@ matrix:
     - # Build with the AddressSanitizer.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug
            CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug
            CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
     - # Generate code coverage information and upload to codecov.io.
       os: linux
@@ -84,7 +87,7 @@ matrix:
       # it has a version of cmake(1) that reports clang-tidy errors.
       os: linux
       compiler: clang
-      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
+      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug
             CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
     - # Compile on CentOS.
       os: linux
