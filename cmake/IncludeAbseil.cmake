@@ -28,7 +28,7 @@ if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
                 " be installed libraries.  Currently gRPC is configured as "
                 ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
                 " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
-                ". Consider installing gRPC too.")
+                ". Consider installing Abseil too.")
     endif ()
     if (NOT ABSEIL_ROOT_DIR)
         set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)

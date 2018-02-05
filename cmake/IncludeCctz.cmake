@@ -25,7 +25,7 @@ if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
                 " be installed libraries.  Currently Abseil is configured as "
                 ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
                 " and cctz as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
-                ". Consider installing Abseil too.")
+                ". Consider installing cctz too.")
     endif ()
     if (NOT CCTZ_ROOT_DIR)
         set(CCTZ_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/cctz)
