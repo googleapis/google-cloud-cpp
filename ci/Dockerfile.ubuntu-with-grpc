@@ -32,7 +32,7 @@ WORKDIR /var/tmp/build/abseil
 RUN git clone --depth 50 https://github.com/abseil/abseil-cpp.git
 RUN git clone --depth 50 https://github.com/google/cctz.git
 RUN (cd cctz && git submodule update --init --recursive)
-COPY abseil/CMakeLists.txt .
+COPY abseil/* /var/tmp/build/abseil/
 RUN (mkdir .build && cd .build && cmake -DBUILD_TESTING=OFF ..)
 RUN (cd .build && make -j ${NCPU})
 RUN (cd .build && make install)
