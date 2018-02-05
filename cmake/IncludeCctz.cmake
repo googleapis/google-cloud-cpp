@@ -15,18 +15,11 @@
 # Configure the cctz dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
 set(GOOGLE_CLOUD_CPP_CCTZ_PROVIDER "module"
-        CACHE STRING "How to find the Abseil library")
+        CACHE STRING "How to find the cctz library")
 set_property(CACHE GOOGLE_CLOUD_CPP_CCTZ_PROVIDER
         PROPERTY STRINGS "module" "package" "pkg-config")
 
 if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
-    if (NOT "${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently Abseil is configured as "
-                ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
-                " and cctz as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
-                ". Consider installing cctz too.")
-    endif ()
     if (NOT CCTZ_ROOT_DIR)
         set(CCTZ_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/cctz)
     endif ()
@@ -39,23 +32,14 @@ if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
     include(CTest)
     set(BUILD_TESTING OFF)
     add_subdirectory(${CCTZ_ROOT_DIR} third_party/cctz EXCLUDE_FROM_ALL)
-elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
-    if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently Abseil is configured as "
-                ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
-                " and cctz as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
-                ". Consider installing Abseil too.")
-    endif ()
+elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "vcpkg")
+    find_package(unofficial-cctz REQUIRED)
+    add_library(cctz INTERFACE IMPORTED)
+    set_property(TARGET cctz PROPERTY INTERFACE_LINK_LIBRARIES
+            unofficial::cctz)
+elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "package")
     find_package(cctz REQUIRED)
-elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "pkg-config")
-    if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently Abseil is configured as "
-                ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
-                " and cctz as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
-                ". Consider installing Abseil too.")
-    endif ()
+elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "pkg-config")
     # Find cctz using pkg-config
     include(FindPkgConfig)
     pkg_check_modules(cctz REQUIRED cctz)

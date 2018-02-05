@@ -42,19 +42,11 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     find_package(GRPC REQUIRED grpc>=1.8)
     find_package(PROTOBUF REQUIRED protobuf>=3.5)
 
-    # ... find the grpc and grpc++ libraries ...
-    if (MSVC)
-        # Use the same settings that gRPC uses...
-        target_compile_options(gRPC::grpc++ PUBLIC
-                /wd4005 /wd4068 /wd4065 /wd4244 /wd4267 /wd4291 /wd4506 /wd4800
-                /wd4838)
-        target_compile_definitions(gRPC::grpc++ PUBLIC
-                -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
-                -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
-        if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
-            set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-            set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-        endif ()
+    if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
+        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
+        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
     endif ()
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     # Use pkg-config to find the libraries.
