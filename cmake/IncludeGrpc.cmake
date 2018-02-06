@@ -106,3 +106,14 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
             )
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 endif ()
+
+if (WIN32)
+    add_definitions(
+        -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
+        -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
+endif (WIN32)
+if (MSVC)
+    add_compile_options(
+        /wd4005 /wd4065 /wd4068 /wd4146 /wd4244 /wd4267 /wd4291 /wd4506
+        /wd4800 /wd4838 /wd4996)
+endif ()
