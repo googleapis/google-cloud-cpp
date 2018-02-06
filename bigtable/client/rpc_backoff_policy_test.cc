@@ -36,7 +36,7 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
   EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
   EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
   // Value should not be exactly XX_ms after few iterations.
-  for(int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 5; ++i) {
     tested.on_completion(CreateTransientError());
   }
   EXPECT_GE(500_ms, tested.on_completion(CreateTransientError()));
