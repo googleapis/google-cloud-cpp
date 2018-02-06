@@ -1,11 +1,11 @@
 <map id="admin/table_admin.cc" name="admin/table_admin.cc">
-<area shape="rect" id="node2" href="$table__admin_8h.html" title="bigtable/admin/table\l_admin.h" alt="" coords="763,80,901,121"/>
-<area shape="rect" id="node3" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="281,169,426,211"/>
-<area shape="rect" id="node13" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="844,259,996,300"/>
-<area shape="rect" id="node19" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="895,169,1033,211"/>
-<area shape="rect" id="node22" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="446,259,570,300"/>
-<area shape="rect" id="node23" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="594,259,718,300"/>
-<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="285,259,422,300"/>
-<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="417,437,575,464"/>
-<area shape="rect" id="node17" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1033,348,1181,389"/>
+<area shape="rect" id="node2" href="$table__admin_8h.html" title="bigtable/admin/table\l_admin.h" alt="" coords="718,80,857,121"/>
+<area shape="rect" id="node3" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="237,169,383,211"/>
+<area shape="rect" id="node13" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="846,259,998,300"/>
+<area shape="rect" id="node19" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="853,169,991,211"/>
+<area shape="rect" id="node22" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="697,259,821,300"/>
+<area shape="rect" id="node24" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="497,259,621,300"/>
+<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="36,259,173,300"/>
+<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="451,437,609,464"/>
+<area shape="rect" id="node17" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="896,348,1044,389"/>
 </map>
