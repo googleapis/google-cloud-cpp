@@ -39,7 +39,7 @@ class Row {
 
   /// Return the row key. The returned value is not valid
   /// after this object is deleted.
-  absl::string_view row_key() const { return row_key_; }
+  std::string const& row_key() const { return row_key_; }
 
   /// Return all cells.
   std::vector<Cell> const& cells() const { return cells_; }
