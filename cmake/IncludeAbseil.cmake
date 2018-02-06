@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(${PROJECT_SOURCE_DIR}/cmake/IncludeCctz.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/IncludeCctz.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/IncludeGMock.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
 # Configure the Abseil dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
@@ -28,9 +29,9 @@ set(ABSEIL_LIBS time dynamic_annotations spinlock_wait stacktrace int128 base
 
 if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
     if (NOT "${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently cctz is configured as "
-                ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or"
+                " both must be installed libraries.  Currently cctz is"
+                " configured as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
                 " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
                 ". Consider installing Abseil too.")
     endif ()
@@ -44,7 +45,7 @@ if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
     if (NOT TARGET gtest)
         # Normally the gtest target is defined by gRPC, if it is not, then
         # provide our own definition.
-        include(${PROJECT_SOURCE_DIR}/cmake/IncludeGTest.cmake)
+        include(${CMAKE_CURRENT_LIST_DIR}/IncludeGTest.cmake)
     endif ()
     add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
 
@@ -53,8 +54,8 @@ if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
     endif(MSVC)
 elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "vcpkg")
     if (NOT "${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "vcpkg")
-        message(ERROR "If Abseil is provided by vcpkg then cctz must also use"
-                " vcpkg.  Currently cctz is configured as "
+        message(FATAL_ERRROR "If Abseil is provided by vcpkg then cctz must"
+                " also use vcpkg.  Currently cctz is configured as "
                 ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
                 " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
                 ".  Consider using vcpkg for cctz also.")
@@ -67,27 +68,26 @@ elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "vcpkg")
     endforeach ()
 elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
     if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently cctz is configured as "
-                ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or both"
+                " must be installed libraries.  Currently cctz is configured"
+                " as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
                 " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
                 ".  Consider installing cctz too.")
     endif ()
     find_package(absl REQUIRED)
 elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "pkg-config")
     if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
-        message(ERROR "Both Abseil and cctz must be submodules or both must"
-                " be installed libraries.  Currently cctz is configured as "
-                ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or both"
+                " must be installed libraries.  Currently cctz is configured"
+                " as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
                 " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
                 ".  Consider installing cctz too.")
     endif ()
     # Use pkg-config to find the libraries.
     include(FindPkgConfig)
     foreach(LIB ${ABSEIL_LIBS})
-        pkg_check_modules(absl_${LIB} REQUIRED IMPORTED_TARGET absl_${LIB})
+        pkg_check_modules(absl_${LIB} REQUIRED absl_${LIB})
         add_library(absl::${LIB} INTERFACE IMPORTED)
-        set_property(TARGET absl::${LIB} PROPERTY INTERFACE_LINK_LIBRARIES
-                PkgConfig::absl_${LIB})
+        set_library_properties_from_pkg_config(absl::${LIB} absl_${LIB})
     endforeach ()
 endif ()

@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
+
 # Configure the cctz dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
 set(GOOGLE_CLOUD_CPP_CCTZ_PROVIDER "module"
@@ -44,6 +46,5 @@ elseif ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "pkg-config")
     include(FindPkgConfig)
     pkg_check_modules(cctz REQUIRED cctz)
     add_library(cctz INTERFACE IMPORTED)
-    set_property(TARGET cctz PROPERTY INTERFACE_LINK_LIBRARIES
-            PkgConfig::cctz)
+    set_library_properties_from_pkg_config(cctz cctz)
 endif ()
