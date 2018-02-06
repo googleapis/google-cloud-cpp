@@ -17,6 +17,7 @@ ARG DISTRO_VERSION=16.04
 FROM cached-${DISTRO}-${DISTRO_VERSION}:tip AS staging
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
+RUN echo "bust cache"
 ARG NCPU=2
 ARG CXX=clang++
 ARG CC=clang

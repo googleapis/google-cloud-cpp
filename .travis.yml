@@ -33,7 +33,7 @@ matrix:
       # as possible.  We also disable the build on pull-requests.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=17.10 BUILD_TYPE=Release
+      env: DISTRO=ubuntu-with-deps DISTRO_VERSION=16.04 BUILD_TYPE=Release
             SCAN_BUILD=yes
             CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config
             -DGOOGLE_CLOUD_CPP_ABSEIL_PROVIDER=pkg-config
@@ -53,7 +53,7 @@ matrix:
     - # Compile against an installed version of gRPC.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu-with-grpc DISTRO_VERSION=17.10 BUILD_TYPE=Release
+      env: DISTRO=ubuntu-with-deps DISTRO_VERSION=17.10 BUILD_TYPE=Release
             CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config
             -DGOOGLE_CLOUD_CPP_ABSEIL_PROVIDER=pkg-config
             -DGOOGLE_CLOUD_CPP_CCTZ_PROVIDER=pkg-config"
