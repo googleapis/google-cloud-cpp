@@ -27,7 +27,7 @@ grpc::Status CreateTransientError() {
 
 }  // anonymous namespace
 
-// / @test A simple test for the ExponentialBackoffRetryPolicy.
+/// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
