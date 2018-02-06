@@ -47,8 +47,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
     grpc::Status const& status) {
   using namespace std::chrono;
   std::uniform_int_distribution<int> rng_distribution(
-      duration_cast<microseconds>(current_delay_range_).count() / 2,
-      duration_cast<microseconds>(current_delay_range_).count());
+      current_delay_range_.count() / 2, current_delay_range_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
   auto delay = microseconds(rng_distribution(generator_));
