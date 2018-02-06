@@ -17,6 +17,7 @@
 
 #include <gtest/gtest.h>
 #include <chrono>
+#include <vector>
 
 namespace {
 /// Create a grpc::Status with a status code for transient errors.
@@ -26,27 +27,46 @@ grpc::Status CreateTransientError() {
 
 }  // anonymous namespace
 
-/// @test A simple test for the ExponentialBackoffRetryPolicy.
+// / @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
-  bigtable::ExponentialBackoffPolicy tested(10_ms, 50_ms);
+  bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
 
-  EXPECT_EQ(10_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_EQ(20_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_EQ(40_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_EQ(50_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_EQ(50_ms, tested.on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, tested.on_completion(CreateTransientError()));
+  EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
+  EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
+  // Value should not be exactly XX_ms after few iterations.
+  for(int i = 0; i < 5; ++i) {
+    tested.on_completion(CreateTransientError());
+  }
+  EXPECT_GE(500_ms, tested.on_completion(CreateTransientError()));
 }
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
-  bigtable::ExponentialBackoffPolicy original(10_ms, 150_ms);
+  bigtable::ExponentialBackoffPolicy original(10_ms, 50_ms);
   auto tested = original.clone();
 
-  EXPECT_EQ(10_ms, tested->on_completion(CreateTransientError()));
-  EXPECT_EQ(20_ms, tested->on_completion(CreateTransientError()));
-  EXPECT_EQ(40_ms, tested->on_completion(CreateTransientError()));
-  EXPECT_EQ(80_ms, tested->on_completion(CreateTransientError()));
-  EXPECT_EQ(150_ms, tested->on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, tested->on_completion(CreateTransientError()));
+  EXPECT_LE(10_ms, tested->on_completion(CreateTransientError()));
+}
+
+/// @test Test for testing randomness for 2 objects of
+/// ExponentialBackoffRetryPolicy such that no two clients have same sleep time.
+TEST(ExponentialBackoffRetryPolicy, Randomness) {
+  using namespace bigtable::chrono_literals;
+  bigtable::ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
+  bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
+  std::vector<int> output1, output2;
+
+  EXPECT_GE(10_ms, test_object1.on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, test_object2.on_completion(CreateTransientError()));
+  for (int i = 0; i < 100; ++i) {
+    output1.push_back(
+        test_object1.on_completion(CreateTransientError()).count());
+    output2.push_back(
+        test_object2.on_completion(CreateTransientError()).count());
+  }
+  EXPECT_NE(output1, output2);
 }

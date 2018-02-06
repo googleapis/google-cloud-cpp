@@ -26,15 +26,15 @@ namespace {
 #define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY std::chrono::minutes(5)
 #endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
 
-const auto initial_delay = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
-const auto maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
+const auto default_initial_delay = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
+const auto default_maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
 }  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
-  return std::unique_ptr<RPCBackoffPolicy>(
-      new ExponentialBackoffPolicy(initial_delay, maximum_delay));
+  return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(
+      default_initial_delay, default_maximum_delay));
 }
 
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
@@ -46,13 +46,17 @@ void ExponentialBackoffPolicy::setup(grpc::ClientContext& /*unused*/) const {}
 std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
     grpc::Status const& status) {
   using namespace std::chrono;
-  // TODO(#57) - we also need to randomize the sleep period.
-  auto delay = duration_cast<milliseconds>(current_delay_);
-  current_delay_ *= 2;
-  if (current_delay_ >= maximum_delay_) {
-    current_delay_ = maximum_delay_;
+  std::uniform_int_distribution<int> rng_distribution(
+      duration_cast<microseconds>(current_delay_range_).count() / 2,
+      duration_cast<microseconds>(current_delay_range_).count());
+  // Randomized sleep period because it is possible that after some time all
+  // client have same sleep period if we use only exponential backoff policy.
+  auto delay = microseconds(rng_distribution(generator_));
+  current_delay_range_ *= 2;
+  if (current_delay_range_ >= maximum_delay_) {
+    current_delay_range_ = maximum_delay_;
   }
-  return delay;
+  return duration_cast<milliseconds>(delay);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
