@@ -13,6 +13,13 @@
 # limitations under the License.
 
 # This should be included from the top level CMakeLists file
+cmake_minimum_required(VERSION 3.5)
+
+set(BIGTABLE_CLIENT_VERSION_MAJOR "0")
+set(BIGTABLE_CLIENT_VERSION_MINOR "1")
+set(BIGTABLE_CLIENT_VERSION_PATCH "0")
+set(BIGTABLE_CLIENT_VERSION
+        "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
 
 # Turn on all available warnings and turn warnings into errors to
 # stop the build if any warning is emitted.  We do this in each
@@ -85,7 +92,12 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
 add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
 target_link_libraries(bigtable_protos
     gRPC::grpc++ gRPC::grpc protobuf::libprotobuf Threads::Threads)
-target_include_directories(bigtable_protos PUBLIC "${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(bigtable_protos PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include/bigtable>)
+target_include_directories(bigtable_protos PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:include/bigtable>)
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
@@ -146,7 +158,9 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client
     bigtable::protos absl::strings
     gRPC::grpc++ gRPC::grpc protobuf::libprotobuf Threads::Threads)
-target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
+target_include_directories(bigtable_client PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include/bigtable>)
 add_library(bigtable::client ALIAS bigtable_client)
 
 add_library(bigtable_client_testing
@@ -170,7 +184,9 @@ add_library(bigtable_admin_client
     admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable::client bigtable::protos
     gRPC::grpc++ gRPC::grpc protobuf::libprotobuf Threads::Threads)
-target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
+target_include_directories(bigtable_admin_client PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include/bigtable>)
 add_library(bigtable::admin_client ALIAS bigtable_admin_client)
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
@@ -334,20 +350,50 @@ target_sources(bigtable_client_all_tests
     PUBLIC ${bigtable_benchmarks_unit_tests})
 target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
-# Define the install target
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
-if ("${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-else()
-    set(LIBSUFFIX "")
-endif()
-set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
-install(TARGETS bigtable_admin_client bigtable_client bigtable_protos
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-    ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
-install(DIRECTORY client/ DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.inc")
-install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/bigtable/google FILES_MATCHING PATTERN "*.h")
+# The install target can only be enabled if all the dependencies are installed,
+# because CMake tries to install the submodules.
+set(BIGTABLE_ENABLE_INSTALL "true")
+foreach (DEP GRPC ABSEIL CCTZ)
+    if (${GOOGLE_CLOUD_CPP_${DEP}_PROVIDER} STREQUAL "module")
+        set(BIGTABLE_ENABLE_INSTALL "false")
+    endif ()
+endforeach()
+if (BIGTABLE_ENABLE_INSTALL)
+    include(GNUInstallDirs)
+    install(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+            EXPORT bigtable-targets
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    install(DIRECTORY client/ DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
+    install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+
+    # Install the pkg-config files.
+    configure_file("client/config.pc.in" "bigtable_client.pc" @ONLY)
+    install(FILES "${CMAKE_BINARY_DIR}/bigtable/bigtable_client.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    configure_file("admin/config.pc.in" "bigtable_admin.pc" @ONLY)
+    install(FILES "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+    # Install the cmake -config.cmake files.
+    configure_file("client/config.cmake.in"
+            "bigtable_client-config.cmake" @ONLY)
+    configure_file("admin/config.cmake.in"
+            "bigtable_admin_client-config.cmake" @ONLY)
+    configure_file("client/config-version.cmake.in"
+            "bigtable_client-config-version.cmake" @ONLY)
+    configure_file("client/config-version.cmake.in"
+            "bigtable_admin_client-config-version.cmake" @ONLY)
+    install(FILES
+            "${CMAKE_BINARY_DIR}/bigtable/bigtable_client-config.cmake"
+            "${CMAKE_BINARY_DIR}/bigtable/bigtable_client-config-version.cmake"
+            "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin_client-config.cmake"
+            "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin_client-config-version.cmake"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+    export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+            NAMESPACE bigtable
+            FILE "bigtable-exports.cmake")
+endif ()

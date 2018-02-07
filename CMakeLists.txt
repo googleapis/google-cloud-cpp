@@ -14,13 +14,8 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-# Define the project name, version, and main programming language.
-set(PACKAGE_NAME      "google-cloud-cpp")
-set(PACKAGE_VERSION   "0.1")
-set(PACKAGE_STRING    "${PACKAGE_NAME} ${PACKAGE_VERSION}")
-set(PACKAGE_TARNAME   "${PACKAGE_NAME}-${PACKAGE_VERSION}")
-set(PACKAGE_BUGREPORT "https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues")
-project(${PACKAGE_NAME} CXX C)
+# Define the project name, and main programming languages.
+project(google-cloud-cpp CXX C)
 
 # Configure the Compiler options, we will be using C++11 features.
 set(CMAKE_CXX_STANDARD 11)

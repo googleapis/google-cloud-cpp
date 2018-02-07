@@ -95,6 +95,16 @@ else
   echo "no sanitizer errors found."
 fi
 
+# Test the install rule and that the installation works.
+if [ "${TEST_INSTALL}" = "yes" ]; then
+  echo
+  echo "Testing install rule"
+  make install
+  echo
+  echo "Test building against installed Bigtable C++ Client using make(1)."
+  make -C /v/ci/install-test all
+fi
+
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
   echo
