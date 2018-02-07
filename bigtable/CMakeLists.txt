@@ -294,7 +294,7 @@ endif (FORCE_STATIC_ANALYZER_ERRORS)
 # Cloud Bigtable emulator.
 add_executable(data_integration_test tests/data_integration_test.cc)
 target_link_libraries(data_integration_test
-    bigtable_admin_client bigtable_client bigtable_protos absl::strings
+    gmock bigtable_admin_client bigtable_client bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local data_integration_test)
 
@@ -314,8 +314,6 @@ add_dependencies(tests-local filters_integration_test)
 
 add_library(bigtable_benchmark_common
     benchmarks/constants.h
-    benchmarks/embedded_server.h
-    benchmarks/embedded_server.cc
     benchmarks/random.h
     benchmarks/random.cc
     benchmarks/setup.h
@@ -326,7 +324,6 @@ target_link_libraries(bigtable_benchmark_common
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests
-    benchmarks/embedded_server_test.cc
     benchmarks/random_test.cc
     benchmarks/setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
