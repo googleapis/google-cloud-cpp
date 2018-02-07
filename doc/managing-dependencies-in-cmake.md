@@ -14,9 +14,19 @@ is expected to become a dependency on protobuf and gRPC.
 test framework and this was already a dependency for googleapis, gRPC, and
 Abseil.
 
-Some of these libraries have dependencies themselves, for example, gRPC depends
-on [protobuf](https://developers.google.com/protocol-buffers/), Abseil depends
-on [cctz](https://github.com/google/cctz).
+Some of these libraries have dependencies themselves:
+
+* [protobuf](https://developers.google.com/protocol-buffers/) is a dependency
+  for gRPC.
+* [cctz](https://github.com/google/cctz) is a dependency for Abseil. In
+  particular `absl::time`.
+  
+gRPC has many other dependencies at build time, but they are not transitive,
+for example, gRPC uses [c-ares](https://c-ares.haxx.se/) for asynchronous DNS
+requests.  But the library is linked into gRPC and not exposed externally.
+There are some challenges around the
+C++ [One Definition Rule](http://en.cppreference.com/w/cpp/language/definition),
+but these are outside the scope of this document.
 
 This document describes how these dependencies are included in CMake files,
 and how they can be used by applications or libraries that depend on
@@ -24,13 +34,15 @@ and how they can be used by applications or libraries that depend on
 
 ## Overview
 
-When compiling from source, we use dependencies as git submodules. Dependency
-submodules are included using the `add_subdirectory()` macro.  We use the
+When compiling from source, we use dependencies as git submodules. Submodules
+ are included using the `add_subdirectory()` macro.  We use the
 `EXCLUDE_FROM_ALL` parameter to avoid compiling additional targets, such as
 examples or tests, that are not required for the `google-cloud-cpp` targets.
-Submodules included with `add_subdirectory()` introduce targets (such as
-libraries) that we can add as dependencies to the libraries and executables
-defined in `google-cloud-cpp`. Any compiler flags, such as include directories,
+
+Submodules included with `add_subdirectory()` introduce CMake
+[targets](https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#binary-targets)
+that we can add as dependencies to the libraries and executables
+compiled in `google-cloud-cpp`. Any compiler flags, such as include directories,
 needed for these targets are automatically added when the target becomes a
 dependency.
 
@@ -38,9 +50,9 @@ We want installed dependencies to have the same behavior. CMake supports this
 use case well as long as projects follow the following conventions:
 
 * One should use dependencies via their `EXPORTED` name, for example,
-`absl::base` and not `absl_base`.
+  `absl::base` and not `absl_base`.
 * Dependencies should use `target_include_directories()`
-and `target_compile_definitions()` to add compilation flags.
+  and `target_compile_definitions()` to add compilation flags.
 * Libraries should install a package config file when they are installed.
 
 In this document we describe how the code in `google-cloud-cpp` can be used
@@ -55,17 +67,16 @@ manage them.
 
 Even when included as a submodule Abseil is hard to manage.  It has a strong
 dependency on `cctz` and `googletest`, going as far as checking that the targets
-for each exist.  However, it does not provide any of the targets for them. The
-library assumes that it is being compiled as a submodule that provides these
-dependencies.
+for each exist even when the target is not used (e.g. if the libraries that do
+not require cctz are not compiled). The library assumes that it is being
+compiled as a submodule that provides these dependencies.
 
-This is problematic because gRPC creates the targets for googletest when used as
-a submodule, but does not provide a `gtest` target when already installed.
-We propose to fix this problem by:
- 
-* Providing the `cctz` and `googletest` targets when Abseil is a submodule.
-* Requiring that Abseil and gRPC are either both used as submodules or both
-used as packages.
+This is problematic because gRPC creates the `gtest` targets for googletest when
+used as a submodule, but does not provide this target when used as an installed
+library.  We propose to fix this problem by:
+
+* Using the gRPC provided `gtest` target when gRPC is a submodule, or
+* Explicitly provide the `gtest` target when required.
 
 Furthermore, Abseil does not provide targets to install it. It recommends
 that applications always compile from source. We believe this is unrealistic
@@ -75,32 +86,82 @@ of Abseil, as long as the application provides (a) either support files for
 
 Whether the application creates these files by themselves, they use a forked
 version of Abseil that has created these files, or they convince the Abseil
-developers to create these files themselves is outside the scope of this
+developers to create these files is outside the scope of the `google-cloud-cpp`
 project.
+
+In general, we will support four modes for Abseil:
+
+1. [`vcpkg`](https://github.com/Microsoft/vcpkg) is a Microsoft tool to install
+   many Open Source libraries on Windows.  It provides `unofficial::absl::`
+   packages for Abseil. We expect this to be popular on Windows.
+   When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `vcpkg` we will define
+   CMake [`INTERFACE`](https://cmake.org/cmake/help/v3.5/command/add_library.html?highlight=interface)
+   libraries with the `absl::*` names that automatically link the corresponding
+   `unofficial::absl::*` libraries.
+
+1. [`pkg-config`](https://www.freedesktop.org/wiki/Software/pkg-config/) is a
+   helper program to discover the compiler and linker command-line arguments
+   required to use a given library. When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is
+   set to `pkg-config` we will define `INTERFACE` libraries for each `absl::*`
+   library used in `google-cloud-cpp`.  These `INTERFACE` libraries will set
+   their target [properties](https://cmake.org/cmake/help/v3.5/manual/cmake-properties.7.html#properties-on-targets)
+   based on the configuration flags discovered via `pkg-config`.
+   
+1. `package`: When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `package` we
+    will use `find_package(absl)` to find the Abseil libraries, and assume that
+    the system contains `Findabsl.cmake` files that tell CMake how to create the
+    `absl::*` targets.
+    
+1. `module`: When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `module`
+   (the default) we will simply add the `third_party/abseil` subdirectory to
+   the CMake build.
 
 ### gRPC
 
 gRPC can be compiled using CMake, plain GNU Make, Bazel, or vcpkg.  Depending
 how it is compiled it may offer an install target (GNU Make and CMake have
-them) and it may or may not have installed config files for `find_package()`.
+them), and it may or may not have installed config files for `find_package()`.
 
-We propose to support three different modes for gRPC:
+Like with Abseil we will support four different configurations for gRPC:
 
-1. As a installed package with CMake support.  In this case we expect gRPC to
-*not* create any of the `googletest` targets.  The exported names are prefixed
-by `gRPC` in this case, e.g., `gRPC::grpc++`, `gRPC::grpc`.
+1. [`vcpkg`](https://github.com/Microsoft/vcpkg) packages gRPC, and provides
+   targets (`gRPC::gprc++` and `gRPC::grpc`) for CMake.  
+   When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `vcpkg` we will enable
+   these targets using `find_package()`.  We will also use `find_package()` to
+   find the `protobuf` library.  The package introduces a
+   `protobuf::libprotobuf` target.
 
-1. As a installed package with `pkg-config` support.  In this case we will
-use the output from `pkg-config` to create `IMPORTED` targets with the same
-names (e.g., `gRPC::grpc++`) as the targets created by an installed gRPC library
-with CMake support.
+1. [`pkg-config`](https://www.freedesktop.org/wiki/Software/pkg-config/) when
+   compiled and installed with GNU Make gRPC installs `pkg-config` support
+   files. When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `pkg-config` we will
+   define `INTERFACE` libraries for `gRPC::grpc++` and `gRPC::grpc`each `absl::*`
+   library used in `google-cloud-cpp`.  These `INTERFACE` libraries will set
+   their target [properties](https://cmake.org/cmake/help/v3.5/manual/cmake-properties.7.html#properties-on-targets)
+   based on the configuration flags discovered via `pkg-config`.
+   We will also use `pkg-config` to find `protobuf` in this case, and introduce
+   `protobuf::libprotobuf` as an `INTERFACE` target with its properties set based
+   on the `pkg-config` parameters.
+   Note that on CMake-3.6 and higher the `Protobuf` CMake module automatically
+   introduces `protobuf::libprotobuf`. We are targeting CMake-3.5, which does
+   not offer this feature.
+   
+1. `package`: When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `package` we
+    will use `find_package(... grpc)` to find the gRPC libraries. Note that gRPC
+    installs the necessary CMake support files when compiled with CMake, but not
+    when compiled and installed with GNU Make, so we cannot assume these support
+    files always exist.
+    
+1. `module`: When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `module`
+   (the default) we will simply add the `third_party/grpc` subdirectory to
+   the CMake build.
 
-1. As a submodule.  In this case gRPC creates a `gtest` and `gtest_main` target,
-but not `gmock` target.  It also does not create the exported names for its
-own libraries.  We will create the `gRPC::*` aliases to mimic an installed
-library.
+### cctz
 
-#### Sub-Dependencies of gRPC
+cctz is similar to Abseil in that it does not provide `install` targets. We
+think that some of our users 
+
+
+#### Things that gRPC depends on
 
 gRPC has many dependencies.  When this document was written, they include:
 [abseil-cpp](https://abseil.io),
@@ -118,11 +179,11 @@ dependencies such as `libpthread`, `libc` and the C++ library (typically
 `libstdc++`). Of all these dependencies, only `protobuf`, `zlib`, and `pthread`
 need to be explicitly linked by the application.
 
-We propose to manage `protobuf` and `zlib` just as we manage `gRPC`: when
-installed with CMake support we will use that support, when used as a submodule
-or when installed with only `pkg-config` support we create imported or aliased
-targets that mimic the installed CMake support, i.e., the target is always
-`Protobuf::libprotobuf`.
+We already discussed how `protobuf` is discovered alonside `gRPC`.
+
+`zlib` is often installed as a system library and has a relatively stable
+interface.  Unless it is used as a module we will use the native library via
+`find_package`.
 
 `libpthread` has native support in CMake and we will simply use that: the
 `FindThreads` module creates a `Threads::Threads` target that works on all
@@ -175,11 +236,8 @@ else ()
     include(FindPkgConfig)
     pkg_check_modules(gRPC++ REQUIRED IMPORTED_TARGET grpc++ >= 1.9.0)
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
-    set_property(TARGET gRPC::grpc++ PROPERTY INTERFACE_LINK_LIBRARIES
-            PkgConfig::gRPC++)
-    # Use a similar pattern for other libraries: discover them with
-    # pkg_check_modules() define an imported interface library for them, then
-    # set the dependencies in the library.
+    # This custom macro sets all the properties based on pkg-config results.
+    set_library_properties_from_pkg_config(gRPC::grpc++ gRPC++)
 endif ()
 ```
 
@@ -189,15 +247,31 @@ The configurations must be tested as part of the CI builds. To ensure coverage
 we will:
 
 * Most builds will compile the dependencies from source, as submodules. This is
-how the `google-cloud-cpp` developers use the system and we expect that many of
-the users will too.
+  how the `google-cloud-cpp` developers use the system and we expect that many
+  of the users will too.
 
 * We will dedicate one CI build on Linux to compile against installed
-dependencies using `pkg-config` files.
+  dependencies using `pkg-config` files.
 
-* On Windows, we already use installed dependencies and CMake support files. On
-this platform compiling from source can be (a) so slow that we go over the 
-time allocated in the CI build, and (b) the build may require patching the
-dependencies, as the `vcpkg` ports do.  Since `vcpkg` already takes care of
-building the dependencies and creating the CMake support files we might as well
-use it to validate this build type.
+* On Windows, we already use installed dependencies via `vcpkg`: compiling from
+  source can be (a) so slow that we go over the time allocated in the CI build,
+  and (b) the build may require patching the dependencies, as the `vcpkg` ports
+  do.
+  
+* We have no coverage for `*_PROVIDER == "package"` at the moment because (a)
+  we have not written `Findabsl.cmake` for the mock installations of Abseil, and
+  (b) previous versions of gRPC had a broken install target with CMake, though
+  this has not been tested recently.
+
+## Alternatives Considered
+
+**Not Supporting a `make install` target**: we could take the stance that our
+users should always build from source. We have no data, but given the amount of
+effort the C++ community spends defining `install` targets we expect that this
+approach would be unpopular.
+
+**Create support files and always use `find_package`**: we could have created
+`Find<dependency>.cmake` files to find each dependency. We could not design a
+solution that works for modules, vcpkg, pkg-config, and system-wide
+`Find<dependency>.cmake` files.  It might be possible to do so and if found that
+would be a more elegant design.
