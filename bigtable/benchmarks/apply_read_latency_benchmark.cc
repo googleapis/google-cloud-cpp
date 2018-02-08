@@ -159,11 +159,11 @@ int main(int argc, char* argv[]) try {
                                combined.read_results);
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << std::endl;
-  benchmark.PrintResultCSV(std::cout, "perf", "BulkApply()", "Latency",
+  benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
                            populate_results);
-  benchmark.PrintResultCSV(std::cout, "perf", "Apply()", "Latency",
+  benchmark.PrintResultCsv(std::cout, "perf", "Apply()", "Latency",
                            combined.apply_results);
-  benchmark.PrintResultCSV(std::cout, "perf", "ReadRow()", "Latency",
+  benchmark.PrintResultCsv(std::cout, "perf", "ReadRow()", "Latency",
                            combined.read_results);
 
   benchmark.DeleteTable();
