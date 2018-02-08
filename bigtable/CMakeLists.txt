@@ -351,6 +351,15 @@ target_sources(bigtable_client_all_tests
     PUBLIC ${bigtable_benchmarks_unit_tests})
 target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
+# Benchmark for Table::Apply() and Table::ReadRow().
+add_executable(apply_read_latency_benchmark
+benchmarks/apply_read_latency_benchmark.cc)
+target_link_libraries(apply_read_latency_benchmark
+bigtable_benchmark_common bigtable_admin_client bigtable_client
+bigtable_protos gmock absl::strings absl::time
+${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
+# Benchmark Table::ReadRows().
 add_executable(scan_throughput_benchmark
         benchmarks/scan_throughput_benchmark.cc)
 target_link_libraries(scan_throughput_benchmark
