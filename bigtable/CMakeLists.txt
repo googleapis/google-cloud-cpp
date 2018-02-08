@@ -349,6 +349,13 @@ target_sources(bigtable_client_all_tests
     PUBLIC ${bigtable_benchmarks_unit_tests})
 target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
+add_executable(scan_throughput_benchmark
+        benchmarks/scan_throughput_benchmark.cc)
+target_link_libraries(scan_throughput_benchmark
+        bigtable_benchmark_common bigtable_admin_client bigtable_client
+        bigtable_protos gmock absl::strings absl::time
+        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 if ("${LIB64}" STREQUAL "TRUE")
