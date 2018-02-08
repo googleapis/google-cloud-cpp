@@ -371,12 +371,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples/quick_start)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-# A benchmark to measure performance of long running programs.
-add_executable(endurance_benchmark benchmarks/endurance_benchmark.cc)
-target_link_libraries(endurance_benchmark bigtable_benchmark_common
-        bigtable_admin_client bigtable_client bigtable_protos
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 if ("${LIB64}" STREQUAL "TRUE")
