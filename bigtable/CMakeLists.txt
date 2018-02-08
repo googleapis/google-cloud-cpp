@@ -394,6 +394,5 @@ if (BIGTABLE_ENABLE_INSTALL)
             "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin_client-config-version.cmake"
             DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
     export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
-            NAMESPACE bigtable
             FILE "bigtable-exports.cmake")
 endif ()

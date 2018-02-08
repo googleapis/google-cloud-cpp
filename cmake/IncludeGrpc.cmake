@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # gRPC always requires thread support.
-include(FindThreads)
+find_package(Threads)
 include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or

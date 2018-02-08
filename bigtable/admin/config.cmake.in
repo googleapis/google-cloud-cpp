@@ -13,3 +13,7 @@
 # limitations under the License.
 
 include("${CMAKE_CURRENT_LIST_DIR}/bigtable-targets.cmake")
+
+add_library(bigtable::admin_client IMPORTED INTERFACE)
+set_target_properties(bigtable::admin_client PROPERTIES
+    INTERFACE_LINK_LIBRARIES "bigtable_admin_client;bigtable::client;bigtable::protos")

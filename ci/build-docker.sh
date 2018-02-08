@@ -98,11 +98,17 @@ fi
 # Test the install rule and that the installation works.
 if [ "${TEST_INSTALL}" = "yes" ]; then
   echo
-  echo "Testing install rule"
+  echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   make install
   echo
-  echo "Test building against installed Bigtable C++ Client using make(1)."
+  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   make -C /v/ci/install-test all
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
+  mkdir /v/ci/install-test/.build
+  cd /v/ci/install-test/.build
+  CMAKE_PREFIX_PATH=/usr/local/share cmake ..
+  make
 fi
 
 # If document generation is enabled, run it now.
