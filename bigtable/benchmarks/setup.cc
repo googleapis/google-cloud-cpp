@@ -26,8 +26,9 @@ std::string FormattedStartTime() {
   auto start = std::chrono::system_clock::now();
   std::time_t start_c = std::chrono::system_clock::to_time_t(start);
   std::string formatted("YYYY-MM-DDTHH:SS:MMZ");
-  std::strftime(&formatted[0], formatted.size(), "%FT%TZ",
-                std::gmtime(&start_c));
+  auto s = std::strftime(&formatted[0], formatted.size() + 1, "%FT%TZ",
+                         std::gmtime(&start_c));
+  formatted[s] = '\0';
   return formatted;
 }
 
