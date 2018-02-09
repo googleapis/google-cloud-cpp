@@ -57,7 +57,8 @@ if ($LASTEXITCODE) {
 # complete before the AppVeyor build time limit.
 $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
-              "grpc:x64-windows-static")
+              "grpc:x64-windows-static", "cctz:x64-windows-static",
+              "abseil:x64-windows-static")
 foreach ($pkg in $packages) {
   $cmd = ".\vcpkg.exe install $pkg"
   Invoke-Expression $cmd

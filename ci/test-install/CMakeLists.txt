@@ -1,0 +1,74 @@
+# Copyright 2018 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cmake_minimum_required(VERSION 3.5)
+project(google-cloud-cpp-install-integration-test CXX C)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Threads REQUIRED)
+
+if (NOT TARGET bigtable::client)
+    # To avoid bitrot this test is compiled as part of the regular build. In
+    # that case bigtable::client is a target and there is no need to import
+    # any other targets, but when used for testing installs then the following
+    # becomes necessary.
+    find_package(bigtable_client 0.1.0 REQUIRED)
+    find_package(bigtable_admin_client 0.1.0 REQUIRED)
+
+    # The dependencies are hard-coded because we just want to test the
+    # google-cloud-cpp installed files.
+
+    # With cmake-3.9 and higher this can be simplified to:
+    #    find_package(Protobuf REQUIRED)
+    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
+    set_target_properties(protobuf::libprotobuf PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libprotobuf.a;Threads::Threads"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+
+    # Ideally these are provided by grpc-config.cmake (or gRPCConfig.cmake), and
+    # that file is installed by the gRPC cmake.
+    add_library(gRPC::grpc INTERFACE IMPORTED)
+    set_target_properties(gRPC::grpc PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libgrpc.so;protobuf::libprotobuf"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+
+    add_library(gRPC::grpc++ INTERFACE IMPORTED)
+    set_target_properties(gRPC::grpc++ PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libgrpc++.so;gRPC::grpc++"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+
+    # Ideally these are provided by absl-config.cmake which should be installed
+    # by Abseil, alternatively the application can implement absl-config.cmake
+    # since they must have manually installed Abseil.
+    add_library(absl::dynamic_annotations INTERFACE IMPORTED)
+    set_target_properties(absl::dynamic_annotations PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libabsl_dynamic_annotations.a"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+
+    add_library(absl::base INTERFACE IMPORTED)
+    set_target_properties(absl::base PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libabsl_base.a;absl::dynamic_annotations"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+
+    add_library(absl::strings INTERFACE IMPORTED)
+    set_target_properties(absl::strings PROPERTIES
+            INTERFACE_LINK_LIBRARIES "/usr/local/lib/libabsl_strings.a;absl::base"
+            INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+endif ()
+
+# Defining new targets should be easy.
+add_executable(install_integration_test install_integration_test.cc)
+target_link_libraries(install_integration_test bigtable::admin_client bigtable::client)

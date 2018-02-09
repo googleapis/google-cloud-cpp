@@ -12,26 +12,82 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(${PROJECT_SOURCE_DIR}/cmake/IncludeCctz.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/IncludeCctz.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/IncludeGMock.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
-# Depending on how gRPC is used (module vs. package), the gtest target may be
-# already defined; if it is, we cannot redefine it.
-if (NOT TARGET gtest)
-    include(${PROJECT_SOURCE_DIR}/cmake/IncludeGTest.cmake)
-endif ()
+# Configure the Abseil dependency, this can be found as a submodule, package, or
+# installed with pkg-config support.
+set(GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER "module"
+        CACHE STRING "How to find the Abseil library")
+set_property(CACHE GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER
+        PROPERTY STRINGS "module" "package" "pkg-config")
 
-if (NOT ABSEIL_ROOT_DIR)
-    set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
-endif ()
-if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
-    message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
-endif ()
-add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
-set(ABSEIL_LIBRARIES abseil)
-set(ABSEIL_INCLUDE_DIRS ${ABSEIL_ROOT_DIR})
-set(ABSL_STD_CXX_FLAG "-std=c++11" CACHE STRING "c++ std flag (default: c++11)")
+# Define the list of Abseil libraries that we might use in google-cloud-cpp.
+set(ABSEIL_LIBS time dynamic_annotations spinlock_wait stacktrace int128 base
+        strings)
 
-if(MSVC)
-    target_compile_definitions(absl_base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
-endif(MSVC)
+if ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "module")
+    if (NOT "${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or"
+                " both must be installed libraries.  Currently cctz is"
+                " configured as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ". Consider installing Abseil too.")
+    endif ()
+    if (NOT ABSEIL_ROOT_DIR)
+        set(ABSEIL_ROOT_DIR ${PROJECT_SOURCE_DIR}/third_party/abseil)
+    endif ()
+    if (NOT EXISTS "${ABSEIL_ROOT_DIR}/CMakeLists.txt")
+        message(ERROR "expected a CMakeLists.txt in ABSEIL_ROOT_DIR.")
+    endif ()
+
+    if (NOT TARGET gtest)
+        # Normally the gtest target is defined by gRPC, if it is not, then
+        # provide our own definition.
+        include(${CMAKE_CURRENT_LIST_DIR}/IncludeGTest.cmake)
+    endif ()
+    add_subdirectory(${ABSEIL_ROOT_DIR} third_party/abseil EXCLUDE_FROM_ALL)
+
+    if(MSVC)
+        target_compile_definitions(absl::base PUBLIC -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
+    endif(MSVC)
+elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "vcpkg")
+    if (NOT "${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "vcpkg")
+        message(FATAL_ERRROR "If Abseil is provided by vcpkg then cctz must"
+                " also use vcpkg.  Currently cctz is configured as "
+                ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ".  Consider using vcpkg for cctz also.")
+    endif ()
+    find_package(unofficial-abseil REQUIRED)
+    foreach(LIB ${ABSEIL_LIBS})
+        add_library(absl::${LIB} INTERFACE IMPORTED)
+        set_property(TARGET absl::${LIB} PROPERTY INTERFACE_LINK_LIBRARIES
+                unofficial::abseil::${LIB})
+    endforeach ()
+elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "package")
+    if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or both"
+                " must be installed libraries.  Currently cctz is configured"
+                " as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ".  Consider installing cctz too.")
+    endif ()
+    find_package(absl REQUIRED)
+elseif ("${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}" STREQUAL "pkg-config")
+    if ("${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}" STREQUAL "module")
+        message(FATAL_ERROR "Both Abseil and cctz must be submodules or both"
+                " must be installed libraries.  Currently cctz is configured"
+                " as " ${GOOGLE_CLOUD_CPP_CCTZ_PROVIDER}
+                " and Abseil as " ${GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER}
+                ".  Consider installing cctz too.")
+    endif ()
+    # Use pkg-config to find the libraries.
+    include(FindPkgConfig)
+    foreach(LIB ${ABSEIL_LIBS})
+        pkg_check_modules(absl_${LIB} REQUIRED absl_${LIB})
+        add_library(absl::${LIB} INTERFACE IMPORTED)
+        set_library_properties_from_pkg_config(absl::${LIB} absl_${LIB})
+    endforeach ()
+endif ()

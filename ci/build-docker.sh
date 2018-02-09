@@ -95,6 +95,22 @@ else
   echo "no sanitizer errors found."
 fi
 
+# Test the install rule and that the installation works.
+if [ "${TEST_INSTALL}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
+  make install
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
+  make -C /v/ci/test-install all
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
+  # Ignore mkdir errors in development environment.
+  mkdir /v/ci/test-install/.build || /bin/true
+  cd /v/ci/test-install/.build
+  CMAKE_PREFIX_PATH=/usr/local/share cmake .. && make
+fi
+
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
   echo
