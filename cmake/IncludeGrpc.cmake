@@ -35,9 +35,11 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     add_library(gRPC::grpc ALIAS grpc)
     add_library(protobuf::libprotobuf ALIAS libprotobuf)
     set(GRPC_BINDIR "${PROJECT_BINARY_DIR}/third_party/grpc")
-    set(PROTOBUF_PROTOC_EXECUTABLE "${GRPC_BINDIR}/third_party/protobuf/protoc")
+
+    # The binary name is different on some platforms, use CMake magic to get it.
+    set(PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protoc>)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE "${GRPC_BINDIR}/grpc_cpp_plugin")
+    set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         OR "${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "vcpkg")
