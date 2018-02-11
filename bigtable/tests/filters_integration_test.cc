@@ -592,7 +592,6 @@ TEST_F(FilterIntegrationTest, Interleave) {
   CheckEqualUnordered(expected, actual);
 }
 
-
 void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
                                               std::string const& prefix) {
   namespace bt = bigtable;
