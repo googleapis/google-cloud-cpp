@@ -165,7 +165,9 @@ add_library(bigtable_client_testing
     client/testing/mock_data_client.h
     client/testing/mock_response_stream.h
     client/testing/table_test_fixture.h
-    client/testing/table_test_fixture.cc)
+    client/testing/table_test_fixture.cc
+    client/testing/table_integration_test.h
+    client/testing/table_integration_test.cc)
 target_link_libraries(bigtable_client_testing
     bigtable_client bigtable_protos absl::strings gmock
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
@@ -294,7 +296,7 @@ endif (FORCE_STATIC_ANALYZER_ERRORS)
 # Cloud Bigtable emulator.
 add_executable(data_integration_test tests/data_integration_test.cc)
 target_link_libraries(data_integration_test
-    gmock bigtable_admin_client bigtable_client bigtable_protos absl::strings
+    gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local data_integration_test)
 
@@ -308,7 +310,7 @@ add_dependencies(tests-local admin_integration_test)
 # An integration test for bigtable::Filter.
 add_executable(filters_integration_test tests/filters_integration_test.cc)
 target_link_libraries(filters_integration_test
-    gmock bigtable_admin_client bigtable_client bigtable_protos
+    gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local filters_integration_test)
 

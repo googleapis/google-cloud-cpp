@@ -27,78 +27,64 @@
 #include "bigtable/client/cell.h"
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/table_integration_test.h"
 
 namespace btproto = ::google::bigtable::v2;
 namespace admin_proto = ::google::bigtable::admin::v2;
 
-namespace {
-/// Store the project and instance captured from the command-line arguments.
-class FilterTestEnvironment : public ::testing::Environment {
- public:
-  FilterTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    instance_id_ = std::move(instance);
-  }
+namespace bigtable {
+namespace testing {
 
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& instance_id() { return instance_id_; }
-
- private:
-  static std::string project_id_;
-  static std::string instance_id_;
-};
-
-class FilterIntegrationTest : public ::testing::Test {
+class FilterIntegrationTest : public TableIntegrationTest {
  protected:
-  void SetUp() override;
-
-  std::unique_ptr<bigtable::Table> CreateTable(std::string const& table_id);
-
   /**
-   * Return all the cells in @p table that pass @p filter.
-   */
-  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
-                                       bigtable::Filter filter);
-
-  void CreateCells(bigtable::Table& table,
-                   std::vector<bigtable::Cell> const& cells);
-
-  /**
-   * Create some complex rows in @p table.
-   *
-   * Create the following rows in @p table, the magic values for the column
-   * families are defined above.
-   *
-   * | Row Key                 | Family | Column | Contents      |
-   * | :---------------------- | :----- | :----- | :------------ |
-   * | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
-   * | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
-   * | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
-   * | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
-   * | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
-   * | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
-   *
-   */
+* Create some complex rows in @p table.
+*
+* Create the following rows in @p table, the magic values for the column
+* families are defined above.
+*
+* | Row Key                 | Family | Column | Contents      |
+* | :---------------------- | :----- | :----- | :------------ |
+* | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
+* | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
+* | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
+* | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
+* | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
+* | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
+* | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
+* | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
+* | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
+* | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+*
+*/
   void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
 
-  std::shared_ptr<bigtable::AdminClient> admin_client_;
-  std::unique_ptr<bigtable::TableAdmin> table_admin_;
-  std::shared_ptr<bigtable::DataClient> data_client_;
   std::string fam0 = "fam0";
   std::string fam1 = "fam1";
   std::string fam2 = "fam2";
   std::string fam3 = "fam3";
+
+  bigtable::TableConfig table_config =
+      bigtable::TableConfig({{fam0, bigtable::GcRule::MaxNumVersions(10)},
+                             {fam1, bigtable::GcRule::MaxNumVersions(10)},
+                             {fam2, bigtable::GcRule::MaxNumVersions(10)},
+                             {fam3, bigtable::GcRule::MaxNumVersions(10)}},
+                            {});
 };
+
+}  // namespace testing
+}  // namespace bigtable
+
+namespace {
+/// Return true if connected to the Cloud Bigtable Emulator.
+bool UsingCloudBigtableEmulator();
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -127,7 +113,7 @@ int main(int argc, char* argv[]) try {
   }
 
   (void)::testing::AddGlobalTestEnvironment(
-      new FilterTestEnvironment(project_id, instance_id));
+      new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
   return RUN_ALL_TESTS();
 } catch (bigtable::PermanentMutationFailure const& ex) {
@@ -149,52 +135,11 @@ int main(int argc, char* argv[]) try {
   return 1;
 }
 
-namespace {
-/**
- * Compare two cells, think about the spaceship operator.
- *
- * @return `< 0` if lhs < rhs, `0` if lhs == rhs, and `> 0` otherwise.
- */
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs);
-
-/**
- * Compare two sets of cells.
- *
- * Unordered because ReadRows does not guarantee a particular order.
- */
-void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
-                         std::vector<bigtable::Cell> actual);
-
-/// Return true if connected to the Cloud Bigtable Emulator.
-bool UsingCloudBigtableEmulator();
-}  // anonymous namespace
-
 namespace bigtable {
-//@{
-/// @name Helpers for GTest.
-bool operator==(Cell const& lhs, Cell const& rhs) {
-  return CellCompare(lhs, rhs) == 0;
-}
-
-bool operator<(Cell const& lhs, Cell const& rhs) {
-  return CellCompare(lhs, rhs) < 0;
-}
-
-/**
- * This function is not used in this file, but it is used by GoogleTest; without
- * it, failing tests will output binary blobs instead of human-readable text.
- */
-void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
-  *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
-      << ", column=" << cell.column_qualifier()
-      << ", timestamp=" << cell.timestamp() << ", value=" << cell.value()
-      << ", labels={" << absl::StrJoin(cell.labels(), ",") << "}";
-}
-//@}
-}  // namespace bigtable
+namespace testing {
 
 TEST_F(FilterIntegrationTest, PassAll) {
-  auto table = CreateTable("pass-all-filter-table");
+  auto table = CreateTable("pass-all-filter-table", table_config);
   std::string const row_key = "pass-all-row-key";
   std::vector<bigtable::Cell> expected{
       {row_key, "fam0", "c", 0, "v-c-0-0", {}},
@@ -215,7 +160,7 @@ TEST_F(FilterIntegrationTest, BlockAll) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
-  auto table = CreateTable("block-all-filter-table");
+  auto table = CreateTable("block-all-filter-table", table_config);
   std::string const row_key = "block-all-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c", 0, "v-c-0-0", {}},
@@ -233,7 +178,7 @@ TEST_F(FilterIntegrationTest, BlockAll) {
 }
 
 TEST_F(FilterIntegrationTest, Latest) {
-  auto table = CreateTable("latest-filter-table");
+  auto table = CreateTable("latest-filter-table", table_config);
   std::string const row_key = "latest-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c", 0, "v-c-0-0", {}},
@@ -258,7 +203,7 @@ TEST_F(FilterIntegrationTest, Latest) {
 }
 
 TEST_F(FilterIntegrationTest, FamilyRegex) {
-  auto table = CreateTable("family-regex-filter-table");
+  auto table = CreateTable("family-regex-filter-table", table_config);
   std::string const row_key = "family-regex-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c2", 0, "bar", {}},
@@ -281,7 +226,7 @@ TEST_F(FilterIntegrationTest, FamilyRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ColumnRegex) {
-  auto table = CreateTable("column-regex-filter-table");
+  auto table = CreateTable("column-regex-filter-table", table_config);
   std::string const row_key = "column-regex-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "abc", 0, "bar", {}},
@@ -304,7 +249,7 @@ TEST_F(FilterIntegrationTest, ColumnRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ColumnRange) {
-  auto table = CreateTable("column-range-filter-table");
+  auto table = CreateTable("column-range-filter-table", table_config);
   std::string const row_key = "column-range-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "a00", 0, "bar", {}},
@@ -327,7 +272,7 @@ TEST_F(FilterIntegrationTest, ColumnRange) {
 }
 
 TEST_F(FilterIntegrationTest, TimestampRange) {
-  auto table = CreateTable("timestamp-range-filter-table");
+  auto table = CreateTable("timestamp-range-filter-table", table_config);
   std::string const row_key = "timestamp-range-row-key";
   std::vector<bigtable::Cell> created{
       {row_key, "fam0", "c0", 1000, "v1000", {}},
@@ -351,7 +296,7 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
 }
 
 TEST_F(FilterIntegrationTest, RowKeysRegex) {
-  auto table = CreateTable("row-key-regex-filter-table");
+  auto table = CreateTable("row-key-regex-filter-table", table_config);
   std::string const row_key = "row-key-regex-row-key";
   std::vector<bigtable::Cell> created{
       {row_key + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -372,7 +317,7 @@ TEST_F(FilterIntegrationTest, RowKeysRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ValueRegex) {
-  auto table = CreateTable("value-regex-filter-table");
+  auto table = CreateTable("value-regex-filter-table", table_config);
   std::string const prefix = "value-regex-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -392,7 +337,7 @@ TEST_F(FilterIntegrationTest, ValueRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ValueRange) {
-  auto table = CreateTable("value-range-filter-table");
+  auto table = CreateTable("value-range-filter-table", table_config);
   std::string const prefix = "value-range-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -415,7 +360,7 @@ TEST_F(FilterIntegrationTest, ValueRange) {
 }
 
 TEST_F(FilterIntegrationTest, CellsRowLimit) {
-  auto table = CreateTable("cells-row-limit-filter-table");
+  auto table = CreateTable("cells-row-limit-filter-table", table_config);
   std::string const prefix = "cell-row-limit-prefix";
   CreateComplexRows(*table, prefix);
 
@@ -436,7 +381,7 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
 }
 
 TEST_F(FilterIntegrationTest, CellsRowOffset) {
-  auto table = CreateTable("cells-row-offset-filter-table");
+  auto table = CreateTable("cells-row-offset-filter-table", table_config);
   std::string const prefix = "cell-row-offset-prefix";
   CreateComplexRows(*table, prefix);
 
@@ -457,7 +402,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
-  auto table = CreateTable("row-sample-filter-table");
+  auto table = CreateTable("row-sample-filter-table", table_config);
   std::string const prefix = "row-sample-prefix";
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (UsingCloudBigtableEmulator()) {
@@ -516,7 +461,8 @@ TEST_F(FilterIntegrationTest, RowSample) {
 }
 
 TEST_F(FilterIntegrationTest, StripValueTransformer) {
-  auto table = CreateTable("strip-value-transformer-filter-table");
+  auto table =
+      CreateTable("strip-value-transformer-filter-table", table_config);
   std::string const prefix = "strip-value-transformer-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -544,7 +490,8 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
-  auto table = CreateTable("apply-label-transformer-filter-table");
+  auto table =
+      CreateTable("apply-label-transformer-filter-table", table_config);
   std::string const prefix = "apply-label-transformer-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -569,7 +516,7 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
 }
 
 TEST_F(FilterIntegrationTest, Condition) {
-  auto table = CreateTable("condition-filter-table");
+  auto table = CreateTable("condition-filter-table", table_config);
   std::string const prefix = "condition-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -596,7 +543,7 @@ TEST_F(FilterIntegrationTest, Condition) {
 }
 
 TEST_F(FilterIntegrationTest, Chain) {
-  auto table = CreateTable("chain-filter-table");
+  auto table = CreateTable("chain-filter-table", table_config);
   std::string const prefix = "chain-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -619,7 +566,7 @@ TEST_F(FilterIntegrationTest, Chain) {
 }
 
 TEST_F(FilterIntegrationTest, Interleave) {
-  auto table = CreateTable("interleave-filter-table");
+  auto table = CreateTable("interleave-filter-table", table_config);
   std::string const prefix = "interleave-prefix";
   std::vector<bigtable::Cell> created{
       {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
@@ -645,61 +592,6 @@ TEST_F(FilterIntegrationTest, Interleave) {
   CheckEqualUnordered(expected, actual);
 }
 
-namespace {
-std::string FilterTestEnvironment::project_id_;
-std::string FilterTestEnvironment::instance_id_;
-
-void FilterIntegrationTest::SetUp() {
-  admin_client_ = bigtable::CreateDefaultAdminClient(
-      FilterTestEnvironment::project_id(), bigtable::ClientOptions());
-  table_admin_ = absl::make_unique<bigtable::TableAdmin>(
-      admin_client_, FilterTestEnvironment::instance_id());
-  data_client_ = bigtable::CreateDefaultDataClient(
-      FilterTestEnvironment::project_id(), FilterTestEnvironment::instance_id(),
-      bigtable::ClientOptions());
-}
-
-std::unique_ptr<bigtable::Table> FilterIntegrationTest::CreateTable(
-    std::string const& table_id) {
-  table_admin_->CreateTable(
-      table_id,
-      bigtable::TableConfig({{fam0, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam1, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam2, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam3, bigtable::GcRule::MaxNumVersions(10)}},
-                            {}));
-  return absl::make_unique<bigtable::Table>(data_client_, table_id);
-}
-
-std::vector<bigtable::Cell> FilterIntegrationTest::ReadRows(
-    bigtable::Table& table, bigtable::Filter filter) {
-  auto reader = table.ReadRows(
-      bigtable::RowSet(bigtable::RowRange::Range("", "")), std::move(filter));
-  std::vector<bigtable::Cell> result;
-  for (auto const& row : reader) {
-    std::copy(row.cells().begin(), row.cells().end(),
-              std::back_inserter(result));
-  }
-  return result;
-}
-
-/// A helper function to create a list of cells.
-void FilterIntegrationTest::CreateCells(
-    bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
-  std::map<std::string, bigtable::SingleRowMutation> mutations;
-  for (auto const& cell : cells) {
-    std::string key = cell.row_key();
-    auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-    inserted.first->second.emplace_back(
-        bigtable::SetCell(cell.family_name(), cell.column_qualifier(),
-                          cell.timestamp(), cell.value()));
-  }
-  bigtable::BulkMutation bulk;
-  for (auto& kv : mutations) {
-    bulk.emplace_back(std::move(kv.second));
-  }
-  table.BulkApply(std::move(bulk));
-}
 
 void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
                                               std::string const& prefix) {
@@ -709,22 +601,19 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
       prefix + "/one-cell", {bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/two-cells",
-                            {bt::SetCell("fam0", "c", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many",
-                            {bt::SetCell("fam0", "c", 0, "foo"),
-                             bt::SetCell("fam0", "c", 1000, "foo"),
-                             bt::SetCell("fam0", "c", 2000, "foo"),
-                             bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many-columns",
-                            {bt::SetCell("fam0", "c0", 3000, "foo"),
-                             bt::SetCell("fam0", "c1", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo"),
-                             bt::SetCell("fam0", "c3", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/two-cells", {bt::SetCell("fam0", "c", 3000, "foo"),
+                              bt::SetCell("fam0", "c2", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many", {bt::SetCell("fam0", "c", 0, "foo"),
+                         bt::SetCell("fam0", "c", 1000, "foo"),
+                         bt::SetCell("fam0", "c", 2000, "foo"),
+                         bt::SetCell("fam0", "c", 3000, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many-columns", {bt::SetCell("fam0", "c0", 3000, "foo"),
+                                 bt::SetCell("fam0", "c1", 3000, "foo"),
+                                 bt::SetCell("fam0", "c2", 3000, "foo"),
+                                 bt::SetCell("fam0", "c3", 3000, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
@@ -740,48 +629,11 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   table.BulkApply(std::move(mutation));
 }
 
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = lhs.row_key().compare(rhs.row_key());
-  if (compare_row_key != 0) {
-    return compare_row_key;
-  }
-  auto compare_family_name = lhs.family_name().compare(rhs.family_name());
-  if (compare_family_name != 0) {
-    return compare_family_name;
-  }
-  auto compare_column_qualifier =
-      lhs.column_qualifier().compare(rhs.column_qualifier());
-  if (compare_column_qualifier != 0) {
-    return compare_column_qualifier;
-  }
-  if (lhs.timestamp() < rhs.timestamp()) {
-    return -1;
-  }
-  if (lhs.timestamp() > rhs.timestamp()) {
-    return 1;
-  }
-  auto compare_value = lhs.value().compare(rhs.value());
-  if (compare_value != 0) {
-    return compare_value;
-  }
-  if (lhs.labels() < rhs.labels()) {
-    return -1;
-  }
-  if (lhs.labels() == rhs.labels()) {
-    return 0;
-  }
-  return 1;
-}
+}  // namespace testing
+}  // namespace bigtable
 
-void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
-                         std::vector<bigtable::Cell> actual) {
-  std::sort(expected.begin(), expected.end());
-  std::sort(actual.begin(), actual.end());
-  EXPECT_THAT(actual, ::testing::ContainerEq(expected));
-}
-
+namespace {
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
-
-}  // anonymous namespace
+}
