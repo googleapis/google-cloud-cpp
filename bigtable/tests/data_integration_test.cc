@@ -33,10 +33,8 @@ namespace testing {
 
 class DataIntegrationTest : public TableIntegrationTest {
  protected:
-
   void Apply(bigtable::Table& table, std::string row_key,
              std::vector<bigtable::Cell> const& cells);
-
 
   void BulkApply(bigtable::Table& table,
                  std::vector<bigtable::Cell> const& cells);
@@ -133,7 +131,6 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   }
   table.BulkApply(std::move(bulk));
 }
-
 
 TEST_F(DataIntegrationTest, TableApply) {
   std::string const table_name = "table-apply-test";
