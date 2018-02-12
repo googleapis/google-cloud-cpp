@@ -124,3 +124,21 @@ TEST(BenchmarkSetup, Test0) {
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_THROW(BenchmarkSetup("t0", argc, argv), std::exception);
 }
+
+TEST(BenchmarkSetup, TestDuration) {
+  char seconds[] = "0";
+  char* argv[] = {arg0, arg1, arg2, arg3, seconds, arg5, arg6, arg7};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+
+  // Test duration parameter should be >= 0.
+  EXPECT_THROW(BenchmarkSetup("test-duration", argc, argv), std::exception);
+}
+
+TEST(BenchmarkSetup, TableSize) {
+  char table_size[] = "10";
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, table_size, arg6, arg7};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+
+  // TableSize parameter should be >= 100.
+  EXPECT_THROW(BenchmarkSetup("table-size", argc, argv), std::exception);
+}
