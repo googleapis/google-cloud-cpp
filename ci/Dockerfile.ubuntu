@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=17.04
+ARG DISTRO_VERSION=17.10
 FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
