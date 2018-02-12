@@ -600,19 +600,22 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
       prefix + "/one-cell", {bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/two-cells", {bt::SetCell("fam0", "c", 3000, "foo"),
-                              bt::SetCell("fam0", "c2", 3000, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many", {bt::SetCell("fam0", "c", 0, "foo"),
-                         bt::SetCell("fam0", "c", 1000, "foo"),
-                         bt::SetCell("fam0", "c", 2000, "foo"),
-                         bt::SetCell("fam0", "c", 3000, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many-columns", {bt::SetCell("fam0", "c0", 3000, "foo"),
-                                 bt::SetCell("fam0", "c1", 3000, "foo"),
-                                 bt::SetCell("fam0", "c2", 3000, "foo"),
-                                 bt::SetCell("fam0", "c3", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/two-cells",
+                            {bt::SetCell("fam0", "c", 3000, "foo"),
+                             bt::SetCell("fam0", "c2", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/many",
+                            {bt::SetCell("fam0", "c", 0, "foo"),
+                             bt::SetCell("fam0", "c", 1000, "foo"),
+                             bt::SetCell("fam0", "c", 2000, "foo"),
+                             bt::SetCell("fam0", "c", 3000, "foo")}));
+  mutation.emplace_back(
+      bt::SingleRowMutation(prefix + "/many-columns",
+                            {bt::SetCell("fam0", "c0", 3000, "foo"),
+                             bt::SetCell("fam0", "c1", 3000, "foo"),
+                             bt::SetCell("fam0", "c2", 3000, "foo"),
+                             bt::SetCell("fam0", "c3", 3000, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
