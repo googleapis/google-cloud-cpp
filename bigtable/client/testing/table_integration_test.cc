@@ -49,7 +49,7 @@ void TableIntegrationTest::DeleteTable(std::string const& table_name) {
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
     bigtable::Table& table, bigtable::Filter filter) {
   auto reader = table.ReadRows(
-      bigtable::RowSet(bigtable::RowRange::Range("", "")), std::move(filter));
+      bigtable::RowSet(bigtable::RowRange::InfiniteRange()), std::move(filter));
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
     std::copy(row.cells().begin(), row.cells().end(),

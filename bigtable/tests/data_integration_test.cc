@@ -24,8 +24,6 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
-#include <gtest/gtest.h>
-
 namespace admin_proto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
@@ -33,9 +31,11 @@ namespace testing {
 
 class DataIntegrationTest : public TableIntegrationTest {
  protected:
+  /// Use Table::Apply() to insert a single row.
   void Apply(bigtable::Table& table, std::string row_key,
              std::vector<bigtable::Cell> const& cells);
 
+  /// Use Table::BulkApply() to insert multiple rows.
   void BulkApply(bigtable::Table& table,
                  std::vector<bigtable::Cell> const& cells);
 
@@ -100,7 +100,6 @@ int main(int argc, char* argv[]) try {
 namespace bigtable {
 namespace testing {
 
-// lets insert a single row at a time
 void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
                                 std::vector<bigtable::Cell> const& cells) {
   auto mutation = bigtable::SingleRowMutation(row_key);
@@ -113,17 +112,15 @@ void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
   table.Apply(std::move(mutation));
 }
 
-// Insert multiple rows
 void DataIntegrationTest::BulkApply(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
-    std::string key = static_cast<std::string>(cell.row_key());
+    std::string key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-    inserted.first->second.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
+    inserted.first->second.emplace_back(
+        bigtable::SetCell(cell.family_name(), cell.column_qualifier(),
+                          cell.timestamp(), cell.value()));
   }
   bigtable::BulkMutation bulk;
   for (auto& kv : mutations) {
@@ -152,7 +149,7 @@ TEST_F(DataIntegrationTest, TableApply) {
 }
 
 TEST_F(DataIntegrationTest, TableBulkApply) {
-  std::string const table_name = "table-apply-test";
+  std::string const table_name = "table-bulk-apply-test";
   auto table = CreateTable(table_name, table_config);
 
   std::vector<bigtable::Cell> created{

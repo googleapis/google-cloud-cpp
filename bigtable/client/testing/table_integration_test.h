@@ -43,35 +43,26 @@ class TableTestEnvironment : public ::testing::Environment {
   static std::string instance_id_;
 };
 
+/**
+ * Fixture for integration tests that need to create tables and check their
+ * contents.
+ */
 class TableIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override;
 
-  /**
-   * creates the table with @p table_config @p
-   *  .
-   */
-
+  /// CREATES THE TABLE with @p table_config
   std::unique_ptr<bigtable::Table> CreateTable(
       std::string const& table_name, bigtable::TableConfig& table_config);
 
-  /**
-  * deletes the table passed via arguments.
-  */
-
+  /// DELETES THE TABLE passed via arguments.
   void DeleteTable(std::string const& table_name);
 
-  /**
-   * Return all the cells in @p table that pass @p filter.
-   */
-
+  /// Return all the cells in @p table that pass @p filter.
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
                                        bigtable::Filter filter);
 
-  /**
-   * Return all the cells in @p table that pass @p filter.
-   */
-
+  /// Return all the cells in @p table that pass @p filter.
   void CreateCells(bigtable::Table& table,
                    std::vector<bigtable::Cell> const& cells);
 
@@ -80,7 +71,6 @@ class TableIntegrationTest : public ::testing::Test {
    *
    * Unordered because ReadRows does not guarantee a particular order.
    */
-
   void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
                            std::vector<bigtable::Cell> actual);
 

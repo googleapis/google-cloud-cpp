@@ -38,31 +38,31 @@ namespace testing {
 class FilterIntegrationTest : public TableIntegrationTest {
  protected:
   /**
-* Create some complex rows in @p table.
-*
-* Create the following rows in @p table, the magic values for the column
-* families are defined above.
-*
-* | Row Key                 | Family | Column | Contents      |
-* | :---------------------- | :----- | :----- | :------------ |
-* | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
-* | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
-* | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
-* | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
-* | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
-* | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
-* | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
-* | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
-* | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
-* | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
-*
-*/
+   * Create some complex rows in @p table.
+   *
+   * Create the following rows in @p table, the magic values for the column
+   * families are defined above.
+   *
+   * | Row Key                 | Family | Column | Contents      |
+   * | :---------------------- | :----- | :----- | :------------ |
+   * | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
+   * | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
+   * | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
+   * | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
+   * | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
+   * | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
+   * | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+   *
+   */
   void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
 
   std::string fam0 = "fam0";
