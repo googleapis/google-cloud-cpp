@@ -39,3 +39,4 @@ add_custom_target(doxygen-docs)
 add_subdirectory(bigtable)
 
 add_subdirectory(tests/grpc-crash)
+add_subdirectory(tests/grpc-round-robin-freeze)
