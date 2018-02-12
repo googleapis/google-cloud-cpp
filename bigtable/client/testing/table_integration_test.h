@@ -48,7 +48,7 @@ class TableIntegrationTest : public ::testing::Test {
   void SetUp() override;
 
   /**
-   * creates the table with @p table_config
+   * creates the table with @p table_config @p
    *  .
    */
 
