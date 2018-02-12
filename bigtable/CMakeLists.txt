@@ -353,7 +353,7 @@ add_executable(scan_throughput_benchmark
         benchmarks/scan_throughput_benchmark.cc)
 target_link_libraries(scan_throughput_benchmark
         bigtable_benchmark_common bigtable_admin_client bigtable_client
-        bigtable_protos gmock absl::strings absl::time
+        bigtable_protos gmock absl::time
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
 # Define the install target

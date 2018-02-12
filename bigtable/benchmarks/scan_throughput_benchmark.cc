@@ -29,10 +29,6 @@
  * "typical" table used for serving data.  The benchmark:
  * - Creates a table with 10,000,000 rows, each row with a single column family,
  *   but with 10 columns.
- * - Creates a table with 10,000,000 rows, each row with a
- *   single column family.
- * - The column family contains 10 columns, each column filled with a random
- *   100 byte string.
  * - The name of the table starts with `scant`, followed by random characters.
  * - If there is a collision on the table name the benchmark aborts immediately.
  * - The benchmark populates the table during an initial phase.  The benchmark

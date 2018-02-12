@@ -91,12 +91,21 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
   if (argc == 1) {
     return;
   }
-  test_duration_ = std::chrono::seconds(std::stol(shift()));
+  long seconds = std::stol(shift());
+  if (seconds <= 0) {
+    throw std::runtime_error("test-duration-seconds should be > 0");
+  }
+  test_duration_ = std::chrono::seconds(seconds);
 
   if (argc == 1) {
     return;
   }
   table_size_ = std::stol(shift());
+  if (table_size_ <= kPopulateShardCount) {
+    std::ostringstream os;
+    os << "table-size parameter should be > " << kPopulateShardCount;
+    throw std::runtime_error(os.str());
+  }
 
   if (argc == 1) {
     return;
