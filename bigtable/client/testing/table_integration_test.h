@@ -51,11 +51,11 @@ class TableIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override;
 
-  /// CREATES THE TABLE with @p table_config
+  /// Creates the table with @p table_config
   std::unique_ptr<bigtable::Table> CreateTable(
       std::string const& table_name, bigtable::TableConfig& table_config);
 
-  /// DELETES THE TABLE passed via arguments.
+  /// Deletes the table passed via arguments.
   void DeleteTable(std::string const& table_name);
 
   /// Return all the cells in @p table that pass @p filter.
