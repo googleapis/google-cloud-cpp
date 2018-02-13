@@ -93,6 +93,27 @@ class ClientOptions {
   }
 
   /**
+   * Set the grpclb fallback timeout (std::chrono::duration<> duration) for the
+   * channel.
+   *
+   * Please see the docs for grpc::ChannelArguments::SetGrpclbFallbackTimeout()
+   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
+   * for more details.
+   *
+   */
+  template <typename Rep, typename Period>
+  void SetGrpclbFallbackTimeout(
+      std::chrono::duration<Rep, Period> fallback_timeout) {
+    int fallback_timeout_ms = 0;
+
+    std::chrono::milliseconds ft_ms =
+        std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
+    fallback_timeout_ms = static_cast<std::int32_t>(ft_ms.count());
+
+    channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
+  }
+
+  /**
    * Set Socket Mutator for channel.
    *
    * Please see the docs for grpc::ChannelArguments::SetSocketMutator()

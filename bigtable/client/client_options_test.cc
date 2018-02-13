@@ -112,7 +112,7 @@ TEST(ClientOptionsTest, EditCredentials) {
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetGrpclbFallbackTimeout(5);
+  client_options_object.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5));
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
   ASSERT_EQ(2UL, test_args.num_args);
