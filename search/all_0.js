@@ -7,6 +7,7 @@ var searchData=
   ['add_5finitial_5fsplit',['add_initial_split',['../classbigtable_1_1v0_1_1TableConfig.html#ae36273712a0f5976f42fd91a792a7c87',1,'bigtable::v0::TableConfig']]],
   ['admin_5fclient_2ecc',['admin_client.cc',['../admin__client_8cc.html',1,'']]],
   ['admin_5fclient_2eh',['admin_client.h',['../admin__client_8h.html',1,'']]],
+  ['admin_5fclient_5f',['admin_client_',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a24f174ad86db5db3be8241b665bf5934',1,'bigtable::testing::TableIntegrationTest']]],
   ['admin_5fclient_5ftest_2ecc',['admin_client_test.cc',['../admin__client__test_8cc.html',1,'']]],
   ['admin_5fendpoint',['admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a303626e65ed4c3d11bdb0dc916e1f910',1,'bigtable::v0::ClientOptions']]],
   ['adminclient',['AdminClient',['../classbigtable_1_1v0_1_1AdminClient.html',1,'bigtable::v0']]],

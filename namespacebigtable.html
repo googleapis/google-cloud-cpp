@@ -79,6 +79,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a21bd571299aa3dd604456ad1f65bf75e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a21bd571299aa3dd604456ad1f65bf75e">CellCompare</a> (bigtable::Cell const &amp;lhs, bigtable::Cell const &amp;rhs)</td></tr>
+<tr class="separator:a21bd571299aa3dd604456ad1f65bf75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bdc8385fc902be2921b6f4d40967a88"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a4bdc8385fc902be2921b6f4d40967a88">version_string</a> ()</td></tr>
 <tr class="separator:a4bdc8385fc902be2921b6f4d40967a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a175e7fcd1d3df57cc709a297a2972953"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a175e7fcd1d3df57cc709a297a2972953">version_major</a> ()</td></tr>
@@ -90,8 +92,130 @@ Functions</h2></td></tr>
 <tr class="memitem:a7513cbf1ea60ee7e66ce0e4c4668a1f6"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a7513cbf1ea60ee7e66ce0e4c4668a1f6">version</a> ()</td></tr>
 <tr class="memdesc:a7513cbf1ea60ee7e66ce0e4c4668a1f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single integer representing the Major/Minor version.  <a href="#a7513cbf1ea60ee7e66ce0e4c4668a1f6">More...</a><br /></td></tr>
 <tr class="separator:a7513cbf1ea60ee7e66ce0e4c4668a1f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Helpers for GTest.</div></td></tr>
+<tr class="memitem:a298cd86269b80b63d7bd7ad4cd817b09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a298cd86269b80b63d7bd7ad4cd817b09">operator==</a> (Cell const &amp;lhs, Cell const &amp;rhs)</td></tr>
+<tr class="separator:a298cd86269b80b63d7bd7ad4cd817b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eac585b1c39c3c466ef2526c9cd90c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a4eac585b1c39c3c466ef2526c9cd90c1">operator&lt;</a> (Cell const &amp;lhs, Cell const &amp;rhs)</td></tr>
+<tr class="separator:a4eac585b1c39c3c466ef2526c9cd90c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a816bbee2204b0287c096c6db6dfacab5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a816bbee2204b0287c096c6db6dfacab5">PrintTo</a> (bigtable::Cell const &amp;cell, std::ostream *os)</td></tr>
+<tr class="memdesc:a816bbee2204b0287c096c6db6dfacab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is not used in this file, but it is used by GoogleTest; without it, failing tests will output binary blobs instead of human-readable text.  <a href="#a816bbee2204b0287c096c6db6dfacab5">More...</a><br /></td></tr>
+<tr class="separator:a816bbee2204b0287c096c6db6dfacab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a21bd571299aa3dd604456ad1f65bf75e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21bd571299aa3dd604456ad1f65bf75e">&#9670;&nbsp;</a></span>CellCompare()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int bigtable::CellCompare </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::Cell const &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::Cell const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4eac585b1c39c3c466ef2526c9cd90c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eac585b1c39c3c466ef2526c9cd90c1">&#9670;&nbsp;</a></span>operator<()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bigtable::operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a298cd86269b80b63d7bd7ad4cd817b09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a298cd86269b80b63d7bd7ad4cd817b09">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bigtable::operator== </td>
+          <td>(</td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a816bbee2204b0287c096c6db6dfacab5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a816bbee2204b0287c096c6db6dfacab5">&#9670;&nbsp;</a></span>PrintTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::PrintTo </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::Cell const &amp;&#160;</td>
+          <td class="paramname"><em>cell</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ostream *&#160;</td>
+          <td class="paramname"><em>os</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is not used in this file, but it is used by GoogleTest; without it, failing tests will output binary blobs instead of human-readable text. </p>
+
+</div>
+</div>
 <a id="a7513cbf1ea60ee7e66ce0e4c4668a1f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7513cbf1ea60ee7e66ce0e4c4668a1f6">&#9670;&nbsp;</a></span>version()</h2>
 
@@ -182,7 +306,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 12 2018 21:03:56 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 13 2018 14:47:16 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

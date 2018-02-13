@@ -4,7 +4,7 @@ var searchData=
   ['range',['Range',['../classbigtable_1_1v0_1_1RowRange.html#a5e9aa048a862cb9b175985f247b89e32',1,'bigtable::v0::RowRange']]],
   ['readme_2emd',['README.md',['../README_8md.html',1,'(Global Namespace)'],['../client_2internal_2README_8md.html',1,'(Global Namespace)'],['../client_2testing_2README_8md.html',1,'(Global Namespace)']]],
   ['readrow',['ReadRow',['../classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a',1,'bigtable::v0::Table']]],
-  ['readrows',['ReadRows',['../classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d',1,'bigtable::v0::Table::ReadRows(RowSet row_set, Filter filter)'],['../classbigtable_1_1v0_1_1Table.html#a156d76ffb347bc7422b16d5ae932a483',1,'bigtable::v0::Table::ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter)']]],
+  ['readrows',['ReadRows',['../classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d',1,'bigtable::v0::Table::ReadRows(RowSet row_set, Filter filter)'],['../classbigtable_1_1v0_1_1Table.html#a156d76ffb347bc7422b16d5ae932a483',1,'bigtable::v0::Table::ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter)'],['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a29a15790eda837b2cef386d1368b1efb',1,'bigtable::testing::TableIntegrationTest::ReadRows()']]],
   ['readrowsparser',['ReadRowsParser',['../classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html',1,'bigtable::v0::internal::ReadRowsParser'],['../classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#af8bcfe976ff3fe27ef27f2600914f803',1,'bigtable::v0::internal::ReadRowsParser::ReadRowsParser()']]],
   ['readrowsparser_2ecc',['readrowsparser.cc',['../readrowsparser_8cc.html',1,'']]],
   ['readrowsparser_2eh',['readrowsparser.h',['../readrowsparser_8h.html',1,'']]],

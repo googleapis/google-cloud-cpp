@@ -10,7 +10,7 @@ var searchData=
   ['deletefromcolumnstartingfrom',['DeleteFromColumnStartingFrom',['../namespacebigtable_1_1v0.html#a299d85e3ceb1923ff011f85585ce6874',1,'bigtable::v0']]],
   ['deletefromfamily',['DeleteFromFamily',['../namespacebigtable_1_1v0.html#a85e807d3730c0f25481c960147f2e409',1,'bigtable::v0']]],
   ['deletefromrow',['DeleteFromRow',['../namespacebigtable_1_1v0.html#afd8f1d9efa4b470295cba73b2c52172d',1,'bigtable::v0']]],
-  ['deletetable',['DeleteTable',['../classbigtable_1_1v0_1_1TableAdmin.html#ae670a1488c00ef8b4963ea927bd6bacc',1,'bigtable::v0::TableAdmin']]],
+  ['deletetable',['DeleteTable',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a4f3385fe1b21aedc808839b35170a0ac',1,'bigtable::testing::TableIntegrationTest::DeleteTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#ae670a1488c00ef8b4963ea927bd6bacc',1,'bigtable::v0::TableAdmin::DeleteTable()']]],
   ['drop',['Drop',['../classbigtable_1_1v0_1_1ColumnFamilyModification.html#af65c7620951f2139432807052200ebe9',1,'bigtable::v0::ColumnFamilyModification']]],
   ['dropallrows',['DropAllRows',['../classbigtable_1_1v0_1_1TableAdmin.html#a8b361b16e1a1cf513426deea4f201458',1,'bigtable::v0::TableAdmin']]],
   ['droprowsbyprefix',['DropRowsByPrefix',['../classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3',1,'bigtable::v0::TableAdmin']]]
