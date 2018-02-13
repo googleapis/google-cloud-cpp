@@ -66,7 +66,7 @@ NONCE=$(date +%s)
 
 echo
 echo "Running Table::Apply() integration test."
-./data_integration_test emulated$NONCE data-test test-table
+./data_integration_test emulated$NONCE data-test 
 
 echo
 echo "Running TableAdmin integration test."

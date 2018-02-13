@@ -12,84 +12,174 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <gmock/gmock.h>
+
+#include <absl/memory/memory.h>
+#include <absl/strings/str_join.h>
+
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
+#include "bigtable/client/cell.h"
+#include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/table_integration_test.h"
+
+namespace admin_proto = ::google::bigtable::admin::v2;
+
+namespace bigtable {
+namespace testing {
+
+class DataIntegrationTest : public TableIntegrationTest {
+ protected:
+  /// Use Table::Apply() to insert a single row.
+  void Apply(bigtable::Table& table, std::string row_key,
+             std::vector<bigtable::Cell> const& cells);
+
+  /// Use Table::BulkApply() to insert multiple rows.
+  void BulkApply(bigtable::Table& table,
+                 std::vector<bigtable::Cell> const& cells);
+
+  std::string family = "family";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
+};
+
+}  // namespace testing
+}  // namespace bigtable
 
 int main(int argc, char* argv[]) try {
-  namespace admin_proto = ::google::bigtable::admin::v2;
+  ::testing::InitGoogleTest(&argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 4) {
+  if (argc != 3) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of("/");
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance> <table>" << std::endl;
+              << " <project> <instance>" << std::endl;
     return 1;
   }
+
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
-  std::string const table_name = argv[3];
-  std::string const family = "fam";
 
   auto admin_client =
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
-  auto created_table = admin.CreateTable(
-      table_name, bigtable::TableConfig(
-                      {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
-  std::cout << table_name << " created successfully" << std::endl;
-
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
-  bool found = false;
-  for (auto& tbl : table_list) {
-    if (tbl.name() == created_table.name()) {
-      found = true;
-      break;
-    }
+  if (not table_list.empty()) {
+    std::ostringstream os;
+    os << "Expected empty instance at the beginning of integration test";
+    throw std::runtime_error(os.str());
   }
-  if (not found) {
-    throw std::runtime_error("Could not find table test table");
-  }
-  std::cout << table_name << " found via ListTables()" << std::endl;
 
-  auto client = bigtable::CreateDefaultDataClient(project_id, instance_id,
-                                                  bigtable::ClientOptions());
-  bigtable::Table table(client, table_name);
+  (void)::testing::AddGlobalTestEnvironment(
+      new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
-  // TODO(#29) we should read these rows back when we have a read path
-  auto mutation = bigtable::SingleRowMutation("row-key-0");
-  mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-0-0"));
-  mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-0-1"));
-  table.Apply(std::move(mutation));
-  std::cout << "row-key-0 mutated successfully" << std::endl;
+  return RUN_ALL_TESTS();
 
-  mutation = bigtable::SingleRowMutation("row-key-1");
-  mutation.emplace_back(bigtable::SetCell(family, "col0", 0, "value-1-0"));
-  mutation.emplace_back(bigtable::SetCell(family, "col1", 0, "value-1-1"));
-  table.Apply(std::move(mutation));
-  std::cout << "row-key-1 mutated successfully" << std::endl;
-
-  bigtable::BulkMutation bulk{
-      bigtable::SingleRowMutation("row-key-2",
-                                  {bigtable::SetCell(family, "c0", 0, "v0"),
-                                   bigtable::SetCell(family, "c1", 0, "v1")}),
-      bigtable::SingleRowMutation("row-key-3",
-                                  {bigtable::SetCell(family, "c0", 0, "v2"),
-                                   bigtable::SetCell(family, "c1", 0, "v3")}),
-  };
-  table.BulkApply(std::move(bulk));
-  std::cout << "bulk mutation successful" << std::endl;
-
-  return 0;
 } catch (bigtable::PermanentMutationFailure const& ex) {
   std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
             << " - " << ex.status().error_message() << " ["
             << ex.status().error_code()
             << "], details=" << ex.status().error_details() << std::endl;
+  int count = 0;
+  for (auto const& failure : ex.failures()) {
+    std::cerr << "failure[" << count++
+              << "] {key=" << failure.mutation().row_key() << "}" << std::endl;
+  }
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << std::endl;
   return 1;
+} catch (...) {
+  std::cerr << "Unknown exception raised." << std::endl;
+  return 1;
 }
+
+namespace bigtable {
+namespace testing {
+
+void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
+                                std::vector<bigtable::Cell> const& cells) {
+  auto mutation = bigtable::SingleRowMutation(row_key);
+  for (auto const& cell : cells) {
+    mutation.emplace_back(bigtable::SetCell(
+        static_cast<std::string>(cell.family_name()),
+        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
+        static_cast<std::string>(cell.value())));
+  }
+  table.Apply(std::move(mutation));
+}
+
+void DataIntegrationTest::BulkApply(bigtable::Table& table,
+                                    std::vector<bigtable::Cell> const& cells) {
+  std::map<std::string, bigtable::SingleRowMutation> mutations;
+  for (auto const& cell : cells) {
+    std::string key = cell.row_key();
+    auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
+    inserted.first->second.emplace_back(
+        bigtable::SetCell(cell.family_name(), cell.column_qualifier(),
+                          cell.timestamp(), cell.value()));
+  }
+  bigtable::BulkMutation bulk;
+  for (auto& kv : mutations) {
+    bulk.emplace_back(std::move(kv.second));
+  }
+  table.BulkApply(std::move(bulk));
+}
+
+TEST_F(DataIntegrationTest, TableApply) {
+  std::string const table_name = "table-apply-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key = "row-key-1";
+  std::vector<bigtable::Cell> created{
+      {row_key, family, "c0", 1000, "v1000", {}},
+      {row_key, family, "c1", 2000, "v2000", {}}};
+  Apply(*table, row_key, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, family, "c0", 1000, "v1000", {}},
+      {row_key, family, "c1", 2000, "v2000", {}}};
+
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, actual);
+
+  DeleteTable(table_name);
+}
+
+TEST_F(DataIntegrationTest, TableBulkApply) {
+  std::string const table_name = "table-bulk-apply-test";
+  auto table = CreateTable(table_name, table_config);
+
+  std::vector<bigtable::Cell> created{
+      {"row-key-1", family, "c0", 1000, "v1000", {}},
+      {"row-key-1", family, "c1", 2000, "v2000", {}},
+      {"row-key-2", family, "c0", 1000, "v1000", {}},
+      {"row-key-2", family, "c1", 2000, "v2000", {}},
+      {"row-key-3", family, "c0", 1000, "v1000", {}},
+      {"row-key-3", family, "c1", 2000, "v2000", {}},
+      {"row-key-4", family, "c0", 1000, "v1000", {}},
+      {"row-key-4", family, "c1", 2000, "v2000", {}}};
+
+  BulkApply(*table, created);
+
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+
+  std::vector<bigtable::Cell> expected{
+      {"row-key-1", family, "c0", 1000, "v1000", {}},
+      {"row-key-1", family, "c1", 2000, "v2000", {}},
+      {"row-key-2", family, "c0", 1000, "v1000", {}},
+      {"row-key-2", family, "c1", 2000, "v2000", {}},
+      {"row-key-3", family, "c0", 1000, "v1000", {}},
+      {"row-key-3", family, "c1", 2000, "v2000", {}},
+      {"row-key-4", family, "c0", 1000, "v1000", {}},
+      {"row-key-4", family, "c1", 2000, "v2000", {}}};
+
+  CheckEqualUnordered(expected, actual);
+
+  DeleteTable(table_name);
+}
+
+}  // namespace testing
+}  // namespace bigtable
