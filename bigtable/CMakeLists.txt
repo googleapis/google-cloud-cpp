@@ -98,7 +98,7 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
 
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
-target_link_libraries(bigtable_protos ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_link_libraries(bigtable_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 target_include_directories(bigtable_protos PUBLIC "${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 target_compile_options(bigtable_protos PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::protos ALIAS bigtable_protos)
@@ -162,7 +162,7 @@ add_library(bigtable_client
     client/version.cc)
 target_link_libraries(bigtable_client
     bigtable_protos absl::strings
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
@@ -177,7 +177,7 @@ add_library(bigtable_client_testing
     client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
     bigtable_client bigtable_protos absl::strings gmock
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
 # the admin library
 add_library(bigtable_admin_client
@@ -189,7 +189,7 @@ add_library(bigtable_admin_client
     admin/table_config.h
     admin/table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
-    absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    absl::strings gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
 add_library(bigtable::admin_client ALIAS bigtable_admin_client)
 
@@ -245,8 +245,7 @@ foreach (fname ${bigtable_client_unit_tests})
     get_target_property(tname ${target} NAME)
     target_link_libraries(${target}
         bigtable_client_testing bigtable_client bigtable_protos
-        gmock absl::strings ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES}
-        ${PROTOBUF_LIBRARIES})
+        gmock absl::strings gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
     add_dependencies(tests-local ${target})
@@ -258,7 +257,7 @@ add_executable(bigtable_client_all_tests EXCLUDE_FROM_ALL
 target_link_libraries(bigtable_client_all_tests
     bigtable_client_testing bigtable_client
     bigtable_protos gmock absl::strings
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_admin_unit_tests
@@ -274,7 +273,7 @@ foreach (fname ${bigtable_admin_unit_tests})
     target_link_libraries(${target}
         bigtable_client_testing bigtable_admin_client bigtable_client
         bigtable_protos gmock absl::strings
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
     add_test(NAME ${tname} COMMAND ${target})
     get_target_property(sources ${target} SOURCES)
     add_dependencies(tests-local ${target})
@@ -303,21 +302,21 @@ endif (FORCE_STATIC_ANALYZER_ERRORS)
 add_executable(data_integration_test tests/data_integration_test.cc)
 target_link_libraries(data_integration_test
     gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos absl::strings
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local data_integration_test)
 
 # An integration test for bigtable::TableAdmin.
 add_executable(admin_integration_test tests/admin_integration_test.cc)
 target_link_libraries(admin_integration_test
     gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos absl::strings
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local admin_integration_test)
 
 # An integration test for bigtable::Filter.
 add_executable(filters_integration_test tests/filters_integration_test.cc)
 target_link_libraries(filters_integration_test
     gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local filters_integration_test)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
@@ -333,7 +332,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         benchmarks/setup.cc)
     target_link_libraries(bigtable_benchmark_common
         absl::time bigtable_admin_client bigtable_client bigtable_protos
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
@@ -363,7 +362,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     target_link_libraries(scan_throughput_benchmark
             bigtable_benchmark_common bigtable_admin_client bigtable_client
             bigtable_protos gmock absl::time
-            ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Define the install target
