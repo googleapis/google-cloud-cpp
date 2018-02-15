@@ -26,8 +26,8 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
 # Additional compile-time definitions for WIN32.  We need to manually set these
 # because Protobuf / gRPC do not (always) set them.
 set(GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS
-        -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
-        -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
+        _WIN32_WINNT=0x600 _SCL_SECURE_NO_WARNINGS
+        _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS)
 # While the previous definitions are applicable to all compilers on Windows, the
 # following options are specific to MSVC, they would not apply to MinGW:
 set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
@@ -49,10 +49,10 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     # The necessary compiler options and definitions are not defined by the
     # targets, we need to add them.
     if (WIN32)
-        target_compile_definitions(libprotobuf ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
+        target_compile_definitions(libprotobuf PUBLIC ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
     endif (WIN32)
     if (MSVC)
-        target_compile_options(libprotobuf ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
+        target_compile_options(libprotobuf PUBLIC ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
 
     # The binary name is different on some platforms, use CMake magic to get it.
@@ -70,15 +70,20 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
         set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
+        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
+        message(STATUS " DEFAULT=${CMAKE_CXX_FLAGS}")
     endif ()
 
     # The necessary compiler options and definitions are not defined by the
     # targets, we need to add them.
     if (WIN32)
-        target_compile_definitions(libprotobuf ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
+        set_property(TARGET protobuf::libprotobuf APPEND PROPERTY
+                INTERFACE_COMPILE_DEFINITIONS ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
     endif (WIN32)
     if (MSVC)
-        target_compile_options(libprotobuf ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
+        set_property(TARGET protobuf::libprotobuf APPEND PROPERTY
+                INTERFACE_COMPILE_OPTIONS ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
 
     # Discover the protobuf compiler and the gRPC plugin.
@@ -141,4 +146,3 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
             )
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 endif ()
-
