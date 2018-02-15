@@ -111,6 +111,7 @@ TEST(ClientOptionsTest, EditCredentials) {
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
+  // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5));
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
@@ -122,6 +123,26 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   // 2nd element of test_args.
   EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
             grpc::string(test_args.args[1].key));
+
+  // Test seconds are converted into milliseconds
+  bigtable::ClientOptions client_options_object_second =
+      bigtable::ClientOptions();
+  client_options_object_second.SetGrpclbFallbackTimeout(
+      std::chrono::seconds(5));
+  grpc::ChannelArguments c_args_second =
+      client_options_object_second.channel_arguments();
+  grpc_channel_args test_args_second = c_args_second.c_channel_args();
+  ASSERT_EQ(2UL, test_args_second.num_args);
+  EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
+            grpc::string(test_args_second.args[1].key));
+
+  // Test if fallback_timeout exceeds int32_t range then throw out_of_range
+  // exception
+  bigtable::ClientOptions client_options_object_third =
+      bigtable::ClientOptions();
+  EXPECT_THROW(client_options_object_third.SetGrpclbFallbackTimeout(
+                   std::chrono::hours(999)),
+               std::out_of_range);
 }
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
