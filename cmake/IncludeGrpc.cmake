@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # gRPC always requires thread support.
-find_package(Threads)
-include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
+find_package(Threads REQUIRED)
+
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
@@ -22,6 +22,17 @@ set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module"
         CACHE STRING "How to find the gRPC library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
         PROPERTY STRINGS "module" "package" "vcpkg" "pkg-config")
+
+# Additional compile-time definitions for WIN32.  We need to manually set these
+# because Protobuf / gRPC do not (always) set them.
+set(GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS
+        -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
+        -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
+# While the previous definitions are applicable to all compilers on Windows, the
+# following options are specific to MSVC, they would not apply to MinGW:
+set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
+        /wd4005 /wd4065 /wd4068 /wd4146 /wd4244 /wd4267 /wd4291 /wd4506
+        /wd4800 /wd4838 /wd4996)
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     if (NOT GRPC_ROOT_DIR)
@@ -34,6 +45,15 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     add_library(gRPC::grpc++ ALIAS grpc++)
     add_library(gRPC::grpc ALIAS grpc)
     add_library(protobuf::libprotobuf ALIAS libprotobuf)
+
+    # The necessary compiler options and definitions are not defined by the
+    # targets, we need to add them.
+    if (WIN32)
+        target_compile_definitions(libprotobuf ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
+    endif (WIN32)
+    if (MSVC)
+        target_compile_options(libprotobuf ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
+    endif (MSVC)
 
     # The binary name is different on some platforms, use CMake magic to get it.
     set(PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protoc>)
@@ -51,6 +71,15 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
         set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
     endif ()
+
+    # The necessary compiler options and definitions are not defined by the
+    # targets, we need to add them.
+    if (WIN32)
+        target_compile_definitions(libprotobuf ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
+    endif (WIN32)
+    if (MSVC)
+        target_compile_options(libprotobuf ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
+    endif (MSVC)
 
     # Discover the protobuf compiler and the gRPC plugin.
     find_program(PROTOBUF_PROTOC_EXECUTABLE
@@ -72,10 +101,15 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     # Use pkg-config to find the libraries.
     find_package(PkgConfig REQUIRED)
+    # We need a helper function to convert pkg-config(1) output into target
+    # properties.
+    include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
     pkg_check_modules(Protobuf REQUIRED protobuf>=3.5)
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(protobuf::libprotobuf Protobuf)
+    set_property(TARGET protobuf::libprotobuf APPEND PROPERTY
+            INTERFACE_LINK_LIBRARIES Threads::Threads)
 
     pkg_check_modules(gRPC REQUIRED grpc)
     add_library(gRPC::grpc INTERFACE IMPORTED)
@@ -108,13 +142,3 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 endif ()
 
-if (WIN32)
-    add_definitions(
-        -D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS
-        -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS)
-endif (WIN32)
-if (MSVC)
-    add_compile_options(
-        /wd4005 /wd4065 /wd4068 /wd4146 /wd4244 /wd4267 /wd4291 /wd4506
-        /wd4800 /wd4838 /wd4996)
-endif ()
