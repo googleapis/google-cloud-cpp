@@ -110,7 +110,7 @@ TEST(ClientOptionsTest, EditCredentials) {
             typeid(client_options_object.credentials()));
 }
 
-TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
+TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5));
@@ -123,7 +123,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   // 2nd element of test_args.
   EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
             grpc::string(test_args.args[1].key));
+}
 
+TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
   // Test seconds are converted into milliseconds
   bigtable::ClientOptions client_options_object_second =
       bigtable::ClientOptions();
@@ -135,8 +137,10 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeout) {
   ASSERT_EQ(2UL, test_args_second.num_args);
   EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
             grpc::string(test_args_second.args[1].key));
+}
 
-  // Test if fallback_timeout exceeds int32_t range then throw out_of_range
+TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
+  // Test if fallback_timeout exceeds int range then throw out_of_range
   // exception
   bigtable::ClientOptions client_options_object_third =
       bigtable::ClientOptions();

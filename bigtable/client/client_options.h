@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CLIENT_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CLIENT_OPTIONS_H_
 
-#include "absl/base/internal/throw_delegate.h"
 #include "bigtable/client/version.h"
 
 #include <grpc++/grpc++.h>
@@ -82,7 +81,7 @@ class ClientOptions {
   }
 
   /**
-   * Set the grpclb fallback timeout with the timestamp [@p fallback_timeout)
+   * Set the grpclb fallback timeout with the timestamp @p fallback_timeout
    * for the channel.
    *
    * This function accepts any instantiation of 'std::chrono::duration<>' for
@@ -90,14 +89,15 @@ class ClientOptions {
    * channel_arguments. For example:
    *
    * @code
-   * using namespace std::chrono_literals; // C++14
-   * bigtable::ClientOptions::SetGrpclbFallbackTimeout(std::chrono::milliseconds(5000))
-   * bigtable::ClientOptions::SetGrpclbFallbackTimeout(std::chrono::seconds(5))
+   * bigtable::ClientOptions::SetGrpclbFallbackTimeout(
+   *     std::chrono::milliseconds(5000))
+   * bigtable::ClientOptions::SetGrpclbFallbackTimeout(
+   *     std::chrono::seconds(5))
    * @endcode
    *
    * The fallback_timeout must not be empty and it should be within the range
-   * of int32. The code will throw exception std::out_of_range if range goes
-   * outside of int32.
+   * of int. The code will throw exception std::out_of_range if range goes
+   * outside of int.
    *
    * @tparam Rep a placeholder to match the Rep tparam for @p fallback_timeout,
    *     the semantics of this template parameter are documented in
@@ -126,10 +126,10 @@ class ClientOptions {
     std::chrono::milliseconds ft_ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
-    if (ft_ms.count() > std::numeric_limits<int32_t>::max())
-      absl::base_internal::ThrowStdOutOfRange("Duration Exceeds Range for int");
+    if (ft_ms.count() > std::numeric_limits<int>::max())
+      throw std::out_of_range("Duration Exceeds Range for int");
 
-    int32_t fallback_timeout_ms = static_cast<std::int32_t>(ft_ms.count());
+    auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
 
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
   }
