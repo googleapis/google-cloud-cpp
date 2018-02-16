@@ -14,6 +14,7 @@
 
 #include <absl/memory/memory.h>
 #include <absl/strings/str_join.h>
+
 #include <gmock/gmock.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -240,7 +241,7 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
 }
 // Test Cases Finished
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 
   // Check for arguments validity
@@ -271,10 +272,4 @@ int main(int argc, char* argv[]) try {
       new bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
   return RUN_ALL_TESTS();
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
-  return 1;
-} catch (...) {
-  std::cerr << "Unknown exception raised." << std::endl;
-  return 1;
 }

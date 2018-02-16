@@ -19,6 +19,7 @@
 #include <sstream>
 #include "bigtable/benchmarks/random.h"
 #include "bigtable/client/build_info.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 /// Supporting types and functions to implement `BenchmarkSetup`
 namespace {
@@ -61,7 +62,8 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
       project_id_(),
       instance_id_(),
       table_id_(MakeRandomTableId(prefix)) {
-  if (argc < 3) {
+
+  auto usage = [argv](char const *msg) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
@@ -70,7 +72,11 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
               << " [test-duration-seconds (" << kDefaultTestDuration << "min)]"
               << " [table-size (" << kDefaultTableSize << ")]"
               << " [use-embedded-server (false)]" << std::endl;
-    throw std::runtime_error("too few arguments for program.");
+    internal::RaiseRuntimeError(msg);
+  };
+
+  if (argc < 3) {
+    usage("too few arguments for program.");
   }
 
   auto shift = [&argc, &argv]() {
@@ -93,7 +99,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
   }
   long seconds = std::stol(shift());
   if (seconds <= 0) {
-    throw std::runtime_error("test-duration-seconds should be > 0");
+    usage("test-duration-seconds should be > 0");
   }
   test_duration_ = std::chrono::seconds(seconds);
 
@@ -104,7 +110,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
   if (table_size_ <= kPopulateShardCount) {
     std::ostringstream os;
     os << "table-size parameter should be > " << kPopulateShardCount;
-    throw std::runtime_error(os.str());
+    usage(os.str().c_str());
   }
 
   if (argc == 1) {

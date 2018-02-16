@@ -16,6 +16,8 @@
 
 #include <google/protobuf/text_format.h>
 
+#include "bigtable/client/internal/throw_delegate.h"
+
 namespace bigtable {
 namespace testing {
 
@@ -23,7 +25,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string repr) {
   google::bigtable::v2::ReadRowsResponse response;
   if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
-    throw std::runtime_error("Failed to parse " + repr);
+    bigtable::internal::RaiseRuntimeError("Failed to parse " + repr);
   }
   return response;
 }

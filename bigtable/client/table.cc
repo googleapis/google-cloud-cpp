@@ -21,6 +21,30 @@
 
 namespace btproto = ::google::bigtable::v2;
 
+namespace {
+[[noreturn]] void ReportPermanentFailures(char const* msg, grpc::Status const& status,
+                                          std::vector<bigtable::FailedMutation> failures) {
+#if ABSL_HAVE_EXCEPTIONS
+  throw bigtable::PermanentMutationFailure(msg,
+                                 status, std::move(failures));
+#else
+  std::cerr << "Permanent (or too many transient) errors in "
+            << "able::BulkApply()";
+  std::cerr << "Status: " << status.error_message() << " ["
+            << status.error_code() << "] - " << status.error_details()
+            << std::endl;
+  for (auto const& failed : failures) {
+    std::cerr << "Mutation " << failed.original_index() << " failed with"
+              << failed.status().error_message() << " ["
+              << failed.status().error_code() << "]" << std::endl;
+  }
+  std::abort();
+#endif  // ABSL_HAVE_EXCEPTIONS
+
+
+}
+}
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
@@ -63,7 +87,8 @@ void Table::Apply(SingleRowMutation&& mut) {
       rpc_status.set_message(status.error_message());
       failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
                             0);
-      throw PermanentMutationFailure(
+      // TODO(#234) - just return the failures instead
+      ReportPermanentFailures(
           "Permanent (or too many transient) errors in Table::Apply()", status,
           std::move(failures));
     }
@@ -102,7 +127,8 @@ void Table::BulkApply(BulkMutation&& mut) {
   }
   auto failures = mutator.ExtractFinalFailures();
   if (not failures.empty()) {
-    throw PermanentMutationFailure(
+    // TODO(#234) - just return the failures instead
+    ReportPermanentFailures(
         "Permanent (or too many transient) errors in Table::BulkApply()",
         status, std::move(failures));
   }
@@ -119,7 +145,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
   if (rows_limit <= 0) {
-    throw std::invalid_argument("rows_limit must be >0");
+    internal::RaiseRuntimeError("rows_limit must be >0");
   }
   return RowReader(
       client_, table_name(), std::move(row_set), rows_limit, std::move(filter),
@@ -138,7 +164,7 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
   }
   auto result = std::make_pair(true, std::move(*it));
   if (++it != reader.end()) {
-    throw std::runtime_error(
+    internal::RaiseRuntimeError(
         "internal error - RowReader returned 2 rows in ReadRow()");
   }
   return result;

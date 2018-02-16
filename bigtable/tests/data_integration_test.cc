@@ -23,6 +23,7 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_integration_test.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace admin_proto = ::google::bigtable::admin::v2;
 
@@ -70,7 +71,7 @@ int main(int argc, char* argv[]) try {
   if (not table_list.empty()) {
     std::ostringstream os;
     os << "Expected empty instance at the beginning of integration test";
-    throw std::runtime_error(os.str());
+    bigtable::internal::RaiseRuntimeError(os.str());
   }
 
   (void)::testing::AddGlobalTestEnvironment(

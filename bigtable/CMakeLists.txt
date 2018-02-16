@@ -133,6 +133,8 @@ add_library(bigtable_client
     client/internal/readrowsparser.cc
     client/internal/rowreaderiterator.h
     client/internal/rowreaderiterator.cc
+    client/internal/throw_delegate.h
+    client/internal/throw_delegate.cc
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 #include <sstream>
 
@@ -133,8 +134,7 @@ void TableAdmin::RaiseError(grpc::Status const& status,
   os << "TableAdmin(" << instance_name() << ") unrecoverable error or too many "
      << " errors in " << error_message << ": " << status.error_message() << " ["
      << status.error_code() << "] " << status.error_details();
-  // TODO(#35) - implement non-throwing version of this class.
-  throw std::runtime_error(os.str());
+  internal::RaiseRuntimeError(os.str());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
