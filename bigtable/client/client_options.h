@@ -105,11 +105,10 @@ class ClientOptions {
    *     used to store the number of ticks), for our purposes it is simply a
    *     formal parameter.
    * @tparam Period a placeholder to match the Period tparam for @p
-   * fallback_timeout
-   *     , the semantics of this template parameter are documented in
-   *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
-   *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
-   *     parameter.
+   *     fallback_timeout, the semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
+   *     is simply a formal parameter.
    *
    * @see
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
