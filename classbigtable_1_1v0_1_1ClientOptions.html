@@ -103,9 +103,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#aea362ad4d4c8333d3ed516c38d1bc49f">SetCompressionAlgorithm</a> (grpc_compression_algorithm algorithm)</td></tr>
 <tr class="memdesc:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set compression algorithm for channel.  <a href="#aea362ad4d4c8333d3ed516c38d1bc49f">More...</a><br /></td></tr>
 <tr class="separator:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45137529a5618ef5c68ee45395c645da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a45137529a5618ef5c68ee45395c645da">SetGrpclbFallbackTimeout</a> (int fallback_timeout)</td></tr>
-<tr class="memdesc:a45137529a5618ef5c68ee45395c645da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grpclb fallback timeout (in ms) for the channel.  <a href="#a45137529a5618ef5c68ee45395c645da">More...</a><br /></td></tr>
-<tr class="separator:a45137529a5618ef5c68ee45395c645da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a911eb0f793804b2260b2f605089344c3"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
+<tr class="memitem:a911eb0f793804b2260b2f605089344c3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a911eb0f793804b2260b2f605089344c3">SetGrpclbFallbackTimeout</a> (std::chrono::duration&lt; Rep, Period &gt; fallback_timeout)</td></tr>
+<tr class="memdesc:a911eb0f793804b2260b2f605089344c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel.  <a href="#a911eb0f793804b2260b2f605089344c3">More...</a><br /></td></tr>
+<tr class="separator:a911eb0f793804b2260b2f605089344c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52d4bd81a756eceeab8b0cae7c9805ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a52d4bd81a756eceeab8b0cae7c9805ef">SetSocketMutator</a> (grpc_socket_mutator *mutator)</td></tr>
 <tr class="memdesc:a52d4bd81a756eceeab8b0cae7c9805ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Socket Mutator for channel.  <a href="#a52d4bd81a756eceeab8b0cae7c9805ef">More...</a><br /></td></tr>
 <tr class="separator:a52d4bd81a756eceeab8b0cae7c9805ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -391,11 +392,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a45137529a5618ef5c68ee45395c645da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45137529a5618ef5c68ee45395c645da">&#9670;&nbsp;</a></span>SetGrpclbFallbackTimeout()</h2>
+<a id="a911eb0f793804b2260b2f605089344c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a911eb0f793804b2260b2f605089344c3">&#9670;&nbsp;</a></span>SetGrpclbFallbackTimeout()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Rep , typename Period &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -403,7 +406,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void bigtable::v0::ClientOptions::SetGrpclbFallbackTimeout </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; Rep, Period &gt;&#160;</td>
           <td class="paramname"><em>fallback_timeout</em></td><td>)</td>
           <td></td>
         </tr>
@@ -415,7 +418,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the grpclb fallback timeout (in ms) for the channel. </p>
+<p>Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel. </p>
+<p>This function accepts any instantiation of 'std::chrono::duration&lt;&gt;' for <code>duration</code> parameter convert it into milliseconds and pass it to channel_arguments. For example:</p>
+<div class="fragment"><div class="line">bigtable::ClientOptions::SetGrpclbFallbackTimeout(</div><div class="line">    std::chrono::milliseconds(5000))</div><div class="line"><a class="code" href="namespacebigtable.html">bigtable</a>::<a class="code" href="classbigtable_1_1v0_1_1ClientOptions.html#acbe23e2a42d99f1b080bd1f92edb3257">ClientOptions</a>::<a class="code" href="classbigtable_1_1v0_1_1ClientOptions.html#a911eb0f793804b2260b2f605089344c3">SetGrpclbFallbackTimeout</a>(</div><div class="line">    <a class="code" href="namespacestd.html">std</a>::chrono::seconds(5))</div></div><!-- fragment --><p>The fallback_timeout must not be empty and it should be within the range of int. The code will throw exception std::out_of_range if range goes outside of int.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Rep</td><td>a placeholder to match the Rep tparam for <code>fallback_timeout</code>, the semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter. </td></tr>
+    <tr><td class="paramname">Period</td><td>a placeholder to match the Period tparam for <code>fallback_timeout</code>, the semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds, expressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a href="http://en.cppreference.com/w/cpp/chrono/duration">std::chrono::duration&lt;&gt;</a> for more details.</dd></dl>
 <p>Please see the docs for grpc::ChannelArguments::SetGrpclbFallbackTimeout() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -661,7 +674,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 14 2018 17:28:24 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 16 2018 14:33:40 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
