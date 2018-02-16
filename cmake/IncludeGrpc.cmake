@@ -62,7 +62,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         OR "${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "vcpkg")
-    find_package(GRPC REQUIRED grpc>=1.8)
+    find_package(GRPC REQUIRED grpc>=1.9)
     find_package(PROTOBUF REQUIRED protobuf>=3.5)
 
     if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -116,13 +116,13 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     set_property(TARGET protobuf::libprotobuf APPEND PROPERTY
             INTERFACE_LINK_LIBRARIES Threads::Threads)
 
-    pkg_check_modules(gRPC REQUIRED grpc)
+    pkg_check_modules(gRPC REQUIRED grpc>=1.9)
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc gRPC)
     set_property(TARGET gRPC::grpc APPEND PROPERTY
             INTERFACE_LINK_LIBRARIES protobuf::libprotobuf)
 
-    pkg_check_modules(gRPC++ REQUIRED grpc++>=1.8)
+    pkg_check_modules(gRPC++ REQUIRED grpc++>=1.9)
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc++ gRPC++)
     set_property(TARGET gRPC::grpc++ APPEND PROPERTY

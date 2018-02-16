@@ -41,24 +41,22 @@ are included using the `add_subdirectory()` macro.  We use the
 examples or tests, that are not required for the `google-cloud-cpp` targets.
 
 Submodules included with `add_subdirectory()` introduce CMake
-[targets](https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#binary-targets)
-that we can add as dependencies to the libraries and executables
-compiled in `google-cloud-cpp`. Any compiler flags, such as include directories,
-needed for these targets are automatically added when the target becomes a
-dependency.
+[targets][cmake-doc-targets] that we can add as dependencies to the libraries
+and executables compiled in `google-cloud-cpp`. Any compiler flags, such as
+include directories, needed for these targets are automatically added when the
+target becomes a dependency.
+
 
 We want installed dependencies to have the same behavior. CMake supports this
 use case well as long as projects follow the following conventions:
 
-* One should use dependencies via their
-  [exported](https://cmake.org/cmake/help/v3.5/command/export.html) names, for
+* One should use dependencies via their [exported][cmake-doc-export] names, for
   example, `absl::base` and not `absl_base`.
 * Dependencies should use `target_include_directories()` and
   `target_compile_definitions()` to add compilation flags.
-* Dependencies should create a
-  [package](https://cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#manual:cmake-packages(7))
-  config file as part of their installation.
-  
+* Dependencies should create a [package][cmake-doc-packages] config file as part
+  of their installation.
+
 Unfortunately the dependencies for `google-cloud-cpp` do not follow these
 conventions, so we must support them as best we can without them.
 
@@ -99,9 +97,8 @@ In general, we will support four modes for Abseil:
    many Open Source libraries on Windows.  It provides `unofficial::absl::`
    packages for Abseil. We expect this to be popular on Windows.
    When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `vcpkg` we will define
-   CMake [`INTERFACE`](https://cmake.org/cmake/help/v3.5/command/add_library.html?highlight=interface)
-   libraries with the `absl::*` names that automatically link the corresponding
-   `unofficial::absl::*` libraries.
+   CMake [`INTERFACE`][cmake-doc-interface] libraries with the `absl::*` names
+   that automatically link the corresponding `unofficial::absl::*` libraries.
 
 1. [`pkg-config`](https://www.freedesktop.org/wiki/Software/pkg-config/) is a
    helper program on Unix to discover the compiler and linker command-line
@@ -109,8 +106,8 @@ In general, we will support four modes for Abseil:
    `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `pkg-config` we will define
    `INTERFACE` libraries for each `absl::*` library used in `google-cloud-cpp`.
    These `INTERFACE` libraries will set their target
-   [properties](https://cmake.org/cmake/help/v3.5/manual/cmake-properties.7.html#properties-on-targets)
-   based on the configuration flags discovered via `pkg-config`.
+   [properties][cmake-doc-target-properties] based on the configuration flags
+   discovered via `pkg-config`.
    
 1. `package`: When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `package` we
     will use `find_package(absl)` to find the Abseil libraries, and assume that
@@ -141,14 +138,13 @@ Like with Abseil we will support four different configurations for gRPC:
    files. When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `pkg-config` we will
    define `INTERFACE` libraries for `gRPC::grpc++` and `gRPC::grpc`each `absl::*`
    library used in `google-cloud-cpp`.  These `INTERFACE` libraries will set
-   their target [properties](https://cmake.org/cmake/help/v3.5/manual/cmake-properties.7.html#properties-on-targets)
-   based on the configuration flags discovered via `pkg-config`.
-   We will also use `pkg-config` to find `protobuf` in this case, and introduce
-   `protobuf::libprotobuf` as an `INTERFACE` target with its properties set based
-   on the `pkg-config` parameters.
-   Note that on CMake-3.6 and higher the `Protobuf` CMake module automatically
-   introduces `protobuf::libprotobuf`. We are targeting CMake-3.5, which does
-   not offer this feature.
+   their target [properties][cmake-doc-target-properties] based on the
+   configuration flags discovered via `pkg-config`. We will also use
+   `pkg-config` to find `protobuf` in this case, and introduce
+   `protobuf::libprotobuf` as an `INTERFACE` target with its properties set
+   based on the `pkg-config` parameters. Note that on CMake-3.6 and higher the
+   `Protobuf` CMake module automatically introduces `protobuf::libprotobuf`. We
+   are targeting CMake-3.5, which does not offer this feature.
    
 1. `package`: When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `package` we
     will use `find_package(... grpc)` to find the gRPC libraries. Note that gRPC
@@ -282,3 +278,8 @@ There is a
 [branch](https://github.com/coryan/google-cloud-cpp/tree/test-install-target-v2)
 that implements all of this.
 
+[cmake-doc-export]:    https://cmake.org/cmake/help/v3.5/command/export.html
+[cmake-doc-interface]: https://cmake.org/cmake/help/v3.5/command/add_library.html?highlight=interface
+[cmake-doc-packages]:  https://cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#manual:cmake-packages(7)
+[cmake-doc-targets]:   https://cmake.org/cmake/help/v3.5/manual/cmake-buildsystem.7.html#binary-targets
+[cmake-doc-target-properties]: https://cmake.org/cmake/help/v3.5/manual/cmake-properties.7.html#properties-on-targets
