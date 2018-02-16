@@ -145,7 +145,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
   if (rows_limit <= 0) {
-    internal::RaiseRuntimeError("rows_limit must be >0");
+    internal::RaiseInvalidArgument("rows_limit must be >0");
   }
   return RowReader(
       client_, table_name(), std::move(row_set), rows_limit, std::move(filter),

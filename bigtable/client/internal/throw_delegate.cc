@@ -38,12 +38,12 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-[[noreturn]] void RaiseRuntimeError(char const* msg) {
-  RaiseException<std::runtime_error>(msg);
+[[noreturn]] void RaiseInvalidArgument(char const* msg) {
+  RaiseException<std::invalid_argument>(msg);
 }
 
-[[noreturn]] void RaiseRuntimeError(std::string const& msg) {
-  RaiseException<std::runtime_error>(msg.c_str());
+[[noreturn]] void RaiseInvalidArgument(std::string const& msg) {
+  RaiseException<std::invalid_argument>(msg.c_str());
 }
 
 [[noreturn]] void RaiseRangeError(char const* msg) {
@@ -53,6 +53,15 @@ namespace internal {
 [[noreturn]] void RaiseRangeError(std::string const& msg) {
   RaiseException<std::range_error>(msg.c_str());
 }
+
+[[noreturn]] void RaiseRuntimeError(char const* msg) {
+  RaiseException<std::runtime_error>(msg);
+}
+
+[[noreturn]] void RaiseRuntimeError(std::string const& msg) {
+  RaiseException<std::runtime_error>(msg.c_str());
+}
+
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

@@ -31,6 +31,7 @@ TEST_F(TableApplyTest, Simple) {
       "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
@@ -43,6 +44,7 @@ TEST_F(TableApplyTest, Failure) {
                    "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
                std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {

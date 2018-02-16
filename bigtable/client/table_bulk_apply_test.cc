@@ -119,6 +119,8 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
                             {bigtable::SetCell("fam", "col", 0, "qux")}))));
 }
 
+// TODO(#234) - this test could be enabled when bug is closed.
+#if ABSL_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   using namespace ::testing;
@@ -155,6 +157,7 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
           bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
       std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
 TEST_F(TableBulkApplyTest, CanceledStream) {
@@ -208,6 +211,8 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))));
 }
 
+// TODO(#234) - test should be enabled when bug is closed.
+#if ABSL_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
   using namespace ::testing;
@@ -265,6 +270,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
           bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
       std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
 TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {

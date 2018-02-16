@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/mutations.h"
+#include <absl/base/config.h>
 #include <google/rpc/error_details.pb.h>
 
 #include <gmock/gmock.h>
@@ -49,14 +50,19 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
-/// @test Verify that DeleteFromColumn() and friends work as expected.
-TEST(MutationsTest, DeleteFromColumn) {
+#if ABSL_HAVE_EXCEPTIONS
+/// @test Verify that DeleteFromColumn() validates inputs as expected.
+TEST(MutationsTest, DeleteFromColumnValidation) {
   // Invalid ranges should fail.
   EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 20, 0),
                std::range_error);
   EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 1000, 1000),
                std::range_error);
+}
+#endif  // ABSL_HAVE_EXCEPTIONS
 
+/// @test Verify that DeleteFromColumn() and friends work as expected.
+TEST(MutationsTest, DeleteFromColumn) {
   auto actual = bigtable::DeleteFromColumn("family", "col", 1234, 1235);
   ASSERT_TRUE(actual.op.has_delete_from_column());
   {

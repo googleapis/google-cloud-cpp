@@ -195,9 +195,14 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btproto::Table::FULL), "failures");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 /**
  * @test Verify that `bigtable::TableAdmin::ListTables` handles too many
  * recoverable failures.
@@ -224,6 +229,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
 TEST_F(TableAdminTest, CreateTableSimple) {
@@ -264,9 +270,10 @@ initial_splits { key: 'p' }
   bigtable::TableConfig config(
       {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
       {"a", "c", "p"});
-  EXPECT_NO_THROW(tested.CreateTable("new-table", std::move(config)));
+  tested.CreateTable("new-table", std::move(config));
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 /**
  * @test Verify that `bigtable::TableAdmin::CreateTable` works with
  * unrecoverable failures.
@@ -310,6 +317,7 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
                std::runtime_error);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
@@ -330,9 +338,10 @@ view: SCHEMA_VIEW
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.GetTable("the-table"));
+  tested.GetTable("the-table");
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 /**
  * @test Verify that `bigtable::TableAdmin::GetTable` reports unrecoverable
  * failures.
@@ -372,6 +381,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.
 TEST_F(TableAdminTest, DeleteTable) {

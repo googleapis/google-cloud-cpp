@@ -35,6 +35,7 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   EXPECT_FALSE(parser.HasNext());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   ReadRowsParser parser;
 
@@ -54,6 +55,7 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   EXPECT_THROW(parser.HandleChunk(chunk), std::exception);
   EXPECT_FALSE(parser.HasNext());
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   using google::protobuf::TextFormat;
@@ -111,6 +113,7 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
   EXPECT_FALSE(parser.HasNext());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   ReadRowsParser parser;
 
@@ -120,6 +123,7 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   EXPECT_FALSE(parser.HasNext());
   EXPECT_THROW(parser.Next(), std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
   using google::protobuf::TextFormat;

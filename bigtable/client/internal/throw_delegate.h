@@ -32,11 +32,14 @@ namespace internal {
  * We copied this technique from Abseil.  Unfortunately we cannot use it
  * directly because it is not a public interface for Abseil.
  */
-[[noreturn]] void RaiseRuntimeError(char const* msg);
-[[noreturn]] void RaiseRuntimeError(std::string const& msg);
+[[noreturn]] void RaiseInvalidArgument(char const* msg);
+[[noreturn]] void RaiseInvalidArgument(std::string const& msg);
 
 [[noreturn]] void RaiseRangeError(char const* msg);
 [[noreturn]] void RaiseRangeError(std::string const& msg);
+
+[[noreturn]] void RaiseRuntimeError(char const* msg);
+[[noreturn]] void RaiseRuntimeError(std::string const& msg);
 //@}
 
 }  // namespace internal
