@@ -36,21 +36,17 @@ class AdminIntegrationTest : public TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
-  void SetUp() { table_admin_ = CreateTableAdmin(); }
+  void SetUp() { CreateTableAdmin(); }
 
   void TearDown() {}
 
-  std::unique_ptr<bigtable::TableAdmin> CreateTableAdmin() {
+  void CreateTableAdmin() {
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
-    std::unique_ptr<bigtable::TableAdmin> table_admin =
-        absl::make_unique<bigtable::TableAdmin>(
-            admin_client,
-            bigtable::testing::TableTestEnvironment::instance_id());
-
-    return std::move(table_admin);
+    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 
   bool TestForTableListCheck(vector<string> expectedTableList) {
