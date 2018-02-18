@@ -22,15 +22,14 @@
 namespace btproto = ::google::bigtable::v2;
 
 namespace {
-[[noreturn]] void ReportPermanentFailures(char const* msg, grpc::Status const& status,
-                                          std::vector<bigtable::FailedMutation> failures) {
+[[noreturn]] void ReportPermanentFailures(
+    char const* msg, grpc::Status const& status,
+    std::vector<bigtable::FailedMutation> failures) {
 #if ABSL_HAVE_EXCEPTIONS
-  throw bigtable::PermanentMutationFailure(msg,
-                                 status, std::move(failures));
+  throw bigtable::PermanentMutationFailure(msg, status, std::move(failures));
 #else
-  std::cerr << "Permanent (or too many transient) errors in "
-            << "able::BulkApply()";
-  std::cerr << "Status: " << status.error_message() << " ["
+  std::cerr << msg << "\n"
+            << "Status: " << status.error_message() << " ["
             << status.error_code() << "] - " << status.error_details()
             << std::endl;
   for (auto const& failed : failures) {
@@ -38,10 +37,9 @@ namespace {
               << failed.status().error_message() << " ["
               << failed.status().error_code() << "]" << std::endl;
   }
+  std::cerr << "Aborting because exceptions are disabled." << std::endl;
   std::abort();
 #endif  // ABSL_HAVE_EXCEPTIONS
-
-
 }
 }
 

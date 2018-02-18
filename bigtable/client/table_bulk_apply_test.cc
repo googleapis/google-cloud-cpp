@@ -64,9 +64,10 @@ TEST_F(TableBulkApplyTest, Simple) {
             return reader.release();
           }));
 
-  EXPECT_NO_THROW(table_.BulkApply(bt::BulkMutation(
+  table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))));
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
+  SUCCEED();
 }
 
 /// @test Verify that Table::BulkApply() retries partial failures.
@@ -113,10 +114,11 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
             return r2.release();
           }));
 
-  EXPECT_NO_THROW(table_.BulkApply(bt::BulkMutation(
+  table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
       bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")}))));
+                            {bigtable::SetCell("fam", "col", 0, "qux")})));
+  SUCCEED();
 }
 
 // TODO(#234) - this test could be enabled when bug is closed.
@@ -206,12 +208,13 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
             return r2.release();
           }));
 
-  EXPECT_NO_THROW(table_.BulkApply(bt::BulkMutation(
+  table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))));
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
+  SUCCEED();
 }
 
-// TODO(#234) - test should be enabled when bug is closed.
+// TODO(#234) - these test should be modified and enabled when bug is closed.
 #if ABSL_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
@@ -270,7 +273,6 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
           bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
       std::exception);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
 TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
@@ -357,3 +359,4 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
     FAIL() << "unexpected exception of unknown type raised";
   }
 }
+#endif  // ABSL_HAVE_EXCEPTIONS

@@ -35,14 +35,13 @@ TEST(BenchmarkTest, Create) {
 
   {
     Benchmark bm(setup);
-    std::string table_id;
     EXPECT_EQ(0, bm.create_table_count());
-    EXPECT_NO_THROW(table_id = bm.CreateTable());
+    std::string table_id = bm.CreateTable();
     EXPECT_EQ(1, bm.create_table_count());
     EXPECT_EQ(std::string("create-"), table_id.substr(0, 7));
 
     EXPECT_EQ(0, bm.delete_table_count());
-    EXPECT_NO_THROW(bm.DeleteTable());
+    bm.DeleteTable();
     EXPECT_EQ(1, bm.delete_table_count());
   }
   SUCCEED() << "Benchmark object successfully destroyed";
@@ -56,7 +55,7 @@ TEST(BenchmarkTest, Populate) {
   Benchmark bm(setup);
   bm.CreateTable();
   EXPECT_EQ(0, bm.mutate_rows_count());
-  EXPECT_NO_THROW(bm.PopulateTable());
+  bm.PopulateTable();
   // The magic 10000 comes from arg5 and we accept 5% error.
   EXPECT_GE(int(10000 * 1.05 / kBulkSize), bm.mutate_rows_count());
   EXPECT_LE(int(10000 * 0.95 / kBulkSize), bm.mutate_rows_count());

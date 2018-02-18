@@ -28,7 +28,6 @@ using testing::Matcher;
 using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
-using testing::Throw;
 using testing::_;
 
 using google::bigtable::v2::ReadRowsRequest;
@@ -355,6 +354,10 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
+
+using testing::Throw;
+
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
   auto parser = absl::make_unique<ReadRowsParserMock>();
@@ -392,7 +395,6 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
   auto parser = absl::make_unique<ReadRowsParserMock>();
@@ -416,7 +418,6 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -458,6 +459,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows

@@ -31,7 +31,12 @@ TEST_F(AcceptanceTest, InvalidNoCommit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -48,7 +53,12 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeCommit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -67,7 +77,12 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeValue) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -95,7 +110,12 @@ TEST_F(AcceptanceTest, InvalidNewColFamilyMustSpecifyQualifier) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -120,7 +140,11 @@ TEST_F(AcceptanceTest, BareCommitImpliesTs) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -156,7 +180,11 @@ TEST_F(AcceptanceTest, SimpleRowWithTimestamp) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -184,7 +212,11 @@ TEST_F(AcceptanceTest, MissingTimestampImpliedTs) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -211,7 +243,11 @@ TEST_F(AcceptanceTest, EmptyCellValue) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -245,7 +281,11 @@ TEST_F(AcceptanceTest, TwoUnsplitCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -287,7 +327,11 @@ TEST_F(AcceptanceTest, TwoQualifiers) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -330,7 +374,11 @@ TEST_F(AcceptanceTest, TwoFamilies) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -373,7 +421,11 @@ TEST_F(AcceptanceTest, WithLabels) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -417,7 +469,11 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -458,7 +514,11 @@ TEST_F(AcceptanceTest, SplitCell) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -503,7 +563,11 @@ TEST_F(AcceptanceTest, SplitFourWays) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -547,7 +611,11 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -599,7 +667,11 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -661,7 +733,11 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -714,7 +790,11 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -758,7 +838,12 @@ TEST_F(AcceptanceTest, InvalidNoCommitBetweenRows) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -788,7 +873,12 @@ TEST_F(AcceptanceTest, InvalidNoCommitAfterFirstRow) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -818,7 +908,12 @@ TEST_F(AcceptanceTest, InvalidLastRowMissingCommit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -855,7 +950,12 @@ TEST_F(AcceptanceTest, InvalidDuplicateRowKey) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -889,7 +989,12 @@ TEST_F(AcceptanceTest, InvalidNewRowMissingRowKey) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -926,7 +1031,11 @@ TEST_F(AcceptanceTest, TwoRows) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -969,7 +1078,11 @@ TEST_F(AcceptanceTest, TwoRowsImplicitTimestamp) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1011,7 +1124,11 @@ TEST_F(AcceptanceTest, TwoRowsEmptyValue) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1060,7 +1177,11 @@ TEST_F(AcceptanceTest, TwoRowsOneWithMultipleCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1123,7 +1244,11 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1195,7 +1320,11 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCellsMultipleFamilies) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1265,7 +1394,11 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1333,7 +1466,11 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1364,7 +1501,12 @@ TEST_F(AcceptanceTest, InvalidBareReset) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1389,7 +1531,12 @@ TEST_F(AcceptanceTest, InvalidBadResetNoCommit) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1419,7 +1566,12 @@ TEST_F(AcceptanceTest, InvalidMissingKeyAfterReset) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1444,7 +1596,11 @@ TEST_F(AcceptanceTest, NoDataAfterReset) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1477,7 +1633,11 @@ TEST_F(AcceptanceTest, SimpleReset) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1517,7 +1677,11 @@ TEST_F(AcceptanceTest, ResetToNewVal) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1557,7 +1721,11 @@ TEST_F(AcceptanceTest, ResetToNewQual) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1602,7 +1770,11 @@ TEST_F(AcceptanceTest, ResetWithSplits) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1647,7 +1819,11 @@ TEST_F(AcceptanceTest, ResetTwoCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1705,7 +1881,11 @@ TEST_F(AcceptanceTest, TwoResets) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1751,7 +1931,11 @@ TEST_F(AcceptanceTest, ResetThenTwoCells) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"
@@ -1798,7 +1982,11 @@ TEST_F(AcceptanceTest, ResetToNewRow) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_2\n"
@@ -1845,7 +2033,11 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK_1\n"
@@ -1881,7 +2073,12 @@ TEST_F(AcceptanceTest, InvalidResetWithChunk) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1910,7 +2107,12 @@ TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(FeedChunks(chunks), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");
+  return;
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1938,7 +2140,11 @@ TEST_F(AcceptanceTest, EmptyCellChunk) {
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(FeedChunks(chunks));
+#else
+  FeedChunks(chunks);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
   std::vector<std::string> expected_cells = {
       "rk: RK\n"

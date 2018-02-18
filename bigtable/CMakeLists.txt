@@ -171,10 +171,10 @@ add_library(bigtable_client_testing
     client/testing/chrono_literals.h
     client/testing/mock_data_client.h
     client/testing/mock_response_stream.h
-    client/testing/table_test_fixture.h
-    client/testing/table_test_fixture.cc
     client/testing/table_integration_test.h
-    client/testing/table_integration_test.cc)
+    client/testing/table_integration_test.cc
+    client/testing/table_test_fixture.h
+    client/testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
     bigtable_client bigtable_protos absl::strings gmock
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
@@ -321,58 +321,49 @@ target_link_libraries(filters_integration_test
 add_dependencies(tests-local filters_integration_test)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-add_library(bigtable_benchmark_common
-    benchmarks/benchmark.h
-    benchmarks/benchmark.cc
-    benchmarks/constants.h
-    benchmarks/embedded_server.h
-    benchmarks/embedded_server.cc
-    benchmarks/random.h
-    benchmarks/random.cc
-    benchmarks/setup.h
-    benchmarks/setup.cc)
-target_link_libraries(bigtable_benchmark_common
-    absl::time bigtable_admin_client bigtable_client bigtable_protos
-    ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-
-# List the unit tests, then setup the targets and dependencies.
-set(bigtable_benchmarks_unit_tests
-    benchmarks/benchmark_test.cc
-    benchmarks/embedded_server_test.cc
-    benchmarks/random_test.cc
-    benchmarks/setup_test.cc)
-foreach (fname ${bigtable_benchmarks_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
-    get_target_property(tname ${target} NAME)
-    target_link_libraries(${target}
-        bigtable_benchmark_common bigtable_admin_client bigtable_client
-        bigtable_protos gmock absl::strings absl::time
+    add_library(bigtable_benchmark_common
+        benchmarks/benchmark.h
+        benchmarks/benchmark.cc
+        benchmarks/constants.h
+        benchmarks/embedded_server.h
+        benchmarks/embedded_server.cc
+        benchmarks/random.h
+        benchmarks/random.cc
+        benchmarks/setup.h
+        benchmarks/setup.cc)
+    target_link_libraries(bigtable_benchmark_common
+        absl::time bigtable_admin_client bigtable_client bigtable_protos
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
-    add_test(NAME ${tname} COMMAND ${target})
-    get_target_property(sources ${target} SOURCES)
-    add_dependencies(tests-local ${target})
-endforeach ()
-target_sources(bigtable_client_all_tests
-    PUBLIC ${bigtable_benchmarks_unit_tests})
-target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
-# Benchmark for Table::Apply() and Table::ReadRow().
-add_executable(apply_read_latency_benchmark
-benchmarks/apply_read_latency_benchmark.cc)
-target_link_libraries(apply_read_latency_benchmark
-bigtable_benchmark_common bigtable_admin_client bigtable_client
-bigtable_protos gmock absl::strings absl::time
-${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    # List the unit tests, then setup the targets and dependencies.
+    set(bigtable_benchmarks_unit_tests
+        benchmarks/benchmark_test.cc
+        benchmarks/embedded_server_test.cc
+        benchmarks/random_test.cc
+        benchmarks/setup_test.cc)
+    foreach (fname ${bigtable_benchmarks_unit_tests})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
+        add_executable(${target} ${fname})
+        get_target_property(tname ${target} NAME)
+        target_link_libraries(${target}
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos gmock absl::strings absl::time
+            ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+        add_test(NAME ${tname} COMMAND ${target})
+        get_target_property(sources ${target} SOURCES)
+        add_dependencies(tests-local ${target})
+    endforeach ()
+    target_sources(bigtable_client_all_tests
+        PUBLIC ${bigtable_benchmarks_unit_tests})
+    target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
-# Benchmark Table::ReadRows().
-add_executable(scan_throughput_benchmark
-        benchmarks/scan_throughput_benchmark.cc)
-target_link_libraries(scan_throughput_benchmark
-        bigtable_benchmark_common bigtable_admin_client bigtable_client
-        bigtable_protos gmock absl::time
-        ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
+    add_executable(scan_throughput_benchmark
+            benchmarks/scan_throughput_benchmark.cc)
+    target_link_libraries(scan_throughput_benchmark
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos gmock absl::time
+            ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Define the install target

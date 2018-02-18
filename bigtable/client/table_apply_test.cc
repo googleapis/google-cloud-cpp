@@ -27,24 +27,29 @@ TEST_F(TableApplyTest, Simple) {
   EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
       .WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_NO_THROW(table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
+  table_.Apply(bigtable::SingleRowMutation(
+      "bar", {bigtable::SetCell("fam", "col", 0, "val")}));
 }
 
-#if ABSL_HAVE_EXCEPTIONS
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
 
   EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
                    "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
                std::exception);
-}
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table_.Apply(bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
+      "exceptions are disabled");
 #endif  // ABSL_HAVE_EXCEPTIONS
+}
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {
@@ -59,8 +64,8 @@ TEST_F(TableApplyTest, Retry) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_NO_THROW(table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0, "val")})));
+  table_.Apply(bigtable::SingleRowMutation(
+      "bar", {bigtable::SetCell("fam", "col", 0, "val")}));
 }
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.
@@ -68,9 +73,11 @@ TEST_F(TableApplyTest, RetryIdempotent) {
   using namespace ::testing;
 
   EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
+#if ABSL_HAVE_EXCEPTIONS
+  // TODO(#234) - update this test when Apply() returns on error.
   try {
     table_.Apply(bigtable::SingleRowMutation(
         "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
@@ -82,4 +89,10 @@ TEST_F(TableApplyTest, RetryIdempotent) {
   } catch (...) {
     FAIL() << "unexpected exception of unknown type raised";
   }
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table_.Apply(bigtable::SingleRowMutation(
+          "not-idempotent", {bigtable::SetCell("fam", "col", "val")})),
+      "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }

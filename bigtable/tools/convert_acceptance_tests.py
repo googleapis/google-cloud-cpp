@@ -85,9 +85,18 @@ def print_test(t):
         ok = not any([r['error'] for r in t['results']])
 
     if ok:
+        o += '#if ABSL_HAVE_EXCEPTIONS\n'
         o += '  EXPECT_NO_THROW(FeedChunks(chunks));\n'
+        o += '#else\n'
+        o += '  FeedChunks(chunks);\n'
+        o += '#endif  // ABSL_HAVE_EXCEPTIONS\n'
     else:
+        o += '#if ABSL_HAVE_EXCEPTIONS\n'
         o += '  EXPECT_THROW(FeedChunks(chunks), std::exception);\n'
+        o += '#else\n'
+        o += '  EXPECT_DEATH_IF_SUPPORTED(FeedChunks(chunks), "exceptions");\n'
+        o += '  return;\n'
+        o += '#endif  // ABSL_HAVE_EXCEPTIONS\n'
 
     o += '\n'
     o += '  std::vector<std::string> expected_cells = {'
