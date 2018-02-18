@@ -86,9 +86,9 @@ class ClientOptions {
    * for the channel.
    *
    * @throws std::range_error if the @p fallback_timeout parameter is too large.
-   *     Currently gRPC uses `int` to represent the timeout in milliseconds, so
-   *     the maximum timeout is `std::numeric_limits<int>::milliseconds()` or
-   *     about 50 days on platforms where `int` is a 32-bit number.
+   *     Currently gRPC uses `int` to represent the timeout, and it is expressed
+   *     in milliseconds. Therefore, the maximum timeout is about 50 days on
+   *     platforms where `int` is a 32-bit number.
    *
    * For example:
    *
