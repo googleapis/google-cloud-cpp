@@ -48,8 +48,7 @@ TEST(EmbeddedServer, Admin) {
 
   auto gc = bigtable::GcRule::MaxNumVersions(42);
   EXPECT_EQ(0, server->create_table_count());
-  admin.CreateTable("fake-table-01",
-                                    bigtable::TableConfig({{"fam", gc}}, {}));
+  admin.CreateTable("fake-table-01", bigtable::TableConfig({{"fam", gc}}, {}));
   EXPECT_EQ(1, server->create_table_count());
 
   EXPECT_EQ(0, server->delete_table_count());
