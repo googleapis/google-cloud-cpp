@@ -72,6 +72,12 @@ matrix:
       compiler: clang
       env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug \
            CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
+    - # Compile with clang-tidy enabled.  We use Fedora for this build because
+      # it has a version of cmake(1) that reports clang-tidy errors.
+      os: linux
+      compiler: clang
+      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
+            CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -80,16 +86,16 @@ matrix:
       os: linux
       compiler: gcc
       env: DISTRO=fedora DISTRO_VERSION=27
-    - # Compile with clang-tidy enabled.  We use Fedora for this build because
-      # it has a version of cmake(1) that reports clang-tidy errors.
-      os: linux
-      compiler: clang
-      env: DISTRO=fedora DISTRO_VERSION=27 BUILD_TYPE=Debug \
-            CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
     - # Compile on CentOS.
       os: linux
       compiler: gcc
       env: DISTRO=centos DISTRO_VERSION=7 BUILD_TYPE=Release
+  allow_failures:
+    - # Compile with exceptions disabled.
+      os: linux
+      compiler: gcc
+      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Release
+           CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
 
 script:
   - ci/build-linux.sh

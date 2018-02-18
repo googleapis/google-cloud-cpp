@@ -123,7 +123,6 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream();
 
-
   EXPECT_FALSE(parser.HasNext());
 #if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(parser.Next(), std::exception);
