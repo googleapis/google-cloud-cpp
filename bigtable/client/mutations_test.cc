@@ -188,3 +188,22 @@ TEST(MutationsTest, MutipleRowMutations) {
   EXPECT_EQ("foo2", request.entries(0).row_key());
   EXPECT_EQ("foo3", request.entries(1).row_key());
 }
+
+/// @test Verify that variadic list of Mutations works as expected for
+/// SingleRowMutation.
+TEST(MutationsTest, SingleRowMutations) {
+  std::string const row_key = "row-key-1";
+
+  bigtable::SingleRowMutation actual(
+      row_key, bigtable::SetCell("family", "c1", 1000, "V1000"),
+      bigtable::SetCell("family", "c2", 2000, "V2000"),
+      bigtable::SetCell("family", "c3", 3000, "V3000"));
+
+  google::bigtable::v2::MutateRowsRequest::Entry entry;
+  (void)entry.add_mutations();
+  ASSERT_FALSE(entry.mutations().empty());
+
+  actual.MoveTo(&entry);
+  ASSERT_EQ(3, entry.mutations_size());
+  EXPECT_EQ(row_key, entry.row_key());
+}

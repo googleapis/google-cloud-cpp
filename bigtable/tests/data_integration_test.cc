@@ -104,10 +104,9 @@ void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
                                 std::vector<bigtable::Cell> const& cells) {
   auto mutation = bigtable::SingleRowMutation(row_key);
   for (auto const& cell : cells) {
-    mutation.emplace_back(bigtable::SetCell(
-        static_cast<std::string>(cell.family_name()),
-        static_cast<std::string>(cell.column_qualifier()), cell.timestamp(),
-        static_cast<std::string>(cell.value())));
+    mutation.emplace_back(bigtable::SetCell(cell.family_name(),
+                                            cell.column_qualifier(),
+                                            cell.timestamp(), cell.value()));
   }
   table.Apply(std::move(mutation));
 }
@@ -175,6 +174,30 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
       {"row-key-3", family, "c1", 2000, "v2000", {}},
       {"row-key-4", family, "c0", 1000, "v1000", {}},
       {"row-key-4", family, "c1", 2000, "v2000", {}}};
+
+  CheckEqualUnordered(expected, actual);
+
+  DeleteTable(table_name);
+}
+
+TEST_F(DataIntegrationTest, TableSingleRow) {
+  std::string const table_name = "table-single-row-variadic-list-test";
+  std::string const row_key = "row-key-1";
+  auto table = CreateTable(table_name, table_config);
+
+  auto mutation = bigtable::SingleRowMutation(
+      row_key, bigtable::SetCell(family, "c1", 1000, "V1000"),
+      bigtable::SetCell(family, "c2", 2000, "V2000"),
+      bigtable::SetCell(family, "c3", 3000, "V3000"));
+
+  table->Apply(std::move(mutation));
+
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+
+  std::vector<bigtable::Cell> expected{
+      {row_key, family, "c1", 1000, "V1000", {}},
+      {row_key, family, "c2", 2000, "V2000", {}},
+      {row_key, family, "c3", 3000, "V3000", {}}};
 
   CheckEqualUnordered(expected, actual);
 

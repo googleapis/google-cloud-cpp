@@ -115,6 +115,18 @@ class SingleRowMutation {
     }
   }
 
+  /// Create a single-row multiple-cell mutation from a variadic list.
+  template <typename... M>
+  SingleRowMutation(std::string row_key, M&&... m)
+      : row_key_(std::move(row_key)) {
+    static_assert(
+        internal::conjunction<std::is_convertible<M, Mutation>...>::value,
+        "The arguments passed to SingleRowMutation(std::string, ...) must be "
+        "convertible"
+        " to Mutation");
+    emplace_many(std::forward<M>(m)...);
+  }
+
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
       ::google::bigtable::v2::MutateRowsRequest::Entry&& entry)
@@ -149,6 +161,16 @@ class SingleRowMutation {
     entry->set_row_key(std::move(row_key_));
     entry->mutable_mutations()->Swap(&ops_);
   }
+
+ private:
+  /// Add multiple mutations to single row
+  template <typename... M>
+  void emplace_many(Mutation&& first, M&&... tail) {
+    emplace_back(std::forward<Mutation>(first));
+    emplace_many(std::forward<M>(tail)...);
+  }
+
+  void emplace_many(Mutation&& m) { emplace_back(std::forward<Mutation>(m)); }
 
  private:
   std::string row_key_;
