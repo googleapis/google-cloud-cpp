@@ -25,8 +25,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
     RaiseRuntimeError("HandleChunk after end of stream");
   }
   if (HasNext()) {
-    RaiseRuntimeError(
-        "HandleChunk called before taking the previous row");
+    RaiseRuntimeError("HandleChunk called before taking the previous row");
   }
 
   if (not chunk.row_key().empty()) {

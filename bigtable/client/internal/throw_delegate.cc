@@ -62,7 +62,6 @@ namespace internal {
   RaiseException<std::runtime_error>(msg.c_str());
 }
 
-
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -62,8 +62,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
       project_id_(),
       instance_id_(),
       table_id_(MakeRandomTableId(prefix)) {
-
-  auto usage = [argv](char const *msg) {
+  auto usage = [argv](char const* msg) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)

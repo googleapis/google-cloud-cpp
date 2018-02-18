@@ -157,7 +157,8 @@ void RowReader::Advance(absl::optional<Row>& row) {
     }
 
     if (not status.ok() and not retry_policy_->on_failure(status)) {
-      internal::RaiseRuntimeError("Unretriable error: " + status.error_message());
+      internal::RaiseRuntimeError("Unretriable error: " +
+                                  status.error_message());
     }
 
     auto delay = backoff_policy_->on_completion(status);
