@@ -117,13 +117,12 @@ class SingleRowMutation {
 
   /// Create a single-row multiple-cell mutation from a variadic list.
   template <typename... M>
-  SingleRowMutation(std::string row_key, M&&... m)
+  explicit SingleRowMutation(std::string row_key, M&&... m)
       : row_key_(std::move(row_key)) {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "
-        "convertible"
-        " to Mutation");
+        "convertible to Mutation");
     emplace_many(std::forward<M>(m)...);
   }
 
