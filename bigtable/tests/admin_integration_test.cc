@@ -103,7 +103,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 };
 
-}  // anonymus namespace
+}  // namespace
 
 /***
  * Test case for checking create table
@@ -264,8 +264,9 @@ int main(int argc, char* argv[]) {
   // If Instance is not empty then dont start test cases
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   if (not table_list.empty()) {
-    throw std::runtime_error(
-        "Expected empty instance at the beginning of integration test");
+    std::cerr << "Expected empty instance at the beginning of integration test"
+              << std::endl;
+    return 1;
   }
 
   (void)::testing::AddGlobalTestEnvironment(
