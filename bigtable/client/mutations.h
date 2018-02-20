@@ -102,11 +102,6 @@ class SingleRowMutation {
   explicit SingleRowMutation(std::string row_key)
       : row_key_(std::move(row_key)) {}
 
-  /// Create a row mutation from a range of Mutations.
-  template <typename iterator>
-  SingleRowMutation(std::string row_key, iterator begin, iterator end)
-      : row_key_(std::move(row_key)), ops_(begin, end) {}
-
   /// Create a row mutation from a initializer list.
   SingleRowMutation(std::string row_key, std::initializer_list<Mutation> list)
       : row_key_(std::move(row_key)) {
