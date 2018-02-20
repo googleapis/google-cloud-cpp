@@ -367,6 +367,8 @@ target_link_libraries(scan_throughput_benchmark
         bigtable_protos gmock absl::time
         ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 
+add_subdirectory(examples/quick_start)
+
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 if ("${LIB64}" STREQUAL "TRUE")
