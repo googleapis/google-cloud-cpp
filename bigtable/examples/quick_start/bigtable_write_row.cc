@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const table_id = argv[2];
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
+  std::string const table_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
