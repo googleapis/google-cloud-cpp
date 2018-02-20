@@ -3,6 +3,7 @@
 [![Travis CI status][travis-shield]][travis-link]
 [![AppVeyor CI status][appveyor-shield]][appveyor-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
+[![Documentation][doxygen-shield]][doxygen-link]
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
@@ -10,6 +11,8 @@
 [appveyor-link]: https://ci.appveyor.com/project/coryan/google-cloud-cpp/branch/master
 [codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
+[doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
+[doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
 
 This repo contains experimental client libraries for the following APIs:
 
