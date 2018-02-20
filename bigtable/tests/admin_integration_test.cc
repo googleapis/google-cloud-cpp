@@ -64,13 +64,11 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
                    back_inserter(diff_table_list));
 
     if (not diff_table_list.empty()) {
-      std::ostringstream ostring_stream;
-      ostring_stream << "Mismatched Tables: "
-                     << absl::StrJoin(diff_table_list, "\n")
-                     << "\nactual: " << absl::StrJoin(actual_table_list, "\n")
-                     << "\nexpected: "
-                     << absl::StrJoin(expected_table_list, "\n") << "\n";
-      std::cout << ostring_stream.str();
+      std::cout << "Mismatched Tables: " << absl::StrJoin(diff_table_list, "\n")
+                << "\nactual: " << absl::StrJoin(actual_table_list, "\n")
+                << "\nexpected: " << absl::StrJoin(expected_table_list, "\n")
+                << "\n"
+                << std::endl;
     }
 
     return diff_table_list.empty();
@@ -83,10 +81,9 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 
     if (not google::protobuf::TextFormat::ParseFromString(expected_text,
                                                           &expected_table)) {
-      std::ostringstream ostring_stream;
-      ostring_stream << message << ": could not parse protobuf string <\n"
-                     << expected_text << ">\n";
-      std::cout << ostring_stream.str();
+      std::cout << message << ": could not parse protobuf string <\n"
+                << expected_text << ">\n"
+                << std::endl;
 
       return false;
     }
@@ -94,37 +91,18 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     std::string delta;
     google::protobuf::util::MessageDifferencer message_differencer;
     message_differencer.ReportDifferencesToString(&delta);
-    bool is_msg_diff_notpresent =
+    bool message_compare_equal =
         message_differencer.Compare(expected_table, actual_table);
-    if (not is_msg_diff_notpresent) {
-      std::ostringstream ostring_stream;
-      ostring_stream << message << ": mismatch expected vs actual:\n" << delta;
-      std::cout << ostring_stream.str();
+    if (not message_compare_equal) {
+      std::cout << message << ": mismatch expected vs actual:\n"
+                << delta << std::endl;
     }
 
-    return is_msg_diff_notpresent;
+    return message_compare_equal;
   }
 };
 
 }  // anonymus namespace
-
-/**
- *  Test case for checking if Instance is empty or not.
- *  If instance is empty then go ahead.
- *  If instance is not empty the throw runtime error
- */
-TEST_F(AdminIntegrationTest, CheckInstanceIsEmpty) {
-  namespace admin_proto = ::google::bigtable::admin::v2;
-  bool table_list_empty =
-      table_admin_->ListTables(admin_proto::Table::NAME_ONLY).empty();
-
-  if (not table_list_empty) {
-    throw std::runtime_error("Expected empty instance in integration test");
-  }
-
-  std::cout << "Initial ListTables() successful" << std::endl;
-  ASSERT_TRUE(table_list_empty);
-}
 
 /***
  * Test case for checking create table
@@ -277,6 +255,17 @@ int main(int argc, char* argv[]) try {
 
   std::string const project_id = argv[0];
   std::string const instance_id = argv[1];
+
+  auto admin_client =
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
+  bigtable::TableAdmin admin(admin_client, instance_id);
+
+  // If Instance is not empty then dont start test cases
+  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
+  if (not table_list.empty()) {
+    throw std::runtime_error(
+        "Expected empty instance at the beginning of integration test");
+  }
 
   (void)::testing::AddGlobalTestEnvironment(
       new bigtable::testing::TableTestEnvironment(project_id, instance_id));
