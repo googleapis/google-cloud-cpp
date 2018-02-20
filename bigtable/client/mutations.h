@@ -102,17 +102,23 @@ class SingleRowMutation {
   explicit SingleRowMutation(std::string row_key)
       : row_key_(std::move(row_key)) {}
 
-  /// Create a row mutation from a range of Mutations.
-  template <typename iterator>
-  SingleRowMutation(std::string row_key, iterator begin, iterator end)
-      : row_key_(std::move(row_key)), ops_(begin, end) {}
-
   /// Create a row mutation from a initializer list.
   SingleRowMutation(std::string row_key, std::initializer_list<Mutation> list)
       : row_key_(std::move(row_key)) {
     for (auto&& i : list) {
       *ops_.Add() = i.op;
     }
+  }
+
+  /// Create a single-row multiple-cell mutation from a variadic list.
+  template <typename... M>
+  explicit SingleRowMutation(std::string row_key, M&&... m)
+      : row_key_(std::move(row_key)) {
+    static_assert(
+        internal::conjunction<std::is_convertible<M, Mutation>...>::value,
+        "The arguments passed to SingleRowMutation(std::string, ...) must be "
+        "convertible to Mutation");
+    emplace_many(std::forward<M>(m)...);
   }
 
   /// Create a row mutation from gRPC proto
@@ -149,6 +155,16 @@ class SingleRowMutation {
     entry->set_row_key(std::move(row_key_));
     entry->mutable_mutations()->Swap(&ops_);
   }
+
+ private:
+  /// Add multiple mutations to single row
+  template <typename... M>
+  void emplace_many(Mutation&& first, M&&... tail) {
+    emplace_back(std::forward<Mutation>(first));
+    emplace_many(std::forward<M>(tail)...);
+  }
+
+  void emplace_many(Mutation&& m) { emplace_back(std::forward<Mutation>(m)); }
 
  private:
   std::string row_key_;
