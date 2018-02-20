@@ -12,185 +12,269 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <absl/memory/memory.h>
 #include <absl/strings/str_join.h>
+#include <gmock/gmock.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
-#include <sstream>
+
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
+#include "bigtable/client/testing/table_integration_test.h"
 
-namespace {
+#include <string>
+#include <vector>
+
 namespace admin_proto = ::google::bigtable::admin::v2;
 
-void CheckInstanceIsEmpty(bigtable::TableAdmin& admin) {
-  std::vector<std::string> table_names;
-  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
-  if (not table_list.empty()) {
-    throw std::runtime_error("Expected empty instance in integration test");
+namespace {
+
+class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
+ protected:
+  std::unique_ptr<bigtable::TableAdmin> table_admin_;
+
+  void SetUp() {
+    std::shared_ptr<bigtable::AdminClient> admin_client =
+        bigtable::CreateDefaultAdminClient(
+            bigtable::testing::TableTestEnvironment::project_id(),
+            bigtable::ClientOptions());
+    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
-  std::cout << "Initial ListTables() successful" << std::endl;
+
+  void TearDown() {}
+
+  bool TestForTableListCheck(std::vector<std::string> expected_table_list) {
+    std::vector<std::string> actual_table_list;
+    std::vector<std::string> diff_table_list;
+
+    auto table_list = table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+    for (auto const& table_name : table_list) {
+      actual_table_list.push_back(table_name.name());
+    }
+
+    // Sort actual_table_list
+    sort(actual_table_list.begin(), actual_table_list.end());
+    // Sort expected_table_list
+    sort(expected_table_list.begin(), expected_table_list.end());
+
+    // Get the difference of expected_table_list and actual_table_list
+    set_difference(expected_table_list.begin(), expected_table_list.end(),
+                   actual_table_list.begin(), actual_table_list.end(),
+                   back_inserter(diff_table_list));
+
+    if (not diff_table_list.empty()) {
+      std::cout << "Mismatched Tables: " << absl::StrJoin(diff_table_list, "\n")
+                << "\nactual: " << absl::StrJoin(actual_table_list, "\n")
+                << "\nexpected: " << absl::StrJoin(expected_table_list, "\n")
+                << "\n"
+                << std::endl;
+    }
+
+    return diff_table_list.empty();
+  }
+
+  bool CheckTableSchema(admin_proto::Table const& actual_table,
+                        std::string const& expected_text,
+                        std::string const& message) {
+    admin_proto::Table expected_table;
+
+    if (not google::protobuf::TextFormat::ParseFromString(expected_text,
+                                                          &expected_table)) {
+      std::cout << message << ": could not parse protobuf string <\n"
+                << expected_text << ">\n"
+                << std::endl;
+
+      return false;
+    }
+
+    std::string delta;
+    google::protobuf::util::MessageDifferencer message_differencer;
+    message_differencer.ReportDifferencesToString(&delta);
+    bool message_compare_equal =
+        message_differencer.Compare(expected_table, actual_table);
+    if (not message_compare_equal) {
+      std::cout << message << ": mismatch expected vs actual:\n"
+                << delta << std::endl;
+    }
+
+    return message_compare_equal;
+  }
+};
+
+}  // anonymus namespace
+
+/***
+ * Test case for checking create table
+ * If created tableID and passed tableID is same then test is successful.
+ */
+TEST_F(AdminIntegrationTest, CheckCreateTable) {
+  std::string const table_id = "table0";
+
+  // Create Table
+  auto table = table_admin_->CreateTable(table_id, bigtable::TableConfig());
+  // Check table is created properly
+  auto table_result = table_admin_->GetTable(table_id);
+
+  // Delete this table so that next run should not throw error
+  table_admin_->DeleteTable(table_id);
+
+  ASSERT_EQ(table.name(), table_result.name())
+      << "Mismatched names for GetTable(" << table_id << "): " << table.name()
+      << " != " << table_result.name();
 }
 
-void CheckCreateTable(bigtable::TableAdmin& admin, std::string table_id) {
-  auto table = admin.CreateTable(table_id, bigtable::TableConfig());
-  std::cout << "CreateTable(" << table_id << ") successful" << std::endl;
+/**
+ * Check if list of table names are matching with the
+ * expected tablename list
+ */
+TEST_F(AdminIntegrationTest, CheckTableListWithSingleTable) {
+  std::string const table_id = "table0";
 
-  auto get_result = admin.GetTable(table_id);
-  if (table.name() != get_result.name()) {
-    std::ostringstream os;
-    os << "Mismatched names for GetTable(" << table_id << "): " << table.name()
-       << " != " << get_result.name();
-    throw std::runtime_error(os.str());
-  }
-  std::cout << "GetTable(" << table_id << ") successful" << std::endl;
+  // Create table first here.
+  table_admin_->CreateTable(table_id, bigtable::TableConfig());
+
+  std::vector<std::string> expected_table_list = {
+      absl::StrCat(table_admin_->instance_name(), "/tables/", table_id)};
+
+  bool list_is_empty = TestForTableListCheck(expected_table_list);
+
+  // Delete the created table here, so it should not interfere with other test
+  // cases
+  table_admin_->DeleteTable(table_id);
+
+  ASSERT_TRUE(list_is_empty);
 }
 
-void CheckTableList(bigtable::TableAdmin& admin,
-                    std::vector<std::string> expected) {
-  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
-  std::vector<std::string> actual;
-  for (auto const& tbl : table_list) {
-    actual.push_back(tbl.name());
+TEST_F(AdminIntegrationTest, CheckTableListWithMultipleTables) {
+  std::string const table_prefix = "table";
+  int table_count = 5;
+  std::vector<std::string> expected_table_list;
+
+  // Create multiple table_id in loop`
+  for (int index = 0; index < table_count; ++index) {
+    std::string table_id = table_prefix + std::to_string(index);
+    // Create table First
+    table_admin_->CreateTable(table_id, bigtable::TableConfig());
+
+    expected_table_list.push_back(
+        absl::StrCat(table_admin_->instance_name(), "/tables/", table_id));
   }
-  std::sort(actual.begin(), actual.end());
-  std::sort(expected.begin(), expected.end());
-  std::vector<std::string> differences;
-  std::set_difference(expected.begin(), expected.end(), actual.begin(),
-                      actual.end(), std::back_inserter(differences));
-  if (differences.empty()) {
-    std::cout << "ListTables() successful" << std::endl;
-    return;
+
+  bool list_is_empty = TestForTableListCheck(expected_table_list);
+
+  // Delete the created table here, so it should not interfere with other test
+  // cases
+  for (int index = 0; index < table_count; ++index) {
+    std::string table_id = table_prefix + std::to_string(index);
+    table_admin_->DeleteTable(table_id);
   }
-  std::ostringstream os;
-  os << "Mismatched names: " << absl::StrJoin(differences, "\n")
-     << "\nactual: " << absl::StrJoin(actual, "\n")
-     << "\nexpected: " << absl::StrJoin(expected, "\n") << "\n";
-  throw std::runtime_error(os.str());
+
+  ASSERT_TRUE(list_is_empty);
 }
 
-void CheckTableSchema(admin_proto::Table const& actual,
-                      std::string const& expected_text,
-                      std::string const& message) {
-  admin_proto::Table expected;
-  if (not google::protobuf::TextFormat::ParseFromString(expected_text,
-                                                        &expected)) {
-    std::ostringstream os;
-    os << message << ": could not parse protobuf string <\n"
-       << expected_text << ">\n";
-    throw std::runtime_error(os.str());
-  }
-
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  if (not differencer.Compare(expected, actual)) {
-    std::ostringstream os;
-    os << message << ": mismatch expected vs. actual:\n" << delta;
-    throw std::runtime_error(os.str());
-  }
-  std::cout << message << " was successful" << std::endl;
-}
-
-void CheckModifyTable(bigtable::TableAdmin& admin, std::string table_id) {
+TEST_F(AdminIntegrationTest, CheckModifyTable) {
   using GC = bigtable::GcRule;
-  auto table = admin.CreateTable(
-      table_id,
-      bigtable::TableConfig({{"fam", GC::MaxNumVersions(5)},
-                             {"foo", GC::MaxAge(std::chrono::hours(24))}},
-                            {"a1000", "a2000", "b3000", "m5000"}));
+  std::string const table_id = "table2";
+
+  bigtable::TableConfig tab_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  auto table = table_admin_->CreateTable(table_id, tab_config);
 
   std::string expected_text_create = "name: '" + table.name() + "'\n";
   // The rest is very deterministic, we control it by the previous operations:
   expected_text_create += R"""(
-column_families {
-  key: 'fam'
-  value { gc_rule { max_num_versions: 5 }}
-}
-column_families {
-  key: 'foo'
-  value { gc_rule { max_age { seconds: 86400 }}}
-}
-)""";
-  auto table_detailed = admin.GetTable(table_id, admin_proto::Table::FULL);
-  CheckTableSchema(table_detailed, expected_text_create,
-                   "CheckModifyTable/Create");
+                          column_families {
+                                             key: 'fam'
+                                             value { gc_rule { max_num_versions: 5 } } 
+                                          }
+                          column_families {
+                                             key: 'foo'
+                                             value { gc_rule { max_age { seconds: 86400 } } }
+                                          }
+                               )""";
 
-  // TODO(google-cloud-go#837) - the emulator returns the wrong value.
-  // std::string expected_text = "name: '" + table.name() + "'\n";
-  std::string expected_text;
-  // The rest is very deterministic, we control it by the previous operations:
-  expected_text += R"""(
-column_families {
-  key: 'fam'
-  value { gc_rule { max_num_versions: 2 }}
-}
-column_families {
-  key: 'newfam'
-  value { gc_rule { intersection {
-    rules { max_age { seconds: 604800 }}
-    rules { max_num_versions: 1 }
-  }}}
-}
-)""";
-  auto modified = admin.ModifyColumnFamilies(
-      table_id,
-      {bigtable::ColumnFamilyModification::Create(
-           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
-                                      GC::MaxNumVersions(1))),
-       bigtable::ColumnFamilyModification::Update(
-           "fam", bigtable::GcRule::MaxNumVersions(2)),
-       bigtable::ColumnFamilyModification::Drop("foo")});
+  auto table_detailed =
+      table_admin_->GetTable(table_id, admin_proto::Table::FULL);
+  bool valid_schema = CheckTableSchema(table_detailed, expected_text_create,
+                                       "CheckModifyTable/Create");
 
-  // TODO(google-cloud-go#837) - the emulator returns the wrong value.
-  modified.set_name("");
-  CheckTableSchema(modified, expected_text, "CheckModifyTable/Modify");
-}
-}  // anonymous namespace
+  ASSERT_TRUE(valid_schema);
 
-/**
- * @file An integration test for the bigtable::TableAdmin class.
- *
- * The continuous integration builds run this test against the Cloud Bigtable
- * Emulator.
- */
+  std::string expected_text = R"""(
+                          column_families {
+                                             key: 'fam'
+                                             value { gc_rule { max_num_versions: 2 } } 
+                                          }
+                          column_families {
+                                             key: 'newfam'
+                                             value { gc_rule { intersection {
+                                                     rules { max_age { seconds: 604800 } }
+                                                     rules { max_num_versions: 1 } 
+                                                   } } }
+                                          }
+                        )""";
+
+  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
+      bigtable::ColumnFamilyModification::Create(
+          "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
+                                     GC::MaxNumVersions(1))),
+      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
+      bigtable::ColumnFamilyModification::Drop("foo")};
+
+  auto table_modified =
+      table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
+
+  table_modified.set_name("");
+  valid_schema = CheckTableSchema(table_modified, expected_text,
+                                  "CheckModifyTable/Modify");
+
+  // Delete table so that is should not interfere with the test again on same
+  // instance.
+  table_admin_->DeleteTable(table_id);
+
+  ASSERT_TRUE(valid_schema);
+}
+// Test Cases Finished
+
 int main(int argc, char* argv[]) try {
-  // Make sure the arguments are valid.
+  ::testing::InitGoogleTest(&argc, argv);
+
+  // Check for arguments validity
   if (argc != 3) {
     std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of("/");
+    auto last_slash = std::string(cmd).find_last_of("/");
+    // Show Usage if invalid no of arguments
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance>" << std::endl;
+              << "<project_id> <instance_id>" << std::endl;
     return 1;
   }
-  std::string const project_id = argv[1];
-  std::string const instance_id = argv[2];
-  std::string const table0 = "table0";
-  std::string const table1 = "table1";
-  std::string const table2 = "table2";
+
+  std::string const project_id = argv[0];
+  std::string const instance_id = argv[1];
 
   auto admin_client =
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
-  auto instance_name = admin.instance_name();
+  // If Instance is not empty then dont start test cases
+  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
+  if (not table_list.empty()) {
+    throw std::runtime_error(
+        "Expected empty instance at the beginning of integration test");
+  }
 
-  CheckInstanceIsEmpty(admin);
-  CheckCreateTable(admin, table0);
-  CheckTableList(admin, {absl::StrCat(instance_name, "/tables/", table0)});
+  (void)::testing::AddGlobalTestEnvironment(
+      new bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
-  CheckCreateTable(admin, table1);
-  CheckTableList(admin,
-                 {absl::StrCat(instance_name, "/tables/", table0),
-                  absl::StrCat(instance_name, "/tables/", table1)});
-
-  admin.DeleteTable(table0);
-  CheckTableList(admin, {absl::StrCat(instance_name, "/tables/", table1)});
-  std::cout << "ListTables() after DeleteTable() successful" << std::endl;
-
-  CheckModifyTable(admin, table2);
-
-  return 0;
+  return RUN_ALL_TESTS();
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  return 1;
+} catch (...) {
+  std::cerr << "Unknown exception raised." << std::endl;
   return 1;
 }

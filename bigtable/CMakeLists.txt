@@ -303,7 +303,7 @@ add_dependencies(tests-local data_integration_test)
 # An integration test for bigtable::TableAdmin.
 add_executable(admin_integration_test tests/admin_integration_test.cc)
 target_link_libraries(admin_integration_test
-    bigtable_admin_client bigtable_client bigtable_protos absl::strings
+    gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos absl::strings
     ${GRPCPP_LIBRARIES} ${GRPC_LIBRARIES} ${PROTOBUF_LIBRARIES})
 add_dependencies(tests-local admin_integration_test)
 
