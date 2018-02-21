@@ -14,9 +14,9 @@
 
 #include "bigtable/client/row_reader.h"
 
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
-#include "bigtable/client/internal/make_unique.h"
 
 #include <gmock/gmock.h>
 
