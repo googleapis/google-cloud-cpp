@@ -13,8 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/readrowsparser.h"
-
-#include <stdexcept>
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -23,23 +22,22 @@ using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   if (end_of_stream_) {
-    throw std::runtime_error("HandleChunk after end of stream");
+    RaiseRuntimeError("HandleChunk after end of stream");
   }
   if (HasNext()) {
-    throw std::runtime_error(
-        "HandleChunk called before taking the previous row");
+    RaiseRuntimeError("HandleChunk called before taking the previous row");
   }
 
   if (not chunk.row_key().empty()) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
-      throw std::runtime_error("Row keys are expected in increasing order");
+      RaiseRuntimeError("Row keys are expected in increasing order");
     }
     chunk.mutable_row_key()->swap(cell_.row);
   }
 
   if (chunk.has_family_name()) {
     if (not chunk.has_qualifier()) {
-      throw std::runtime_error("New column family must specify qualifier");
+      RaiseRuntimeError("New column family must specify qualifier");
     }
     chunk.mutable_family_name()->mutable_value()->swap(cell_.family);
   }
@@ -73,12 +71,12 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
   if (chunk.value_size() == 0) {
     if (cells_.empty()) {
       if (cell_.row.empty()) {
-        throw std::runtime_error("Missing row key at last chunk in cell");
+        RaiseRuntimeError("Missing row key at last chunk in cell");
       }
       row_key_ = cell_.row;
     } else {
       if (row_key_ != cell_.row) {
-        throw std::runtime_error("Different row key in cell chunk");
+        RaiseRuntimeError("Different row key in cell chunk");
       }
     }
     cells_.emplace_back(MovePartialToCell());
@@ -89,14 +87,14 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
     cells_.clear();
     cell_ = {};
     if (not cell_first_chunk_) {
-      throw std::runtime_error("Reset row with an unfinished cell");
+      RaiseRuntimeError("Reset row with an unfinished cell");
     }
   } else if (chunk.commit_row()) {
     if (not cell_first_chunk_) {
-      throw std::runtime_error("Commit row with an unfinished cell");
+      RaiseRuntimeError("Commit row with an unfinished cell");
     }
     if (cells_.empty()) {
-      throw std::runtime_error("Commit row missing the row key");
+      RaiseRuntimeError("Commit row missing the row key");
     }
     row_ready_ = true;
     last_seen_row_key_ = row_key_;
@@ -106,16 +104,16 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk) {
 
 void ReadRowsParser::HandleEndOfStream() {
   if (end_of_stream_) {
-    throw std::runtime_error("HandleEndOfStream called twice");
+    RaiseRuntimeError("HandleEndOfStream called twice");
   }
   end_of_stream_ = true;
 
   if (not cell_first_chunk_) {
-    throw std::runtime_error("end of stream with unfinished cell");
+    RaiseRuntimeError("end of stream with unfinished cell");
   }
 
   if (cells_.begin() != cells_.end() and not row_ready_) {
-    throw std::runtime_error("end of stream with unfinished row");
+    RaiseRuntimeError("end of stream with unfinished row");
   }
 }
 
@@ -123,7 +121,7 @@ bool ReadRowsParser::HasNext() const { return row_ready_; }
 
 Row ReadRowsParser::Next() {
   if (not row_ready_) {
-    throw std::runtime_error("Next with row not ready");
+    RaiseRuntimeError("Next with row not ready");
   }
   row_ready_ = false;
 

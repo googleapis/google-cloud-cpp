@@ -28,7 +28,6 @@ using testing::Matcher;
 using testing::Property;
 using testing::Return;
 using testing::SetArgPointee;
-using testing::Throw;
 using testing::_;
 
 using google::bigtable::v2::ReadRowsRequest;
@@ -105,7 +104,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
  public:
   RetryPolicyMock() {}
   std::unique_ptr<RPCRetryPolicy> clone() const override {
-    throw std::runtime_error("Mocks cannot be copied.");
+    bigtable::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
 
   MOCK_CONST_METHOD1(setup_impl, void(grpc::ClientContext&));
@@ -125,7 +124,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
   BackoffPolicyMock() {}
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
-    throw std::runtime_error("Mocks cannot be copied.");
+    bigtable::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
   void setup(grpc::ClientContext& context) const override {}
   MOCK_METHOD1(on_completion_impl,
@@ -290,6 +289,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   EXPECT_EQ(++it, reader.end());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
   auto parser = absl::make_unique<ReadRowsParserMock>();
@@ -312,6 +312,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -352,6 +353,10 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
+
+#if ABSL_HAVE_EXCEPTIONS
+
+using testing::Throw;
 
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -454,6 +459,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -573,6 +579,7 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   EXPECT_EQ(++it, reader.end());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
@@ -612,6 +619,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancel) {
 
   EXPECT_THROW(reader.begin(), std::runtime_error);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   // The RowReader constructor/destructor by themselves should not

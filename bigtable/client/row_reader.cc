@@ -16,6 +16,8 @@
 
 #include <thread>
 
+#include "bigtable/client/internal/throw_delegate.h"
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // RowReader::iterator must satisfy the requirements of an InputIterator.
@@ -64,7 +66,7 @@ RowReader::RowReader(
 
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
-    throw std::runtime_error("Operation already cancelled.");
+    internal::RaiseRuntimeError("Operation already cancelled.");
   }
   if (not stream_) {
     MakeRequest();
@@ -120,12 +122,16 @@ void RowReader::Advance(absl::optional<Row>& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
+#if ABSL_HAVE_EXCEPTIONS
     try {
       status = AdvanceOrFail(row);
-    } catch (std::exception ex) {
+    } catch (std::exception const& ex) {
       // Parser exceptions arrive here.
       status = grpc::Status(grpc::INTERNAL, ex.what());
     }
+#else
+    status = AdvanceOrFail(row);
+#endif  // ABSL_HAVE_EXCEPTIONS
 
     if (status.ok()) {
       return;
@@ -151,7 +157,8 @@ void RowReader::Advance(absl::optional<Row>& row) {
     }
 
     if (not status.ok() and not retry_policy_->on_failure(status)) {
-      throw std::runtime_error("Unretriable error: " + status.error_message());
+      internal::RaiseRuntimeError("Unretriable error: " +
+                                  status.error_message());
     }
 
     auto delay = backoff_policy_->on_completion(status);

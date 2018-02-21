@@ -21,6 +21,7 @@
 #include "bigtable/admin/table_admin.h"
 #include "bigtable/client/cell.h"
 #include "bigtable/client/data_client.h"
+#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
@@ -47,7 +48,7 @@ class DataIntegrationTest : public TableIntegrationTest {
 }  // namespace testing
 }  // namespace bigtable
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 
   // Make sure the arguments are valid.
@@ -68,33 +69,15 @@ int main(int argc, char* argv[]) try {
 
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   if (not table_list.empty()) {
-    std::ostringstream os;
-    os << "Expected empty instance at the beginning of integration test";
-    throw std::runtime_error(os.str());
+    std::cerr << "Expected empty instance at the beginning of integration "
+              << "test";
+    return 1;
   }
 
   (void)::testing::AddGlobalTestEnvironment(
       new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
   return RUN_ALL_TESTS();
-
-} catch (bigtable::PermanentMutationFailure const& ex) {
-  std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
-            << " - " << ex.status().error_message() << " ["
-            << ex.status().error_code()
-            << "], details=" << ex.status().error_details() << std::endl;
-  int count = 0;
-  for (auto const& failure : ex.failures()) {
-    std::cerr << "failure[" << count++
-              << "] {key=" << failure.mutation().row_key() << "}" << std::endl;
-  }
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
-  return 1;
-} catch (...) {
-  std::cerr << "Unknown exception raised." << std::endl;
-  return 1;
 }
 
 namespace bigtable {

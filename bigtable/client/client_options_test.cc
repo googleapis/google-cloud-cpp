@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/client_options.h"
+#include <absl/base/config.h>
 
 #include <cstdlib>
 #ifdef WIN32
@@ -139,6 +140,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
             grpc::string(test_args_second.args[1].key));
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
   // Test if fallback_timeout exceeds int range then throw out_of_range
   // exception
@@ -146,8 +148,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
       bigtable::ClientOptions();
   EXPECT_THROW(client_options_object_third.SetGrpclbFallbackTimeout(
                    std::chrono::hours(999)),
-               std::out_of_range);
+               std::range_error);
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();

@@ -35,6 +35,7 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   EXPECT_FALSE(parser.HasNext());
 }
 
+#if ABSL_HAVE_EXCEPTIONS
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   ReadRowsParser parser;
 
@@ -43,6 +44,7 @@ TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   EXPECT_THROW(parser.HandleEndOfStream(), std::exception);
   EXPECT_FALSE(parser.HasNext());
 }
+#endif  // ABSL_HAVE_EXCEPTIONS
 
 TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   ReadRowsParser parser;
@@ -51,8 +53,12 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream();
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(parser.HandleChunk(chunk), std::exception);
   EXPECT_FALSE(parser.HasNext());
+#else
+  EXPECT_DEATH_IF_SUPPORTED(parser.HandleChunk(chunk), "exceptions");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
@@ -118,7 +124,11 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   parser.HandleEndOfStream();
 
   EXPECT_FALSE(parser.HasNext());
+#if ABSL_HAVE_EXCEPTIONS
   EXPECT_THROW(parser.Next(), std::exception);
+#else
+  ASSERT_DEATH_IF_SUPPORTED(parser.Next(), "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {

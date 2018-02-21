@@ -48,12 +48,11 @@ TEST(EmbeddedServer, Admin) {
 
   auto gc = bigtable::GcRule::MaxNumVersions(42);
   EXPECT_EQ(0, server->create_table_count());
-  EXPECT_NO_THROW(admin.CreateTable("fake-table-01",
-                                    bigtable::TableConfig({{"fam", gc}}, {})));
+  admin.CreateTable("fake-table-01", bigtable::TableConfig({{"fam", gc}}, {}));
   EXPECT_EQ(1, server->create_table_count());
 
   EXPECT_EQ(0, server->delete_table_count());
-  EXPECT_NO_THROW(admin.DeleteTable("fake-table-02"));
+  admin.DeleteTable("fake-table-02");
   EXPECT_EQ(1, server->delete_table_count());
 
   server->Shutdown();
@@ -77,7 +76,7 @@ TEST(EmbeddedServer, TableApply) {
        bigtable::SetCell("fam", "col", 0, "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
-  EXPECT_NO_THROW(table.Apply(std::move(mutation)));
+  table.Apply(std::move(mutation));
   EXPECT_EQ(1, server->mutate_row_count());
 
   server->Shutdown();
@@ -102,7 +101,7 @@ TEST(EmbeddedServer, TableBulkApply) {
       "row2", {bigtable::SetCell("fam", "col", 0, "val")}));
 
   EXPECT_EQ(0, server->mutate_rows_count());
-  EXPECT_NO_THROW(table.BulkApply(std::move(bulk)));
+  table.BulkApply(std::move(bulk));
   EXPECT_EQ(1, server->mutate_rows_count());
 
   server->Shutdown();

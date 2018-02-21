@@ -19,6 +19,8 @@
 
 #include <grpc++/grpc++.h>
 
+#include "bigtable/client/internal/throw_delegate.h"
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -35,14 +37,14 @@ class ClientOptions {
   ClientOptions();
 
   /// Return the current endpoint for data RPCs.
-  const std::string& data_endpoint() const { return data_endpoint_; }
+  std::string const& data_endpoint() const { return data_endpoint_; }
   ClientOptions& set_data_endpoint(std::string endpoint) {
     data_endpoint_ = std::move(endpoint);
     return *this;
   }
 
   /// Return the current endpoint for admin RPCs.
-  const std::string& admin_endpoint() const { return admin_endpoint_; }
+  std::string const& admin_endpoint() const { return admin_endpoint_; }
   ClientOptions& set_admin_endpoint(std::string endpoint) {
     admin_endpoint_ = std::move(endpoint);
     return *this;
@@ -54,16 +56,15 @@ class ClientOptions {
   }
   ClientOptions& SetCredentials(
       std::shared_ptr<grpc::ChannelCredentials> credentials) {
-    credentials_ = credentials;
+    credentials_ = std::move(credentials);
     return *this;
   }
 
-  // TODO(#53) create setter/getter for each channel argument.
-  const grpc::ChannelArguments channel_arguments() const {
+  grpc::ChannelArguments channel_arguments() const {
     return channel_arguments_;
   }
   ClientOptions& set_channel_arguments(
-      grpc::ChannelArguments channel_arguments) {
+      grpc::ChannelArguments const& channel_arguments) {
     channel_arguments_ = channel_arguments;
     return *this;
   }
@@ -84,9 +85,12 @@ class ClientOptions {
    * Set the grpclb fallback timeout with the timestamp @p fallback_timeout
    * for the channel.
    *
-   * This function accepts any instantiation of 'std::chrono::duration<>' for
-   * @p duration parameter convert it into milliseconds and pass it to
-   * channel_arguments. For example:
+   * @throws std::range_error if the @p fallback_timeout parameter is too large.
+   *     Currently gRPC uses `int` to represent the timeout, and it is expressed
+   *     in milliseconds. Therefore, the maximum timeout is about 50 days on
+   *     platforms where `int` is a 32-bit number.
+   *
+   * For example:
    *
    * @code
    * bigtable::ClientOptions::SetGrpclbFallbackTimeout(
@@ -94,10 +98,6 @@ class ClientOptions {
    * bigtable::ClientOptions::SetGrpclbFallbackTimeout(
    *     std::chrono::seconds(5))
    * @endcode
-   *
-   * The fallback_timeout must not be empty and it should be within the range
-   * of int. The code will throw exception std::out_of_range if range goes
-   * outside of int.
    *
    * @tparam Rep a placeholder to match the Rep tparam for @p fallback_timeout,
    *     the semantics of this template parameter are documented in
@@ -125,24 +125,11 @@ class ClientOptions {
     std::chrono::milliseconds ft_ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
-    if (ft_ms.count() > std::numeric_limits<int>::max())
-      throw std::out_of_range("Duration Exceeds Range for int");
-
+    if (ft_ms.count() > std::numeric_limits<int>::max()) {
+      internal::RaiseRangeError("Duration Exceeds Range for int");
+    }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
-
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
-  }
-
-  /**
-   * Set Socket Mutator for channel.
-   *
-   * Please see the docs for grpc::ChannelArguments::SetSocketMutator()
-   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
-   * for more details.
-   *
-   */
-  void SetSocketMutator(grpc_socket_mutator* mutator) {
-    channel_arguments_.SetSocketMutator(mutator);
   }
 
   /**
@@ -153,7 +140,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  void SetUserAgentPrefix(const grpc::string& user_agent_prefix) {
+  void SetUserAgentPrefix(grpc::string const& user_agent_prefix) {
     channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
   }
 
@@ -165,7 +152,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  void SetResourceQuota(const grpc::ResourceQuota& resource_quota) {
+  void SetResourceQuota(grpc::ResourceQuota const& resource_quota) {
     channel_arguments_.SetResourceQuota(resource_quota);
   }
 
@@ -202,7 +189,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  void SetLoadBalancingPolicyName(const grpc::string& lb_policy_name) {
+  void SetLoadBalancingPolicyName(grpc::string const& lb_policy_name) {
     channel_arguments_.SetLoadBalancingPolicyName(lb_policy_name);
   }
 
@@ -214,7 +201,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  void SetServiceConfigJSON(const grpc::string& service_config_json) {
+  void SetServiceConfigJSON(grpc::string const& service_config_json) {
     channel_arguments_.SetServiceConfigJSON(service_config_json);
   }
 
@@ -226,7 +213,7 @@ class ClientOptions {
    * for more details.
    *
    */
-  void SetSslTargetNameOverride(const grpc::string& name) {
+  void SetSslTargetNameOverride(grpc::string const& name) {
     channel_arguments_.SetSslTargetNameOverride(name);
   }
 

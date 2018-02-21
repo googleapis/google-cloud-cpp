@@ -188,14 +188,22 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+// After all the setup, make the actual call we want to test.
+#if ABSL_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
-
-  // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btproto::Table::FULL),
+                            "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /**
@@ -216,6 +224,8 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   };
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
       .WillRepeatedly(Invoke(mock_recoverable_failure));
+
+#if ABSL_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -223,6 +233,13 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
 
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ListTables(btproto::Table::FULL), std::exception);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btproto::Table::FULL),
+                            "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
@@ -264,7 +281,7 @@ initial_splits { key: 'p' }
   bigtable::TableConfig config(
       {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
       {"a", "c", "p"});
-  EXPECT_NO_THROW(tested.CreateTable("new-table", std::move(config)));
+  tested.CreateTable("new-table", std::move(config));
 }
 
 /**
@@ -276,15 +293,24 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if ABSL_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
-
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
                std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CreateTable("other-table", bigtable::TableConfig()),
+      "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /**
@@ -301,6 +327,8 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+#if ABSL_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -309,6 +337,14 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
                std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CreateTable("other-table", bigtable::TableConfig()),
+      "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
@@ -330,7 +366,7 @@ view: SCHEMA_VIEW
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.GetTable("the-table"));
+  tested.GetTable("the-table");
 }
 
 /**
@@ -343,11 +379,20 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
+#if ABSL_HAVE_EXCEPTIONS
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetTable("other-table"),
+                            "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /**
@@ -364,6 +409,8 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+#if ABSL_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -371,6 +418,13 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
 
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetTable("other-table"),
+                            "exceptions are disabled");
+#endif  // ABSL_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.

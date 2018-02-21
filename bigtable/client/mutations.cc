@@ -17,7 +17,8 @@
 #include <google/protobuf/text_format.h>
 
 #include <sstream>
-#include <stdexcept>
+
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -49,13 +50,13 @@ Mutation DeleteFromColumn(std::string family, std::string column,
     std::ostringstream os;
     os << "invalid time range in DeleteFromColumn [" << timestamp_begin << ","
        << timestamp_end << ")";
-    throw std::range_error(os.str());
+    internal::RaiseRangeError(os.str());
   }
   if (timestamp_end == timestamp_begin and timestamp_end != 0) {
     std::ostringstream os;
     os << "invalid time range in DeleteFromColumn [" << timestamp_begin << ","
        << timestamp_end << ")";
-    throw std::range_error(os.str());
+    internal::RaiseRangeError(os.str());
   }
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
