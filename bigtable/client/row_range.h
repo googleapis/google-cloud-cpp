@@ -171,10 +171,10 @@ class RowRange {
   RowRange() {}
 
   /// Return true if @p key is below the start.
-  bool BelowStart(const std::string &key) const;
+  bool BelowStart(const std::string& key) const;
 
   /// Return true if @p key is above the end.
-  bool AboveEnd(const std::string &key) const;
+  bool AboveEnd(const std::string& key) const;
 
  private:
   ::google::bigtable::v2::RowRange row_range_;

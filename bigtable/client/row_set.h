@@ -85,10 +85,10 @@ class RowSet {
   template <typename T>
   struct IsValidAppendAllArg {
     using value_type = T;
-    using type = std::integral_constant<
-        bool,
-        std::is_convertible<T, std::string>::value or
-            std::is_convertible<T, RowRange>::value>;
+    using type =
+        std::integral_constant<bool,
+                               std::is_convertible<T, std::string>::value or
+                                   std::is_convertible<T, RowRange>::value>;
     static constexpr bool value = type::value;
   };
 
