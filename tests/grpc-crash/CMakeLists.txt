@@ -34,16 +34,14 @@ if (NOT GOOGLE_CLOUD_CPP_GRPC_PROVIDER)
         message(ERROR "GRPC_ROOT_DIR does not have a CMake file.")
     endif ()
     add_subdirectory(${GRPC_ROOT_DIR} ext/grpc EXCLUDE_FROM_ALL)
-    set(GRPCPP_LIBRARIES grpc++)
-    set(GRPC_LIBRARIES grpc)
-    set(PROTOBUF_LIBRARIES libprotobuf)
-    set(GRPC_BINDIR "${PROJECT_BINARY_DIR}/ext/grpc")
-    set(GRPC_INCLUDE_DIRS ${GRPC_ROOT_DIR}/include)
-    set(GRPCPP_INCLUDE_DIRS ${GRPC_ROOT_DIR}/include)
-    set(PROTOBUF_INCLUDE_DIRS ${GRPC_ROOT_DIR}/third_party/protobuf/include)
-    set(PROTOBUF_PROTOC_EXECUTABLE "${GRPC_BINDIR}/third_party/protobuf/protoc")
+    add_library(gRPC::grpc++ ALIAS grpc++)
+    add_library(gRPC::grpc ALIAS grpc)
+    add_library(protobuf::libprotobuf ALIAS libprotobuf)
+
+    # The binary name is different on some platforms, use CMake magic to get it.
+    set(PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protoc>)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE "${GRPC_BINDIR}/grpc_cpp_plugin")
+    set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 endif ()
 
@@ -77,7 +75,7 @@ add_custom_command(
 add_library(echo_protos
         "echo.pb.h" "echo.pb.cc"
         "echo.grpc.pb.h" "echo.grpc.pb.cc")
-target_link_libraries(echo_protos ${GRPC_LIBRARIES} ${GRPCPP_LIBRARIES} ${PROTOBUF_LIBRARIES})
+target_link_libraries(echo_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 target_include_directories(echo_protos PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 
 add_executable(server server.cc)
