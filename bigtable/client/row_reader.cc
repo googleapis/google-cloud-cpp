@@ -45,13 +45,13 @@ static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
               "RowReader::iterator &>");
 
 RowReader::RowReader(
-    std::shared_ptr<DataClient> client, absl::string_view table_name,
+    std::shared_ptr<DataClient> client, std::string table_name,
     RowSet row_set, std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
-      table_name_(table_name),
+      table_name_(std::move(table_name)),
       row_set_(std::move(row_set)),
       rows_limit_(rows_limit),
       filter_(std::move(filter)),

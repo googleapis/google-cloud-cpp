@@ -17,7 +17,7 @@
 
 #include "bigtable/client/version.h"
 
-#include <absl/strings/string_view.h>
+#include <string>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -30,7 +30,7 @@ namespace internal {
  * starting with the prefix. This is the key that is one bit larger than the
  * prefix.
  */
-std::string PrefixRangeEnd(absl::string_view key);
+std::string PrefixRangeEnd(std::string const& key);
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

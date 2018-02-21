@@ -19,8 +19,6 @@
 
 #include <google/bigtable/v2/data.pb.h>
 
-#include <absl/strings/string_view.h>
-
 #include <chrono>
 
 #include "bigtable/client/internal/prefix_range_end.h"
@@ -142,7 +140,7 @@ class RowRange {
   bool IsEmpty() const;
 
   /// Return true if @p key is in the range.
-  bool Contains(absl::string_view key) const;
+  bool Contains(std::string const& key) const;
 
   /**
    * Compute the intersection against another RowRange.
@@ -173,10 +171,10 @@ class RowRange {
   RowRange() {}
 
   /// Return true if @p key is below the start.
-  bool BelowStart(absl::string_view key) const;
+  bool BelowStart(const std::string &key) const;
 
   /// Return true if @p key is above the end.
-  bool AboveEnd(absl::string_view key) const;
+  bool AboveEnd(const std::string &key) const;
 
  private:
   ::google::bigtable::v2::RowRange row_range_;

@@ -41,7 +41,7 @@ class RowSet {
     // Generate a better error message when the parameters do not match.
     static_assert(internal::conjunction<IsValidAppendAllArg<Arg>...>::value,
                   "RowSet variadic constructor arguments must be convertible "
-                  "to bigtable::RowRange or absl::string_view");
+                  "to bigtable::RowRange or std::string");
     AppendAll(std::forward<Arg&&>(a)...);
   }
 
@@ -50,28 +50,12 @@ class RowSet {
     *row_set_.add_row_ranges() = range.as_proto_move();
   }
 
-  /// Add @p row_key to the set.
-  void Append(absl::string_view row_key) {
-    *row_set_.add_row_keys() = static_cast<std::string>(row_key);
-  }
-
   /**
    * Add @p row_key to the set, minimize copies when possible.
-   *
-   * Unlike `Append(absl::string_view)` this overload can avoid copies of the
-   * @p row_key parameter.
    */
   void Append(std::string row_key) {
     *row_set_.add_row_keys() = std::move(row_key);
   }
-
-  /**
-   * Add @p row_key to the set, resolve ambiguous overloads.
-   *
-   * This overload is needed to resolve ambiguity between
-   * `Append(absl::string_view)` and `Append(std::string)`.
-   */
-  void Append(char const* row_key) { Append(absl::string_view(row_key)); }
 
   /**
    * Modify this object to contain the ranges and keys inside @p range.
@@ -103,7 +87,7 @@ class RowSet {
     using value_type = T;
     using type = std::integral_constant<
         bool,
-        std::is_convertible<T, absl::string_view>::value or
+        std::is_convertible<T, std::string>::value or
             std::is_convertible<T, RowRange>::value>;
     static constexpr bool value = type::value;
   };

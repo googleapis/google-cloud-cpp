@@ -60,11 +60,11 @@ bool RowRange::IsEmpty() const {
   return cmp > 0;
 }
 
-bool RowRange::Contains(absl::string_view key) const {
+bool RowRange::Contains(std::string const& key) const {
   return not BelowStart(key) and not AboveEnd(key);
 }
 
-bool RowRange::BelowStart(absl::string_view key) const {
+bool RowRange::BelowStart(std::string const& key) const {
   switch (row_range_.start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
@@ -76,7 +76,7 @@ bool RowRange::BelowStart(absl::string_view key) const {
   return false;
 }
 
-bool RowRange::AboveEnd(absl::string_view key) const {
+bool RowRange::AboveEnd(std::string const& key) const {
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;

@@ -17,7 +17,6 @@
 
 #include "bigtable/client/version.h"
 
-#include <absl/strings/string_view.h>
 #include <vector>
 
 namespace bigtable {

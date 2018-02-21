@@ -20,8 +20,6 @@
 #include <memory>
 #include <thread>
 
-#include <absl/strings/string_view.h>
-
 #include "bigtable/admin/column_family.h"
 #include "bigtable/admin/table_config.h"
 #include "bigtable/client/rpc_backoff_policy.h"
@@ -255,7 +253,7 @@ class TableAdmin {
   CallWithRetry(
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const& request,
-      absl::string_view error_message) {
+      char const* error_message) {
     // Copy the policies in effect for the operation.
     auto rpc_policy = rpc_retry_policy_->clone();
     auto backoff_policy = rpc_backoff_policy_->clone();
@@ -283,7 +281,7 @@ class TableAdmin {
 
   /// Raise an exception representing the given status.
   [[noreturn]] void RaiseError(grpc::Status const& status,
-                               absl::string_view error_message) const;
+                               char const* error_message) const;
 
  private:
   std::shared_ptr<AdminClient> client_;

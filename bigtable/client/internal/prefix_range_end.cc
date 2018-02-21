@@ -18,7 +18,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-std::string PrefixRangeEnd(absl::string_view key) {
+std::string PrefixRangeEnd(std::string const& key) {
   auto pos = key.find_last_not_of('\xFF');
   if (pos == std::string::npos) {
     // If key is all \xFF then any sequence higher than key starts with the
@@ -29,7 +29,7 @@ std::string PrefixRangeEnd(absl::string_view key) {
   // Generally just take the last byte and increment by 1, but if there are
   // trailing \xFF byte we need to turn those into zeroes and increment the last
   // byte that is not a \xFF.
-  std::string result = static_cast<std::string>(key);
+  std::string result = key;
   std::fill(std::begin(result) + pos + 1, std::end(result), '\0');
   result[pos]++;
   return result;

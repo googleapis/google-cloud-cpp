@@ -30,8 +30,7 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_table_id(std::move(table_id));
 
   auto error_message = absl::StrCat("CreateTable(", request.table_id(), ")");
-  return CallWithRetry(&StubType::CreateTable, request,
-                       std::move(error_message));
+  return CallWithRetry(&StubType::CreateTable, request, error_message.c_str());
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -83,7 +82,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   request.set_view(view);
 
   auto error_message = absl::StrCat("GetTable(", request.name(), ")");
-  return CallWithRetry(&StubType::GetTable, request, error_message);
+  return CallWithRetry(&StubType::GetTable, request, error_message.c_str());
 }
 
 void TableAdmin::DeleteTable(std::string table_id) {
@@ -101,9 +100,10 @@ void TableAdmin::DeleteTable(std::string table_id) {
     *request.add_modifications() = m.as_proto_move();
   }
 
-  return CallWithRetry(
-      &StubType::ModifyColumnFamilies, request,
-      absl::StrCat("ModifyColumnFamilies(", request.name(), ")"));
+  auto error_message =
+      absl::StrCat("ModifyColumnFamilies(", request.name(), ")");
+  return CallWithRetry(&StubType::ModifyColumnFamilies, request,
+                       error_message.c_str());
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
@@ -129,7 +129,7 @@ std::string TableAdmin::InstanceName() const {
 }
 
 void TableAdmin::RaiseError(grpc::Status const& status,
-                            absl::string_view error_message) const {
+                            char const* error_message) const {
   std::ostringstream os;
   os << "TableAdmin(" << instance_name() << ") unrecoverable error or too many "
      << " errors in " << error_message << ": " << status.error_message() << " ["
