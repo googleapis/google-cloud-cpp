@@ -71,6 +71,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="client__options_8h_source.html">bigtable/client/client_options.h</a>&quot;</code><br />
+<code>#include &lt;absl/base/config.h&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
@@ -79,8 +80,9 @@ Include dependency graph for client_options_test.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="client__options__test_8cc__incl.png" border="0" usemap="#client_2client__options__test_8cc" alt=""/></div>
 <map name="client_2client__options__test_8cc" id="client_2client__options__test_8cc">
-<area shape="rect" id="node2" href="client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="97,95,235,136"/>
-<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="5,184,164,211"/>
+<area shape="rect" id="node2" href="client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="15,95,152,136"/>
+<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="34,273,192,300"/>
+<area shape="rect" id="node7" href="throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="167,184,315,225"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -100,8 +102,6 @@ Functions</h2></td></tr>
 <tr class="separator:a1ccd2359786dc62fdd13c58b2d28483b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae238f784352c410e4bac13bb6d2279a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options__test_8cc.html#ae238f784352c410e4bac13bb6d2279a6">TEST</a> (ClientOptionsTest, SetGrpclbFallbackTimeoutSec)</td></tr>
 <tr class="separator:ae238f784352c410e4bac13bb6d2279a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40eba8e73c3d0d78170697c6c0ce655d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options__test_8cc.html#a40eba8e73c3d0d78170697c6c0ce655d">TEST</a> (ClientOptionsTest, SetGrpclbFallbackTimeoutException)</td></tr>
-<tr class="separator:a40eba8e73c3d0d78170697c6c0ce655d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab1f5d343fce6fcc3bd4a01463c8aa2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options__test_8cc.html#aab1f5d343fce6fcc3bd4a01463c8aa2a">TEST</a> (ClientOptionsTest, SetCompressionAlgorithm)</td></tr>
 <tr class="separator:aab1f5d343fce6fcc3bd4a01463c8aa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aa6f12563baba53915dce4a2e28e9eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options__test_8cc.html#a5aa6f12563baba53915dce4a2e28e9eb">TEST</a> (ClientOptionsTest, SetMaxReceiveMessageSize)</td></tr>
@@ -119,7 +119,7 @@ Functions</h2></td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a9e38599241b9cf91d9d55cad605965f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e38599241b9cf91d9d55cad605965f8">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e38599241b9cf91d9d55cad605965f8">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +147,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac0e8ffd6882c07c2cde34b8675b42e7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0e8ffd6882c07c2cde34b8675b42e7f">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0e8ffd6882c07c2cde34b8675b42e7f">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -175,7 +175,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab08ec44ad769116d0910339b01de83c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab08ec44ad769116d0910339b01de83c7">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab08ec44ad769116d0910339b01de83c7">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a32564b30eff478de343844fce3278f93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32564b30eff478de343844fce3278f93">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a32564b30eff478de343844fce3278f93">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a1ccd2359786dc62fdd13c58b2d28483b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ccd2359786dc62fdd13c58b2d28483b">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ccd2359786dc62fdd13c58b2d28483b">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae238f784352c410e4bac13bb6d2279a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae238f784352c410e4bac13bb6d2279a6">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae238f784352c410e4bac13bb6d2279a6">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,36 +286,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a40eba8e73c3d0d78170697c6c0ce655d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40eba8e73c3d0d78170697c6c0ce655d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/14]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">ClientOptionsTest&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SetGrpclbFallbackTimeoutException&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="aab1f5d343fce6fcc3bd4a01463c8aa2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab1f5d343fce6fcc3bd4a01463c8aa2a">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aab1f5d343fce6fcc3bd4a01463c8aa2a">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +315,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5aa6f12563baba53915dce4a2e28e9eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aa6f12563baba53915dce4a2e28e9eb">&#9670;&nbsp;</a></span>TEST() <span class="overload">[9/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aa6f12563baba53915dce4a2e28e9eb">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +343,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac454b944ae865fb3f952174af9aef6e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac454b944ae865fb3f952174af9aef6e1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[10/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac454b944ae865fb3f952174af9aef6e1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[9/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,7 +371,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0346f9ca97e555c403bed717dfcf3414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0346f9ca97e555c403bed717dfcf3414">&#9670;&nbsp;</a></span>TEST() <span class="overload">[11/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0346f9ca97e555c403bed717dfcf3414">&#9670;&nbsp;</a></span>TEST() <span class="overload">[10/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -427,7 +399,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac957919411bb91a11e8cb5cee9a80422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac957919411bb91a11e8cb5cee9a80422">&#9670;&nbsp;</a></span>TEST() <span class="overload">[12/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac957919411bb91a11e8cb5cee9a80422">&#9670;&nbsp;</a></span>TEST() <span class="overload">[11/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -455,7 +427,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad8ab84ed8704e869198bb92e02a72d3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8ab84ed8704e869198bb92e02a72d3d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[13/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8ab84ed8704e869198bb92e02a72d3d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[12/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -483,7 +455,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7ca0a3ebc3eeabfe58a00db014fc78a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ca0a3ebc3eeabfe58a00db014fc78a1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[14/14]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ca0a3ebc3eeabfe58a00db014fc78a1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[13/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -541,7 +513,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 20 2018 19:50:37 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 21 2018 04:37:19 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

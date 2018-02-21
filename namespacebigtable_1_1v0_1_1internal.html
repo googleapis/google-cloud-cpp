@@ -104,6 +104,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a52d958b08477d752c57e5c872f7d2a94"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a52d958b08477d752c57e5c872f7d2a94">PrefixRangeEnd</a> (absl::string_view key)</td></tr>
 <tr class="memdesc:a52d958b08477d752c57e5c872f7d2a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the end of the prefix range for <code>key</code>.  <a href="#a52d958b08477d752c57e5c872f7d2a94">More...</a><br /></td></tr>
 <tr class="separator:a52d958b08477d752c57e5c872f7d2a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Delete exception raising to hidden functions.</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>The following functions raise the corresponding exception, unless the user has disabled exception handling, in which case they print the error message to std::cerr and call std::abort().</p>
+<p>We copied this technique from Abseil. Unfortunately we cannot use it directly because it is not a public interface for Abseil. </p>
+</div></td></tr>
+<tr class="memitem:a13852703ef96efa82324590ffe8cd13c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a13852703ef96efa82324590ffe8cd13c">RaiseInvalidArgument</a> (char const *msg)</td></tr>
+<tr class="separator:a13852703ef96efa82324590ffe8cd13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad909136442a0acb505eb4eae7cff1b9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#ad909136442a0acb505eb4eae7cff1b9e">RaiseInvalidArgument</a> (std::string const &amp;msg)</td></tr>
+<tr class="separator:ad909136442a0acb505eb4eae7cff1b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7a5b5073a1e286d09a7d165d82dc80a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#ae7a5b5073a1e286d09a7d165d82dc80a">RaiseRangeError</a> (char const *msg)</td></tr>
+<tr class="separator:ae7a5b5073a1e286d09a7d165d82dc80a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555f178be4f77a25d18195e29930145f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a555f178be4f77a25d18195e29930145f">RaiseRangeError</a> (std::string const &amp;msg)</td></tr>
+<tr class="separator:a555f178be4f77a25d18195e29930145f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfcb266c68aee09a52c8d4d534c34620"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#adfcb266c68aee09a52c8d4d534c34620">RaiseRuntimeError</a> (char const *msg)</td></tr>
+<tr class="separator:adfcb266c68aee09a52c8d4d534c34620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76e87e07de7cf3b27a8acb79fc92ad28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a76e87e07de7cf3b27a8acb79fc92ad28">RaiseRuntimeError</a> (std::string const &amp;msg)</td></tr>
+<tr class="separator:a76e87e07de7cf3b27a8acb79fc92ad28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a52d958b08477d752c57e5c872f7d2a94"></a>
@@ -127,10 +143,118 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a13852703ef96efa82324590ffe8cd13c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13852703ef96efa82324590ffe8cd13c">&#9670;&nbsp;</a></span>RaiseInvalidArgument() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseInvalidArgument </td>
+          <td>(</td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad909136442a0acb505eb4eae7cff1b9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad909136442a0acb505eb4eae7cff1b9e">&#9670;&nbsp;</a></span>RaiseInvalidArgument() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseInvalidArgument </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae7a5b5073a1e286d09a7d165d82dc80a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7a5b5073a1e286d09a7d165d82dc80a">&#9670;&nbsp;</a></span>RaiseRangeError() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseRangeError </td>
+          <td>(</td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a555f178be4f77a25d18195e29930145f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a555f178be4f77a25d18195e29930145f">&#9670;&nbsp;</a></span>RaiseRangeError() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseRangeError </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adfcb266c68aee09a52c8d4d534c34620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfcb266c68aee09a52c8d4d534c34620">&#9670;&nbsp;</a></span>RaiseRuntimeError() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseRuntimeError </td>
+          <td>(</td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76e87e07de7cf3b27a8acb79fc92ad28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e87e07de7cf3b27a8acb79fc92ad28">&#9670;&nbsp;</a></span>RaiseRuntimeError() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseRuntimeError </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 20 2018 19:50:37 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 21 2018 04:37:19 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

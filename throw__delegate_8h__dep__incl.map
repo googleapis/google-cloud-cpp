@@ -1,0 +1,34 @@
+<map id="client/internal/throw_delegate.h" name="client/internal/throw_delegate.h">
+<area shape="rect" id="node2" href="$readrowsparser_8cc.html" title="client/internal/readrowsparser.cc" alt="" coords="5,102,216,129"/>
+<area shape="rect" id="node3" href="$throw__delegate_8cc.html" title="client/internal/throw\l_delegate.cc" alt="" coords="241,95,375,136"/>
+<area shape="rect" id="node4" href="$mutations_8cc.html" title="client/mutations.cc" alt="" coords="399,102,531,129"/>
+<area shape="rect" id="node5" href="$row__reader_8cc.html" title="client/row_reader.cc" alt="" coords="607,363,745,389"/>
+<area shape="rect" id="node6" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="505,616,633,657"/>
+<area shape="rect" id="node7" href="$table__admin_8cc.html" title="admin/table_admin.cc" alt="" coords="1419,363,1568,389"/>
+<area shape="rect" id="node8" href="$client__options_8h.html" title="client/client_options.h" alt="" coords="1477,102,1625,129"/>
+<area shape="rect" id="node9" href="$client__options_8cc.html" title="client/client_options.cc" alt="" coords="1733,191,1888,218"/>
+<area shape="rect" id="node10" href="$client__options__test_8cc.html" title="client/client_options\l_test.cc" alt="" coords="1394,184,1531,225"/>
+<area shape="rect" id="node11" href="$data__client_8h.html" title="client/data_client.h" alt="" coords="1151,191,1281,218"/>
+<area shape="rect" id="node28" href="$common__client_8h.html" title="client/internal/common\l_client.h" alt="" coords="1555,184,1709,225"/>
+<area shape="rect" id="node30" href="$admin__client_8h.html" title="admin/admin_client.h" alt="" coords="1913,191,2058,218"/>
+<area shape="rect" id="node12" href="$data__client_8cc.html" title="client/data_client.cc" alt="" coords="1412,281,1551,307"/>
+<area shape="rect" id="node13" href="$data__client__test_8cc.html" title="client/data_client\l_test.cc" alt="" coords="1217,273,1337,315"/>
+<area shape="rect" id="node14" href="$row__reader_8h.html" title="client/row_reader.h" alt="" coords="959,281,1091,307"/>
+<area shape="rect" id="node17" href="$table_8h.html" title="client/table.h" alt="" coords="1081,363,1177,389"/>
+<area shape="rect" id="node25" href="$table__integration__test_8h.html" title="client/testing/table\l_integration_test.h" alt="" coords="1565,527,1694,568"/>
+<area shape="rect" id="node15" href="$rowreaderiterator_8cc.html" title="client/internal/rowreaderiterator.cc" alt="" coords="769,363,988,389"/>
+<area shape="rect" id="node16" href="$row__reader__test_8cc.html" title="client/row_reader_test.cc" alt="" coords="657,623,825,650"/>
+<area shape="rect" id="node18" href="$table_8cc.html" title="client/table.cc" alt="" coords="837,445,939,471"/>
+<area shape="rect" id="node19" href="$table__apply__test_8cc.html" title="client/table_apply\l_test.cc" alt="" coords="1007,616,1129,657"/>
+<area shape="rect" id="node20" href="$table__bulk__apply__test_8cc.html" title="client/table_bulk_apply\l_test.cc" alt="" coords="1153,616,1308,657"/>
+<area shape="rect" id="node21" href="$table__readrow__test_8cc.html" title="client/table_readrow\l_test.cc" alt="" coords="1332,616,1471,657"/>
+<area shape="rect" id="node22" href="$table__readrows__test_8cc.html" title="client/table_readrows\l_test.cc" alt="" coords="1495,616,1641,657"/>
+<area shape="rect" id="node23" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="850,623,982,650"/>
+<area shape="rect" id="node24" href="$mock__data__client_8h.html" title="client/testing/mock\l_data_client.h" alt="" coords="1370,437,1502,479"/>
+<area shape="rect" id="node27" href="$table__test__fixture_8h.html" title="client/testing/table\l_test_fixture.h" alt="" coords="1065,527,1193,568"/>
+<area shape="rect" id="node26" href="$table__integration__test_8cc.html" title="client/testing/table\l_integration_test.cc" alt="" coords="1665,616,1801,657"/>
+<area shape="rect" id="node29" href="$admin__client_8cc.html" title="admin/admin_client.cc" alt="" coords="1575,281,1727,307"/>
+<area shape="rect" id="node31" href="$admin__client__test_8cc.html" title="admin/admin_client\l_test.cc" alt="" coords="1918,273,2053,315"/>
+<area shape="rect" id="node32" href="$table__admin_8h.html" title="admin/table_admin.h" alt="" coords="1751,281,1894,307"/>
+<area shape="rect" id="node33" href="$table__admin__test_8cc.html" title="admin/table_admin_test.cc" alt="" coords="1733,363,1912,389"/>
+</map>

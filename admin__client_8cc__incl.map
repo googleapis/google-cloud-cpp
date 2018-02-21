@@ -1,6 +1,7 @@
 <map id="admin/admin_client.cc" name="admin/admin_client.cc">
-<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="274,80,419,121"/>
-<area shape="rect" id="node10" href="$common__client_8h.html" title="bigtable/client/internal\l/common_client.h" alt="" coords="443,80,591,121"/>
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="435,169,573,211"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="398,259,557,285"/>
+<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="283,80,429,121"/>
+<area shape="rect" id="node11" href="$common__client_8h.html" title="bigtable/client/internal\l/common_client.h" alt="" coords="453,80,601,121"/>
+<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="454,169,591,211"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="398,348,557,375"/>
+<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="449,259,597,300"/>
 </map>

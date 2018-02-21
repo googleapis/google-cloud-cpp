@@ -1,6 +1,9 @@
 var searchData=
 [
   ['r',['R',['../row__range__test_8cc.html#aabbb8bdbf288611797e825b07c46238c',1,'row_range_test.cc']]],
+  ['raiseinvalidargument',['RaiseInvalidArgument',['../namespacebigtable_1_1v0_1_1internal.html#a13852703ef96efa82324590ffe8cd13c',1,'bigtable::v0::internal::RaiseInvalidArgument(char const *msg)'],['../namespacebigtable_1_1v0_1_1internal.html#ad909136442a0acb505eb4eae7cff1b9e',1,'bigtable::v0::internal::RaiseInvalidArgument(std::string const &amp;msg)']]],
+  ['raiserangeerror',['RaiseRangeError',['../namespacebigtable_1_1v0_1_1internal.html#ae7a5b5073a1e286d09a7d165d82dc80a',1,'bigtable::v0::internal::RaiseRangeError(char const *msg)'],['../namespacebigtable_1_1v0_1_1internal.html#a555f178be4f77a25d18195e29930145f',1,'bigtable::v0::internal::RaiseRangeError(std::string const &amp;msg)']]],
+  ['raiseruntimeerror',['RaiseRuntimeError',['../namespacebigtable_1_1v0_1_1internal.html#adfcb266c68aee09a52c8d4d534c34620',1,'bigtable::v0::internal::RaiseRuntimeError(char const *msg)'],['../namespacebigtable_1_1v0_1_1internal.html#a76e87e07de7cf3b27a8acb79fc92ad28',1,'bigtable::v0::internal::RaiseRuntimeError(std::string const &amp;msg)']]],
   ['range',['Range',['../classbigtable_1_1v0_1_1RowRange.html#a5e9aa048a862cb9b175985f247b89e32',1,'bigtable::v0::RowRange']]],
   ['readme_2emd',['README.md',['../README_8md.html',1,'(Global Namespace)'],['../client_2internal_2README_8md.html',1,'(Global Namespace)'],['../client_2testing_2README_8md.html',1,'(Global Namespace)']]],
   ['readrow',['ReadRow',['../classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a',1,'bigtable::v0::Table']]],

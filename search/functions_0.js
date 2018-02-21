@@ -2,7 +2,7 @@ var searchData=
 [
   ['add_5fcolumn_5ffamily',['add_column_family',['../classbigtable_1_1v0_1_1TableConfig.html#a73cf3d0a4ba2e9cd1181a76d305354f0',1,'bigtable::v0::TableConfig']]],
   ['add_5finitial_5fsplit',['add_initial_split',['../classbigtable_1_1v0_1_1TableConfig.html#ae36273712a0f5976f42fd91a792a7c87',1,'bigtable::v0::TableConfig']]],
-  ['admin_5fendpoint',['admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a303626e65ed4c3d11bdb0dc916e1f910',1,'bigtable::v0::ClientOptions']]],
+  ['admin_5fendpoint',['admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a09adfb1db5ea31ccce918b84d40623cb',1,'bigtable::v0::ClientOptions']]],
   ['alwaysretrymutationpolicy',['AlwaysRetryMutationPolicy',['../classbigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html#a623c0878e93cc47a5a2c68cfb41fc659',1,'bigtable::v0::AlwaysRetryMutationPolicy']]],
   ['append',['Append',['../classbigtable_1_1v0_1_1RowSet.html#a1577203b5038dd082f8e7709a903dafe',1,'bigtable::v0::RowSet::Append(RowRange range)'],['../classbigtable_1_1v0_1_1RowSet.html#a153edb9e5bb62b6d06e2d2cf69ca15cf',1,'bigtable::v0::RowSet::Append(absl::string_view row_key)'],['../classbigtable_1_1v0_1_1RowSet.html#ad02983a68b04b1d68e56d5d6ee6a71ee',1,'bigtable::v0::RowSet::Append(std::string row_key)'],['../classbigtable_1_1v0_1_1RowSet.html#a678a5d9be8e37a7db6ca34c953fdb407',1,'bigtable::v0::RowSet::Append(char const *row_key)']]],
   ['apply',['Apply',['../classbigtable_1_1v0_1_1Table.html#adbd684a9bb9eb992890a4b9d17b4b03f',1,'bigtable::v0::Table']]],

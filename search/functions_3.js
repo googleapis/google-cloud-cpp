@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_5fendpoint',['data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a80a4bc5707558ce37744c4d6f200687b',1,'bigtable::v0::ClientOptions']]],
+  ['data_5fendpoint',['data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a5753fef1cb30d384f24905cefb497aee',1,'bigtable::v0::ClientOptions']]],
   ['defaultdataclient',['DefaultDataClient',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a06282ef754f75ba17ce4cabfc1d85f60',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance, ClientOptions options)'],['../classbigtable_1_1v0_1_1DefaultDataClient.html#a9bd9f51ec2f1517ef9931b06a6c2a370',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance)']]],
   ['defaultidempotentmutationpolicy',['DefaultIdempotentMutationPolicy',['../namespacebigtable_1_1v0.html#afc37466672777e7e9babf2d393d81dbe',1,'bigtable::v0']]],
   ['defaultrpcbackoffpolicy',['DefaultRPCBackoffPolicy',['../namespacebigtable_1_1v0.html#ade9f89d5543645385ad5277416f458da',1,'bigtable::v0']]],

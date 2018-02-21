@@ -1,4 +1,5 @@
 <map id="client/internal/common_client.h" name="client/internal/common_client.h">
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="103,95,240,136"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="148,184,307,211"/>
+<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="100,95,237,136"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="143,273,301,300"/>
+<area shape="rect" id="node7" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="204,184,352,225"/>
 </map>
