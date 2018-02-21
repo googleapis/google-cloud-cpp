@@ -1,21 +1,22 @@
 # Supporting C++ without exceptions
 
 This document describes how we support C++ with exceptions disabled in the
-Cloud Bigtable C++ libraries.  It is aimed at the project developers who may
+Google Cloud C++ libraries.  It is aimed at the project developers who may
 need to raise exceptions or write tests that verify the exceptions are raised.
 
 ## Background
 
-We expect that some of the users of the Cloud Bigtable C++ client will want to
-compile their code without exception support, notably Google and many libraries
-that are created by Google.  On the other hand, we expect that most C++11 users
-will be more familiar with exceptions as the error reporting mechanism, we want
-to offer these users (most likely the majority) and good experience on the
-platform.
+We expect that *some* (but not the majority) of the users of the Google Cloud
+C++ libraries will want to compile their code without exception support, notably
+Google does not use C++ exceptions, and many libraries that are created by
+Google do not support exceptions either.  On the other hand, we expect that most
+C++11 users will be more familiar with exceptions as the error reporting
+mechanism, we want to offer these users (most likely the majority) and good
+experience on the platform.
 
 Documenting guidelines as to when is it a good idea to raise exceptions vs.
 returning and error status is beyond the scope of this document, and is
-described in the [style guide](../../doc/style-guide.md).
+described in the [style guide](style-guide.md).
 
 ## Overview
 
@@ -27,6 +28,10 @@ disabled, and `EXPECT_THROW()` in the normal case. The examples should use a
 be compiled when exceptions are disabled.
 
 ## Detailed Design
+
+In this document we will use the `bigtable::` as an example.  Each library will
+use their own namespace.  Some of this code should be refactored to a common
+library once that becomes necessary.
 
 ### Raising Exceptions
 
