@@ -96,7 +96,7 @@ void RowReader::MakeRequest() {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
-  context_ = absl::make_unique<grpc::ClientContext>();
+  context_.reset(new grpc::ClientContext);
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
   stream_ = client_->Stub()->ReadRows(context_.get(), request);

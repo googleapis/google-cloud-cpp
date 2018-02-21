@@ -26,7 +26,6 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
-#include <absl/memory/memory.h>
 #include <absl/types/optional.h>
 #include <grpc++/grpc++.h>
 
