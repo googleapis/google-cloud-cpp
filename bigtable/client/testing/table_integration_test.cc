@@ -14,6 +14,7 @@
 
 #include "bigtable/client/testing/table_integration_test.h"
 #include <google/protobuf/text_format.h>
+#include "bigtable/client/internal/make_unique.h"
 
 namespace bigtable {
 namespace testing {
@@ -25,8 +26,8 @@ void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
       ::bigtable::testing::TableTestEnvironment::project_id(),
       bigtable::ClientOptions());
-  table_admin_.reset(new bigtable::TableAdmin(
-      admin_client_, ::bigtable::testing::TableTestEnvironment::instance_id()));
+  table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
+      admin_client_, ::bigtable::testing::TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       ::bigtable::testing::TableTestEnvironment::project_id(),
       ::bigtable::testing::TableTestEnvironment::instance_id(),

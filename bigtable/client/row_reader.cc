@@ -16,6 +16,7 @@
 
 #include <thread>
 
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
@@ -96,7 +97,7 @@ void RowReader::MakeRequest() {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
-  context_.reset(new grpc::ClientContext);
+  context_ = bigtable::internal::make_unique<grpc::ClientContext>();
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
   stream_ = client_->Stub()->ReadRows(context_.get(), request);

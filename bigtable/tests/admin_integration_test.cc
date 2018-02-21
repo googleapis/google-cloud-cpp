@@ -18,6 +18,7 @@
 
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 #include <string>
@@ -36,8 +37,8 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
-    table_admin_.reset(new bigtable::TableAdmin(
-        admin_client, bigtable::testing::TableTestEnvironment::instance_id()));
+    table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
+        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 
   void TearDown() {}
