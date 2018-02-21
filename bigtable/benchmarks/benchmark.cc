@@ -18,8 +18,6 @@
 #include <iomanip>
 #include <sstream>
 
-#include <absl/time/time.h>
-
 namespace {
 double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
 }  // anonymous namespace
@@ -114,7 +112,7 @@ BenchmarkResult Benchmark::PopulateTable() {
   using std::chrono::duration_cast;
   result.elapsed = duration_cast<std::chrono::milliseconds>(
       std::chrono::steady_clock::now() - upload_start);
-  std::cout << " DONE. Elapsed=" << absl::FromChrono(result.elapsed)
+  std::cout << " DONE. Elapsed=" << FormatDuration(result.elapsed)
             << ", Ops=" << result.operations.size()
             << ", Rows=" << result.row_count << std::endl;
   return result;
@@ -162,7 +160,7 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
     auto i = result.operations.begin();
     std::advance(i, index);
     os << sep << "p" << std::setprecision(3) << p << "=" << std::setprecision(2)
-       << absl::FromChrono(i->latency);
+       << FormatDuration(i->latency);
     sep = ", ";
   }
   os << std::endl;
@@ -285,6 +283,54 @@ int Benchmark::KeyWidth() const {
   for (auto tsize = setup_.table_size(); tsize > 0; tsize /= 10, ++r) {
   }
   return r;
+}
+
+std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
+  using namespace std::chrono;
+
+  auto nanos = duration.ns;
+  // For sub-microsecond ranges just print the number of nanoseconds.
+  if (nanos < microseconds(1)) {
+    return os << nanos.count() << "ns";
+  }
+  // For sub-millisecond values print 123.456us, that is the number of
+  // microseconds.  Formatting with iostreams is not hard, but resetting them
+  // back is super tedious, so just use std::snprintf().
+  if (nanos < milliseconds(1)) {
+    char buf[32];
+    std::snprintf(buf, sizeof(buf), "%.03fus", nanos.count() / 1000.0);
+    return os << buf;
+  }
+  // For sub-second values print 123.456ms, that is, the number of milliseconds.
+  if (nanos < seconds(1)) {
+    auto us = duration_cast<microseconds>(nanos);
+    char buf[32];
+    std::snprintf(buf, sizeof(buf), "%.03fms", us.count() / 1000.0);
+    return os << buf;
+  }
+
+  // In general, print something like 12h34m56.789s, though we omit the hours,
+  // minutes, or seconds if they are 0.
+  auto hh = duration_cast<hours>(duration.ns);
+  if (hh.count() != 0) {
+    os << hh.count() << "h";
+  }
+  nanos = nanos - hh;
+  auto mm = duration_cast<minutes>(nanos);
+  if (mm.count() != 0) {
+    os << mm.count() << "m";
+  }
+  nanos = nanos - mm;
+  auto ms = duration_cast<milliseconds>(nanos);
+  if (ms.count() == 0) {
+    return os;
+  }
+  if (ms.count() % 1000 == 0) {
+    return os << ms.count() / 1000 << "s";
+  }
+  char buf[32];
+  std::snprintf(buf, sizeof(buf), "%.03fs", ms.count() / 1000.0);
+  return os << buf;
 }
 
 }  // namespace benchmarks

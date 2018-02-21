@@ -340,6 +340,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set(bigtable_benchmarks_unit_tests
         benchmarks/benchmark_test.cc
         benchmarks/embedded_server_test.cc
+        benchmarks/format_duration_test.cc
         benchmarks/random_test.cc
         benchmarks/setup_test.cc)
     foreach (fname ${bigtable_benchmarks_unit_tests})

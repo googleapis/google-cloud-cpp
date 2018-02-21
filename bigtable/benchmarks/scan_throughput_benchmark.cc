@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <absl/time/time.h>
 #include <chrono>
 #include <future>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+
 #include "bigtable/benchmarks/benchmark.h"
 
 /**
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) try {
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
-    std::cout << " DONE. Elapsed=" << absl::FromChrono(combined.elapsed)
+    std::cout << " DONE. Elapsed=" << FormatDuration(combined.elapsed)
               << ", Ops=" << combined.operations.size()
               << ", Rows=" << combined.row_count << std::endl;
     auto op_name = "Scan(" + std::to_string(scan_size) + ")";

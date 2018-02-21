@@ -143,9 +143,9 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   // And the percentiles are easy to estimate for the generated data. Note that
   // this test depends on the duration formatting as specified by the absl::time
   // library.
-  EXPECT_NE(std::string::npos, output.find("p0=100us"));
-  EXPECT_NE(std::string::npos, output.find("p95=9.5ms"));
-  EXPECT_NE(std::string::npos, output.find("p100=10ms"));
+  EXPECT_NE(std::string::npos, output.find("p0=100.000us"));
+  EXPECT_NE(std::string::npos, output.find("p95=9.500ms"));
+  EXPECT_NE(std::string::npos, output.find("p100=10.000ms"));
 }
 
 TEST(BenchmarkTest, PrintCsv) {
