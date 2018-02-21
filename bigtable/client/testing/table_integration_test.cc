@@ -16,7 +16,6 @@
 #include <google/protobuf/text_format.h>
 
 #include <absl/memory/memory.h>
-#include <absl/strings/str_join.h>
 
 namespace bigtable {
 namespace testing {
@@ -136,7 +135,13 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
       << ", timestamp=" << cell.timestamp() << ", value=" << cell.value()
-      << ", labels={" << absl::StrJoin(cell.labels(), ",") << "}";
+      << ", labels={";
+  char const* del = "";
+  for (auto const& label : cell.labels()) {
+    *os << del << label;
+    del = ",";
+  }
+  *os << "}";
 }
 //@}
 

@@ -15,7 +15,6 @@
 #include "bigtable/client/internal/readrowsparser.h"
 #include "bigtable/client/row.h"
 
-#include <absl/strings/str_join.h>
 #include <google/protobuf/text_format.h>
 
 #include <gtest/gtest.h>
@@ -164,7 +163,6 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
 // **** Acceptance tests helpers ****
 
 namespace bigtable {
-namespace {
 
 // Can also be used by gtest to print Cell values
 void PrintTo(Cell const& c, std::ostream* os) {
@@ -173,7 +171,13 @@ void PrintTo(Cell const& c, std::ostream* os) {
   *os << "qual: " << std::string(c.column_qualifier()) << "\n";
   *os << "ts: " << c.timestamp() << "\n";
   *os << "value: " << std::string(c.value()) << "\n";
-  *os << "label: " << absl::StrJoin(c.labels(), ",") << "\n";
+  *os << "label: ";
+  char const* del = "";
+  for (auto const& label : c.labels()) {
+    *os << del << label;
+    del = ",";
+  }
+  *os << "\n";
 }
 
 std::string CellToString(Cell const& cell) {
@@ -182,7 +186,6 @@ std::string CellToString(Cell const& cell) {
   return ss.str();
 }
 
-}  // namespace
 }  // namespace bigtable
 
 class AcceptanceTest : public ::testing::Test {

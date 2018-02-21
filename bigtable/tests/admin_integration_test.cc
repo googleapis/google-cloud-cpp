@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include <absl/memory/memory.h>
-#include <absl/strings/str_join.h>
 
 #include <gmock/gmock.h>
 #include <google/protobuf/text_format.h>
@@ -65,11 +64,16 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
                    back_inserter(diff_table_list));
 
     if (not diff_table_list.empty()) {
-      std::cout << "Mismatched Tables: " << absl::StrJoin(diff_table_list, "\n")
-                << "\nactual: " << absl::StrJoin(actual_table_list, "\n")
-                << "\nexpected: " << absl::StrJoin(expected_table_list, "\n")
-                << "\n"
-                << std::endl;
+      std::cout << "Mismatched Tables: ";
+      std::copy(diff_table_list.begin(), diff_table_list.end(),
+                std::ostream_iterator<std::string>(std::cout, "\n"));
+      std::cout << "\nactual: ";
+      std::copy(actual_table_list.begin(), actual_table_list.end(),
+                std::ostream_iterator<std::string>(std::cout, "\n"));
+      std::cout << "\nexpected: ";
+      std::copy(expected_table_list.begin(), expected_table_list.end(),
+                std::ostream_iterator<std::string>(std::cout, "\n"));
+      std::cout << std::endl;
     }
 
     return diff_table_list.empty();
