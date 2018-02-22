@@ -26,49 +26,41 @@
  * of the platform problems.
  */
 
-// Abort compilation if the compiler does not support C++11.
-#ifndef _MSC_VER
-// Microsoft Visual Studio does not define __cplusplus correctly for C++11.
-#if __cplusplus < 201103L
-#error "Bigtable C++ Client requires C++11"
-#endif  // __cplusplus < 201103L
-#elif _MSC_VER < 1900
-#error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
-#endif  // _MSC_VER
-
 // With Microsoft Visual Studio we need an extra header for the word boolean
 // operators.
 #include <ciso646>
 
+// Abort compilation if the compiler does not support C++11.
+#ifndef _MSC_VER
+// Microsoft Visual Studio does not define __cplusplus correctly for C++11.
+#  if __cplusplus < 201103L
+#    error "Bigtable C++ Client requires C++11"
+#  endif  // __cplusplus < 201103L
+#elif _MSC_VER < 1900
+#  error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
+#endif  // _MSC_VER
+
 // Discover if exceptions are enabled and define them as needed.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-#error GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be directly set.
-
+#  error GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be directly set.
 #elif defined(__clang__)
-
-#if defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
-#define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
-#endif  // defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
-
-// Handle remaining special cases and default to exceptions being supported.
+#  if defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
+#    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
+#  endif  // defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
 #elif defined(_MSC_VER)
-
-#if defined(_CPPUNWIND)
-#define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
-#endif  // defined(_CPPUNWIND)
-
+#  if defined(_CPPUNWIND)
+#    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
+#  endif  // defined(_CPPUNWIND)
 #elif defined(__GNUC__)
-
-#if (__GNUC__ < 5) && defined(__EXCEPTIONS)
-#define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
-#elif (__GNUC__ >= 5) && defined(__cpp_exceptions)
-#define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
-#endif  // (__GNUC__ >= 5) && defined(__cpp_exceptions)
-
+#  if (__GNUC__ < 5) && defined(__EXCEPTIONS)
+#    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
+#  elif (__GNUC__ >= 5) && defined(__cpp_exceptions)
+#    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
+#  endif  // (__GNUC__ >= 5) && defined(__cpp_exceptions)
 #elif defined(__cpp_exceptions)
-// This should work in increasingly more and more compilers.
-// https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
-#define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
+   // This should work in increasingly more and more compilers.
+   // https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
+#  define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_PORT_PLATFORM_H_
