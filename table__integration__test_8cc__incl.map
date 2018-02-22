@@ -3,11 +3,12 @@
 <area shape="rect" id="node3" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="565,638,702,665"/>
 <area shape="rect" id="node9" href="$table_8h.html" title="bigtable/client/table.h" alt="" coords="1294,281,1440,307"/>
 <area shape="rect" id="node10" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="1040,452,1171,493"/>
-<area shape="rect" id="node38" href="$mock__data__client_8h.html" title="bigtable/client/testing\l/mock_data_client.h" alt="" coords="1430,184,1576,225"/>
+<area shape="rect" id="node38" href="$mock__data__client_8h.html" title="bigtable/client/testing\l/mock_data_client.h" alt="" coords="1442,184,1588,225"/>
 <area shape="rect" id="node41" href="$mock__response__stream_8h.html" title="bigtable/client/testing\l/mock_response_stream.h" alt="" coords="1626,184,1802,225"/>
 <area shape="rect" id="node42" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="2776,452,2921,493"/>
 <area shape="rect" id="node44" href="$table__admin_8h.html" title="bigtable/admin/table\l_admin.h" alt="" coords="2372,363,2511,404"/>
 <area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="1788,727,1946,754"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="1793,809,1941,851"/>
 <area shape="rect" id="node16" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="1506,549,1655,575"/>
 <area shape="rect" id="node21" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="2132,452,2303,493"/>
 <area shape="rect" id="node23" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="1680,549,1854,575"/>

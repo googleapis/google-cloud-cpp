@@ -1,11 +1,12 @@
 <map id="admin/table_admin.h" name="admin/table_admin.h">
-<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="282,80,427,121"/>
-<area shape="rect" id="node13" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="848,169,1000,211"/>
-<area shape="rect" id="node19" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="855,80,993,121"/>
-<area shape="rect" id="node22" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="699,169,823,211"/>
-<area shape="rect" id="node24" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="499,169,623,211"/>
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="286,169,423,211"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="317,348,475,375"/>
-<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="210,259,358,300"/>
-<area shape="rect" id="node17" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1121,259,1269,300"/>
+<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="283,80,428,121"/>
+<area shape="rect" id="node14" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="849,169,1001,211"/>
+<area shape="rect" id="node20" href="$table__config_8h.html" title="bigtable/admin/table\l_config.h" alt="" coords="856,80,994,121"/>
+<area shape="rect" id="node23" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="700,169,824,211"/>
+<area shape="rect" id="node25" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="500,169,624,211"/>
+<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="287,169,424,211"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="318,348,476,375"/>
+<area shape="rect" id="node9" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="211,259,359,300"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="323,423,471,464"/>
+<area shape="rect" id="node18" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1122,259,1270,300"/>
 </map>

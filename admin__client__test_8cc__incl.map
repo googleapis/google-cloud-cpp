@@ -1,6 +1,7 @@
 <map id="admin/admin_client_test.cc" name="admin/admin_client_test.cc">
 <area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="318,95,464,136"/>
 <area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="96,184,233,225"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="158,363,317,389"/>
-<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="169,273,317,315"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="154,363,313,389"/>
+<area shape="rect" id="node9" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="169,273,317,315"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="156,437,304,479"/>
 </map>

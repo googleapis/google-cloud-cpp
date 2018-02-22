@@ -1,6 +1,7 @@
 <map id="admin/column_family_test.cc" name="admin/column_family_test.cc">
 <area shape="rect" id="node2" href="$column__family_8h.html" title="bigtable/admin/column\l_family.h" alt="" coords="328,95,480,136"/>
-<area shape="rect" id="node13" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="643,95,788,136"/>
+<area shape="rect" id="node14" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="643,95,788,136"/>
 <area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="136,273,295,300"/>
-<area shape="rect" id="node10" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="512,184,660,225"/>
+<area shape="rect" id="node11" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="512,184,660,225"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="204,348,352,389"/>
 </map>

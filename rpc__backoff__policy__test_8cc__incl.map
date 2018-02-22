@@ -1,5 +1,6 @@
 <map id="client/rpc_backoff_policy_test.cc" name="client/rpc_backoff_policy_test.cc">
-<area shape="rect" id="node2" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="304,95,428,136"/>
-<area shape="rect" id="node10" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="504,95,649,136"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="5,184,164,211"/>
+<area shape="rect" id="node2" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="315,95,439,136"/>
+<area shape="rect" id="node11" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="515,95,660,136"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,184,175,211"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,259,232,300"/>
 </map>

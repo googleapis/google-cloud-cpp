@@ -1,4 +1,5 @@
 <map id="client/internal/throw_delegate.cc" name="client/internal/throw_delegate.cc">
-<area shape="rect" id="node2" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="11,95,159,136"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="5,184,164,211"/>
+<area shape="rect" id="node2" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="21,95,169,136"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,184,175,211"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,259,232,300"/>
 </map>

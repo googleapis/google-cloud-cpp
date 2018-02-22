@@ -1,5 +1,6 @@
 <map id="admin/admin_client.h" name="admin/admin_client.h">
 <area shape="rect" id="node2" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="96,80,233,121"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="158,259,317,285"/>
-<area shape="rect" id="node7" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="169,169,317,211"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="154,259,313,285"/>
+<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="169,169,317,211"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="156,333,304,375"/>
 </map>
