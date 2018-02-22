@@ -32,7 +32,8 @@ namespace internal {
  */
 class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
  public:
-  RowReaderIterator(RowReader* owner, bool is_end) : owner_(owner), row_() {}
+  RowReaderIterator(RowReader* owner, bool is_end)
+      : owner_(owner), row_(std::string(), {}), has_row_(false) {}
 
   RowReaderIterator& operator++();
   RowReaderIterator operator++(int) {
@@ -41,17 +42,17 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
     return tmp;
   }
 
-  Row const* operator->() const { return row_.operator->(); }
-  Row* operator->() { return row_.operator->(); }
+  Row const* operator->() const { return &row_; }
+  Row* operator->() { return &row_; }
 
-  Row const& operator*() const & { return row_.operator*(); }
-  Row& operator*() & { return row_.operator*(); }
-  Row const&& operator*() const && { return std::move(row_.operator*()); }
-  Row&& operator*() && { return std::move(row_.operator*()); }
+  Row const& operator*() const & { return row_; }
+  Row& operator*() & { return row_; }
+  Row const&& operator*() const && { return std::move(row_); }
+  Row&& operator*() && { return std::move(row_); }
 
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
-    return (owner_ == that.owner_) and (bool(row_) == bool(that.row_));
+    return owner_ == that.owner_ and has_row_ == that.has_row_;
   }
 
   bool operator!=(RowReaderIterator const& that) const {
@@ -60,7 +61,8 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
 
  private:
   RowReader* owner_;
-  absl::optional<Row> row_;
+  Row row_;
+  bool has_row_;
 };
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
