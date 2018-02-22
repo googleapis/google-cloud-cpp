@@ -16,7 +16,7 @@ experience on the platform.
 
 Documenting guidelines as to when is it a good idea to raise exceptions vs.
 returning and error status is beyond the scope of this document, and is
-described in the [style guide](style-guide.md).
+described in the [style guide](cpp-style-guide.md).
 
 ## Overview
 

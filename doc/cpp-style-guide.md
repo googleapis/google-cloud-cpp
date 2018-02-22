@@ -8,6 +8,7 @@ The exceptions are highlighted to help contributors familiar with the GSG start 
 ## Goals
 
 ##### Style rules should pull their weight
+
 The benefit of a style rule must be large enough to justify asking all of our engineers to remember it. The benefit is
 measured relative to the codebase we would get without the rule, so a rule against a very harmful practice may still
 have a small benefit if people are unlikely to do it anyway. This principle mostly explains the rules we don’t have,
@@ -15,11 +16,13 @@ rather than the rules we do: for example, goto contravenes many of the following
 rare, so the Style Guide doesn’t discuss it.
 
 ##### Optimize for the user first, the reader second, and the writer last
+
 The code in `google-cloud-cpp` will be used by far more developers than those contributing to the project.  They are the
 main audience, make the libraries easy to use first.  Then make it easy to understand for a future developer, last make
 it easy to write.
 
 ##### Be consistent with the broader C++ community as much as possible
+
 Consistency with the way other organizations use C++ has value for the same reasons as consistency within our code base.
 Most of the users of `google-cloud-cpp` will not be Googlers, they will be used to the standard library, and to other
 popular libraries such as [Boost](https://www.boost.org).  The style guide should conform to their expectations and
@@ -30,19 +33,21 @@ for using it.  However, sometimes standard features and idioms are flawed, or we
 needs in mind.  In those cases (as described below) it's appropriate to constrain or ban standard features.
 
 `google-cloud-cpp` tries to minimize the number of dependencies it imposes on its users.  When the C++ standard solves a
-problem we prefer to adopt that solution first.  If the C++ standard does not solve a feature, or if the solution is not
-yet widely available we use [abseil](https://www.abseil.io) as an alternative.
+problem we prefer to adopt that solution first.
 
 ##### Avoid surprising or dangerous constructs
+
 C++ has features that are more surprising or dangerous than one might think at a glance. Some style guide restrictions
 are in place to prevent falling into these pitfalls. There is a high bar for style guide waivers on such restrictions,
 because waiving such rules often directly risks compromising program correctness.
 
 ##### Concede to optimization when necessary
+
 Performance optimizations can sometimes be necessary and appropriate, even when they conflict with the other principles
 of this document.
 
 ##### Adopt rules that can be enforced by automatic tools
+
 When designing this style guide we biased towards rules that can be automatically enforced by linters such as
 `clang-tidy` or `clang-format`
 
@@ -50,19 +55,8 @@ When designing this style guide we biased towards rules that can be automaticall
 
 ### Exceptions
 
-This project uses C++ exceptions for error reporting and handling.  In general, exceptions should indicate that a
-function failed to perform its job, for example, constructors that fail, or remote operations that cannot contact the
-server.
-
-In distributed systems it is possible for a function to only perform part of its job, in these cases the function
-should not raise an exception, it should return a result indicating what parts of the request completed successfully,
-and which parts failed.
-
-### Naming Conventions
-
-Most names should be `all_in_lowercase`.  This includes namespaces, classes, structs, standalone functions.  Macros are
-`ALL_UPPER_CASE`.  Template parameters are `CamelCase` though they rarely require more than one word.  This follows the
-naming conventions in the standard library and Boost.
+This project uses C++ exceptions for error reporting and handling, but the project must compile without exception 
+support, following [this approach](no-exception-support.md).
 
 ### External Libraries
 
@@ -72,8 +66,6 @@ Only use the following libraries:
 * [protobuf](https://github.com/google/protobuf): this is a hard dependencies for gRPC.
 * [googletest](https://github.com/google/googletest): this is a requirement for gRPC and protobuf, and used only for
     testing.
-* [abseil](https://abseil.io): as a replacement for C++ features not yet widely available (e.g. `std::make_unique`,
-    or `std::string_view`).  Only those classes and functions usable as header-only are allowed.
 * The C++11 standard library.
 
 This is a fairly minimal set. Any proposal to add new libraries will require careful consideration. Additional libraries
@@ -154,7 +146,7 @@ Define functions inline only when they are small, say, 10 lines or fewer.
 #### Names and Order of Includes
 
 Use the following order for readability and to avoid hidden dependencies: related header, the project's `.h` files,
-grpc headers, protobuf headers, abseil headers, C++ library, C library.
+grpc headers, protobuf headers, C++ library, C library.
 
 The project headers should always be included using their full path from the project root.
 
@@ -170,14 +162,11 @@ example, a `table.cc` file would have:
 // Copyright notice elided ...
 #include "bigtable/client/table.h"
 #include "bigtable/client/foo.h"
-
+#include <grpc/grpc/++.h>
 #include <google/bigtable/v2/data.grpc.pb.h>
-
-#include <absl/memory/memory.h>
-#include <absl/string/str_join.h>
-
-#include <vector>
 #include <map>
+#include <vector>
+#include <unitstd.h> // probably protected by #ifdef for Windows.
 ```
 
 This is substantially different from the corresponding
@@ -405,7 +394,28 @@ other classes solely through their public members.
 
 #### Exceptions
 
-Use exceptions to represent a failure to complete the desired work in a function.
+Use exceptions to represent a failure to complete the desired work in a function. Your library should compile with 
+exceptions disabled, follow [the design document](no-exception-support.md) to do so.
+
+There are no hard and fast rules as to when is better to raise an exceptions vs. returning an error status, specially
+for libraries that contact remote systems. In general, this guideline is useful:
+
+```
+Raise an exception when the function could not complete its work.
+```
+
+For purely local functions this is a broadly applicable guideline. If the preconditions are not met, or the arguments
+are out of range or invalid one should raise an exception. It is a harder rule to apply for operations that need to 
+contact a remote server. The following list is not exhaustive, but provides some general principles:
+
+- Failing to contact the server should raise an exception.
+- Receiving an invalid response from the server should raise an exception.
+- Receiving a permanent error status from the server should raise an exception.
+- Being unable to find an object, or row, or file in a remote server should
+  not raise an exception.
+
+As we said, there are no hard and fast rules, consult your colleagues and be
+ready to change your mind.
 
 This is substantially different from the corresponding
 [GSG section](https://google.github.io/styleguide/cppguide.html#Exceptions)
@@ -555,7 +565,7 @@ form over `typedef Bar Foo;` because it can be used more consistently.
 Naming rules are pretty arbitrary, but we feel that consistency is more important than individual preferences in this
 area, so regardless of whether you find them sensible or not, the rules are the rules.
 
-All the subsections here are substantially different from the corresponding
+All the subsections here follow the guidelines in the corresponding
 [GSG sections](https://google.github.io/styleguide/cppguide.html#Naming)
 
 #### General Naming Rules
@@ -576,11 +586,16 @@ Filenames should be all lowercase and can include underscores (`_`). Do not use 
 
 #### Type Names
 
-Type names should be all lowercase with `_` to separate words.  This is also known as `snake_case`.
+Type names start with a capital letter and have a capital letter for each new word, with no underscores.  This is 
+also known as `CamelCase`.
+
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Type_Names)
 
 #### Variable Names
 
 Variable names should be all lowercase with `_` to separate words.  This is also known as `snake_case`.
+
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Variable_Names)
 
 #### Class Data Members
 
@@ -594,19 +609,29 @@ This is also known as `snake_case`.
 
 #### Constant Names
 
-Constant names should be all lowercase with `_` to separate words.  This is also known as `snake_case`.
+Variables declared constexpr or const, and whose value is fixed for the duration of the program, are named with a leading "k" followed by mixed case
+
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Constant_Names)
 
 #### Function Names
 
-Variable names should be all lowercase with `_` to separate words.  This is also known as `snake_case`.
+Regular functions have mixed case; accessors and mutators may be named like variables.
+
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Function_Names)
 
 #### Namespace Names
 
-Namespace names should be all lowercase with `_` to separate words.  This is also known as `snake_case`.
+Namespace names are all lower-case. Top-level namespace names are based on the project name . Avoid collisions between nested namespaces and well-known top-level namespaces.
+
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Namespace_Names)
 
 #### Enumerator Names
 
-Enumerators are named like macros.  All uppercase separated by `_`, as in `MY_FANCY_ENUM_VALUE`.
+Enumerators (for both scoped and unscoped enums) should be named like [macros](#Macro Names): `ENUM_NAME`.
+
+This rule is more restrictive than:
+NN
+[link to CSG](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
 #### Macro Names
 
@@ -634,10 +659,10 @@ Use either the `//` or `/* */` syntax, as long as you are consistent.
 
 #### Legal Notice and Author Line
 
-Every file should contain license boilerplate.  The boilerplate for this project is:
+Every file should contain license boilerplate, in this project use:
 
 ```C++
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -654,9 +679,15 @@ Every file should contain license boilerplate.  The boilerplate for this project
 
 #### File Contents
 
+If a `.h` declares multiple abstractions, the file-level comment should broadly describe the contents of the file, and 
+how the abstractions are related. A 1 or 2 sentence file-level comment may be sufficient. The detailed documentation 
+about individual abstractions belongs with those abstractions, not at the file level. 
+
+Do not duplicate comments in both the `.h` and the `.cc`. Duplicated comments diverge.
+
 #### Class Comments
 
-Use Doxygen-style comments to document classes.  Prefer `@directives` over `\directives`.  Do document the template
+Use Doxygen-style comments to document classes.  Prefer `@directives` over `\directivFes`.  Do document the template
 parameters for template classes.  Use `///` for one-line Doxygen comments, use `/** */` otherwise.
 Document all classes exposed as part of the API of the library, even obvious ones.
 
