@@ -46,8 +46,7 @@ TEST(RowSetTest, AppendRowKey) {
   ASSERT_EQ(1, proto.row_keys_size());
   EXPECT_EQ("foo", proto.row_keys(0));
 
-  absl::string_view view("bar");
-  row_set.Append(view);
+  row_set.Append("bar");
   proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_keys_size());
   EXPECT_EQ("bar", proto.row_keys(1));

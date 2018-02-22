@@ -19,7 +19,6 @@
 
 #include "bigtable/client/cell.h"
 
-#include <absl/strings/string_view.h>
 #include <vector>
 
 namespace bigtable {

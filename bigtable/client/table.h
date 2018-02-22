@@ -27,7 +27,6 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 #include <absl/strings/str_cat.h>
-#include <absl/strings/string_view.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -41,7 +40,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Where the project id and instance id come from the @p client parameter.
  */
 inline std::string TableName(std::shared_ptr<DataClient> client,
-                             absl::string_view table_id) {
+                             std::string const& table_id) {
   return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
 }
 
@@ -67,7 +66,7 @@ class Table {
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
-  Table(std::shared_ptr<DataClient> client, absl::string_view table_id)
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
       : client_(std::move(client)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
@@ -125,7 +124,7 @@ class Table {
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, absl::string_view table_id,
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(std::move(client)),

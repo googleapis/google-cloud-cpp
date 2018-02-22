@@ -20,7 +20,6 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 #include <absl/strings/str_cat.h>
-#include <absl/strings/string_view.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
