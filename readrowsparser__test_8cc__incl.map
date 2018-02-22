@@ -1,6 +1,6 @@
 <map id="client/internal/readrowsparser_test.cc" name="client/internal/readrowsparser_test.cc">
-<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="343,102,491,143"/>
-<area shape="rect" id="node9" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="31,206,170,233"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="21,370,180,397"/>
-<area shape="rect" id="node6" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="248,288,385,315"/>
+<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="413,102,561,143"/>
+<area shape="rect" id="node9" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="570,206,709,233"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="321,370,480,397"/>
+<area shape="rect" id="node6" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="495,288,632,315"/>
 </map>

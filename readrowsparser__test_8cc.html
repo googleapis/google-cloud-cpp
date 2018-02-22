@@ -74,7 +74,6 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="readrowsparser_8h_source.html">bigtable/client/internal/readrowsparser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="row_8h_source.html">bigtable/client/row.h</a>&quot;</code><br />
-<code>#include &lt;absl/strings/str_join.h&gt;</code><br />
 <code>#include &lt;google/protobuf/text_format.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;numeric&gt;</code><br />
@@ -86,10 +85,10 @@ Include dependency graph for readrowsparser_test.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="readrowsparser__test_8cc__incl.png" border="0" usemap="#client_2internal_2readrowsparser__test_8cc" alt=""/></div>
 <map name="client_2internal_2readrowsparser__test_8cc" id="client_2internal_2readrowsparser__test_8cc">
-<area shape="rect" id="node2" href="readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="343,102,491,143"/>
-<area shape="rect" id="node9" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="31,206,170,233"/>
-<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="21,370,180,397"/>
-<area shape="rect" id="node6" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="248,288,385,315"/>
+<area shape="rect" id="node2" href="readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="413,102,561,143"/>
+<area shape="rect" id="node9" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="570,206,709,233"/>
+<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="321,370,480,397"/>
+<area shape="rect" id="node6" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="495,288,632,315"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -117,6 +116,10 @@ Functions</h2></td></tr>
 <tr class="separator:aeeda9284297f978b63b11f5e3354f4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51666159a42fef9858230b667c309369"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="readrowsparser__test_8cc.html#a51666159a42fef9858230b667c309369">TEST</a> (ReadRowsParserTest, SingleChunkValueIsMoved)</td></tr>
 <tr class="separator:a51666159a42fef9858230b667c309369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a314b352d881209a7333655419fa91188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a314b352d881209a7333655419fa91188">bigtable::PrintTo</a> (Cell const &amp;c, std::ostream *os)</td></tr>
+<tr class="separator:a314b352d881209a7333655419fa91188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e257086f9f372702b286f45168d1fc1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a5e257086f9f372702b286f45168d1fc1">bigtable::CellToString</a> (Cell const &amp;cell)</td></tr>
+<tr class="separator:a5e257086f9f372702b286f45168d1fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ab8d02e01d66e97182caa439bd7c5c045"></a>
@@ -290,7 +293,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 21 2018 21:49:19 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 22 2018 04:42:14 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

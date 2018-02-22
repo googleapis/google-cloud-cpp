@@ -79,6 +79,10 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a314b352d881209a7333655419fa91188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a314b352d881209a7333655419fa91188">PrintTo</a> (Cell const &amp;c, std::ostream *os)</td></tr>
+<tr class="separator:a314b352d881209a7333655419fa91188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e257086f9f372702b286f45168d1fc1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a5e257086f9f372702b286f45168d1fc1">CellToString</a> (Cell const &amp;cell)</td></tr>
+<tr class="separator:a5e257086f9f372702b286f45168d1fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21bd571299aa3dd604456ad1f65bf75e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a21bd571299aa3dd604456ad1f65bf75e">CellCompare</a> (bigtable::Cell const &amp;lhs, bigtable::Cell const &amp;rhs)</td></tr>
 <tr class="separator:a21bd571299aa3dd604456ad1f65bf75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bdc8385fc902be2921b6f4d40967a88"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html#a4bdc8385fc902be2921b6f4d40967a88">version_string</a> ()</td></tr>
@@ -124,6 +128,24 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5e257086f9f372702b286f45168d1fc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e257086f9f372702b286f45168d1fc1">&#9670;&nbsp;</a></span>CellToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string bigtable::CellToString </td>
+          <td>(</td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>cell</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -187,7 +209,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a816bbee2204b0287c096c6db6dfacab5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a816bbee2204b0287c096c6db6dfacab5">&#9670;&nbsp;</a></span>PrintTo()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a816bbee2204b0287c096c6db6dfacab5">&#9670;&nbsp;</a></span>PrintTo() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,6 +235,34 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This function is not used in this file, but it is used by GoogleTest; without it, failing tests will output binary blobs instead of human-readable text. </p>
+
+</div>
+</div>
+<a id="a314b352d881209a7333655419fa91188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a314b352d881209a7333655419fa91188">&#9670;&nbsp;</a></span>PrintTo() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::PrintTo </td>
+          <td>(</td>
+          <td class="paramtype">Cell const &amp;&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ostream *&#160;</td>
+          <td class="paramname"><em>os</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -306,7 +356,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 21 2018 21:49:19 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 22 2018 04:42:14 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
