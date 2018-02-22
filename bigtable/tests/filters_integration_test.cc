@@ -17,8 +17,6 @@
 #include <cmath>
 #include <sstream>
 
-#include <absl/strings/str_join.h>
-
 #include <gmock/gmock.h>
 
 #include "bigtable/admin/admin_client.h"
@@ -621,4 +619,4 @@ namespace {
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
-}
+}  // namespace

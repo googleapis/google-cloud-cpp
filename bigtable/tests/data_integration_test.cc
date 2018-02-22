@@ -15,7 +15,6 @@
 #include <gmock/gmock.h>
 
 #include <absl/memory/memory.h>
-#include <absl/strings/str_join.h>
 
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
