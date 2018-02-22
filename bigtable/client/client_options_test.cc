@@ -140,7 +140,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
             grpc::string(test_args_second.args[1].key));
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
   // Test if fallback_timeout exceeds int range then throw out_of_range
   // exception
@@ -150,7 +150,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
                    std::chrono::hours(999)),
                std::range_error);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();

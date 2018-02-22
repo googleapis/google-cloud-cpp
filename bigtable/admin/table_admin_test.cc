@@ -192,7 +192,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
 // After all the setup, make the actual call we want to test.
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
@@ -203,7 +203,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
   EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btproto::Table::FULL),
                             "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /**
@@ -225,7 +225,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
       .WillRepeatedly(Invoke(mock_recoverable_failure));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -239,7 +239,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
   EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btproto::Table::FULL),
                             "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
@@ -296,7 +296,7 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
@@ -310,7 +310,7 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
   EXPECT_DEATH_IF_SUPPORTED(
       tested.CreateTable("other-table", bigtable::TableConfig()),
       "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /**
@@ -328,7 +328,7 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -344,7 +344,7 @@ TEST_F(TableAdminTest, CreateTableTooManyFailures) {
   EXPECT_DEATH_IF_SUPPORTED(
       tested.CreateTable("other-table", bigtable::TableConfig()),
       "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
@@ -382,7 +382,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
@@ -392,7 +392,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
   EXPECT_DEATH_IF_SUPPORTED(tested.GetTable("other-table"),
                             "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /**
@@ -410,7 +410,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed. Notice that it is prepared to tolerate 3 failures, so it is the
   // fourth failure that actually raises an error.
@@ -424,7 +424,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
   EXPECT_DEATH_IF_SUPPORTED(tested.GetTable("other-table"),
                             "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.

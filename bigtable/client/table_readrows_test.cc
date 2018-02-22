@@ -54,7 +54,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(TableReadRowsTest, ReadRowsFailsForIllegalRowLimit) {
   EXPECT_THROW(
       table_.ReadRows(bigtable::RowSet(), 0, bigtable::Filter::PassAllFilter()),
@@ -63,7 +63,7 @@ TEST_F(TableReadRowsTest, ReadRowsFailsForIllegalRowLimit) {
                                bigtable::Filter::PassAllFilter()),
                std::invalid_argument);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(
@@ -122,7 +122,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
       .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
@@ -144,4 +144,4 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

@@ -25,7 +25,7 @@ namespace {
 [[noreturn]] void ReportPermanentFailures(
     char const* msg, grpc::Status const& status,
     std::vector<bigtable::FailedMutation> failures) {
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw bigtable::PermanentMutationFailure(msg, status, std::move(failures));
 #else
   std::cerr << msg << "\n"
@@ -39,7 +39,7 @@ namespace {
   }
   std::cerr << "Aborting because exceptions are disabled." << std::endl;
   std::abort();
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 }
 

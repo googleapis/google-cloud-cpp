@@ -16,21 +16,21 @@
 
 #include <absl/base/config.h>
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include <stdexcept>
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 #include <iostream>
 
 namespace {
 template <typename Exception>
 [[noreturn]] void RaiseException(char const* msg) {
-#ifdef ABSL_HAVE_EXCEPTIONS
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw Exception(msg);
 #else
   std::cerr << "Aborting because exceptions are disabled: " << msg << std::endl;
   std::abort();
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 }
 
