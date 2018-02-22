@@ -17,8 +17,6 @@
 
 #include <sstream>
 
-#include <absl/strings/str_cat.h>
-
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
@@ -29,7 +27,7 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  auto error_message = absl::StrCat("CreateTable(", request.table_id(), ")");
+  auto error_message = "CreateTable(" + request.table_id() + ")";
   return CallWithRetry(&StubType::CreateTable, request, error_message.c_str());
 }
 
@@ -81,7 +79,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   request.set_name(TableName(table_id));
   request.set_view(view);
 
-  auto error_message = absl::StrCat("GetTable(", request.name(), ")");
+  auto error_message = "GetTable(" + request.name() + ")";
   return CallWithRetry(&StubType::GetTable, request, error_message.c_str());
 }
 
@@ -100,8 +98,7 @@ void TableAdmin::DeleteTable(std::string table_id) {
     *request.add_modifications() = m.as_proto_move();
   }
 
-  auto error_message =
-      absl::StrCat("ModifyColumnFamilies(", request.name(), ")");
+  auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
   return CallWithRetry(&StubType::ModifyColumnFamilies, request,
                        error_message.c_str());
 }
@@ -124,8 +121,7 @@ void TableAdmin::DropAllRows(std::string table_id) {
 }
 
 std::string TableAdmin::InstanceName() const {
-  return absl::StrCat("projects/", client_->project(), "/instances/",
-                      instance_id_);
+  return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
 
 void TableAdmin::RaiseError(grpc::Status const& status,

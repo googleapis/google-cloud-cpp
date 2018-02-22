@@ -140,7 +140,7 @@ TEST_F(AdminIntegrationTest, CheckTableListWithSingleTable) {
   table_admin_->CreateTable(table_id, bigtable::TableConfig());
 
   std::vector<std::string> expected_table_list = {
-      absl::StrCat(table_admin_->instance_name(), "/tables/", table_id)};
+      table_admin_->instance_name() + "/tables/" + table_id};
 
   bool list_is_empty = TestForTableListCheck(expected_table_list);
 
@@ -162,8 +162,8 @@ TEST_F(AdminIntegrationTest, CheckTableListWithMultipleTables) {
     // Create table First
     table_admin_->CreateTable(table_id, bigtable::TableConfig());
 
-    expected_table_list.push_back(
-        absl::StrCat(table_admin_->instance_name(), "/tables/", table_id));
+    expected_table_list.emplace_back(table_admin_->instance_name() +
+                                     "/tables/" + table_id);
   }
 
   bool list_is_empty = TestForTableListCheck(expected_table_list);

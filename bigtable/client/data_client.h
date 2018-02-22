@@ -15,11 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
 
-#include "bigtable/client/client_options.h"
-
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
-
-#include <absl/strings/str_cat.h>
+#include "bigtable/client/client_options.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -70,8 +67,8 @@ std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
  * `projects/instances/<client->project_id()>/instances/<client->instance_id()>`
  */
 inline std::string InstanceName(std::shared_ptr<DataClient> client) {
-  return absl::StrCat("projects/", client->project_id(), "/instances/",
-                      client->instance_id());
+  return "projects/" + client->project_id() + "/instances/" +
+         client->instance_id();
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

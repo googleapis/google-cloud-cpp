@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 
 #include "bigtable/client/client_options.h"
-#include <absl/strings/str_cat.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -28,8 +27,9 @@ ClientOptions::ClientOptions() {
     credentials_ = grpc::GoogleDefaultCredentials();
   }
   channel_arguments_ = grpc::ChannelArguments();
-  channel_arguments_.SetUserAgentPrefix(
-      absl::StrCat("cbt-c++/", version_string()));
+
+  static std::string const prefix = "cbt-c++/" + version_string();
+  channel_arguments_.SetUserAgentPrefix(prefix);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

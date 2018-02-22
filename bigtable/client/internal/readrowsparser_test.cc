@@ -126,6 +126,7 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(parser.Next(), std::exception);
 #else
+
   ASSERT_DEATH_IF_SUPPORTED(parser.Next(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
