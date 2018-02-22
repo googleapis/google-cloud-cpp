@@ -30,6 +30,10 @@
 // operators.
 #include <ciso646>
 
+// Turn off clang-format because these nested #if/#endif blocks are more
+// readable with indentation.
+// clang-format off
+
 // Abort compilation if the compiler does not support C++11.
 #ifndef _MSC_VER
 // Microsoft Visual Studio does not define __cplusplus correctly for C++11.
@@ -62,5 +66,6 @@
    // https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 #  define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+// clang-format on
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_PORT_PLATFORM_H_
