@@ -1,6 +1,6 @@
 <map id="client/row_test.cc" name="client/row_test.cc">
-<area shape="rect" id="node2" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="193,80,331,107"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,237,175,263"/>
-<area shape="rect" id="node7" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="140,155,277,181"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,319,232,360"/>
+<area shape="rect" id="node2" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="113,80,251,107"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,229,175,256"/>
+<area shape="rect" id="node7" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="113,155,251,181"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,304,232,345"/>
 </map>

@@ -97,15 +97,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1577203b5038dd082f8e7709a903dafe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#a1577203b5038dd082f8e7709a903dafe">Append</a> (<a class="el" href="classbigtable_1_1v0_1_1RowRange.html">RowRange</a> range)</td></tr>
 <tr class="memdesc:a1577203b5038dd082f8e7709a903dafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>range</code> to the set.  <a href="#a1577203b5038dd082f8e7709a903dafe">More...</a><br /></td></tr>
 <tr class="separator:a1577203b5038dd082f8e7709a903dafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a153edb9e5bb62b6d06e2d2cf69ca15cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#a153edb9e5bb62b6d06e2d2cf69ca15cf">Append</a> (absl::string_view row_key)</td></tr>
-<tr class="memdesc:a153edb9e5bb62b6d06e2d2cf69ca15cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>row_key</code> to the set.  <a href="#a153edb9e5bb62b6d06e2d2cf69ca15cf">More...</a><br /></td></tr>
-<tr class="separator:a153edb9e5bb62b6d06e2d2cf69ca15cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad02983a68b04b1d68e56d5d6ee6a71ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#ad02983a68b04b1d68e56d5d6ee6a71ee">Append</a> (std::string row_key)</td></tr>
 <tr class="memdesc:ad02983a68b04b1d68e56d5d6ee6a71ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>row_key</code> to the set, minimize copies when possible.  <a href="#ad02983a68b04b1d68e56d5d6ee6a71ee">More...</a><br /></td></tr>
 <tr class="separator:ad02983a68b04b1d68e56d5d6ee6a71ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a678a5d9be8e37a7db6ca34c953fdb407"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#a678a5d9be8e37a7db6ca34c953fdb407">Append</a> (char const *row_key)</td></tr>
-<tr class="memdesc:a678a5d9be8e37a7db6ca34c953fdb407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>row_key</code> to the set, resolve ambiguous overloads.  <a href="#a678a5d9be8e37a7db6ca34c953fdb407">More...</a><br /></td></tr>
-<tr class="separator:a678a5d9be8e37a7db6ca34c953fdb407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf7ca8e97e7d12f33018a36a0188079a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html">RowSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#aaf7ca8e97e7d12f33018a36a0188079a">Intersect</a> (bigtable::RowRange const &amp;range) const</td></tr>
 <tr class="memdesc:aaf7ca8e97e7d12f33018a36a0188079a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify this object to contain the ranges and keys inside <code>range</code>.  <a href="#aaf7ca8e97e7d12f33018a36a0188079a">More...</a><br /></td></tr>
 <tr class="separator:aaf7ca8e97e7d12f33018a36a0188079a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,7 +224,7 @@ template&lt;typename... Arg&gt; </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1577203b5038dd082f8e7709a903dafe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1577203b5038dd082f8e7709a903dafe">&#9670;&nbsp;</a></span>Append() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1577203b5038dd082f8e7709a903dafe">&#9670;&nbsp;</a></span>Append() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,36 +251,8 @@ template&lt;typename... Arg&gt; </div>
 
 </div>
 </div>
-<a id="a153edb9e5bb62b6d06e2d2cf69ca15cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a153edb9e5bb62b6d06e2d2cf69ca15cf">&#9670;&nbsp;</a></span>Append() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bigtable::v0::RowSet::Append </td>
-          <td>(</td>
-          <td class="paramtype">absl::string_view&#160;</td>
-          <td class="paramname"><em>row_key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add <code>row_key</code> to the set. </p>
-
-</div>
-</div>
 <a id="ad02983a68b04b1d68e56d5d6ee6a71ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad02983a68b04b1d68e56d5d6ee6a71ee">&#9670;&nbsp;</a></span>Append() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad02983a68b04b1d68e56d5d6ee6a71ee">&#9670;&nbsp;</a></span>Append() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -310,36 +276,6 @@ template&lt;typename... Arg&gt; </div>
 </div><div class="memdoc">
 
 <p>Add <code>row_key</code> to the set, minimize copies when possible. </p>
-<p>Unlike <code><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#a153edb9e5bb62b6d06e2d2cf69ca15cf" title="Add row_key to the set. ">Append(absl::string_view)</a></code> this overload can avoid copies of the <code>row_key</code> parameter. </p>
-
-</div>
-</div>
-<a id="a678a5d9be8e37a7db6ca34c953fdb407"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a678a5d9be8e37a7db6ca34c953fdb407">&#9670;&nbsp;</a></span>Append() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bigtable::v0::RowSet::Append </td>
-          <td>(</td>
-          <td class="paramtype">char const *&#160;</td>
-          <td class="paramname"><em>row_key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add <code>row_key</code> to the set, resolve ambiguous overloads. </p>
-<p>This overload is needed to resolve ambiguity between <code><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#a153edb9e5bb62b6d06e2d2cf69ca15cf" title="Add row_key to the set. ">Append(absl::string_view)</a></code> and <code><a class="el" href="classbigtable_1_1v0_1_1RowSet.html#ad02983a68b04b1d68e56d5d6ee6a71ee" title="Add row_key to the set, minimize copies when possible. ">Append(std::string)</a></code>. </p>
 
 </div>
 </div>
@@ -494,7 +430,7 @@ template&lt;typename... Arg&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 22 2018 18:05:30 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 22 2018 18:17:02 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

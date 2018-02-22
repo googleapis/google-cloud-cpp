@@ -1,5 +1,5 @@
 <map id="client/row_range.h" name="client/row_range.h">
-<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,177,175,203"/>
-<area shape="rect" id="node9" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="236,80,384,121"/>
-<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,259,232,300"/>
+<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="137,169,295,196"/>
+<area shape="rect" id="node8" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="263,80,411,121"/>
+<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="138,244,286,285"/>
 </map>

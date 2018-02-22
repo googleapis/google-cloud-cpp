@@ -1,7 +1,7 @@
 <map id="client/internal/readrowsparser_test.cc" name="client/internal/readrowsparser_test.cc">
-<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="413,102,561,143"/>
-<area shape="rect" id="node10" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="570,206,709,233"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="321,370,480,397"/>
-<area shape="rect" id="node7" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="495,288,632,315"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="389,452,537,493"/>
+<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="103,102,251,143"/>
+<area shape="rect" id="node11" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="435,206,573,233"/>
+<area shape="rect" id="node6" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="99,288,237,315"/>
+<area shape="rect" id="node7" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="114,363,273,389"/>
+<area shape="rect" id="node9" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="182,437,330,479"/>
 </map>
