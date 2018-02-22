@@ -122,7 +122,7 @@ void RowReader::Advance(absl::optional<Row>& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
       status = AdvanceOrFail(row);
     } catch (std::exception const& ex) {
@@ -131,7 +131,7 @@ void RowReader::Advance(absl::optional<Row>& row) {
     }
 #else
     status = AdvanceOrFail(row);
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {
       return;

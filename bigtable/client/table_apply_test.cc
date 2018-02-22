@@ -39,7 +39,7 @@ TEST_F(TableApplyTest, Failure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
                    "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
                std::exception);
@@ -48,7 +48,7 @@ TEST_F(TableApplyTest, Failure) {
       table_.Apply(bigtable::SingleRowMutation(
           "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
       "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that Table::Apply() retries on partial failures.
@@ -76,7 +76,7 @@ TEST_F(TableApplyTest, RetryIdempotent) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // TODO(#234) - update this test when Apply() returns on error.
   try {
     table_.Apply(bigtable::SingleRowMutation(
@@ -94,5 +94,5 @@ TEST_F(TableApplyTest, RetryIdempotent) {
       table_.Apply(bigtable::SingleRowMutation(
           "not-idempotent", {bigtable::SetCell("fam", "col", "val")})),
       "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

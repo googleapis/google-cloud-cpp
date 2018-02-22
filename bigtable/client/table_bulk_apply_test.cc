@@ -122,7 +122,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 }
 
 // TODO(#234) - this test could be enabled when bug is closed.
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   using namespace ::testing;
@@ -159,7 +159,7 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
           bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
       std::exception);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
 TEST_F(TableBulkApplyTest, CanceledStream) {
@@ -215,7 +215,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
 }
 
 // TODO(#234) - these test should be modified and enabled when bug is closed.
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
   using namespace ::testing;
@@ -359,4 +359,4 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
     FAIL() << "unexpected exception of unknown type raised";
   }
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

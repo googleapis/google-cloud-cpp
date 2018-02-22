@@ -289,7 +289,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
   auto parser = absl::make_unique<ReadRowsParserMock>();
@@ -312,7 +312,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
 
   EXPECT_THROW(reader.begin(), std::exception);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -354,7 +354,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 using testing::Throw;
 
@@ -459,7 +459,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
@@ -579,7 +579,7 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
@@ -619,7 +619,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancel) {
 
   EXPECT_THROW(reader.begin(), std::runtime_error);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   // The RowReader constructor/destructor by themselves should not

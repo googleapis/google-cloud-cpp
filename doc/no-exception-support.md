@@ -87,11 +87,11 @@ becomes:
 
 ```C++
 TEST(MyTest, TheTest) {
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(foo(), std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(foo(), "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 ```
 
@@ -124,12 +124,12 @@ Such a test would become:
 
 TEST(BarTest, Increment) {
   counter = 0;
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(bar(), std::runtime_error);
   EXPECT_EQ(1, counter);
 #else
   EXPECT_DEATH_IF_SUPPORTED(bar(), "exceptions are disabled");
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 ```
 
@@ -137,14 +137,14 @@ Note that the value of `counter` is unchanged with `EXPECT_DEATH()`.  Since some
 of these tests become trivial sometimes it is simpler to just say:
 
 ```C++
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 // Test is trivial without exceptions, 
 TEST(BarTest, Increment) {
   counter = 0;
   EXPECT_THROW(bar(), std::runtime_error);
   EXPECT_EQ(1, counter);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 ```
 
 ### Examples

@@ -50,7 +50,7 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
-#if ABSL_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that DeleteFromColumn() validates inputs as expected.
 TEST(MutationsTest, DeleteFromColumnValidation) {
   // Invalid ranges should fail.
@@ -59,7 +59,7 @@ TEST(MutationsTest, DeleteFromColumnValidation) {
   EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 1000, 1000),
                std::range_error);
 }
-#endif  // ABSL_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that DeleteFromColumn() and friends work as expected.
 TEST(MutationsTest, DeleteFromColumn) {
