@@ -37,8 +37,8 @@ void TableIntegrationTest::SetUp() {
 std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
     std::string const& table_name, bigtable::TableConfig& table_config) {
   table_admin_->CreateTable(table_name, table_config);
-  return std::unique_ptr<bigtable::Table>(
-      new bigtable::Table(data_client_, table_name));
+  return bigtable::internal::make_unique<bigtable::Table>(data_client_,
+                                                          table_name);
 }
 
 void TableIntegrationTest::DeleteTable(std::string const& table_name) {

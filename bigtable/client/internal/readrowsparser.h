@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "bigtable/client/cell.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/row.h"
 
 namespace bigtable {
@@ -143,7 +144,7 @@ class ReadRowsParserFactory {
 
   /// Returns a newly created parser instance.
   virtual std::unique_ptr<ReadRowsParser> Create() {
-    return std::unique_ptr<ReadRowsParser>(new ReadRowsParser);
+    return bigtable::internal::make_unique<ReadRowsParser>();
   }
 };
 }  // namespace internal
