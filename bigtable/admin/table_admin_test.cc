@@ -13,14 +13,11 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
-
+#include <absl/base/config.h>
 #include <gmock/gmock.h>
-
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
-
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
-
 #include "bigtable/client/testing/chrono_literals.h"
 
 namespace {
