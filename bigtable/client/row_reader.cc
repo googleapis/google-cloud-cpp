@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/row_reader.h"
-
 #include <thread>
-
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/internal/throw_delegate.h"
 
@@ -131,7 +129,7 @@ void RowReader::Advance(Row& row, bool& has_row) {
       status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 #else
-    status = AdvanceOrFail(row);
+    status = AdvanceOrFail(row, has_row);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {
