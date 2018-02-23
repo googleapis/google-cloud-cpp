@@ -72,29 +72,31 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="row__reader_8h_source.html">bigtable/client/row_reader.h</a>&quot;</code><br />
 <code>#include &lt;thread&gt;</code><br />
+<code>#include &quot;<a class="el" href="make__unique_8h_source.html">bigtable/client/internal/make_unique.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="throw__delegate_8h_source.html">bigtable/client/internal/throw_delegate.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for row_reader.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="row__reader_8cc__incl.png" border="0" usemap="#client_2row__reader_8cc" alt=""/></div>
 <map name="client_2row__reader_8cc" id="client_2row__reader_8cc">
-<area shape="rect" id="node2" href="row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="1012,80,1139,121"/>
-<area shape="rect" id="node10" href="throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="5,348,153,389"/>
-<area shape="rect" id="node3" href="data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="522,169,653,211"/>
-<area shape="rect" id="node13" href="filters_8h.html" title="bigtable/client/filters.h" alt="" coords="762,266,911,293"/>
-<area shape="rect" id="node18" href="readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="1345,169,1493,211"/>
-<area shape="rect" id="node22" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="1526,266,1665,293"/>
-<area shape="rect" id="node23" href="rowreaderiterator_8h.html" title="bigtable/client/internal\l/rowreaderiterator.h" alt="" coords="1592,169,1740,211"/>
-<area shape="rect" id="node26" href="row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="1137,169,1264,211"/>
-<area shape="rect" id="node29" href="rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="296,259,420,300"/>
-<area shape="rect" id="node32" href="rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="613,259,737,300"/>
-<area shape="rect" id="node4" href="client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="83,259,220,300"/>
-<area shape="rect" id="node5" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="903,437,1061,464"/>
-<area shape="rect" id="node7" href="port__platform_8h.html" title="Platform portability details. " alt="" coords="908,512,1056,553"/>
-<area shape="rect" id="node16" href="conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1037,348,1185,389"/>
-<area shape="rect" id="node21" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="1433,355,1571,382"/>
-<area shape="rect" id="node27" href="row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="1089,259,1216,300"/>
-<area shape="rect" id="node28" href="prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="1209,348,1357,389"/>
+<area shape="rect" id="node2" href="row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="989,80,1115,121"/>
+<area shape="rect" id="node10" href="throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="370,348,518,389"/>
+<area shape="rect" id="node21" href="make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="235,259,383,300"/>
+<area shape="rect" id="node3" href="data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="853,169,984,211"/>
+<area shape="rect" id="node13" href="filters_8h.html" title="bigtable/client/filters.h" alt="" coords="1492,266,1641,293"/>
+<area shape="rect" id="node18" href="readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="101,169,249,211"/>
+<area shape="rect" id="node23" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="72,266,211,293"/>
+<area shape="rect" id="node24" href="rowreaderiterator_8h.html" title="bigtable/client/internal\l/rowreaderiterator.h" alt="" coords="1191,169,1339,211"/>
+<area shape="rect" id="node27" href="row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="1666,169,1793,211"/>
+<area shape="rect" id="node30" href="rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="1090,259,1214,300"/>
+<area shape="rect" id="node32" href="rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="407,259,531,300"/>
+<area shape="rect" id="node4" href="client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="709,259,846,300"/>
+<area shape="rect" id="node5" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="838,437,997,464"/>
+<area shape="rect" id="node7" href="port__platform_8h.html" title="Platform portability details. " alt="" coords="843,512,991,553"/>
+<area shape="rect" id="node16" href="conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1493,348,1641,389"/>
+<area shape="rect" id="node20" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="73,355,210,382"/>
+<area shape="rect" id="node28" href="row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="1666,259,1793,300"/>
+<area shape="rect" id="node29" href="prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="1665,348,1813,389"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -108,7 +110,7 @@ Namespaces</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 22 2018 18:17:02 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 23 2018 02:54:35 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

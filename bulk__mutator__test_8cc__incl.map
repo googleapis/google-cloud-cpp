@@ -1,8 +1,9 @@
 <map id="client/internal/bulk_mutator_test.cc" name="client/internal/bulk_mutator_test.cc">
-<area shape="rect" id="node2" href="$bulk__mutator_8h.html" title="bigtable/client/internal\l/bulk_mutator.h" alt="" coords="171,95,319,136"/>
-<area shape="rect" id="node3" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="73,184,243,225"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,437,175,464"/>
-<area shape="rect" id="node9" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="260,273,435,300"/>
-<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,512,232,553"/>
-<area shape="rect" id="node14" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="577,348,725,389"/>
+<area shape="rect" id="node2" href="$bulk__mutator_8h.html" title="bigtable/client/internal\l/bulk_mutator.h" alt="" coords="475,95,623,136"/>
+<area shape="rect" id="node17" href="$make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="779,184,927,225"/>
+<area shape="rect" id="node3" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="431,184,601,225"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="605,437,763,464"/>
+<area shape="rect" id="node9" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="323,273,498,300"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="673,512,821,553"/>
+<area shape="rect" id="node14" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="29,348,177,389"/>
 </map>

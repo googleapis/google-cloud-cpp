@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['make_5funique',['make_unique',['../namespacebigtable_1_1v0_1_1internal.html#adafa5c9ba9a21ec48f86764dfe470719',1,'bigtable::v0::internal']]],
   ['makeonerequest',['MakeOneRequest',['../classbigtable_1_1v0_1_1internal_1_1BulkMutator.html#a6d6b43283f88a150d0990236af981b39',1,'bigtable::v0::internal::BulkMutator']]],
   ['maxage',['MaxAge',['../classbigtable_1_1v0_1_1GcRule.html#ad47d8cc40b5f4aff7eac86042d9c938b',1,'bigtable::v0::GcRule']]],
   ['maxnumversions',['MaxNumVersions',['../classbigtable_1_1v0_1_1GcRule.html#af783194b1fc8acd083c221674f5cd9f1',1,'bigtable::v0::GcRule']]],

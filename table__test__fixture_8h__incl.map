@@ -1,24 +1,25 @@
 <map id="client/testing/table_test_fixture.h" name="client/testing/table_test_fixture.h">
-<area shape="rect" id="node2" href="$table_8h.html" title="bigtable/client/table.h" alt="" coords="1429,191,1575,218"/>
-<area shape="rect" id="node38" href="$mock__data__client_8h.html" title="bigtable/client/testing\l/mock_data_client.h" alt="" coords="2301,95,2447,136"/>
-<area shape="rect" id="node41" href="$mock__response__stream_8h.html" title="bigtable/client/testing\l/mock_response_stream.h" alt="" coords="2101,95,2277,136"/>
-<area shape="rect" id="node3" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="1009,363,1139,404"/>
-<area shape="rect" id="node13" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="1742,459,1891,486"/>
-<area shape="rect" id="node18" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="1858,363,2029,404"/>
-<area shape="rect" id="node20" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="2021,459,2196,486"/>
-<area shape="rect" id="node22" href="$row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="708,273,835,315"/>
-<area shape="rect" id="node31" href="$row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="1552,363,1679,404"/>
-<area shape="rect" id="node34" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="1073,452,1197,493"/>
-<area shape="rect" id="node36" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="1391,452,1515,493"/>
-<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="912,452,1049,493"/>
-<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="1372,631,1531,657"/>
-<area shape="rect" id="node10" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="761,541,909,583"/>
-<area shape="rect" id="node7" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="1373,705,1521,747"/>
-<area shape="rect" id="node16" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="1873,541,2021,583"/>
-<area shape="rect" id="node23" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="431,363,579,404"/>
-<area shape="rect" id="node27" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="259,459,398,486"/>
-<area shape="rect" id="node28" href="$rowreaderiterator_8h.html" title="bigtable/client/internal\l/rowreaderiterator.h" alt="" coords="149,363,297,404"/>
-<area shape="rect" id="node26" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="473,549,611,575"/>
-<area shape="rect" id="node32" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="1591,452,1717,493"/>
-<area shape="rect" id="node33" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="1499,541,1647,583"/>
+<area shape="rect" id="node2" href="$table_8h.html" title="bigtable/client/table.h" alt="" coords="885,191,1031,218"/>
+<area shape="rect" id="node38" href="$mock__data__client_8h.html" title="bigtable/client/testing\l/mock_data_client.h" alt="" coords="709,95,855,136"/>
+<area shape="rect" id="node41" href="$mock__response__stream_8h.html" title="bigtable/client/testing\l/mock_response_stream.h" alt="" coords="509,95,685,136"/>
+<area shape="rect" id="node3" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="2038,363,2169,404"/>
+<area shape="rect" id="node13" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="513,459,662,486"/>
+<area shape="rect" id="node18" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="750,363,921,404"/>
+<area shape="rect" id="node20" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="313,459,488,486"/>
+<area shape="rect" id="node22" href="$row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="1272,273,1399,315"/>
+<area shape="rect" id="node31" href="$row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="599,363,725,404"/>
+<area shape="rect" id="node34" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="889,452,1013,493"/>
+<area shape="rect" id="node36" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="1089,452,1213,493"/>
+<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="1715,452,1852,493"/>
+<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="859,631,1017,657"/>
+<area shape="rect" id="node10" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="1629,541,1777,583"/>
+<area shape="rect" id="node7" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="864,705,1012,747"/>
+<area shape="rect" id="node16" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,541,356,583"/>
+<area shape="rect" id="node23" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="1815,363,1963,404"/>
+<area shape="rect" id="node27" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="1877,459,2015,486"/>
+<area shape="rect" id="node28" href="$rowreaderiterator_8h.html" title="bigtable/client/internal\l/rowreaderiterator.h" alt="" coords="1399,363,1547,404"/>
+<area shape="rect" id="node25" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="1877,549,2015,575"/>
+<area shape="rect" id="node26" href="$make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="1543,452,1691,493"/>
+<area shape="rect" id="node32" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="687,452,813,493"/>
+<area shape="rect" id="node33" href="$prefix__range__end_8h.html" title="bigtable/client/internal\l/prefix_range_end.h" alt="" coords="583,541,731,583"/>
 </map>

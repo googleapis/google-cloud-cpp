@@ -1,8 +1,9 @@
 <map id="client/internal/readrowsparser.cc" name="client/internal/readrowsparser.cc">
-<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="128,80,276,121"/>
-<area shape="rect" id="node12" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="481,259,629,300"/>
-<area shape="rect" id="node6" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="217,266,355,293"/>
-<area shape="rect" id="node11" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="375,177,514,203"/>
-<area shape="rect" id="node7" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="364,348,523,375"/>
-<area shape="rect" id="node9" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="432,423,580,464"/>
+<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="98,80,246,121"/>
+<area shape="rect" id="node13" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="403,80,551,121"/>
+<area shape="rect" id="node5" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="86,259,223,285"/>
+<area shape="rect" id="node10" href="$make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="358,169,506,211"/>
+<area shape="rect" id="node12" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="194,177,333,203"/>
+<area shape="rect" id="node6" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="258,333,416,360"/>
+<area shape="rect" id="node8" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="326,408,474,449"/>
 </map>
