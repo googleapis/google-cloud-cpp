@@ -14,8 +14,9 @@
 
 #include "bigtable/client/internal/bulk_mutator.h"
 
-#include <absl/memory/memory.h>
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
+
+#include "bigtable/client/internal/make_unique.h"
 
 /// Define types and functions used in the tests.
 namespace {
@@ -44,7 +45,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
   // Prepare the mocks.  The mutator should issue a RPC which must return a
   // stream of responses, we prepare the stream first because it is easier than
   // to create one of the fly.
-  auto reader = absl::make_unique<MockReader>();
+  auto reader = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -96,7 +97,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
 
   // Prepare the mocks for the request.  First create a stream response which
   // indicates a partial failure.
-  auto r1 = absl::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate a partial (and recoverable) failure.
@@ -113,7 +114,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
 
   // Prepare a second stream response, because the client should retry after
   // the partial failure.
-  auto r2 = absl::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -169,7 +170,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
 
   // Make the first RPC return one recoverable and one unrecoverable failures.
-  auto r1 = absl::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate a partial failure, which is recoverable for this first
@@ -188,7 +189,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
 
   // The BulkMutator should issue a second request, which will return success
   // for the remaining mutation.
-  auto r2 = absl::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -245,7 +246,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
 
   // This will be the stream returned by the first request.  It is missing
   // information about one of the mutations.
-  auto r1 = absl::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         auto& e0 = *r->add_entries();
@@ -259,7 +260,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   // The BulkMutation should issue a second request, this is the stream returned
   // by the second request, which indicates success for the missed mutation
   // on r1.
-  auto r2 = absl::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -313,7 +314,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   // We will setup the mock to return recoverable failures for idempotent
   // mutations.
-  auto r1 = absl::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate recoverable failures for both elements.
@@ -330,7 +331,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   // The BulkMutator should issue a second request, with only the idempotent
   // mutations, make the mocks return success for them.
-  auto r2 = absl::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {

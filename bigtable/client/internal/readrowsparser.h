@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_READROWSPARSER_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_READROWSPARSER_H_
 
-#include <absl/memory/memory.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <vector>
 
 #include "bigtable/client/cell.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/row.h"
 
 namespace bigtable {
@@ -144,7 +144,7 @@ class ReadRowsParserFactory {
 
   /// Returns a newly created parser instance.
   virtual std::unique_ptr<ReadRowsParser> Create() {
-    return absl::make_unique<ReadRowsParser>();
+    return bigtable::internal::make_unique<ReadRowsParser>();
   }
 };
 }  // namespace internal

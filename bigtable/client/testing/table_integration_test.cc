@@ -14,8 +14,7 @@
 
 #include "bigtable/client/testing/table_integration_test.h"
 #include <google/protobuf/text_format.h>
-
-#include <absl/memory/memory.h>
+#include "bigtable/client/internal/make_unique.h"
 
 namespace bigtable {
 namespace testing {
@@ -27,7 +26,7 @@ void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
       ::bigtable::testing::TableTestEnvironment::project_id(),
       bigtable::ClientOptions());
-  table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+  table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
       admin_client_, ::bigtable::testing::TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       ::bigtable::testing::TableTestEnvironment::project_id(),
@@ -38,7 +37,8 @@ void TableIntegrationTest::SetUp() {
 std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
     std::string const& table_name, bigtable::TableConfig& table_config) {
   table_admin_->CreateTable(table_name, table_config);
-  return absl::make_unique<bigtable::Table>(data_client_, table_name);
+  return bigtable::internal::make_unique<bigtable::Table>(data_client_,
+                                                          table_name);
 }
 
 void TableIntegrationTest::DeleteTable(std::string const& table_name) {

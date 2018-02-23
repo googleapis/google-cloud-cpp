@@ -14,6 +14,7 @@
 
 #include "bigtable/client/row_reader.h"
 
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
@@ -89,7 +90,7 @@ class ReadRowsParserMockFactory
   ParserPtr Create() override {
     CreateHook();
     if (parsers_.empty()) {
-      return absl::make_unique<bigtable::internal::ReadRowsParser>();
+      return ParserPtr(new bigtable::internal::ReadRowsParser);
     }
     ParserPtr parser = std::move(parsers_.front());
     parsers_.pop_front();
@@ -151,9 +152,9 @@ Matcher<const ReadRowsRequest&> RequestWithRowsLimit(std::int64_t n) {
 class RowReaderTest : public bigtable::testing::TableTestFixture {
  public:
   RowReaderTest()
-      : retry_policy_(absl::make_unique<RetryPolicyMock>()),
-        backoff_policy_(absl::make_unique<BackoffPolicyMock>()),
-        parser_factory_(absl::make_unique<ReadRowsParserMockFactory>()) {}
+      : retry_policy_(new RetryPolicyMock),
+        backoff_policy_(new BackoffPolicyMock),
+        parser_factory_(new ReadRowsParserMockFactory) {}
 
   std::unique_ptr<RetryPolicyMock> retry_policy_;
   std::unique_ptr<BackoffPolicyMock> backoff_policy_;
@@ -177,7 +178,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 
 TEST_F(RowReaderTest, ReadOneRow) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook()).Times(1);
   {
@@ -202,7 +203,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
 
 TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook()).Times(1);
   {
@@ -228,7 +229,7 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
 
 TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -256,7 +257,7 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
 
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -292,7 +293,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
@@ -316,7 +317,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
 
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -360,7 +361,7 @@ using testing::Throw;
 
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   auto response = bigtable::testing::ReadRowsResponseFromString("chunks {}");
   {
@@ -397,7 +398,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
 
 TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
@@ -421,7 +422,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
 
 TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -463,7 +464,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 
 TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r2"});
   {
     testing::InSequence s;
@@ -512,7 +513,7 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
 
 TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -550,7 +551,7 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
 
 TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -581,7 +582,7 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   auto* stream = new MockResponseStream();
   {
@@ -638,7 +639,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   using namespace ::testing;
   // Every retry should use a new ClientContext object.
   auto* stream = new MockResponseStream();  // wrapped in unique_ptr by ReadRows
-  auto parser = absl::make_unique<ReadRowsParserMock>();
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
 
   void* previous_context = nullptr;

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <absl/memory/memory.h>
-
 #include <gmock/gmock.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/table_admin.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 #include <string>
@@ -38,7 +37,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
-    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+    table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 
@@ -194,7 +193,7 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
   expected_text_create += R"""(
                           column_families {
                                              key: 'fam'
-                                             value { gc_rule { max_num_versions: 5 } } 
+                                             value { gc_rule { max_num_versions: 5 } }
                                           }
                           column_families {
                                              key: 'foo'
@@ -212,13 +211,13 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
   std::string expected_text = R"""(
                           column_families {
                                              key: 'fam'
-                                             value { gc_rule { max_num_versions: 2 } } 
+                                             value { gc_rule { max_num_versions: 2 } }
                                           }
                           column_families {
                                              key: 'newfam'
                                              value { gc_rule { intersection {
                                                      rules { max_age { seconds: 604800 } }
-                                                     rules { max_num_versions: 1 } 
+                                                     rules { max_num_versions: 1 }
                                                    } } }
                                           }
                         )""";
