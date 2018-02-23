@@ -49,9 +49,7 @@ Replica CreateReplica(EchoImpl *echo_impl, std::string address) {
   builder.RegisterService(echo_impl);
   std::shared_ptr<grpc::Server> server = builder.BuildAndStart();
 
-  auto waiter = [](std::shared_ptr<grpc::Server> server) {
-    server->Wait();
-  };
+  auto waiter = [](std::shared_ptr<grpc::Server> server) { server->Wait(); };
   auto task = std::async(std::launch::async, waiter, server);
   return Replica{std::move(address), std::move(server), std::move(task)};
 }
@@ -73,12 +71,12 @@ int main(int argc, char *argv[]) try {
   // Continuously restart each server, to
   while (true) {
     std::this_thread::sleep_for(std::chrono::seconds(20));
-    for (auto& replica : servers) {
+    for (auto &replica : servers) {
       replica.server->Shutdown();
       replica.task.get();
     }
     std::cout << "Shutdown completed." << std::endl;
-    for (auto& replica : servers) {
+    for (auto &replica : servers) {
       replica = CreateReplica(&echo_impl, std::move(replica.address));
     }
   }
