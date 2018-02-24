@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
-
 #include <sstream>
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace btproto = ::google::bigtable::admin::v2;
 
@@ -28,7 +27,9 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_table_id(std::move(table_id));
 
   auto error_message = "CreateTable(" + request.table_id() + ")";
-  return CallWithRetry(&StubType::CreateTable, request, error_message.c_str());
+  return CallWithRetry::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      &StubType::CreateTable, request, error_message.c_str());
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -54,7 +55,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
         client_->Stub()->ListTables(&client_context, request, &response);
     client_->on_completion(status);
     if (status.ok()) {
-      for (auto& table : response.tables()) {
+      for (auto& table : *response.mutable_tables()) {
         result.emplace_back(std::move(table));
       }
       if (response.next_page_token().empty()) {
@@ -65,7 +66,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     }
     page_token = std::move(*request.mutable_page_token());
     if (not rpc_policy->on_failure(status)) {
-      RaiseError(status, "ListTables()");
+      std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
+      internal::RaiseRpcError(status, msg);
     }
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
@@ -80,14 +82,18 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   request.set_view(view);
 
   auto error_message = "GetTable(" + request.name() + ")";
-  return CallWithRetry(&StubType::GetTable, request, error_message.c_str());
+  return CallWithRetry::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      &StubType::GetTable, request, error_message.c_str());
 }
 
 void TableAdmin::DeleteTable(std::string table_id) {
   btproto::DeleteTableRequest request;
   request.set_name(TableName(table_id));
 
-  CallWithRetry(&StubType::DeleteTable, request, "DeleteTable");
+  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+                          rpc_backoff_policy_->clone(), &StubType::DeleteTable,
+                          request, "DeleteTable");
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
@@ -99,8 +105,9 @@ void TableAdmin::DeleteTable(std::string table_id) {
   }
 
   auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
-  return CallWithRetry(&StubType::ModifyColumnFamilies, request,
-                       error_message.c_str());
+  return CallWithRetry::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      &StubType::ModifyColumnFamilies, request, error_message.c_str());
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
@@ -109,7 +116,9 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
   request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
 
-  CallWithRetry(&StubType::DropRowRange, request, "DropRowsByPrefix");
+  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+                          rpc_backoff_policy_->clone(), &StubType::DropRowRange,
+                          request, "DropRowsByPrefix");
 }
 
 void TableAdmin::DropAllRows(std::string table_id) {
@@ -117,20 +126,13 @@ void TableAdmin::DropAllRows(std::string table_id) {
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
 
-  CallWithRetry(&StubType::DropRowRange, request, "DropAllRows");
+  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+                          rpc_backoff_policy_->clone(), &StubType::DropRowRange,
+                          request, "DropAllRows");
 }
 
 std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
-}
-
-void TableAdmin::RaiseError(grpc::Status const& status,
-                            char const* error_message) const {
-  std::ostringstream os;
-  os << "TableAdmin(" << instance_name() << ") unrecoverable error or too many "
-     << " errors in " << error_message << ": " << status.error_message() << " ["
-     << status.error_code() << "] " << status.error_details();
-  internal::RaiseRuntimeError(os.str());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

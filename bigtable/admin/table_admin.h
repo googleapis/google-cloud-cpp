@@ -15,15 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_TABLE_ADMIN_H_
 
-#include "bigtable/admin/admin_client.h"
-
 #include <memory>
-#include <thread>
-
+#include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/column_family.h"
 #include "bigtable/admin/table_config.h"
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
+#include "bigtable/client/internal/call_with_retry.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -39,7 +35,7 @@ class TableAdmin {
    *   the project id in the @p client parameter.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
-      : client_(client),
+      : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
@@ -61,7 +57,7 @@ class TableAdmin {
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : client_(client),
+      : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_(retry_policy.clone()),
@@ -187,101 +183,8 @@ class TableAdmin {
   using StubType =
       ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface;
 
-  /**
-   * Determine if @p T is a pointer to member function with the expected
-   * signature for CallWithRetry().
-   *
-   * This is the generic case, where the type does not match the expected
-   * signature.  The class derives from std::false_type, so
-   * CheckSignature<T>::value is `false`.
-   *
-   * @tparam T the type to check against the expected signature.
-   */
-  template <typename T>
-  struct CheckSignature : std::false_type {
-    /// Must define ResponseType because it is used in std::enable_if<>.
-    using ResponseType = int;
-  };
-
-  /**
-   * Determine if a type is a pointer to member function with the correct
-   * signature for CallWithRetry()
-   *
-   * This is the case where the type actually matches the expected signature.
-   * This class derives from std::true_type, so CheckSignature<T>::value is
-   * `true` in this case.  The class also extracts the request and response
-   * types used in the implementation of CallWithRetry().
-   *
-   * @tparam Request the RPC request type.
-   * @tparam Response the RPC response type.
-   */
-  template <typename Request, typename Response>
-  struct CheckSignature<grpc::Status (StubType::*)(grpc::ClientContext*,
-                                                   Request const&, Response*)>
-      : public std::true_type {
-    using RequestType = Request;
-    using ResponseType = Response;
-    using MemberFunctionType = grpc::Status (StubType::*)(grpc::ClientContext*,
-                                                          Request const&,
-                                                          Response*);
-  };
-
-  /**
-   * Call a simple unary RPC with retries.
-   *
-   * Given a pointer to member function in the grpc StubInterface class this
-   * generic function calls it with retries until success or until the RPC
-   * policies determine that this is an error.
-   *
-   * We use std::enable_if<> to stop signature errors at compile-time.  The
-   * `CheckSignature` meta function returns `false` if given a type that is not
-   * a pointer to member with the right signature, that disables this function
-   * altogether, and the developer gets a nice-ish error message.
-   *
-   * @tparam MemberFunction the signature of the member function.
-   * @param function the pointer to the member function to call.
-   * @param request an initialized request parameter for the RPC.
-   * @return the return parameter from the RPC.
-   * @throw std::exception with a description of the RPC error.
-   */
-  template <typename MemberFunction>
-  // Disable the function if the provided member function does not match the
-  // expected signature.  Compilers also emit nice error messages in this case.
-  typename std::enable_if<
-      CheckSignature<MemberFunction>::value,
-      typename CheckSignature<MemberFunction>::ResponseType>::type
-  CallWithRetry(
-      MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const& request,
-      char const* error_message) {
-    // Copy the policies in effect for the operation.
-    auto rpc_policy = rpc_retry_policy_->clone();
-    auto backoff_policy = rpc_backoff_policy_->clone();
-
-    typename CheckSignature<MemberFunction>::ResponseType response;
-    while (true) {
-      grpc::ClientContext client_context;
-      rpc_policy->setup(client_context);
-      backoff_policy->setup(client_context);
-      // Call the pointer to member function.
-      grpc::Status status =
-          ((*client_->Stub()).*function)(&client_context, request, &response);
-      client_->on_completion(status);
-      if (status.ok()) {
-        break;
-      }
-      if (not rpc_policy->on_failure(status)) {
-        RaiseError(status, error_message);
-      }
-      auto delay = backoff_policy->on_completion(status);
-      std::this_thread::sleep_for(delay);
-    }
-    return response;
-  }
-
-  /// Raise an exception representing the given status.
-  [[noreturn]] void RaiseError(grpc::Status const& status,
-                               char const* error_message) const;
+  using CallWithRetry =
+      bigtable::internal::CallWithRetry<AdminClient, StubType>;
 
  private:
   std::shared_ptr<AdminClient> client_;
