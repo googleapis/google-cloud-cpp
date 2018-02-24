@@ -60,12 +60,12 @@ struct CallWithRetry {
    *
    * This is the generic case, where the type does not match the expected
    * signature.  The class derives from `std::false_type`, so
-   * `CheckSignature<T>::value` is `false`.
+   * `CheckSignature<T>::%value` is `false`.
    *
    * @tparam T the type to check against the expected signature.
    */
   template <typename T>
-  struct CheckSignature : std::false_type {
+  struct CheckSignature : public std::false_type {
     /// Must define ResponseType because it is used in std::enable_if<>.
     using ResponseType = int;
   };
@@ -75,7 +75,7 @@ struct CallWithRetry {
    * signature for `MakeCall()`.
    *
    * This is the case where the type actually matches the expected signature.
-   * This class derives from `std::true_type`, so `CheckSignature<T>::value` is
+   * This class derives from `std::true_type`, so `CheckSignature<T>::%value` is
    * `true`.  The class also extracts the request and response types used in the
    * implementation of `CallWithRetry()`.
    *
