@@ -77,8 +77,8 @@ namespace internal {
   internal::RaiseRuntimeError(os.str());
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const &status,
-                                std::string const &msg) {
+[[noreturn]] void RaiseRpcError(grpc::Status const& status,
+                                std::string const& msg) {
   RaiseRpcError(status, msg.c_str());
 }
 
