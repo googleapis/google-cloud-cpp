@@ -179,12 +179,9 @@ class TableAdmin {
     return instance_name() + "/tables/" + table_id;
   }
 
-  /// A shortcut for the grpc stub this class wraps.
-  using StubType =
-      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface;
-
-  using CallWithRetry =
-      bigtable::internal::CallWithRetry<AdminClient, StubType>;
+  /// Shortcuts to avoid typing long names over and over.
+  using CallWithRetry = bigtable::internal::CallWithRetry<AdminClient>;
+  using StubType = CallWithRetry::StubType;
 
  private:
   std::shared_ptr<AdminClient> client_;

@@ -50,10 +50,43 @@ namespace internal {
  * Where `Request` and `Response` are the protos in the gRPC call.
  *
  * @tparam ClientType the type of the client used for the gRPC call.
- * @tparam StubType the type of the stub returned by Client::Stub().
  */
-template <typename ClientType, typename StubType>
+template <typename ClientType>
 struct CallWithRetry {
+  /**
+   * Extract the StubType from the type returned by ClientType::Stub().
+   *
+   * This is a meta-function to convert the std::shared_ptr<T> type returned
+   * by ClientType::Stub into a plain T.  We follow the STL convention of using
+   * `type` for the returned type of this metafunction.
+   */
+  struct DiscoverStubType {
+    using SharedPtr = decltype(std::declval<ClientType>().Stub());
+
+    /// Meta-function to convert shared_ptr<T> into T.  Non-matching case.
+    template <typename U>
+    struct ExtractSharedType {
+      constexpr static bool matched = false;
+      using type = void;
+    };
+
+    /// Meta-function to convert shared_ptr<T> into T.  Matching case.
+    template <typename U>
+    struct ExtractSharedType<std::shared_ptr<U>> {
+      constexpr static bool matched = true;
+      using type = U;
+    };
+
+    // Use ExtractSharedType<T> to get the underlying stub.
+    static_assert(ExtractSharedType<SharedPtr>::matched,
+                  "The type returned by ClientType::Stub() must be a "
+                  "shared_ptr<> instantiation");
+    using type = typename ExtractSharedType<SharedPtr>::type;
+  };
+
+  /// The stub type returned by ClientType::Stub().
+  using StubType = typename DiscoverStubType::type;
+
   /**
    * Determine if @p T is a pointer to member function with the expected
    * signature for `MakeCall()`.
