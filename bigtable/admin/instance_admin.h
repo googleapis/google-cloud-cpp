@@ -31,7 +31,7 @@ class InstanceAdmin {
    */
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
-        project_name_("projects/" + project()),
+        project_name_("projects/" + project_id()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy()) {}
 
@@ -49,11 +49,14 @@ class InstanceAdmin {
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                 RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : client_(std::move(client)),
-        project_name_("projects/" + project()),
+        project_name_("projects/" + project_id()),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()) {}
 
-  std::string const& project() const { return client_->project(); }
+  /// The full name (`projects/<project_id>`) of the project.
+  std::string const& project_name() const { return project_name_; }
+  /// The project id, i.e., `project_name()` without the `projects/` prefix.
+  std::string const& project_id() const { return client_->project(); }
 
   /**
    * Return the list of instances in the project.

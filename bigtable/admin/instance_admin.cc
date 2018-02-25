@@ -23,7 +23,7 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
-  std::string error = "InstanceAdmin::ListInstances(" + project() + ")";
+  std::string error = "InstanceAdmin::ListInstances(" + project_id() + ")";
 
   // Build the RPC request, try to minimize copying.
   std::vector<btproto::Instance> result;

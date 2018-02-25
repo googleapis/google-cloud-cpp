@@ -260,6 +260,7 @@ set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
     admin/column_family_test.cc
     admin/instance_admin_client_test.cc
+    admin/instance_admin_test.cc
     admin/table_admin_test.cc
     admin/table_config_test.cc)
 foreach (fname ${bigtable_admin_unit_tests})
