@@ -118,7 +118,6 @@ add_library(bigtable_client
     client/data_client.cc
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
-    client/internal/call_with_retry.h
     client/internal/common_client.h
     client/internal/common_client.cc
     client/internal/conjunction.h
