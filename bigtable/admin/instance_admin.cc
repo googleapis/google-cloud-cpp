@@ -33,7 +33,7 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
     request.set_page_token(std::move(page_token));
     request.set_parent(project_name_);
 
-    auto response = RpcUtils::CallWithRetry(
+    auto response = RpcUtils::CallWithRetryBorrow(
         *client_, *rpc_policy, *backoff_policy, &StubType::ListInstances,
         request, error.c_str());
 
