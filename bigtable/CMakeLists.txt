@@ -177,6 +177,10 @@ add_library(bigtable_admin_client
     admin/admin_client.h
     admin/admin_client.cc
     admin/column_family.h
+    admin/instance_admin_client.h
+    admin/instance_admin_client.cc
+    admin/instance_admin.h
+    admin/instance_admin.cc
     admin/table_admin.h
     admin/table_admin.cc
     admin/table_config.h
@@ -255,6 +259,7 @@ target_link_libraries(bigtable_client_all_tests
 set(bigtable_admin_unit_tests
     admin/admin_client_test.cc
     admin/column_family_test.cc
+    admin/instance_admin_client_test.cc
     admin/table_admin_test.cc
     admin/table_config_test.cc)
 foreach (fname ${bigtable_admin_unit_tests})
