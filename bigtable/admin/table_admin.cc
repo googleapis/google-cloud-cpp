@@ -40,40 +40,26 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
+  std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
+
   // Build the RPC request, try to minimize copying.
   std::vector<btproto::Table> result;
   std::string page_token;
-  while (true) {
+  do {
     btproto::ListTablesRequest request;
     request.set_page_token(std::move(page_token));
     request.set_parent(instance_name());
     request.set_view(view);
 
-    btproto::ListTablesResponse response;
-    grpc::ClientContext client_context;
-    rpc_policy->setup(client_context);
-    backoff_policy->setup(client_context);
-    grpc::Status status =
-        client_->Stub()->ListTables(&client_context, request, &response);
-    client_->on_completion(status);
-    if (status.ok()) {
-      for (auto& table : *response.mutable_tables()) {
-        result.emplace_back(std::move(table));
-      }
-      if (response.next_page_token().empty()) {
-        break;
-      }
-      page_token = std::move(*response.mutable_next_page_token());
-      continue;
+    auto response = RpcUtils::CallWithRetryBorrow(
+        *client_, *rpc_policy, *backoff_policy, &StubType::ListTables, request,
+        msg.c_str());
+
+    for (auto& x : *response.mutable_tables()) {
+      result.emplace_back(std::move(x));
     }
-    page_token = std::move(*request.mutable_page_token());
-    if (not rpc_policy->on_failure(status)) {
-      std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
-      internal::RaiseRpcError(status, msg);
-    }
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
-  }
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (not page_token.empty());
   return result;
 }
 
