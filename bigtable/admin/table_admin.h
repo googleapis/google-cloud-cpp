@@ -19,7 +19,7 @@
 #include "bigtable/admin/admin_client.h"
 #include "bigtable/admin/column_family.h"
 #include "bigtable/admin/table_config.h"
-#include "bigtable/client/internal/call_with_retry.h"
+#include "bigtable/client/internal/unary_rpc_utils.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -180,8 +180,8 @@ class TableAdmin {
   }
 
   /// Shortcuts to avoid typing long names over and over.
-  using CallWithRetry = bigtable::internal::CallWithRetry<AdminClient>;
-  using StubType = CallWithRetry::StubType;
+  using RpcUtils = bigtable::internal::UnaryRpcUtils<AdminClient>;
+  using StubType = RpcUtils::StubType;
 
  private:
   std::shared_ptr<AdminClient> client_;

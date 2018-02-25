@@ -129,7 +129,6 @@ add_library(bigtable_client
     client/data_client.cc
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
-    client/internal/call_with_retry.h
     client/internal/common_client.h
     client/internal/common_client.cc
     client/internal/conjunction.h
@@ -143,6 +142,7 @@ add_library(bigtable_client
     client/internal/rowreaderiterator.cc
     client/internal/throw_delegate.h
     client/internal/throw_delegate.cc
+    client/internal/unary_rpc_utils.h
     client/filters.h
     client/filters.cc
     client/idempotent_mutation_policy.h

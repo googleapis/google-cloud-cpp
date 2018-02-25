@@ -27,7 +27,7 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_table_id(std::move(table_id));
 
   auto error_message = "CreateTable(" + request.table_id() + ")";
-  return CallWithRetry::MakeCall(
+  return RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       &StubType::CreateTable, request, error_message.c_str());
 }
@@ -82,7 +82,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   request.set_view(view);
 
   auto error_message = "GetTable(" + request.name() + ")";
-  return CallWithRetry::MakeCall(
+  return RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       &StubType::GetTable, request, error_message.c_str());
 }
@@ -91,7 +91,7 @@ void TableAdmin::DeleteTable(std::string table_id) {
   btproto::DeleteTableRequest request;
   request.set_name(TableName(table_id));
 
-  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                           rpc_backoff_policy_->clone(), &StubType::DeleteTable,
                           request, "DeleteTable");
 }
@@ -105,7 +105,7 @@ void TableAdmin::DeleteTable(std::string table_id) {
   }
 
   auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
-  return CallWithRetry::MakeCall(
+  return RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       &StubType::ModifyColumnFamilies, request, error_message.c_str());
 }
@@ -116,7 +116,7 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
   request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
 
-  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                           rpc_backoff_policy_->clone(), &StubType::DropRowRange,
                           request, "DropRowsByPrefix");
 }
@@ -126,7 +126,7 @@ void TableAdmin::DropAllRows(std::string table_id) {
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
 
-  CallWithRetry::MakeCall(*client_, rpc_retry_policy_->clone(),
+  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                           rpc_backoff_policy_->clone(), &StubType::DropRowRange,
                           request, "DropAllRows");
 }

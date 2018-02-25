@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_CALL_WITH_RETRY_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_CALL_WITH_RETRY_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_RPC_UTILS_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_RPC_UTILS_H_
 
 #include <thread>
 #include "bigtable/client/internal/throw_delegate.h"
@@ -52,7 +52,7 @@ namespace internal {
  * @tparam ClientType the type of the client used for the gRPC call.
  */
 template <typename ClientType>
-struct CallWithRetry {
+struct UnaryRpcUtils {
   /**
    * Extract the StubType from the type returned by ClientType::Stub().
    *
@@ -155,12 +155,12 @@ struct CallWithRetry {
   static typename std::enable_if<
       CheckSignature<MemberFunction>::value,
       typename CheckSignature<MemberFunction>::ResponseType>::type
-  MakeCall(ClientType &client,
-           std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
-           std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-           MemberFunction function,
-           typename CheckSignature<MemberFunction>::RequestType const &request,
-           char const *error_message) {
+  CallWithRetry(
+      ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+      MemberFunction function,
+      typename CheckSignature<MemberFunction>::RequestType const &request,
+      char const *error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
     while (true) {
       grpc::ClientContext client_context;
@@ -187,4 +187,4 @@ struct CallWithRetry {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_CALL_WITH_RETRY_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_RPC_UTILS_H_
