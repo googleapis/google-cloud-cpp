@@ -52,7 +52,7 @@ class TableAdminTest : public ::testing::Test {
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_instances_lambda = [](std::string expected_token,
+auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
   return [expected_token, returned_token, table_names](
@@ -128,7 +128,7 @@ TEST_F(TableAdminTest, ListTables) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, kInstanceId);
-  auto mock_list_tables = create_list_instances_lambda("", "", {"t0", "t1"});
+  auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
       .WillOnce(Invoke(mock_list_tables));
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
@@ -151,8 +151,8 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
                                      btproto::ListTablesResponse* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
-  auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
+  auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
+  auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch0))
