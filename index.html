@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Bigtable C++ Client: Google Cloud Bigtable</title>
+<title>Google Cloud Bigtable C++ Client: Cloud Bigtable C++ Client Libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,14 +61,32 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Google Cloud Bigtable </div>  </div>
+<div class="title">Cloud Bigtable C++ Client Libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This directory contains the implementation of the Google Cloud Bigtable C++ client. This is a work-in-progress and is not yet suitable for production use. </p>
+<div class="textblock"><h2>Quick Start</h2>
+<p>This page explains how to use the Cloud Bigtable C++ library to connect to a Cloud Bigtable instance, perform basic administrative tasks, and read and write data in a table.</p>
+<h3>Before you begin</h3>
+<p>Please consult the Cloud Bigtable <a href="https://cloud.google.com/bigtable/docs/creating-instance">documentation</a> on how to create an instance.</p>
+<h3>Create a Table</h3>
+<p>First connect to Cloud Bigtable C++ using the Admin API:</p>
+<div class="fragment"><div class="line">  bigtable::TableAdmin table_admin(</div><div class="line">      <a class="code" href="namespacebigtable_1_1v0.html#a47ed425d2e8281836e0222e8993b828c">bigtable::CreateDefaultAdminClient</a>(project_id, bigtable::ClientOptions()),</div><div class="line">      instance_id);</div></div><!-- fragment --><p> Then define the column families and garbage collection rules for your table:</p>
+<div class="fragment"><div class="line">  <span class="keyword">auto</span> gc_rule = bigtable::GcRule::MaxNumVersions(1);</div><div class="line">  bigtable::TableConfig schema({{<span class="stringliteral">&quot;family&quot;</span>, gc_rule}}, {});</div></div><!-- fragment --><p> And then create the table:</p>
+<div class="fragment"><div class="line">  <span class="keyword">auto</span> returned_schema = table_admin.CreateTable(table_id, schema);</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">bigtable::v0::TableAdmin</a></code> for additional operations to list, read, modify, and delete tables.</dd></dl>
+<h3>Write a Row</h3>
+<p>First connect to Cloud Bigtable C++ using the Data API:</p>
+<div class="fragment"><div class="line">  bigtable::Table table(<a class="code" href="namespacebigtable_1_1v0.html#ad671db278ce6fb606c4fea3391e5745d">bigtable::CreateDefaultDataClient</a>(</div><div class="line">                            project_id, instance_id, bigtable::ClientOptions()),</div><div class="line">                        table_id);</div></div><!-- fragment --><p> Then write the row.</p>
+<div class="fragment"><div class="line">  table.Apply(bigtable::SingleRowMutation(</div><div class="line">      <span class="stringliteral">&quot;my-key&quot;</span>, <a class="code" href="namespacebigtable_1_1v0.html#aec4cdce014f0677bbdd5e1a9ddbc239e">bigtable::SetCell</a>(<span class="stringliteral">&quot;family&quot;</span>, <span class="stringliteral">&quot;value&quot;</span>, 0, <span class="stringliteral">&quot;Hello World!&quot;</span>)));</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a5714f0f923da7544cccd11fa943f320b" title="Attempts to apply mutations to multiple rows. ">bigtable::v0::Table::BulkApply()</a></code> to modify multiple rows in a single operation. In addition to <code><a class="el" href="namespacebigtable_1_1v0.html#aec4cdce014f0677bbdd5e1a9ddbc239e" title="Create a mutation to set a cell value. ">SetCell()</a></code> there are functions to delete columns (e.g., <code><a class="el" href="namespacebigtable_1_1v0.html#a85e807d3730c0f25481c960147f2e409" title="Create a mutation to delete all the cells in a column family. ">DeleteFromFamily()</a></code>) or to delete the whole row (<code><a class="el" href="namespacebigtable_1_1v0.html#afd8f1d9efa4b470295cba73b2c52172d" title="Create a mutation to delete all the cells in a row. ">DeleteFromRow()</a></code>).</dd></dl>
+<h3>Read a Table</h3>
+<p>First connect to Cloud Bigtable C++ using the Data API:</p>
+<div class="fragment"><div class="line">  bigtable::Table table(<a class="code" href="namespacebigtable_1_1v0.html#ad671db278ce6fb606c4fea3391e5745d">bigtable::CreateDefaultDataClient</a>(</div><div class="line">                            project_id, instance_id, bigtable::ClientOptions()),</div><div class="line">                        table_id);</div></div><!-- fragment --><p> Request the row that you want:</p>
+<div class="fragment"><div class="line">  <span class="keyword">auto</span> result = table.ReadRow(<span class="stringliteral">&quot;my-key&quot;</span>, bigtable::Filter::PassAllFilter());</div></div><!-- fragment --><p> In this example we request all the columns, you could filter the column families, columns, and timestamps to only obtain a subset. Check the <code><a class="el" href="classbigtable_1_1v0_1_1Filter.html" title="Define the interfaces to create filter expressions. ">bigtable::v0::Filter</a></code> documentation for additional filtering primitives. In any case, you should verify if the row really exists:</p>
+<div class="fragment"><div class="line">  <span class="keywordflow">if</span> (not result.first) {</div><div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Cannot find row &#39;my-key&#39; in the table: &quot;</span> &lt;&lt; table.table_name()</div><div class="line">              &lt;&lt; std::endl;</div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">  }</div></div><!-- fragment --><p> And if it does you can iterate over the returned cells:</p>
+<div class="fragment"><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; cell : result.second.cells()) {</div><div class="line">    std::cout &lt;&lt; cell.family_name() &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; cell.column_qualifier()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;    @ &quot;</span> &lt;&lt; cell.timestamp() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="charliteral">&#39;&quot;&#39;</span> &lt;&lt; cell.value() &lt;&lt; <span class="charliteral">&#39;&quot;&#39;</span> &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d" title="Reads a set of rows from the table. ">bigtable::v0::Table::ReadRows()</a></code> to iterate over multiple rows. </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 23 2018 17:13:34 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 26 2018 19:56:59 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

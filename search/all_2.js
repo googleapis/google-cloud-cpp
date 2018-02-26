@@ -50,5 +50,6 @@ var searchData=
   ['createdefaultdataclient',['CreateDefaultDataClient',['../namespacebigtable_1_1v0.html#ad671db278ce6fb606c4fea3391e5745d',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, bigtable::ClientOptions options)'],['../namespacebigtable_1_1v0.html#a5fad7f14ac136fae05048446aa30d13b',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, ClientOptions options)']]],
   ['createtable',['CreateTable',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a21eef8cd077226ed76adcaa0724d2a0b',1,'bigtable::testing::TableIntegrationTest::CreateTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin::CreateTable()']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]],
+  ['cloud_20bigtable_20c_2b_2b_20client_20libraries',['Cloud Bigtable C++ Client Libraries',['../index.html',1,'']]],
   ['cloud_20bigtable_20c_2b_2b_20client_20testing_20support_20classes',['Cloud Bigtable C++ Client Testing Support Classes',['../md_client_testing_README.html',1,'']]]
 ];
