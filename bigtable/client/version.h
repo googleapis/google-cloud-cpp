@@ -18,10 +18,7 @@
 #include <string>
 
 #include "bigtable/client/internal/port_platform.h"
-
-#define BIGTABLE_CLIENT_VERSION_MAJOR 0
-#define BIGTABLE_CLIENT_VERSION_MINOR 1
-#define BIGTABLE_CLIENT_VERSION_PATCH 0
+#include "bigtable/client/version_info.h"
 
 #define BIGTABLE_CLIENT_VCONCAT(Ma, Mi) v##Ma
 #define BIGTABLE_CLIENT_VEVAL(Ma, Mi) BIGTABLE_CLIENT_VCONCAT(Ma, Mi)
