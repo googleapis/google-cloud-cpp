@@ -359,11 +359,26 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         PUBLIC ${bigtable_benchmarks_unit_tests})
     target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
 
+    # Benchmark Table::ReadRows().
     add_executable(scan_throughput_benchmark
             benchmarks/scan_throughput_benchmark.cc)
     target_link_libraries(scan_throughput_benchmark
             bigtable_benchmark_common bigtable_admin_client bigtable_client
             bigtable_protos gmock absl::time
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+    # Benchmark for Table::Apply() and Table::ReadRow().
+    add_executable(apply_read_latency_benchmark
+            benchmarks/apply_read_latency_benchmark.cc)
+    target_link_libraries(apply_read_latency_benchmark
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos gmock absl::strings absl::time
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+    # A benchmark to measure performance of long running programs.
+    add_executable(endurance_benchmark benchmarks/endurance_benchmark.cc)
+    target_link_libraries(endurance_benchmark bigtable_benchmark_common
+            bigtable_admin_client bigtable_client bigtable_protos
             gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
