@@ -35,7 +35,9 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
             typeid(client_options_object.credentials()));
 
   EXPECT_EQ("", client_options_object.connection_pool_name());
-  EXPECT_EQ(1UL, client_options_object.connection_pool_size());
+  // The number of connections should be >= 1, we "know" what the actual value
+  // is, but we do not want a change-detection-test.
+  EXPECT_LE(1UL, client_options_object.connection_pool_size());
 }
 
 namespace {

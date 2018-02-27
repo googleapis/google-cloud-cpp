@@ -36,10 +36,16 @@ std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
 template <typename Traits, typename Interface>
 class CommonClient {
  public:
-  CommonClient(bigtable::ClientOptions options)
-      : options_(std::move(options)), current_stub_index_(0) {}
-
+  //@{
+  /// @name Type traits.
   using StubPtr = std::shared_ptr<typename Interface::StubInterface>;
+  //@}
+
+  CommonClient(bigtable::ClientOptions options)
+      : options_(std::move(options)), current_stub_index_(0) {
+    std::unique_lock<std::mutex> lk(mu_);
+    CreateStubs(lk);
+  }
 
   /**
    * Reset the channel and stub.
@@ -55,31 +61,37 @@ class CommonClient {
 
   StubPtr Stub() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (stubs_.empty()) {
-      // Release the lock while making remote calls.  gRPC uses the current
-      // thread to make remote connections (and probably authenticate), holding
-      // a lock for long operations like that is a bad practice.  Releasing
-      // the lock here can result in wasted work, but that is a smaller problem
-      // than a deadlock or an unbounded priority inversion.
-      lk.unlock();
-      auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
-      std::vector<StubPtr> tmp;
-      std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
-                     [](std::shared_ptr<grpc::Channel> ch) {
-                       return Interface::NewStub(ch);
-                     });
-      lk.lock();
-      if (stubs_.empty()) {
-        tmp.swap(stubs_);
-        current_stub_index_ = 0;
-      }
-    }
+    CreateStubs(lk);
     auto stub = stubs_[current_stub_index_];
     // Round robin through the connections.
     if (++current_stub_index_ >= stubs_.size()) {
       current_stub_index_ = 0;
     }
     return stub;
+  }
+
+ private:
+  void CreateStubs(std::unique_lock<std::mutex>& lk) {
+    if (not stubs_.empty()) {
+      return;
+    }
+    // Release the lock while making remote calls.  gRPC uses the current
+    // thread to make remote connections (and probably authenticate), holding
+    // a lock for long operations like that is a bad practice.  Releasing
+    // the lock here can result in wasted work, but that is a smaller problem
+    // than a deadlock or an unbounded priority inversion.
+    lk.unlock();
+    auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
+    std::vector<StubPtr> tmp;
+    std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
+                   [](std::shared_ptr<grpc::Channel> ch) {
+                     return Interface::NewStub(ch);
+                   });
+    lk.lock();
+    if (stubs_.empty()) {
+      tmp.swap(stubs_);
+      current_stub_index_ = 0;
+    }
   }
 
  private:
