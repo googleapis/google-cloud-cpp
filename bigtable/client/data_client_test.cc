@@ -18,7 +18,8 @@
 
 TEST(DataClientTest, Default) {
   auto data_client = bigtable::CreateDefaultDataClient(
-      "test-project", "test-instance", bigtable::ClientOptions());
+      "test-project", "test-instance",
+      bigtable::ClientOptions().set_connection_pool_size(1));
   ASSERT_TRUE(data_client);
   EXPECT_EQ("test-project", data_client->project_id());
   EXPECT_EQ("test-instance", data_client->instance_id());

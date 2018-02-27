@@ -33,6 +33,11 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
             client_options_object.admin_endpoint());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(client_options_object.credentials()));
+
+  EXPECT_EQ("", client_options_object.connection_pool_name());
+  // The number of connections should be >= 1, we "know" what the actual value
+  // is, but we do not want a change-detection-test.
+  EXPECT_LE(1UL, client_options_object.connection_pool_size());
 }
 
 namespace {
@@ -90,25 +95,39 @@ TEST_F(ClientOptionsEmulatorTest, Default) {
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  bigtable::ClientOptions client_options_object;
   client_options_object =
       client_options_object.set_data_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.data_endpoint());
 }
 
 TEST(ClientOptionsTest, EditAdminEndpoint) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  bigtable::ClientOptions client_options_object;
   client_options_object =
       client_options_object.set_admin_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
 }
 
 TEST(ClientOptionsTest, EditCredentials) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  bigtable::ClientOptions client_options_object;
   client_options_object =
       client_options_object.SetCredentials(grpc::InsecureChannelCredentials());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(client_options_object.credentials()));
+}
+
+TEST(ClientOptionsTest, EditConnectionPoolName) {
+  bigtable::ClientOptions client_options_object;
+  auto& returned = client_options_object.set_connection_pool_name("foo");
+  EXPECT_EQ(&returned, &client_options_object);
+  EXPECT_EQ("foo", returned.connection_pool_name());
+}
+
+TEST(ClientOptionsTest, EditConnectionPoolSize) {
+  bigtable::ClientOptions client_options_object;
+  auto& returned = client_options_object.set_connection_pool_size(42);
+  EXPECT_EQ(&returned, &client_options_object);
+  EXPECT_EQ(42UL, returned.connection_pool_size());
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {

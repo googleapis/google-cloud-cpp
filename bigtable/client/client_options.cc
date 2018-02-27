@@ -13,9 +13,15 @@
 
 #include "bigtable/client/client_options.h"
 
+// Make the default pool size 4 because that is consistent with what Go does.
+#ifndef BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
+#define BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE 4
+#endif  // BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-ClientOptions::ClientOptions() {
+ClientOptions::ClientOptions()
+    : connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE) {
   char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
     data_endpoint_ = emulator;

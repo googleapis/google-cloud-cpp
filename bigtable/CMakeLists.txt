@@ -130,6 +130,7 @@ add_library(bigtable_client
     client/internal/bulk_mutator.h
     client/internal/bulk_mutator.cc
     client/internal/common_client.h
+    client/internal/common_client.cc
     client/internal/conjunction.h
     client/internal/make_unique.h
     client/internal/port_platform.h

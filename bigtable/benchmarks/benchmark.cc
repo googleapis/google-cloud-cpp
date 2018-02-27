@@ -37,6 +37,8 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
     client_options_.set_data_endpoint(address);
     client_options_.SetCredentials(grpc::InsecureChannelCredentials());
   }
+  client_options_.set_connection_pool_size(
+      static_cast<std::size_t>(setup_.thread_count()));
 }
 
 Benchmark::~Benchmark() {

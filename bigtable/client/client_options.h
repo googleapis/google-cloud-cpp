@@ -50,6 +50,37 @@ class ClientOptions {
     return *this;
   }
 
+  /**
+   * Set the name of the connection pool.
+   *
+   * gRPC typically opens a single connection for each destination.  To improve
+   * performance, the Cloud Bigtable C++ client can open multiple connections
+   * to a given destination, but these connections are shared by all threads
+   * in the application.  Sometimes the application may want even more
+   * segregation, for example, the application may want to use a different pool
+   * for high-priority requests vs. lower priority ones.  Using different names
+   * creates segregated pools.
+   */
+  ClientOptions& set_connection_pool_name(std::string name) {
+    connection_pool_name_ = std::move(name);
+    return *this;
+  }
+  /// Return the name of the connection pool.
+  std::string const& connection_pool_name() const {
+    return connection_pool_name_;
+  }
+
+  /// Set the size of the connection pool.
+  ClientOptions& set_connection_pool_size(std::size_t size) {
+    if (size == 0) {
+      internal::RaiseRangeError(
+          "ClientOptions::set_connection_pool_size requires size > 0");
+    }
+    connection_pool_size_ = size;
+    return *this;
+  }
+  std::size_t connection_pool_size() const { return connection_pool_size_; }
+
   /// Return the current credentials.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return credentials_;
@@ -60,9 +91,12 @@ class ClientOptions {
     return *this;
   }
 
+  /// Access all the channel arguments.
   grpc::ChannelArguments channel_arguments() const {
     return channel_arguments_;
   }
+
+  /// Set all the channel arguments.
   ClientOptions& set_channel_arguments(
       grpc::ChannelArguments const& channel_arguments) {
     channel_arguments_ = channel_arguments;
@@ -222,6 +256,8 @@ class ClientOptions {
   std::string admin_endpoint_;
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
+  std::string connection_pool_name_;
+  std::size_t connection_pool_size_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

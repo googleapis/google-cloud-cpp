@@ -21,6 +21,11 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
+/// Create a pool of grpc::Channel objects based on the client options.
+std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
+    std::string const& endpoint, bigtable::ClientOptions const& options);
+
 /**
  * Refactor implementation of `bigtable::AdminClient` and `bigtable::DataClient`
  *
@@ -31,10 +36,13 @@ namespace internal {
 template <typename Traits, typename Interface>
 class CommonClient {
  public:
-  CommonClient(bigtable::ClientOptions options)
-      : options_(std::move(options)) {}
-
+  //@{
+  /// @name Type traits.
   using StubPtr = std::shared_ptr<typename Interface::StubInterface>;
+  //@}
+
+  CommonClient(bigtable::ClientOptions options)
+      : options_(std::move(options)), current_stub_index_(0) {}
 
   /**
    * Reset the channel and stub.
@@ -44,25 +52,49 @@ class CommonClient {
    * and/or when the credentials require explicit refresh.
    */
   void reset() {
-    stub_.reset();
-    channel_.reset();
+    std::lock_guard<std::mutex> lk(mu_);
+    stubs_.clear();
   }
 
   StubPtr Stub() {
-    if (not stub_) {
-      auto channel = grpc::CreateCustomChannel(Traits::Endpoint(options_),
-                                               options_.credentials(),
-                                               options_.channel_arguments());
-      stub_ = Interface::NewStub(channel);
-      channel_ = channel;
+    std::unique_lock<std::mutex> lk(mu_);
+    if (stubs_.empty()) {
+      // Release the lock while making remote calls.  gRPC uses the current
+      // thread to make remote connections (and probably authenticate), holding
+      // a lock for long operations like that is a bad practice.  Releasing
+      // the lock here can result in wasted work, but that is a smaller problem
+      // than a deadlock or an unbounded priority inversion.
+      // Note that only one connection per application is created by gRPC, even
+      // if multiple threads are calling this function at the same time. gRPC
+      // only opens one socket per destination+attributes combo, we artificially
+      // introduce attributes in the implementation of CreateChannelPool() to
+      // create one socket per element in the pool.
+      lk.unlock();
+      auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
+      std::vector<StubPtr> tmp;
+      std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
+                     [](std::shared_ptr<grpc::Channel> ch) {
+                       return Interface::NewStub(ch);
+                     });
+      lk.lock();
+      if (stubs_.empty()) {
+        tmp.swap(stubs_);
+        current_stub_index_ = 0;
+      }
     }
-    return stub_;
+    auto stub = stubs_[current_stub_index_];
+    // Round robin through the connections.
+    if (++current_stub_index_ >= stubs_.size()) {
+      current_stub_index_ = 0;
+    }
+    return stub;
   }
 
  private:
+  std::mutex mu_;
   ClientOptions options_;
-  std::shared_ptr<grpc::Channel> channel_;
-  StubPtr stub_;
+  std::vector<StubPtr> stubs_;
+  std::size_t current_stub_index_;
 };
 
 }  // namespace internal
