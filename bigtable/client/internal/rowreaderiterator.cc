@@ -21,7 +21,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 // Defined here because it needs to see the definition of RowReader
 RowReaderIterator& RowReaderIterator::operator++() {
-  owner_->Advance(row_, has_row_);
+  owner_->Advance(row_);
   return *this;
 }
 

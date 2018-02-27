@@ -117,19 +117,19 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-void RowReader::Advance(Row& row, bool& has_row) {
+void RowReader::Advance(internal::OptionalRow& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
-      status = AdvanceOrFail(row, has_row);
+      status = AdvanceOrFail(row);
     } catch (std::exception const& ex) {
       // Parser exceptions arrive here.
       status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 #else
-    status = AdvanceOrFail(row, has_row);
+    status = AdvanceOrFail(row);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {
@@ -168,8 +168,8 @@ void RowReader::Advance(Row& row, bool& has_row) {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail(Row& row, bool& has_row) {
-  has_row = false;
+grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
+  row.reset();
   while (not parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
@@ -190,10 +190,9 @@ grpc::Status RowReader::AdvanceOrFail(Row& row, bool& has_row) {
   }
 
   // We have a complete row in the parser.
-  row = parser_->Next();
-  has_row = true;
+  row.emplace(parser_->Next());
   ++rows_count_;
-  last_read_row_key_ = std::string(row.row_key());
+  last_read_row_key_ = std::string(row.value().row_key());
 
   return grpc::Status::OK;
 }

@@ -93,10 +93,10 @@ class RowReader {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  void Advance(Row& row, bool& has_row);
+  void Advance(internal::OptionalRow& row);
 
   /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail(Row& row, bool& has_row);
+  grpc::Status AdvanceOrFail(internal::OptionalRow& row);
 
   /**
    * Move the `processed_chunks_count_` index to the next chunk,
