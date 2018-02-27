@@ -104,6 +104,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a9aaf8c551274cdfd6bb0d11e5e68f507"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; grpc::Channel &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a9aaf8c551274cdfd6bb0d11e5e68f507">CreateChannelPool</a> (std::string const  &amp;endpoint, bigtable::ClientOptions const  &amp;options)</td></tr>
+<tr class="memdesc:a9aaf8c551274cdfd6bb0d11e5e68f507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a pool of grpc::Channel objects based on the client options.  <a href="#a9aaf8c551274cdfd6bb0d11e5e68f507">More...</a><br /></td></tr>
+<tr class="separator:a9aaf8c551274cdfd6bb0d11e5e68f507"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad18ab3abea83be842b8cac3cfdb0593f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#ad18ab3abea83be842b8cac3cfdb0593f">PrefixRangeEnd</a> (std::string const  &amp;key)</td></tr>
 <tr class="memdesc:ad18ab3abea83be842b8cac3cfdb0593f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the end of the prefix range for <code>key</code>.  <a href="#ad18ab3abea83be842b8cac3cfdb0593f">More...</a><br /></td></tr>
 <tr class="separator:ad18ab3abea83be842b8cac3cfdb0593f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +136,36 @@ Functions</h2></td></tr>
 <tr class="separator:aa8098c67d579e8879972c2fc0fbadf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a9aaf8c551274cdfd6bb0d11e5e68f507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aaf8c551274cdfd6bb0d11e5e68f507">&#9670;&nbsp;</a></span>CreateChannelPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::shared_ptr&lt; grpc::Channel &gt; &gt; bigtable::v0::internal::CreateChannelPool </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>endpoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ClientOptions const &amp;&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a pool of grpc::Channel objects based on the client options. </p>
+
+</div>
+</div>
 <a id="adafa5c9ba9a21ec48f86764dfe470719"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adafa5c9ba9a21ec48f86764dfe470719">&#9670;&nbsp;</a></span>make_unique()</h2>
 
@@ -338,7 +371,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 27 2018 18:57:03 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 27 2018 20:01:29 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
