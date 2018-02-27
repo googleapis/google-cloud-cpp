@@ -64,6 +64,11 @@ class CommonClient {
       // a lock for long operations like that is a bad practice.  Releasing
       // the lock here can result in wasted work, but that is a smaller problem
       // than a deadlock or an unbounded priority inversion.
+      // Note that only one connection per application is created by gRPC, even
+      // if multiple threads are calling this function at the same time. gRPC
+      // only opens one socket per destination+attributes combo, we artificially
+      // introduce attributes in the implementation of CreateChannelPool() to
+      // create one socket per element in the pool.
       lk.unlock();
       auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
       std::vector<StubPtr> tmp;
