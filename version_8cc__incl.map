@@ -1,5 +1,5 @@
 <map id="client/version.cc" name="client/version.cc">
-<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="43,169,202,196"/>
-<area shape="rect" id="node7" href="$build__info_8h.html" title="bigtable/client/build\l_info.h" alt="" coords="192,80,325,121"/>
-<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="111,244,259,285"/>
+<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,169,175,196"/>
+<area shape="rect" id="node7" href="$build__info_8h.html" title="bigtable/client/build\l_info.h" alt="" coords="127,80,261,121"/>
+<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,244,232,285"/>
 </map>
