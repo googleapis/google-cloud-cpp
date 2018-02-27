@@ -13,16 +13,11 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
-
+#include <absl/base/config.h>
 #include <gmock/gmock.h>
-
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
-
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
-
-#include <absl/strings/str_cat.h>
-
 #include "bigtable/client/testing/chrono_literals.h"
 
 namespace {
@@ -65,7 +60,7 @@ auto create_list_tables_lambda = [](std::string expected_token,
       grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
       btproto::ListTablesResponse* response) {
     auto const instance_name =
-        absl::StrCat("projects/", kProjectId, "/instances/", kInstanceId);
+        "projects/" + kProjectId + "/instances/" + kInstanceId;
     EXPECT_EQ(instance_name, request.parent());
     EXPECT_EQ(btproto::Table::FULL, request.view());
     EXPECT_EQ(expected_token, request.page_token());

@@ -26,8 +26,6 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
-#include <absl/strings/str_cat.h>
-
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -41,7 +39,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 inline std::string TableName(std::shared_ptr<DataClient> client,
                              std::string const& table_id) {
-  return absl::StrCat(InstanceName(std::move(client)), "/tables/", table_id);
+  return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
 
 /**

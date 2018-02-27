@@ -17,7 +17,6 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <vector>
-
 #include "bigtable/client/cell.h"
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/row.h"

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/setup.h"
-#include <absl/strings/str_cat.h>
 #include <cctype>
 #include <iomanip>
 #include <sstream>
@@ -34,9 +33,8 @@ std::string FormattedStartTime() {
 }
 
 std::string FormattedAnnotations() {
-  std::string notes =
-      absl::StrCat(bigtable::version_string(), ";", bigtable::compiler, ";",
-                   bigtable::compiler_flags);
+  std::string notes = bigtable::version_string() + ";" + bigtable::compiler +
+                      ";" + bigtable::compiler_flags;
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
   return notes;
@@ -46,10 +44,9 @@ std::string MakeRandomTableId(std::string const& prefix) {
   static std::string const table_id_chars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
   auto gen = bigtable::benchmarks::MakeDefaultPRNG();
-  return absl::StrCat(
-      prefix, "-",
-      bigtable::benchmarks::Sample(
-          gen, bigtable::benchmarks::kTableIdRandomLetters, table_id_chars));
+  return prefix + "-" +
+         bigtable::benchmarks::Sample(
+             gen, bigtable::benchmarks::kTableIdRandomLetters, table_id_chars);
 }
 }  // anonymous namespace
 
