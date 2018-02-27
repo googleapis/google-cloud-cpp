@@ -40,6 +40,9 @@ namespace internal {
 
 [[noreturn]] void RaiseRuntimeError(char const* msg);
 [[noreturn]] void RaiseRuntimeError(std::string const& msg);
+
+[[noreturn]] void RaiseLogicError(char const* msg);
+[[noreturn]] void RaiseLogicError(std::string const& msg);
 //@}
 
 }  // namespace internal

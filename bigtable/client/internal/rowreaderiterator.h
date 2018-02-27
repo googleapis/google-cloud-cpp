@@ -15,11 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 
-#include "bigtable/client/row.h"
-
-#include <absl/types/optional.h>
-
 #include <iterator>
+#include "bigtable/client/internal/throw_delegate.h"
+#include "bigtable/client/row.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -27,6 +25,50 @@ inline namespace BIGTABLE_CLIENT_NS {
 class RowReader;
 
 namespace internal {
+/**
+ * A poor's man version of std::optional<Row>.
+ *
+ * This project needs to support C++11 and C++14, so std::optional<> is not
+ * available.  We cannot use Abseil either, see #232 for the reasons.
+ * So we implement a very minimal "OptionalRow" class that documents the intent
+ * and we will remove it when possible.
+ *
+ * TODO(#277) - replace with absl::optional<> or std::optional<> when possible.
+ */
+class OptionalRow {
+ public:
+  OptionalRow() : row_(std::string(), {}), has_row_(false) {}
+
+  Row* get() { return &row_; }
+  Row const* get() const { return &row_; }
+
+  Row& value() {
+    if (not has_row_) {
+      RaiseLogicError("access unset OptionalRow");
+    }
+    return row_;
+  }
+  Row const& value() const {
+    if (not has_row_) {
+      RaiseLogicError("access unset OptionalRow");
+    }
+    return row_;
+  }
+
+  operator bool() const { return has_row_; }
+  bool has_value() const { return has_row_; }
+
+  void reset() { has_row_ = false; }
+  void emplace(Row&& row) {
+    has_row_ = true;
+    row_ = std::move(row);
+  }
+
+ private:
+  Row row_;
+  bool has_row_;
+};
+
 /**
  * The input iterator used to scan the rows in a RowReader.
  */
@@ -41,17 +83,17 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
     return tmp;
   }
 
-  Row const* operator->() const { return row_.operator->(); }
-  Row* operator->() { return row_.operator->(); }
+  Row const* operator->() const { return row_.get(); }
+  Row* operator->() { return row_.get(); }
 
-  Row const& operator*() const & { return row_.operator*(); }
-  Row& operator*() & { return row_.operator*(); }
-  Row const&& operator*() const && { return std::move(row_.operator*()); }
-  Row&& operator*() && { return std::move(row_.operator*()); }
+  Row const& operator*() const & { return row_.value(); }
+  Row& operator*() & { return row_.value(); }
+  Row const&& operator*() const && { return std::move(row_.value()); }
+  Row&& operator*() && { return std::move(row_.value()); }
 
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
-    return (owner_ == that.owner_) and (bool(row_) == bool(that.row_));
+    return owner_ == that.owner_ and row_.has_value() == that.row_.has_value();
   }
 
   bool operator!=(RowReaderIterator const& that) const {
@@ -60,7 +102,7 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
 
  private:
   RowReader* owner_;
-  absl::optional<Row> row_;
+  OptionalRow row_;
 };
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

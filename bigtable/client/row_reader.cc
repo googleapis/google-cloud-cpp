@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/row_reader.h"
-
 #include <thread>
-
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/internal/throw_delegate.h"
 
@@ -119,7 +117,7 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-void RowReader::Advance(absl::optional<Row>& row) {
+void RowReader::Advance(internal::OptionalRow& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
@@ -170,7 +168,7 @@ void RowReader::Advance(absl::optional<Row>& row) {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
+grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
   row.reset();
   while (not parser_->HasNext()) {
     if (NextChunk()) {
@@ -194,7 +192,7 @@ grpc::Status RowReader::AdvanceOrFail(absl::optional<Row>& row) {
   // We have a complete row in the parser.
   row.emplace(parser_->Next());
   ++rows_count_;
-  last_read_row_key_ = std::string(row->row_key());
+  last_read_row_key_ = std::string(row.value().row_key());
 
   return grpc::Status::OK;
 }
