@@ -71,18 +71,19 @@ $(function() {
 <div class="title">rowreaderiterator.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="row_8h_source.html">bigtable/client/row.h</a>&quot;</code><br />
-<code>#include &lt;absl/types/optional.h&gt;</code><br />
-<code>#include &lt;iterator&gt;</code><br />
+<div class="textblock"><code>#include &lt;iterator&gt;</code><br />
+<code>#include &quot;<a class="el" href="throw__delegate_8h_source.html">bigtable/client/internal/throw_delegate.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="row_8h_source.html">bigtable/client/row.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for rowreaderiterator.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="rowreaderiterator_8h__incl.png" border="0" usemap="#client_2internal_2rowreaderiterator_8h" alt=""/></div>
 <map name="client_2internal_2rowreaderiterator_8h" id="client_2internal_2rowreaderiterator_8h">
-<area shape="rect" id="node2" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="113,80,251,107"/>
-<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="16,229,175,256"/>
-<area shape="rect" id="node7" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="113,155,251,181"/>
-<area shape="rect" id="node5" href="port__platform_8h.html" title="Platform portability details. " alt="" coords="84,304,232,345"/>
+<area shape="rect" id="node3" href="throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="5,155,153,196"/>
+<area shape="rect" id="node8" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="175,80,314,107"/>
+<area shape="rect" id="node4" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="112,244,271,271"/>
+<area shape="rect" id="node6" href="port__platform_8h.html" title="Platform portability details. " alt="" coords="180,319,328,360"/>
+<area shape="rect" id="node9" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="229,162,367,189"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -113,6 +114,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1OptionalRow.html">bigtable::v0::internal::OptionalRow</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A poor's man version of std::optional&lt;Row&gt;.  <a href="classbigtable_1_1v0_1_1internal_1_1OptionalRow.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1RowReaderIterator.html">bigtable::v0::internal::RowReaderIterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The input iterator used to scan the rows in a <a class="el" href="classbigtable_1_1v0_1_1RowReader.html" title="Object returned by Table::ReadRows(), enumerates rows in the response. ">RowReader</a>.  <a href="classbigtable_1_1v0_1_1internal_1_1RowReaderIterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,7 +133,7 @@ Namespaces</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 27 2018 04:37:27 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 27 2018 18:57:03 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

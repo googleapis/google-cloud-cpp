@@ -89,6 +89,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1conjunction_3_01B1_00_01Bn_8_8_8_01_4.html">conjunction&lt; B1, Bn... &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A metafunction to fold &amp;&amp; across a list of types.  <a href="structbigtable_1_1v0_1_1internal_1_1conjunction_3_01B1_00_01Bn_8_8_8_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1OptionalRow.html">OptionalRow</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A poor's man version of std::optional&lt;Row&gt;.  <a href="classbigtable_1_1v0_1_1internal_1_1OptionalRow.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html">ReadRowsParser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of chunks as returned by the ReadRows streaming RPC into a sequence of rows.  <a href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,6 +127,10 @@ Functions</h2></td></tr>
 <tr class="separator:adfcb266c68aee09a52c8d4d534c34620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76e87e07de7cf3b27a8acb79fc92ad28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a76e87e07de7cf3b27a8acb79fc92ad28">RaiseRuntimeError</a> (std::string const &amp;msg)</td></tr>
 <tr class="separator:a76e87e07de7cf3b27a8acb79fc92ad28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d73991c7433f73a7bdd4aa88d5f47fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#a6d73991c7433f73a7bdd4aa88d5f47fc">RaiseLogicError</a> (char const *msg)</td></tr>
+<tr class="separator:a6d73991c7433f73a7bdd4aa88d5f47fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8098c67d579e8879972c2fc0fbadf68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0_1_1internal.html#aa8098c67d579e8879972c2fc0fbadf68">RaiseLogicError</a> (std::string const &amp;msg)</td></tr>
+<tr class="separator:aa8098c67d579e8879972c2fc0fbadf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="adafa5c9ba9a21ec48f86764dfe470719"></a>
@@ -220,6 +227,42 @@ template&lt;typename T , typename... Args&gt; </div>
 
 </div>
 </div>
+<a id="a6d73991c7433f73a7bdd4aa88d5f47fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d73991c7433f73a7bdd4aa88d5f47fc">&#9670;&nbsp;</a></span>RaiseLogicError() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseLogicError </td>
+          <td>(</td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8098c67d579e8879972c2fc0fbadf68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8098c67d579e8879972c2fc0fbadf68">&#9670;&nbsp;</a></span>RaiseLogicError() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::internal::RaiseLogicError </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae7a5b5073a1e286d09a7d165d82dc80a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7a5b5073a1e286d09a7d165d82dc80a">&#9670;&nbsp;</a></span>RaiseRangeError() <span class="overload">[1/2]</span></h2>
 
@@ -295,7 +338,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 27 2018 04:37:28 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 27 2018 18:57:03 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

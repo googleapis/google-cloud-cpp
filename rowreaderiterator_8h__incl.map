@@ -1,6 +1,7 @@
 <map id="client/internal/rowreaderiterator.h" name="client/internal/rowreaderiterator.h">
-<area shape="rect" id="node2" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="113,80,251,107"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,229,175,256"/>
-<area shape="rect" id="node7" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="113,155,251,181"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,304,232,345"/>
+<area shape="rect" id="node3" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="5,155,153,196"/>
+<area shape="rect" id="node8" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="175,80,314,107"/>
+<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="112,244,271,271"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="180,319,328,360"/>
+<area shape="rect" id="node9" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="229,162,367,189"/>
 </map>
