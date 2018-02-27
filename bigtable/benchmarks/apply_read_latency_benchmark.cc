@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <absl/time/time.h>
 #include <cctype>
 #include <chrono>
 #include <future>
@@ -149,7 +148,7 @@ int main(int argc, char* argv[]) try {
           std::chrono::steady_clock::now() - latency_test_start);
   combined.apply_results.elapsed = latency_test_elapsed;
   combined.read_results.elapsed = latency_test_elapsed;
-  std::cout << " DONE. Elapsed=" << absl::FromChrono(latency_test_elapsed)
+  std::cout << " DONE. Elapsed=" << FormatDuration(latency_test_elapsed)
             << ", Ops=" << combined.apply_results.operations.size()
             << ", Rows=" << combined.apply_results.row_count << std::endl;
 

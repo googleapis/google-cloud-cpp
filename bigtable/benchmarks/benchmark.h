@@ -19,6 +19,8 @@
 #include "bigtable/benchmarks/random.h"
 #include "bigtable/benchmarks/setup.h"
 
+#include <chrono>
+
 namespace bigtable {
 namespace benchmarks {
 /// The result of a single operation.
@@ -132,6 +134,30 @@ class Benchmark {
   std::unique_ptr<EmbeddedServer> server_;
   std::thread server_thread_;
 };
+
+/// Helper class to pretty print durations.
+struct FormatDuration {
+  template <typename Rep, typename Period>
+  FormatDuration(std::chrono::duration<Rep, Period> d)
+      : ns(std::chrono::duration_cast<std::chrono::nanoseconds>(d)) {}
+  std::chrono::nanoseconds ns;
+};
+
+/**
+ * Pretty print an elapsed time.
+ *
+ * The benchmarks need to report time in human readable terms.  This operator
+ * streams a FormatDuration in hours, minutes, seconds and sub-seconds.  Any
+ * component that is zero gets ommitted, e.g. 1 hour exactly is printed as 1h.
+ *
+ * If the time is less than 1 second then the format uses millisecond or
+ * microsecond resolution, as appropriate.
+ *
+ * @param os the destination stream.
+ * @param duration the duration value.
+ * @return the stream after printing.
+ */
+std::ostream& operator<<(std::ostream& os, FormatDuration duration);
 
 }  // namespace benchmarks
 }  // namespace bigtable
