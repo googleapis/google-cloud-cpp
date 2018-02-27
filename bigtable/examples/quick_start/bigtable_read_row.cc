@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) try {
   // Handle the case where the row does not exist.
   //! [check result]
   if (not result.first) {
-    std::cerr << "Cannot find row 'my-key' in the table: " << table.table_name()
+    std::cout << "Cannot find row 'my-key' in the table: " << table.table_name()
               << std::endl;
     return 0;
   }

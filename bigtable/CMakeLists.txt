@@ -367,7 +367,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-add_subdirectory(examples/quick_start)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(examples/quick_start)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Define the install target
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
