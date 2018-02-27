@@ -68,7 +68,7 @@ namespace internal {
   RaiseException<std::logic_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg) {
+[[noreturn]] void RaiseRpcError(grpc::Status const &status, char const *msg) {
   // TODO(#119) - raise an exception that stores `status` as a value.
   std::ostringstream os;
   os << "unrecoverable gRPC error or too many gRPC errors in " << msg << ": "
@@ -77,8 +77,8 @@ namespace internal {
   internal::RaiseRuntimeError(os.str());
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const& status,
-                                std::string const& msg) {
+[[noreturn]] void RaiseRpcError(grpc::Status const &status,
+                                std::string const &msg) {
   RaiseRpcError(status, msg.c_str());
 }
 
