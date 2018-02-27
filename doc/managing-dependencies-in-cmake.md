@@ -8,8 +8,6 @@ libraries are allowed as dependencies:
 protocol definition (as protobufs) to contact Google Cloud services.
 * [gRPC](https://grpc.io) because this implements the protocol used to contact
 Google Cloud services.
-* [abseil-cpp](https://abseil.io) because it offers useful functionality and it
-is expected to become a dependency on protobuf and gRPC.
 * [googletest](https://github.com/google/googletest) because we needed a unit
 test framework and this was already a dependency for googleapis, gRPC, and
 Abseil.
@@ -18,7 +16,6 @@ Some of these libraries have dependencies themselves:
 
 * [protobuf](https://developers.google.com/protocol-buffers/) is a dependency
   for gRPC.
-* [cctz](https://github.com/google/cctz) is a dependency for parts of Abseil.
   
 gRPC has many other dependencies at build time, but they are not transitive,
 for example, gRPC uses [c-ares](https://c-ares.haxx.se/) for asynchronous DNS
@@ -65,66 +62,13 @@ conventions, so we must support them as best we can without them.
 In this section we analyse the existing dependencies and how do we propose to
 manage them.
 
-### Abseil and cctz
-
-Even when included as a submodule Abseil is hard to manage.  It has a strong
-dependency on `cctz` and `googletest`, going as far as checking that the targets
-for each exist even when the target is not used (e.g. if the libraries that do
-not require cctz are not compiled). The library assumes that it is being
-compiled as a submodule that provides these dependencies.
-
-This is problematic because gRPC creates the `gtest` targets for googletest when
-used as a submodule, but does not provide this target when used as an installed
-library.  We propose to fix this problem by:
-
-* Using the gRPC provided `gtest` target when gRPC is a submodule, and
-* Explicitly provide the `gtest` target when required.
-
-Furthermore, Abseil does not provide targets to install it. It recommends
-that applications always compile from source. We believe this is unrealistic
-for some of our customers. We will support compiling against a installed version
-of Abseil, as long as the application provides (a) either support files for
-`find_package()` in CMake, or (b) support files for `pkg-config`.
-
-Whether the application creates these files by themselves, they use a forked
-version of Abseil that has created these files, or they convince the Abseil
-developers to create these files is outside the scope of the `google-cloud-cpp`
-project.
-
-In general, we will support four modes for Abseil:
-
-1. [`vcpkg`](https://github.com/Microsoft/vcpkg) is a Microsoft tool to install
-   many Open Source libraries on Windows.  It provides `unofficial::absl::`
-   packages for Abseil. We expect this to be popular on Windows.
-   When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `vcpkg` we will define
-   CMake [`INTERFACE`][cmake-doc-interface] libraries with the `absl::*` names
-   that automatically link the corresponding `unofficial::absl::*` libraries.
-
-1. [`pkg-config`](https://www.freedesktop.org/wiki/Software/pkg-config/) is a
-   helper program on Unix to discover the compiler and linker command-line
-   arguments required to use a given library. When
-   `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `pkg-config` we will define
-   `INTERFACE` libraries for each `absl::*` library used in `google-cloud-cpp`.
-   These `INTERFACE` libraries will set their target
-   [properties][cmake-doc-target-properties] based on the configuration flags
-   discovered via `pkg-config`.
-   
-1. `package`: When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `package` we
-    will use `find_package(absl)` to find the Abseil libraries, and assume that
-    the system contains `Findabsl.cmake` files that tell CMake how to create the
-    `absl::*` targets.
-    
-1. `module`: When `GOOGLE_CLOUD_CPP_ABSEIL_PROVIDER` is set to `module`
-   (the default) we will simply add the `third_party/abseil` subdirectory to
-   the CMake build.
-
 ### gRPC and Protobuf
 
 gRPC can be compiled using CMake, plain GNU Make, Bazel, or vcpkg.  Depending
 how it is compiled it may offer an install target (GNU Make and CMake have
 them), and it may or may not have installed config files for `find_package()`.
 
-Like with Abseil we will support four different configurations for gRPC:
+We will support four different configurations for gRPC:
 
 1. [`vcpkg`](https://github.com/Microsoft/vcpkg) packages gRPC, and provides
    targets (`gRPC::gprc++` and `gRPC::grpc`) for CMake.  
@@ -158,8 +102,7 @@ Like with Abseil we will support four different configurations for gRPC:
 
 #### Things that gRPC depends on
 
-gRPC has many dependencies.  When this document was written, they include:
-[abseil-cpp](https://abseil.io),
+gRPC has many submodules.  When this document was written, they include:
 [benchmark](https://github.com/google/benchmark),
 [bloaty](https://github.com/google/bloaty), 
 [boringssl](https://github.com/google/boringssl),

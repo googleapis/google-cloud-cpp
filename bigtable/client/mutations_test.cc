@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/mutations.h"
-#include <absl/base/config.h>
-#include <google/rpc/error_details.pb.h>
-
 #include <gmock/gmock.h>
+#include <google/rpc/error_details.pb.h>
 
 /// @test Verify that SetCell() works as expected.
 TEST(MutationsTest, SetCell) {
