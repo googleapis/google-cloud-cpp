@@ -117,20 +117,22 @@ if (${CMAKE_VERSION} VERSION_LESS "3.9")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
 else ()
-    set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
-    set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
-    set(DOXYGEN_PROJECT_NUMBER
-            "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
-    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
-    set(DOXYGEN_EXAMPLE_PATH examples)
-    set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
-    include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
-
     find_package(Doxygen)
-    doxygen_add_docs(bigtable-docs doc client admin
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bigtable
-            COMMENT "Generate HTML documentation")
-    add_dependencies(doxygen-docs bigtable-docs)
+    if (Doxygen_FOUND)
+        set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
+        set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
+        set(DOXYGEN_PROJECT_NUMBER
+                "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
+        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
+        set(DOXYGEN_EXAMPLE_PATH examples)
+        set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+        include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
+
+        doxygen_add_docs(bigtable-docs doc client admin
+                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bigtable
+                COMMENT "Generate HTML documentation")
+        add_dependencies(doxygen-docs bigtable-docs)
+    endif ()
 endif ()
 
 # the client library
