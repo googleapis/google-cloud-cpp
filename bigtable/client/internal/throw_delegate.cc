@@ -14,8 +14,6 @@
 
 #include "bigtable/client/internal/throw_delegate.h"
 
-#include <absl/base/config.h>
-
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include <stdexcept>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

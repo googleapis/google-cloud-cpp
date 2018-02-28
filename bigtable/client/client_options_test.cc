@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/client_options.h"
-#include <absl/base/config.h>
-
+#include <gmock/gmock.h>
 #include <cstdlib>
+
 #ifdef WIN32
 // We need _putenv_s(), which is defined here:
 #include <stdlib.h>
@@ -23,8 +23,6 @@
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
 #include <unistd.h>
 #endif  // WIN32
-
-#include <gmock/gmock.h>
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();

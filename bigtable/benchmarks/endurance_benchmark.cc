@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <absl/time/time.h>
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -107,7 +106,7 @@ int main(int argc, char* argv[]) try {
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::steady_clock::now() - latency_test_start);
   auto throughput = 1000.0 * combined / elapsed.count();
-  std::cout << "# DONE. Elapsed=" << absl::FromChrono(elapsed)
+  std::cout << "# DONE. Elapsed=" << FormatDuration(elapsed)
             << ", Ops=" << combined << ", Throughput: " << throughput
             << " ops/sec" << std::endl;
 
