@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/admin/instance_admin.h"
-#include <absl/strings/str_cat.h>
 #include <gmock/gmock.h>
 #include <google/bigtable/admin/v2/bigtable_instance_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>

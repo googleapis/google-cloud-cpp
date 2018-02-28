@@ -17,7 +17,7 @@
 
 TEST(AdminClientTest, Default) {
   auto admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      "test-project", bigtable::ClientOptions());
+      "test-project", bigtable::ClientOptions().set_connection_pool_size(1));
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 
