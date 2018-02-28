@@ -165,3 +165,49 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
             CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
 endif ()
+
+# The install target can only be enabled if all the dependencies are installed.
+# CMake tries to install the submodules, and gRPC has complex configuration for
+# getting installed.  It is easier to just compile + install gRPC and then
+# compile this project.
+if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
+    # Install the libraries and headers in the locations determined by
+    # GNUInstallDirs
+    include(GNUInstallDirs)
+    install(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+        EXPORT bigtable-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    install(DIRECTORY client/ DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
+    # Export the CMake targets to make it easy to create configuration files.
+    install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+
+    # Install the pkg-config files.
+    configure_file("client/config.pc.in" "bigtable_client.pc" @ONLY)
+    install(FILES "${CMAKE_BINARY_DIR}/bigtable/bigtable_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    configure_file("admin/config.pc.in" "bigtable_admin.pc" @ONLY)
+    install(FILES "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+    # Install the cmake -config.cmake files.
+    configure_file("client/config.cmake.in"
+        "bigtable_client-config.cmake" @ONLY)
+    configure_file("admin/config.cmake.in"
+        "bigtable_admin_client-config.cmake" @ONLY)
+    configure_file("client/config-version.cmake.in"
+        "bigtable_client-config-version.cmake" @ONLY)
+    configure_file("client/config-version.cmake.in"
+        "bigtable_admin_client-config-version.cmake" @ONLY)
+    install(FILES
+        "${CMAKE_BINARY_DIR}/bigtable/bigtable_client-config.cmake"
+        "${CMAKE_BINARY_DIR}/bigtable/bigtable_client-config-version.cmake"
+        "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin_client-config.cmake"
+        "${CMAKE_BINARY_DIR}/bigtable/bigtable_admin_client-config-version.cmake"
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+    export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+        FILE "bigtable-exports.cmake")
+endif ()
