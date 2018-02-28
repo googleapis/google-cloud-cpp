@@ -21,28 +21,34 @@ set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Define an interface library, i.e., a library that really has no sources, and
+# add public target options to it.  The targets then use the library via
+# target_link_libraries(target PRIVATE bigtable_common_options), which
+# implicitly adds the options to those targets, but does *not* add the options
+# to any targets that depend on them.  This is a CMake idiom to add options to
+# targets without having to painfully set special variables, it also allows
+# users to add more common options without having to touch the code.
+add_library(bigtable_common_options INTERFACE)
+
 if (MSVC)
     include(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
     if (_cpp_latest_flag_supported)
-        add_compile_options("/std:c++latest")
+        target_compile_options(bigtable_common_options INTEFACE "/std:c++latest")
     endif ()
 endif ()
 
-# Turn on all available warnings and turn warnings into errors to
-# stop the build if any warning is emitted.  We do this in each
-# subdirectory because setting this for the top-level CMakeLists
-# breaks submodules (such as gRPC) that do not conform to such an
-# strict setting.
+# Find out what flags turn on all available warnings and turn those warnings
+# into errors.
 include(CheckCXXCompilerFlag)
 if (NOT MSVC)
-    CHECK_CXX_COMPILER_FLAG(-Werror COMPILER_SUPPORTS_WERROR)
-    if (COMPILER_SUPPORTS_WERROR)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
-    endif ()
     CHECK_CXX_COMPILER_FLAG(-Wall COMPILER_SUPPORTS_WALL)
     if (COMPILER_SUPPORTS_WALL)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+        target_compile_options(bigtable_common_options INTERFACE "-Wall")
+    endif ()
+    CHECK_CXX_COMPILER_FLAG(-Werror COMPILER_SUPPORTS_WERROR)
+    if (COMPILER_SUPPORTS_WERROR)
+        target_compile_options(bigtable_common_options INTERFACE "-Werror")
     endif ()
 endif ()
 

@@ -64,9 +64,10 @@ add_library(bigtable_client
         table.cc
         version.h
         version.cc)
-target_link_libraries(bigtable_client
+target_link_libraries(bigtable_client PUBLIC
         bigtable_protos
-        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+        PRIVATE bigtable_common_options)
 target_include_directories(bigtable_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -82,9 +83,10 @@ add_library(bigtable_client_testing
         testing/table_integration_test.cc
         testing/table_test_fixture.h
         testing/table_test_fixture.cc)
-target_link_libraries(bigtable_client_testing
+target_link_libraries(bigtable_client_testing PUBLIC
         bigtable_client bigtable_protos
-        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+    PRIVATE bigtable_common_options)
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
@@ -118,7 +120,8 @@ foreach (fname ${bigtable_client_unit_tests})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
             bigtable_client_testing bigtable_client bigtable_protos
-            gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+            gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+            bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
     add_dependencies(tests-local ${target})
 endforeach ()

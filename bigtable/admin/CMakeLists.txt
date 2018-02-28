@@ -24,8 +24,10 @@ add_library(bigtable_admin_client
         table_admin.cc
         table_config.h
         table_config.cc)
-target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
-        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+target_link_libraries(bigtable_admin_client PUBLIC
+        bigtable_client bigtable_protos
+        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+    PRIVATE bigtable_common_options)
 target_include_directories(bigtable_admin_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -47,7 +49,8 @@ foreach (fname ${bigtable_admin_unit_tests})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
             bigtable_admin_client bigtable_client bigtable_protos
-            gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+            gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+            bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
     add_dependencies(tests-local ${target})
 endforeach ()
