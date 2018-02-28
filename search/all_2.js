@@ -1,6 +1,7 @@
 var searchData=
 [
   ['c_5f00',['c_00',['../row__range__test_8cc.html#adc58d353c9474de57f181cbc8166c673',1,'row_range_test.cc']]],
+  ['callwithretry',['CallWithRetry',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa',1,'bigtable::v0::internal::UnaryRpcUtils']]],
   ['can_5fretry',['can_retry',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html#a4d53aa7f16dda1187f0bd72c40716b45',1,'bigtable::v0::RPCRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a83e1faa5fc4c6e306077b7082407000c',1,'bigtable::v0::LimitedErrorCountRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#aec1939c7298faaf6359ae9b16e6779b6',1,'bigtable::v0::LimitedTimeRetryPolicy::can_retry()']]],
   ['cancel',['Cancel',['../classbigtable_1_1v0_1_1RowReader.html#a59457f0baf7d6dc4f42a8a5d53d00295',1,'bigtable::v0::RowReader']]],
   ['cell',['Cell',['../classbigtable_1_1v0_1_1Cell.html',1,'bigtable::v0::Cell'],['../classbigtable_1_1v0_1_1Cell.html#afd76f5a24fea82bc10f65f8eba450576',1,'bigtable::v0::Cell::Cell()']]],
@@ -14,6 +15,8 @@ var searchData=
   ['chain',['Chain',['../classbigtable_1_1v0_1_1Filter.html#a1f1fe5a74d501d1e09fc873f059ddd14',1,'bigtable::v0::Filter']]],
   ['channel_5farguments',['channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a8178490fb038925bb1b097aeb5a87e86',1,'bigtable::v0::ClientOptions']]],
   ['checkequalunordered',['CheckEqualUnordered',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#afc3f7359d6960cc450b9b471732afe68',1,'bigtable::testing::TableIntegrationTest']]],
+  ['checksignature',['CheckSignature',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html',1,'bigtable::v0::internal::UnaryRpcUtils']]],
+  ['checksignature_3c_20grpc_3a_3astatus_28stubtype_3a_3a_2a_29_28grpc_3a_3aclientcontext_20_2a_2c_20request_20const_20_26_2c_20response_20_2a_29_3e',['CheckSignature&lt; grpc::Status(StubType::*)(grpc::ClientContext *, Request const &amp;, Response *)&gt;',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature_3_01grpc_1_1Status_07StubTypcbf5ad09c0ab84ee8079a6f7b0ccbdf7.html',1,'bigtable::v0::internal::UnaryRpcUtils']]],
   ['chrono_5fliterals_2eh',['chrono_literals.h',['../chrono__literals_8h.html',1,'']]],
   ['client_5f',['client_',['../classbigtable_1_1testing_1_1TableTestFixture.html#a3a23848c4a3f81138535f5dd57189b8c',1,'bigtable::testing::TableTestFixture']]],
   ['client_5foptions_2ecc',['client_options.cc',['../client__options_8cc.html',1,'']]],

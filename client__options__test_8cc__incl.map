@@ -1,6 +1,6 @@
 <map id="client/client_options_test.cc" name="client/client_options_test.cc">
-<area shape="rect" id="node2" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="15,95,152,136"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="34,273,192,300"/>
-<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="167,184,315,225"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="102,348,250,389"/>
+<area shape="rect" id="node2" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="124,95,261,136"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,273,175,300"/>
+<area shape="rect" id="node8" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="119,184,267,225"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,348,232,389"/>
 </map>

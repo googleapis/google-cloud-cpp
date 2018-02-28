@@ -1,7 +1,7 @@
 <map id="client/mutations.cc" name="client/mutations.cc">
-<area shape="rect" id="node2" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="279,87,453,114"/>
-<area shape="rect" id="node14" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="733,80,881,121"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="608,259,767,285"/>
-<area shape="rect" id="node11" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="501,169,649,211"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="676,333,824,375"/>
+<area shape="rect" id="node2" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="203,87,377,114"/>
+<area shape="rect" id="node14" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="657,80,805,121"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="315,259,473,285"/>
+<area shape="rect" id="node11" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,169,356,211"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="383,333,531,375"/>
 </map>
