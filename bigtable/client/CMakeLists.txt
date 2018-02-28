@@ -65,7 +65,10 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client
         bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+target_include_directories(bigtable_client PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 

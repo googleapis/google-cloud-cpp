@@ -89,7 +89,10 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
 target_link_libraries(bigtable_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_protos PUBLIC "${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(bigtable_protos PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_protos PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::protos ALIAS bigtable_protos)
 
