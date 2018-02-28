@@ -18,7 +18,7 @@
 #include <stdexcept>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-#include <iostream>
+#include <sstream>
 
 namespace {
 template <typename Exception>
@@ -66,6 +66,20 @@ namespace internal {
 
 [[noreturn]] void RaiseLogicError(std::string const &msg) {
   RaiseException<std::logic_error>(msg.c_str());
+}
+
+[[noreturn]] void RaiseRpcError(grpc::Status const &status, char const *msg) {
+  // TODO(#119) - raise an exception that stores `status` as a value.
+  std::ostringstream os;
+  os << "unrecoverable gRPC error or too many gRPC errors in " << msg << ": "
+     << status.error_message() << " [" << status.error_code() << "] "
+     << status.error_details();
+  internal::RaiseRuntimeError(os.str());
+}
+
+[[noreturn]] void RaiseRpcError(grpc::Status const &status,
+                                std::string const &msg) {
+  RaiseRpcError(status, msg.c_str());
 }
 
 }  // namespace internal

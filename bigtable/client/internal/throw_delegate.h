@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_THROW_DELEGATE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_THROW_DELEGATE_H_
 
+#include <grpc++/grpc++.h>
 #include "bigtable/client/version.h"
 
 namespace bigtable {
@@ -43,6 +44,10 @@ namespace internal {
 
 [[noreturn]] void RaiseLogicError(char const* msg);
 [[noreturn]] void RaiseLogicError(std::string const& msg);
+
+[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg);
+[[noreturn]] void RaiseRpcError(grpc::Status const& status,
+                                std::string const& msg);
 //@}
 
 }  // namespace internal
