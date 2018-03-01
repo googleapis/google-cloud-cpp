@@ -181,6 +181,56 @@ struct UnaryRpcUtils {
     }
     return response;
   }
+
+  /**
+   * Call a simple unary RPC with no retry.
+   *
+   * Given a pointer to member function in the grpc StubInterface class this
+   * generic function calls it with retries until success or until the RPC
+   * policies determine that this is an error.
+   *
+   * We use std::enable_if<> to stop signature errors at compile-time.  The
+   * `CheckSignature` meta function returns `false` if given a type that is not
+   * a pointer to member with the right signature, that disables this function
+   * altogether, and the developer gets a nice-ish error message.
+   *
+   * @tparam MemberFunction the signature of the member function.
+   * @param client the object that holds the gRPC stub.
+   * @param rpc_policy the policy to control timeouts.
+   * @param function the pointer to the member function to call.
+   * @param request an initialized request parameter for the RPC.
+   * @param error_message include this message in any exception or error log.
+   * @return the return parameter from the RPC.
+   * @throw std::exception with a description of the last RPC error.
+   */
+  template <typename MemberFunction>
+  // Disable the function if the provided member function does not match the
+  // expected signature.  Compilers also emit nice error messages in this case.
+  static typename std::enable_if<
+      CheckSignature<MemberFunction>::value,
+      typename CheckSignature<MemberFunction>::ResponseType>::type
+  CallWithoutRetry(
+      ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      MemberFunction function,
+      typename CheckSignature<MemberFunction>::RequestType const &request,
+      char const *error_message) {
+    typename CheckSignature<MemberFunction>::ResponseType response;
+
+    grpc::ClientContext client_context;
+
+    // Policies can set timeouts so allowing them to update context
+    rpc_policy->setup(client_context);
+    // Call the pointer to member function.
+    grpc::Status status =
+        ((*client.Stub()).*function)(&client_context, request, &response);
+    client.on_completion(status);
+
+    // no retries possible, so raise error as and when detected
+    if (!status.ok()) {
+      RaiseRpcError(status, error_message);
+    }
+    return response;
+  }
 };
 
 }  // namespace internal

@@ -27,9 +27,11 @@ inline namespace BIGTABLE_CLIENT_NS {
   request.set_table_id(std::move(table_id));
 
   auto error_message = "CreateTable(" + request.table_id() + ")";
-  return RpcUtils::CallWithRetry(
-      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-      &StubType::CreateTable, request, error_message.c_str());
+
+  // This API is not idempotent, lets call it without retry
+  return RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                                    &StubType::CreateTable, request,
+                                    error_message.c_str());
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -91,9 +93,9 @@ void TableAdmin::DeleteTable(std::string table_id) {
   btproto::DeleteTableRequest request;
   request.set_name(TableName(table_id));
 
-  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
-                          rpc_backoff_policy_->clone(), &StubType::DeleteTable,
-                          request, "DeleteTable");
+  // This API is not idempotent, lets call it without retry
+  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             &StubType::DeleteTable, request, "DeleteTable");
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
