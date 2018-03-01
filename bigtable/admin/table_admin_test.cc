@@ -265,10 +265,8 @@ initial_splits { key: 'p' }
       MockRpcFactory<btproto::CreateTableRequest, btproto::Table>::Create(
           expected_text);
   EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
-      .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock_create_table));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   using GC = bigtable::GcRule;
@@ -279,10 +277,10 @@ initial_splits { key: 'p' }
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::CreateTable` works with
- * unrecoverable failures.
+ * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * only one try and let client know request status.
  */
-TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
+TEST_F(TableAdminTest, CreateTableFailure) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -294,40 +292,6 @@ TEST_F(TableAdminTest, CreateTableUnrecoverableFailure) {
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
-  // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               std::runtime_error);
-#else
-  // Death tests happen on a separate process, so we do not get to observe the
-  // calls to on_completion().
-  EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.CreateTable("other-table", bigtable::TableConfig()),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/**
- * @test Verify that `bigtable::TableAdmin::CreateTable` works with too many
- * recoverable failures.
- */
-TEST_F(TableAdminTest, CreateTableTooManyFailures) {
-  using namespace ::testing;
-  using namespace bigtable::chrono_literals;
-
-  bigtable::TableAdmin tested(
-      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
-      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
-  // fourth failure that actually raises an error.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
-
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
                std::runtime_error);
@@ -432,11 +396,8 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
   auto mock =
       MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
-  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   tested.DeleteTable("the-table");
