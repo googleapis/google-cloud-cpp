@@ -54,6 +54,10 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
   void reset() override { return impl_.reset(); }
   void on_completion(grpc::Status const& status) override {}
 
+  DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
+  DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
+      delete;
+
  private:
   std::string project_;
   Impl impl_;

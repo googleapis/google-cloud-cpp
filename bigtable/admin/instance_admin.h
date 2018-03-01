@@ -64,6 +64,9 @@ class InstanceAdmin {
    */
   std::vector<::google::bigtable::admin::v2::Instance> ListInstances();
 
+  InstanceAdmin(InstanceAdmin const&) = delete;
+  InstanceAdmin operator=(InstanceAdmin const&) = delete;
+
  private:
   /// Shortcuts to avoid typing long names over and over.
   using RpcUtils = bigtable::internal::UnaryRpcUtils<InstanceAdminClient>;
