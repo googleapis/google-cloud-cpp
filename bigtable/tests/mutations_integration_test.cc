@@ -20,9 +20,9 @@ namespace admin_proto = ::google::bigtable::admin::v2;
 
 class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::string column_family1 = "fam1";
-  std::string column_family2 = "fam2";
-  std::string column_family3 = "fam3";
+  std::string const column_family1 = "fam1";
+  std::string const column_family2 = "fam2";
+  std::string const column_family3 = "fam3";
 
   bigtable::TableConfig table_config = bigtable::TableConfig(
       {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
@@ -30,7 +30,11 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
        {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
       {});
 
-  // A helper function to create a list of cells.
+  /**
+   * This function creates Cell by ignoring the timestamp.
+   * In this case Cloud Bigtable will insert the default server
+   * side timestamp for the cells.
+   */
   void CreateCellsIgnoringTimestamp(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
     std::map<std::string, bigtable::SingleRowMutation> mutations;
@@ -63,9 +67,19 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 
   /**
-   * Delete the records from table for the specified family and column with
-   * timestamp starting from time_begin.
-   * time_begin: This parameter is inclusive, i.e. timestamp >= time_begin
+   * Delete the records from table for the specified family and column
+   * with timestamp starting from time_begin.
+   *
+   * @tparam table represents bigtable table
+   * @tparam row_key represents the row_key from which we have to delete
+   *     the records.
+   * @tparam column_family represents column family from which we have to
+   *     delete the records.
+   * @tparam column_id represents the column identifier from which we have
+   *     to delete the records.
+   * @tparam time_begin represents the starting timestamp from which we
+   *     have to delete the records.
+   *     This parameter is inclusive, i.e. timestamp >= time_begin
    */
   void DeleteFromColumnStartingFrom(bigtable::Table& table, std::string row_key,
                                     std::string column_family,
@@ -81,9 +95,19 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 
   /**
-   * Delete the records from table for the specified family and column with
-   * timestamp ending at time_end.
-   * time_end  : This parameter is not inclusive. i.e. timestamp < time_end
+   * Delete the records from table for the specified family and column
+   * identifier with timestamp ending at time_end.
+   *
+   * @tparam table represents bigtable table
+   * @tparam row_key represents the row_key from which we have to delete
+   *     the records.
+   * @tparam column_family represents column family from which we have
+   *     to delete the records.
+   * @tparam column_id represents the column identifier from which we
+   *     have to delete the records.
+   * @tparam time_end represents the ending timestamp upto which we have
+   *     to delete the records.
+   *     This parameter is not inclusive. i.e. timestamp < time_end
    */
   void DeleteFromColumnEndingAt(bigtable::Table& table, std::string row_key,
                                 std::string column_family,
@@ -98,10 +122,23 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 
   /**
-   * Delete the records from table for the specified family and column with
-   * timestamp starting from time_begin.
-   * time_begin: This parameter is inclusive i.e. timestamp >= time_begin
-   * time_end  : This parameter is not inclusive. i.e. timestamp < time_end
+   * Delete the records from table for the specified family and column
+   * identifier with timestamp starting from time_begin and ending at
+   * time_end.
+   *
+   * @tparam table represents bigtable table
+   * @tparam row_key represents the row_key from which we have to delete
+   *     the records.
+   * @tparam column_family represents column family from which we have
+   *     to delete the records.
+   * @tparam column_id represents the column identifier from which we
+   *     have to delete the records.
+   * @tparam time_begin represents the starting timestamp from which
+   *     we have to delete the records.
+   *     This parameter is inclusive i.e. timestamp >= time_begin
+   * @tparam time_end represents the ending timestamp upto which we have
+   *     to delete the records.
+   *     This parameter is not inclusive. i.e. timestamp < time_end
    */
   void DeleteFromColumn(bigtable::Table& table, std::string row_key,
                         std::string column_family, std::string column_id,
@@ -140,8 +177,7 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
     table.BulkApply(std::move(bulk));
   }
 };
-
-}  // namespace anonymus
+}  // namespace anonymous
 
 /**
  *  Check if the values inserted by SetCell are correctly inserted into
@@ -163,9 +199,7 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
   };
 
   CreateCells(*table, created_cells);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(created_cells, actual_cells);
@@ -179,7 +213,6 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
   std::string const table_name = "table-setcell-ignore-timestamp";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
   std::vector<bigtable::Cell> created_cells{
@@ -190,35 +223,52 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
       {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
-
-  // This microseconds are 1 milliseconds mismatch with the server timestamp.
-  // So during comparison this timestamp is fixed to 1000 and actual and
-  // expected are matched
-  auto micro_secs =
-      ((std::chrono::system_clock::now().time_since_epoch().count() + 50000) /
-       1000000) *
-      1000;
-  // Add one millisecond as processing to match the server timestamp
-  micro_secs += 1000;
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", micro_secs, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", micro_secs, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", micro_secs, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", micro_secs, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id3", micro_secs, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", micro_secs, "v-c1-0-2", {}},
+      {row_key,
+       column_family1,
+       "column_id1",
+       bigtable::ServerSetTimestamp(),
+       "v-c-0-0",
+       {}},
+      {row_key,
+       column_family1,
+       "column_id2",
+       bigtable::ServerSetTimestamp(),
+       "v-c-0-1",
+       {}},
+      {row_key,
+       column_family1,
+       "column_id3",
+       bigtable::ServerSetTimestamp(),
+       "v-c-0-2",
+       {}},
+      {row_key,
+       column_family2,
+       "column_id2",
+       bigtable::ServerSetTimestamp(),
+       "v-c0-0-0",
+       {}},
+      {row_key,
+       column_family2,
+       "column_id3",
+       bigtable::ServerSetTimestamp(),
+       "v-c1-0-1",
+       {}},
+      {row_key,
+       column_family3,
+       "column_id1",
+       bigtable::ServerSetTimestamp(),
+       "v-c1-0-2",
+       {}},
   };
 
   CreateCellsIgnoringTimestamp(*table, created_cells);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   // Create the expected_cells and actual_cells with same timestamp
   std::vector<bigtable::Cell> expected_cells_ignore_time;
   std::vector<bigtable::Cell> actual_cells_ignore_time;
-
   for (auto& cell : expected_cells) {
     bigtable::Cell newCell(cell.row_key(), cell.family_name(),
                            cell.column_qualifier(), 1000, cell.value(),
@@ -244,9 +294,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   std::string const table_name = "table-delete-for-column-time-range";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
+  std::string const row_key = "DeleteColumn-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
@@ -259,10 +308,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c1-0-2", {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
-
-  // timestamp_end is not inclusive.
   std::int64_t timestamp_begin = 2000;
-  std::int64_t timestamp_end = 4000;
+  std::int64_t timestamp_end = 4000;  // timestamp_end is not inclusive.
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
@@ -275,45 +322,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   // Delete the columns with column identifier as column_id2
   DeleteFromColumn(*table, row_key, column_family2, "column_id2",
                    timestamp_begin, timestamp_end);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
-}
-
-/**
- * Verify that DeleteFromColumn operation for invalid time range
- * should throw a range exception
- */
-TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeValidityTest) {
-  std::string const table_name = "table-delete-for-column-invalid-time-range";
-
-  auto table = CreateTable(table_name, table_config);
-
-  // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
-  std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family2, "column_id2", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c0-0-0", {}},
-  };
-
-  std::int64_t timestamp_begin = 4000;
-  std::int64_t timestamp_end = 3000;
-
-  // Create records
-  CreateCells(*table, created_cells);
-  EXPECT_THROW(DeleteFromColumn(*table, row_key, column_family2, "column_id2",
-                                timestamp_begin, timestamp_end),
-               std::range_error);
-  DeleteTable(table_name);
 }
 
 /**
@@ -324,9 +339,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   std::string const table_name = "table-delete-for-column";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
+  std::string const row_key = "DeleteColumnForAll-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id3", 1000, "v-c-0-1", {}},
@@ -334,7 +348,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
-
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
@@ -343,12 +356,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   // Delete the columns with column identifier column_id3
-  DeleteFromColumn(*table, row_key, column_family2, "column_id3");
-
+  DeleteFromColumn(*table, row_key, column_family1, "column_id3");
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -363,9 +373,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   std::string const table_name = "table-delete-for-column-starting-from";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
+  std::string const row_key = "DeleteColumnStartingFrom-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
@@ -374,7 +383,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
-
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
@@ -384,14 +392,11 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   std::int64_t time_begin = 1000;
   // Delete the columns with column identifier column_id1
   DeleteFromColumnStartingFrom(*table, row_key, column_family1, "column_id1",
                                time_begin);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -406,9 +411,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   std::string const table_name = "table-delete-for-column-ending-at";
 
   auto table = CreateTable(table_name, table_config);
-
-  // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
+  // Create a vector of cell which will be inserted into bigtable cloud
+  std::string const row_key = "DeleteColumnEndingAt-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
@@ -417,7 +421,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
-
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
       {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
@@ -427,16 +430,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   // end_time is not inclusive, only records with timestamp < time_end
   // will be deleted
   std::int64_t time_end = 2000;
   // Delete the columns with column identifier column_id1
   DeleteFromColumnEndingAt(*table, row_key, column_family1, "column_id1",
                            time_end);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -450,9 +450,8 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   std::string const table_name = "table-delete-for-family";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key = "DelColKey";
+  std::string const row_key = "DeleteFamily-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
@@ -460,7 +459,6 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
-
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
       {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
@@ -468,12 +466,9 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   // Delete all the records for family
   DeleteFromFamily(*table, row_key, column_family1);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -487,7 +482,6 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   std::string const table_name = "table-delete-for-row";
 
   auto table = CreateTable(table_name, table_config);
-
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DeleteRowKey1";
   std::string const row_key2 = "DeleteRowKey2";
@@ -498,7 +492,6 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
       {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
   };
-
   std::vector<bigtable::Cell> expected_cells{
       {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
       {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
@@ -506,19 +499,16 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-
   // Delete all the records for a row
   DeleteFromRow(*table, row_key1);
-
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
 // Test Cases Finished
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 
   // Make sure the arguments are valid.
@@ -546,10 +536,4 @@ int main(int argc, char* argv[]) try {
       new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
   return RUN_ALL_TESTS();
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
-  return 1;
-} catch (...) {
-  std::cerr << "Unknown exception raised." << std::endl;
-  return 1;
 }
