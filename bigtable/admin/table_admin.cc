@@ -14,7 +14,6 @@
 
 #include "bigtable/admin/table_admin.h"
 #include <sstream>
-#include "bigtable/client/internal/throw_delegate.h"
 
 namespace btproto = ::google::bigtable::admin::v2;
 
@@ -80,8 +79,10 @@ void TableAdmin::DeleteTable(std::string table_id) {
   request.set_name(TableName(table_id));
 
   // This API is not idempotent, lets call it without retry
+  auto error_message = "DeleteTable(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                             &StubType::DeleteTable, request, "DeleteTable");
+                             &StubType::DeleteTable, request,
+                             error_message.c_str());
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
@@ -93,9 +94,9 @@ void TableAdmin::DeleteTable(std::string table_id) {
   }
 
   auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
-  return RpcUtils::CallWithRetry(
-      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-      &StubType::ModifyColumnFamilies, request, error_message.c_str());
+  return RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                                    &StubType::ModifyColumnFamilies, request,
+                                    error_message.c_str());
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
@@ -104,9 +105,10 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
   request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
 
-  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
-                          rpc_backoff_policy_->clone(), &StubType::DropRowRange,
-                          request, "DropRowsByPrefix");
+  auto error_message = "DropRowsByPrefix(" + request.name() + ")";
+  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             &StubType::DropRowRange, request,
+                             error_message.c_str());
 }
 
 void TableAdmin::DropAllRows(std::string table_id) {
@@ -114,9 +116,10 @@ void TableAdmin::DropAllRows(std::string table_id) {
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
 
-  RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
-                          rpc_backoff_policy_->clone(), &StubType::DropRowRange,
-                          request, "DropAllRows");
+  auto error_message = "DropAllRows(" + request.name() + ")";
+  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             &StubType::DropRowRange, request,
+                             error_message.c_str());
 }
 
 std::string TableAdmin::InstanceName() const {
