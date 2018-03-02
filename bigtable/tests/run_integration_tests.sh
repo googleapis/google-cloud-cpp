@@ -75,3 +75,7 @@ echo "Running TableAdmin integration test."
 echo
 echo "Running bigtable::Filters integration tests."
 ./filters_integration_test emulated$NONCE filters-test
+
+echo
+echo "Running bigtable::Filters integration tests."
+./mutations_integration_test emulated$NONCE mutations-test

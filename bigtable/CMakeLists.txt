@@ -346,6 +346,13 @@ target_link_libraries(filters_integration_test
     gmock gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local filters_integration_test)
 
+# An integration test for bigtable::Mutations.
+add_executable(mutations_integration_test tests/mutations_integration_test.cc)
+target_link_libraries(mutations_integration_test
+    bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+    gmock gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local mutations_integration_test)
+
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_library(bigtable_benchmark_common
         benchmarks/benchmark.h
