@@ -72,7 +72,7 @@ fi
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # Run the tests and output any failures.
-ctest --output-on-failure
+CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
 
 # If possible, run the integration tests.
 if [ -r /etc/lsb-release ] && grep -q 14.04 /etc/lsb-release; then
