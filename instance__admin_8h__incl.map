@@ -1,10 +1,10 @@
 <map id="admin/instance_admin.h" name="admin/instance_admin.h">
-<area shape="rect" id="node3" href="$instance__admin__client_8h.html" title="bigtable/admin/instance\l_admin_client.h" alt="" coords="530,80,689,121"/>
-<area shape="rect" id="node12" href="$unary__rpc__utils_8h.html" title="bigtable/client/internal\l/unary_rpc_utils.h" alt="" coords="194,177,342,218"/>
-<area shape="rect" id="node6" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="541,177,678,218"/>
-<area shape="rect" id="node7" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="447,363,606,389"/>
-<area shape="rect" id="node11" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="429,273,577,315"/>
-<area shape="rect" id="node8" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="453,437,601,479"/>
-<area shape="rect" id="node14" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="133,273,257,315"/>
-<area shape="rect" id="node17" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="281,273,405,315"/>
+<area shape="rect" id="node3" href="$instance__admin__client_8h.html" title="bigtable/admin/instance\l_admin_client.h" alt="" coords="535,80,694,121"/>
+<area shape="rect" id="node13" href="$unary__rpc__utils_8h.html" title="bigtable/client/internal\l/unary_rpc_utils.h" alt="" coords="199,177,347,218"/>
+<area shape="rect" id="node6" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="546,177,683,218"/>
+<area shape="rect" id="node7" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="442,363,601,389"/>
+<area shape="rect" id="node12" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="434,273,582,315"/>
+<area shape="rect" id="node8" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="286,437,434,479"/>
+<area shape="rect" id="node15" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="138,273,262,315"/>
+<area shape="rect" id="node18" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="286,273,410,315"/>
 </map>

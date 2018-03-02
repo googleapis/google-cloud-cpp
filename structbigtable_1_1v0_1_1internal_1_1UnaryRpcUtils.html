@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Google Cloud Bigtable C++ Client
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
    <div id="projectbrief">A C++ Client Library for Google Cloud Bigtable</div>
   </td>
@@ -74,21 +74,15 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Helper functions to make (unary) gRPC calls under the right policies.  
- <a href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="unary__rpc__utils_8h_source.html">unary_rpc_utils.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if <code>T</code> is a pointer to member function with the expected signature for <code>MakeCall()</code>.  <a href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature_3_01grpc_1_1Status_07StubTypcbf5ad09c0ab84ee8079a6f7b0ccbdf7.html">CheckSignature&lt; grpc::Status(StubType::*)(grpc::ClientContext *, Request const &amp;, Response *)&gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a type is a pointer to member function with the correct signature for <code>MakeCall()</code>.  <a href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature_3_01grpc_1_1Status_07StubTypcbf5ad09c0ab84ee8079a6f7b0ccbdf7.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1DiscoverStubType.html">DiscoverStubType</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the StubType from the type returned by ClientType::Stub().  <a href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1DiscoverStubType.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -101,22 +95,19 @@ Public Types</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a96189ac1b77e83f879e0d36898b6f9aa"><td class="memTemplParams" colspan="2">template&lt;typename MemberFunction &gt; </td></tr>
 <tr class="memitem:a96189ac1b77e83f879e0d36898b6f9aa"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa">CallWithRetry</a> (ClientType &amp;client, std::unique_ptr&lt; bigtable::RPCRetryPolicy &gt; rpc_policy, std::unique_ptr&lt; bigtable::RPCBackoffPolicy &gt; backoff_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
-<tr class="memdesc:a96189ac1b77e83f879e0d36898b6f9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with retries.  <a href="#a96189ac1b77e83f879e0d36898b6f9aa">More...</a><br /></td></tr>
 <tr class="separator:a96189ac1b77e83f879e0d36898b6f9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba56f4637d79360e8a272041b80f9ffc"><td class="memTemplParams" colspan="2">template&lt;typename MemberFunction &gt; </td></tr>
 <tr class="memitem:aba56f4637d79360e8a272041b80f9ffc"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#aba56f4637d79360e8a272041b80f9ffc">CallWithRetryBorrow</a> (ClientType &amp;client, bigtable::RPCRetryPolicy &amp;rpc_policy, bigtable::RPCBackoffPolicy &amp;backoff_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
-<tr class="memdesc:aba56f4637d79360e8a272041b80f9ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with retries borrowing the RPC policies.  <a href="#aba56f4637d79360e8a272041b80f9ffc">More...</a><br /></td></tr>
 <tr class="separator:aba56f4637d79360e8a272041b80f9ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a589f30755df91d502eca0905f362fb71"><td class="memTemplParams" colspan="2">template&lt;typename MemberFunction &gt; </td></tr>
 <tr class="memitem:a589f30755df91d502eca0905f362fb71"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a589f30755df91d502eca0905f362fb71">CallWithoutRetry</a> (ClientType &amp;client, std::unique_ptr&lt; bigtable::RPCRetryPolicy &gt; rpc_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
-<tr class="memdesc:a589f30755df91d502eca0905f362fb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with no retry.  <a href="#a589f30755df91d502eca0905f362fb71">More...</a><br /></td></tr>
 <tr class="separator:a589f30755df91d502eca0905f362fb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ClientType&gt;<br />
 struct bigtable::v0::internal::UnaryRpcUtils&lt; ClientType &gt;</h3>
 
-<p>Helper functions to make (unary) gRPC calls under the right policies. </p>
+<p>Helper functions to make (unary) gRPC calls under the right policies.</p>
 <p>Many of the gRPC calls made the the Cloud Bigtable C++ client library are wrapped in essentially the same loop:</p>
 <div class="fragment"><div class="line">clone the policies <span class="keywordflow">for</span> the call</div><div class="line"><span class="keywordflow">do</span> {</div><div class="line">  make rpc call</div><div class="line">  <span class="keywordflow">return</span> <span class="keywordflow">if</span> successful</div><div class="line">  update policies</div><div class="line">} <span class="keywordflow">while</span>(policies allow retry);</div><div class="line">report failure</div></div><!-- fragment --><p>The loop is not hard to write, but gets tedious, <code>CallWithRetry</code> provides a function that implements this loop. The code is a bit difficult because the signature of the gRPC functions look like this:</p>
 <div class="fragment"><div class="line">grpc::Status (<a class="code" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a83d27d789de50c2cb1834e68ebd46e93">StubType</a>::*)(grpc::ClientContext*, Request <span class="keyword">const</span>&amp;, Response*);</div></div><!-- fragment --><p>Where <code>Request</code> and <code>Response</code> are the protos in the gRPC call.</p>
@@ -201,10 +192,9 @@ template&lt;typename MemberFunction &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Call a simple unary RPC with no retry. </p>
+<p>Call a simple unary RPC with no retry.</p>
 <p>Given a pointer to member function in the grpc StubInterface class this generic function calls it with retries until success or until the RPC policies determine that this is an error.</p>
-<p>We use std::enable_if&lt;&gt; to stop signature errors at compile-time. The <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html" title="Determine if T is a pointer to member function with the expected signature for MakeCall(). ">CheckSignature</a></code> meta function returns <code>false</code> if given a type that is not a pointer to member with the right signature, that disables this function altogether, and the developer gets a nice-ish error message.</p>
+<p>We use std::enable_if&lt;&gt; to stop signature errors at compile-time. The <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a></code> meta function returns <code>false</code> if given a type that is not a pointer to member with the right signature, that disables this function altogether, and the developer gets a nice-ish error message.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">MemberFunction</td><td>the signature of the member function. </td></tr>
@@ -292,10 +282,9 @@ template&lt;typename MemberFunction &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Call a simple unary RPC with retries. </p>
+<p>Call a simple unary RPC with retries.</p>
 <p>Given a pointer to member function in the grpc StubInterface class this generic function calls it with retries until success or until the RPC policies determine that this is an error.</p>
-<p>We use std::enable_if&lt;&gt; to stop signature errors at compile-time. The <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html" title="Determine if T is a pointer to member function with the expected signature for MakeCall(). ">CheckSignature</a></code> meta function returns <code>false</code> if given a type that is not a pointer to member with the right signature, that disables this function altogether, and the developer gets a nice-ish error message.</p>
+<p>We use std::enable_if&lt;&gt; to stop signature errors at compile-time. The <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a></code> meta function returns <code>false</code> if given a type that is not a pointer to member with the right signature, that disables this function altogether, and the developer gets a nice-ish error message.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">MemberFunction</td><td>the signature of the member function. </td></tr>
@@ -384,9 +373,8 @@ template&lt;typename MemberFunction &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Call a simple unary RPC with retries borrowing the RPC policies. </p>
-<p>This implements <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa" title="Call a simple unary RPC with retries. ">CallWithRetry()</a></code>, but does not assume ownership of the RPC policies. Some RPCs, notably those with pagination, can reuse most of the code in <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa" title="Call a simple unary RPC with retries. ">CallWithRetry()</a></code> but must reuse the same policies across several calls.</p>
+<p>Call a simple unary RPC with retries borrowing the RPC policies.</p>
+<p>This implements <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa">CallWithRetry()</a></code>, but does not assume ownership of the RPC policies. Some RPCs, notably those with pagination, can reuse most of the code in <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa">CallWithRetry()</a></code> but must reuse the same policies across several calls.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">MemberFunction</td><td>the signature of the member function. </td></tr>
@@ -420,7 +408,7 @@ template&lt;typename MemberFunction &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 2 2018 13:47:41 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

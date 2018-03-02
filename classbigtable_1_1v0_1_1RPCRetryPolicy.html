@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Google Cloud Bigtable C++ Client
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
    <div id="projectbrief">A C++ Client Library for Google Cloud Bigtable</div>
   </td>
@@ -72,17 +72,14 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Define the interface for controlling how the Bigtable client retries RPC operations.  
- <a href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="rpc__retry__policy_8h_source.html">rpc_retry_policy.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bigtable::v0::RPCRetryPolicy:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbigtable_1_1v0_1_1RPCRetryPolicy__inherit__graph.png" border="0" usemap="#bigtable_1_1v0_1_1RPCRetryPolicy_inherit__map" alt="Inheritance graph"/></div>
 <map name="bigtable_1_1v0_1_1RPCRetryPolicy_inherit__map" id="bigtable_1_1v0_1_1RPCRetryPolicy_inherit__map">
-<area shape="rect" id="node2" href="classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. " alt="" coords="5,80,172,121"/>
-<area shape="rect" id="node3" href="classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. " alt="" coords="197,80,365,121"/>
+<area shape="rect" id="node2" href="classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="bigtable::v0::LimitedError\lCountRetryPolicy" alt="" coords="5,80,172,121"/>
+<area shape="rect" id="node3" href="classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="bigtable::v0::LimitedTime\lRetryPolicy" alt="" coords="197,80,365,121"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -91,22 +88,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afe611baba5e9c314228c6d8b5aa00d6f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#afe611baba5e9c314228c6d8b5aa00d6f">~RPCRetryPolicy</a> ()=default</td></tr>
 <tr class="separator:afe611baba5e9c314228c6d8b5aa00d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad92731d9ae9774acde277670a58ba816"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#ad92731d9ae9774acde277670a58ba816">clone</a> () const =0</td></tr>
-<tr class="memdesc:ad92731d9ae9774acde277670a58ba816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a new copy of this object.  <a href="#ad92731d9ae9774acde277670a58ba816">More...</a><br /></td></tr>
 <tr class="separator:ad92731d9ae9774acde277670a58ba816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1895b09db4d470c21f9ce095a99f1088"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#a1895b09db4d470c21f9ce095a99f1088">setup</a> (grpc::ClientContext &amp;context) const =0</td></tr>
-<tr class="memdesc:a1895b09db4d470c21f9ce095a99f1088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the ClientContext for the next call.  <a href="#a1895b09db4d470c21f9ce095a99f1088">More...</a><br /></td></tr>
 <tr class="separator:a1895b09db4d470c21f9ce095a99f1088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9efd047aca4068d2303fa6bb6b3dd503"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#a9efd047aca4068d2303fa6bb6b3dd503">on_failure</a> (grpc::Status const &amp;status)=0</td></tr>
-<tr class="memdesc:a9efd047aca4068d2303fa6bb6b3dd503"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle an RPC failure.  <a href="#a9efd047aca4068d2303fa6bb6b3dd503">More...</a><br /></td></tr>
 <tr class="separator:a9efd047aca4068d2303fa6bb6b3dd503"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d53aa7f16dda1187f0bd72c40716b45"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html#a4d53aa7f16dda1187f0bd72c40716b45">can_retry</a> (grpc::StatusCode code) const =0</td></tr>
 <tr class="memdesc:a4d53aa7f16dda1187f0bd72c40716b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the status code is retryable.  <a href="#a4d53aa7f16dda1187f0bd72c40716b45">More...</a><br /></td></tr>
 <tr class="separator:a4d53aa7f16dda1187f0bd72c40716b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Define the interface for controlling how the Bigtable client retries RPC operations. </p>
+<div class="textblock"><p>Define the interface for controlling how the Bigtable client retries RPC operations.</p>
 <p>The C++ client for Bigtable needs to hide partial and temporary failures from the application. However, we need to give the users enough flexibility to control how many attempts are made to reissue operations, how often these attempts are executed, and how to signal that an error has occurred.</p>
-<p>The application provides an instance of this class when the <a class="el" href="classbigtable_1_1v0_1_1Table.html" title="The main interface to interact with data in a Cloud Bigtable table. ">Table</a> (or <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">TableAdmin</a>) object is created. This instance serves as a prototype to create new <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a> objects of the same (dynamic) type and with the same initial state. </p>
+<p>The application provides an instance of this class when the <a class="el" href="classbigtable_1_1v0_1_1Table.html">Table</a> (or <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a>) object is created. This instance serves as a prototype to create new <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> objects of the same (dynamic) type and with the same initial state. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afe611baba5e9c314228c6d8b5aa00d6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afe611baba5e9c314228c6d8b5aa00d6f">&#9670;&nbsp;</a></span>~RPCRetryPolicy()</h2>
@@ -186,8 +180,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return a new copy of this object. </p>
+<p>Return a new copy of this object.</p>
 <p>Typically implemented as </p><div class="fragment"><div class="line"><span class="keywordflow">return</span> std::unique_ptr&lt;RPCRetryPolicy&gt;(<span class="keyword">new</span> Foo(*<span class="keyword">this</span>));</div></div><!-- fragment --> 
 <p>Implemented in <a class="el" href="classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#a851863a0218015f565e5263abaf1a3ee">bigtable::v0::LimitedTimeRetryPolicy</a>, and <a class="el" href="classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a3ce7fafa704d070e9fa33767bc0a477c">bigtable::v0::LimitedErrorCountRetryPolicy</a>.</p>
 
@@ -216,8 +209,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Handle an RPC failure. </p>
+<p>Handle an RPC failure.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the RPC operation should be retried. </dd></dl>
 
 <p>Implemented in <a class="el" href="classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#a3f6c098bbef90619f9fd3c9f7647164b">bigtable::v0::LimitedTimeRetryPolicy</a>, and <a class="el" href="classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#afd52b1bb1521aaf4632a4997344ef3c2">bigtable::v0::LimitedErrorCountRetryPolicy</a>.</p>
@@ -247,7 +239,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
 <p>Update the ClientContext for the next call. </p>
 
 <p>Implemented in <a class="el" href="classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#ac4dbca8172b65a27da6d7af6e46c40b9">bigtable::v0::LimitedTimeRetryPolicy</a>, and <a class="el" href="classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a81747bdf4abe7b4b5a52b0ef91822e87">bigtable::v0::LimitedErrorCountRetryPolicy</a>.</p>
@@ -260,7 +251,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 2 2018 13:47:41 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

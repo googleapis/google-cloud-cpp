@@ -1,5 +1,5 @@
 <map id="client/row.h" name="client/row.h">
-<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,155,175,181"/>
-<area shape="rect" id="node6" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="113,80,251,107"/>
-<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,229,232,271"/>
+<area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,155,237,181"/>
+<area shape="rect" id="node7" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="176,80,313,107"/>
+<area shape="rect" id="node4" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="84,229,232,271"/>
 </map>

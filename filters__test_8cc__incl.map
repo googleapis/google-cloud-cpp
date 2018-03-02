@@ -1,7 +1,7 @@
 <map id="client/filters_test.cc" name="client/filters_test.cc">
-<area shape="rect" id="node2" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="63,87,213,114"/>
-<area shape="rect" id="node13" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="559,80,704,121"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="16,259,175,285"/>
-<area shape="rect" id="node9" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="225,169,373,211"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,333,232,375"/>
+<area shape="rect" id="node2" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="126,87,275,114"/>
+<area shape="rect" id="node14" href="$chrono__literals_8h.html" title="bigtable/client/testing\l/chrono_literals.h" alt="" coords="621,80,767,121"/>
+<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,259,237,285"/>
+<area shape="rect" id="node10" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="288,169,436,211"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="84,333,232,375"/>
 </map>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Google Cloud Bigtable C++ Client
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
    <div id="projectbrief">A C++ Client Library for Google Cloud Bigtable</div>
   </td>
@@ -72,9 +72,6 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Represent a set of mutations across multiple rows.  
- <a href="classbigtable_1_1v0_1_1BulkMutation.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="mutations_8h_source.html">mutations.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -90,10 +87,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0c4d29e25d45698ada0dc9b4f5028cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a multi-row mutation from a initializer list.  <a href="#a0c4d29e25d45698ada0dc9b4f5028cc0">More...</a><br /></td></tr>
 <tr class="separator:a0c4d29e25d45698ada0dc9b4f5028cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19c796fcafe129140f6703efea18b458"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1BulkMutation.html#a19c796fcafe129140f6703efea18b458">BulkMutation</a> (<a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> &amp;&amp;mutation)</td></tr>
-<tr class="memdesc:a19c796fcafe129140f6703efea18b458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from a <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a19c796fcafe129140f6703efea18b458">More...</a><br /></td></tr>
+<tr class="memdesc:a19c796fcafe129140f6703efea18b458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from a <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a>.  <a href="#a19c796fcafe129140f6703efea18b458">More...</a><br /></td></tr>
 <tr class="separator:a19c796fcafe129140f6703efea18b458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cc247677bbca64411edfc3ae3a662a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1BulkMutation.html#a2cc247677bbca64411edfc3ae3a662a5">BulkMutation</a> (<a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> &amp;&amp;m1, <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> &amp;&amp;m2)</td></tr>
-<tr class="memdesc:a2cc247677bbca64411edfc3ae3a662a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from two <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a2cc247677bbca64411edfc3ae3a662a5">More...</a><br /></td></tr>
+<tr class="memdesc:a2cc247677bbca64411edfc3ae3a662a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from two <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a>.  <a href="#a2cc247677bbca64411edfc3ae3a662a5">More...</a><br /></td></tr>
 <tr class="separator:a2cc247677bbca64411edfc3ae3a662a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea4d9e6f30e97a95faaad9d38b4c7974"><td class="memTemplParams" colspan="2">template&lt;typename... M&gt; </td></tr>
 <tr class="memitem:aea4d9e6f30e97a95faaad9d38b4c7974"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1BulkMutation.html#aea4d9e6f30e97a95faaad9d38b4c7974">BulkMutation</a> (M &amp;&amp;... m)</td></tr>
@@ -113,7 +110,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0ed3faf217379e0faa069877b4d688f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represent a set of mutations across multiple rows. </p>
+<div class="textblock"><p>Represent a set of mutations across multiple rows.</p>
 <p>Cloud Bigtable can batch multiple mutations in a single request. The mutations are not atomic, but it is more efficient to send them in a batch than to make multiple smaller requests. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="addcc31baecce5f859a5ea947d9d6e590"></a>
@@ -235,7 +232,7 @@ template&lt;typename iterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a muti-row mutation from a <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
+<p>Create a muti-row mutation from a <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a>. </p>
 
 </div>
 </div>
@@ -273,7 +270,7 @@ template&lt;typename iterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a muti-row mutation from two <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
+<p>Create a muti-row mutation from two <a class="el" href="classbigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a>. </p>
 
 </div>
 </div>
@@ -447,7 +444,7 @@ template&lt;typename... M&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 2 2018 13:47:41 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>

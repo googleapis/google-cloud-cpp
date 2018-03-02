@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Google Cloud Bigtable C++ Client
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
    <div id="projectbrief">A C++ Client Library for Google Cloud Bigtable</div>
   </td>
@@ -74,12 +74,13 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &quot;<a class="el" href="port__platform_8h_source.html">bigtable/client/internal/port_platform.h</a>&quot;</code><br />
+<code>#include &quot;bigtable/client/version_info.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for version.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="version_8h__incl.png" border="0" usemap="#client_2version_8h" alt=""/></div>
 <map name="client_2version_8h" id="client_2version_8h">
-<area shape="rect" id="node3" href="port__platform_8h.html" title="Platform portability details. " alt="" coords="84,80,232,121"/>
+<area shape="rect" id="node3" href="port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="84,80,232,121"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -148,12 +149,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a2727e6827d809df63f4deacfd817455f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a2727e6827d809df63f4deacfd817455f">BIGTABLE_CLIENT_VERSION_MAJOR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a2727e6827d809df63f4deacfd817455f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc2a6c16f5b60d39118fb2e05862e80b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#adc2a6c16f5b60d39118fb2e05862e80b">BIGTABLE_CLIENT_VERSION_MINOR</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:adc2a6c16f5b60d39118fb2e05862e80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa738fe59a3d5826668a69d38395ea136"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#aa738fe59a3d5826668a69d38395ea136">BIGTABLE_CLIENT_VERSION_PATCH</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:aa738fe59a3d5826668a69d38395ea136"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a337f0c4db29f33f05b85d371e826a5df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a337f0c4db29f33f05b85d371e826a5df">BIGTABLE_CLIENT_VCONCAT</a>(Ma,  Mi)&#160;&#160;&#160;v##Ma</td></tr>
 <tr class="separator:a337f0c4db29f33f05b85d371e826a5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea0294a9fcdf2bfaae45e52ddcb9f135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135">BIGTABLE_CLIENT_VEVAL</a>(Ma,  Mi)&#160;&#160;&#160;<a class="el" href="version_8h.html#a337f0c4db29f33f05b85d371e826a5df">BIGTABLE_CLIENT_VCONCAT</a>(Ma, Mi)</td></tr>
@@ -187,9 +182,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135">BIGTABLE_CLIENT_VEVAL</a>(<a class="code" href="version_8h.html#a2727e6827d809df63f4deacfd817455f">BIGTABLE_CLIENT_VERSION_MAJOR</a>, \</div><div class="line">                        <a class="code" href="version_8h.html#adc2a6c16f5b60d39118fb2e05862e80b">BIGTABLE_CLIENT_VERSION_MINOR</a>)</div><div class="ttc" id="version_8h_html_a2727e6827d809df63f4deacfd817455f"><div class="ttname"><a href="version_8h.html#a2727e6827d809df63f4deacfd817455f">BIGTABLE_CLIENT_VERSION_MAJOR</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_VERSION_MAJOR</div><div class="ttdef"><b>Definition:</b> version.h:22</div></div>
-<div class="ttc" id="version_8h_html_aea0294a9fcdf2bfaae45e52ddcb9f135"><div class="ttname"><a href="version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135">BIGTABLE_CLIENT_VEVAL</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> version.h:27</div></div>
-<div class="ttc" id="version_8h_html_adc2a6c16f5b60d39118fb2e05862e80b"><div class="ttname"><a href="version_8h.html#adc2a6c16f5b60d39118fb2e05862e80b">BIGTABLE_CLIENT_VERSION_MINOR</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_VERSION_MINOR</div><div class="ttdef"><b>Definition:</b> version.h:23</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135">BIGTABLE_CLIENT_VEVAL</a>(BIGTABLE_CLIENT_VERSION_MAJOR, \</div><div class="line">                        BIGTABLE_CLIENT_VERSION_MINOR)</div><div class="ttc" id="version_8h_html_aea0294a9fcdf2bfaae45e52ddcb9f135"><div class="ttname"><a href="version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135">BIGTABLE_CLIENT_VEVAL</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> version.h:24</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -215,48 +208,6 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td>&#160;&#160;&#160;v##Ma</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2727e6827d809df63f4deacfd817455f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2727e6827d809df63f4deacfd817455f">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_VERSION_MAJOR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adc2a6c16f5b60d39118fb2e05862e80b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc2a6c16f5b60d39118fb2e05862e80b">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_VERSION_MINOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_VERSION_MINOR&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa738fe59a3d5826668a69d38395ea136"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa738fe59a3d5826668a69d38395ea136">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_VERSION_PATCH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_VERSION_PATCH&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -294,7 +245,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 2 2018 13:47:41 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
