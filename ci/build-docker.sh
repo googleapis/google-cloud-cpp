@@ -97,9 +97,7 @@ fi
 
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
-  echo
-  echo "Generating documentation from source files"
-  (cd /v/bigtable ; doxygen doc/Doxyfile)
+  make doxygen-docs
 fi
 
 # Collect the output from the Clang static analyzer and provide instructions to

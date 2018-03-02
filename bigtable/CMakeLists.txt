@@ -107,10 +107,39 @@ configure_file(client/build_info.cc.in client/build_info.cc)
 
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
 
+# Generate the version information from the CMake values.
+set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
+set(BIGTABLE_CLIENT_VERSION_MINOR 1)
+set(BIGTABLE_CLIENT_VERSION_PATCH 0)
+configure_file(client/version_info.h.in client/version_info.h)
+
+if (${CMAKE_VERSION} VERSION_LESS "3.9")
+    # Old versions of CMake have really poor support for Doxygen generation.
+    message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
+else ()
+    find_package(Doxygen)
+    if (Doxygen_FOUND)
+        set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
+        set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
+        set(DOXYGEN_PROJECT_NUMBER
+                "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
+        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
+        set(DOXYGEN_EXAMPLE_PATH examples)
+        set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+        include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
+
+        doxygen_add_docs(bigtable-docs doc client admin
+                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bigtable
+                COMMENT "Generate HTML documentation")
+        add_dependencies(doxygen-docs bigtable-docs)
+    endif ()
+endif ()
+
 # the client library
 add_library(bigtable_client
-    client/build_info.h
     ${PROJECT_BINARY_DIR}/bigtable/client/build_info.cc
+    ${PROJECT_BINARY_DIR}/bigtable/client/version_info.h
+    client/build_info.h
     client/cell.h
     client/client_options.h
     client/client_options.cc
@@ -156,7 +185,7 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client
     bigtable_protos
     gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}")
+target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 

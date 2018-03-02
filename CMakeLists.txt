@@ -14,13 +14,9 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-# Define the project name, version, and main programming language.
-set(PACKAGE_NAME      "google-cloud-cpp")
-set(PACKAGE_VERSION   "0.1")
-set(PACKAGE_STRING    "${PACKAGE_NAME} ${PACKAGE_VERSION}")
-set(PACKAGE_TARNAME   "${PACKAGE_NAME}-${PACKAGE_VERSION}")
+# Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues")
-project(${PACKAGE_NAME} CXX C)
+project(google-cloud-cpp CXX C)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 
@@ -35,6 +31,9 @@ include (cmake/IncludeGrpc.cmake)
 
 # Enable testing in this directory so we can do a top-level `make test`.
 enable_testing()
+
+# Each subproject adds dependencies to this target to have their docs generated.
+add_custom_target(doxygen-docs)
 
 # Add subprojects here.
 add_subdirectory(bigtable)

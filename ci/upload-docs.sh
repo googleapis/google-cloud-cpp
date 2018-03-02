@@ -44,7 +44,8 @@ git clone -b gh-pages "${REPO_URL}" github-io-staging
 (cd github-io-staging && git rm -qfr --ignore-unmatch .)
 
 # Copy the build results into the gh-pages clone.
-cp -r bigtable/doc/html/. github-io-staging
+readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+cp -r build-output/${IMAGE}/bigtable/html/. github-io-staging
 
 cd github-io-staging
 git config user.name "Google Cloud C++ Project Robot"
