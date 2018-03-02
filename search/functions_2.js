@@ -2,6 +2,7 @@ var searchData=
 [
   ['callwithoutretry',['CallWithoutRetry',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a589f30755df91d502eca0905f362fb71',1,'bigtable::v0::internal::UnaryRpcUtils']]],
   ['callwithretry',['CallWithRetry',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa',1,'bigtable::v0::internal::UnaryRpcUtils']]],
+  ['callwithretryborrow',['CallWithRetryBorrow',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#aba56f4637d79360e8a272041b80f9ffc',1,'bigtable::v0::internal::UnaryRpcUtils']]],
   ['can_5fretry',['can_retry',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html#a4d53aa7f16dda1187f0bd72c40716b45',1,'bigtable::v0::RPCRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a83e1faa5fc4c6e306077b7082407000c',1,'bigtable::v0::LimitedErrorCountRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#aec1939c7298faaf6359ae9b16e6779b6',1,'bigtable::v0::LimitedTimeRetryPolicy::can_retry()']]],
   ['cancel',['Cancel',['../classbigtable_1_1v0_1_1RowReader.html#a59457f0baf7d6dc4f42a8a5d53d00295',1,'bigtable::v0::RowReader']]],
   ['cell',['Cell',['../classbigtable_1_1v0_1_1Cell.html#afd76f5a24fea82bc10f65f8eba450576',1,'bigtable::v0::Cell']]],
@@ -36,6 +37,7 @@ var searchData=
   ['createchannelpool',['CreateChannelPool',['../namespacebigtable_1_1v0_1_1internal.html#a9aaf8c551274cdfd6bb0d11e5e68f507',1,'bigtable::v0::internal']]],
   ['createdefaultadminclient',['CreateDefaultAdminClient',['../namespacebigtable_1_1v0.html#a47ed425d2e8281836e0222e8993b828c',1,'bigtable::v0']]],
   ['createdefaultdataclient',['CreateDefaultDataClient',['../namespacebigtable_1_1v0.html#ad671db278ce6fb606c4fea3391e5745d',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, bigtable::ClientOptions options)'],['../namespacebigtable_1_1v0.html#a5fad7f14ac136fae05048446aa30d13b',1,'bigtable::v0::CreateDefaultDataClient(std::string project_id, std::string instance_id, ClientOptions options)']]],
+  ['createdefaultinstanceadminclient',['CreateDefaultInstanceAdminClient',['../namespacebigtable_1_1v0.html#ae4b9a4e9c41350c46cb09105c5d0f23a',1,'bigtable::v0']]],
   ['createtable',['CreateTable',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a21eef8cd077226ed76adcaa0724d2a0b',1,'bigtable::testing::TableIntegrationTest::CreateTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin::CreateTable()']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]]
 ];

@@ -103,6 +103,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a96189ac1b77e83f879e0d36898b6f9aa"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa">CallWithRetry</a> (ClientType &amp;client, std::unique_ptr&lt; bigtable::RPCRetryPolicy &gt; rpc_policy, std::unique_ptr&lt; bigtable::RPCBackoffPolicy &gt; backoff_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
 <tr class="memdesc:a96189ac1b77e83f879e0d36898b6f9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with retries.  <a href="#a96189ac1b77e83f879e0d36898b6f9aa">More...</a><br /></td></tr>
 <tr class="separator:a96189ac1b77e83f879e0d36898b6f9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba56f4637d79360e8a272041b80f9ffc"><td class="memTemplParams" colspan="2">template&lt;typename MemberFunction &gt; </td></tr>
+<tr class="memitem:aba56f4637d79360e8a272041b80f9ffc"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#aba56f4637d79360e8a272041b80f9ffc">CallWithRetryBorrow</a> (ClientType &amp;client, bigtable::RPCRetryPolicy &amp;rpc_policy, bigtable::RPCBackoffPolicy &amp;backoff_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
+<tr class="memdesc:aba56f4637d79360e8a272041b80f9ffc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with retries borrowing the RPC policies.  <a href="#aba56f4637d79360e8a272041b80f9ffc">More...</a><br /></td></tr>
+<tr class="separator:aba56f4637d79360e8a272041b80f9ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a589f30755df91d502eca0905f362fb71"><td class="memTemplParams" colspan="2">template&lt;typename MemberFunction &gt; </td></tr>
 <tr class="memitem:a589f30755df91d502eca0905f362fb71"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::ResponseType &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a589f30755df91d502eca0905f362fb71">CallWithoutRetry</a> (ClientType &amp;client, std::unique_ptr&lt; bigtable::RPCRetryPolicy &gt; rpc_policy, MemberFunction function, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;request, char const *error_message)</td></tr>
 <tr class="memdesc:a589f30755df91d502eca0905f362fb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a simple unary RPC with no retry.  <a href="#a589f30755df91d502eca0905f362fb71">More...</a><br /></td></tr>
@@ -319,13 +323,104 @@ template&lt;typename MemberFunction &gt; </div>
 
 </div>
 </div>
+<a id="aba56f4637d79360e8a272041b80f9ffc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba56f4637d79360e8a272041b80f9ffc">&#9670;&nbsp;</a></span>CallWithRetryBorrow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ClientType &gt; </div>
+<div class="memtemplate">
+template&lt;typename MemberFunction &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::enable_if&lt; <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt;MemberFunction&gt;::value, typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt;MemberFunction&gt;::ResponseType&gt;::type <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html">bigtable::v0::internal::UnaryRpcUtils</a>&lt; ClientType &gt;::CallWithRetryBorrow </td>
+          <td>(</td>
+          <td class="paramtype">ClientType &amp;&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::RPCRetryPolicy &amp;&#160;</td>
+          <td class="paramname"><em>rpc_policy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::RPCBackoffPolicy &amp;&#160;</td>
+          <td class="paramname"><em>backoff_policy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MemberFunction&#160;</td>
+          <td class="paramname"><em>function</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">typename <a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html">CheckSignature</a>&lt; MemberFunction &gt;::RequestType const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>error_message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Call a simple unary RPC with retries borrowing the RPC policies. </p>
+<p>This implements <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa" title="Call a simple unary RPC with retries. ">CallWithRetry()</a></code>, but does not assume ownership of the RPC policies. Some RPCs, notably those with pagination, can reuse most of the code in <code><a class="el" href="structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils.html#a96189ac1b77e83f879e0d36898b6f9aa" title="Call a simple unary RPC with retries. ">CallWithRetry()</a></code> but must reuse the same policies across several calls.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">MemberFunction</td><td>the signature of the member function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>the object that holds the gRPC stub. </td></tr>
+    <tr><td class="paramname">rpc_policy</td><td>the policy controlling what failures are retryable. </td></tr>
+    <tr><td class="paramname">backoff_policy</td><td>the policy controlling how long to wait before retrying. </td></tr>
+    <tr><td class="paramname">function</td><td>the pointer to the member function to call. </td></tr>
+    <tr><td class="paramname">request</td><td>an initialized request parameter for the RPC. </td></tr>
+    <tr><td class="paramname">error_message</td><td>include this message in any exception or error log. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the return parameter from the RPC. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>with a description of the last RPC error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>client/internal/<a class="el" href="unary__rpc__utils_8h_source.html">unary_rpc_utils.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 1 2018 14:29:06 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 2 2018 02:25:59 for Google Cloud Bigtable C++ Client by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
