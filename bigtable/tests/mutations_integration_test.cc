@@ -70,14 +70,14 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
    * Delete the records from table for the specified family and column
    * with timestamp starting from time_begin.
    *
-   * @tparam table represents bigtable table
-   * @tparam row_key represents the row_key from which we have to delete
+   * @param table represents bigtable table
+   * @param row_key represents the row_key from which we have to delete
    *     the records.
-   * @tparam column_family represents column family from which we have to
+   * @param column_family represents column family from which we have to
    *     delete the records.
-   * @tparam column_id represents the column identifier from which we have
+   * @param column_id represents the column identifier from which we have
    *     to delete the records.
-   * @tparam time_begin represents the starting timestamp from which we
+   * @param time_begin represents the starting timestamp from which we
    *     have to delete the records.
    *     This parameter is inclusive, i.e. timestamp >= time_begin
    */
@@ -98,14 +98,14 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
    * Delete the records from table for the specified family and column
    * identifier with timestamp ending at time_end.
    *
-   * @tparam table represents bigtable table
-   * @tparam row_key represents the row_key from which we have to delete
+   * @param table represents bigtable table
+   * @param row_key represents the row_key from which we have to delete
    *     the records.
-   * @tparam column_family represents column family from which we have
+   * @param column_family represents column family from which we have
    *     to delete the records.
-   * @tparam column_id represents the column identifier from which we
+   * @param column_id represents the column identifier from which we
    *     have to delete the records.
-   * @tparam time_end represents the ending timestamp upto which we have
+   * @param time_end represents the ending timestamp upto which we have
    *     to delete the records.
    *     This parameter is not inclusive. i.e. timestamp < time_end
    */
@@ -126,17 +126,17 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
    * identifier with timestamp starting from time_begin and ending at
    * time_end.
    *
-   * @tparam table represents bigtable table
-   * @tparam row_key represents the row_key from which we have to delete
+   * @param table represents bigtable table
+   * @param row_key represents the row_key from which we have to delete
    *     the records.
-   * @tparam column_family represents column family from which we have
+   * @param column_family represents column family from which we have
    *     to delete the records.
-   * @tparam column_id represents the column identifier from which we
+   * @param column_id represents the column identifier from which we
    *     have to delete the records.
-   * @tparam time_begin represents the starting timestamp from which
+   * @param time_begin represents the starting timestamp from which
    *     we have to delete the records.
    *     This parameter is inclusive i.e. timestamp >= time_begin
-   * @tparam time_end represents the ending timestamp upto which we have
+   * @param time_end represents the ending timestamp upto which we have
    *     to delete the records.
    *     This parameter is not inclusive. i.e. timestamp < time_end
    */
@@ -180,8 +180,8 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
 }  // namespace anonymous
 
 /**
- *  Check if the values inserted by SetCell are correctly inserted into
- *  Cloud Bigtable
+ * Check if the values inserted by SetCell are correctly inserted into
+ * Cloud Bigtable
  */
 TEST_F(MutationIntegrationTest, SetCellTest) {
   std::string const table_name = "table-setcell";
@@ -206,8 +206,8 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
 }
 
 /**
- *  Verify that the values inserted by SetCell with server-side timestamp are
- *  correctly inserted into Cloud Bigtable.
+ * Verify that the values inserted by SetCell with server-side timestamp are
+ * correctly inserted into Cloud Bigtable.
  */
 TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
   std::string const table_name = "table-setcell-ignore-timestamp";
@@ -223,43 +223,14 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
       {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
+  std::int64_t server_timestamp = -1;
   std::vector<bigtable::Cell> expected_cells{
-      {row_key,
-       column_family1,
-       "column_id1",
-       bigtable::ServerSetTimestamp(),
-       "v-c-0-0",
-       {}},
-      {row_key,
-       column_family1,
-       "column_id2",
-       bigtable::ServerSetTimestamp(),
-       "v-c-0-1",
-       {}},
-      {row_key,
-       column_family1,
-       "column_id3",
-       bigtable::ServerSetTimestamp(),
-       "v-c-0-2",
-       {}},
-      {row_key,
-       column_family2,
-       "column_id2",
-       bigtable::ServerSetTimestamp(),
-       "v-c0-0-0",
-       {}},
-      {row_key,
-       column_family2,
-       "column_id3",
-       bigtable::ServerSetTimestamp(),
-       "v-c1-0-1",
-       {}},
-      {row_key,
-       column_family3,
-       "column_id1",
-       bigtable::ServerSetTimestamp(),
-       "v-c1-0-2",
-       {}},
+      {row_key, column_family1, "column_id1", server_timestamp, "v-c-0-0", {}},
+      {row_key, column_family1, "column_id2", server_timestamp, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id3", server_timestamp, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", server_timestamp, "v-c0-0-0", {}},
+      {row_key, column_family2, "column_id3", server_timestamp, "v-c1-0-1", {}},
+      {row_key, column_family3, "column_id1", server_timestamp, "v-c1-0-2", {}},
   };
 
   CreateCellsIgnoringTimestamp(*table, created_cells);
@@ -528,8 +499,9 @@ int main(int argc, char* argv[]) {
 
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   if (not table_list.empty()) {
-    throw std::runtime_error(
-        "Expected empty instance at the beginning of integration test");
+    std::cerr << "Expected empty instance at the beginning of integration test"
+              << std::endl;
+    return 1;
   }
 
   (void)::testing::AddGlobalTestEnvironment(
