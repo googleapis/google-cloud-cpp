@@ -161,11 +161,45 @@ struct UnaryRpcUtils {
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
+    return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy, function,
+                               request, error_message);
+  }
+
+  /**
+   * Call a simple unary RPC with retries borrowing the RPC policies.
+   *
+   * This implements `CallWithRetry()`, but does not assume ownership of the RPC
+   * policies.  Some RPCs, notably those with pagination, can reuse most of the
+   * code in `CallWithRetry()` but must reuse the same policies across several
+   * calls.
+   *
+   * @tparam MemberFunction the signature of the member function.
+   * @param client the object that holds the gRPC stub.
+   * @param rpc_policy the policy controlling what failures are retryable.
+   * @param backoff_policy the policy controlling how long to wait before
+   *     retrying.
+   * @param function the pointer to the member function to call.
+   * @param request an initialized request parameter for the RPC.
+   * @param error_message include this message in any exception or error log.
+   * @return the return parameter from the RPC.
+   * @throw std::exception with a description of the last RPC error.
+   */
+  template <typename MemberFunction>
+  // Disable the function if the provided member function does not match the
+  // expected signature.  Compilers also emit nice error messages in this case.
+  static typename std::enable_if<
+      CheckSignature<MemberFunction>::value,
+      typename CheckSignature<MemberFunction>::ResponseType>::type
+  CallWithRetryBorrow(
+      ClientType &client, bigtable::RPCRetryPolicy &rpc_policy,
+      bigtable::RPCBackoffPolicy &backoff_policy, MemberFunction function,
+      typename CheckSignature<MemberFunction>::RequestType const &request,
+      char const *error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
     while (true) {
       grpc::ClientContext client_context;
-      rpc_policy->setup(client_context);
-      backoff_policy->setup(client_context);
+      rpc_policy.setup(client_context);
+      backoff_policy.setup(client_context);
       // Call the pointer to member function.
       grpc::Status status =
           ((*client.Stub()).*function)(&client_context, request, &response);
@@ -173,10 +207,10 @@ struct UnaryRpcUtils {
       if (status.ok()) {
         break;
       }
-      if (not rpc_policy->on_failure(status)) {
+      if (not rpc_policy.on_failure(status)) {
         RaiseRpcError(status, error_message);
       }
-      auto delay = backoff_policy->on_completion(status);
+      auto delay = backoff_policy.on_completion(status);
       std::this_thread::sleep_for(delay);
     }
     return response;
