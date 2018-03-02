@@ -72,13 +72,13 @@ fi
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # Run the tests and output any failures.
-CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
+ctest --output-on-failure
 
 # If possible, run the integration tests.
 if [ -r /etc/lsb-release ] && grep -q 14.04 /etc/lsb-release; then
   echo "Skipping integration tests, Go version too old in Ubuntu 14.04."
 else
-  (cd bigtable ; ../../../bigtable/tests/run_integration_tests.sh)
+  (cd bigtable/tests && ../../../../bigtable/tests/run_integration_tests.sh)
 fi
 
 # Some of the sanitizers only emit errors and do not change the error code
