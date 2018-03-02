@@ -404,6 +404,35 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 }
 
 /**
+ * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, DeleteTableFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
+               std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CreateTable("other-table", bigtable::TableConfig()),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
  * @test Verify that bigtable::TableAdmin::ModifyColumnFamilies works as
  * expected.
  */
@@ -427,10 +456,8 @@ modifications {
   auto mock = MockRpcFactory<btproto::ModifyColumnFamiliesRequest,
                              btproto::Table>::Create(expected_text);
   EXPECT_CALL(*table_admin_stub_, ModifyColumnFamilies(_, _, _))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
       .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   using M = bigtable::ColumnFamilyModification;
@@ -438,6 +465,41 @@ modifications {
   auto actual = tested.ModifyColumnFamilies(
       "the-table",
       {M::Create("foo", GC::MaxAge(48_h)), M::Update("bar", GC::MaxAge(24_h))});
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ModifyColumnFamilies` makes only one
+ * RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, ModifyColumnFamilies(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  using M = bigtable::ColumnFamilyModification;
+  using GC = bigtable::GcRule;
+  std::vector<M> changes{M::Create("foo", GC::MaxAge(48_h)),
+                         M::Update("bar", GC::MaxAge(24_h))};
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.ModifyColumnFamilies("other-table", std::move(changes)),
+               std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.ModifyColumnFamilies("other-table", std::move(changes)),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
@@ -452,14 +514,39 @@ row_key_prefix: 'foobar'
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   tested.DropRowsByPrefix("the-table", "foobar");
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::DropRowsByPrefix` makes only one
+ * RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.DropRowsByPrefix("other-table", "prefix"),
+               std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.DropRowsByPrefix("other-table", "prefix"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
@@ -474,12 +561,36 @@ delete_all_data_from_table: true
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "")))
-      .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(3);
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   tested.DropAllRows("the-table");
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::DropAllRows` makes only one
+ * RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, DropAllRowsFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.DropAllRows("other-table"), std::runtime_error);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.DropAllRows("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
