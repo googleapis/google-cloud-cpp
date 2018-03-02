@@ -51,131 +51,6 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
     }
     table.BulkApply(std::move(bulk));
   }
-
-  /**
-   * Delete the records from table for the specified family and column
-   * identifier.
-   */
-  void DeleteFromColumn(bigtable::Table& table, std::string row_key,
-                        std::string column_family, std::string column_id) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(bigtable::DeleteFromColumn(column_family, column_id));
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
-
-  /**
-   * Delete the records from table for the specified family and column
-   * with timestamp starting from time_begin.
-   *
-   * @param table represents bigtable table
-   * @param row_key represents the row_key from which we have to delete
-   *     the records.
-   * @param column_family represents column family from which we have to
-   *     delete the records.
-   * @param column_id represents the column identifier from which we have
-   *     to delete the records.
-   * @param time_begin represents the starting timestamp from which we
-   *     have to delete the records.
-   *     This parameter is inclusive, i.e. timestamp >= time_begin
-   */
-  void DeleteFromColumnStartingFrom(bigtable::Table& table, std::string row_key,
-                                    std::string column_family,
-                                    std::string column_id,
-                                    std::int64_t time_begin) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(bigtable::DeleteFromColumnStartingFrom(
-        column_family, column_id, time_begin));
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
-
-  /**
-   * Delete the records from table for the specified family and column
-   * identifier with timestamp ending at time_end.
-   *
-   * @param table represents bigtable table
-   * @param row_key represents the row_key from which we have to delete
-   *     the records.
-   * @param column_family represents column family from which we have
-   *     to delete the records.
-   * @param column_id represents the column identifier from which we
-   *     have to delete the records.
-   * @param time_end represents the ending timestamp upto which we have
-   *     to delete the records.
-   *     This parameter is not inclusive. i.e. timestamp < time_end
-   */
-  void DeleteFromColumnEndingAt(bigtable::Table& table, std::string row_key,
-                                std::string column_family,
-                                std::string column_id, std::int64_t time_end) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(
-        bigtable::DeleteFromColumnEndingAt(column_family, column_id, time_end));
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
-
-  /**
-   * Delete the records from table for the specified family and column
-   * identifier with timestamp starting from time_begin and ending at
-   * time_end.
-   *
-   * @param table represents bigtable table
-   * @param row_key represents the row_key from which we have to delete
-   *     the records.
-   * @param column_family represents column family from which we have
-   *     to delete the records.
-   * @param column_id represents the column identifier from which we
-   *     have to delete the records.
-   * @param time_begin represents the starting timestamp from which
-   *     we have to delete the records.
-   *     This parameter is inclusive i.e. timestamp >= time_begin
-   * @param time_end represents the ending timestamp upto which we have
-   *     to delete the records.
-   *     This parameter is not inclusive. i.e. timestamp < time_end
-   */
-  void DeleteFromColumn(bigtable::Table& table, std::string row_key,
-                        std::string column_family, std::string column_id,
-                        std::int64_t time_begin, std::int64_t time_end) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(bigtable::DeleteFromColumn(column_family, column_id,
-                                                     time_begin, time_end));
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
-
-  /**
-   * Delete records from a specific row_key and specific column_family
-   */
-  void DeleteFromFamily(bigtable::Table& table, std::string row_key,
-                        std::string column_family) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(bigtable::DeleteFromFamily(column_family));
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
-
-  /**
-   * Delete records from a specific row key
-   */
-  void DeleteFromRow(bigtable::Table& table, std::string row_key) {
-    bigtable::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(bigtable::DeleteFromRow());
-
-    bigtable::BulkMutation bulk;
-    bulk.emplace_back(std::move(mutation));
-    table.BulkApply(std::move(bulk));
-  }
 };
 }  // namespace anonymous
 
@@ -294,8 +169,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier as column_id2
-  DeleteFromColumn(*table, row_key, column_family2, "column_id2",
-                   timestamp_begin, timestamp_end);
+  table->Apply(bigtable::SingleRowMutation(
+      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2",
+                                          timestamp_begin, timestamp_end)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -328,7 +204,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier column_id3
-  DeleteFromColumn(*table, row_key, column_family1, "column_id3");
+  table->Apply(bigtable::SingleRowMutation(
+      row_key, bigtable::DeleteFromColumn(column_family1, "column_id3")));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -365,8 +242,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   CreateCells(*table, created_cells);
   std::int64_t time_begin = 1000;
   // Delete the columns with column identifier column_id1
-  DeleteFromColumnStartingFrom(*table, row_key, column_family1, "column_id1",
-                               time_begin);
+  table->Apply(bigtable::SingleRowMutation(
+      row_key, bigtable::DeleteFromColumnStartingFrom(
+                   column_family1, "column_id1", time_begin)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -405,8 +283,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // will be deleted
   std::int64_t time_end = 2000;
   // Delete the columns with column identifier column_id1
-  DeleteFromColumnEndingAt(*table, row_key, column_family1, "column_id1",
-                           time_end);
+  table->Apply(bigtable::SingleRowMutation(
+      row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
+                                                  time_end)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -438,7 +317,8 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records for family
-  DeleteFromFamily(*table, row_key, column_family1);
+  table->Apply(bigtable::SingleRowMutation(
+      row_key, bigtable::DeleteFromFamily(column_family1)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -471,7 +351,8 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records for a row
-  DeleteFromRow(*table, row_key1);
+  table->Apply(
+      bigtable::SingleRowMutation(row_key1, bigtable::DeleteFromRow()));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
