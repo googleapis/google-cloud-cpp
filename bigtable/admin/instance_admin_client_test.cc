@@ -15,7 +15,7 @@
 #include "bigtable/admin/instance_admin_client.h"
 #include <gmock/gmock.h>
 
-TEST(AdminClientTest, Default) {
+TEST(InstanceAdminClientTest, Default) {
   auto admin_client = bigtable::CreateDefaultInstanceAdminClient(
       "test-project", bigtable::ClientOptions().set_connection_pool_size(1));
   ASSERT_TRUE(admin_client);
