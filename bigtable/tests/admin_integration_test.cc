@@ -16,23 +16,21 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 
-#include "bigtable/admin/admin_client.h"
-#include "bigtable/admin/table_admin.h"
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 #include <string>
 #include <vector>
 
-namespace admin_proto = ::google::bigtable::admin::v2;
-
 namespace {
+namespace admin_proto = ::google::bigtable::admin::v2;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
   void SetUp() {
+    TableIntegrationTest::SetUp();
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
@@ -48,15 +46,14 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     std::vector<std::string> diff_table_list;
 
     auto table_list = table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
-    for (auto const& table_name : table_list) {
-      actual_table_list.push_back(table_name.name());
+    for (auto const& table : table_list) {
+      actual_table_list.push_back(table.name());
     }
 
     // Sort actual_table_list
     sort(actual_table_list.begin(), actual_table_list.end());
     // Sort expected_table_list
     sort(expected_table_list.begin(), expected_table_list.end());
-
     // Get the difference of expected_table_list and actual_table_list
     set_difference(expected_table_list.begin(), expected_table_list.end(),
                    actual_table_list.begin(), actual_table_list.end(),
@@ -108,87 +105,81 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 
 }  // namespace
 
-/***
+/**
  * Test case for checking create table
  * If created tableID and passed tableID is same then test is successful.
  */
-TEST_F(AdminIntegrationTest, CheckCreateTable) {
-  std::string const table_id = "table0";
-
+TEST_F(AdminIntegrationTest, CreateTableTest) {
+  std::string const table_id = "table-create";
   // Create Table
-  auto table = table_admin_->CreateTable(table_id, bigtable::TableConfig());
+  auto table_config = bigtable::TableConfig();
+  auto table = CreateTable(table_id, table_config);
   // Check table is created properly
   auto table_result = table_admin_->GetTable(table_id);
-
   // Delete this table so that next run should not throw error
-  table_admin_->DeleteTable(table_id);
+  DeleteTable(table_id);
 
-  ASSERT_EQ(table.name(), table_result.name())
-      << "Mismatched names for GetTable(" << table_id << "): " << table.name()
-      << " != " << table_result.name();
+  ASSERT_EQ(table->table_name(), table_result.name())
+      << "Mismatched names for GetTable(" << table_id
+      << "): " << table->table_name() << " != " << table_result.name();
 }
 
 /**
  * Check if list of table names are matching with the
  * expected tablename list
  */
-TEST_F(AdminIntegrationTest, CheckTableListWithSingleTable) {
-  std::string const table_id = "table0";
-
+TEST_F(AdminIntegrationTest, TableListWithSingleTableTest) {
+  std::string const table_id = "table-single-table";
   // Create table first here.
-  table_admin_->CreateTable(table_id, bigtable::TableConfig());
-
+  auto table_config = bigtable::TableConfig();
+  auto table = CreateTable(table_id, table_config);
   std::vector<std::string> expected_table_list = {
       table_admin_->instance_name() + "/tables/" + table_id};
-
   bool list_is_empty = TestForTableListCheck(expected_table_list);
-
-  // Delete the created table here, so it should not interfere with other test
-  // cases
-  table_admin_->DeleteTable(table_id);
+  // Delete the created table here, so it should not interfere with other
+  // test cases
+  DeleteTable(table_id);
 
   ASSERT_TRUE(list_is_empty);
 }
 
-TEST_F(AdminIntegrationTest, CheckTableListWithMultipleTables) {
-  std::string const table_prefix = "table";
+TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
+  std::string const table_prefix = "table-multiple-tables";
   int table_count = 5;
   std::vector<std::string> expected_table_list;
+  auto table_config = bigtable::TableConfig();
 
-  // Create multiple table_id in loop`
+  // Create multiple table_id in loop
   for (int index = 0; index < table_count; ++index) {
     std::string table_id = table_prefix + std::to_string(index);
     // Create table First
-    table_admin_->CreateTable(table_id, bigtable::TableConfig());
+    CreateTable(table_id, table_config);
 
     expected_table_list.emplace_back(table_admin_->instance_name() +
                                      "/tables/" + table_id);
   }
 
   bool list_is_empty = TestForTableListCheck(expected_table_list);
-
   // Delete the created table here, so it should not interfere with other test
   // cases
   for (int index = 0; index < table_count; ++index) {
     std::string table_id = table_prefix + std::to_string(index);
-    table_admin_->DeleteTable(table_id);
+    DeleteTable(table_id);
   }
 
   ASSERT_TRUE(list_is_empty);
 }
 
-TEST_F(AdminIntegrationTest, CheckModifyTable) {
+TEST_F(AdminIntegrationTest, ModifyTableTest) {
   using GC = bigtable::GcRule;
-  std::string const table_id = "table2";
+  std::string const table_id = "table-modify";
 
-  bigtable::TableConfig tab_config(
+  bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
-
-  auto table = table_admin_->CreateTable(table_id, tab_config);
-
-  std::string expected_text_create = "name: '" + table.name() + "'\n";
+  auto table = CreateTable(table_id, table_config);
+  std::string expected_text_create = "name: '" + table->table_name() + "'\n";
   // The rest is very deterministic, we control it by the previous operations:
   expected_text_create += R"""(
                           column_families {
@@ -200,7 +191,6 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
                                              value { gc_rule { max_age { seconds: 86400 } } }
                                           }
                                )""";
-
   auto table_detailed =
       table_admin_->GetTable(table_id, admin_proto::Table::FULL);
   bool valid_schema = CheckTableSchema(table_detailed, expected_text_create,
@@ -221,7 +211,6 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
                                                    } } }
                                           }
                         )""";
-
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
       bigtable::ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
@@ -231,17 +220,90 @@ TEST_F(AdminIntegrationTest, CheckModifyTable) {
 
   auto table_modified =
       table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
-
   table_modified.set_name("");
   valid_schema = CheckTableSchema(table_modified, expected_text,
                                   "CheckModifyTable/Modify");
-
   // Delete table so that is should not interfere with the test again on same
   // instance.
-  table_admin_->DeleteTable(table_id);
+  DeleteTable(table_id);
 
   ASSERT_TRUE(valid_schema);
 }
+
+TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
+  std::string const table_id = "table-drop-rows-prefix";
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+  auto table = CreateTable(table_id, table_config);
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1_prefix = "DropRowPrefix1";
+  std::string const row_key2_prefix = "DropRowPrefix2";
+  std::string const row_key1 = row_key1_prefix + "-Key1";
+  std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
+  std::string const row_key2 = row_key2_prefix + "-Key2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+  std::vector<bigtable::Cell> expected_cells{
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}}};
+
+  // Create records
+  CreateCells(*table, created_cells);
+  // Delete all the records for a row
+  table_admin_->DropRowsByPrefix(table_id, row_key1_prefix);
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+
+  CheckEqualUnordered(expected_cells, actual_cells);
+}
+
+TEST_F(AdminIntegrationTest, DropAllRowsTest) {
+  std::string const table_id = "table-drop-rows-all";
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+  auto table = CreateTable(table_id, table_config);
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "DropRowKey1";
+  std::string const row_key2 = "DropRowKey2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+
+  // Create records
+  CreateCells(*table, created_cells);
+  // Delete all the records from a table
+  table_admin_->DropAllRows(table_id);
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+
+  ASSERT_TRUE(actual_cells.empty());
+}
+
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {
@@ -257,13 +319,11 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
   auto admin_client =
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
-
   // If Instance is not empty then dont start test cases
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   if (not table_list.empty()) {
