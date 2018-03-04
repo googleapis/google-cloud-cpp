@@ -12,22 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <gmock/gmock.h>
-
-#include "bigtable/admin/admin_client.h"
-#include "bigtable/admin/table_admin.h"
-#include "bigtable/client/cell.h"
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
+namespace {
 namespace admin_proto = ::google::bigtable::admin::v2;
 
-namespace bigtable {
-namespace testing {
-
-class DataIntegrationTest : public TableIntegrationTest {
+class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
   /// Use Table::Apply() to insert a single row.
   void Apply(bigtable::Table& table, std::string row_key,
@@ -37,13 +27,12 @@ class DataIntegrationTest : public TableIntegrationTest {
   void BulkApply(bigtable::Table& table,
                  std::vector<bigtable::Cell> const& cells);
 
-  std::string family = "family";
+  std::string const family = "family";
   bigtable::TableConfig table_config = bigtable::TableConfig(
       {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace anonymous
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
@@ -59,15 +48,13 @@ int main(int argc, char* argv[]) {
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
-
   auto admin_client =
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
-
   auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
   if (not table_list.empty()) {
     std::cerr << "Expected empty instance at the beginning of integration "
-              << "test";
+              << "test" << std::endl;
     return 1;
   }
 
@@ -77,8 +64,7 @@ int main(int argc, char* argv[]) {
   return RUN_ALL_TESTS();
 }
 
-namespace bigtable {
-namespace testing {
+namespace {
 
 void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
                                 std::vector<bigtable::Cell> const& cells) {
@@ -107,24 +93,24 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   }
   table.BulkApply(std::move(bulk));
 }
+}  // namespace anonymous
 
 TEST_F(DataIntegrationTest, TableApply) {
   std::string const table_name = "table-apply-test";
   auto table = CreateTable(table_name, table_config);
+
   std::string const row_key = "row-key-1";
   std::vector<bigtable::Cell> created{
       {row_key, family, "c0", 1000, "v1000", {}},
       {row_key, family, "c1", 2000, "v2000", {}}};
   Apply(*table, row_key, created);
-
   std::vector<bigtable::Cell> expected{
       {row_key, family, "c0", 1000, "v1000", {}},
       {row_key, family, "c1", 2000, "v2000", {}}};
 
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  CheckEqualUnordered(expected, actual);
-
   DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableBulkApply) {
@@ -140,11 +126,7 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
       {"row-key-3", family, "c1", 2000, "v2000", {}},
       {"row-key-4", family, "c0", 1000, "v1000", {}},
       {"row-key-4", family, "c1", 2000, "v2000", {}}};
-
   BulkApply(*table, created);
-
-  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   std::vector<bigtable::Cell> expected{
       {"row-key-1", family, "c0", 1000, "v1000", {}},
       {"row-key-1", family, "c1", 2000, "v2000", {}},
@@ -155,9 +137,9 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
       {"row-key-4", family, "c0", 1000, "v1000", {}},
       {"row-key-4", family, "c1", 2000, "v2000", {}}};
 
-  CheckEqualUnordered(expected, actual);
-
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableSingleRow) {
@@ -169,20 +151,48 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
       row_key, bigtable::SetCell(family, "c1", 1000, "V1000"),
       bigtable::SetCell(family, "c2", 2000, "V2000"),
       bigtable::SetCell(family, "c3", 3000, "V3000"));
-
   table->Apply(std::move(mutation));
-
-  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-
   std::vector<bigtable::Cell> expected{
       {row_key, family, "c1", 1000, "V1000", {}},
       {row_key, family, "c2", 2000, "V2000", {}},
       {row_key, family, "c3", 3000, "V3000", {}}};
 
-  CheckEqualUnordered(expected, actual);
-
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
 }
 
-}  // namespace testing
-}  // namespace bigtable
+TEST_F(DataIntegrationTest, TableReadRowTest) {
+  std::string const table_name = "table-read-row-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "v1000", {}},
+      {row_key2, family, "c2", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> expected{
+      {row_key1, family, "c1", 1000, "v1000", {}}};
+
+  CreateCells(*table, created);
+  auto row_cell = ReadRow(*table, row_key1, bigtable::Filter::PassAllFilter());
+  std::vector<bigtable::Cell> actual;
+  actual.emplace_back(*row_cell);
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
+  std::string const table_name = "table-read-row-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "v1000", {}}};
+
+  CreateCells(*table, created);
+  auto row_cell = ReadRow(*table, row_key2, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+  EXPECT_EQ(row_cell, nullptr);
+}

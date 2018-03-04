@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/table_integration_test.h"
 #include <google/protobuf/text_format.h>
+
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/testing/table_integration_test.h"
 
 namespace bigtable {
 namespace testing {
@@ -55,6 +56,34 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
               std::back_inserter(result));
   }
   return result;
+}
+
+std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
+    bigtable::Table& table, std::int64_t rows_limit, bigtable::Filter filter) {
+  auto reader =
+      table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+                     rows_limit, std::move(filter));
+  std::vector<bigtable::Cell> result;
+  for (auto const& row : reader) {
+    std::copy(row.cells().begin(), row.cells().end(),
+              std::back_inserter(result));
+  }
+  return result;
+}
+
+std::unique_ptr<bigtable::Cell> TableIntegrationTest::ReadRow(
+    bigtable::Table& table, std::string row_key, bigtable::Filter filter) {
+  auto row_pair = table.ReadRow(row_key, std::move(filter));
+  if (!row_pair.first) {
+    return nullptr;
+  }
+
+  bigtable::Cell row_cell = row_pair.second.cells().at(0);
+  bigtable::Cell newCell(row_cell.row_key(), row_cell.family_name(),
+                         row_cell.column_qualifier(), row_cell.timestamp(),
+                         row_cell.value(), row_cell.labels());
+
+  return bigtable::internal::make_unique<bigtable::Cell>(newCell);
 }
 
 /// A helper function to create a list of cells.
