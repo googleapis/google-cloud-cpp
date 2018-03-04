@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_TABLE_ADMIN_H_
 
 #include <memory>
-#include "bigtable/admin/admin_client.h"
-#include "bigtable/admin/column_family.h"
-#include "bigtable/admin/table_config.h"
+#include "bigtable/client/admin_client.h"
+#include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/table_config.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

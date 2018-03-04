@@ -13,13 +13,10 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/embedded_server.h"
-
-#include <thread>
-
 #include <gmock/gmock.h>
-
-#include "bigtable/admin/table_admin.h"
+#include <thread>
 #include "bigtable/client/table.h"
+#include "bigtable/client/table_admin.h"
 
 using namespace bigtable::benchmarks;
 
@@ -71,9 +68,8 @@ TEST(EmbeddedServer, TableApply) {
                         "fake-table");
 
   bigtable::SingleRowMutation mutation(
-      "row1",
-      {bigtable::SetCell("fam", "col", 0, "val"),
-       bigtable::SetCell("fam", "col", 0, "val")});
+      "row1", {bigtable::SetCell("fam", "col", 0, "val"),
+               bigtable::SetCell("fam", "col", 0, "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
   table.Apply(std::move(mutation));

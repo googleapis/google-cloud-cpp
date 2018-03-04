@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/admin_client.h"
+#include "bigtable/client/admin_client.h"
 #include "bigtable/client/internal/common_client.h"
 
 namespace {

@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_H_
 
 #include <memory>
-#include "bigtable/admin/instance_admin_client.h"
+#include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 
 namespace bigtable {

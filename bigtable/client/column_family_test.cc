@@ -12,10 +12,8 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "bigtable/admin/column_family.h"
-
+#include "bigtable/client/column_family.h"
 #include <gmock/gmock.h>
-
 #include "bigtable/client/testing/chrono_literals.h"
 
 using namespace bigtable::chrono_literals;
