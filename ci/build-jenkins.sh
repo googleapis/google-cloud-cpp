@@ -36,6 +36,20 @@ case ${BENCHMARK} in
     scan)
         bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 1800;
         ;;
+    # The following cases are used to test the script when making changes, they are not good
+    # benchmarks.
+    endurance-quick)
+        bigtable/benchmarks/endurance_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        ;;
+    latency-quick)
+        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        ;;
+    throughput-quick)
+        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        ;;
+    scan-quick)
+        bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        ;;
     *)
         echo "Unknown benchmark type"
         exit 1
