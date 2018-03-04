@@ -156,7 +156,6 @@ add_dependencies(depends-local gmock bigtable_protos)
 # All tests get added to this target below.
 add_custom_target(tests-local)
 add_subdirectory(client)
-add_subdirectory(admin)
 add_subdirectory(tests)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

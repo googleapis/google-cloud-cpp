@@ -130,6 +130,43 @@ foreach (fname ${bigtable_client_unit_tests})
     add_dependencies(tests-local ${target})
 endforeach ()
 
+add_library(bigtable_admin_client
+    admin_client.h
+    admin_client.cc
+    column_family.h
+    instance_admin_client.h
+    instance_admin_client.cc
+    instance_admin.h
+    instance_admin.cc
+    table_admin.h
+    table_admin.cc
+    table_config.h
+    table_config.cc)
+target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
+add_library(bigtable::admin_client ALIAS bigtable_admin_client)
+
+# List the unit tests, then setup the targets and dependencies.
+set(bigtable_admin_unit_tests
+    admin_client_test.cc
+    column_family_test.cc
+    instance_admin_client_test.cc
+    instance_admin_test.cc
+    table_admin_test.cc
+    table_config_test.cc)
+foreach (fname ${bigtable_admin_unit_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    set(target "bigtable_admin_${target}")
+    add_executable(${target} ${fname})
+    target_link_libraries(${target} PRIVATE
+        bigtable_admin_client bigtable_client bigtable_protos
+        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+    add_test(NAME ${target} COMMAND ${target})
+    add_dependencies(tests-local ${target})
+endforeach ()
+
 option(FORCE_SANITIZER_ERRORS
         "If set, enable tests that force errors detected by the sanitizers."
         "")
