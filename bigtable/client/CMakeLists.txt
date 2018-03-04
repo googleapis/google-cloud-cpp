@@ -17,18 +17,25 @@ configure_file(version_info.h.in version_info.h)
 
 # the client library
 add_library(bigtable_client
+        admin_client.h
+        admin_client.cc
         ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
         build_info.h
         cell.h
         client_options.h
         client_options.cc
+        column_family.h
         data_client.h
         data_client.cc
         filters.h
         filters.cc
         grpc_error.h
         grpc_error.cc
+        instance_admin_client.h
+        instance_admin_client.cc
+        instance_admin.h
+        instance_admin.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
@@ -64,6 +71,10 @@ add_library(bigtable_client
         rpc_retry_policy.cc
         table.h
         table.cc
+        table_admin.h
+        table_admin.cc
+        table_config.h
+        table_config.cc
         version.h
         version.cc)
 target_link_libraries(bigtable_client PUBLIC
@@ -92,20 +103,26 @@ target_link_libraries(bigtable_client_testing PUBLIC
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
+        admin_client_test.cc
         cell_test.cc
         client_options_test.cc
+        column_family_test.cc
         data_client_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
         grpc_error_test.cc
         idempotent_mutation_policy_test.cc
+        instance_admin_client_test.cc
+        instance_admin_test.cc
         internal/bulk_mutator_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
         mutations_test.cc
+        table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
         table_check_and_mutate_row_test.cc
+        table_config_test.cc
         table_readrow_test.cc
         table_readrows_test.cc
         table_test.cc
@@ -126,43 +143,6 @@ foreach (fname ${bigtable_client_unit_tests})
             bigtable_client_testing bigtable_client bigtable_protos
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
             bigtable_common_options)
-    add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(tests-local ${target})
-endforeach ()
-
-add_library(bigtable_admin_client
-    admin_client.h
-    admin_client.cc
-    column_family.h
-    instance_admin_client.h
-    instance_admin_client.cc
-    instance_admin.h
-    instance_admin.cc
-    table_admin.h
-    table_admin.cc
-    table_config.h
-    table_config.cc)
-target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
-    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
-add_library(bigtable::admin_client ALIAS bigtable_admin_client)
-
-# List the unit tests, then setup the targets and dependencies.
-set(bigtable_admin_unit_tests
-    admin_client_test.cc
-    column_family_test.cc
-    instance_admin_client_test.cc
-    instance_admin_test.cc
-    table_admin_test.cc
-    table_config_test.cc)
-foreach (fname ${bigtable_admin_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    set(target "bigtable_admin_${target}")
-    add_executable(${target} ${fname})
-    target_link_libraries(${target} PRIVATE
-        bigtable_admin_client bigtable_client bigtable_protos
-        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
     add_test(NAME ${target} COMMAND ${target})
     add_dependencies(tests-local ${target})
 endforeach ()

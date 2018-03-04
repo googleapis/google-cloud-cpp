@@ -17,7 +17,7 @@
 # part of the examples.
 
 add_executable(bigtable_create_table bigtable_create_table.cc)
-target_link_libraries(bigtable_create_table bigtable_client bigtable_admin_client)
+target_link_libraries(bigtable_create_table bigtable_client)
 
 add_executable(bigtable_write_row bigtable_write_row.cc)
 target_link_libraries(bigtable_write_row bigtable_client)

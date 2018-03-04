@@ -172,10 +172,6 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
             bigtable_client PROPERTIES
             CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
-    set_target_properties(
-            bigtable_admin_client PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
 endif ()
 
 # Install the libraries and headers in the locations determined by

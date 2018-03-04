@@ -17,6 +17,7 @@
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
+#include "bigtable/client/grpc_error.h"
 #include "bigtable/client/testing/chrono_literals.h"
 
 namespace {
@@ -55,25 +56,26 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
-  return [expected_token, returned_token, table_names](
-      grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-      btproto::ListTablesResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(btproto::Table::FULL, request.view());
-    EXPECT_EQ(expected_token, request.page_token());
+  return
+      [expected_token, returned_token, table_names](
+          grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
+          btproto::ListTablesResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(btproto::Table::FULL, request.view());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& table_name : table_names) {
-      auto& table = *response->add_tables();
-      table.set_name(instance_name + "/tables/" + table_name);
-      table.set_granularity(btproto::Table::MILLIS);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
+        EXPECT_NE(nullptr, response);
+        for (auto const& table_name : table_names) {
+          auto& table = *response->add_tables();
+          table.set_name(instance_name + "/tables/" + table_name);
+          table.set_granularity(btproto::Table::MILLIS);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
 };
 
 /**
@@ -294,7 +296,7 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -343,7 +345,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.GetTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -375,7 +377,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.GetTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -421,7 +423,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -491,7 +493,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ModifyColumnFamilies("other-table", std::move(changes)),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -539,7 +541,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.DropRowsByPrefix("other-table", "prefix"),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -585,7 +587,7 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.DropAllRows("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.DropAllRows("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
