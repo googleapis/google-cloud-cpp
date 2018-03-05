@@ -102,6 +102,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a29a15790eda837b2cef386d1368b1efb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; bigtable::Cell &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1testing_1_1TableIntegrationTest.html#a29a15790eda837b2cef386d1368b1efb">ReadRows</a> (bigtable::Table &amp;table, bigtable::Filter filter)</td></tr>
 <tr class="memdesc:a29a15790eda837b2cef386d1368b1efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the cells in <code>table</code> that pass <code>filter</code>.  <a href="#a29a15790eda837b2cef386d1368b1efb">More...</a><br /></td></tr>
 <tr class="separator:a29a15790eda837b2cef386d1368b1efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3541c8c64fc6f84c0979f3e858674d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; bigtable::Cell &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1testing_1_1TableIntegrationTest.html#ab3541c8c64fc6f84c0979f3e858674d5">ReadRows</a> (bigtable::Table &amp;table, std::int64_t rows_limit, bigtable::Filter filter)</td></tr>
+<tr class="separator:ab3541c8c64fc6f84c0979f3e858674d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0ae9503c1be48e01b973cf63baf8703"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1testing_1_1TableIntegrationTest.html#ad0ae9503c1be48e01b973cf63baf8703">CreateCells</a> (bigtable::Table &amp;table, std::vector&lt; bigtable::Cell &gt; const &amp;cells)</td></tr>
 <tr class="memdesc:ad0ae9503c1be48e01b973cf63baf8703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the cells in <code>table</code> that pass <code>filter</code>.  <a href="#ad0ae9503c1be48e01b973cf63baf8703">More...</a><br /></td></tr>
 <tr class="separator:ad0ae9503c1be48e01b973cf63baf8703"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,8 +155,7 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Compare two sets of cells.</p>
-<p>Unordered because ReadRows does not guarantee a particular order. </p>
+<p>Compare two sets of cells. Unordered because ReadRows does not guarantee a particular order. </p>
 
 </div>
 </div>
@@ -264,7 +265,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a29a15790eda837b2cef386d1368b1efb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29a15790eda837b2cef386d1368b1efb">&#9670;&nbsp;</a></span>ReadRows()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a15790eda837b2cef386d1368b1efb">&#9670;&nbsp;</a></span>ReadRows() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,6 +299,48 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return all the cells in <code>table</code> that pass <code>filter</code>. </p>
+
+</div>
+</div>
+<a id="ab3541c8c64fc6f84c0979f3e858674d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3541c8c64fc6f84c0979f3e858674d5">&#9670;&nbsp;</a></span>ReadRows() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; bigtable::Cell &gt; bigtable::testing::TableIntegrationTest::ReadRows </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::Table &amp;&#160;</td>
+          <td class="paramname"><em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::int64_t&#160;</td>
+          <td class="paramname"><em>rows_limit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::Filter&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
