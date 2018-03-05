@@ -17,36 +17,50 @@
 # Stop on errors. This has a similar effect as `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-# Using relative paths works both on appveyor and in development workstations.
-cd ..
-
-# Update or clone the 'vcpkg' package manager.
-if (Test-Path vcpkg\.git) {
-  cd vcpkg
-  git pull
-} elseif (Test-Path vcpkg\installed) {
-  move vcpkg vcpkg-tmp
-  git clone https://github.com/Microsoft/vcpkg
-  move vcpkg-tmp\installed vcpkg
-  cd vcpkg
-} else {
-  git clone https://github.com/Microsoft/vcpkg
-  cd vcpkg
+# First check if the compilation is setup to use modules.
+if (-not (Test-Path env:PROVIDER)) {
+    throw "Aborting build because the PROVIDER environment variable is not set."
 }
-if ($LASTEXITCODE) {
-  throw "git setup failed with exit code $LASTEXITCODE"
+
+# If this is a build using the submodules just install nasm.  The rest of this script configures vcpkg, which
+# is not used in this case.
+if ($env:PROVIDER -eq "module") {
+    choco install -y nasm
+    return
+}
+
+# Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
+# but it works well on your workstation where you may want to run this script
+# multiple times while debugging vcpkg installs.  It also works on AppVeyor
+# where we cache the vcpkg installation, but it might be empty on the first
+# build.
+cd ..
+if (Test-Path vcpkg\.git) {
+    cd vcpkg
+    git pull
+} elseif (Test-Path vcpkg\installed) {
+    move vcpkg vcpkg-tmp
+    git clone https://github.com/Microsoft/vcpkg
+    move vcpkg-tmp\installed vcpkg
+    cd vcpkg
+} else {
+    git clone https://github.com/Microsoft/vcpkg
+    cd vcpkg
+}
+if ($LastExitCode) {
+    throw "git setup failed with exit code $LastExitCode"
 }
 
 # Build the tool each time, it is fast to do so.
 powershell -exec bypass scripts\bootstrap.ps1
-if ($LASTEXITCODE) {
-  throw "vcpkg bootstrap failed with exit code $LASTEXITCODE"
+if ($LastExitCode) {
+    throw "vcpkg bootstrap failed with exit code $LastExitCode"
 }
 
 # Integrate installed packages into the build environment.
-.\vcpkg integrate install
-if ($LASTEXITCODE) {
-  throw "vcpkg integrate failed with exit code $LASTEXITCODE"
+& .\vcpkg.exe integrate install
+if ($LastExitCode) {
+    throw "vcpkg integrate failed with exit code $LastExitCode"
 }
 
 # AppVeyor limits builds to 60 minutes. Building all the dependencies takes
@@ -59,11 +73,8 @@ $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
               "grpc:x64-windows-static")
 foreach ($pkg in $packages) {
-  $cmd = ".\vcpkg.exe install $pkg"
-  Invoke-Expression $cmd
-  if ($LASTEXITCODE) {
-    throw "vcpkg install $pkg failed with exit code $LASTEXITCODE"
-  }
+    .\vcpkg.exe install $pkg
+    if ($LastExitCode) {
+        throw "vcpkg install $pkg failed with exit code $LastExitCode"
+    }
 }
-
-cd ..
