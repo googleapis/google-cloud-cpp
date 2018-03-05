@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/table_integration_test.h"
 #include <google/protobuf/text_format.h>
+
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/testing/table_integration_test.h"
 
 namespace bigtable {
 namespace testing {
@@ -49,6 +50,19 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
     bigtable::Table& table, bigtable::Filter filter) {
   auto reader = table.ReadRows(
       bigtable::RowSet(bigtable::RowRange::InfiniteRange()), std::move(filter));
+  std::vector<bigtable::Cell> result;
+  for (auto const& row : reader) {
+    std::copy(row.cells().begin(), row.cells().end(),
+              std::back_inserter(result));
+  }
+  return result;
+}
+
+std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
+    bigtable::Table& table, std::int64_t rows_limit, bigtable::Filter filter) {
+  auto reader =
+      table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+                     rows_limit, std::move(filter));
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
     std::copy(row.cells().begin(), row.cells().end(),

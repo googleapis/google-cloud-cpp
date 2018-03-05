@@ -62,13 +62,16 @@ class TableIntegrationTest : public ::testing::Test {
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
                                        bigtable::Filter filter);
 
+  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                       std::int64_t rows_limit,
+                                       bigtable::Filter filter);
+
   /// Return all the cells in @p table that pass @p filter.
   void CreateCells(bigtable::Table& table,
                    std::vector<bigtable::Cell> const& cells);
 
   /**
    * Compare two sets of cells.
-   *
    * Unordered because ReadRows does not guarantee a particular order.
    */
   void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
