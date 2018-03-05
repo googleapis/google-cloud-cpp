@@ -175,9 +175,9 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
       {row_key1, family, "c1", 1000, "v1000", {}}};
 
   CreateCells(*table, created);
-  auto row_cell = ReadRow(*table, row_key1, bigtable::Filter::PassAllFilter());
+  auto row_cell = table->ReadRow(row_key1, bigtable::Filter::PassAllFilter());
   std::vector<bigtable::Cell> actual;
-  actual.emplace_back(*row_cell);
+  actual.emplace_back(row_cell.second.cells().at(0));
   DeleteTable(table_name);
   CheckEqualUnordered(expected, actual);
 }
@@ -192,7 +192,7 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
       {row_key1, family, "c1", 1000, "v1000", {}}};
 
   CreateCells(*table, created);
-  auto row_cell = ReadRow(*table, row_key2, bigtable::Filter::PassAllFilter());
+  auto row_cell = table->ReadRow(row_key2, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
-  EXPECT_EQ(row_cell, nullptr);
+  EXPECT_FALSE(row_cell.first);
 }

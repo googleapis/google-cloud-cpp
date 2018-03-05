@@ -71,21 +71,6 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
-std::unique_ptr<bigtable::Cell> TableIntegrationTest::ReadRow(
-    bigtable::Table& table, std::string row_key, bigtable::Filter filter) {
-  auto row_pair = table.ReadRow(row_key, std::move(filter));
-  if (!row_pair.first) {
-    return nullptr;
-  }
-
-  bigtable::Cell row_cell = row_pair.second.cells().at(0);
-  bigtable::Cell newCell(row_cell.row_key(), row_cell.family_name(),
-                         row_cell.column_qualifier(), row_cell.timestamp(),
-                         row_cell.value(), row_cell.labels());
-
-  return bigtable::internal::make_unique<bigtable::Cell>(newCell);
-}
-
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
