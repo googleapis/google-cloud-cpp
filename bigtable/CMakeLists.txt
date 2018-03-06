@@ -172,26 +172,24 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
-# The install target can only be enabled if all the dependencies are installed.
-# CMake tries to install the submodules, and gRPC has complex configuration for
-# getting installed.  It is easier to just compile + install gRPC and then
-# compile this project.
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS bigtable_protos
+    EXPORT bigtable-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# Install proto generated files into bigtable/google.
+install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
+
+# The exports can only be installed if all the dependencies are installed.
+# CMake needs to know where the submodules will be installed from,
 if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(TARGETS bigtable_protos
-        EXPORT bigtable-targets
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-    # Install proto generated files into bigtable/google.
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
-
     # Export the CMake targets to make it easy to create configuration files.
     install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
 
-    # Install the cmake -config.cmake files.
+    # Install the cmake -exports.cmake files.
     export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
         FILE "bigtable-exports.cmake")
 endif ()

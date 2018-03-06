@@ -136,27 +136,25 @@ if (FORCE_STATIC_ANALYZER_ERRORS)
             PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
 endif (FORCE_STATIC_ANALYZER_ERRORS)
 
-if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
-    install(TARGETS bigtable_client
-        EXPORT bigtable-targets
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(DIRECTORY . DESTINATION include/bigtable/client
-            FILES_MATCHING PATTERN "*.h"
-            PATTERN "testing/*" EXCLUDE)
+install(TARGETS bigtable_client
+    EXPORT bigtable-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY . DESTINATION include/bigtable/client
+        FILES_MATCHING PATTERN "*.h"
+        PATTERN "testing/*" EXCLUDE)
 
-    # Install the pkg-config files.
-    configure_file("config.pc.in" "bigtable_client.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+# Install the pkg-config files.
+configure_file("config.pc.in" "bigtable_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-    # Install the CMake configuration files.
-    configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
-    configure_file("config-version.cmake.in"
-        "bigtable_client-config-version.cmake" @ONLY)
-    install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
-endif ()
+# Install the CMake configuration files.
+configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
+configure_file("config-version.cmake.in"
+    "bigtable_client-config-version.cmake" @ONLY)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
