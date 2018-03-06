@@ -142,7 +142,9 @@ if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(DIRECTORY . DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY . DESTINATION include/bigtable/client
+            FILES_MATCHING PATTERN "*.h"
+            PATTERN "testing/*" EXCLUDE)
 
     # Install the pkg-config files.
     configure_file("config.pc.in" "bigtable_client.pc" @ONLY)
