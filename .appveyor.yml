@@ -17,12 +17,20 @@ version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: true
 
+# If we have a branch with an open PR do not build the branch.  This removes
+# the duplicate build for any updates on a PR, which consume a lot of scarce
+# AppVeyor build slots.
+skip_branch_with_pr: true
+
 image:
   - Visual Studio 2017
 
 environment:
-  APPVEYOR_SAVE_CACHE_ON_ERROR: true
-  GENERATOR: "Visual Studio 15 2017 Win64"
+  matrix:
+    - PROVIDER: vcpkg
+      CONFIG: Debug
+      GENERATOR: "Visual Studio 15 2017 Win64"
+      APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
   - c:\projects\vcpkg\installed -> ci\install-windows.ps1
@@ -33,3 +41,7 @@ install:
 
 build_script:
   - powershell -exec bypass ci\build-windows.ps1
+
+test_script:
+  - ps: cd build-output
+  - ctest --output-on-failure -C "%CONFIG%"

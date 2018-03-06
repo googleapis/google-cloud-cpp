@@ -17,33 +17,46 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-$dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
-if (Test-Path variable:env:APPVEYOR_BUILD_FOLDER) {
-  $dir = Split-Path $env:APPVEYOR_BUILD_FOLDER
+# First check the required environment variables.
+if (-not (Test-Path env:PROVIDER)) {
+    throw "Aborting build because the PROVIDER environment variable is not set."
+}
+if (-not (Test-Path env:GENERATOR)) {
+    throw "Aborting build because the GENERATOR environment variable is not set."
+}
+if (-not (Test-Path env:CONFIG)) {
+    throw "Aborting build because the CONFIG environment variable is not set."
 }
 
-$integrate = "$dir\vcpkg\vcpkg.exe integrate install"
-Invoke-Expression $integrate
-if ($LASTEXITCODE) {
-  throw "vcpkg integrate failed with exit code $LASTEXITCODE"
+# By default assume "module", use the configuration parameters and build in the `build-output` directory.
+$cmake_flags=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-Bbuild-output")
+
+if ($env:PROVIDER -eq "vcpkg") {
+    # Setup the environment for vcpkg:
+    $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
+    if (Test-Path variable:env:APPVEYOR_BUILD_FOLDER) {
+        $dir = Split-Path $env:APPVEYOR_BUILD_FOLDER
+    }
+
+    $integrate = "$dir\vcpkg\vcpkg.exe integrate install"
+    Invoke-Expression $integrate
+    if ($LastExitCode) {
+        throw "vcpkg integrate failed with exit code $LastExitCode"
+    }
+
+    $cmake_flags += "-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=$env:PROVIDER"
+    $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
+    $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
 }
 
-mkdir build
-cd build
-cmake -DCMAKE_TOOLCHAIN_FILE="$dir\vcpkg\scripts\buildsystems\vcpkg.cmake" `
-    -DVCPKG_TARGET_TRIPLET=x64-windows-static `
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=vcpkg `
-    -G $env:GENERATOR ..
-if ($LASTEXITCODE) {
-  throw "cmake failed with exit code $LASTEXITCODE"
+# Create a build directory, and run cmake in it.
+cmake $cmake_flags
+if ($LastExitCode) {
+    throw "cmake failed with exit code $LastExitCode"
 }
 
-cmake --build .
-if ($LASTEXITCODE) {
-  throw "cmake build failed with exit code $LASTEXITCODE"
-}
-
-ctest -C Debug .
-if ($LASTEXITCODE) {
-  throw "ctest failed with exit code $LASTEXITCODE"
+# Compile inside the build directory. Pass /m flag to msbuild to use all cores.
+cmake --build build-output -- /m
+if ($LastExitCode) {
+    throw "cmake build failed with exit code $LastExitCode"
 }
