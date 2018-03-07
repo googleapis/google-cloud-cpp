@@ -31,7 +31,9 @@ case ${BENCHMARK} in
         bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID};
         ;;
     throughput)
-        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 60 1800;
+        # The magic number 128 here is the number of threads necessary to saturate the CPU
+        # on a 4-cpu server (a n1-standard-4 GCE instance).
+        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 128 1800;
         ;;
     scan)
         bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 1800;
