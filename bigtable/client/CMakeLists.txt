@@ -47,6 +47,8 @@ add_library(bigtable_client
         idempotent_mutation_policy.cc
         mutations.h
         mutations.cc
+        read_modify_write_rule.h
+        read_modify_write_rule.cc
         row.h
         row_range.h
         row_range.cc
@@ -98,6 +100,7 @@ set(bigtable_client_unit_tests
         table_readrow_test.cc
         table_readrows_test.cc
         table_test.cc
+        read_modify_write_rule_test.cc
         row_reader_test.cc
         row_test.cc
         row_range_test.cc
