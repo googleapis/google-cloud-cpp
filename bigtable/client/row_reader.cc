@@ -61,11 +61,17 @@ RowReader::RowReader(
       stream_is_open_(false),
       operation_cancelled_(false),
       processed_chunks_count_(0),
-      rows_count_(0) {}
+      rows_count_(0),
+      status_(grpc::Status::OK) {}
 
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     internal::RaiseRuntimeError("Operation already cancelled.");
+#else
+    status_ = grpc::Status::CANCELLED;
+    return internal::RowReaderIterator(this, true);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
   if (not stream_) {
     MakeRequest();
@@ -129,7 +135,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
       status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 #else
-    status = AdvanceOrFail(row);
+    status_ = status = AdvanceOrFail(row);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {

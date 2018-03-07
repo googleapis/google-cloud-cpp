@@ -41,6 +41,52 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
                              std::string const& table_id) {
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
+namespace noex {
+class Table {
+ public:
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
+      : client_(client),
+        table_name_(TableName(client_, table_id)),
+        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
+        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
+        idempotent_mutation_policy_(
+            bigtable::DefaultIdempotentMutationPolicy()) {}
+
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+            typename IdempotentMutationPolicy>
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
+        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
+        IdempotentMutationPolicy idempotent_mutation_policy)
+      : client_(client),
+        table_name_(TableName(client_, table_id)),
+        rpc_retry_policy_(retry_policy.clone()),
+        rpc_backoff_policy_(backoff_policy.clone()),
+        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
+
+  std::string const& table_name() const { return table_name_; }
+
+  std::vector<FailedMutation> Apply(SingleRowMutation&& mut,
+                                    grpc::Status& ret_status);
+
+  std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
+                                        grpc::Status& ret_status);
+
+  RowReader ReadRows(RowSet row_set, Filter filter, grpc::Status& ret_status);
+
+  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter,
+                     grpc::Status& ret_status);
+
+  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
+                               grpc::Status& ret_status);
+
+ private:
+  std::shared_ptr<DataClient> client_;
+  std::string table_name_;
+  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
+};
+}  // namespace noex
 
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
@@ -65,12 +111,7 @@ class Table {
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
-        idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()) {}
+      : impl_(client, table_id) {}
 
   /**
    * Constructor with explicit policies.
@@ -125,13 +166,10 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
+      : impl_(client, table_id, retry_policy, backoff_policy,
+              idempotent_mutation_policy) {}
 
-  std::string const& table_name() const { return table_name_; }
+  std::string const& table_name() const { return impl_.table_name(); }
 
   /**
    * Attempts to apply the mutation to a row.
@@ -201,11 +239,12 @@ class Table {
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
 
  private:
-  std::shared_ptr<DataClient> client_;
-  std::string table_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
+  noex::Table impl_;
+  //    std::shared_ptr<DataClient> client_;
+  //    std::string table_name_;
+  //    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  //    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  //    std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
