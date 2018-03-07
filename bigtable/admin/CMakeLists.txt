@@ -26,7 +26,10 @@ add_library(bigtable_admin_client
         table_config.cc)
 target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
+target_include_directories(bigtable_admin_client PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:include>)
 add_library(bigtable::admin_client ALIAS bigtable_admin_client)
 
 # List the unit tests, then setup the targets and dependencies.
@@ -48,3 +51,25 @@ foreach (fname ${bigtable_admin_unit_tests})
     add_test(NAME ${target} COMMAND ${target})
     add_dependencies(tests-local ${target})
 endforeach ()
+
+install(TARGETS bigtable_admin_client
+    EXPORT bigtable-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
+
+# Install the pkg-config files.
+configure_file("config.pc.in" "bigtable_admin.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_admin.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+# Install the CMake configuration files.
+configure_file("config.cmake.in"
+    "bigtable_admin_client-config.cmake" @ONLY)
+configure_file("config-version.cmake.in"
+    "bigtable_admin_client-config-version.cmake" @ONLY)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_admin_client-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_admin_client-config-version.cmake"
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)

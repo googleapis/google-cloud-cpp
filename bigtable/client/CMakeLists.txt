@@ -65,7 +65,10 @@ add_library(bigtable_client
 target_link_libraries(bigtable_client
         bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+target_include_directories(bigtable_client PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 
@@ -132,3 +135,26 @@ if (FORCE_STATIC_ANALYZER_ERRORS)
     target_compile_definitions(bigtable_client_force_sanitizer_failures_test
             PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
 endif (FORCE_STATIC_ANALYZER_ERRORS)
+
+install(TARGETS bigtable_client
+    EXPORT bigtable-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY . DESTINATION include/bigtable/client
+        FILES_MATCHING PATTERN "*.h"
+        PATTERN "testing/*" EXCLUDE)
+
+# Install the pkg-config files.
+configure_file("config.pc.in" "bigtable_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+# Install the CMake configuration files.
+configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
+configure_file("config-version.cmake.in"
+    "bigtable_client-config-version.cmake" @ONLY)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)

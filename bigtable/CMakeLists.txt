@@ -64,6 +64,9 @@ if(GRPC_ROOT_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
 endif(GRPC_ROOT_DIR)
 
+# Get the destination directories based on the GNU recommendations.
+include(GNUInstallDirs)
+
 # Include the functions to compile proto files.
 include(${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake)
 PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
@@ -89,7 +92,10 @@ GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
 target_link_libraries(bigtable_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(bigtable_protos PUBLIC "${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(bigtable_protos PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_protos PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::protos ALIAS bigtable_protos)
 
@@ -164,4 +170,26 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
             bigtable_admin_client PROPERTIES
             CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
+endif ()
+
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS bigtable_protos
+    EXPORT bigtable-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# Install proto generated files into bigtable/google.
+install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
+
+# The exports can only be installed if all the dependencies are installed.
+# CMake needs to know where the submodules will be installed from,
+if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
+    # Export the CMake targets to make it easy to create configuration files.
+    install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+
+    # Install the cmake -exports.cmake files.
+    export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+        FILE "bigtable-exports.cmake")
 endif ()
