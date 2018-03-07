@@ -64,7 +64,7 @@ constexpr int kScanSizes[] = {100, 1000, 10000};
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             std::string const& table_id, long table_size,
+                             long table_size, std::string const& table_id,
                              long scan_size,
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
@@ -86,8 +86,8 @@ int main(int argc, char* argv[]) try {
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
     auto combined =
-        RunBenchmark(benchmark, data_client, setup.table_id(), scan_size,
-                     setup.table_size(), setup.test_duration());
+        RunBenchmark(benchmark, data_client, setup.table_size(),
+                     setup.table_id(), scan_size, setup.test_duration());
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) try {
 namespace {
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             std::string const& table_id, long table_size,
+                             long table_size, std::string const& table_id,
                              long scan_size,
                              std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
