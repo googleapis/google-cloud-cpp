@@ -19,7 +19,20 @@ namespace btproto = ::google::bigtable::v2;
 
 TEST(ReadModifyWriteRuleTest, AppendValue) {
   auto const proto =
-      bigtable::ReadModifyWriteRule::AppendValue("foo").as_proto();
+      bigtable::ReadModifyWriteRule::AppendValue("fam", "col", "foo")
+          .as_proto();
   EXPECT_EQ(btproto::ReadModifyWriteRule::kAppendValue, proto.rule_case());
   EXPECT_EQ("foo", proto.append_value());
+  EXPECT_EQ("fam", proto.family_name());
+  EXPECT_EQ("col", proto.column_qualifier());
+}
+
+TEST(ReadModifyWriteRuleTest, IncrementAmount) {
+  auto const proto =
+      bigtable::ReadModifyWriteRule::IncrementAmount("fam", "col", 42)
+          .as_proto();
+  EXPECT_EQ(btproto::ReadModifyWriteRule::kIncrementAmount, proto.rule_case());
+  EXPECT_EQ(42, proto.increment_amount());
+  EXPECT_EQ("fam", proto.family_name());
+  EXPECT_EQ("col", proto.column_qualifier());
 }
