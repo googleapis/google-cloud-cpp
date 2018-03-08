@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) try {
   std::vector<Replica> servers;
   // Create a server for each port and launch a thread to run it.
   for (int i = 1; i != argc; ++i) {
-    std::string address = "0.0.0.0:" + std::string(argv[1]);
+    std::string address = "0.0.0.0:" + std::string(argv[i]);
     servers.emplace_back(CreateReplica(&echo_impl, std::move(address)));
   }
 
