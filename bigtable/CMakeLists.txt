@@ -34,7 +34,7 @@ if (MSVC)
     include(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
     if (_cpp_latest_flag_supported)
-        target_compile_options(bigtable_common_options INTEFACE "/std:c++latest")
+        target_compile_options(bigtable_common_options INTERFACE "/std:c++latest")
     endif ()
 endif ()
 
