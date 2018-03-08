@@ -17,8 +17,8 @@ configure_file(version_info.h.in version_info.h)
 
 # the client library
 add_library(bigtable_client
-        ${PROJECT_BINARY_DIR}/bigtable/client/build_info.cc
-        ${PROJECT_BINARY_DIR}/bigtable/client/version_info.h
+        ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
+        ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
         build_info.h
         cell.h
         client_options.h
@@ -150,6 +150,8 @@ install(TARGETS bigtable_client
 install(DIRECTORY . DESTINATION include/bigtable/client
         FILES_MATCHING PATTERN "*.h"
         PATTERN "testing/*" EXCLUDE)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    DESTINATION include/bigtable/client)
 
 # Install the pkg-config files.
 configure_file("config.pc.in" "bigtable_client.pc" @ONLY)

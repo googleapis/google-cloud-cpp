@@ -180,7 +180,7 @@ endif ()
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS bigtable_protos
+install(TARGETS bigtable_protos bigtable_common_options
     EXPORT bigtable-targets
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -194,8 +194,4 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/googl
 if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
     # Export the CMake targets to make it easy to create configuration files.
     install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
-
-    # Install the cmake -exports.cmake files.
-    export(TARGETS bigtable_admin_client bigtable_client bigtable_protos
-        FILE "bigtable-exports.cmake")
 endif ()
