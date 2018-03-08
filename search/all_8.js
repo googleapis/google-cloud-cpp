@@ -4,6 +4,7 @@ var searchData=
   ['idempotent_5fmutation_5fpolicy_2eh',['idempotent_mutation_policy.h',['../idempotent__mutation__policy_8h.html',1,'']]],
   ['idempotent_5fmutation_5fpolicy_5ftest_2ecc',['idempotent_mutation_policy_test.cc',['../idempotent__mutation__policy__test_8cc.html',1,'']]],
   ['idempotentmutationpolicy',['IdempotentMutationPolicy',['../classbigtable_1_1v0_1_1IdempotentMutationPolicy.html',1,'bigtable::v0']]],
+  ['incrementamount',['IncrementAmount',['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html#a60e78a0453daf700485d5980a6222350',1,'bigtable::v0::ReadModifyWriteRule']]],
   ['infiniterange',['InfiniteRange',['../classbigtable_1_1v0_1_1RowRange.html#a72c550241d571dbeadab39d5c8acfc3a',1,'bigtable::v0::RowRange']]],
   ['initial_5fsplits',['initial_splits',['../classbigtable_1_1v0_1_1TableConfig.html#a178e673b5cf929a9ae9fa65d439b27b5',1,'bigtable::v0::TableConfig']]],
   ['instance_5fadmin_2ecc',['instance_admin.cc',['../instance__admin_8cc.html',1,'']]],
