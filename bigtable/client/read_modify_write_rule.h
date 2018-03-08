@@ -25,10 +25,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Define the interfaces to create ReadWriteModifyRule operations.
  *
  * Cloud Bigtable has operations to perform atomic updates to a row, such as
- * incrementing an integer value or appending to an string value.  The changes
- * are represented by a ReadModifyWriteRule operations.  One or much such
- * operations can be sent in a single request.  This class helps users create
- * the operations through a more idiomatic C++ interface.
+ * incrementing an integer value or appending to a string value. The changes are
+ * represented by a ReadModifyWriteRule operations. One or much such operations
+ * can be sent in a single request. This class helps users create the operations
+ * through a more idiomatic C++ interface.
  */
 class ReadModifyWriteRule {
  public:

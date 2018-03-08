@@ -18,7 +18,8 @@
 namespace btproto = ::google::bigtable::v2;
 
 TEST(ReadModifyWriteRuleTest, AppendValue) {
-  auto proto = bigtable::ReadModifyWriteRule::AppendValue("foo").as_proto();
+  auto const proto =
+      bigtable::ReadModifyWriteRule::AppendValue("foo").as_proto();
   EXPECT_EQ(btproto::ReadModifyWriteRule::kAppendValue, proto.rule_case());
   EXPECT_EQ("foo", proto.append_value());
 }
