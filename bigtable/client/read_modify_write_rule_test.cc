@@ -23,3 +23,10 @@ TEST(ReadModifyWriteRuleTest, AppendValue) {
   EXPECT_EQ(btproto::ReadModifyWriteRule::kAppendValue, proto.rule_case());
   EXPECT_EQ("foo", proto.append_value());
 }
+
+TEST(ReadModifyWriteRuleTest, IncrementAmount) {
+  auto const proto =
+      bigtable::ReadModifyWriteRule::IncrementAmount(42).as_proto();
+  EXPECT_EQ(btproto::ReadModifyWriteRule::kIncrementAmount, proto.rule_case());
+  EXPECT_EQ(42, proto.increment_amount());
+}

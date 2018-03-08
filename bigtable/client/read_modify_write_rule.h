@@ -44,6 +44,13 @@ class ReadModifyWriteRule {
     return tmp;
   }
 
+  /// Create an operation that increments an integer value.
+  static ReadModifyWriteRule IncrementAmount(std::int64_t amount) {
+    ReadModifyWriteRule tmp;
+    tmp.rule_.set_increment_amount(amount);
+    return tmp;
+  }
+
   /// Return the filter expression as a protobuf.
   google::bigtable::v2::ReadModifyWriteRule as_proto() const { return rule_; }
 
