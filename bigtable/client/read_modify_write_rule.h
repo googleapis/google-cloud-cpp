@@ -38,15 +38,23 @@ class ReadModifyWriteRule {
   ReadModifyWriteRule& operator=(ReadModifyWriteRule const& rhs) = default;
 
   /// Create an operation that appends a string value.
-  static ReadModifyWriteRule AppendValue(std::string value) {
+  static ReadModifyWriteRule AppendValue(std::string family_name,
+                                         std::string column_qualifier,
+                                         std::string value) {
     ReadModifyWriteRule tmp;
+    tmp.rule_.set_family_name(std::move(family_name));
+    tmp.rule_.set_column_qualifier(std::move(column_qualifier));
     tmp.rule_.set_append_value(std::move(value));
     return tmp;
   }
 
   /// Create an operation that increments an integer value.
-  static ReadModifyWriteRule IncrementAmount(std::int64_t amount) {
+  static ReadModifyWriteRule IncrementAmount(std::string family_name,
+                                             std::string column_qualifier,
+                                             std::int64_t amount) {
     ReadModifyWriteRule tmp;
+    tmp.rule_.set_family_name(std::move(family_name));
+    tmp.rule_.set_column_qualifier(std::move(column_qualifier));
     tmp.rule_.set_increment_amount(amount);
     return tmp;
   }
