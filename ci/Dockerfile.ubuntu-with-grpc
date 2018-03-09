@@ -28,6 +28,13 @@ RUN git submodule update --init --recursive
 RUN (make -j "${NCPU}" HAS_SYSTEM_PROTOBUF=false && make install && \
      cd third_party/protobuf && make install)
 
+WORKDIR /var/tmp/build/
+RUN git clone --depth 50 https://github.com/google/googletest.git
+WORKDIR /var/tmp/build/googletest
+RUN git submodule update --init --recursive
+RUN cmake -H. -B.build && cmake --build .build -- -j "${NCPU}"
+RUN cmake --build .build --target install
+
 FROM cached-${DISTRO}-${DISTRO_VERSION}:tip
 COPY --from=staging /usr/local/include /usr/local/include
 COPY --from=staging /usr/local/bin /usr/local/bin

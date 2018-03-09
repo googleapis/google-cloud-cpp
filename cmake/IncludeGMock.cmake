@@ -23,6 +23,7 @@ if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
     # Compile the googlemock library.  This library is rarely installed or
     # pre-compiled because it should be configured with the same flags as the
     # application.
+    # TODO(#310) - the name of this target can easily conflict, consider changing it.
     add_library(gmock
             ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
             ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
@@ -35,7 +36,8 @@ if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
 
 elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     find_package(GTest REQUIRED)
-    # The FindGTest module can find GTest when installed with vcpkg, but does not find GMock.
+    # The FindGTest module finds GTest by default, but does not search for
+    # GMock, though they are usually installed together.
     __gtest_find_library(GMOCK_LIBRARY            gmock)
     __gtest_find_library(GMOCK_LIBRARY_DEBUG      gmockd)
     if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
@@ -58,11 +60,64 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     __gtest_import_library(GMock::GMock GMOCK_LIBRARY "")
     __gtest_import_library(GMock::GMock GMOCK_LIBRARY "RELEASE")
     __gtest_import_library(GMock::GMock GMOCK_LIBRARY "DEBUG")
+    # TODO(#310) - the name of this target can easily conflict, consider changing it.
     add_library(gmock INTERFACE)
     target_link_libraries(gmock INTERFACE GMock::GMock GTest::Main)
 
 elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
-    message(FATAL_ERROR "GOOGLE_CLOUD_CPP_GMOCK_PROVIDER=package is not implemented.")
+    find_package(Threads REQUIRED)
+    find_package(GTest REQUIRED)
+
+    find_path(GMOCK_INCLUDE_DIR gmock/gmock.h
+            HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
+            DOC "The GoogleTest Mocking Library headers")
+    if ("${GMOCK_INCLUDE_DIR}" MATCHES "-NOTFOUND")
+        message(FATAL_ERROR "Cannot find gmock headers ${GMOCK_INCLUDE_DIR}.")
+    endif ()
+    mark_as_advanced(GMOCK_INCLUDE_DIR)
+
+    find_library(GMOCK_LIBRARY gmock)
+    if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
+        message(FATAL_ERROR "Cannot find gmock library ${GMOCK_LIBRARY}.")
+    endif ()
+    mark_as_advanced(GMOCK_LIBRARY)
+
+    find_library(GMOCK_MAIN_LIBRARY gmock_main)
+    if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
+        message(FATAL_ERROR "Cannot find gmock_main library ${GMOCK_MAIN_LIBRARY}.")
+    endif ()
+    mark_as_advanced(GMOCK_MAIN_LIBRARY)
+
+    add_library(GMock::GMock UNKNOWN IMPORTED)
+    set_target_properties(GMock::GMock PROPERTIES
+            IMPORTED_LINK_INTERFACE_LIBRARIES "GTest::GTest;Threads::Threads"
+            INTERFACE_INCLUDE_DIRECTORIES "${GMOCK_INCLUDE_DIRS}"
+            IMPORTED_LOCATION "${GMOCK_LIBRARY}")
+
+    add_library(GMock::Main UNKNOWN IMPORTED)
+    set_target_properties(GMock::Main PROPERTIES
+            IMPORTED_LINK_INTERFACE_LIBRARIES "GMock::GMock;Threads::Threads"
+            INTERFACE_INCLUDE_DIRECTORIES "${GMOCK_INCLUDE_DIRS}"
+            IMPORTED_LOCATION "${GMOCK_MAIN_LIBRARY}")
+
+    # TODO(#310) - the name of this target can easily conflict, consider changing it.
+    add_library(gmock INTERFACE)
+    target_link_libraries(gmock INTERFACE GMock::Main GMock::GMock GTest::GTest)
+
 elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
-    message(FATAL_ERROR "GOOGLE_CLOUD_CPP_GMOCK_PROVIDER=pkg-config is not implemented.")
+    # Use pkg-config to find the libraries.
+    find_package(PkgConfig REQUIRED)
+    # We need a helper function to convert pkg-config(1) output into target
+    # properties.
+    include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
+
+    pkg_check_modules(gmock_pc REQUIRED gmock_main gmock gtest)
+    add_library(GMock::GMock INTERFACE IMPORTED)
+    set_library_properties_from_pkg_config(GMock::GMock gmock_pc)
+    set_property(TARGET GMock::GMock APPEND PROPERTY
+            INTERFACE_LINK_LIBRARIES Threads::Threads)
+
+    # TODO(#310) - the name of this target can easily conflict, consider changing it.
+    add_library(gmock INTERFACE)
+    target_link_libraries(gmock INTERFACE GMock::GMock)
 endif ()
