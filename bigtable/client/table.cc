@@ -46,6 +46,7 @@ namespace {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.
 std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
@@ -97,6 +98,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
     std::this_thread::sleep_for(delay);
   }
 }
+
 // Call the `google.bigtable.v2.Bigtable.MutateRows` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.  When the RPC
 // is partially successful, this function retries only the mutations that did
@@ -138,7 +140,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   return failures;
 }
 
-RowReader Table::ReadRows(RowSet row_set, Filter filter, grpc::Status& status) {
+RowReader Table::ReadRows(RowSet row_set, Filter filter) {
   return RowReader(client_, table_name(), std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
                    rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -147,12 +149,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter, grpc::Status& status) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
-                          Filter filter, grpc::Status& status) {
-  //  if (rows_limit <= 0) {
-  //    ret_status =
-  //        grpc::Status(grpc::StatusCode::OUT_OF_RANGE, "rows_limit must be
-  //        >0");
-  //  }
+                          Filter filter) {
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
                    rpc_backoff_policy_->clone(),
@@ -165,16 +162,10 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   RowReader reader =
-      ReadRows(std::move(row_set), rows_limit, std::move(filter), status);
-  if (not status.ok()) {
-    return std::make_pair(false, Row("", {}));
-  }
+      ReadRows(std::move(row_set), rows_limit, std::move(filter));
   auto it = reader.begin();
   if (it == reader.end()) {
     grpc::Status status = reader.finish();
-    if (not status.ok()) {
-      status = grpc::Status(status.error_code(), status.error_message());
-    }
     return std::make_pair(false, Row("", {}));
   }
   auto result = std::make_pair(true, std::move(*it));
@@ -207,20 +198,12 @@ void Table::BulkApply(BulkMutation&& mut) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  grpc::Status status = grpc::Status::OK;
-  auto result = impl_.ReadRows(std::move(row_set), std::move(filter), status);
-  return result;
+  return impl_.ReadRows(std::move(row_set), std::move(filter));
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  grpc::Status status;
-  auto result =
-      impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter), status);
-  if (not status.ok()) {
-    internal::RaiseRuntimeError(status.error_message());
-  }
-  return result;
+  return impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter));
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {

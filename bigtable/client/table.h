@@ -82,10 +82,9 @@ class Table {
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
                                         grpc::Status& status);
 
-  RowReader ReadRows(RowSet row_set, Filter filter, grpc::Status& status);
+  RowReader ReadRows(RowSet row_set, Filter filter);
 
-  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter,
-                     grpc::Status& ret_status);
+  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
                                grpc::Status& status);
