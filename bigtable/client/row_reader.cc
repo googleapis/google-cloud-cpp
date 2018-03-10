@@ -162,8 +162,12 @@ void RowReader::Advance(internal::OptionalRow& row) {
     }
 
     if (not status.ok() and not retry_policy_->on_failure(status)) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       internal::RaiseRuntimeError("Unretriable error: " +
                                   status.error_message());
+#else
+      return;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     }
 
     auto delay = backoff_policy_->on_completion(status);

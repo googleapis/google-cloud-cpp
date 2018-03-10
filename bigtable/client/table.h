@@ -41,11 +41,15 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
                              std::string const& table_id) {
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
+/**
+ * No Exception namespace contains the public version of interface without
+ * exception. This is not for public use.
+ */
 namespace noex {
 class Table {
  public:
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : client_(client),
+      : client_(std::move(client)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
@@ -57,27 +61,35 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(client),
+      : client_(std::move(client)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
   std::string const& table_name() const { return table_name_; }
-
+  //@{
+  /**
+   * @name No exception versions of Table::*
+   *
+   * These functions provide the same functionality as their counterparts in the
+   * `bigtable::Table` class, but do not raise exceptions on errors, instead
+   * they return the error on the status parameter.
+   */
   std::vector<FailedMutation> Apply(SingleRowMutation&& mut,
-                                    grpc::Status& ret_status);
+                                    grpc::Status& status);
 
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
-                                        grpc::Status& ret_status);
+                                        grpc::Status& status);
 
-  RowReader ReadRows(RowSet row_set, Filter filter, grpc::Status& ret_status);
+  RowReader ReadRows(RowSet row_set, Filter filter, grpc::Status& status);
 
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter,
                      grpc::Status& ret_status);
 
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
-                               grpc::Status& ret_status);
+                               grpc::Status& status);
+  //@}
 
  private:
   std::shared_ptr<DataClient> client_;
@@ -111,7 +123,7 @@ class Table {
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : impl_(client, table_id) {}
+      : impl_(std::move(client), table_id) {}
 
   /**
    * Constructor with explicit policies.
@@ -166,7 +178,7 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : impl_(client, table_id, retry_policy, backoff_policy,
+      : impl_(std::move(client), table_id, retry_policy, backoff_policy,
               idempotent_mutation_policy) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
@@ -221,7 +233,6 @@ class Table {
    *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * @throws std::invalid_argument if rows_limit is <= 0.
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
@@ -240,11 +251,6 @@ class Table {
 
  private:
   noex::Table impl_;
-  //    std::shared_ptr<DataClient> client_;
-  //    std::string table_name_;
-  //    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  //    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  //    std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

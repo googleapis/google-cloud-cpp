@@ -46,8 +46,10 @@ namespace {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+// Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
+// successful, or until the policies in effect tell us to stop.
 std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
-                                         grpc::Status& ret_status) {
+                                         grpc::Status& status) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -73,8 +75,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
     grpc::ClientContext client_context;
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
-    grpc::Status status =
-        client_->Stub()->MutateRow(&client_context, request, &response);
+    status = client_->Stub()->MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return failures;
     }
@@ -87,7 +88,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
       failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
                             0);
       // TODO(#234) - just return the failures instead
-      ret_status = grpc::Status(
+      status = grpc::Status(
           status.error_code(),
           "Permanent (or too many transient) errors in Table::Apply()");
       return failures;
@@ -101,7 +102,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
 // is partially successful, this function retries only the mutations that did
 // not succeed.
 std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
-                                             grpc::Status& ret_status) {
+                                             grpc::Status& status) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -112,7 +113,6 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   internal::BulkMutator mutator(table_name_, *idemponent_policy,
                                 std::forward<BulkMutation>(mut));
 
-  grpc::Status status = grpc::Status::OK;
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
@@ -127,20 +127,18 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   }
   auto failures = mutator.ExtractFinalFailures();
   if (not status.ok()) {
-    ret_status = grpc::Status(status.error_code(), status.error_message());
     return failures;
   }
   if (not failures.empty()) {
     // TODO(#234) - just return the failures instead
-    ret_status = grpc::Status(
+    status = grpc::Status(
         grpc::StatusCode::INTERNAL,
         "Permanent (or too many transient) errors in Table::BulkApply()");
   }
   return failures;
 }
 
-RowReader Table::ReadRows(RowSet row_set, Filter filter,
-                          grpc::Status& ret_status) {
+RowReader Table::ReadRows(RowSet row_set, Filter filter, grpc::Status& status) {
   return RowReader(client_, table_name(), std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
                    rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -149,11 +147,12 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter,
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
-                          Filter filter, grpc::Status& ret_status) {
-  if (rows_limit <= 0) {
-    ret_status =
-        grpc::Status(grpc::StatusCode::OUT_OF_RANGE, "rows_limit must be >0");
-  }
+                          Filter filter, grpc::Status& status) {
+  //  if (rows_limit <= 0) {
+  //    ret_status =
+  //        grpc::Status(grpc::StatusCode::OUT_OF_RANGE, "rows_limit must be
+  //        >0");
+  //  }
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
                    rpc_backoff_policy_->clone(),
@@ -162,25 +161,25 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
-                                    grpc::Status& ret_status) {
+                                    grpc::Status& status) {
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   RowReader reader =
-      ReadRows(std::move(row_set), rows_limit, std::move(filter), ret_status);
-  if (not ret_status.ok()) {
+      ReadRows(std::move(row_set), rows_limit, std::move(filter), status);
+  if (not status.ok()) {
     return std::make_pair(false, Row("", {}));
   }
   auto it = reader.begin();
   if (it == reader.end()) {
     grpc::Status status = reader.finish();
     if (not status.ok()) {
-      ret_status = grpc::Status(status.error_code(), status.error_message());
+      status = grpc::Status(status.error_code(), status.error_message());
     }
     return std::make_pair(false, Row("", {}));
   }
   auto result = std::make_pair(true, std::move(*it));
   if (++it != reader.end()) {
-    ret_status =
+    status =
         grpc::Status(grpc::StatusCode::INTERNAL,
                      "internal error - RowReader returned 2 rows in ReadRow()");
     return std::make_pair(false, Row("", {}));
@@ -190,55 +189,45 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
 
 }  // namespace noex
 
-// Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
-// successful, or until the policies in effect tell us to stop.
 void Table::Apply(SingleRowMutation&& mut) {
-  grpc::Status ret_status = grpc::Status::OK;
-  std::vector<FailedMutation> failures =
-      impl_.Apply(std::move(mut), ret_status);
-  if (not ret_status.ok()) {
-    ReportPermanentFailures(ret_status.error_message().c_str(), ret_status,
-                            failures);
+  grpc::Status status;
+  std::vector<FailedMutation> failures = impl_.Apply(std::move(mut), status);
+  if (not status.ok()) {
+    ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
-// Call the `google.bigtable.v2.Bigtable.MutateRows` RPC repeatedly until
-// successful, or until the policies in effect tell us to stop.  When the RPC
-// is partially successful, this function retries only the mutations that did
-// not succeed.
+
 void Table::BulkApply(BulkMutation&& mut) {
-  grpc::Status ret_status = grpc::Status::OK;
+  grpc::Status status;
   std::vector<FailedMutation> failures =
-      impl_.BulkApply(std::move(mut), ret_status);
-  if (not ret_status.ok()) {
-    ReportPermanentFailures(ret_status.error_message().c_str(), ret_status,
-                            failures);
+      impl_.BulkApply(std::move(mut), status);
+  if (not status.ok()) {
+    ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  grpc::Status ret_status = grpc::Status::OK;
-  auto result =
-      impl_.ReadRows(std::move(row_set), std::move(filter), ret_status);
+  grpc::Status status = grpc::Status::OK;
+  auto result = impl_.ReadRows(std::move(row_set), std::move(filter), status);
   return result;
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  grpc::Status ret_status = grpc::Status::OK;
-  auto result = impl_.ReadRows(std::move(row_set), rows_limit,
-                               std::move(filter), ret_status);
-  if (not ret_status.ok()) {
-    internal::RaiseInvalidArgument(ret_status.error_message());
+  grpc::Status status;
+  auto result =
+      impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter), status);
+  if (not status.ok()) {
+    internal::RaiseRuntimeError(status.error_message());
   }
   return result;
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
-  grpc::Status ret_status = grpc::Status::OK;
-  auto result =
-      impl_.ReadRow(std::move(row_key), std::move(filter), ret_status);
-  if (not ret_status.ok()) {
-    internal::RaiseRuntimeError(ret_status.error_message());
+  grpc::Status status = grpc::Status::OK;
+  auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
+  if (not status.ok()) {
+    internal::RaiseRuntimeError(status.error_message());
   }
   return result;
 }
