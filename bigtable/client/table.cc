@@ -49,8 +49,7 @@ namespace noex {
 
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.
-std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
-                                         grpc::Status& status) {
+std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -72,6 +71,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
 
   btproto::MutateRowResponse response;
   std::vector<FailedMutation> failures;
+  grpc::Status status;
   while (true) {
     grpc::ClientContext client_context;
     rpc_policy->setup(client_context);
@@ -103,8 +103,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut,
 // successful, or until the policies in effect tell us to stop.  When the RPC
 // is partially successful, this function retries only the mutations that did
 // not succeed.
-std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
-                                             grpc::Status& status) {
+std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -114,7 +113,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
 
   internal::BulkMutator mutator(table_name_, *idemponent_policy,
                                 std::forward<BulkMutation>(mut));
-
+  grpc::Status status;
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
@@ -181,18 +180,17 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
 }  // namespace noex
 
 void Table::Apply(SingleRowMutation&& mut) {
-  grpc::Status status;
-  std::vector<FailedMutation> failures = impl_.Apply(std::move(mut), status);
-  if (not status.ok()) {
+  std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
+  if (not failures.empty()) {
+    grpc::Status status = failures.front().status();
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
 
 void Table::BulkApply(BulkMutation&& mut) {
-  grpc::Status status;
-  std::vector<FailedMutation> failures =
-      impl_.BulkApply(std::move(mut), status);
-  if (not status.ok()) {
+  std::vector<FailedMutation> failures = impl_.BulkApply(std::move(mut));
+  if (not failures.empty()) {
+    grpc::Status status = failures.front().status();
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }

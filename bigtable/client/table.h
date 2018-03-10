@@ -76,11 +76,9 @@ class Table {
    * `bigtable::Table` class, but do not raise exceptions on errors, instead
    * they return the error on the status parameter.
    */
-  std::vector<FailedMutation> Apply(SingleRowMutation&& mut,
-                                    grpc::Status& status);
+  std::vector<FailedMutation> Apply(SingleRowMutation&& mut);
 
-  std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
-                                        grpc::Status& status);
+  std::vector<FailedMutation> BulkApply(BulkMutation&& mut);
 
   RowReader ReadRows(RowSet row_set, Filter filter);
 
