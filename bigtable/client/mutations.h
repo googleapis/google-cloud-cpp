@@ -155,7 +155,7 @@ class SingleRowMutation {
     entry->set_row_key(std::move(row_key_));
     entry->mutable_mutations()->Swap(&ops_);
   }
-
+  /// Transfer the contents to @p request.
   void MoveTo(google::bigtable::v2::MutateRowRequest& request) {
     request.set_row_key(std::move(row_key_));
     request.mutable_mutations()->Swap(&ops_);

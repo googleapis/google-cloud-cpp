@@ -129,10 +129,10 @@ void RowReader::Advance(internal::OptionalRow& row) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
-      status = AdvanceOrFail(row);
+      status_ = status = AdvanceOrFail(row);
     } catch (std::exception const& ex) {
       // Parser exceptions arrive here.
-      status = grpc::Status(grpc::INTERNAL, ex.what());
+      status_ = status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 #else
     status_ = status = AdvanceOrFail(row);
