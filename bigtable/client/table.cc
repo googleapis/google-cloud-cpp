@@ -103,7 +103,8 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 // successful, or until the policies in effect tell us to stop.  When the RPC
 // is partially successful, this function retries only the mutations that did
 // not succeed.
-std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut) {
+std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
+                                             grpc::Status& status) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -113,7 +114,6 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut) {
 
   internal::BulkMutator mutator(table_name_, *idemponent_policy,
                                 std::forward<BulkMutation>(mut));
-  grpc::Status status;
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
@@ -188,9 +188,10 @@ void Table::Apply(SingleRowMutation&& mut) {
 }
 
 void Table::BulkApply(BulkMutation&& mut) {
-  std::vector<FailedMutation> failures = impl_.BulkApply(std::move(mut));
-  if (not failures.empty()) {
-    grpc::Status status = failures.front().status();
+  grpc::Status status;
+  std::vector<FailedMutation> failures =
+      impl_.BulkApply(std::move(mut), status);
+  if (not status.ok()) {
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
@@ -205,7 +206,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
-  grpc::Status status = grpc::Status::OK;
+  grpc::Status status;
   auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
   if (not status.ok()) {
     internal::RaiseRuntimeError(status.error_message());
