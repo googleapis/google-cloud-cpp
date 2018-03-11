@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/rpc_metadata_holder.h"
+#include "bigtable/client/internal/make_unique.h"
 
 #include <sstream>
 
@@ -26,13 +27,13 @@ std::unique_ptr<RPCMetadataHolder> DefaultRPCMetadataHolder(
 }
 
 std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::clone() const {
-  return std::unique_ptr<RPCMetadataHolder>(
+  return bigtable::internal::make_unique<RPCMetadataHolder>(
       new RPCMetadataHolder(this->resource_name_, this->request_param_type_));
 }
 
 std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::cloneWithModifications(
     RPCRequestParamType request_param_type, std::string table_id) const {
-  return std::unique_ptr<RPCMetadataHolder>(new RPCMetadataHolder(
+  return bigtable::internal::make_unique<RPCMetadataHolder>(new RPCMetadataHolder(
       this->resource_name_, request_param_type, table_id));
 }
 

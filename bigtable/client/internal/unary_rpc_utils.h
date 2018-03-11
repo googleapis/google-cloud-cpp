@@ -144,7 +144,7 @@ struct UnaryRpcUtils {
    * @param rpc_policy the policy controlling what failures are retryable.
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
-   * @param rpc_metadat_holder holder to keep metadata like
+   * @param rpc_metadata_holder holder to keep metadata like
    * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
@@ -161,7 +161,7 @@ struct UnaryRpcUtils {
   CallWithRetry(
       ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-      std::unique_ptr<bigtable::RPCMetadataHolder> rpc_metadat_holder,
+      std::unique_ptr<bigtable::RPCMetadataHolder> rpc_metadata_holder,
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
@@ -183,7 +183,7 @@ struct UnaryRpcUtils {
    * @param rpc_policy the policy controlling what failures are retryable.
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
-   * @param rpc_metadat_holder holder to keep metadata like
+   * @param rpc_metadata_holder holder to keep metadata like
    * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
@@ -200,7 +200,7 @@ struct UnaryRpcUtils {
   CallWithRetryBorrow(
       ClientType &client, bigtable::RPCRetryPolicy &rpc_policy,
       bigtable::RPCBackoffPolicy &backoff_policy,
-      bigtable::RPCMetadataHolder &rpc_metadat_holder, MemberFunction function,
+      bigtable::RPCMetadataHolder &rpc_metadata_holder, MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
@@ -240,7 +240,7 @@ struct UnaryRpcUtils {
    * @tparam MemberFunction the signature of the member function.
    * @param client the object that holds the gRPC stub.
    * @param rpc_policy the policy to control timeouts.
-   * @param rpc_metadat_holder holder to keep metadata like
+   * @param rpc_metadata_holder holder to keep metadata like
    * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.

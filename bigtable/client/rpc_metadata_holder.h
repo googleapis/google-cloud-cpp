@@ -212,7 +212,7 @@ class RPCMetadataHolder {
 };
 
 std::unique_ptr<RPCMetadataHolder> DefaultRPCMetadataHolder(
-    std::string requester, RPCRequestParamType request_param_type);
+    std::string resource_name, RPCRequestParamType request_param_type);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
