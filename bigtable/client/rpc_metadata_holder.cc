@@ -33,8 +33,9 @@ std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::clone() const {
 
 std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::cloneWithModifications(
     RPCRequestParamType request_param_type, std::string table_id) const {
-  return bigtable::internal::make_unique<RPCMetadataHolder>(new RPCMetadataHolder(
-      this->resource_name_, request_param_type, table_id));
+  return bigtable::internal::make_unique<RPCMetadataHolder>(
+      new RPCMetadataHolder(this->resource_name_, request_param_type,
+                            table_id));
 }
 
 void RPCMetadataHolder::setup(grpc::ClientContext& context) const {
