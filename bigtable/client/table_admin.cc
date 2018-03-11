@@ -28,9 +28,9 @@ inline namespace BIGTABLE_CLIENT_NS {
   auto error_message = "CreateTable(" + request.table_id() + ")";
 
   // This API is not idempotent, lets call it without retry
-  return RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                                    &StubType::CreateTable, request,
-                                    error_message.c_str());
+  return RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(), rpc_metadata_holder_->clone(),
+      &StubType::CreateTable, request, error_message.c_str());
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -38,6 +38,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
+  auto rpc_metadata_holder = rpc_metadata_holder_->clone();
 
   std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
 
@@ -51,8 +52,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     request.set_view(view);
 
     auto response = RpcUtils::CallWithRetryBorrow(
-        *client_, *rpc_policy, *backoff_policy, &StubType::ListTables, request,
-        msg.c_str());
+        *client_, *rpc_policy, *backoff_policy, *rpc_metadata_holder,
+        &StubType::ListTables, request, msg.c_str());
 
     for (auto& x : *response.mutable_tables()) {
       result.emplace_back(std::move(x));
@@ -71,6 +72,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   auto error_message = "GetTable(" + request.name() + ")";
   return RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      rpc_metadata_holder_->cloneWithModifications(RPCRequestParamType::kName,
+                                                   table_id),
       &StubType::GetTable, request, error_message.c_str());
 }
 
@@ -81,6 +84,8 @@ void TableAdmin::DeleteTable(std::string table_id) {
   // This API is not idempotent, lets call it without retry
   auto error_message = "DeleteTable(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             rpc_metadata_holder_->cloneWithModifications(
+                                 RPCRequestParamType::kName, table_id),
                              &StubType::DeleteTable, request,
                              error_message.c_str());
 }
@@ -94,9 +99,11 @@ void TableAdmin::DeleteTable(std::string table_id) {
   }
 
   auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
-  return RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                                    &StubType::ModifyColumnFamilies, request,
-                                    error_message.c_str());
+  return RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(),
+      rpc_metadata_holder_->cloneWithModifications(RPCRequestParamType::kName,
+                                                   table_id),
+      &StubType::ModifyColumnFamilies, request, error_message.c_str());
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
@@ -107,6 +114,8 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
 
   auto error_message = "DropRowsByPrefix(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             rpc_metadata_holder_->cloneWithModifications(
+                                 RPCRequestParamType::kName, table_id),
                              &StubType::DropRowRange, request,
                              error_message.c_str());
 }
@@ -118,6 +127,8 @@ void TableAdmin::DropAllRows(std::string table_id) {
 
   auto error_message = "DropAllRows(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             rpc_metadata_holder_->cloneWithModifications(
+                                 RPCRequestParamType::kName, table_id),
                              &StubType::DropRowRange, request,
                              error_message.c_str());
 }

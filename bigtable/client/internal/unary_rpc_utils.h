@@ -18,6 +18,7 @@
 #include <thread>
 #include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/rpc_backoff_policy.h"
+#include "bigtable/client/rpc_metadata_holder.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
 namespace bigtable {
@@ -143,6 +144,8 @@ struct UnaryRpcUtils {
    * @param rpc_policy the policy controlling what failures are retryable.
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
+   * @param rpc_metadat_holder holder to keep metadata like
+   * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.
@@ -158,11 +161,13 @@ struct UnaryRpcUtils {
   CallWithRetry(
       ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+      std::unique_ptr<bigtable::RPCMetadataHolder> rpc_metadat_holder,
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
-    return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy, function,
-                               request, error_message);
+    return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
+                               *rpc_metadat_holder, function, request,
+                               error_message);
   }
 
   /**
@@ -178,6 +183,8 @@ struct UnaryRpcUtils {
    * @param rpc_policy the policy controlling what failures are retryable.
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
+   * @param rpc_metadat_holder holder to keep metadata like
+   * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.
@@ -192,7 +199,8 @@ struct UnaryRpcUtils {
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithRetryBorrow(
       ClientType &client, bigtable::RPCRetryPolicy &rpc_policy,
-      bigtable::RPCBackoffPolicy &backoff_policy, MemberFunction function,
+      bigtable::RPCBackoffPolicy &backoff_policy,
+      bigtable::RPCMetadataHolder &rpc_metadat_holder, MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
@@ -200,6 +208,7 @@ struct UnaryRpcUtils {
       grpc::ClientContext client_context;
       rpc_policy.setup(client_context);
       backoff_policy.setup(client_context);
+      rpc_metadat_holder.setup(client_context);
       // Call the pointer to member function.
       grpc::Status status =
           ((*client.Stub()).*function)(&client_context, request, &response);
@@ -231,6 +240,8 @@ struct UnaryRpcUtils {
    * @tparam MemberFunction the signature of the member function.
    * @param client the object that holds the gRPC stub.
    * @param rpc_policy the policy to control timeouts.
+   * @param rpc_metadat_holder holder to keep metadata like
+   * google-cloud-resource-prefix.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.
@@ -245,6 +256,7 @@ struct UnaryRpcUtils {
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithoutRetry(
       ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      std::unique_ptr<bigtable::RPCMetadataHolder> rpc_metadata_holder,
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
@@ -254,6 +266,7 @@ struct UnaryRpcUtils {
 
     // Policies can set timeouts so allowing them to update context
     rpc_policy->setup(client_context);
+    rpc_metadata_holder->setup(client_context);
     // Call the pointer to member function.
     grpc::Status status =
         ((*client.Stub()).*function)(&client_context, request, &response);

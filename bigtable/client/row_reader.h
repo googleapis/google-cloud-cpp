@@ -26,6 +26,7 @@
 #include "bigtable/client/row.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
+#include "bigtable/client/rpc_metadata_holder.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
 namespace bigtable {
@@ -49,6 +50,7 @@ class RowReader {
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
   RowReader(RowReader&& rhs) noexcept = default;
 
@@ -121,6 +123,7 @@ class RowReader {
   Filter filter_;
   std::unique_ptr<RPCRetryPolicy> retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
+  std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder_;
 
   std::unique_ptr<grpc::ClientContext> context_;
 

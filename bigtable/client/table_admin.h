@@ -39,7 +39,9 @@ class TableAdmin {
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()) {}
+        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
+        rpc_metadata_holder_(DefaultRPCMetadataHolder(
+            instance_name(), RPCRequestParamType::kParent)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -61,7 +63,9 @@ class TableAdmin {
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()) {}
+        rpc_backoff_policy_(backoff_policy.clone()),
+        rpc_metadata_holder_(DefaultRPCMetadataHolder(
+            instance_name(), RPCRequestParamType::kParent)) {}
 
   std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
@@ -189,6 +193,7 @@ class TableAdmin {
   std::string instance_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
