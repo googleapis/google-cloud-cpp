@@ -166,7 +166,7 @@ struct UnaryRpcUtils {
       typename CheckSignature<MemberFunction>::RequestType const &request,
       char const *error_message) {
     return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
-                               *rpc_metadat_holder, function, request,
+                               *rpc_metadata_holder, function, request,
                                error_message);
   }
 
@@ -208,7 +208,7 @@ struct UnaryRpcUtils {
       grpc::ClientContext client_context;
       rpc_policy.setup(client_context);
       backoff_policy.setup(client_context);
-      rpc_metadat_holder.setup(client_context);
+      rpc_metadata_holder.setup(client_context);
       // Call the pointer to member function.
       grpc::Status status =
           ((*client.Stub()).*function)(&client_context, request, &response);

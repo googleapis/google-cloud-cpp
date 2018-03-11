@@ -142,8 +142,8 @@ class RPCMetadataHolder {
    * @param request_param_type type to decide prefix for the value of
    * x-goog-request-params
    */
-  explicit RPCMetadataHolder(std::string resource_name,
-                             RPCRequestParamType request_param_type)
+  RPCMetadataHolder(std::string resource_name,
+                    RPCRequestParamType request_param_type)
       : resource_name_(resource_name),
         request_param_type_(request_param_type),
         google_cloud_resource_prefix_(resource_name),
@@ -159,9 +159,9 @@ class RPCMetadataHolder {
    * x-goog-request-params.
    * @param table_id table_id used in RPC call.
    */
-  explicit RPCMetadataHolder(std::string resource_name,
-                             RPCRequestParamType request_param_type,
-                             std::string table_id)
+  RPCMetadataHolder(std::string resource_name,
+                    RPCRequestParamType request_param_type,
+                    std::string table_id)
       : resource_name_(resource_name),
         request_param_type_(request_param_type),
         google_cloud_resource_prefix_(resource_name),
