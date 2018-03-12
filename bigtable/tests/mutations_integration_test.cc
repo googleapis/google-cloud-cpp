@@ -210,12 +210,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   };
 
   CreateCells(*table, created_cells);
-// Try to delete the columns with an invalid range:
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Try to delete the columns with an invalid range:
+  // TODO(#119) - change the expected exception to the wrapper.
   EXPECT_THROW(
       table->Apply(bigtable::SingleRowMutation(
           key, bigtable::DeleteFromColumn(column_family2, "c2", 4000, 2000))),
-      std::exception);
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
@@ -251,12 +252,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   };
 
   CreateCells(*table, created_cells);
-// Try to delete the columns with an invalid range:
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Try to delete the columns with an invalid range:
+  // TODO(#119) - change the expected exception to the wrapper.
   EXPECT_THROW(
       table->Apply(bigtable::SingleRowMutation(
           key, bigtable::DeleteFromColumn(column_family2, "c2", 2000, 2000))),
-      std::exception);
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
