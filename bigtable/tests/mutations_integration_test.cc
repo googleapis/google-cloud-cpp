@@ -52,6 +52,10 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
     table.BulkApply(std::move(bulk));
   }
 };
+
+bool UsingCloudBigtableEmulator() {
+  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
+}
 }  // namespace
 
 /**
@@ -184,6 +188,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
   std::string const table_name = "table-delete-for-column-time-range-reversed";
 
   auto table = CreateTable(table_name, table_config);
@@ -227,6 +235,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
   std::string const table_name = "table-delete-for-column-time-range-empty";
 
   auto table = CreateTable(table_name, table_config);
