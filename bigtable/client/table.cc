@@ -14,6 +14,7 @@
 
 #include "bigtable/client/table.h"
 
+#include <bigtable/client/internal/unary_rpc_utils.h>
 #include <thread>
 
 #include "bigtable/client/internal/bulk_mutator.h"
@@ -167,6 +168,26 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
         "internal error - RowReader returned 2 rows in ReadRow()");
   }
   return result;
+}
+
+bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
+                              std::vector<Mutation> true_mutations,
+                              std::vector<Mutation> false_mutations) {
+  using RpcUtils = internal::UnaryRpcUtils<DataClient>;
+  using StubType = RpcUtils::StubType;
+  btproto::CheckAndMutateRowRequest request;
+  request.set_row_key(std::move(row_key));
+  *request.mutable_predicate_filter() = filter.as_proto_move();
+  for (auto& m : true_mutations) {
+    *request.add_true_mutations() = std::move(m.op);
+  }
+  for (auto& m : false_mutations) {
+    *request.add_false_mutations() = std::move(m.op);
+  }
+  auto response = RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(), &StubType::CheckAndMutateRow,
+      request, "Table::CheckAndMutateRow");
+  return response.predicate_matched();
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

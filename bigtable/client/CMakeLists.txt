@@ -100,6 +100,7 @@ set(bigtable_client_unit_tests
         mutations_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
+        table_check_and_mutate_row_test.cc
         table_readrow_test.cc
         table_readrows_test.cc
         table_test.cc
