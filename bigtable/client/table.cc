@@ -176,6 +176,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   using RpcUtils = internal::UnaryRpcUtils<DataClient>;
   using StubType = RpcUtils::StubType;
   btproto::CheckAndMutateRowRequest request;
+  request.set_table_name(table_name());
   request.set_row_key(std::move(row_key));
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
