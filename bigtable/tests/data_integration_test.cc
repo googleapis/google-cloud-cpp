@@ -32,7 +32,7 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
       {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
 };
 
-}  // namespace anonymous
+}  // anonymous namespace
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
@@ -93,7 +93,7 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   }
   table.BulkApply(std::move(bulk));
 }
-}  // namespace anonymous
+}  // anonymous namespace
 
 TEST_F(DataIntegrationTest, TableApply) {
   std::string const table_name = "table-apply-test";
@@ -195,4 +195,42 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
   auto row_cell = table->ReadRow(row_key2, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
   EXPECT_FALSE(row_cell.first);
+}
+
+TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
+  std::string const table_name = "table-check-and-mutate-row-pass";
+  auto table = CreateTable(table_name, table_config);
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  CreateCells(*table, created);
+  auto result =
+      table->CheckAndMutateRow(key, bigtable::Filter::ValueRegex("v1000"),
+                               {bigtable::SetCell(family, "c2", 0, "v2000")},
+                               {bigtable::SetCell(family, "c3", 0, "v3000")});
+  EXPECT_TRUE(result);
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
+                                       {key, family, "c2", 0, "v2000", {}}};
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
+  std::string const table_name = "table-check-and-mutate-row-fail";
+  auto table = CreateTable(table_name, table_config);
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  CreateCells(*table, created);
+  auto result =
+      table->CheckAndMutateRow(key, bigtable::Filter::ValueRegex("not-there"),
+                               {bigtable::SetCell(family, "c2", 0, "v2000")},
+                               {bigtable::SetCell(family, "c3", 0, "v3000")});
+  EXPECT_FALSE(result);
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
+                                       {key, family, "c3", 0, "v3000", {}}};
+  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected, actual);
 }

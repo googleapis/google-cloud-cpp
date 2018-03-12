@@ -200,6 +200,24 @@ class Table {
    */
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
 
+  /**
+   * Atomic test-and-set for a row using filter expressions.
+   *
+   * Atomically check the value of a row using a filter expression.  If the
+   * expression passes (meaning at least one element is returned by it), one
+   * set of mutations is applied.  If the filter does not pass, a different set
+   * of mutations is applied.  The changes are atomically applied in the server.
+   *
+   * @param row_key the row to modify.
+   * @param filter the filter expression.
+   * @param true_mutations the mutations for the "filter passed" case.
+   * @param false_mutations the mutations for the "filter did not pass" case.
+   * @returns true if the filter passed.
+   */
+  bool CheckAndMutateRow(std::string row_key, Filter filter,
+                         std::vector<Mutation> true_mutations,
+                         std::vector<Mutation> false_mutations);
+
  private:
   std::shared_ptr<DataClient> client_;
   std::string table_name_;
