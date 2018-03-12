@@ -1,10 +1,11 @@
 <map id="client/internal/unary_rpc_utils.h" name="client/internal/unary_rpc_utils.h">
-<area shape="rect" id="node2" href="$instance__admin_8h.html" title="admin/instance_admin.h" alt="" coords="195,95,357,121"/>
-<area shape="rect" id="node5" href="$table__admin_8h.html" title="admin/table_admin.h" alt="" coords="474,95,617,121"/>
-<area shape="rect" id="node3" href="$instance__admin_8cc.html" title="admin/instance_admin.cc" alt="" coords="5,177,176,203"/>
-<area shape="rect" id="node4" href="$instance__admin__test_8cc.html" title="admin/instance_admin\l_test.cc" alt="" coords="200,169,352,211"/>
-<area shape="rect" id="node6" href="$table__admin_8cc.html" title="admin/table_admin.cc" alt="" coords="376,177,525,203"/>
-<area shape="rect" id="node7" href="$table__admin__test_8cc.html" title="admin/table_admin_test.cc" alt="" coords="549,177,728,203"/>
-<area shape="rect" id="node8" href="$table__integration__test_8h.html" title="client/testing/table\l_integration_test.h" alt="" coords="753,169,882,211"/>
-<area shape="rect" id="node9" href="$table__integration__test_8cc.html" title="client/testing/table\l_integration_test.cc" alt="" coords="749,259,885,300"/>
+<area shape="rect" id="node2" href="$table_8cc.html" title="client/table.cc" alt="" coords="67,95,170,121"/>
+<area shape="rect" id="node3" href="$instance__admin_8h.html" title="admin/instance_admin.h" alt="" coords="195,95,357,121"/>
+<area shape="rect" id="node6" href="$table__admin_8h.html" title="admin/table_admin.h" alt="" coords="474,95,617,121"/>
+<area shape="rect" id="node4" href="$instance__admin_8cc.html" title="admin/instance_admin.cc" alt="" coords="5,177,176,203"/>
+<area shape="rect" id="node5" href="$instance__admin__test_8cc.html" title="admin/instance_admin\l_test.cc" alt="" coords="200,169,352,211"/>
+<area shape="rect" id="node7" href="$table__admin_8cc.html" title="admin/table_admin.cc" alt="" coords="376,177,525,203"/>
+<area shape="rect" id="node8" href="$table__admin__test_8cc.html" title="admin/table_admin_test.cc" alt="" coords="549,177,728,203"/>
+<area shape="rect" id="node9" href="$table__integration__test_8h.html" title="client/testing/table\l_integration_test.h" alt="" coords="753,169,882,211"/>
+<area shape="rect" id="node10" href="$table__integration__test_8cc.html" title="client/testing/table\l_integration_test.cc" alt="" coords="749,259,885,300"/>
 </map>

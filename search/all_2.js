@@ -16,6 +16,7 @@ var searchData=
   ['celltostring',['CellToString',['../namespacebigtable.html#a5e257086f9f372702b286f45168d1fc1',1,'bigtable']]],
   ['chain',['Chain',['../classbigtable_1_1v0_1_1Filter.html#a1f1fe5a74d501d1e09fc873f059ddd14',1,'bigtable::v0::Filter']]],
   ['channel_5farguments',['channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a8178490fb038925bb1b097aeb5a87e86',1,'bigtable::v0::ClientOptions']]],
+  ['checkandmutaterow',['CheckAndMutateRow',['../classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1',1,'bigtable::v0::Table']]],
   ['checkequalunordered',['CheckEqualUnordered',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#afc3f7359d6960cc450b9b471732afe68',1,'bigtable::testing::TableIntegrationTest']]],
   ['checksignature',['CheckSignature',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature.html',1,'bigtable::v0::internal::UnaryRpcUtils']]],
   ['checksignature_3c_20grpc_3a_3astatus_28stubtype_3a_3a_2a_29_28grpc_3a_3aclientcontext_20_2a_2c_20request_20const_20_26_2c_20response_20_2a_29_3e',['CheckSignature&lt; grpc::Status(StubType::*)(grpc::ClientContext *, Request const &amp;, Response *)&gt;',['../structbigtable_1_1v0_1_1internal_1_1UnaryRpcUtils_1_1CheckSignature_3_01grpc_1_1Status_07StubTypcbf5ad09c0ab84ee8079a6f7b0ccbdf7.html',1,'bigtable::v0::internal::UnaryRpcUtils']]],

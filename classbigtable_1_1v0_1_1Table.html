@@ -93,6 +93,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a156d76ffb347bc7422b16d5ae932a483"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdb527ed7c658c736ccb973ff49f051a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; bool, <a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a">ReadRow</a> (std::string row_key, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter)</td></tr>
 <tr class="separator:abdb527ed7c658c736ccb973ff49f051a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1">CheckAndMutateRow</a> (std::string row_key, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; true_mutations, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; false_mutations)</td></tr>
+<tr class="separator:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main interface to interact with data in a Cloud Bigtable table.</p>
@@ -280,6 +282,58 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a91f8dd3d54bcccf61b7d2ba36cd802b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f8dd3d54bcccf61b7d2ba36cd802b1">&#9670;&nbsp;</a></span>CheckAndMutateRow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bigtable::v0::Table::CheckAndMutateRow </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>row_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a>&#160;</td>
+          <td class="paramname"><em>filter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt;&#160;</td>
+          <td class="paramname"><em>true_mutations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt;&#160;</td>
+          <td class="paramname"><em>false_mutations</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Atomic test-and-set for a row using filter expressions.</p>
+<p>Atomically check the value of a row using a filter expression. If the expression passes (meaning at least one element is returned by it), one set of mutations is applied. If the filter does not pass, a different set of mutations is applied. The changes are atomically applied in the server.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">row_key</td><td>the row to modify. </td></tr>
+    <tr><td class="paramname">filter</td><td>the filter expression. </td></tr>
+    <tr><td class="paramname">true_mutations</td><td>the mutations for the "filter passed" case. </td></tr>
+    <tr><td class="paramname">false_mutations</td><td>the mutations for the "filter did not pass" case. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the filter passed. </dd></dl>
 
 </div>
 </div>
