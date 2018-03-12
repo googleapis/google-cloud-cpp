@@ -20,21 +20,21 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCMetadataHolder> DefaultRPCMetadataHolder(
-    std::string reource_name, RPCRequestParamType request_param_type) {
+    std::string resource_name, RPCRequestParamType request_param_type) {
   RPCMetadataHolder* rpc_metadata_holder =
-      new RPCMetadataHolder(reource_name, request_param_type);
+      new RPCMetadataHolder(resource_name, request_param_type);
   return std::unique_ptr<RPCMetadataHolder>(rpc_metadata_holder);
 }
 
 std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::clone() const {
-  return std::unique_ptr<RPCMetadataHolder>(
-      new RPCMetadataHolder(this->resource_name_, this->request_param_type_));
+  return bigtable::internal::make_unique<RPCMetadataHolder>(
+      this->resource_name_, this->request_param_type_);
 }
 
 std::unique_ptr<RPCMetadataHolder> RPCMetadataHolder::cloneWithModifications(
     RPCRequestParamType request_param_type, std::string table_id) const {
-  return std::unique_ptr<RPCMetadataHolder>(new RPCMetadataHolder(
-      this->resource_name_, request_param_type, table_id));
+  return bigtable::internal::make_unique<RPCMetadataHolder>(
+      this->resource_name_, request_param_type, table_id);
 }
 
 void RPCMetadataHolder::setup(grpc::ClientContext& context) const {
