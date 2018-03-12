@@ -73,18 +73,15 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="mutations_8h_source.html">bigtable/client/mutations.h</a>&quot;</code><br />
 <code>#include &lt;google/protobuf/text_format.h&gt;</code><br />
-<code>#include &lt;sstream&gt;</code><br />
-<code>#include &quot;<a class="el" href="throw__delegate_8h_source.html">bigtable/client/internal/throw_delegate.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mutations.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="mutations_8cc__incl.png" border="0" usemap="#client_2mutations_8cc" alt=""/></div>
 <map name="client_2mutations_8cc" id="client_2mutations_8cc">
-<area shape="rect" id="node2" href="mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="203,87,377,114"/>
-<area shape="rect" id="node15" href="throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="657,80,805,121"/>
-<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="315,259,473,285"/>
-<area shape="rect" id="node12" href="conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,169,356,211"/>
-<area shape="rect" id="node5" href="port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="320,333,468,375"/>
+<area shape="rect" id="node2" href="mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="227,87,402,114"/>
+<area shape="rect" id="node3" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="115,259,274,285"/>
+<area shape="rect" id="node12" href="conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="471,169,619,211"/>
+<area shape="rect" id="node5" href="port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="121,333,269,375"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -110,7 +107,7 @@ Functions</h2></td></tr>
 <tr class="separator:afd8f1d9efa4b470295cba73b2c52172d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Create mutations to delete a range of cells from a column.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>The following functions create a mutation that deletes all the cells in the given column family and column within the given timestamp range.</p>
-<p>The ending timestamp is exclusive, while the beginning timestamp is inclusive. Please notice that [a,a) is an invalid range unless a==0. </p>
+<p>The ending timestamp is exclusive, while the beginning timestamp is inclusive. That is, the interval is [<code>timestamp_begin</code>, <code>timestamp_end</code>). The value 0 is special and treated as "unbounded" for both the begin and end endpoints of the time range. The Cloud Bigtable server rejects invalid and empty ranges, i.e., any range where the endpoint is smaller or equal than to the initial endpoint unless either endpoint is 0. </p>
 </div></td></tr>
 <tr class="memitem:ae6fa224288ca03b5214bff84c0e73997"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#ae6fa224288ca03b5214bff84c0e73997">bigtable::v0::DeleteFromColumn</a> (std::string family, std::string column, std::int64_t timestamp_begin, std::int64_t timestamp_end)</td></tr>
 <tr class="memdesc:ae6fa224288ca03b5214bff84c0e73997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete only within the timestamp range provided.  <a href="namespacebigtable_1_1v0.html#ae6fa224288ca03b5214bff84c0e73997">More...</a><br /></td></tr>
