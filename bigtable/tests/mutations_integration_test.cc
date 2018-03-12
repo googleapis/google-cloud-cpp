@@ -52,7 +52,7 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
     table.BulkApply(std::move(bulk));
   }
 };
-}  // namespace anonymous
+}  // namespace
 
 /**
  * Check if the values inserted by SetCell are correctly inserted into
@@ -176,6 +176,86 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   DeleteTable(table_name);
 
   CheckEqualUnordered(expected_cells, actual_cells);
+}
+
+/**
+ * Verify DeleteFromColumn() with invalid ranges works.
+ *
+ * We expect the server (and not the client library) to reject invalid ranges.
+ */
+TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
+  std::string const table_name = "table-delete-for-column-time-range-reversed";
+
+  auto table = CreateTable(table_name, table_config);
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const key = "row";
+  std::vector<bigtable::Cell> created_cells{
+      {key, column_family1, "c1", 1000, "v1", {}},
+      {key, column_family1, "c2", 1000, "v2", {}},
+      {key, column_family1, "c3", 2000, "v3", {}},
+      {key, column_family2, "c2", 1000, "v4", {}},
+      {key, column_family2, "c2", 3000, "v5", {}},
+      {key, column_family2, "c2", 4000, "v6", {}},
+      {key, column_family2, "c3", 1000, "v7", {}},
+      {key, column_family2, "c2", 2000, "v8", {}},
+      {key, column_family3, "c1", 2000, "v9", {}},
+  };
+
+  CreateCells(*table, created_cells);
+// Try to delete the columns with an invalid range:
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      table->Apply(bigtable::SingleRowMutation(
+          key, bigtable::DeleteFromColumn(column_family2, "c2", 4000, 2000))),
+      std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table->Apply(bigtable::SingleRowMutation(
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 4000,
+                                          2000))),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+
+  CheckEqualUnordered(created_cells, actual_cells);
+}
+
+/**
+ * Verify DeleteFromColumn() with empty ranges works.
+ *
+ * We expect the server (and not the client library) to reject invalid ranges.
+ */
+TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
+  std::string const table_name = "table-delete-for-column-time-range-empty";
+
+  auto table = CreateTable(table_name, table_config);
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const key = "row";
+  std::vector<bigtable::Cell> created_cells{
+      {key, column_family1, "c3", 2000, "v3", {}},
+      {key, column_family2, "c2", 2000, "v2", {}},
+      {key, column_family3, "c1", 2000, "v1", {}},
+  };
+
+  CreateCells(*table, created_cells);
+// Try to delete the columns with an invalid range:
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      table->Apply(bigtable::SingleRowMutation(
+          key, bigtable::DeleteFromColumn(column_family2, "c2", 2000, 2000))),
+      std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table->Apply(bigtable::SingleRowMutation(
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000,
+                                          2000))),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+
+  CheckEqualUnordered(created_cells, actual_cells);
 }
 
 /**

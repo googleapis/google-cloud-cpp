@@ -48,16 +48,13 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-/// @test Verify that DeleteFromColumn() validates inputs as expected.
-TEST(MutationsTest, DeleteFromColumnValidation) {
-  // Invalid ranges should fail.
-  EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 20, 0),
-               std::range_error);
-  EXPECT_THROW(bigtable::DeleteFromColumn("family", "col", 1000, 1000),
-               std::range_error);
+/// @test Verify that DeleteFromColumn() does not validates inputs.
+TEST(MutationsTest, DeleteFromColumnNoValidation) {
+  auto reversed = bigtable::DeleteFromColumn("family", "col", 20, 0);
+  EXPECT_TRUE(reversed.op.has_delete_from_column());
+  auto empty = bigtable::DeleteFromColumn("family", "col", 1000, 1000);
+  EXPECT_TRUE(empty.op.has_delete_from_column());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that DeleteFromColumn() and friends work as expected.
 TEST(MutationsTest, DeleteFromColumn) {
