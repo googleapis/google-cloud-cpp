@@ -65,9 +65,13 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  * timestamp range.
  *
  * The ending timestamp is exclusive, while the beginning timestamp is
- * inclusive.  Please notice that [a,a) is an invalid range unless
- * a==0.
+ * inclusive.  That is, the interval is [@p timestamp_begin, @p timestamp_end).
+ * The value 0 is special and treated as "unbounded" for both the begin and end
+ * endpoints of the time range.  The Cloud Bigtable server rejects invalid and
+ * empty ranges, i.e., any range where the endpoint is smaller or equal than to
+ * the initial endpoint unless either endpoint is 0.
  */
+
 /// Delete only within the timestamp range provided.
 Mutation DeleteFromColumn(std::string family, std::string column,
                           std::int64_t timestamp_begin,
