@@ -109,9 +109,14 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main interface to interact with data in a Cloud Bigtable table. </p>
-<p>This class offers member functions to modify data in a Cloud Bigtable table. The class deals with the most common transient failures, and retries the underlying RPC calls subject to the policies configured by the application.</p>
-<p>Please read the documentation for <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a6382a12a12be3a3066e67be2b9fcb827" title="Constructor with default policies. ">Table::Table()</a></code> to understand the effect of the different policies.</p>
-<p>TODO(#32) - update the description when <a class="el" href="classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d" title="Reads a set of rows from the table. ">ReadRows()</a>/ReadRow() are implemented. </p>
+<p>This class provides member functions to:</p><ul>
+<li>read specific rows: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a" title="Read and return a single row from the table. ">Table::ReadRow()</a></code></li>
+<li>scan a ranges of rows: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d" title="Reads a set of rows from the table. ">Table::ReadRows()</a></code></li>
+<li>update or create a single row: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#adbd684a9bb9eb992890a4b9d17b4b03f" title="Attempts to apply the mutation to a row. ">Table::Apply()</a></code></li>
+<li>update or modify multiple rows: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a5714f0f923da7544cccd11fa943f320b" title="Attempts to apply mutations to multiple rows. ">Table::BulkApply()</a></code></li>
+<li>update a row based on previous values: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1" title="Atomic test-and-set for a row using filter expressions. ">Table::CheckAndMutateRow()</a></code></li>
+</ul>
+<p>The class deals with the most common transient failures, and retries the underlying RPC calls subject to the policies configured by the application. These policies are documented in<code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a6382a12a12be3a3066e67be2b9fcb827" title="Constructor with default policies. ">Table::Table()</a></code>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6382a12a12be3a3066e67be2b9fcb827"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6382a12a12be3a3066e67be2b9fcb827">&#9670;&nbsp;</a></span>Table() <span class="overload">[1/2]</span></h2>
