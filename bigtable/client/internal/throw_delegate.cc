@@ -13,12 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/throw_delegate.h"
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-#include <stdexcept>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 #include <sstream>
+#include "bigtable/client/grpc_error.h"
 
 namespace {
 template <typename Exception>
@@ -69,12 +65,14 @@ namespace internal {
 }
 
 [[noreturn]] void RaiseRpcError(grpc::Status const &status, char const *msg) {
-  // TODO(#119) - raise an exception that stores `status` as a value.
-  std::ostringstream os;
-  os << "unrecoverable gRPC error or too many gRPC errors in " << msg << ": "
-     << status.error_message() << " [" << status.error_code() << "] "
-     << status.error_details();
-  internal::RaiseRuntimeError(os.str());
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  throw bigtable::GRpcError(msg, status);
+#else
+  bigtable::GRpcError ex(msg, status);
+  std::cerr << "Aborting because exceptions are disabled: " << ex.what()
+            << std::endl;
+  std::abort();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 [[noreturn]] void RaiseRpcError(grpc::Status const &status,

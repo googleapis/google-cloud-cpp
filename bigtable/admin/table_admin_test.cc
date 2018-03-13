@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
+#include <bigtable/client/grpc_error.h>
 #include <gmock/gmock.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
@@ -294,7 +295,7 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -343,7 +344,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.GetTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -375,7 +376,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetTable("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.GetTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -421,7 +422,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -491,7 +492,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.ModifyColumnFamilies("other-table", std::move(changes)),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -539,7 +540,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(tested.DropRowsByPrefix("other-table", "prefix"),
-               std::runtime_error);
+               bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
@@ -585,7 +586,7 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.DropAllRows("other-table"), std::runtime_error);
+  EXPECT_THROW(tested.DropAllRows("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
