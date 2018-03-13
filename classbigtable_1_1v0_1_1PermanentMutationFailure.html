@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Report unrecoverable errors in a partially completed mutation.  
+ <a href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="mutations_8h_source.html">bigtable/client/mutations.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bigtable::v0::PermanentMutationFailure:</div>
@@ -99,8 +102,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2deb1283fc6ecf16a8a5332d06aab070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#a2deb1283fc6ecf16a8a5332d06aab070">PermanentMutationFailure</a> (char const *msg, grpc::Status <a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#a16c4f7c440d2fd328e922e911093908c">status</a>, std::vector&lt; <a class="el" href="classbigtable_1_1v0_1_1FailedMutation.html">FailedMutation</a> &gt; &amp;&amp;<a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#acfbfbd5ea4036b5e4dd035e07e35358a">failures</a>)</td></tr>
 <tr class="separator:a2deb1283fc6ecf16a8a5332d06aab070"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfbfbd5ea4036b5e4dd035e07e35358a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classbigtable_1_1v0_1_1FailedMutation.html">FailedMutation</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#acfbfbd5ea4036b5e4dd035e07e35358a">failures</a> () const</td></tr>
+<tr class="memdesc:acfbfbd5ea4036b5e4dd035e07e35358a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The details of each mutation failure.  <a href="#acfbfbd5ea4036b5e4dd035e07e35358a">More...</a><br /></td></tr>
 <tr class="separator:acfbfbd5ea4036b5e4dd035e07e35358a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16c4f7c440d2fd328e922e911093908c"><td class="memItemLeft" align="right" valign="top">grpc::Status const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#a16c4f7c440d2fd328e922e911093908c">status</a> () const</td></tr>
+<tr class="memdesc:a16c4f7c440d2fd328e922e911093908c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The grpc::Status of the request.  <a href="#a16c4f7c440d2fd328e922e911093908c">More...</a><br /></td></tr>
 <tr class="separator:a16c4f7c440d2fd328e922e911093908c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -207,7 +212,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The details of each mutation failure.</p>
+
+<p>The details of each mutation failure. </p>
 <p>Because BulkApply() and Apply() take ownership of the data in the mutations the failures are returned with their full contents, in case the application wants to take further action with them. Any successful mutations are discarded.</p>
 <p>Any mutations that fail with an unknown state are included with a grpc::StatusCode::OK. </p>
 
@@ -235,7 +241,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The grpc::Status of the request.</p>
+
+<p>The grpc::Status of the request. </p>
 <p>Notice that it can return grpc::Status::OK when there are partial failures in a BulkApply() operation. </p>
 
 </div>

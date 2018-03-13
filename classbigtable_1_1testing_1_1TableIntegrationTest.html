@@ -73,6 +73,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Fixture for integration tests that need to create tables and check their contents.  
+ <a href="classbigtable_1_1testing_1_1TableIntegrationTest.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="table__integration__test_8h_source.html">bigtable/client/testing/table_integration_test.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bigtable::testing::TableIntegrationTest:</div>
@@ -108,6 +111,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:ad0ae9503c1be48e01b973cf63baf8703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the cells in <code>table</code> that pass <code>filter</code>.  <a href="#ad0ae9503c1be48e01b973cf63baf8703">More...</a><br /></td></tr>
 <tr class="separator:ad0ae9503c1be48e01b973cf63baf8703"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc3f7359d6960cc450b9b471732afe68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1testing_1_1TableIntegrationTest.html#afc3f7359d6960cc450b9b471732afe68">CheckEqualUnordered</a> (std::vector&lt; bigtable::Cell &gt; expected, std::vector&lt; bigtable::Cell &gt; actual)</td></tr>
+<tr class="memdesc:afc3f7359d6960cc450b9b471732afe68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two sets of cells.  <a href="#afc3f7359d6960cc450b9b471732afe68">More...</a><br /></td></tr>
 <tr class="separator:afc3f7359d6960cc450b9b471732afe68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -155,7 +159,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Compare two sets of cells. Unordered because ReadRows does not guarantee a particular order. </p>
+
+<p>Compare two sets of cells. </p>
+<p>Unordered because ReadRows does not guarantee a particular order. </p>
 
 </div>
 </div>

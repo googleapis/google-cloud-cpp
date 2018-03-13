@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>A poor's man version of std::optional&lt;Row&gt;.  
+ <a href="classbigtable_1_1v0_1_1internal_1_1OptionalRow.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="rowreaderiterator_8h_source.html">bigtable/client/internal/rowreaderiterator.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -96,7 +99,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a916206c5cabc025b0440e71ab344c124"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A poor's man version of std::optional&lt;Row&gt;.</p>
+<div class="textblock"><p>A poor's man version of std::optional&lt;Row&gt;. </p>
 <p>This project needs to support C++11 and C++14, so std::optional&lt;&gt; is not available. We cannot use Abseil either, see #232 for the reasons. So we implement a very minimal "OptionalRow" class that documents the intent and we will remove it when possible.</p>
 <p>TODO(#277) - replace with absl::optional&lt;&gt; or std::optional&lt;&gt; when possible. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

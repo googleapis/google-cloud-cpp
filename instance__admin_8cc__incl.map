@@ -5,7 +5,7 @@
 <area shape="rect" id="node7" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="546,266,683,307"/>
 <area shape="rect" id="node8" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="442,452,601,479"/>
 <area shape="rect" id="node13" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="434,363,582,404"/>
-<area shape="rect" id="node9" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="286,527,434,568"/>
+<area shape="rect" id="node9" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="286,527,434,568"/>
 <area shape="rect" id="node16" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="138,363,262,404"/>
 <area shape="rect" id="node19" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="286,363,410,404"/>
 </map>

@@ -13,7 +13,7 @@
 <area shape="rect" id="node5" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="881,452,1019,493"/>
 <area shape="rect" id="node6" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="868,631,1027,657"/>
 <area shape="rect" id="node12" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="1147,541,1295,583"/>
-<area shape="rect" id="node8" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="1009,705,1157,747"/>
+<area shape="rect" id="node8" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="1009,705,1157,747"/>
 <area shape="rect" id="node16" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="208,541,356,583"/>
 <area shape="rect" id="node25" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="1901,363,2049,404"/>
 <area shape="rect" id="node29" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="1906,459,2045,486"/>

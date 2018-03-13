@@ -3,5 +3,5 @@
 <area shape="rect" id="node10" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="409,95,533,136"/>
 <area shape="rect" id="node14" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="261,95,385,136"/>
 <area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="81,184,239,211"/>
-<area shape="rect" id="node7" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="86,259,234,300"/>
+<area shape="rect" id="node7" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="86,259,234,300"/>
 </map>

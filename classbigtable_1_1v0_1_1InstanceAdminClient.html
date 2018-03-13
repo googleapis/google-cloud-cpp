@@ -85,8 +85,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a152b7ada0fde072b1fdc116274cbab71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a new stub to handle admin operations.  <a href="#a152b7ada0fde072b1fdc116274cbab71">More...</a><br /></td></tr>
 <tr class="separator:a152b7ada0fde072b1fdc116274cbab71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a738b9b57b752f2f156c6807a05f806aa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a738b9b57b752f2f156c6807a05f806aa">reset</a> ()=0</td></tr>
+<tr class="memdesc:a738b9b57b752f2f156c6807a05f806aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset and create a new <a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71" title="Return a new stub to handle admin operations. ">Stub()</a>.  <a href="#a738b9b57b752f2f156c6807a05f806aa">More...</a><br /></td></tr>
 <tr class="separator:a738b9b57b752f2f156c6807a05f806aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a754fbc2a8ff08e51f2ee320da5c7dffa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a754fbc2a8ff08e51f2ee320da5c7dffa">on_completion</a> (grpc::Status const &amp;)=0</td></tr>
+<tr class="memdesc:a754fbc2a8ff08e51f2ee320da5c7dffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback for completed RPCs.  <a href="#a754fbc2a8ff08e51f2ee320da5c7dffa">More...</a><br /></td></tr>
 <tr class="separator:a754fbc2a8ff08e51f2ee320da5c7dffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -139,7 +141,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>A callback for completed RPCs.</p>
+
+<p>A callback for completed RPCs. </p>
 <p>Currently this is only used in testing. In the future, we expect that some errors may require the class to update its state. </p>
 
 </div>
@@ -193,7 +196,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Reset and create a new <a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71" title="Return a new stub to handle admin operations. ">Stub()</a>.</p>
+
+<p>Reset and create a new <a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71" title="Return a new stub to handle admin operations. ">Stub()</a>. </p>
 <p>Currently this is only used in testing. In the future, we expect this, or a similar member function, will be needed to handle errors that require a new connection, or an explicit refresh of the credentials. </p>
 
 </div>

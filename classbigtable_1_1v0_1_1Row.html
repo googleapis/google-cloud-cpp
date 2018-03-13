@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>The in-memory representation of a Bigtable row.  
+ <a href="classbigtable_1_1v0_1_1Row.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="row_8h_source.html">bigtable/client/row.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -80,13 +83,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5ac93c6b8674ddbb059a649c7bc955b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a row from a list of cells.  <a href="#a5ac93c6b8674ddbb059a649c7bc955b3">More...</a><br /></td></tr>
 <tr class="separator:a5ac93c6b8674ddbb059a649c7bc955b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab03bbbe658da9e4d445128c0d68cf6ac"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Row.html#ab03bbbe658da9e4d445128c0d68cf6ac">row_key</a> () const</td></tr>
+<tr class="memdesc:ab03bbbe658da9e4d445128c0d68cf6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the row key.  <a href="#ab03bbbe658da9e4d445128c0d68cf6ac">More...</a><br /></td></tr>
 <tr class="separator:ab03bbbe658da9e4d445128c0d68cf6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cf226032c6f85de0151ba2024811200"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classbigtable_1_1v0_1_1Cell.html">Cell</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Row.html#a2cf226032c6f85de0151ba2024811200">cells</a> () const</td></tr>
 <tr class="memdesc:a2cf226032c6f85de0151ba2024811200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all cells.  <a href="#a2cf226032c6f85de0151ba2024811200">More...</a><br /></td></tr>
 <tr class="separator:a2cf226032c6f85de0151ba2024811200"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The in-memory representation of a Bigtable row.</p>
+<div class="textblock"><p>The in-memory representation of a Bigtable row. </p>
 <p>Notice that a row returned by the Bigtable Client may have been filtered by any filtering expressions provided by the application, and may not contain all the data available. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5ac93c6b8674ddbb059a649c7bc955b3"></a>
@@ -177,7 +181,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return the row key. The returned value is not valid after this object is deleted. </p>
+
+<p>Return the row key. </p>
+<p>The returned value is not valid after this object is deleted. </p>
 
 </div>
 </div>

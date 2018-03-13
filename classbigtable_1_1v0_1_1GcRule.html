@@ -73,6 +73,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Implement a thin wrapper around google::bigtable::admin::v2::GcRule.  
+ <a href="classbigtable_1_1v0_1_1GcRule.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="column__family_8h_source.html">bigtable/admin/column_family.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -100,16 +103,19 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:af783194b1fc8acd083c221674f5cd9f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad47d8cc40b5f4aff7eac86042d9c938b"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
 <tr class="memitem:ad47d8cc40b5f4aff7eac86042d9c938b"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GcRule.html#ad47d8cc40b5f4aff7eac86042d9c938b">MaxAge</a> (std::chrono::duration&lt; Rep, Period &gt; duration)</td></tr>
+<tr class="memdesc:ad47d8cc40b5f4aff7eac86042d9c938b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a garbage collection rule that deletes cells in a column older than the given duration.  <a href="#ad47d8cc40b5f4aff7eac86042d9c938b">More...</a><br /></td></tr>
 <tr class="separator:ad47d8cc40b5f4aff7eac86042d9c938b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd3b1c6974fa8c6d41b7cc9e3585b7b8"><td class="memTemplParams" colspan="2">template&lt;typename... GcRuleTypes&gt; </td></tr>
 <tr class="memitem:abd3b1c6974fa8c6d41b7cc9e3585b7b8"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GcRule.html#abd3b1c6974fa8c6d41b7cc9e3585b7b8">Intersection</a> (GcRuleTypes &amp;&amp;... gc_rules)</td></tr>
+<tr class="memdesc:abd3b1c6974fa8c6d41b7cc9e3585b7b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a> that deletes cells if all the rules passed in would delete the cells.  <a href="#abd3b1c6974fa8c6d41b7cc9e3585b7b8">More...</a><br /></td></tr>
 <tr class="separator:abd3b1c6974fa8c6d41b7cc9e3585b7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9068034d6665fcd90513bbc2182bc86e"><td class="memTemplParams" colspan="2">template&lt;typename... GcRuleTypes&gt; </td></tr>
 <tr class="memitem:a9068034d6665fcd90513bbc2182bc86e"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GcRule.html#a9068034d6665fcd90513bbc2182bc86e">Union</a> (GcRuleTypes &amp;&amp;... gc_rules)</td></tr>
+<tr class="memdesc:a9068034d6665fcd90513bbc2182bc86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a> that deletes cells if any the rules passed in would delete the cells.  <a href="#a9068034d6665fcd90513bbc2182bc86e">More...</a><br /></td></tr>
 <tr class="separator:a9068034d6665fcd90513bbc2182bc86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implement a thin wrapper around google::bigtable::admin::v2::GcRule.</p>
+<div class="textblock"><p>Implement a thin wrapper around google::bigtable::admin::v2::GcRule. </p>
 <p>Provides functions to create GcRules in a convenient form. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aee5b4184c26840e6520f1b1564a4aded"></a>
@@ -244,10 +250,11 @@ template&lt;typename... GcRuleTypes&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a> that deletes cells if all the rules passed in would delete the cells.</p>
+
+<p>Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a> that deletes cells if all the rules passed in would delete the cells. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">GcRuleTypes</td><td>the type of the GC rule arguments. They must all be convertible to <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a>. </td></tr>
+    <tr><td class="paramname">GcRuleTypes</td><td>the type of the GC rule arguments. They must all be convertible to <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -285,7 +292,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return a garbage collection rule that deletes cells in a column older than the given duration.</p>
+
+<p>Return a garbage collection rule that deletes cells in a column older than the given duration. </p>
 <p>The function accepts any instantiation of <code>std::chrono::duration&lt;&gt;</code> for the <code>duration</code> parameter. For example:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> rule1 = bigtable::GcRule::MaxAge(std::chrono::hours(48));</div><div class="line"><span class="keyword">auto</span> rule2 = bigtable::GcRule::MaxAge(std::chrono::seconds(48 * 3600));</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -403,10 +411,11 @@ template&lt;typename... GcRuleTypes&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a> that deletes cells if any the rules passed in would delete the cells.</p>
+
+<p>Return a <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a> that deletes cells if any the rules passed in would delete the cells. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">GcRuleTypes</td><td>the type of the GC rule arguments. They must all be convertible to <a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a>. </td></tr>
+    <tr><td class="paramname">GcRuleTypes</td><td>the type of the GC rule arguments. They must all be convertible to <a class="el" href="classbigtable_1_1v0_1_1GcRule.html" title="Implement a thin wrapper around google::bigtable::admin::v2::GcRule. ">GcRule</a>. </td></tr>
   </table>
   </dd>
 </dl>

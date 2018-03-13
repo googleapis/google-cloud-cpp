@@ -7,7 +7,7 @@
 <area shape="rect" id="node41" href="$admin__client_8h.html" title="bigtable/admin/admin\l_client.h" alt="" coords="364,363,510,404"/>
 <area shape="rect" id="node43" href="$table__admin_8h.html" title="bigtable/admin/table\l_admin.h" alt="" coords="502,273,641,315"/>
 <area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="1846,631,2004,657"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="1726,705,1874,747"/>
+<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="1726,705,1874,747"/>
 <area shape="rect" id="node15" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="2201,459,2350,486"/>
 <area shape="rect" id="node20" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="2481,363,2652,404"/>
 <area shape="rect" id="node22" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="2628,459,2803,486"/>

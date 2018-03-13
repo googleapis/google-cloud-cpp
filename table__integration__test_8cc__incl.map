@@ -2,7 +2,7 @@
 <area shape="rect" id="node3" href="$make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="776,541,924,583"/>
 <area shape="rect" id="node10" href="$table__integration__test_8h.html" title="bigtable/client/testing\l/table_integration_test.h" alt="" coords="1183,95,1344,136"/>
 <area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="1439,720,1597,747"/>
-<area shape="rect" id="node6" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="1357,795,1505,836"/>
+<area shape="rect" id="node6" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="1357,795,1505,836"/>
 <area shape="rect" id="node11" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="2344,638,2481,665"/>
 <area shape="rect" id="node13" href="$table_8h.html" title="bigtable/client/table.h" alt="" coords="1123,281,1268,307"/>
 <area shape="rect" id="node14" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="2530,452,2661,493"/>

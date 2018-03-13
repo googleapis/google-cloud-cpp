@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Configuration options for the Bigtable Client.  
+ <a href="classbigtable_1_1v0_1_1ClientOptions.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="client__options_8h_source.html">bigtable/client/client_options.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -89,6 +92,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67d5cd1969e1362e8ae05a1344ad4ee6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a67d5cd1969e1362e8ae05a1344ad4ee6">set_admin_endpoint</a> (std::string endpoint)</td></tr>
 <tr class="separator:a67d5cd1969e1362e8ae05a1344ad4ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ab9bcbabd8bf74b2618a06edbca626d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a4ab9bcbabd8bf74b2618a06edbca626d">set_connection_pool_name</a> (std::string name)</td></tr>
+<tr class="memdesc:a4ab9bcbabd8bf74b2618a06edbca626d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of the connection pool.  <a href="#a4ab9bcbabd8bf74b2618a06edbca626d">More...</a><br /></td></tr>
 <tr class="separator:a4ab9bcbabd8bf74b2618a06edbca626d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abeaeee12e43028c40c0fda9d28383e1d"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#abeaeee12e43028c40c0fda9d28383e1d">connection_pool_name</a> () const</td></tr>
 <tr class="memdesc:abeaeee12e43028c40c0fda9d28383e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of the connection pool.  <a href="#abeaeee12e43028c40c0fda9d28383e1d">More...</a><br /></td></tr>
@@ -110,27 +114,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a81f63a8313a4d600b305d4fe672a419b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all the channel arguments.  <a href="#a81f63a8313a4d600b305d4fe672a419b">More...</a><br /></td></tr>
 <tr class="separator:a81f63a8313a4d600b305d4fe672a419b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#aea362ad4d4c8333d3ed516c38d1bc49f">SetCompressionAlgorithm</a> (grpc_compression_algorithm algorithm)</td></tr>
+<tr class="memdesc:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set compression algorithm for channel.  <a href="#aea362ad4d4c8333d3ed516c38d1bc49f">More...</a><br /></td></tr>
 <tr class="separator:aea362ad4d4c8333d3ed516c38d1bc49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a911eb0f793804b2260b2f605089344c3"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
 <tr class="memitem:a911eb0f793804b2260b2f605089344c3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a911eb0f793804b2260b2f605089344c3">SetGrpclbFallbackTimeout</a> (std::chrono::duration&lt; Rep, Period &gt; fallback_timeout)</td></tr>
+<tr class="memdesc:a911eb0f793804b2260b2f605089344c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel.  <a href="#a911eb0f793804b2260b2f605089344c3">More...</a><br /></td></tr>
 <tr class="separator:a911eb0f793804b2260b2f605089344c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64b2863e422e6b539e26114b469dc11b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a64b2863e422e6b539e26114b469dc11b">SetUserAgentPrefix</a> (grpc::string const &amp;user_agent_prefix)</td></tr>
+<tr class="memdesc:a64b2863e422e6b539e26114b469dc11b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the string to prepend to the user agent.  <a href="#a64b2863e422e6b539e26114b469dc11b">More...</a><br /></td></tr>
 <tr class="separator:a64b2863e422e6b539e26114b469dc11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fabc9d2e34e2465dfffad7c3b35e9cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a2fabc9d2e34e2465dfffad7c3b35e9cd">SetResourceQuota</a> (grpc::ResourceQuota const &amp;resource_quota)</td></tr>
+<tr class="memdesc:a2fabc9d2e34e2465dfffad7c3b35e9cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the buffer pool to be attached to the constructed channel.  <a href="#a2fabc9d2e34e2465dfffad7c3b35e9cd">More...</a><br /></td></tr>
 <tr class="separator:a2fabc9d2e34e2465dfffad7c3b35e9cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a946715bd6200bc1820c4d4af60c3ee79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a946715bd6200bc1820c4d4af60c3ee79">SetMaxReceiveMessageSize</a> (int size)</td></tr>
+<tr class="memdesc:a946715bd6200bc1820c4d4af60c3ee79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the max receive message size in bytes.  <a href="#a946715bd6200bc1820c4d4af60c3ee79">More...</a><br /></td></tr>
 <tr class="separator:a946715bd6200bc1820c4d4af60c3ee79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8feb5895ff69a272f1349ff69c53507c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a8feb5895ff69a272f1349ff69c53507c">SetMaxSendMessageSize</a> (int size)</td></tr>
+<tr class="memdesc:a8feb5895ff69a272f1349ff69c53507c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the max send message size in bytes.  <a href="#a8feb5895ff69a272f1349ff69c53507c">More...</a><br /></td></tr>
 <tr class="separator:a8feb5895ff69a272f1349ff69c53507c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a306951eeedfd157cdb7980a9602be1fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a306951eeedfd157cdb7980a9602be1fc">SetLoadBalancingPolicyName</a> (grpc::string const &amp;lb_policy_name)</td></tr>
+<tr class="memdesc:a306951eeedfd157cdb7980a9602be1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set LB policy name.  <a href="#a306951eeedfd157cdb7980a9602be1fc">More...</a><br /></td></tr>
 <tr class="separator:a306951eeedfd157cdb7980a9602be1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf9bc8d78422809a973a306fe077159c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#aaf9bc8d78422809a973a306fe077159c">SetServiceConfigJSON</a> (grpc::string const &amp;service_config_json)</td></tr>
+<tr class="memdesc:aaf9bc8d78422809a973a306fe077159c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set service config in JSON form.  <a href="#aaf9bc8d78422809a973a306fe077159c">More...</a><br /></td></tr>
 <tr class="separator:aaf9bc8d78422809a973a306fe077159c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a941c03317acb7fb31244b0e6fbffc46d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a941c03317acb7fb31244b0e6fbffc46d">SetSslTargetNameOverride</a> (grpc::string const &amp;name)</td></tr>
+<tr class="memdesc:a941c03317acb7fb31244b0e6fbffc46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set target name override for SSL host name checking.  <a href="#a941c03317acb7fb31244b0e6fbffc46d">More...</a><br /></td></tr>
 <tr class="separator:a941c03317acb7fb31244b0e6fbffc46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration options for the Bigtable Client.</p>
+<div class="textblock"><p>Configuration options for the Bigtable Client. </p>
 <p>Applications typically configure the client class using: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> client =</div><div class="line">  bigtable::Client(bigtable::ClientOptions().<a class="code" href="classbigtable_1_1v0_1_1ClientOptions.html#a789dd24997ee0e6cd4722ae00ba2416f">SetCredentials</a>(...));</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acbe23e2a42d99f1b080bd1f92edb3257"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acbe23e2a42d99f1b080bd1f92edb3257">&#9670;&nbsp;</a></span>ClientOptions()</h2>
@@ -387,7 +400,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the name of the connection pool.</p>
+
+<p>Set the name of the connection pool. </p>
 <p>gRPC typically opens a single connection for each destination. To improve performance, the Cloud Bigtable C++ client can open multiple connections to a given destination, but these connections are shared by all threads in the application. Sometimes the application may want even more segregation, for example, the application may want to use a different pool for high-priority requests vs. lower priority ones. Using different names creates segregated pools. </p>
 
 </div>
@@ -469,7 +483,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set compression algorithm for channel.</p>
+
+<p>Set compression algorithm for channel. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetCompressionAlgorithm() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -525,7 +540,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel.</p>
+
+<p>Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::range_error</td><td>if the <code>fallback_timeout</code> parameter is too large. Currently gRPC uses <code>int</code> to represent the timeout, and it is expressed in milliseconds. Therefore, the maximum timeout is about 50 days on platforms where <code>int</code> is a 32-bit number.</td></tr>
@@ -568,7 +584,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set LB policy name.</p>
+
+<p>Set LB policy name. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetLoadBalancingPolicyName() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -596,7 +613,9 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the max receive message size in bytes. -1 means unlimited.</p>
+
+<p>Set the max receive message size in bytes. </p>
+<p>-1 means unlimited.</p>
 <p>Please see the docs for grpc::ChannelArguments::SetMaxReceiveMessageSize() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -624,7 +643,9 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the max send message size in bytes. -1 means unlimited.</p>
+
+<p>Set the max send message size in bytes. </p>
+<p>-1 means unlimited.</p>
 <p>Please see the docs for grpc::ChannelArguments::SetMaxSendMessageSize() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -652,7 +673,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the buffer pool to be attached to the constructed channel.</p>
+
+<p>Set the buffer pool to be attached to the constructed channel. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetResourceQuota() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -680,7 +702,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set service config in JSON form.</p>
+
+<p>Set service config in JSON form. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetServiceConfigJSON() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -708,7 +731,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set target name override for SSL host name checking.</p>
+
+<p>Set target name override for SSL host name checking. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetSslTargetNameOverride() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>
@@ -736,7 +760,8 @@ template&lt;typename Rep , typename Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the string to prepend to the user agent.</p>
+
+<p>Set the string to prepend to the user agent. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetUserAgentPrefix() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
 </div>

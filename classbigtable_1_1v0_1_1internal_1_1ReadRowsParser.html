@@ -73,6 +73,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Transforms a stream of chunks as returned by the ReadRows streaming RPC into a sequence of rows.  
+ <a href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="readrowsparser_8h_source.html">bigtable/client/internal/readrowsparser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -82,16 +85,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64184b19f1f7781266dee8a8059153c5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a64184b19f1f7781266dee8a8059153c5">~ReadRowsParser</a> ()=default</td></tr>
 <tr class="separator:a64184b19f1f7781266dee8a8059153c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3abddea58902fa1a696493111485f47b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a3abddea58902fa1a696493111485f47b">HandleChunk</a> (google::bigtable::v2::ReadRowsResponse_CellChunk chunk)</td></tr>
+<tr class="memdesc:a3abddea58902fa1a696493111485f47b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass an input chunk proto to the parser.  <a href="#a3abddea58902fa1a696493111485f47b">More...</a><br /></td></tr>
 <tr class="separator:a3abddea58902fa1a696493111485f47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d620c7c7e9e28e5fb12e8d41676c910"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a0d620c7c7e9e28e5fb12e8d41676c910">HandleEndOfStream</a> ()</td></tr>
+<tr class="memdesc:a0d620c7c7e9e28e5fb12e8d41676c910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal that the input stream reached the end.  <a href="#a0d620c7c7e9e28e5fb12e8d41676c910">More...</a><br /></td></tr>
 <tr class="separator:a0d620c7c7e9e28e5fb12e8d41676c910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06ecd220218a996e58f9c6acba6b54ee"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee">HasNext</a> () const</td></tr>
+<tr class="memdesc:a06ecd220218a996e58f9c6acba6b54ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the data parsed so far yielded a <a class="el" href="classbigtable_1_1v0_1_1Row.html" title="The in-memory representation of a Bigtable row. ">Row</a>.  <a href="#a06ecd220218a996e58f9c6acba6b54ee">More...</a><br /></td></tr>
 <tr class="separator:a06ecd220218a996e58f9c6acba6b54ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45763d2e9725084d6361b2baa193d617"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a45763d2e9725084d6361b2baa193d617">Next</a> ()</td></tr>
+<tr class="memdesc:a45763d2e9725084d6361b2baa193d617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and take ownership of the data in a row.  <a href="#a45763d2e9725084d6361b2baa193d617">More...</a><br /></td></tr>
 <tr class="separator:a45763d2e9725084d6361b2baa193d617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Transforms a stream of chunks as returned by the ReadRows streaming RPC into a sequence of rows.</p>
+<div class="textblock"><p>Transforms a stream of chunks as returned by the ReadRows streaming RPC into a sequence of rows. </p>
 <p>A simplified example of correctly using this class:</p>
 <div class="fragment"><div class="line"><span class="keywordflow">while</span> (!stream.End()) {</div><div class="line">  chunk = stream.NextChunk();</div><div class="line">  parser.HandleChunk(chunk);</div><div class="line">  <span class="keywordflow">if</span> (parser.HasNext()) {</div><div class="line">    row = parser.Next();  <span class="comment">// you now own `row`</span></div><div class="line">  }</div><div class="line">}</div><div class="line">parser.HandleEndOfStream();</div></div><!-- fragment --><p>NO RECYCLING of the parser object: This is a stateful class, and a single and unique parser should be used for each stream of ReadRows responses. If errors occur, an exception is thrown as documented by each method and the parser object is left in an undefined state. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -169,10 +176,11 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Pass an input chunk proto to the parser.</p>
+
+<p>Pass an input chunk proto to the parser. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if called while a row is available (<a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee">HasNext()</a> is true).</td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if called while a row is available (<a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee" title="True if the data parsed so far yielded a Row. ">HasNext()</a> is true).</td></tr>
     <tr><td class="paramname">std::runtime_error</td><td>if validation failed. </td></tr>
   </table>
   </dd>
@@ -202,7 +210,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Signal that the input stream reached the end.</p>
+
+<p>Signal that the input stream reached the end. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>if more data was expected to finish the current row. </td></tr>
@@ -234,8 +243,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>True if the data parsed so far yielded a <a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a>.</p>
-<p>Call <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a45763d2e9725084d6361b2baa193d617">Next()</a> to take the row. </p>
+
+<p>True if the data parsed so far yielded a <a class="el" href="classbigtable_1_1v0_1_1Row.html" title="The in-memory representation of a Bigtable row. ">Row</a>. </p>
+<p>Call <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a45763d2e9725084d6361b2baa193d617" title="Extract and take ownership of the data in a row. ">Next()</a> to take the row. </p>
 
 </div>
 </div>
@@ -261,11 +271,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Extract and take ownership of the data in a row.</p>
-<p>Use <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee">HasNext()</a> first to find out if there are rows available.</p>
+
+<p>Extract and take ownership of the data in a row. </p>
+<p>Use <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee" title="True if the data parsed so far yielded a Row. ">HasNext()</a> first to find out if there are rows available.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee">HasNext()</a> is false. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParser.html#a06ecd220218a996e58f9c6acba6b54ee" title="True if the data parsed so far yielded a Row. ">HasNext()</a> is false. </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,6 +1,6 @@
 <map id="client/idempotent_mutation_policy.h" name="client/idempotent_mutation_policy.h">
 <area shape="rect" id="node2" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,259,237,285"/>
 <area shape="rect" id="node8" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="323,95,497,121"/>
-<area shape="rect" id="node4" href="$port__platform_8h.html" title="bigtable/client/internal\l/port_platform.h" alt="" coords="84,333,232,375"/>
+<area shape="rect" id="node4" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,333,232,375"/>
 <area shape="rect" id="node13" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="640,169,788,211"/>
 </map>
