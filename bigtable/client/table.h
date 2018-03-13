@@ -45,14 +45,16 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
  *
- * This class offers member functions to modify data in a Cloud Bigtable table.
+ * This class provides member functions to:
+ * - read specific rows: `Table::ReadRow()`
+ * - scan a ranges of rows: `Table::ReadRows()`
+ * - update or create a single row: `Table::Apply()`
+ * - update or modify multiple rows: `Table::BulkApply()`
+ * - update a row based on previous values: `Table::CheckAndMutateRow()`
+ *
  * The class deals with the most common transient failures, and retries the
  * underlying RPC calls subject to the policies configured by the application.
- *
- * Please read the documentation for `Table::Table()` to understand the effect
- * of the different policies.
- *
- * TODO(#32) - update the description when ReadRows()/ReadRow() are implemented.
+ * These policies are documented in`Table::Table()`.
  */
 class Table {
  public:
