@@ -129,6 +129,7 @@ else ()
         set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
         set(DOXYGEN_EXAMPLE_PATH examples)
         set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+        set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
         include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
 
         doxygen_add_docs(bigtable-docs doc client admin
