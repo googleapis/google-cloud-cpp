@@ -4,6 +4,5 @@ var searchData=
   ['failures',['failures',['../classbigtable_1_1v0_1_1PermanentMutationFailure.html#acfbfbd5ea4036b5e4dd035e07e35358a',1,'bigtable::v0::PermanentMutationFailure']]],
   ['family_5fname',['family_name',['../classbigtable_1_1v0_1_1Cell.html#a951f265aeed6ac7d9867793a57f1d723',1,'bigtable::v0::Cell']]],
   ['familyregex',['FamilyRegex',['../classbigtable_1_1v0_1_1Filter.html#ad907c363c631e213ffe271b21beee2b2',1,'bigtable::v0::Filter']]],
-  ['feedchunks',['FeedChunks',['../classAcceptanceTest.html#a72d6050213e2f6f387951d91208bdfa3',1,'AcceptanceTest']]],
   ['filter',['Filter',['../classbigtable_1_1v0_1_1Filter.html#a5dfe16f0fb944c2d54e948092dc61a35',1,'bigtable::v0::Filter::Filter(Filter &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1Filter.html#aebec8660badba0e46ea5b3ae386a0428',1,'bigtable::v0::Filter::Filter(Filter const &amp;rhs)=default']]]
 ];

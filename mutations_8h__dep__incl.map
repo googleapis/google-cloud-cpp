@@ -1,24 +1,7 @@
 <map id="client/mutations.h" name="client/mutations.h">
-<area shape="rect" id="node2" href="$mutations_8cc.html" title="client/mutations.cc" alt="" coords="43,87,175,114"/>
-<area shape="rect" id="node3" href="$mutations__test_8cc.html" title="client/mutations_test.cc" alt="" coords="199,87,361,114"/>
-<area shape="rect" id="node4" href="$idempotent__mutation__policy_8h.html" title="client/idempotent_mutation\l_policy.h" alt="" coords="385,80,564,121"/>
-<area shape="rect" id="node11" href="$table_8h.html" title="client/table.h" alt="" coords="668,177,764,203"/>
-<area shape="rect" id="node5" href="$idempotent__mutation__policy_8cc.html" title="client/idempotent_mutation\l_policy.cc" alt="" coords="5,169,184,211"/>
-<area shape="rect" id="node6" href="$idempotent__mutation__policy__test_8cc.html" title="client/idempotent_mutation\l_policy_test.cc" alt="" coords="208,169,387,211"/>
-<area shape="rect" id="node7" href="$bulk__mutator_8h.html" title="client/internal/bulk\l_mutator.h" alt="" coords="411,169,538,211"/>
-<area shape="rect" id="node8" href="$bulk__mutator_8cc.html" title="client/internal/bulk\l_mutator.cc" alt="" coords="273,259,399,300"/>
-<area shape="rect" id="node9" href="$bulk__mutator__test_8cc.html" title="client/internal/bulk\l_mutator_test.cc" alt="" coords="122,259,249,300"/>
-<area shape="rect" id="node10" href="$table_8cc.html" title="client/table.cc" alt="" coords="423,266,526,293"/>
-<area shape="rect" id="node12" href="$row__reader__test_8cc.html" title="client/row_reader_test.cc" alt="" coords="103,445,271,471"/>
-<area shape="rect" id="node13" href="$table__apply__test_8cc.html" title="client/table_apply\l_test.cc" alt="" coords="295,437,417,479"/>
-<area shape="rect" id="node14" href="$table__bulk__apply__test_8cc.html" title="client/table_bulk_apply\l_test.cc" alt="" coords="441,437,596,479"/>
-<area shape="rect" id="node15" href="$table__check__and__mutate__row__test_8cc.html" title="client/table_check\l_and_mutate_row_test.cc" alt="" coords="621,437,793,479"/>
-<area shape="rect" id="node16" href="$table__readrow__test_8cc.html" title="client/table_readrow\l_test.cc" alt="" coords="969,437,1108,479"/>
-<area shape="rect" id="node17" href="$table__readrows__test_8cc.html" title="client/table_readrows\l_test.cc" alt="" coords="1133,437,1278,479"/>
-<area shape="rect" id="node18" href="$table__test_8cc.html" title="client/table_test.cc" alt="" coords="1302,445,1434,471"/>
-<area shape="rect" id="node19" href="$mock__data__client_8h.html" title="client/testing/mock\l_data_client.h" alt="" coords="805,259,937,300"/>
-<area shape="rect" id="node20" href="$table__integration__test_8h.html" title="client/testing/table\l_integration_test.h" alt="" coords="1114,348,1243,389"/>
-<area shape="rect" id="node22" href="$table__test__fixture_8h.html" title="client/testing/table\l_test_fixture.h" alt="" coords="780,348,908,389"/>
-<area shape="rect" id="node21" href="$table__integration__test_8cc.html" title="client/testing/table\l_integration_test.cc" alt="" coords="1459,437,1595,479"/>
-<area shape="rect" id="node23" href="$table__test__fixture_8cc.html" title="client/testing/table\l_test_fixture.cc" alt="" coords="817,437,945,479"/>
+<area shape="rect" id="node2" href="$mutations_8cc.html" title="client/mutations.cc" alt="" coords="5,87,137,114"/>
+<area shape="rect" id="node3" href="$idempotent__mutation__policy_8h.html" title="client/idempotent_mutation\l_policy.h" alt="" coords="162,80,341,121"/>
+<area shape="rect" id="node5" href="$table_8h.html" title="client/table.h" alt="" coords="330,177,426,203"/>
+<area shape="rect" id="node4" href="$idempotent__mutation__policy_8cc.html" title="client/idempotent_mutation\l_policy.cc" alt="" coords="127,169,306,211"/>
+<area shape="rect" id="node6" href="$table_8cc.html" title="client/table.cc" alt="" coords="327,259,429,285"/>
 </map>

@@ -1,7 +1,0 @@
-<map id="client/internal/bulk_mutator.h" name="client/internal/bulk_mutator.h">
-<area shape="rect" id="node2" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="135,95,306,136"/>
-<area shape="rect" id="node3" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,348,237,375"/>
-<area shape="rect" id="node9" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="323,184,497,211"/>
-<area shape="rect" id="node5" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,423,232,464"/>
-<area shape="rect" id="node14" href="$conjunction_8h.html" title="bigtable/client/internal\l/conjunction.h" alt="" coords="640,259,788,300"/>
-</map>

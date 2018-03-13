@@ -1,8 +1,5 @@
 <map id="client/data_client.cc" name="client/data_client.cc">
-<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="94,80,225,121"/>
-<area shape="rect" id="node12" href="$common__client_8h.html" title="bigtable/client/internal\l/common_client.h" alt="" coords="249,80,397,121"/>
-<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="199,169,336,211"/>
-<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,348,237,375"/>
-<area shape="rect" id="node11" href="$throw__delegate_8h.html" title="bigtable/client/internal\l/throw_delegate.h" alt="" coords="165,259,313,300"/>
-<area shape="rect" id="node7" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="84,423,232,464"/>
+<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="177,80,307,121"/>
+<area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="252,169,389,211"/>
+<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="79,266,237,293"/>
 </map>

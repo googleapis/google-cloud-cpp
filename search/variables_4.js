@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gitrev',['gitrev',['../namespacebigtable_1_1v0.html#ab1d1fa2d38a4a3487a19dd5a6bd21a28',1,'bigtable::v0']]]
+  ['op',['op',['../structbigtable_1_1v0_1_1Mutation.html#ab853d9a3fc4e1b816d0b2f20248733df',1,'bigtable::v0::Mutation']]]
 ];

@@ -1,23 +1,5 @@
 var searchData=
 [
-  ['table_2ecc',['table.cc',['../table_8cc.html',1,'']]],
-  ['table_2eh',['table.h',['../table_8h.html',1,'']]],
-  ['table_5fadmin_2ecc',['table_admin.cc',['../table__admin_8cc.html',1,'']]],
-  ['table_5fadmin_2eh',['table_admin.h',['../table__admin_8h.html',1,'']]],
-  ['table_5fadmin_5ftest_2ecc',['table_admin_test.cc',['../table__admin__test_8cc.html',1,'']]],
-  ['table_5fapply_5ftest_2ecc',['table_apply_test.cc',['../table__apply__test_8cc.html',1,'']]],
-  ['table_5fbulk_5fapply_5ftest_2ecc',['table_bulk_apply_test.cc',['../table__bulk__apply__test_8cc.html',1,'']]],
-  ['table_5fcheck_5fand_5fmutate_5frow_5ftest_2ecc',['table_check_and_mutate_row_test.cc',['../table__check__and__mutate__row__test_8cc.html',1,'']]],
-  ['table_5fconfig_2ecc',['table_config.cc',['../table__config_8cc.html',1,'']]],
-  ['table_5fconfig_2eh',['table_config.h',['../table__config_8h.html',1,'']]],
-  ['table_5fconfig_5ftest_2ecc',['table_config_test.cc',['../table__config__test_8cc.html',1,'']]],
-  ['table_5fintegration_5ftest_2ecc',['table_integration_test.cc',['../table__integration__test_8cc.html',1,'']]],
-  ['table_5fintegration_5ftest_2eh',['table_integration_test.h',['../table__integration__test_8h.html',1,'']]],
-  ['table_5freadrow_5ftest_2ecc',['table_readrow_test.cc',['../table__readrow__test_8cc.html',1,'']]],
-  ['table_5freadrows_5ftest_2ecc',['table_readrows_test.cc',['../table__readrows__test_8cc.html',1,'']]],
-  ['table_5ftest_2ecc',['table_test.cc',['../table__test_8cc.html',1,'']]],
-  ['table_5ftest_5ffixture_2ecc',['table_test_fixture.cc',['../table__test__fixture_8cc.html',1,'']]],
-  ['table_5ftest_5ffixture_2eh',['table_test_fixture.h',['../table__test__fixture_8h.html',1,'']]],
-  ['throw_5fdelegate_2ecc',['throw_delegate.cc',['../throw__delegate_8cc.html',1,'']]],
-  ['throw_5fdelegate_2eh',['throw_delegate.h',['../throw__delegate_8h.html',1,'']]]
+  ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
+  ['version_2eh',['version.h',['../version_8h.html',1,'']]]
 ];

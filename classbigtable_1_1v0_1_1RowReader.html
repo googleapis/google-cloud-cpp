@@ -82,12 +82,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a6d4d2830e59b96019a024d0b37758430"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430">iterator</a> = <a class="el" href="classbigtable_1_1v0_1_1internal_1_1RowReaderIterator.html">internal::RowReaderIterator</a></td></tr>
+<tr class="memitem:a6d4d2830e59b96019a024d0b37758430"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430">iterator</a> = internal::RowReaderIterator</td></tr>
 <tr class="separator:a6d4d2830e59b96019a024d0b37758430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae4319ef108d7323323d9fb77f8ed59a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html#ae4319ef108d7323323d9fb77f8ed59a3">RowReader</a> (std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string table_name, <a class="el" href="classbigtable_1_1v0_1_1RowSet.html">RowSet</a> row_set, std::int64_t rows_limit, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParserFactory.html">internal::ReadRowsParserFactory</a> &gt; parser_factory)</td></tr>
+<tr class="memitem:ae4319ef108d7323323d9fb77f8ed59a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html#ae4319ef108d7323323d9fb77f8ed59a3">RowReader</a> (std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string table_name, <a class="el" href="classbigtable_1_1v0_1_1RowSet.html">RowSet</a> row_set, std::int64_t rows_limit, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; internal::ReadRowsParserFactory &gt; parser_factory)</td></tr>
 <tr class="separator:ae4319ef108d7323323d9fb77f8ed59a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaced0447df945f8ed791e51d1e1f72b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1RowReader.html#aaaced0447df945f8ed791e51d1e1f72b">RowReader</a> (<a class="el" href="classbigtable_1_1v0_1_1RowReader.html">RowReader</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="separator:aaaced0447df945f8ed791e51d1e1f72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,7 +125,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430">bigtable::v0::RowReader::iterator</a> =  <a class="el" href="classbigtable_1_1v0_1_1internal_1_1RowReaderIterator.html">internal::RowReaderIterator</a></td>
+          <td class="memname">using <a class="el" href="classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430">bigtable::v0::RowReader::iterator</a> =  internal::RowReaderIterator</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -184,7 +184,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1internal_1_1ReadRowsParserFactory.html">internal::ReadRowsParserFactory</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; internal::ReadRowsParserFactory &gt;&#160;</td>
           <td class="paramname"><em>parser_factory</em>&#160;</td>
         </tr>
         <tr>
@@ -319,7 +319,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">friend class <a class="el" href="classbigtable_1_1v0_1_1internal_1_1RowReaderIterator.html">internal::RowReaderIterator</a></td>
+          <td class="memname">friend class internal::RowReaderIterator</td>
         </tr>
       </table>
   </td>

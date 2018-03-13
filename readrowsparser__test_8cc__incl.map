@@ -1,8 +1,0 @@
-<map id="client/internal/readrowsparser_test.cc" name="client/internal/readrowsparser_test.cc">
-<area shape="rect" id="node2" href="$readrowsparser_8h.html" title="bigtable/client/internal\l/readrowsparser.h" alt="" coords="269,102,417,143"/>
-<area shape="rect" id="node13" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="383,206,522,233"/>
-<area shape="rect" id="node5" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="333,288,471,315"/>
-<area shape="rect" id="node11" href="$make__unique_8h.html" title="bigtable/client/internal\l/make_unique.h" alt="" coords="5,199,153,240"/>
-<area shape="rect" id="node6" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="216,363,375,389"/>
-<area shape="rect" id="node8" href="$port__platform_8h.html" title="Platform portability details. " alt="" coords="221,437,369,479"/>
-</map>

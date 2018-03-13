@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['backoff_5fpolicy_5f',['backoff_policy_',['../classRowReaderTest.html#a44b0130791e119f83722283c62d9c6d5',1,'RowReaderTest']]],
   ['begin',['begin',['../classbigtable_1_1v0_1_1RowReader.html#a43dbac4c60a068d96792c03441fb3b6b',1,'bigtable::v0::RowReader']]],
   ['bigtable',['bigtable',['../namespacebigtable.html',1,'']]],
   ['bigtable_2dmain_2emd',['bigtable-main.md',['../bigtable-main_8md.html',1,'']]],
@@ -11,18 +10,10 @@ var searchData=
   ['bigtable_5fclient_5fns',['BIGTABLE_CLIENT_NS',['../version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37',1,'version.h']]],
   ['bigtable_5fclient_5fvconcat',['BIGTABLE_CLIENT_VCONCAT',['../version_8h.html#a337f0c4db29f33f05b85d371e826a5df',1,'version.h']]],
   ['bigtable_5fclient_5fveval',['BIGTABLE_CLIENT_VEVAL',['../version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135',1,'version.h']]],
-  ['bigtable_5fstub_5f',['bigtable_stub_',['../classbigtable_1_1testing_1_1TableTestFixture.html#a65b4f51d24007a9899991cb7bc4555c1',1,'bigtable::testing::TableTestFixture']]],
   ['bigtablestubptr',['BigtableStubPtr',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a80bb775b18d44effed7a039d74c3c72e',1,'bigtable::v0::DefaultDataClient']]],
   ['blockallfilter',['BlockAllFilter',['../classbigtable_1_1v0_1_1Filter.html#a3c99a00451ee7a6dcbc47c739a005366',1,'bigtable::v0::Filter']]],
   ['build_5finfo_2eh',['build_info.h',['../build__info_8h.html',1,'']]],
-  ['bulk_5fmutator_2ecc',['bulk_mutator.cc',['../bulk__mutator_8cc.html',1,'']]],
-  ['bulk_5fmutator_2eh',['bulk_mutator.h',['../bulk__mutator_8h.html',1,'']]],
-  ['bulk_5fmutator_5ftest_2ecc',['bulk_mutator_test.cc',['../bulk__mutator__test_8cc.html',1,'']]],
   ['bulkapply',['BulkApply',['../classbigtable_1_1v0_1_1Table.html#a5714f0f923da7544cccd11fa943f320b',1,'bigtable::v0::Table']]],
   ['bulkmutation',['BulkMutation',['../classbigtable_1_1v0_1_1BulkMutation.html',1,'bigtable::v0::BulkMutation'],['../classbigtable_1_1v0_1_1FailedMutation.html#afe72aeec710b8ca7cfe9b70ddeed4a3d',1,'bigtable::v0::FailedMutation::BulkMutation()'],['../classbigtable_1_1v0_1_1BulkMutation.html#addcc31baecce5f859a5ea947d9d6e590',1,'bigtable::v0::BulkMutation::BulkMutation()'],['../classbigtable_1_1v0_1_1BulkMutation.html#a8ca3b494b22356110037bb6b7979db86',1,'bigtable::v0::BulkMutation::BulkMutation(iterator begin, iterator end)'],['../classbigtable_1_1v0_1_1BulkMutation.html#a0c4d29e25d45698ada0dc9b4f5028cc0',1,'bigtable::v0::BulkMutation::BulkMutation(std::initializer_list&lt; SingleRowMutation &gt; list)'],['../classbigtable_1_1v0_1_1BulkMutation.html#a19c796fcafe129140f6703efea18b458',1,'bigtable::v0::BulkMutation::BulkMutation(SingleRowMutation &amp;&amp;mutation)'],['../classbigtable_1_1v0_1_1BulkMutation.html#a2cc247677bbca64411edfc3ae3a662a5',1,'bigtable::v0::BulkMutation::BulkMutation(SingleRowMutation &amp;&amp;m1, SingleRowMutation &amp;&amp;m2)'],['../classbigtable_1_1v0_1_1BulkMutation.html#aea4d9e6f30e97a95faaad9d38b4c7974',1,'bigtable::v0::BulkMutation::BulkMutation(M &amp;&amp;... m)']]],
-  ['bulkmutator',['BulkMutator',['../classbigtable_1_1v0_1_1internal_1_1BulkMutator.html',1,'bigtable::v0::internal::BulkMutator'],['../classbigtable_1_1v0_1_1internal_1_1BulkMutator.html#ac839de321659a6ac240c82609023d251',1,'bigtable::v0::internal::BulkMutator::BulkMutator()']]],
-  ['chrono_5fliterals',['chrono_literals',['../namespacebigtable_1_1chrono__literals.html',1,'bigtable']]],
-  ['internal',['internal',['../namespacebigtable_1_1v0_1_1internal.html',1,'bigtable::v0']]],
-  ['testing',['testing',['../namespacebigtable_1_1testing.html',1,'bigtable']]],
   ['v0',['v0',['../namespacebigtable_1_1v0.html',1,'bigtable']]]
 ];

@@ -1,14 +1,9 @@
 var searchData=
 [
-  ['a_5f00',['a_00',['../row__range__test_8cc.html#a68b923e25385da964ccd92585d40be98',1,'row_range_test.cc']]],
-  ['a_5fffff00',['a_ffff00',['../row__range__test_8cc.html#ab318c9623be6734ab5f8ff44c5093305',1,'row_range_test.cc']]],
-  ['acceptancetest',['AcceptanceTest',['../classAcceptanceTest.html',1,'']]],
   ['add_5fcolumn_5ffamily',['add_column_family',['../classbigtable_1_1v0_1_1TableConfig.html#a73cf3d0a4ba2e9cd1181a76d305354f0',1,'bigtable::v0::TableConfig']]],
   ['add_5finitial_5fsplit',['add_initial_split',['../classbigtable_1_1v0_1_1TableConfig.html#ae36273712a0f5976f42fd91a792a7c87',1,'bigtable::v0::TableConfig']]],
   ['admin_5fclient_2ecc',['admin_client.cc',['../admin__client_8cc.html',1,'']]],
   ['admin_5fclient_2eh',['admin_client.h',['../admin__client_8h.html',1,'']]],
-  ['admin_5fclient_5f',['admin_client_',['../classbigtable_1_1testing_1_1TableIntegrationTest.html#a24f174ad86db5db3be8241b665bf5934',1,'bigtable::testing::TableIntegrationTest']]],
-  ['admin_5fclient_5ftest_2ecc',['admin_client_test.cc',['../admin__client__test_8cc.html',1,'']]],
   ['admin_5fendpoint',['admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a09adfb1db5ea31ccce918b84d40623cb',1,'bigtable::v0::ClientOptions']]],
   ['adminclient',['AdminClient',['../classbigtable_1_1v0_1_1AdminClient.html',1,'bigtable::v0']]],
   ['alwaysretrymutationpolicy',['AlwaysRetryMutationPolicy',['../classbigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html',1,'bigtable::v0::AlwaysRetryMutationPolicy'],['../classbigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html#a623c0878e93cc47a5a2c68cfb41fc659',1,'bigtable::v0::AlwaysRetryMutationPolicy::AlwaysRetryMutationPolicy()']]],
