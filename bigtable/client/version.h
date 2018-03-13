@@ -26,15 +26,32 @@
   BIGTABLE_CLIENT_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
                         BIGTABLE_CLIENT_VERSION_MINOR)
 
+/**
+ * Contains all the Cloud Bigtable C++ client APIs.
+ */
 namespace bigtable {
 int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
 int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
 int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
-/// A single integer representing the Major/Minor version
+/// A single integer representing the Major/Minor/Patch version
 int constexpr version() {
   return 100 * (100 * version_major() + version_minor()) + version_patch();
 }
 std::string version_string();
+
+/**
+ * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.
+ *
+ * Applications may need to link multiple versions of the Cloud Bigtable C++
+ * client, for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `bigtable::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `bigtable::v1::Foo`.
+ *
+ * Note that, consistent with the semver.org guidelines, the v0 version makes
+ * no guarantees with respect to backwards compatibility.
+ */
+inline namespace BIGTABLE_CLIENT_NS {}
 }  // namespace bigtable
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
