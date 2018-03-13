@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "bigtable/admin/table_admin.h"
-#include <bigtable/client/grpc_error.h>
 #include <gmock/gmock.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
+#include "bigtable/client/grpc_error.h"
 #include "bigtable/client/testing/chrono_literals.h"
 
 namespace {
@@ -56,25 +56,26 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
-  return [expected_token, returned_token, table_names](
-      grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-      btproto::ListTablesResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(btproto::Table::FULL, request.view());
-    EXPECT_EQ(expected_token, request.page_token());
+  return
+      [expected_token, returned_token, table_names](
+          grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
+          btproto::ListTablesResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(btproto::Table::FULL, request.view());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& table_name : table_names) {
-      auto& table = *response->add_tables();
-      table.set_name(instance_name + "/tables/" + table_name);
-      table.set_granularity(btproto::Table::MILLIS);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
+        EXPECT_NE(nullptr, response);
+        for (auto const& table_name : table_names) {
+          auto& table = *response->add_tables();
+          table.set_name(instance_name + "/tables/" + table_name);
+          table.set_granularity(btproto::Table::MILLIS);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
 };
 
 /**
