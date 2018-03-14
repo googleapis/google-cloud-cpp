@@ -195,12 +195,12 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
  * Send request ReadModifyWriteRowRequest to modify the row and get it back
  */
 std::unique_ptr<Row> Table::CallReadModifyWriteRowRequest(
-    btproto::ReadModifyWriteRowRequest request) {
+    btproto::ReadModifyWriteRowRequest row_request) {
   auto error_message =
-      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
+      "ReadModifyWriteRowRequest(" + row_request.table_name() + ")";
   auto response_row = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), &StubType::ReadModifyWriteRow,
-      request, error_message.c_str());
+      row_request, error_message.c_str());
 
   std::vector<bigtable::Cell> cells;
   for (auto& family : response_row.row().families()) {
