@@ -29,8 +29,15 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
                  std::vector<bigtable::Cell> const& cells);
 
   std::string const family = "family";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
+  std::string const family1 = "AmazingFamily";
+  std::string const family2 = "ExtremeFamily";
+  std::string const family3 = "VirtualFamily";
+  bigtable::TableConfig table_config =
+      bigtable::TableConfig({{family, bigtable::GcRule::MaxNumVersions(10)},
+                             {family1, bigtable::GcRule::MaxNumVersions(10)},
+                             {family2, bigtable::GcRule::MaxNumVersions(10)},
+                             {family3, bigtable::GcRule::MaxNumVersions(10)}},
+                            {});
 };
 
 }  // anonymous namespace
@@ -240,4 +247,46 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
   CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
+  std::string const table_name = "table-read-modify-write-append-row-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const add_suffix1 = "-suffix";
+  std::string const add_suffix2 = "-next";
+  std::string const add_suffix3 = "-newrecord";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family1, "column-id1", 1000, "v1000", {}},
+      {row_key1, family2, "column-id2", 2000, "v2000", {}},
+      {row_key1, family3, "column-id1", 2000, "v3000", {}},
+      {row_key1, family1, "column-id3", 2000, "v5000", {}}};
+
+  std::vector<bigtable::Cell> expected{
+      {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1, {}},
+      {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2, {}},
+      {row_key1, family3, "column-id3", 2000, add_suffix3, {}}};
+
+  CreateCells(*table, created);
+  auto result_row = table->ReadModifyWriteRow(
+      row_key1, bigtable::ReadModifyWriteRule::AppendValue(
+                    family1, "column-id1", add_suffix1),
+      bigtable::ReadModifyWriteRule::AppendValue(family2, "column-id2",
+                                                 add_suffix2),
+      bigtable::ReadModifyWriteRule::AppendValue(family3, "column-id3",
+                                                 add_suffix3));
+
+  // Returned cells contains timestamp in microseconds which is
+  // not matching with the timestamp in expected cells, So creating
+  // cells by ignoring timestamp
+  std::vector<bigtable::Cell> expected_cells_ignore_timestamp =
+      GetCellsIgnoringTimestamp(expected);
+  std::vector<bigtable::Cell> actual_cells_ignore_timestamp =
+      GetCellsIgnoringTimestamp(result_row->cells());
+
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected_cells_ignore_timestamp,
+                      actual_cells_ignore_timestamp);
 }

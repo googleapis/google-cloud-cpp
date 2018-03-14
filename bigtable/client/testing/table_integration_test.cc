@@ -91,6 +91,20 @@ void TableIntegrationTest::CreateCells(
   table.BulkApply(std::move(bulk));
 }
 
+std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
+    std::vector<bigtable::Cell> cells) {
+  // Create the expected_cells and actual_cells with same timestamp
+  std::vector<bigtable::Cell> return_cells;
+  for (auto& cell : cells) {
+    bigtable::Cell newCell(cell.row_key(), cell.family_name(),
+                           cell.column_qualifier(), 1000, cell.value(),
+                           cell.labels());
+    return_cells.emplace_back(std::move(newCell));
+  }
+
+  return return_cells;
+}
+
 void TableIntegrationTest::CheckEqualUnordered(
     std::vector<bigtable::Cell> expected, std::vector<bigtable::Cell> actual) {
   std::sort(expected.begin(), expected.end());

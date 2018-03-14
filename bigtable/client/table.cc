@@ -191,5 +191,36 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   return response.predicate_matched();
 }
 
+/**
+ * Send request ReadModifyWriteRowRequest to modify the row and get it back
+ */
+std::unique_ptr<Row> Table::CallReadModifyWriteRowRequest(
+    btproto::ReadModifyWriteRowRequest request) {
+  auto error_message =
+      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
+  auto response_row = RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(), &StubType::ReadModifyWriteRow,
+      request, error_message.c_str());
+
+  std::vector<bigtable::Cell> cells;
+  for (auto& family : response_row.row().families()) {
+    for (auto& column : family.columns()) {
+      for (auto cell : column.cells()) {
+        std::vector<std::string> labels;
+        for (auto label : cell.labels()) {
+          labels.emplace_back(label.c_str());
+        }
+        bigtable::Cell new_cell(response_row.row().key(), family.name(),
+                                column.qualifier(), cell.timestamp_micros(),
+                                cell.value(), labels);
+        cells.emplace_back(std::move(new_cell));
+      }
+    }
+  }
+
+  Row row(response_row.row().key(), cells);
+  return bigtable::internal::make_unique<Row>(row);
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

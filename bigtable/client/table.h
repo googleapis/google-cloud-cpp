@@ -18,13 +18,17 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/read_modify_write_rule.h"
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+
+namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -219,6 +223,57 @@ class Table {
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations);
+
+  using RpcUtils = bigtable::internal::UnaryRpcUtils<DataClient>;
+  using StubType = RpcUtils::StubType;
+
+  /**
+   * Read the row modify it according to ReadModifyRule and return the row.
+   *
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply to the row
+   * @param row_key the row to read
+   * @param rule to modify the row. Two types of rules are applied here
+   *     AppendValue which will read the existing value and append the
+   *     text provided to the value.
+   *     IncrementAmount which will read the existing uint64 big-endian-int
+   *     and add the value provided.
+   *     Both rules accept the family and column identifier to modify.
+   * @returns modified row
+   */
+  template <typename... Args>
+  std::unique_ptr<Row> ReadModifyWriteRow(std::string row_key,
+                                          bigtable::ReadModifyWriteRule rule,
+                                          Args&&... rules) {
+    btproto::ReadModifyWriteRowRequest request;
+    request.set_table_name(table_name_);
+    request.set_row_key(std::move(row_key));
+
+    // This ugly thing provides a better compile-time error message than
+    // just letting the compiler figure things out 3 levels deep
+    // as it recurses on append_types().
+    static_assert(
+        internal::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    // Add first default rule
+    *request.add_rules() = rule.as_proto_move();
+    // Add if any additional rule is present
+    std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
+        std::forward<Args>(rules)...};
+    for (auto args_rule : rule_list) {
+      *request.add_rules() = args_rule.as_proto_move();
+    }
+
+    std::unique_ptr<Row> row = CallReadModifyWriteRowRequest(request);
+
+    return row;
+  }
+
+ private:
+  std::unique_ptr<Row> CallReadModifyWriteRowRequest(
+      btproto::ReadModifyWriteRowRequest row_request);
 
  private:
   std::shared_ptr<DataClient> client_;

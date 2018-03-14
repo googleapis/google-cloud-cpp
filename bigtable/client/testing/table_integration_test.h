@@ -70,6 +70,15 @@ class TableIntegrationTest : public ::testing::Test {
                    std::vector<bigtable::Cell> const& cells);
 
   /**
+   * This function gets the vector of cells and modify its timestamp
+   * to fixed 1000 value and return it. So when there is a mismatch between
+   * records due to timestamp we can ignore timestamp and match the other
+   * parameters of the cells.
+   */
+  std::vector<bigtable::Cell> GetCellsIgnoringTimestamp(
+      std::vector<bigtable::Cell> cells);
+
+  /**
    * Compare two sets of cells.
    * Unordered because ReadRows does not guarantee a particular order.
    */
