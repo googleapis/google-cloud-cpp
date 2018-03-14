@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 
 #include <memory>
 #include "bigtable/client/instance_admin_client.h"
@@ -82,4 +82,4 @@ class InstanceAdmin {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
