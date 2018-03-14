@@ -25,6 +25,10 @@ add_library(bigtable_client
         client_options.cc
         data_client.h
         data_client.cc
+        filters.h
+        filters.cc
+        grpc_error.h
+        grpc_error.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
@@ -41,8 +45,6 @@ add_library(bigtable_client
         internal/throw_delegate.h
         internal/throw_delegate.cc
         internal/unary_rpc_utils.h
-        filters.h
-        filters.cc
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
         mutations.h
@@ -95,6 +97,7 @@ set(bigtable_client_unit_tests
         data_client_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
+        grpc_error_test.cc
         idempotent_mutation_policy_test.cc
         internal/bulk_mutator_test.cc
         internal/prefix_range_end_test.cc
