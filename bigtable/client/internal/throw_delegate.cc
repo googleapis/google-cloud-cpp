@@ -23,6 +23,7 @@ template <typename Exception>
   throw Exception(msg);
 #else
   std::cerr << "Aborting because exceptions are disabled: " << msg << std::endl;
+  // TODO(#327) - make the call to std::abort() configurable.
   std::abort();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -71,6 +72,7 @@ namespace internal {
   bigtable::GRpcError ex(msg, status);
   std::cerr << "Aborting because exceptions are disabled: " << ex.what()
             << std::endl;
+  // TODO(#327) - make the call to std::abort() configurable.
   std::abort();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

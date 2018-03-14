@@ -24,6 +24,13 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Wrap gRPC errors is a C++ exception.
  *
+ * Applications that only wish to log errors can (and should) catch
+ * `std::exception` or `std::runtime_error`. The string returned by `what()`
+ * contains all the necessary information.  If the application wants to handle
+ * errors raised by the gRPC library, they can catch this exception type, and
+ * use the `error_code()` member function to implement whatever error handling
+ * strategy they need.
+ *
  * It is customary, though not required, for C++ libraries and applications
  * to use classes in the `std::exception` hierarchy to report errors. Meanwhile,
  * gRPC reports errors using the `grpc::Status` class. This class wraps the
