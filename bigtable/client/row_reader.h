@@ -84,6 +84,8 @@ class RowReader {
    */
   void Cancel();
 
+  grpc::Status finish() const { return status_; }
+
  private:
   /**
    * Read and parse the next row in the response.
@@ -141,6 +143,7 @@ class RowReader {
   std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
   std::string last_read_row_key_;
+  grpc::Status status_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

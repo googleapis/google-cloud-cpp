@@ -61,11 +61,17 @@ RowReader::RowReader(
       stream_is_open_(false),
       operation_cancelled_(false),
       processed_chunks_count_(0),
-      rows_count_(0) {}
+      rows_count_(0),
+      status_(grpc::Status::OK) {}
 
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     internal::RaiseRuntimeError("Operation already cancelled.");
+#else
+    status_ = grpc::Status::CANCELLED;
+    return internal::RowReaderIterator(this, true);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
   if (not stream_) {
     MakeRequest();
@@ -123,13 +129,13 @@ void RowReader::Advance(internal::OptionalRow& row) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
-      status = AdvanceOrFail(row);
+      status_ = status = AdvanceOrFail(row);
     } catch (std::exception const& ex) {
       // Parser exceptions arrive here.
-      status = grpc::Status(grpc::INTERNAL, ex.what());
+      status_ = status = grpc::Status(grpc::INTERNAL, ex.what());
     }
 #else
-    status = AdvanceOrFail(row);
+    status_ = status = AdvanceOrFail(row);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {
@@ -156,8 +162,12 @@ void RowReader::Advance(internal::OptionalRow& row) {
     }
 
     if (not status.ok() and not retry_policy_->on_failure(status)) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       internal::RaiseRuntimeError("Unretriable error: " +
                                   status.error_message());
+#else
+      return;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     }
 
     auto delay = backoff_policy_->on_completion(status);
