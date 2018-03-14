@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) try {
     servers.emplace_back(CreateReplica(&echo_impl, std::move(address)));
   }
 
-  // Continuously restart each server, to
+  // Continuously restart each server, to force reconnects from the client.
   while (true) {
     std::this_thread::sleep_for(std::chrono::seconds(20));
     for (auto &replica : servers) {

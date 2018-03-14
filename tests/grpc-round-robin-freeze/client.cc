@@ -34,7 +34,7 @@ void MakeStreamPing(Echo::Stub &echo, std::int32_t count) {
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
-  std::cerr << "Error making StreamPing request" << std::endl;
+  std::cerr << "Error making StreamPing request." << std::endl;
 }
 
 void MakePing(Echo::Stub &echo, std::int32_t count) {
@@ -49,7 +49,7 @@ void MakePing(Echo::Stub &echo, std::int32_t count) {
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
-  std::cerr << "Error making Ping request" << std::endl;
+  std::cerr << "Error making Ping request." << std::endl;
 }
 
 void RunClient(std::string const &server_address, std::chrono::minutes duration,
