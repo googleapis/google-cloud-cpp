@@ -112,6 +112,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement a thin wrapper around google::bigtable::admin::v2::GcRule.  <a href="classbigtable_1_1v0_1_1GcRule.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GRpcError.html">GRpcError</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap gRPC errors is a C++ exception.  <a href="classbigtable_1_1v0_1_1GRpcError.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface to control which mutations are idempotent and therefore can be re-tried.  <a href="classbigtable_1_1v0_1_1IdempotentMutationPolicy.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +238,10 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:add23a48b4666a6cec169c8b9174988c3"><td class="memItemLeft" align="right" valign="top">constexpr char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3">kKnownCodes</a> []</td></tr>
+<tr class="separator:add23a48b4666a6cec169c8b9174988c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1daf42bfcbf4badc8d312b502f929b27"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a1daf42bfcbf4badc8d312b502f929b27">kKnownCodesSize</a> = sizeof(<a class="el" href="namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3">kKnownCodes</a>) / sizeof(<a class="el" href="namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3">kKnownCodes</a>[0])</td></tr>
+<tr class="separator:a1daf42bfcbf4badc8d312b502f929b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1d1fa2d38a4a3487a19dd5a6bd21a28"><td class="memItemLeft" align="right" valign="top">char const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#ab1d1fa2d38a4a3487a19dd5a6bd21a28">gitrev</a> []</td></tr>
 <tr class="memdesc:ab1d1fa2d38a4a3487a19dd5a6bd21a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">The git revision at compile time.  <a href="#ab1d1fa2d38a4a3487a19dd5a6bd21a28">More...</a><br /></td></tr>
 <tr class="separator:ab1d1fa2d38a4a3487a19dd5a6bd21a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -883,6 +890,34 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The git revision at compile time. </p>
+
+</div>
+</div>
+<a id="add23a48b4666a6cec169c8b9174988c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add23a48b4666a6cec169c8b9174988c3">&#9670;&nbsp;</a></span>kKnownCodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr char const* bigtable::v0::kKnownCodes[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    <span class="stringliteral">&quot;OK&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;CANCELLED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;UNKNOWN&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;INVALID_ARGUMENT&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;DEADLINE_EXCEEDED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;NOT_FOUND&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;ALREADY_EXISTS&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;PERMISSION_DENIED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;RESOURCE_EXHAUSTED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;FAILED_PRECONDITION&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;ABORTED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;OUT_OF_RANGE&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;UNIMPLEMENTED&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;INTERNAL&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;UNAVAILABLE&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;DATA_LOSS&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;UNAUTHENTICATED&quot;</span>,</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a1daf42bfcbf4badc8d312b502f929b27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1daf42bfcbf4badc8d312b502f929b27">&#9670;&nbsp;</a></span>kKnownCodesSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int bigtable::v0::kKnownCodesSize = sizeof(<a class="el" href="namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3">kKnownCodes</a>) / sizeof(<a class="el" href="namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3">kKnownCodes</a>[0])</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

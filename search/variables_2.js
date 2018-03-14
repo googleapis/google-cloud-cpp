@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['millis',['MILLIS',['../classbigtable_1_1v0_1_1TableConfig.html#a03141fbe6dc2d31ea0f7086da7e6c74d',1,'bigtable::v0::TableConfig']]]
+  ['kknowncodes',['kKnownCodes',['../namespacebigtable_1_1v0.html#add23a48b4666a6cec169c8b9174988c3',1,'bigtable::v0']]],
+  ['kknowncodessize',['kKnownCodesSize',['../namespacebigtable_1_1v0.html#a1daf42bfcbf4badc8d312b502f929b27',1,'bigtable::v0']]]
 ];
