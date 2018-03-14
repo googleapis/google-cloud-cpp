@@ -72,14 +72,14 @@ add_custom_command(
             "${PROTOBUF_PROTOC_EXECUTABLE}" "${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}"
         COMMENT "Running (local) C++ protocol buffer compiler on ${FIL}"
         VERBATIM )
-add_library(grpc_crash_protos
+add_library(grpc_round_robin_freeze_protos
         "echo.pb.h" "echo.pb.cc"
         "echo.grpc.pb.h" "echo.grpc.pb.cc")
-target_link_libraries(grpc_crash_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-target_include_directories(grpc_crash_protos PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
+target_link_libraries(grpc_round_robin_freeze_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+target_include_directories(grpc_round_robin_freeze_protos PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 
-add_executable(grpc_crash_server server.cc)
-target_link_libraries(grpc_crash_server grpc_crash_protos)
+add_executable(grpc_round_robin_freeze_server server.cc)
+target_link_libraries(grpc_round_robin_freeze_server grpc_round_robin_freeze_protos)
 
-add_executable(grpc_crash_client client.cc)
-target_link_libraries(grpc_crash_client grpc_crash_protos)
+add_executable(grpc_round_robin_freeze_client client.cc)
+target_link_libraries(grpc_round_robin_freeze_client grpc_round_robin_freeze_protos)

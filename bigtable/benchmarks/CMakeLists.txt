@@ -40,7 +40,7 @@ foreach (fname ${bigtable_benchmarks_unit_tests})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
             bigtable_benchmark_common bigtable_admin_client bigtable_client
-            bigtable_protos
+            bigtable_protos bigtable_common_options
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
     add_test(NAME ${target} COMMAND ${target})
     add_dependencies(tests-local ${target})
@@ -48,20 +48,21 @@ endforeach ()
 
 # Benchmark Table::ReadRows().
 add_executable(scan_throughput_benchmark scan_throughput_benchmark.cc)
-target_link_libraries(scan_throughput_benchmark
+target_link_libraries(scan_throughput_benchmark PRIVATE
         bigtable_benchmark_common bigtable_admin_client bigtable_client
-        bigtable_protos
+        bigtable_protos bigtable_common_options
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
 # Benchmark for Table::Apply() and Table::ReadRow().
 add_executable(apply_read_latency_benchmark apply_read_latency_benchmark.cc)
-target_link_libraries(apply_read_latency_benchmark
+target_link_libraries(apply_read_latency_benchmark PRIVATE
         bigtable_benchmark_common bigtable_admin_client bigtable_client
-        bigtable_protos
+        bigtable_protos bigtable_common_options
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
 # A benchmark to measure performance of long running programs.
 add_executable(endurance_benchmark endurance_benchmark.cc)
-target_link_libraries(endurance_benchmark bigtable_benchmark_common
-        bigtable_admin_client bigtable_client bigtable_protos
+target_link_libraries(endurance_benchmark PRIVATE
+        bigtable_benchmark_common bigtable_admin_client bigtable_client
+        bigtable_protos bigtable_common_options
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)

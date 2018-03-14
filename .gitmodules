@@ -7,5 +7,4 @@
 [submodule "third_party/grpc"]
 	path = third_party/grpc
 	url = https://github.com/grpc/grpc.git
-	branch = master
-	ignore = dirty
+	branch = v1.10.x

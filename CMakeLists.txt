@@ -20,14 +20,10 @@ project(google-cloud-cpp CXX C)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 
-# WARNING: do not change any compiler flags or variables in this
-# CMakeList file.  The grpc subdirectory (and its children), have
-# carefully crafted flags, and you may break them by using your own
-# settings.  In particular -Werror -Wall breaks protobuf or grpc in many
-# platforms, for an example of these problems (but not the only one) see:
-#    https://github.com/grpc/grpc/pull/11376
-
-include (cmake/IncludeGrpc.cmake)
+# Add gRPC and protobuf targets as submodules or packages, depending on the
+# configuration.  This should happen before enable_testing(), because we are
+# not interested in compiling and running the gRPC tests.
+include (${PROJECT_SOURCE_DIR}/cmake/IncludeGrpc.cmake)
 
 # Enable testing in this directory so we can do a top-level `make test`.
 enable_testing()
@@ -38,4 +34,6 @@ add_custom_target(doxygen-docs)
 # Add subprojects here.
 add_subdirectory(bigtable)
 
+# These are tests to reproduce problems in gRPC and other dependencies.
 add_subdirectory(tests/grpc-crash)
+add_subdirectory(tests/grpc-round-robin-freeze)

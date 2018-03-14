@@ -55,6 +55,13 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
         target_compile_options(libprotobuf PUBLIC ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
 
+    # TODO(#286) - workaround build breakage for gRPC v1.10.x on Ubuntu:16.04.
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG(-Wno-maybe-uninitialized __cxx_supports_wno_maybe_unitialized)
+    if (__cxx_supports_wno_maybe_unitialized)
+        target_compile_options(ssl PRIVATE -Wno-maybe-uninitialized)
+    endif ()
+
     # The binary name is different on some platforms, use CMake magic to get it.
     set(PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protoc>)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)

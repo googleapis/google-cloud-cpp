@@ -105,10 +105,9 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   make -C /v/ci/test-install all
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
-  # Ignore mkdir errors in development environment.
-  mkdir /v/ci/test-install/.build || /bin/true
-  cd /v/ci/test-install/.build
-  CMAKE_PREFIX_PATH=/usr/local/share cmake .. && make
+  cd /v/ci/test-install
+  CMAKE_PREFIX_PATH=/usr/local/share cmake -H. -B.build
+  cmake --build .build
 fi
 
 # If document generation is enabled, run it now.
