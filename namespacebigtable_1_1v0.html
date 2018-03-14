@@ -72,6 +72,9 @@ $(function() {
 <div class="title">bigtable::v0 Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -242,7 +245,11 @@ Variables</h2></td></tr>
 <tr class="memdesc:a6a3ef447b0654c159b9d2580f432e502"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compiler flags.  <a href="#a6a3ef447b0654c159b9d2580f432e502">More...</a><br /></td></tr>
 <tr class="separator:a6a3ef447b0654c159b9d2580f432e502"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. </p>
+<p>Applications may need to link multiple versions of the Cloud Bigtable C++ client, for example, if they link a library that uses an older version of the client than they do. This namespace is inlined, so applications can use <code>bigtable::Foo</code> in their source, but the symbols are versioned, i.e., the symbol becomes <code>bigtable::v1::Foo</code>.</p>
+<p>Note that, consistent with the semver.org guidelines, the <a class="el" href="namespacebigtable_1_1v0.html" title="The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. ">v0</a> version makes no guarantees with respect to backwards compatibility. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a47ed425d2e8281836e0222e8993b828c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a47ed425d2e8281836e0222e8993b828c">&#9670;&nbsp;</a></span>CreateDefaultAdminClient()</h2>
 
