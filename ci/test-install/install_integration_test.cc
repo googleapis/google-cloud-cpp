@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <google/protobuf/text_format.h>
+#include <sstream>
+#include "bigtable/client/admin_client.h"
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
-
-#include <sstream>
-
-#include <google/protobuf/text_format.h>
-
-#include "bigtable/admin/admin_client.h"
-#include "bigtable/admin/table_admin.h"
+#include "bigtable/client/table_admin.h"
 
 int main(int argc, char* argv[]) try {
   // Make sure the arguments are valid.
