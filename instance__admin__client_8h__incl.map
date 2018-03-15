@@ -1,4 +1,4 @@
-<map id="admin/instance_admin_client.h" name="admin/instance_admin_client.h">
+<map id="client/instance_admin_client.h" name="client/instance_admin_client.h">
 <area shape="rect" id="node5" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="419,102,556,143"/>
 <area shape="rect" id="node6" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="327,206,485,233"/>
 </map>

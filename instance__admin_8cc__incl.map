@@ -1,6 +1,6 @@
-<map id="admin/instance_admin.cc" name="admin/instance_admin.cc">
-<area shape="rect" id="node2" href="$instance__admin_8h.html" title="bigtable/admin/instance\l_admin.h" alt="" coords="94,80,253,121"/>
-<area shape="rect" id="node4" href="$instance__admin__client_8h.html" title="bigtable/admin/instance\l_admin_client.h" alt="" coords="94,169,253,211"/>
+<map id="client/instance_admin.cc" name="client/instance_admin.cc">
+<area shape="rect" id="node2" href="$instance__admin_8h.html" title="bigtable/client/instance\l_admin.h" alt="" coords="96,80,251,121"/>
+<area shape="rect" id="node4" href="$instance__admin__client_8h.html" title="bigtable/client/instance\l_admin_client.h" alt="" coords="96,169,251,211"/>
 <area shape="rect" id="node7" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="419,266,557,307"/>
 <area shape="rect" id="node8" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="327,370,486,397"/>
 </map>

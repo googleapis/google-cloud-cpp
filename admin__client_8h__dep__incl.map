@@ -1,5 +1,5 @@
-<map id="admin/admin_client.h" name="admin/admin_client.h">
-<area shape="rect" id="node2" href="$admin__client_8cc.html" title="admin/admin_client.cc" alt="" coords="5,80,157,107"/>
-<area shape="rect" id="node3" href="$table__admin_8h.html" title="admin/table_admin.h" alt="" coords="182,80,325,107"/>
-<area shape="rect" id="node4" href="$table__admin_8cc.html" title="admin/table_admin.cc" alt="" coords="179,155,328,181"/>
+<map id="client/admin_client.h" name="client/admin_client.h">
+<area shape="rect" id="node2" href="$admin__client_8cc.html" title="client/admin_client.cc" alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node3" href="$table__admin_8h.html" title="client/table_admin.h" alt="" coords="178,80,317,107"/>
+<area shape="rect" id="node4" href="$table__admin_8cc.html" title="client/table_admin.cc" alt="" coords="175,155,320,181"/>
 </map>
