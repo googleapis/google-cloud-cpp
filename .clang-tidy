@@ -10,12 +10,13 @@ Checks: google-readability-*,modernize-*,readability-*,-google-readability-names
 WarningsAsErrors: clang-*,google-*,modernize-*,readability-*,-readability-identifier-naming
 
 CheckOptions:
-  - { key: readability-identifier-naming.NamespaceCase,         value: lower_case }
-  - { key: readability-identifier-naming.ClassCase,             value: CamelCase  }
-  - { key: readability-identifier-naming.StructCase,            value: CamelCase  }
-  - { key: readability-identifier-naming.FunctionCase,          value: CamelCase  }
-  - { key: readability-identifier-naming.VariableCase,          value: lower_case }
-  - { key: readability-identifier-naming.PrivateMemberSuffix,   value: _          }
-  - { key: readability-identifier-naming.ProtectedMemberSuffix, value: _          }
-  - { key: readability-identifier-naming.MacroDefinition,       value: UPPER_CASE }
-  - { key: readability-identifier-naming.TemplateParameter,     value: CamelCase  }
+  - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,           value: CamelCase  }
+  - { key: readability-identifier-naming.VariableCase,           value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberSuffix,    value: _          }
+  - { key: readability-identifier-naming.ProtectedMemberSuffix,  value: _          }
+  - { key: readability-identifier-naming.MacroDefinitionCase,    value: UPPER_CASE }
+  - { key: readability-identifier-naming.EnumConstantCase,       value: UPPER_CASE }
+  - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
