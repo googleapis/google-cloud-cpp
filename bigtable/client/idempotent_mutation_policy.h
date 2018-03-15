@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_IDEMPOTENT_MUTATION_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_IDEMPOTENT_MUTATION_POLICY_H_
 
-#include <bigtable/client/version.h>
-
-#include <memory>
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/version.h"
+#include <memory>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

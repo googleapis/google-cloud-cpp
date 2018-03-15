@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_CLIENT_H_
 
+#include "bigtable/client/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
 #include <string>
-#include "bigtable/client/client_options.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/testing/table_test_fixture.h"
-
-#include <google/protobuf/text_format.h>
-
 #include "bigtable/client/internal/throw_delegate.h"
+#include <google/protobuf/text_format.h>
 
 namespace bigtable {
 namespace testing {

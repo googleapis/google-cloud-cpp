@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_STREAM_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_STREAM_H_
 
-#include <gmock/gmock.h>
 #include <google/bigtable/v2/bigtable.pb.h>
+#include <gmock/gmock.h>
 
 namespace bigtable {
 namespace testing {

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/bulk_mutator.h"
-#include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/chrono_literals.h"
+#include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
 
 /// Define types and functions used in the tests.
 namespace {

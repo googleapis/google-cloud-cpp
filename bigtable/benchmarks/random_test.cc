@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/random.h"
-#include <gmock/gmock.h>
 #include "bigtable/benchmarks/constants.h"
+#include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;
 

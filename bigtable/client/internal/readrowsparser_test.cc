@@ -14,11 +14,8 @@
 
 #include "bigtable/client/internal/readrowsparser.h"
 #include "bigtable/client/row.h"
-
 #include <google/protobuf/text_format.h>
-
 #include <gtest/gtest.h>
-
 #include <numeric>
 #include <sstream>
 #include <vector>

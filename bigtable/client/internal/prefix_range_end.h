@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_PREFIX_RANGE_END_H_
 
 #include "bigtable/client/version.h"
-
 #include <string>
 
 namespace bigtable {

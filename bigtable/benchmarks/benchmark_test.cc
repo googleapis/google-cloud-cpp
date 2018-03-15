@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/benchmark.h"
-#include <bigtable/client/build_info.h>
+#include "bigtable/client/build_info.h"
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;

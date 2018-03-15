@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/client/table.h"
-
 #include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define types and functions used in the tests.

@@ -7,15 +7,14 @@ BasedOnStyle: Google
 # so to enforce the consistency:
 PointerAlignment: Left
 
-# These will need to be enabled after we commit the style guide:
-# IncludeCategories:
-# - Regex: '^\"'
-#   Priority: 1000
-# - Regex: '^<grpc/'
-#   Priority: 2000
-# - Regex: '^<google/*'
-#   Priority: 3000
-# - Regex: '^<.*/.*'
-#   Priority: 4000
-# - Regex: '^<[^/]*>'
-#   Priority: 5000
+IncludeCategories:
+- Regex: '^\"'
+  Priority: 1000
+- Regex: '^<grpc/'
+  Priority: 2000
+- Regex: '^<google/*'
+  Priority: 3000
+- Regex: '^<.*/.*'
+  Priority: 4000
+- Regex: '^<[^/]*>'
+  Priority: 5000

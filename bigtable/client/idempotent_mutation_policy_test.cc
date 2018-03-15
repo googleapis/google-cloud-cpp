@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/idempotent_mutation_policy.h"
-#include <gmock/gmock.h>
 #include "bigtable/client/testing/chrono_literals.h"
+#include <gmock/gmock.h>
 
 /// @test Verify that the default policy works as expected.
 TEST(IdempotentMutationPolicyTest, Simple) {

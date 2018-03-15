@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_RPC_UTILS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_RPC_UTILS_H_
 
-#include <thread>
 #include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
+#include <thread>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

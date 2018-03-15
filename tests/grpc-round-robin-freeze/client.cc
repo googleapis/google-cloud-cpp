@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "echo.grpc.pb.h"
-
-#include <future>
-
 #include <grpc++/grpc++.h>
+#include <future>
 
 void MakeStreamPing(Echo::Stub &echo, std::int32_t count) {
   for (int i = 0; i != 100; ++i) {
