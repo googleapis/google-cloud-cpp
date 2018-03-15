@@ -69,8 +69,8 @@ add_library(bigtable_client
         rpc_backoff_policy.cc
         rpc_retry_policy.h
         rpc_retry_policy.cc
-        rpc_metadata_holder.h
-        rpc_metadata_holder.cc
+        metadata_update_policy.h
+        metadata_update_policy.cc
         table.h
         table.cc
         table_admin.h
@@ -134,7 +134,7 @@ set(bigtable_client_unit_tests
         row_range_test.cc
         row_set_test.cc
         rpc_backoff_policy_test.cc
-        rpc_metadata_holder_test.cc
+        metadata_update_policy_test.cc
         rpc_retry_policy_test.cc)
 
 foreach (fname ${bigtable_client_unit_tests})

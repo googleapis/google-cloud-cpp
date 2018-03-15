@@ -54,7 +54,6 @@ void Table::Apply(SingleRowMutation&& mut) {
   // we need fresh instances.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
-  auto rpc_metadata_holder = rpc_metadata_holder_->clone();
   auto idempotent_policy = idempotent_mutation_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
@@ -73,7 +72,7 @@ void Table::Apply(SingleRowMutation&& mut) {
     grpc::ClientContext client_context;
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
-    rpc_metadata_holder->setup(client_context);
+    metadata_update_policy_.setup(client_context);
     grpc::Status status =
         client_->Stub()->MutateRow(&client_context, request, &response);
     if (status.ok()) {
@@ -108,7 +107,6 @@ void Table::BulkApply(BulkMutation&& mut) {
   // we need fresh instances.
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto retry_policy = rpc_retry_policy_->clone();
-  auto rpc_metadata_holder = rpc_metadata_holder_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
   internal::BulkMutator mutator(table_name_, *idemponent_policy,
@@ -119,7 +117,7 @@ void Table::BulkApply(BulkMutation&& mut) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
     retry_policy->setup(client_context);
-    rpc_metadata_holder->setup(client_context);
+    metadata_update_policy_.setup(client_context);
 
     status = mutator.MakeOneRequest(*client_->Stub(), client_context);
     if (not status.ok() and not retry_policy->on_failure(status)) {
@@ -141,7 +139,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
   return RowReader(client_, table_name(), std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
                    rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-                   rpc_metadata_holder_->clone(),
+                   metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>());
 }
@@ -153,7 +151,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
   }
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
-                   rpc_backoff_policy_->clone(), rpc_metadata_holder_->clone(),
+                   rpc_backoff_policy_->clone(), metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>());
 }
@@ -191,8 +189,8 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
     *request.add_false_mutations() = std::move(m.op);
   }
   auto response = RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), &StubType::CheckAndMutateRow,
-      request, "Table::CheckAndMutateRow");
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow");
   return response.predicate_matched();
 }
 

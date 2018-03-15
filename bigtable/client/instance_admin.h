@@ -34,8 +34,7 @@ class InstanceAdmin {
         project_name_("projects/" + project_id()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
-        rpc_metadata_holder_(DefaultRPCMetadataHolder(
-            project_name(), RPCRequestParamType::kParent)) {}
+        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -54,8 +53,7 @@ class InstanceAdmin {
         project_name_("projects/" + project_id()),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
-        rpc_metadata_holder_(DefaultRPCMetadataHolder(
-            project_name(), RPCRequestParamType::kParent)) {}
+        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return project_name_; }
@@ -81,7 +79,7 @@ class InstanceAdmin {
   std::string project_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder_;
+  MetadataUpdatePolicy metadata_update_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

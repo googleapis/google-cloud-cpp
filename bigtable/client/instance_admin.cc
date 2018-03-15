@@ -22,7 +22,6 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
-  auto rpc_metadata_holder = rpc_metadata_holder_->clone();
 
   std::string error = "InstanceAdmin::ListInstances(" + project_id() + ")";
 
@@ -35,7 +34,7 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
     request.set_parent(project_name_);
 
     auto response = RpcUtils::CallWithRetryBorrow(
-        *client_, *rpc_policy, *backoff_policy, *rpc_metadata_holder,
+        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
         &StubType::ListInstances, request, error.c_str());
 
     for (auto& x : *response.mutable_instances()) {

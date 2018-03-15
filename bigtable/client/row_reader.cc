@@ -48,7 +48,7 @@ RowReader::RowReader(
     std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder,
+    MetadataUpdatePolicy const& metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
       table_name_(std::move(table_name)),
@@ -57,7 +57,7 @@ RowReader::RowReader(
       filter_(std::move(filter)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
-      rpc_metadata_holder_(std::move(rpc_metadata_holder)),
+      metadata_update_policy_(metadata_update_policy),
       context_(),
       parser_factory_(std::move(parser_factory)),
       stream_is_open_(false),
@@ -100,7 +100,7 @@ void RowReader::MakeRequest() {
   context_ = bigtable::internal::make_unique<grpc::ClientContext>();
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
-  rpc_metadata_holder_->setup(*context_);
+  metadata_update_policy_.setup(*context_);
   stream_ = client_->Stub()->ReadRows(context_.get(), request);
   stream_is_open_ = true;
 

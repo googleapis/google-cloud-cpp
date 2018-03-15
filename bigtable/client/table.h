@@ -18,11 +18,11 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/metadata_update_policy.h"
 #include "bigtable/client/mutations.h"
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_metadata_holder.h"
 #include "bigtable/client/rpc_retry_policy.h"
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -72,8 +72,7 @@ class Table {
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
-        rpc_metadata_holder_(DefaultRPCMetadataHolder(
-            table_name(), RPCRequestParamType::kTableName)),
+        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 
@@ -134,8 +133,7 @@ class Table {
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
-        rpc_metadata_holder_(DefaultRPCMetadataHolder(
-            table_name(), RPCRequestParamType::kTableName)),
+        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
   std::string const& table_name() const { return table_name_; }
@@ -230,7 +228,7 @@ class Table {
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::unique_ptr<RPCMetadataHolder> rpc_metadata_holder_;
+  MetadataUpdatePolicy metadata_update_policy_;
   std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
