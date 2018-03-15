@@ -228,9 +228,10 @@ class Table {
   using StubType = RpcUtils::StubType;
 
   /**
-   * Read the row modify it according to ReadModifyRule and return the row.
+   * Atomically read and modify the row in the server, returning the
+   * resulting row
    *
-   * @tparam Args this is zero or more ReadModifyWriteRules to apply to the row
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row
    * @param row_key the row to read
    * @param rule to modify the row. Two types of rules are applied here
    *     AppendValue which will read the existing value and append the
@@ -238,25 +239,28 @@ class Table {
    *     IncrementAmount which will read the existing uint64 big-endian-int
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
+   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns modified row
    */
   template <typename... Args>
-  std::unique_ptr<Row> ReadModifyWriteRow(std::string row_key,
-                                          bigtable::ReadModifyWriteRule rule,
-                                          Args&&... rules) {
+  Row ReadModifyWriteRow(std::string row_key,
+                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     btproto::ReadModifyWriteRowRequest request;
     request.set_table_name(table_name_);
     request.set_row_key(std::move(row_key));
 
-    // This ugly thing provides a better compile-time error message than
-    // just letting the compiler figure things out 3 levels deep
-    // as it recurses on append_types().
+    // Generate a better compile time error message than the default one
+    // if the types do not match
     static_assert(
         internal::conjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
+    // Below code to add the ReadModifyWriteRule to the request object
+    // is by making a copy. This will create performance problem if the
+    // rules buffer is large
+    // TODO Issue#336
     // Add first default rule
     *request.add_rules() = rule.as_proto_move();
     // Add if any additional rule is present
@@ -266,13 +270,11 @@ class Table {
       *request.add_rules() = args_rule.as_proto_move();
     }
 
-    std::unique_ptr<Row> row = CallReadModifyWriteRowRequest(request);
-
-    return row;
+    return CallReadModifyWriteRowRequest(request);
   }
 
  private:
-  std::unique_ptr<Row> CallReadModifyWriteRowRequest(
+  Row CallReadModifyWriteRowRequest(
       btproto::ReadModifyWriteRowRequest row_request);
 
  private:

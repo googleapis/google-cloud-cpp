@@ -29,9 +29,9 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
                  std::vector<bigtable::Cell> const& cells);
 
   std::string const family = "family";
-  std::string const family1 = "AmazingFamily";
-  std::string const family2 = "ExtremeFamily";
-  std::string const family3 = "VirtualFamily";
+  std::string const family1 = "family1";
+  std::string const family2 = "family2";
+  std::string const family3 = "family3";
   bigtable::TableConfig table_config =
       bigtable::TableConfig({{family, bigtable::GcRule::MaxNumVersions(10)},
                              {family1, bigtable::GcRule::MaxNumVersions(10)},
@@ -281,10 +281,9 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
   // Returned cells contains timestamp in microseconds which is
   // not matching with the timestamp in expected cells, So creating
   // cells by ignoring timestamp
-  std::vector<bigtable::Cell> expected_cells_ignore_timestamp =
-      GetCellsIgnoringTimestamp(expected);
-  std::vector<bigtable::Cell> actual_cells_ignore_timestamp =
-      GetCellsIgnoringTimestamp(result_row->cells());
+  auto expected_cells_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_cells_ignore_timestamp =
+      GetCellsIgnoringTimestamp(result_row.cells());
 
   DeleteTable(table_name);
   CheckEqualUnordered(expected_cells_ignore_timestamp,

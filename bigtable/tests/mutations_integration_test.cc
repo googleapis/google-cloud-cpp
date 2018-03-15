@@ -118,10 +118,8 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
   DeleteTable(table_name);
 
   // Create the expected_cells and actual_cells with same timestamp
-  std::vector<bigtable::Cell> expected_cells_ignore_time =
-      GetCellsIgnoringTimestamp(expected_cells);
-  std::vector<bigtable::Cell> actual_cells_ignore_time =
-      GetCellsIgnoringTimestamp(actual_cells);
+  auto expected_cells_ignore_time = GetCellsIgnoringTimestamp(expected_cells);
+  auto actual_cells_ignore_time = GetCellsIgnoringTimestamp(actual_cells);
 
   CheckEqualUnordered(expected_cells_ignore_time, actual_cells_ignore_time);
 }

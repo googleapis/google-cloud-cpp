@@ -194,7 +194,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
 /**
  * Send request ReadModifyWriteRowRequest to modify the row and get it back
  */
-std::unique_ptr<Row> Table::CallReadModifyWriteRowRequest(
+Row Table::CallReadModifyWriteRowRequest(
     btproto::ReadModifyWriteRowRequest row_request) {
   auto error_message =
       "ReadModifyWriteRowRequest(" + row_request.table_name() + ")";
@@ -219,7 +219,7 @@ std::unique_ptr<Row> Table::CallReadModifyWriteRowRequest(
   }
 
   Row row(response_row.row().key(), cells);
-  return bigtable::internal::make_unique<Row>(row);
+  return row;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

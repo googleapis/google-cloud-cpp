@@ -70,10 +70,10 @@ class TableIntegrationTest : public ::testing::Test {
                    std::vector<bigtable::Cell> const& cells);
 
   /**
-   * This function gets the vector of cells and modify its timestamp
-   * to fixed 1000 value and return it. So when there is a mismatch between
-   * records due to timestamp we can ignore timestamp and match the other
-   * parameters of the cells.
+   * Return @p cells with all timestamps set to a fixed value.
+   *
+   * This is useful to compare sets of cells but ignoring their timestamp
+   * values.
    */
   std::vector<bigtable::Cell> GetCellsIgnoringTimestamp(
       std::vector<bigtable::Cell> cells);
