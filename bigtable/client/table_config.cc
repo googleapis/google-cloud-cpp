@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/table_config.h"
+#include "bigtable/client/table_config.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

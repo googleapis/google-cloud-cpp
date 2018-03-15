@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/instance_admin_client.h"
+#include "bigtable/client/instance_admin_client.h"
 #include <gmock/gmock.h>
 
 TEST(InstanceAdminClientTest, Default) {

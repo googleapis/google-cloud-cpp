@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_CLIENT_H_
 
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
@@ -59,4 +59,4 @@ std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_INSTANCE_ADMIN_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_CLIENT_H_

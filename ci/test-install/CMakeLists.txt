@@ -29,7 +29,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Threads REQUIRED)
 
 find_package(bigtable_client 0.1.0 REQUIRED)
-find_package(bigtable_admin_client 0.1.0 REQUIRED)
 
 # The dependencies are hard-coded because we just want to test the
 # google-cloud-cpp installed files.  A real application would use find_package()
@@ -58,4 +57,4 @@ set_target_properties(gRPC::grpc++ PROPERTIES
 
 # Defining new targets should be easy.
 add_executable(install_integration_test install_integration_test.cc)
-target_link_libraries(install_integration_test bigtable::admin_client bigtable::client)
+target_link_libraries(install_integration_test bigtable::client)

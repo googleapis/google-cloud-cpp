@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/table_admin.h"
+#include "bigtable/client/table_admin.h"
 #include <sstream>
 
 namespace btproto = ::google::bigtable::admin::v2;

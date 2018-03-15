@@ -156,7 +156,6 @@ add_dependencies(depends-local gmock bigtable_protos)
 # All tests get added to this target below.
 add_custom_target(tests-local)
 add_subdirectory(client)
-add_subdirectory(admin)
 add_subdirectory(tests)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
@@ -171,10 +170,6 @@ if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
     message(STATUS "clang-tidy build enabled.")
     set_target_properties(
             bigtable_client PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-    set_target_properties(
-            bigtable_admin_client PROPERTIES
             CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
     )
 endif ()

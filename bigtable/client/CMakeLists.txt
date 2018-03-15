@@ -17,18 +17,25 @@ configure_file(version_info.h.in version_info.h)
 
 # the client library
 add_library(bigtable_client
+        admin_client.h
+        admin_client.cc
         ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
         build_info.h
         cell.h
         client_options.h
         client_options.cc
+        column_family.h
         data_client.h
         data_client.cc
         filters.h
         filters.cc
         grpc_error.h
         grpc_error.cc
+        instance_admin_client.h
+        instance_admin_client.cc
+        instance_admin.h
+        instance_admin.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
@@ -64,6 +71,10 @@ add_library(bigtable_client
         rpc_retry_policy.cc
         table.h
         table.cc
+        table_admin.h
+        table_admin.cc
+        table_config.h
+        table_config.cc
         version.h
         version.cc)
 target_link_libraries(bigtable_client PUBLIC
@@ -92,20 +103,26 @@ target_link_libraries(bigtable_client_testing PUBLIC
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
+        admin_client_test.cc
         cell_test.cc
         client_options_test.cc
+        column_family_test.cc
         data_client_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
         grpc_error_test.cc
         idempotent_mutation_policy_test.cc
+        instance_admin_client_test.cc
+        instance_admin_test.cc
         internal/bulk_mutator_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
         mutations_test.cc
+        table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
         table_check_and_mutate_row_test.cc
+        table_config_test.cc
         table_readrow_test.cc
         table_readrows_test.cc
         table_test.cc

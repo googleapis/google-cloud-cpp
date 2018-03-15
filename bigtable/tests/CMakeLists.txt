@@ -16,27 +16,27 @@
 # Cloud Bigtable emulator.
 add_executable(data_integration_test data_integration_test.cc)
 target_link_libraries(data_integration_test
-        gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+        gmock bigtable_client bigtable_client_testing bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local data_integration_test)
 
 # An integration test for bigtable::TableAdmin.
 add_executable(admin_integration_test admin_integration_test.cc)
 target_link_libraries(admin_integration_test
-        gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+        gmock bigtable_client bigtable_client_testing bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local admin_integration_test)
 
 # An integration test for bigtable::Filter.
 add_executable(filters_integration_test filters_integration_test.cc)
 target_link_libraries(filters_integration_test
-        bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
-        gmock gRPC::grpc protobuf::libprotobuf)
+        gmock bigtable_client bigtable_client_testing bigtable_protos
+        gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local filters_integration_test)
 
 # An integration test for bigtable::Mutations.
 add_executable(mutations_integration_test mutations_integration_test.cc)
 target_link_libraries(mutations_integration_test
-        bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
-        gmock gRPC::grpc protobuf::libprotobuf)
+        gmock bigtable_client bigtable_client_testing bigtable_protos
+        gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local mutations_integration_test)

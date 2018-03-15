@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/instance_admin_client.h"
+#include "bigtable/client/admin_client.h"
 #include "bigtable/client/internal/common_client.h"
 
 namespace {
@@ -29,7 +29,7 @@ namespace {
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
+class DefaultAdminClient : public bigtable::AdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
@@ -40,23 +40,18 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
   };
 
   using Impl = bigtable::internal::CommonClient<
-      AdminTraits, ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
+      AdminTraits, ::google::bigtable::admin::v2::BigtableTableAdmin>;
 
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  DefaultInstanceAdminClient(std::string project,
-                             bigtable::ClientOptions options)
+  DefaultAdminClient(std::string project, bigtable::ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
   AdminStubPtr Stub() override { return impl_.Stub(); }
   void reset() override { return impl_.reset(); }
   void on_completion(grpc::Status const& status) override {}
-
-  DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
-  DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
-      delete;
 
  private:
   std::string project_;
@@ -66,10 +61,10 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
     std::string project, bigtable::ClientOptions options) {
-  return std::make_shared<DefaultInstanceAdminClient>(std::move(project),
-                                                      std::move(options));
+  return std::make_shared<DefaultAdminClient>(std::move(project),
+                                              std::move(options));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/admin/instance_admin.h"
+#include "bigtable/client/instance_admin.h"
 #include <gmock/gmock.h>
 #include <google/bigtable/admin/v2/bigtable_instance_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>

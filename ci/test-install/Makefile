@@ -18,7 +18,7 @@
 # nor is it a general solution on how to build Makefiles for google-cloud-cpp.
 # It is simply a minimal file to test the installed pkg-config support files.
 
-DEPS=bigtable_client bigtable_admin grpc++ grpc protobuf
+DEPS=bigtable_client grpc++ grpc protobuf
 CXXFLAGS=$(shell pkg-config $(DEPS) --cflags)
 CXXLDFLAGS=$(shell pkg-config $(DEPS) --libs-only-L)
 LIBS=$(shell pkg-config $(DEPS) --libs-only-l)

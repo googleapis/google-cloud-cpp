@@ -13,13 +13,10 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/embedded_server.h"
-
-#include <thread>
-
 #include <gmock/gmock.h>
-
-#include "bigtable/admin/table_admin.h"
+#include <thread>
 #include "bigtable/client/table.h"
+#include "bigtable/client/table_admin.h"
 
 using namespace bigtable::benchmarks;
 
