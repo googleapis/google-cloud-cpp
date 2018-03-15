@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define helper types and functions for this test.
@@ -21,6 +22,9 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::Apply() works in a simplest case.
+
+using namespace bigtable::chrono_literals;
+
 TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;
 
@@ -28,7 +32,7 @@ TEST_F(TableApplyTest, Simple) {
       .WillOnce(Return(grpc::Status::OK));
 
   table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0, "val")}));
+      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 }
 
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
@@ -41,7 +45,7 @@ TEST_F(TableApplyTest, Failure) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
-                   "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
+                   "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
                std::exception);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
@@ -65,7 +69,7 @@ TEST_F(TableApplyTest, Retry) {
       .WillOnce(Return(grpc::Status::OK));
 
   table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0, "val")}));
+      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 }
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.

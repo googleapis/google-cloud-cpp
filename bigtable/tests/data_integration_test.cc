@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 namespace {
@@ -68,24 +69,28 @@ namespace {
 
 void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
                                 std::vector<bigtable::Cell> const& cells) {
+  using namespace std::chrono;
   auto mutation = bigtable::SingleRowMutation(row_key);
   for (auto const& cell : cells) {
-    mutation.emplace_back(bigtable::SetCell(cell.family_name(),
-                                            cell.column_qualifier(),
-                                            cell.timestamp(), cell.value()));
+    mutation.emplace_back(bigtable::SetCell(
+        cell.family_name(), cell.column_qualifier(),
+        duration_cast<milliseconds>(microseconds(cell.timestamp())),
+        cell.value()));
   }
   table.Apply(std::move(mutation));
 }
 
 void DataIntegrationTest::BulkApply(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
+  using namespace std::chrono;
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     std::string key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-    inserted.first->second.emplace_back(
-        bigtable::SetCell(cell.family_name(), cell.column_qualifier(),
-                          cell.timestamp(), cell.value()));
+    inserted.first->second.emplace_back(bigtable::SetCell(
+        cell.family_name(), cell.column_qualifier(),
+        duration_cast<milliseconds>(microseconds(cell.timestamp())),
+        cell.value()));
   }
   bigtable::BulkMutation bulk;
   for (auto& kv : mutations) {
@@ -94,6 +99,8 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   table.BulkApply(std::move(bulk));
 }
 }  // anonymous namespace
+
+using namespace bigtable::chrono_literals;
 
 TEST_F(DataIntegrationTest, TableApply) {
   std::string const table_name = "table-apply-test";
@@ -148,9 +155,9 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   auto table = CreateTable(table_name, table_config);
 
   auto mutation = bigtable::SingleRowMutation(
-      row_key, bigtable::SetCell(family, "c1", 1000, "V1000"),
-      bigtable::SetCell(family, "c2", 2000, "V2000"),
-      bigtable::SetCell(family, "c3", 3000, "V3000"));
+      row_key, bigtable::SetCell(family, "c1", 1_ms, "V1000"),
+      bigtable::SetCell(family, "c2", 2_ms, "V2000"),
+      bigtable::SetCell(family, "c3", 3_ms, "V3000"));
   table->Apply(std::move(mutation));
   std::vector<bigtable::Cell> expected{
       {row_key, family, "c1", 1000, "V1000", {}},
@@ -204,10 +211,10 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*table, created);
-  auto result =
-      table->CheckAndMutateRow(key, bigtable::Filter::ValueRegex("v1000"),
-                               {bigtable::SetCell(family, "c2", 0, "v2000")},
-                               {bigtable::SetCell(family, "c3", 0, "v3000")});
+  auto result = table->CheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("v1000"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")});
   EXPECT_TRUE(result);
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c2", 0, "v2000", {}}};
@@ -223,10 +230,10 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*table, created);
-  auto result =
-      table->CheckAndMutateRow(key, bigtable::Filter::ValueRegex("not-there"),
-                               {bigtable::SetCell(family, "c2", 0, "v2000")},
-                               {bigtable::SetCell(family, "c3", 0, "v3000")});
+  auto result = table->CheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("not-there"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")});
   EXPECT_FALSE(result);
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c3", 0, "v3000", {}}};

@@ -13,38 +13,35 @@
 // limitations under the License.
 
 #include "bigtable/client/idempotent_mutation_policy.h"
-
 #include <gmock/gmock.h>
+#include "bigtable/client/testing/chrono_literals.h"
 
 /// @test Verify that the default policy works as expected.
 TEST(IdempotentMutationPolicyTest, Simple) {
+  using namespace bigtable::chrono_literals;
   auto policy = bigtable::DefaultIdempotentMutationPolicy();
   EXPECT_TRUE(policy->is_idempotent(
       bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
   EXPECT_TRUE(policy->is_idempotent(bigtable::DeleteFromFamily("fam").op));
 
   EXPECT_TRUE(
-      policy->is_idempotent(bigtable::SetCell("fam", "col", 0, "v1").op));
+      policy->is_idempotent(bigtable::SetCell("fam", "col", 0_ms, "v1").op));
   EXPECT_FALSE(policy->is_idempotent(bigtable::SetCell("fam", "c2", "v2").op));
-  EXPECT_FALSE(policy->is_idempotent(
-      bigtable::SetCell("f", "c", bigtable::ServerSetTimestamp(), "v").op));
 }
 
 /// @test Verify that bigtable::AlwaysRetryMutationPolicy works as expected.
 TEST(IdempotentMutationPolicyTest, AlwaysRetry) {
+  using namespace bigtable::chrono_literals;
   bigtable::AlwaysRetryMutationPolicy policy;
   EXPECT_TRUE(
       policy.is_idempotent(bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
   EXPECT_TRUE(policy.is_idempotent(bigtable::DeleteFromFamily("fam").op));
 
   EXPECT_TRUE(
-      policy.is_idempotent(bigtable::SetCell("fam", "col", 0, "v1").op));
+      policy.is_idempotent(bigtable::SetCell("fam", "col", 0_ms, "v1").op));
   EXPECT_TRUE(policy.is_idempotent(bigtable::SetCell("fam", "c2", "v2").op));
-  EXPECT_TRUE(policy.is_idempotent(
-      bigtable::SetCell("f", "c", bigtable::ServerSetTimestamp(), "v").op));
 
   auto clone = policy.clone();
-  EXPECT_TRUE(clone->is_idempotent(
-      bigtable::SetCell("f", "c", bigtable::ServerSetTimestamp(), "v").op));
-  EXPECT_TRUE(clone->is_idempotent(bigtable::SetCell("f", "c", 10, "v").op));
+  EXPECT_TRUE(clone->is_idempotent(bigtable::SetCell("f", "c", "v").op));
+  EXPECT_TRUE(clone->is_idempotent(bigtable::SetCell("f", "c", 10_ms, "v").op));
 }

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 namespace {
@@ -386,6 +387,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
+  using namespace bigtable::chrono_literals;
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (UsingCloudBigtableEmulator()) {
     return;
@@ -400,7 +402,7 @@ TEST_F(FilterIntegrationTest, RowSample) {
   for (int row = 0; row != row_count; ++row) {
     std::string row_key = prefix + "/" + std::to_string(row);
     bulk.emplace_back(bigtable::SingleRowMutation(
-        row_key, bigtable::SetCell("fam0", "col", 4000, "foo")));
+        row_key, bigtable::SetCell("fam0", "col", 4_ms, "foo")));
   }
   table->BulkApply(std::move(bulk));
 
@@ -597,36 +599,38 @@ namespace {
 void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
                                               std::string const& prefix) {
   namespace bt = bigtable;
+  using namespace bigtable::chrono_literals;
+
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/one-cell", {bt::SetCell("fam0", "c", 3000, "foo")}));
+      prefix + "/one-cell", {bt::SetCell("fam0", "c", 3_ms, "foo")}));
   mutation.emplace_back(
       bt::SingleRowMutation(prefix + "/two-cells",
-                            {bt::SetCell("fam0", "c", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo")}));
+                            {bt::SetCell("fam0", "c", 3_ms, "foo"),
+                             bt::SetCell("fam0", "c2", 3_ms, "foo")}));
   mutation.emplace_back(
       bt::SingleRowMutation(prefix + "/many",
-                            {bt::SetCell("fam0", "c", 0, "foo"),
-                             bt::SetCell("fam0", "c", 1000, "foo"),
-                             bt::SetCell("fam0", "c", 2000, "foo"),
-                             bt::SetCell("fam0", "c", 3000, "foo")}));
+                            {bt::SetCell("fam0", "c", 0_ms, "foo"),
+                             bt::SetCell("fam0", "c", 1_ms, "foo"),
+                             bt::SetCell("fam0", "c", 2_ms, "foo"),
+                             bt::SetCell("fam0", "c", 3_ms, "foo")}));
   mutation.emplace_back(
       bt::SingleRowMutation(prefix + "/many-columns",
-                            {bt::SetCell("fam0", "c0", 3000, "foo"),
-                             bt::SetCell("fam0", "c1", 3000, "foo"),
-                             bt::SetCell("fam0", "c2", 3000, "foo"),
-                             bt::SetCell("fam0", "c3", 3000, "foo")}));
+                            {bt::SetCell("fam0", "c0", 3_ms, "foo"),
+                             bt::SetCell("fam0", "c1", 3_ms, "foo"),
+                             bt::SetCell("fam0", "c2", 3_ms, "foo"),
+                             bt::SetCell("fam0", "c3", 3_ms, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
   for (int i = 0; i != 4; ++i) {
     for (int j = 0; j != 10; ++j) {
       complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
-                                       "col" + std::to_string(j), 3000, "foo"));
+                                       "col" + std::to_string(j), 3_ms, "foo"));
       complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
-                                       "col" + std::to_string(j), 6000, "bar"));
+                                       "col" + std::to_string(j), 6_ms, "bar"));
     }
   }
   mutation.emplace_back(std::move(complex));

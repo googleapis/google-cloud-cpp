@@ -22,6 +22,7 @@
 #include "bigtable/client/table.h"
 
 using namespace bigtable::benchmarks;
+using std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {
   auto server = CreateEmbeddedServer();
@@ -72,8 +73,8 @@ TEST(EmbeddedServer, TableApply) {
 
   bigtable::SingleRowMutation mutation(
       "row1",
-      {bigtable::SetCell("fam", "col", 0, "val"),
-       bigtable::SetCell("fam", "col", 0, "val")});
+      {bigtable::SetCell("fam", "col", milliseconds(0), "val"),
+       bigtable::SetCell("fam", "col", milliseconds(0), "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
   table.Apply(std::move(mutation));
@@ -96,9 +97,9 @@ TEST(EmbeddedServer, TableBulkApply) {
 
   bigtable::BulkMutation bulk;
   bulk.emplace_back(bigtable::SingleRowMutation(
-      "row1", {bigtable::SetCell("fam", "col", 0, "val")}));
+      "row1", {bigtable::SetCell("fam", "col", milliseconds(0), "val")}));
   bulk.emplace_back(bigtable::SingleRowMutation(
-      "row2", {bigtable::SetCell("fam", "col", 0, "val")}));
+      "row2", {bigtable::SetCell("fam", "col", milliseconds(0), "val")}));
 
   EXPECT_EQ(0, server->mutate_rows_count());
   table.BulkApply(std::move(bulk));

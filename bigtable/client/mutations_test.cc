@@ -15,14 +15,17 @@
 #include "bigtable/client/mutations.h"
 #include <gmock/gmock.h>
 #include <google/rpc/error_details.pb.h>
+#include "bigtable/client/testing/chrono_literals.h"
+
+using namespace bigtable::chrono_literals;
 
 /// @test Verify that SetCell() works as expected.
 TEST(MutationsTest, SetCell) {
-  auto actual = bigtable::SetCell("family", "col", 1234, "value");
+  auto actual = bigtable::SetCell("family", "col", 1234_ms, "value");
   ASSERT_TRUE(actual.op.has_set_cell());
   EXPECT_EQ("family", actual.op.set_cell().family_name());
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
-  EXPECT_EQ(1234, actual.op.set_cell().timestamp_micros());
+  EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
   EXPECT_EQ("value", actual.op.set_cell().value());
 
   auto server_set = bigtable::SetCell("fam", "col", "v");
@@ -40,8 +43,8 @@ TEST(MutationsTest, SetCell) {
   // work around that optimization and test the move behavior.
   std::string val(1000000, 'a');
   auto val_data = val.data();
-  auto moved =
-      bigtable::SetCell(std::move(fam), std::move(col), 2345, std::move(val));
+  auto moved = bigtable::SetCell(std::move(fam), std::move(col), 2345_ms,
+                                 std::move(val));
   ASSERT_TRUE(moved.op.has_set_cell());
   EXPECT_EQ("fam2", moved.op.set_cell().family_name());
   EXPECT_EQ("col2", moved.op.set_cell().column_qualifier());
@@ -113,7 +116,7 @@ TEST(MutationsTest, DeleteFromRow) {
 // @test Verify that FailedMutation works as expected.
 TEST(MutationsTest, FailedMutation) {
   bigtable::SingleRowMutation mut("foo",
-                                  {bigtable::SetCell("f", "c", 0, "val")});
+                                  {bigtable::SetCell("f", "c", 0_ms, "val")});
 
   // Create an overly complicated detail status, the idea is to make
   // sure it works in this case.
@@ -153,9 +156,9 @@ TEST(MutationsTest, MutipleRowMutations) {
 
   actual
       .emplace_back(bigtable::SingleRowMutation(
-          "foo1", {bigtable::SetCell("f", "c", 0, "v1")}))
+          "foo1", {bigtable::SetCell("f", "c", 0_ms, "v1")}))
       .push_back(bigtable::SingleRowMutation(
-          "foo2", {bigtable::SetCell("f", "c", 0, "v2")}));
+          "foo2", {bigtable::SetCell("f", "c", 0_ms, "v2")}));
 
   actual.MoveTo(&request);
   ASSERT_EQ(2, request.entries_size());
@@ -164,11 +167,11 @@ TEST(MutationsTest, MutipleRowMutations) {
 
   std::vector<bigtable::SingleRowMutation> vec{
       bigtable::SingleRowMutation("foo1",
-                                  {bigtable::SetCell("f", "c", 0, "v1")}),
+                                  {bigtable::SetCell("f", "c", 0_ms, "v1")}),
       bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0, "v2")}),
+                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
       bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0, "v3")}),
+                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
   bigtable::BulkMutation from_vec(vec.begin(), vec.end());
 
@@ -180,9 +183,9 @@ TEST(MutationsTest, MutipleRowMutations) {
 
   bigtable::BulkMutation from_il{
       bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0, "v2")}),
+                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
       bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0, "v3")}),
+                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
   from_il.MoveTo(&request);
   ASSERT_EQ(2, request.entries_size());
@@ -195,8 +198,8 @@ TEST(MutationsTest, SingleRowMutationMultipleVariadic) {
   std::string const row_key = "row-key-1";
 
   bigtable::SingleRowMutation actual(
-      row_key, bigtable::SetCell("family", "c1", 1000, "V1000"),
-      bigtable::SetCell("family", "c2", 2000, "V2000"));
+      row_key, bigtable::SetCell("family", "c1", 1_ms, "V1000"),
+      bigtable::SetCell("family", "c2", 2_ms, "V2000"));
 
   google::bigtable::v2::MutateRowsRequest::Entry entry;
   (void)entry.add_mutations();
@@ -212,7 +215,7 @@ TEST(MutationsTest, SingleRowMutationSingleVariadic) {
   std::string const row_key = "row-key-1";
 
   bigtable::SingleRowMutation actual(
-      row_key, bigtable::SetCell("family", "c1", 1000, "V1000"));
+      row_key, bigtable::SetCell("family", "c1", 1_ms, "V1000"));
 
   google::bigtable::v2::MutateRowsRequest::Entry entry;
   (void)entry.add_mutations();
