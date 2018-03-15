@@ -17,8 +17,8 @@
 
 #include <algorithm>
 #include <random>
-#include "bigtable/client/table_admin.h"
 #include "bigtable/client/table.h"
+#include "bigtable/client/table_admin.h"
 
 namespace bigtable {
 namespace benchmarks {
