@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/setup.h"
-#include <cctype>
-#include <iomanip>
-#include <sstream>
 #include "bigtable/benchmarks/random.h"
 #include "bigtable/client/build_info.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include <cctype>
+#include <iomanip>
+#include <sstream>
 
 /// Supporting types and functions to implement `BenchmarkSetup`
 namespace {

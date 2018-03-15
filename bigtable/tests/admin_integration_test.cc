@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <gmock/gmock.h>
-#include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
-
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
-
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/message_differencer.h>
+#include <gmock/gmock.h>
 #include <string>
 #include <vector>
 

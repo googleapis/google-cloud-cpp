@@ -17,8 +17,8 @@
 
 #include <bigtable/client/version.h>
 
-#include <memory>
 #include "bigtable/client/mutations.h"
+#include <memory>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

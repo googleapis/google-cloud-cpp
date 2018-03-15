@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/rowreaderiterator.h"
-
 #include "bigtable/client/row_reader.h"
 
 namespace bigtable {

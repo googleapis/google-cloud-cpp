@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "echo.grpc.pb.h"
-
 #include <grpc++/grpc++.h>
 #include <future>
 #include <iostream>

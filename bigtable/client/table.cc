@@ -13,12 +13,10 @@
 // limitations under the License.
 
 #include "bigtable/client/table.h"
-
-#include <bigtable/client/internal/unary_rpc_utils.h>
-#include <thread>
-
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
+#include <bigtable/client/internal/unary_rpc_utils.h>
+#include <thread>
 
 namespace btproto = ::google::bigtable::v2;
 

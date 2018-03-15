@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_BENCHMARK_SETUP_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_BENCHMARK_SETUP_H_
 
+#include "bigtable/benchmarks/constants.h"
 #include <chrono>
 #include <string>
 #include <vector>
-#include "bigtable/benchmarks/constants.h"
 
 namespace bigtable {
 namespace benchmarks {

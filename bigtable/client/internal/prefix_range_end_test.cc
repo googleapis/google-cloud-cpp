@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/prefix_range_end.h"
-
 #include <gmock/gmock.h>
 
 TEST(PrefixRangeEndTest, Simple) {
