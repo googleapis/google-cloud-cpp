@@ -49,7 +49,7 @@ of this document.
 ##### Adopt rules that can be enforced by automatic tools
 
 When designing this style guide we biased towards rules that can be automatically enforced by linters such as
-`clang-tidy` or `clang-format`
+`clang-tidy` or `clang-format`.
 
 ## Major Differences from the Google Style Guide
 
@@ -395,7 +395,9 @@ other classes solely through their public members.
 #### Exceptions
 
 Use exceptions to represent a failure to complete the desired work in a function. Your library should compile with 
-exceptions disabled, follow [the design document](no-exception-support.md) to do so.
+exceptions disabled, follow [the accompanying design document](no-exception-support.md) to do so. In rare circumstances
+you may need to provide APIs that perform error reporting without using exceptions, the
+[same document](no-exception-support.md) covers how to design such APIs.
 
 There are no hard and fast rules as to when is better to raise an exceptions vs. returning an error status, specially
 for libraries that contact remote systems. In general, this guideline is useful:
@@ -630,7 +632,6 @@ Namespace names are all lower-case. Top-level namespace names are based on the p
 Enumerators (for both scoped and unscoped enums) should be named like [macros](#Macro Names): `ENUM_NAME`.
 
 This rule is more restrictive than:
-NN
 [link to CSG](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
 #### Macro Names
@@ -762,7 +763,9 @@ and understand everyone's code easily.
 
 The project enforces formatting using `clang-format`, configured to follow the `Google` style guide.  Please
 configure your editor or IDE to follow the same guidelines.  When the tool disagrees with this document please file a
-bug either the tool configuration or the document needs adjustment.
+bug either the tool configuration or the document needs adjustment. This document lists all the formatting rules to
+compare them against the existing style guide, unless you are trying to learn how to configure `clang-format`, you
+probably should not memorize the rules and trust the tool to do the formatting for you.
 
 In a few cases where the GSG give latitude we have made a choice.
 
@@ -842,8 +845,8 @@ string const &str;
 #### Boolean Expressions
 
 When you have a boolean expression that is longer than the standard line length, be consistent in how you break up
-the lines.  Use the word operators, such as `and`, `not`, and `or`, rather than the punctuation operators such as
-`&&`, `!`, and `||`.  Word operators are more readable.
+the lines.  Also note that you should always use the punctuation operators, such as `&&` and `~`, rather than the word
+operators, such as `and` and `compl`.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Boolean_Expressions)
 
