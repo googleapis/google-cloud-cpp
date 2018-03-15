@@ -50,7 +50,7 @@ TEST_F(TableApplyTest, Failure) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table_.Apply(bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0, "val")})),
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

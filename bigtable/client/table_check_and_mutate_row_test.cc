@@ -55,8 +55,8 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
   EXPECT_DEATH_IF_SUPPORTED(
       table_.CheckAndMutateRow(
           "foo", bigtable::Filter::PassAllFilter(),
-          {bigtable::SetCell("fam", "col", 0, "it was true")},
-          {bigtable::SetCell("fam", "col", 0, "it was false")}),
+          {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+          {bigtable::SetCell("fam", "col", 0_ms, "it was false")}),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
