@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
 
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include "bigtable/client/client_options.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

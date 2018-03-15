@@ -23,7 +23,6 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {

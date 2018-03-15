@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
-#include <string>
-
 #include "bigtable/client/internal/port_platform.h"
 #include "bigtable/client/version_info.h"
+#include <string>
 
 #define BIGTABLE_CLIENT_VCONCAT(Ma, Mi) v##Ma
 #define BIGTABLE_CLIENT_VEVAL(Ma, Mi) BIGTABLE_CLIENT_VCONCAT(Ma, Mi)

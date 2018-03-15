@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <google/protobuf/text_format.h>
-
-#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
+#include "bigtable/client/internal/make_unique.h"
+#include <google/protobuf/text_format.h>
 
 namespace bigtable {
 namespace testing {

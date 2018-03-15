@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/table.h"
-
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/table.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 

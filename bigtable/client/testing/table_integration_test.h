@@ -15,14 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_INTEGRATION_TEST_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_INTEGRATION_TEST_H_
 
+#include "bigtable/admin/admin_client.h"
+#include "bigtable/admin/table_admin.h"
 #include "bigtable/client/cell.h"
+#include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/mock_data_client.h"
 #include "bigtable/client/testing/mock_response_stream.h"
-
-#include "bigtable/admin/admin_client.h"
-#include "bigtable/admin/table_admin.h"
-#include "bigtable/client/data_client.h"
 
 namespace bigtable {
 namespace testing {

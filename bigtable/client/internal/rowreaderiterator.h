@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 
-#include <iterator>
 #include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/row.h"
+#include <iterator>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
