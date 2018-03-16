@@ -25,28 +25,29 @@ MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string resource_name, MetadataParamTypes metadata_param_type) {
-  google_cloud_resource_prefix_ =
-      std::make_pair("google-cloud-resource-prefix", resource_name);
-
   std::string value;
-  value = metadata_param_type.getType();
+  value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   x_google_request_params_ = std::make_pair("x-goog-request-params", value);
+
+  google_cloud_resource_prefix_ =
+      std::make_pair("google-cloud-resource-prefix", std::move(resource_name));
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string resource_name, MetadataParamTypes metadata_param_type,
     std::string table_id) {
-  google_cloud_resource_prefix_ =
-      std::make_pair("google-cloud-resource-prefix", resource_name);
-
   std::string value;
-  value = metadata_param_type.getType();
+  value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   value += "/tables/" + table_id;
-  x_google_request_params_ = std::make_pair("x-goog-request-params", value);
+  x_google_request_params_ =
+      std::make_pair("x-goog-request-params", std::move(value));
+
+  google_cloud_resource_prefix_ =
+      std::make_pair("google-cloud-resource-prefix", std::move(resource_name));
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) {

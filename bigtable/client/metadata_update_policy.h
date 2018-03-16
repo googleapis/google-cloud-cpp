@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 
-#include <bigtable/client/version.h>
-
 #include <grpc++/grpc++.h>
 #include <memory>
+#include "bigtable/client/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -42,7 +41,7 @@ class MetadataParamTypes final {
   bool operator==(MetadataParamTypes const& that) const {
     return type_ == that.type_;
   }
-  std::string const& getType() const { return type_; }
+  std::string const& type() const { return type_; }
 
  private:
   std::string type_;
@@ -79,19 +78,17 @@ class MetadataUpdatePolicy {
                        std::string table_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
-  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy&& rhs) noexcept =
-      default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs);
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const& rhs) = default;
 
   // Update the ClientContext for the next call.
   void setup(grpc::ClientContext& context) const;
 
-  std::pair<std::string, std::string> get_google_cloud_resource_prefix() const {
+  std::pair<std::string, std::string> google_cloud_resource_prefix() const {
     return google_cloud_resource_prefix_;
   }
 
-  std::pair<std::string, std::string> get_x_google_request_params() const {
+  std::pair<std::string, std::string> x_google_request_params() const {
     return x_google_request_params_;
   }
 
