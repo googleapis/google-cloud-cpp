@@ -24,6 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Define the class for governing x-goog-request-params metadata value.
+ *
  * The value of x-goog-request-params starts with one of the following suffix
  *    "parent=" : Operation in instance, e.g. TableAdmin::CreateTable.
  *    "table_name=" : table_id is known at the time of creation, e.g.
@@ -34,18 +35,18 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class MetadataParamTypes final {
  public:
-  static const MetadataParamTypes PARENT;
-  static const MetadataParamTypes NAME;
-  static const MetadataParamTypes TABLE_NAME;
+  static MetadataParamTypes const PARENT;
+  static MetadataParamTypes const NAME;
+  static MetadataParamTypes const TABLE_NAME;
 
   bool operator==(MetadataParamTypes const& that) const {
     return type_ == that.type_;
   }
-  std::string getType() const { return std::move(type_); }
+  std::string const& getType() const { return type_; }
 
  private:
   std::string type_;
-  MetadataParamTypes(std::string type) : type_(type) {}
+  MetadataParamTypes(std::string type) : type_(std::move(type)) {}
 };
 
 /// MetadataUpdatePolicy holds supported metadata and setup ClientContext
@@ -77,7 +78,11 @@ class MetadataUpdatePolicy {
                        MetadataParamTypes metadata_param_type,
                        std::string table_id);
 
-  MetadataUpdatePolicy(MetadataUpdatePolicy const& policy);
+  MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
+  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy&& rhs) noexcept =
+      default;
+  MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs);
+  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const& rhs) = default;
 
   // Update the ClientContext for the next call.
   void setup(grpc::ClientContext& context) const;

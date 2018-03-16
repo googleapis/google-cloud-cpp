@@ -48,7 +48,7 @@ RowReader::RowReader(
     std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy const& metadata_update_policy,
+    MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
       table_name_(std::move(table_name)),
@@ -57,7 +57,7 @@ RowReader::RowReader(
       filter_(std::move(filter)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
-      metadata_update_policy_(metadata_update_policy),
+      metadata_update_policy_(std::move(metadata_update_policy)),
       context_(),
       parser_factory_(std::move(parser_factory)),
       stream_is_open_(false),

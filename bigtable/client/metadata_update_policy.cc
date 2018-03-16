@@ -19,9 +19,9 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-const MetadataParamTypes MetadataParamTypes::PARENT("parent");
-const MetadataParamTypes MetadataParamTypes::NAME("name");
-const MetadataParamTypes MetadataParamTypes::TABLE_NAME("table_name");
+MetadataParamTypes const MetadataParamTypes::PARENT("parent");
+MetadataParamTypes const MetadataParamTypes::NAME("name");
+MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string resource_name, MetadataParamTypes metadata_param_type) {
@@ -49,9 +49,9 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   x_google_request_params_ = std::make_pair("x-goog-request-params", value);
 }
 
-MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& policy) {
-  google_cloud_resource_prefix_ = policy.google_cloud_resource_prefix_;
-  x_google_request_params_ = policy.x_google_request_params_;
+MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) {
+  google_cloud_resource_prefix_ = rhs.google_cloud_resource_prefix_;
+  x_google_request_params_ = rhs.x_google_request_params_;
 }
 
 void MetadataUpdatePolicy::setup(grpc::ClientContext& context) const {

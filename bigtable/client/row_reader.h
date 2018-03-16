@@ -50,7 +50,7 @@ class RowReader {
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy const& metadata_update_policy,
+            MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(RowReader&& rhs) noexcept = default;
@@ -124,7 +124,7 @@ class RowReader {
   Filter filter_;
   std::unique_ptr<RPCRetryPolicy> retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
-  MetadataUpdatePolicy const& metadata_update_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
 
   std::unique_ptr<grpc::ClientContext> context_;
 
