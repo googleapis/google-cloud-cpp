@@ -49,6 +49,17 @@ RowReader::RowReader(
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    : RowReader(std::move(client), std::move(table_name), std::move(row_set),
+                rows_limit, std::move(filter), std::move(retry_policy),
+                std::move(backoff_policy), std::move(parser_factory), true) {}
+
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
+    std::int64_t rows_limit, Filter filter,
+    std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+    bool raise_on_error)
     : client_(std::move(client)),
       table_name_(std::move(table_name)),
       row_set_(std::move(row_set)),
@@ -62,16 +73,18 @@ RowReader::RowReader(
       operation_cancelled_(false),
       processed_chunks_count_(0),
       rows_count_(0),
-      status_(grpc::Status::OK) {}
+      status_(grpc::Status::OK),
+      raise_on_error_(raise_on_error),
+      error_retrieved_(raise_on_error ? true : false) {}
 
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    internal::RaiseRuntimeError("Operation already cancelled.");
-#else
-    status_ = grpc::Status::CANCELLED;
-    return internal::RowReaderIterator(this, true);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    if (raise_on_error_) {
+      internal::RaiseRuntimeError("Operation already cancelled.");
+    } else {
+      status_ = grpc::Status::CANCELLED;
+      return internal::RowReaderIterator(this, true);
+    }
   }
   if (not stream_) {
     MakeRequest();
@@ -127,16 +140,16 @@ void RowReader::Advance(internal::OptionalRow& row) {
   while (true) {
     grpc::Status status = grpc::Status::OK;
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    try {
+    if (raise_on_error_) {
+      try {
+        status_ = status = AdvanceOrFail(row);
+      } catch (std::exception const& ex) {
+        // Parser exceptions arrive here.
+        status_ = status = grpc::Status(grpc::INTERNAL, ex.what());
+      }
+    } else {
       status_ = status = AdvanceOrFail(row);
-    } catch (std::exception const& ex) {
-      // Parser exceptions arrive here.
-      status_ = status = grpc::Status(grpc::INTERNAL, ex.what());
     }
-#else
-    status_ = status = AdvanceOrFail(row);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (status.ok()) {
       return;
@@ -162,12 +175,12 @@ void RowReader::Advance(internal::OptionalRow& row) {
     }
 
     if (not status.ok() and not retry_policy_->on_failure(status)) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-      internal::RaiseRuntimeError("Unretriable error: " +
-                                  status.error_message());
-#else
-      return;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      if (raise_on_error_) {
+        internal::RaiseRuntimeError("Unretriable error: " +
+                                    status.error_message());
+      } else {
+        return;
+      }
     }
 
     auto delay = backoff_policy_->on_completion(status);
@@ -179,11 +192,16 @@ void RowReader::Advance(internal::OptionalRow& row) {
 }
 
 grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
+  grpc::Status status;
   row.reset();
   while (not parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
-          std::move(*(response_.mutable_chunks(processed_chunks_count_))));
+          std::move(*(response_.mutable_chunks(processed_chunks_count_))),
+          status);
+      if (not status.ok()) {
+        return status;
+      }
       continue;
     }
 
@@ -191,20 +209,24 @@ grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
     // finalize the parser and return OK with no rows unless something
     // fails during cleanup.
     stream_is_open_ = false;
-    grpc::Status status = stream_->Finish();
+    status = stream_->Finish();
     if (not status.ok()) {
       return status;
     }
-    parser_->HandleEndOfStream();
-    return grpc::Status::OK;
+    parser_->HandleEndOfStream(status);
+    return status;
   }
 
   // We have a complete row in the parser.
-  row.emplace(parser_->Next());
+  Row parsed_row = parser_->Next(status);
+  if (not status.ok()) {
+    return status;
+  }
+  row.emplace(std::move(parsed_row));
   ++rows_count_;
   last_read_row_key_ = std::string(row.value().row_key());
 
-  return grpc::Status::OK;
+  return status;
 }
 
 void RowReader::Cancel() {
@@ -226,6 +248,10 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
+  if (not raise_on_error_ and not error_retrieved_ and not status_.ok()) {
+    internal::RaiseRuntimeError(
+        "Exception is disabled and error is not retrieved");
+  }
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

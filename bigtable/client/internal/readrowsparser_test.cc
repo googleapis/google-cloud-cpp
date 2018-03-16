@@ -16,8 +16,8 @@
 #include "bigtable/client/row.h"
 
 #include <google/protobuf/text_format.h>
-
 #include <gtest/gtest.h>
+#include "bigtable/client/internal/throw_delegate.h"
 
 #include <numeric>
 #include <sstream>
@@ -27,37 +27,37 @@ using bigtable::internal::ReadRowsParser;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
+  grpc::Status status;
   ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEndOfStream();
+  parser.HandleEndOfStream(status);
+  EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   ReadRowsParser parser;
-
+  grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEndOfStream();
-  EXPECT_THROW(parser.HandleEndOfStream(), std::exception);
+  parser.HandleEndOfStream(status);
+  EXPECT_NO_THROW(parser.HandleEndOfStream(status));
+  EXPECT_FALSE(status.ok());
   EXPECT_FALSE(parser.HasNext());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
+  grpc::Status status;
   chunk.set_value_size(1);
 
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEndOfStream();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(parser.HandleChunk(chunk), std::exception);
+  parser.HandleEndOfStream(status);
+
+  EXPECT_NO_THROW(parser.HandleChunk(chunk, status));
+  EXPECT_FALSE(status.ok());
   EXPECT_FALSE(parser.HasNext());
-#else
-  EXPECT_DEATH_IF_SUPPORTED(parser.HandleChunk(chunk), "exceptions");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
@@ -73,13 +73,15 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
     commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
-
+  grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleChunk(chunk);
+  parser.HandleChunk(chunk, status);
+  EXPECT_TRUE(status.ok());
   EXPECT_TRUE(parser.HasNext());
 
   std::vector<bigtable::Row> rows;
-  rows.emplace_back(parser.Next());
+  rows.emplace_back(parser.Next(status));
+  EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
   ASSERT_EQ(1U, rows[0].cells().size());
   auto cell_it = rows[0].cells().begin();
@@ -89,7 +91,8 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   EXPECT_EQ("V", cell_it->value());
   EXPECT_EQ(42, cell_it->timestamp());
 
-  parser.HandleEndOfStream();
+  parser.HandleEndOfStream(status);
+  EXPECT_TRUE(status.ok());
 }
 
 TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
@@ -105,30 +108,28 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
     commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
-
+  grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleChunk(chunk);
-  parser.HandleEndOfStream();
+  parser.HandleChunk(chunk, status);
+  EXPECT_TRUE(status.ok());
+  parser.HandleEndOfStream(status);
+  EXPECT_TRUE(status.ok());
 
   EXPECT_TRUE(parser.HasNext());
-  ASSERT_EQ(1U, parser.Next().cells().size());
-
+  ASSERT_EQ(1U, parser.Next(status).cells().size());
+  EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
 }
 
 TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   ReadRowsParser parser;
-
+  grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
-  parser.HandleEndOfStream();
-
+  parser.HandleEndOfStream(status);
+  EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(parser.Next(), std::exception);
-#else
-
-  ASSERT_DEATH_IF_SUPPORTED(parser.Next(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_NO_THROW(parser.Next(status));
+  EXPECT_FALSE(status.ok());
 }
 
 TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
@@ -151,13 +152,14 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
   std::string value(1024, 'a');  // avoid any small value optimizations
   auto* data_ptr = value.data();
   chunk.mutable_value()->swap(value);
-
+  grpc::Status status;
   ASSERT_FALSE(parser.HasNext());
-  parser.HandleChunk(std::move(chunk));
+  parser.HandleChunk(std::move(chunk), status);
+  EXPECT_TRUE(status.ok());
   ASSERT_TRUE(parser.HasNext());
-  bigtable::Row r = parser.Next();
+  bigtable::Row r = parser.Next(status);
   ASSERT_EQ(1U, r.cells().size());
-
+  EXPECT_TRUE(status.ok());
   EXPECT_EQ(data_ptr, r.cells().begin()->value().data());
 }
 
@@ -218,13 +220,23 @@ class AcceptanceTest : public ::testing::Test {
   }
 
   void FeedChunks(std::vector<ReadRowsResponse_CellChunk> chunks) {
+    grpc::Status status;
     for (auto const& chunk : chunks) {
-      parser_.HandleChunk(chunk);
+      parser_.HandleChunk(chunk, status);
+      if (not status.ok()) {
+        bigtable::internal::RaiseRuntimeError(status.error_message());
+      }
       if (parser_.HasNext()) {
-        rows_.emplace_back(parser_.Next());
+        rows_.emplace_back(parser_.Next(status));
+        if (not status.ok()) {
+          bigtable::internal::RaiseRuntimeError(status.error_message());
+        }
       }
     }
-    parser_.HandleEndOfStream();
+    parser_.HandleEndOfStream(status);
+    if (not status.ok()) {
+      bigtable::internal::RaiseRuntimeError(status.error_message());
+    }
   }
 
  private:

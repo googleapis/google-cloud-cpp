@@ -50,6 +50,12 @@ class RowReader {
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
+            RowSet row_set, std::int64_t rows_limit, Filter filter,
+            std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+            bool raise_on_error);
   RowReader(RowReader&& rhs) noexcept = default;
 
   ~RowReader();
@@ -84,7 +90,10 @@ class RowReader {
    */
   void Cancel();
 
-  grpc::Status finish() const { return status_; }
+  grpc::Status Finish() {
+    error_retrieved_ = true;
+    return status_;
+  }
 
  private:
   /**
@@ -144,6 +153,8 @@ class RowReader {
   /// Holds the last read row key, for retries.
   std::string last_read_row_key_;
   grpc::Status status_;
+  bool raise_on_error_;
+  bool error_retrieved_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

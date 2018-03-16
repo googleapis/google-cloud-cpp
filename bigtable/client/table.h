@@ -15,89 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/filters.h"
-#include "bigtable/client/idempotent_mutation_policy.h"
-#include "bigtable/client/mutations.h"
-#include "bigtable/client/row_reader.h"
-#include "bigtable/client/row_set.h"
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
-
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+//#include "bigtable/client/data_client.h"
+//#include "bigtable/client/filters.h"
+//#include "bigtable/client/idempotent_mutation_policy.h"
+//#include "bigtable/client/mutations.h"
+//#include "bigtable/client/row_reader.h"
+//#include "bigtable/client/row_set.h"
+//#include "bigtable/client/rpc_backoff_policy.h"
+//#include "bigtable/client/rpc_retry_policy.h"
+//
+//#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "bigtable/client/internal/table.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-/**
- * Return the full table name.
- *
- * The full table name is:
- *
- * `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
- *
- * Where the project id and instance id come from the @p client parameter.
- */
-inline std::string TableName(std::shared_ptr<DataClient> client,
-                             std::string const& table_id) {
-  return InstanceName(std::move(client)) + "/tables/" + table_id;
-}
-/**
- * No Exception namespace contains the public version of interface without
- * exception. This is not for public use.
- */
-namespace noex {
-class Table {
- public:
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
-        idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()) {}
-
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-        IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
-
-  std::string const& table_name() const { return table_name_; }
-  //@{
-  /**
-   * @name No exception versions of Table::*
-   *
-   * These functions provide the same functionality as their counterparts in the
-   * `bigtable::Table` class, but do not raise exceptions on errors, instead
-   * they return the error on the status parameter.
-   */
-  std::vector<FailedMutation> Apply(SingleRowMutation&& mut);
-
-  std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
-                                        grpc::Status& status);
-
-  RowReader ReadRows(RowSet row_set, Filter filter);
-
-  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
-
-  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
-                               grpc::Status& status);
-  //@}
-
- private:
-  std::shared_ptr<DataClient> client_;
-  std::string table_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
-};
-}  // namespace noex
-
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
  *
@@ -176,8 +107,9 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : impl_(std::move(client), table_id, retry_policy, backoff_policy,
-              idempotent_mutation_policy) {}
+      : impl_(std::move(client), table_id, std::move(retry_policy),
+              std::move(backoff_policy),
+              std::move(idempotent_mutation_policy)) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
 
