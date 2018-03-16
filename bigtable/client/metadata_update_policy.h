@@ -84,16 +84,11 @@ class MetadataUpdatePolicy {
   // Update the ClientContext for the next call.
   void setup(grpc::ClientContext& context) const;
 
-  std::pair<std::string, std::string> google_cloud_resource_prefix() const {
-    return google_cloud_resource_prefix_;
-  }
-
   std::pair<std::string, std::string> x_google_request_params() const {
     return x_google_request_params_;
   }
 
  private:
-  std::pair<std::string, std::string> google_cloud_resource_prefix_;
   std::pair<std::string, std::string> x_google_request_params_;
 };
 

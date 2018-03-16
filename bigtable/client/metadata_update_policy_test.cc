@@ -25,7 +25,6 @@ TEST(MetadataUpdatePolicy, SimpleDefault) {
   auto const x_google_request_params = "parent=" + kInstanceName;
   bigtable::MetadataUpdatePolicy created(kInstanceName,
                                          bigtable::MetadataParamTypes::PARENT);
-  EXPECT_EQ(kInstanceName, created.google_cloud_resource_prefix().second);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }
 
@@ -34,6 +33,5 @@ TEST(MetadataUpdatePolicy, SimpleLazy) {
   auto const x_google_request_params = "name=" + kTableName;
   bigtable::MetadataUpdatePolicy created(
       kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
-  EXPECT_EQ(kInstanceName, created.google_cloud_resource_prefix().second);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }

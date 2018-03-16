@@ -29,10 +29,8 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value = metadata_param_type.type();
   value += "=";
   value += resource_name;
-  x_google_request_params_ = std::make_pair("x-goog-request-params", value);
-
-  google_cloud_resource_prefix_ =
-      std::make_pair("google-cloud-resource-prefix", std::move(resource_name));
+  x_google_request_params_ =
+      std::make_pair("x-goog-request-params", std::move(value));
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
@@ -45,19 +43,13 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value += "/tables/" + table_id;
   x_google_request_params_ =
       std::make_pair("x-goog-request-params", std::move(value));
-
-  google_cloud_resource_prefix_ =
-      std::make_pair("google-cloud-resource-prefix", std::move(resource_name));
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) {
-  google_cloud_resource_prefix_ = rhs.google_cloud_resource_prefix_;
   x_google_request_params_ = rhs.x_google_request_params_;
 }
 
 void MetadataUpdatePolicy::setup(grpc::ClientContext& context) const {
-  context.AddMetadata(google_cloud_resource_prefix_.first,
-                      google_cloud_resource_prefix_.second);
   context.AddMetadata(x_google_request_params_.first,
                       x_google_request_params_.second);
 }
