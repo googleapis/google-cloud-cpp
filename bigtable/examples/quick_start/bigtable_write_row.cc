@@ -36,8 +36,10 @@ int main(int argc, char* argv[]) try {
 
   // Modify (and create if necessary) a row.
   //! [write row]
+  using std::chrono::milliseconds;
   table.Apply(bigtable::SingleRowMutation(
-      "my-key", bigtable::SetCell("family", "value", 0, "Hello World!")));
+      "my-key",
+      bigtable::SetCell("family", "value", milliseconds(0), "Hello World!")));
   //! [write row]
 
   return 0;

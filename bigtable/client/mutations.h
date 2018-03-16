@@ -38,8 +38,8 @@ struct Mutation {
 };
 
 /// Create a mutation to set a cell value.
-Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
-                 std::string value);
+Mutation SetCell(std::string family, std::string column,
+                 std::chrono::milliseconds timestamp, std::string value);
 
 /**
  * Create a mutation to set a cell value where the server sets the time.

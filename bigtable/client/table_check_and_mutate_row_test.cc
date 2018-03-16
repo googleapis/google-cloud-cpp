@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define helper types and functions for this test.
@@ -20,6 +21,8 @@ namespace {
 class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
 };
 }  // anonymous namespace
+
+using namespace bigtable::chrono_literals;
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {
@@ -30,8 +33,8 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 
   table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
-      {bigtable::SetCell("fam", "col", 0, "it was true")},
-      {bigtable::SetCell("fam", "col", 0, "it was false")});
+      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+      {bigtable::SetCell("fam", "col", 0_ms, "it was false")});
 }
 
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
@@ -45,15 +48,15 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(table_.CheckAndMutateRow(
                    "foo", bigtable::Filter::PassAllFilter(),
-                   {bigtable::SetCell("fam", "col", 0, "it was true")},
-                   {bigtable::SetCell("fam", "col", 0, "it was false")}),
+                   {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+                   {bigtable::SetCell("fam", "col", 0_ms, "it was false")}),
                std::exception);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table_.CheckAndMutateRow(
           "foo", bigtable::Filter::PassAllFilter(),
-          {bigtable::SetCell("fam", "col", 0, "it was true")},
-          {bigtable::SetCell("fam", "col", 0, "it was false")}),
+          {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+          {bigtable::SetCell("fam", "col", 0_ms, "it was false")}),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

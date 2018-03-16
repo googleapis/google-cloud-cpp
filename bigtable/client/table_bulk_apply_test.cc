@@ -34,11 +34,13 @@ class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
-TEST_F(TableBulkApplyTest, Simple) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
 
+using namespace bigtable::chrono_literals;
+using namespace testing;
+namespace btproto = google::bigtable::v2;
+namespace bt = bigtable;
+
+TEST_F(TableBulkApplyTest, Simple) {
   auto reader = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -64,17 +66,13 @@ TEST_F(TableBulkApplyTest, Simple) {
           }));
 
   table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
   SUCCEED();
 }
 
 /// @test Verify that Table::BulkApply() retries partial failures.
 TEST_F(TableBulkApplyTest, RetryPartialFailure) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -114,9 +112,10 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
           }));
 
   table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bigtable::SetCell("fam", "col", 0, "baz")}),
+      bt::SingleRowMutation("foo",
+                            {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0, "qux")})));
+                            {bigtable::SetCell("fam", "col", 0_ms, "qux")})));
   SUCCEED();
 }
 
@@ -124,10 +123,6 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
@@ -152,20 +147,17 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
             return r1.release();
           }));
 
-  EXPECT_THROW(
-      table_.BulkApply(bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
-      std::exception);
+  EXPECT_THROW(table_.BulkApply(bt::BulkMutation(
+                   bt::SingleRowMutation(
+                       "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                   bt::SingleRowMutation(
+                       "bar", {bt::SetCell("fam", "col", 0_ms, "qux")}))),
+               std::exception);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
 TEST_F(TableBulkApplyTest, CanceledStream) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
   // Simulate a stream that returns one success and then terminates.  We expect
   // the BulkApply() operation to retry the request, because the mutation is in
   // an undetermined state.  Well, it should retry assuming it is idempotent,
@@ -208,8 +200,8 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
           }));
 
   table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
   SUCCEED();
 }
 
@@ -217,11 +209,6 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
-  using namespace bigtable::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
@@ -266,19 +253,16 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_THROW(
-      custom_table.BulkApply(bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}))),
-      std::exception);
+  EXPECT_THROW(custom_table.BulkApply(bt::BulkMutation(
+                   bt::SingleRowMutation(
+                       "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                   bt::SingleRowMutation(
+                       "bar", {bt::SetCell("fam", "col", 0_ms, "qux")}))),
+               std::exception);
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
 TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
   // We will send both idempotent and non-idempotent mutations.  We prepare the
   // mocks to return an empty stream in the first RPC request.  That will force
   // the client to only retry the idempotent mutations.
@@ -312,7 +296,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   try {
     table_.BulkApply(bt::BulkMutation(
         bt::SingleRowMutation("is-idempotent",
-                              {bt::SetCell("fam", "col", 0, "qux")}),
+                              {bt::SetCell("fam", "col", 0_ms, "qux")}),
         bt::SingleRowMutation("not-idempotent",
                               {bt::SetCell("fam", "col", "baz")})));
   } catch (bt::PermanentMutationFailure const &ex) {
@@ -328,10 +312,6 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.
 TEST_F(TableBulkApplyTest, FailedRPC) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-  namespace bt = ::bigtable;
-
   auto reader = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
@@ -346,8 +326,9 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 
   try {
     table_.BulkApply(bt::BulkMutation(
-        bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-        bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")})));
+        bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+        bt::SingleRowMutation("bar",
+                              {bt::SetCell("fam", "col", 0_ms, "qux")})));
   } catch (bt::PermanentMutationFailure const &ex) {
     EXPECT_EQ(2UL, ex.failures().size());
     EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, ex.status().error_code());

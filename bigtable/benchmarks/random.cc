@@ -28,8 +28,8 @@ std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
 
 bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f) {
   std::string field = "field" + std::to_string(f);
-  return bigtable::SetCell(kColumnFamily, std::move(field), 0,
-                           MakeRandomValue(gen));
+  return bigtable::SetCell(kColumnFamily, std::move(field),
+                           std::chrono::milliseconds(0), MakeRandomValue(gen));
 }
 
 std::string MakeRandomValue(DefaultPRNG& generator) {

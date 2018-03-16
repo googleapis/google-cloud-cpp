@@ -13,10 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/bulk_mutator.h"
-
 #include <google/bigtable/v2/bigtable_mock.grpc.pb.h>
-
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/testing/chrono_literals.h"
 
 /// Define types and functions used in the tests.
 namespace {
@@ -35,12 +34,13 @@ TEST(MultipleRowsMutatorTest, Simple) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
+  using namespace bigtable::chrono_literals;
 
   // In this test we create a Mutation for two rows, which succeeds in the
   // first RPC request.  First create the mutation.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
 
   // Prepare the mocks.  The mutator should issue a RPC which must return a
   // stream of responses, we prepare the stream first because it is easier than
@@ -88,12 +88,13 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
+  using namespace bigtable::chrono_literals;
 
   // In this test we create a Mutation for two rows, one of which will fail.
   // First create the mutation.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
 
   // Prepare the mocks for the request.  First create a stream response which
   // indicates a partial failure.
@@ -162,12 +163,13 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
+  using namespace bigtable::chrono_literals;
 
   // In this test we handle a recoverable and one unrecoverable failures.
   // Create a bulk mutation with two SetCell() mutations.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
 
   // Make the first RPC return one recoverable and one unrecoverable failures.
   auto r1 = bigtable::internal::make_unique<MockReader>();
@@ -237,12 +239,13 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
+  using namespace bigtable::chrono_literals;
 
   // We are going to test the case where the stream does not contain a response
   // for all requests.  Create a BulkMutation with two entries.
   bt::BulkMutation mut(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
 
   // This will be the stream returned by the first request.  It is missing
   // information about one of the mutations.
@@ -305,11 +308,12 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
+  using namespace bigtable::chrono_literals;
 
   // Create a BulkMutation with a non-idempotent mutation.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0, "qux")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}),
       bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "v")}));
 
   // We will setup the mock to return recoverable failures for idempotent

@@ -17,13 +17,14 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-Mutation SetCell(std::string family, std::string column, std::int64_t timestamp,
-                 std::string value) {
+Mutation SetCell(std::string family, std::string column,
+                 std::chrono::milliseconds timestamp, std::string value) {
   Mutation m;
   auto& set_cell = *m.op.mutable_set_cell();
   set_cell.set_family_name(std::move(family));
   set_cell.set_column_qualifier(std::move(column));
-  set_cell.set_timestamp_micros(timestamp);
+  set_cell.set_timestamp_micros(
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
   set_cell.set_value(std::move(value));
   return m;
 }

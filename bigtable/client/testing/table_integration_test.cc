@@ -76,11 +76,13 @@ void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
   std::map<std::string, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
+    using namespace std::chrono;
     std::string key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-    inserted.first->second.emplace_back(
-        bigtable::SetCell(cell.family_name(), cell.column_qualifier(),
-                          cell.timestamp(), cell.value()));
+    inserted.first->second.emplace_back(bigtable::SetCell(
+        cell.family_name(), cell.column_qualifier(),
+        duration_cast<milliseconds>(microseconds(cell.timestamp())),
+        cell.value()));
   }
   bigtable::BulkMutation bulk;
   for (auto& kv : mutations) {
