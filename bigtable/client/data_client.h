@@ -21,11 +21,15 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Define the interface to access Cloud Bigtable.
+ * Connects to Cloud Bigtable's data manipulation APIs.
  *
  * This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable.
- * It provides a configuration point to control how we do load-balancing, how we
- * handle reconnections, refresh authorization tokens, etc.
+ * Multiple `bigtable::Table` objects may share a connection via a single
+ * `DataClient` object. The `DataClient` object is configured at construction
+ * time, this configuration includes the credentials, access endpoints, default
+ * timeouts, and other gRPC configuration options. This is an interface class
+ * because it is also used as a dependency injection points in some of the
+ * tests.
  */
 class DataClient {
  public:

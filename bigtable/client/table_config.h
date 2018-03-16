@@ -22,6 +22,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/// Specify the initial schema for a new table.
 class TableConfig {
  public:
   TableConfig() : granularity_(TIMESTAMP_GRANULARITY_UNSPECIFIED) {}

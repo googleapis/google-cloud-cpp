@@ -15,8 +15,7 @@
 #include "bigtable/client/grpc_error.h"
 #include <sstream>
 
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 constexpr char const* kKnownCodes[] = {
     "OK",
     "CANCELLED",
@@ -37,7 +36,10 @@ constexpr char const* kKnownCodes[] = {
     "UNAUTHENTICATED",
 };
 constexpr int kKnownCodesSize = sizeof(kKnownCodes) / sizeof(kKnownCodes[0]);
+}  // anonymous namespace
 
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 GRpcError::GRpcError(char const* what, grpc::Status const& status)
     : std::runtime_error(CreateWhatString(what, status)),
       error_code_(status.error_code()),
