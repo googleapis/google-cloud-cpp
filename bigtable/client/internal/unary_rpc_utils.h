@@ -117,14 +117,14 @@ struct UnaryRpcUtils {
    * @tparam Response the RPC response type.
    */
   template <typename Request, typename Response>
-  struct CheckSignature<grpc::Status (StubType::*)(grpc::ClientContext *,
-                                                   Request const &, Response *)>
+  struct CheckSignature<grpc::Status (StubType::*)(grpc::ClientContext*,
+                                                   Request const&, Response*)>
       : public std::true_type {
     using RequestType = Request;
     using ResponseType = Response;
-    using MemberFunctionType = grpc::Status (StubType::*)(grpc::ClientContext *,
-                                                          Request const &,
-                                                          Response *);
+    using MemberFunctionType = grpc::Status (StubType::*)(grpc::ClientContext*,
+                                                          Request const&,
+                                                          Response*);
   };
 
   /**
@@ -159,12 +159,12 @@ struct UnaryRpcUtils {
       CheckSignature<MemberFunction>::value,
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithRetry(
-      ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
       bigtable::MetadataUpdatePolicy const &metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const &request,
-      char const *error_message) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message) {
     return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
                                metadata_update_policy, function, request,
                                error_message);
@@ -198,12 +198,12 @@ struct UnaryRpcUtils {
       CheckSignature<MemberFunction>::value,
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithRetryBorrow(
-      ClientType &client, bigtable::RPCRetryPolicy &rpc_policy,
-      bigtable::RPCBackoffPolicy &backoff_policy,
-      bigtable::MetadataUpdatePolicy const &metadata_update_policy,
+      ClientType& client, bigtable::RPCRetryPolicy& rpc_policy,
+      bigtable::RPCBackoffPolicy& backoff_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const &request,
-      char const *error_message) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
     while (true) {
       grpc::ClientContext client_context;
@@ -256,11 +256,11 @@ struct UnaryRpcUtils {
       CheckSignature<MemberFunction>::value,
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithoutRetry(
-      ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const &metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const &request,
-      char const *error_message) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message) {
     typename CheckSignature<MemberFunction>::ResponseType response;
 
     grpc::ClientContext client_context;

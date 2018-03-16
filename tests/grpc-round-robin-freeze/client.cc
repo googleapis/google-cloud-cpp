@@ -16,7 +16,7 @@
 #include <grpc++/grpc++.h>
 #include <future>
 
-void MakeStreamPing(Echo::Stub &echo, std::int32_t count) {
+void MakeStreamPing(Echo::Stub& echo, std::int32_t count) {
   for (int i = 0; i != 100; ++i) {
     grpc::ClientContext context;
     Request request;
@@ -35,7 +35,7 @@ void MakeStreamPing(Echo::Stub &echo, std::int32_t count) {
   std::cerr << "Error making StreamPing request." << std::endl;
 }
 
-void MakePing(Echo::Stub &echo, std::int32_t count) {
+void MakePing(Echo::Stub& echo, std::int32_t count) {
   for (int i = 0; i != 100; ++i) {
     grpc::ClientContext context;
     Request request;
@@ -50,7 +50,7 @@ void MakePing(Echo::Stub &echo, std::int32_t count) {
   std::cerr << "Error making Ping request." << std::endl;
 }
 
-void RunClient(std::string const &server_address, std::chrono::minutes duration,
+void RunClient(std::string const& server_address, std::chrono::minutes duration,
                int id) {
   grpc::ChannelArguments arguments;
   arguments.SetLoadBalancingPolicyName("round_robin");
@@ -71,7 +71,7 @@ void RunClient(std::string const &server_address, std::chrono::minutes duration,
   }
 }
 
-int main(int argc, char *argv[]) try {
+int main(int argc, char* argv[]) try {
   if (argc < 4) {
     std::cerr << "Usage: client <address> <thread-count>"
               << " <test-duration-in-minutes>" << std::endl;
@@ -89,13 +89,13 @@ int main(int argc, char *argv[]) try {
                                   test_duration, i));
   }
 
-  for (auto &t : tasks) {
+  for (auto& t : tasks) {
     t.get();
   }
   std::cout << " DONE." << std::endl;
 
   return 0;
-} catch (std::exception const &ex) {
+} catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }

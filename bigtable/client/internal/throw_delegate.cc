@@ -18,7 +18,7 @@
 
 namespace {
 template <typename Exception>
-[[noreturn]] void RaiseException(char const *msg) {
+[[noreturn]] void RaiseException(char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw Exception(msg);
 #else
@@ -33,39 +33,39 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-[[noreturn]] void RaiseInvalidArgument(char const *msg) {
+[[noreturn]] void RaiseInvalidArgument(char const* msg) {
   RaiseException<std::invalid_argument>(msg);
 }
 
-[[noreturn]] void RaiseInvalidArgument(std::string const &msg) {
+[[noreturn]] void RaiseInvalidArgument(std::string const& msg) {
   RaiseException<std::invalid_argument>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRangeError(char const *msg) {
+[[noreturn]] void RaiseRangeError(char const* msg) {
   RaiseException<std::range_error>(msg);
 }
 
-[[noreturn]] void RaiseRangeError(std::string const &msg) {
+[[noreturn]] void RaiseRangeError(std::string const& msg) {
   RaiseException<std::range_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRuntimeError(char const *msg) {
+[[noreturn]] void RaiseRuntimeError(char const* msg) {
   RaiseException<std::runtime_error>(msg);
 }
 
-[[noreturn]] void RaiseRuntimeError(std::string const &msg) {
+[[noreturn]] void RaiseRuntimeError(std::string const& msg) {
   RaiseException<std::runtime_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseLogicError(char const *msg) {
+[[noreturn]] void RaiseLogicError(char const* msg) {
   RaiseException<std::logic_error>(msg);
 }
 
-[[noreturn]] void RaiseLogicError(std::string const &msg) {
+[[noreturn]] void RaiseLogicError(std::string const& msg) {
   RaiseException<std::logic_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const &status, char const *msg) {
+[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw bigtable::GRpcError(msg, status);
 #else
@@ -77,8 +77,8 @@ namespace internal {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const &status,
-                                std::string const &msg) {
+[[noreturn]] void RaiseRpcError(grpc::Status const& status,
+                                std::string const& msg) {
   RaiseRpcError(status, msg.c_str());
 }
 
