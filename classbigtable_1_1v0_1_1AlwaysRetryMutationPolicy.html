@@ -106,7 +106,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a policy that retries all mutations. </p>
-<p>Notice that this will may result in non-idempotent mutations being resent to the server. Re-trying a <a class="el" href="namespacebigtable_1_1v0.html#aec4cdce014f0677bbdd5e1a9ddbc239e" title="Create a mutation to set a cell value. ">SetCell()</a> mutation where the server selects the timestamp can result in multiple copies of the data stored with different timestamps. Only use this policy if your application is prepared to handle such problems, for example, by only querying the last value and setting garbage collection policies to delete the old values. </p>
+<p>Notice that this will may result in non-idempotent mutations being resent to the server. Re-trying a <a class="el" href="namespacebigtable_1_1v0.html#aef996eb933092af76b2709fc37b70e36" title="Create a mutation to set a cell value. ">SetCell()</a> mutation where the server selects the timestamp can result in multiple copies of the data stored with different timestamps. Only use this policy if your application is prepared to handle such problems, for example, by only querying the last value and setting garbage collection policies to delete the old values. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a623c0878e93cc47a5a2c68cfb41fc659"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a623c0878e93cc47a5a2c68cfb41fc659">&#9670;&nbsp;</a></span>AlwaysRetryMutationPolicy()</h2>
