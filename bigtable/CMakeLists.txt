@@ -13,9 +13,6 @@
 # limitations under the License.
 
 # This should be included from the top level CMakeLists file
-set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
-set(BIGTABLE_CLIENT_VERSION_MINOR 1)
-set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 
 # Configure the Compiler options, we will be using C++11 features.
 set(CMAKE_CXX_STANDARD 11)
@@ -110,6 +107,12 @@ configure_file(client/build_info.cc.in client/build_info.cc)
 
 include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
 
+# Generate the version information from the CMake values.
+set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
+set(BIGTABLE_CLIENT_VERSION_MINOR 1)
+set(BIGTABLE_CLIENT_VERSION_PATCH 0)
+configure_file(client/version_info.h.in client/version_info.h)
+
 if (${CMAKE_VERSION} VERSION_LESS "3.9")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
@@ -132,36 +135,309 @@ else ()
     endif ()
 endif ()
 
-# Define custom targets to simplify the scan-build static analysis scripts: we
-# want to compile these targets without static analysis, as they are not part
-# of this project, and we also do not want to list all the dependencies in the
-# scripts and here.  So we create a target to build the dependencies, build that
-# without static analysis, and then build "all" with static analysis.
+# the client library
+add_library(bigtable_client
+    ${PROJECT_BINARY_DIR}/bigtable/client/build_info.cc
+    ${PROJECT_BINARY_DIR}/bigtable/client/version_info.h
+    client/build_info.h
+    client/cell.h
+    client/client_options.h
+    client/client_options.cc
+    client/data_client.h
+    client/data_client.cc
+    client/internal/bulk_mutator.h
+    client/internal/bulk_mutator.cc
+    client/internal/common_client.h
+    client/internal/common_client.cc
+    client/internal/conjunction.h
+    client/internal/make_unique.h
+    client/internal/port_platform.h
+    client/internal/prefix_range_end.h
+    client/internal/prefix_range_end.cc
+    client/internal/readrowsparser.h
+    client/internal/readrowsparser.cc
+    client/internal/rowreaderiterator.h
+    client/internal/rowreaderiterator.cc
+    client/internal/throw_delegate.h
+    client/internal/throw_delegate.cc
+    client/internal/unary_rpc_utils.h
+    client/internal/table.h
+    client/internal/table.cc
+    client/filters.h
+    client/filters.cc
+    client/idempotent_mutation_policy.h
+    client/idempotent_mutation_policy.cc
+    client/mutations.h
+    client/mutations.cc
+    client/row.h
+    client/row_range.h
+    client/row_range.cc
+    client/row_reader.h
+    client/row_reader.cc
+    client/row_set.h
+    client/row_set.cc
+    client/rpc_backoff_policy.h
+    client/rpc_backoff_policy.cc
+    client/rpc_retry_policy.h
+    client/rpc_retry_policy.cc
+    client/table.h
+    client/table.cc
+    client/version.h
+    client/version.cc)
+target_link_libraries(bigtable_client
+    bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+target_include_directories(bigtable_client PUBLIC "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(bigtable::client ALIAS bigtable_client)
+
+add_library(bigtable_client_testing
+    client/testing/chrono_literals.h
+    client/testing/mock_data_client.h
+    client/testing/mock_response_stream.h
+    client/testing/table_integration_test.h
+    client/testing/table_integration_test.cc
+    client/testing/table_test_fixture.h
+    client/testing/table_test_fixture.cc
+    client/testing/internal_table_test_fixture.h
+    client/testing/internal_table_test_fixture.cc)
+target_link_libraries(bigtable_client_testing
+    bigtable_client bigtable_protos
+    gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+# the admin library
+add_library(bigtable_admin_client
+    admin/admin_client.h
+    admin/admin_client.cc
+    admin/column_family.h
+    admin/instance_admin_client.h
+    admin/instance_admin_client.cc
+    admin/instance_admin.h
+    admin/instance_admin.cc
+    admin/table_admin.h
+    admin/table_admin.cc
+    admin/table_config.h
+    admin/table_config.cc)
+target_link_libraries(bigtable_admin_client bigtable_client bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+target_include_directories(bigtable_admin_client PUBLIC "${PROJECT_SOURCE_DIR}")
+add_library(bigtable::admin_client ALIAS bigtable_admin_client)
+
+option(BIGTABLE_CLIENT_CLANG_TIDY
+    "If set compiles the Cloud Bigtable client with clang-tidy."
+    "")
+if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
+    message(STATUS "clang-tidy build enabled.")
+    set_target_properties(
+        bigtable_client PROPERTIES
+        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+    )
+    set_target_properties(
+        bigtable_admin_client PROPERTIES
+        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+    )
+endif ()
+
+# Define custom targets to simplify the scan-build scripts.
 add_custom_target(depends-local)
 add_dependencies(depends-local gmock bigtable_protos)
 
 # All tests get added to this target below.
 add_custom_target(tests-local)
-add_subdirectory(client)
-add_subdirectory(admin)
-add_subdirectory(tests)
+
+# List the unit tests, then setup the targets and dependencies.
+set(bigtable_client_unit_tests
+    client/cell_test.cc
+    client/client_options_test.cc
+    client/data_client_test.cc
+    client/filters_test.cc
+    client/force_sanitizer_failures_test.cc
+    client/idempotent_mutation_policy_test.cc
+    client/internal/bulk_mutator_test.cc
+    client/internal/prefix_range_end_test.cc
+    client/internal/readrowsparser_test.cc
+    client/internal/table_test.cc
+    client/mutations_test.cc
+    client/table_apply_test.cc
+    client/table_bulk_apply_test.cc
+    client/table_readrow_test.cc
+    client/table_readrows_test.cc
+    client/table_test.cc
+    client/row_reader_test.cc
+    client/row_test.cc
+    client/row_range_test.cc
+    client/row_set_test.cc
+    client/rpc_backoff_policy_test.cc
+    client/rpc_retry_policy_test.cc)
+foreach (fname ${bigtable_client_unit_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname})
+    get_target_property(tname ${target} NAME)
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_client bigtable_protos
+        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+    add_test(NAME ${tname} COMMAND ${target})
+    get_target_property(sources ${target} SOURCES)
+    add_dependencies(tests-local ${target})
+endforeach ()
+# Create a single executable that rolls up all the tests, this is convenient
+# for CLion and other IDEs.
+add_executable(bigtable_client_all_tests EXCLUDE_FROM_ALL
+    ${bigtable_client_unit_tests})
+target_link_libraries(bigtable_client_all_tests
+    bigtable_client_testing bigtable_client bigtable_protos
+    gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+# List the unit tests, then setup the targets and dependencies.
+set(bigtable_admin_unit_tests
+    admin/admin_client_test.cc
+    admin/column_family_test.cc
+    admin/instance_admin_client_test.cc
+    admin/instance_admin_test.cc
+    admin/table_admin_test.cc
+    admin/table_config_test.cc)
+foreach (fname ${bigtable_admin_unit_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname})
+    get_target_property(tname ${target} NAME)
+    target_link_libraries(${target}
+        bigtable_client_testing bigtable_admin_client bigtable_client
+        bigtable_protos
+        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+    add_test(NAME ${tname} COMMAND ${target})
+    get_target_property(sources ${target} SOURCES)
+    add_dependencies(tests-local ${target})
+endforeach ()
+target_sources(bigtable_client_all_tests PUBLIC ${bigtable_admin_unit_tests})
+target_link_libraries(bigtable_client_all_tests bigtable_admin_client)
+
+option(FORCE_SANITIZER_ERRORS
+    "If set, enable tests that force errors detected by the sanitizers."
+    "")
+if (FORCE_SANITIZER_ERRORS)
+    target_compile_definitions(client_force_sanitizer_failures_test
+            PRIVATE -DBIGTABLE_CLIENT_FORCE_SANITIZER_ERRORS)
+endif (FORCE_SANITIZER_ERRORS)
+
+option(FORCE_STATIC_ANALYZER_ERRORS
+    "If set, enable tests that force errors detected by the static analyzer."
+    "")
+if (FORCE_STATIC_ANALYZER_ERRORS)
+    target_compile_definitions(client_force_sanitizer_failures_test
+        PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
+endif (FORCE_STATIC_ANALYZER_ERRORS)
+
+# The integration tests, these are simply programs that connect to the
+# Cloud Bigtable emulator.
+add_executable(data_integration_test tests/data_integration_test.cc)
+target_link_libraries(data_integration_test
+    gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local data_integration_test)
+
+# An integration test for bigtable::TableAdmin.
+add_executable(admin_integration_test tests/admin_integration_test.cc)
+target_link_libraries(admin_integration_test
+    gmock bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local admin_integration_test)
+
+# An integration test for bigtable::Filter.
+add_executable(filters_integration_test tests/filters_integration_test.cc)
+target_link_libraries(filters_integration_test
+    bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+    gmock gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local filters_integration_test)
+
+# An integration test for bigtable::Mutations.
+add_executable(mutations_integration_test tests/mutations_integration_test.cc)
+target_link_libraries(mutations_integration_test
+    bigtable_admin_client bigtable_client bigtable_client_testing bigtable_protos
+    gmock gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local mutations_integration_test)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_subdirectory(benchmarks)
+    add_library(bigtable_benchmark_common
+        benchmarks/benchmark.h
+        benchmarks/benchmark.cc
+        benchmarks/constants.h
+        benchmarks/embedded_server.h
+        benchmarks/embedded_server.cc
+        benchmarks/random.h
+        benchmarks/random.cc
+        benchmarks/setup.h
+        benchmarks/setup.cc)
+    target_link_libraries(bigtable_benchmark_common
+        bigtable_admin_client bigtable_client bigtable_protos
+        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+    # List the unit tests, then setup the targets and dependencies.
+    set(bigtable_benchmarks_unit_tests
+        benchmarks/benchmark_test.cc
+        benchmarks/embedded_server_test.cc
+        benchmarks/format_duration_test.cc
+        benchmarks/random_test.cc
+        benchmarks/setup_test.cc)
+    foreach (fname ${bigtable_benchmarks_unit_tests})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
+        add_executable(${target} ${fname})
+        get_target_property(tname ${target} NAME)
+        target_link_libraries(${target}
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos
+            gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+        add_test(NAME ${tname} COMMAND ${target})
+        get_target_property(sources ${target} SOURCES)
+        add_dependencies(tests-local ${target})
+    endforeach ()
+    target_sources(bigtable_client_all_tests
+        PUBLIC ${bigtable_benchmarks_unit_tests})
+    target_link_libraries(bigtable_client_all_tests bigtable_benchmark_common)
+
+    # Benchmark Table::ReadRows().
+    add_executable(scan_throughput_benchmark
+            benchmarks/scan_throughput_benchmark.cc)
+    target_link_libraries(scan_throughput_benchmark
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+    # Benchmark for Table::Apply() and Table::ReadRow().
+    add_executable(apply_read_latency_benchmark
+            benchmarks/apply_read_latency_benchmark.cc)
+    target_link_libraries(apply_read_latency_benchmark
+            bigtable_benchmark_common bigtable_admin_client bigtable_client
+            bigtable_protos
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+
+    # A benchmark to measure performance of long running programs.
+    add_executable(endurance_benchmark benchmarks/endurance_benchmark.cc)
+    target_link_libraries(endurance_benchmark bigtable_benchmark_common
+            bigtable_admin_client bigtable_client bigtable_protos
+            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples/quick_start)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-option(BIGTABLE_CLIENT_CLANG_TIDY
-        "If set compiles the Cloud Bigtable client with clang-tidy."
-        "")
-if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
-    message(STATUS "clang-tidy build enabled.")
-    set_target_properties(
-            bigtable_client PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-    set_target_properties(
-            bigtable_admin_client PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-endif ()
+# Define the install target
+get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+if ("${LIB64}" STREQUAL "TRUE")
+    set(LIBSUFFIX 64)
+else()
+    set(LIBSUFFIX "")
+endif()
+set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
+install(TARGETS bigtable_admin_client bigtable_client bigtable_protos
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
+    ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+install(DIRECTORY client/ DESTINATION include/bigtable/client FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY admin/ DESTINATION include/bigtable/admin FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ../third_party/abseil/absl DESTINATION include/bigtable FILES_MATCHING PATTERN "*.inc")
+install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/bigtable/google FILES_MATCHING PATTERN "*.h")
