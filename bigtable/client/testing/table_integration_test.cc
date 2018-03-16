@@ -97,9 +97,10 @@ std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
   std::vector<bigtable::Cell> return_cells;
   std::transform(cells.begin(), cells.end(), std::back_inserter(return_cells),
                  [](Cell const& cell) {
-                   bigtable::Cell newCell(cell.row_key(), cell.family_name(),
-                                          cell.column_qualifier(), 0,
-                                          cell.value(), cell.labels());
+                   bigtable::Cell newCell(
+                       std::move(cell.row_key()), std::move(cell.family_name()),
+                       std::move(cell.column_qualifier()), 0,
+                       std::move(cell.value()), std::move(cell.labels()));
                    return newCell;
                  });
 

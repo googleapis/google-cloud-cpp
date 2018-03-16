@@ -191,9 +191,6 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   return response.predicate_matched();
 }
 
-/**
- * Send request ReadModifyWriteRowRequest to modify the row and get it back
- */
 Row Table::CallReadModifyWriteRowRequest(
     btproto::ReadModifyWriteRowRequest row_request) {
   auto error_message =
@@ -207,19 +204,21 @@ Row Table::CallReadModifyWriteRowRequest(
     for (auto& column : family.columns()) {
       for (auto cell : column.cells()) {
         std::vector<std::string> labels;
-        for (auto label : cell.labels()) {
-          labels.emplace_back(label.c_str());
-        }
-        bigtable::Cell new_cell(response_row.row().key(), family.name(),
-                                column.qualifier(), cell.timestamp_micros(),
-                                cell.value(), labels);
+
+        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
+                  std::back_inserter(labels));
+        bigtable::Cell new_cell(std::move(response_row.mutable_row()->key()),
+                                std::move(family.name()),
+                                std::move(column.qualifier()),
+                                cell.timestamp_micros(),
+                                std::move(cell.value()), std::move(labels));
+
         cells.emplace_back(std::move(new_cell));
       }
     }
   }
 
-  Row row(response_row.row().key(), cells);
-  return row;
+  return Row(response_row.row().key(), std::move(cells));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

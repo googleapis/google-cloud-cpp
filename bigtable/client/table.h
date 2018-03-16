@@ -28,8 +28,6 @@
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
-namespace btproto = ::google::bigtable::v2;
-
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -245,7 +243,7 @@ class Table {
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key,
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
-    btproto::ReadModifyWriteRowRequest request;
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_table_name(table_name_);
     request.set_row_key(std::move(row_key));
 
@@ -257,10 +255,7 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
-    // Below code to add the ReadModifyWriteRule to the request object
-    // is by making a copy. This will create performance problem if the
-    // rules buffer is large
-    // TODO Issue#336
+    // TODO Issue#336 - optimize this code by not copying the parameter pack.
     // Add first default rule
     *request.add_rules() = rule.as_proto_move();
     // Add if any additional rule is present
@@ -274,8 +269,11 @@ class Table {
   }
 
  private:
+  /**
+   * Send request ReadModifyWriteRowRequest to modify the row and get it back
+   */
   Row CallReadModifyWriteRowRequest(
-      btproto::ReadModifyWriteRowRequest row_request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest row_request);
 
  private:
   std::shared_ptr<DataClient> client_;
