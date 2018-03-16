@@ -30,15 +30,6 @@
  * Contains all the Cloud Bigtable C++ client APIs.
  */
 namespace bigtable {
-int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
-int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
-int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
-/// A single integer representing the Major/Minor/Patch version
-int constexpr version() {
-  return 100 * (100 * version_major() + version_minor()) + version_patch();
-}
-std::string version_string();
-
 /**
  * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.
  *
@@ -51,7 +42,37 @@ std::string version_string();
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace BIGTABLE_CLIENT_NS {}
+inline namespace BIGTABLE_CLIENT_NS {
+/**
+ * The Cloud Bigtable C++ Client major version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
+
+/**
+ * The Cloud Bigtable C++ Client minor version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
+
+/**
+ * The Cloud Bigtable C++ Client patch version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
+
+/// A single integer representing the Major/Minor/Patch version.
+int constexpr version() {
+  return 100 * (100 * version_major() + version_minor()) + version_patch();
+}
+
+/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+std::string version_string();
+
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
