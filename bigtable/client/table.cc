@@ -206,7 +206,7 @@ Row Table::CallReadModifyWriteRowRequest(
   auto& row = *response.mutable_row();
   for (auto& family : *row.mutable_families()) {
     for (auto& column : *family.mutable_columns()) {
-      for (auto cell : *column.mutable_cells()) {
+      for (auto& cell : *column.mutable_cells()) {
         std::vector<std::string> labels;
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
