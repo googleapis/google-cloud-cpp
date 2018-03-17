@@ -1,15 +1,16 @@
 <map id="client/table.h" name="client/table.h">
-<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="69,169,199,211"/>
-<area shape="rect" id="node11" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="1191,266,1341,293"/>
-<area shape="rect" id="node15" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="1323,169,1494,211"/>
-<area shape="rect" id="node17" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="1365,266,1540,293"/>
-<area shape="rect" id="node20" href="$row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="619,80,745,121"/>
-<area shape="rect" id="node28" href="$row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="1519,169,1645,211"/>
-<area shape="rect" id="node31" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="377,259,501,300"/>
-<area shape="rect" id="node33" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="525,259,649,300"/>
+<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="15,169,146,211"/>
+<area shape="rect" id="node11" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="1258,266,1407,293"/>
+<area shape="rect" id="node15" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="474,169,645,211"/>
+<area shape="rect" id="node17" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="1059,266,1233,293"/>
+<area shape="rect" id="node20" href="$metadata__update__policy_8h.html" title="bigtable/client/metadata\l_update_policy.h" alt="" coords="423,259,583,300"/>
+<area shape="rect" id="node21" href="$row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="959,80,1085,121"/>
+<area shape="rect" id="node29" href="$row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="1505,169,1632,211"/>
+<area shape="rect" id="node32" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="659,259,783,300"/>
+<area shape="rect" id="node34" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="859,259,983,300"/>
 <area shape="rect" id="node4" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="11,259,148,300"/>
-<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="760,355,919,382"/>
-<area shape="rect" id="node25" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="666,177,805,203"/>
-<area shape="rect" id="node26" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="776,266,913,293"/>
-<area shape="rect" id="node29" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="1040,259,1167,300"/>
+<area shape="rect" id="node5" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="771,355,929,382"/>
+<area shape="rect" id="node26" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="1657,177,1795,203"/>
+<area shape="rect" id="node27" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="1648,266,1785,293"/>
+<area shape="rect" id="node30" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="1432,259,1559,300"/>
 </map>
