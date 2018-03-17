@@ -199,8 +199,8 @@ Row Table::CallReadModifyWriteRowRequest(
   auto error_message =
       "ReadModifyWriteRowRequest(" + row_request.table_name() + ")";
   auto response_row = RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_, &StubType::ReadModifyWriteRow,
-      row_request, error_message.c_str());
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &StubType::ReadModifyWriteRow, row_request, error_message.c_str());
 
   std::vector<bigtable::Cell> cells;
   for (auto& family : response_row.row().families()) {
