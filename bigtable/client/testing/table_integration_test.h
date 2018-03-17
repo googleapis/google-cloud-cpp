@@ -70,6 +70,15 @@ class TableIntegrationTest : public ::testing::Test {
                    std::vector<bigtable::Cell> const& cells);
 
   /**
+   * Return @p cells with all timestamps set to a fixed value.
+   *
+   * This is useful to compare sets of cells but ignoring their timestamp
+   * values.
+   */
+  std::vector<bigtable::Cell> GetCellsIgnoringTimestamp(
+      std::vector<bigtable::Cell> cells);
+
+  /**
    * Compare two sets of cells.
    * Unordered because ReadRows does not guarantee a particular order.
    */

@@ -18,8 +18,10 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/metadata_update_policy.h"
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/read_modify_write_rule.h"
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
@@ -222,6 +224,59 @@ class Table {
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations);
+
+  using RpcUtils = bigtable::internal::UnaryRpcUtils<DataClient>;
+  using StubType = RpcUtils::StubType;
+
+  /**
+   * Atomically read and modify the row in the server, returning the
+   * resulting row
+   *
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row
+   * @param row_key the row to read
+   * @param rule to modify the row. Two types of rules are applied here
+   *     AppendValue which will read the existing value and append the
+   *     text provided to the value.
+   *     IncrementAmount which will read the existing uint64 big-endian-int
+   *     and add the value provided.
+   *     Both rules accept the family and column identifier to modify.
+   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @returns modified row
+   */
+  template <typename... Args>
+  Row ReadModifyWriteRow(std::string row_key,
+                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_table_name(table_name_);
+    request.set_row_key(std::move(row_key));
+
+    // Generate a better compile time error message than the default one
+    // if the types do not match
+    static_assert(
+        internal::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    // TODO(#336) - optimize this code by not copying the parameter pack.
+    // Add first default rule
+    *request.add_rules() = rule.as_proto_move();
+    // Add if any additional rule is present
+    std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
+        std::forward<Args>(rules)...};
+    for (auto args_rule : rule_list) {
+      *request.add_rules() = args_rule.as_proto_move();
+    }
+
+    return CallReadModifyWriteRowRequest(request);
+  }
+
+ private:
+  /**
+   * Send request ReadModifyWriteRowRequest to modify the row and get it back
+   */
+  Row CallReadModifyWriteRowRequest(
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
  private:
   std::shared_ptr<DataClient> client_;
