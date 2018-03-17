@@ -258,7 +258,7 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
-    // TODO Issue#336 - optimize this code by not copying the parameter pack.
+    // TODO(#336) - optimize this code by not copying the parameter pack.
     // Add first default rule
     *request.add_rules() = rule.as_proto_move();
     // Add if any additional rule is present
@@ -276,7 +276,7 @@ class Table {
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
   Row CallReadModifyWriteRowRequest(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest row_request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
  private:
   std::shared_ptr<DataClient> client_;

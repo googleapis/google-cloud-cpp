@@ -195,33 +195,32 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
 }
 
 Row Table::CallReadModifyWriteRowRequest(
-    btproto::ReadModifyWriteRowRequest row_request) {
+    btproto::ReadModifyWriteRowRequest request) {
   auto error_message =
-      "ReadModifyWriteRowRequest(" + row_request.table_name() + ")";
-  auto response_row = RpcUtils::CallWithoutRetry(
+      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
+  auto response = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::ReadModifyWriteRow, row_request, error_message.c_str());
+      &StubType::ReadModifyWriteRow, request, error_message.c_str());
 
   std::vector<bigtable::Cell> cells;
-  for (auto& family : response_row.row().families()) {
-    for (auto& column : family.columns()) {
-      for (auto cell : column.cells()) {
+  auto& row = *response.mutable_row();
+  for (auto& family : *row.mutable_families()) {
+    for (auto& column : *family.mutable_columns()) {
+      for (auto cell : *column.mutable_cells()) {
         std::vector<std::string> labels;
-
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
-        bigtable::Cell new_cell(std::move(response_row.mutable_row()->key()),
-                                std::move(family.name()),
-                                std::move(column.qualifier()),
-                                cell.timestamp_micros(),
-                                std::move(cell.value()), std::move(labels));
+        bigtable::Cell new_cell(
+            std::move(row.key()), std::move(*family.mutable_name()),
+            std::move(*column.mutable_qualifier()), cell.timestamp_micros(),
+            std::move(*cell.mutable_value()), std::move(labels));
 
         cells.emplace_back(std::move(new_cell));
       }
     }
   }
 
-  return Row(response_row.row().key(), std::move(cells));
+  return Row(std::move(*row.mutable_key()), std::move(cells));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
