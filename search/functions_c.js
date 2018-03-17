@@ -1,6 +1,7 @@
 var searchData=
 [
   ['range',['Range',['../classbigtable_1_1v0_1_1RowRange.html#a5e9aa048a862cb9b175985f247b89e32',1,'bigtable::v0::RowRange']]],
+  ['readmodifywriterow',['ReadModifyWriteRow',['../classbigtable_1_1v0_1_1Table.html#ae88d7887be866fc78e27451dca8bcd94',1,'bigtable::v0::Table']]],
   ['readmodifywriterule',['ReadModifyWriteRule',['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html#a38cdaa1f884133583df4f6ad5e5c8567',1,'bigtable::v0::ReadModifyWriteRule::ReadModifyWriteRule(ReadModifyWriteRule &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html#a5fce39e33cc88c793424aa56cd1d4550',1,'bigtable::v0::ReadModifyWriteRule::ReadModifyWriteRule(ReadModifyWriteRule const &amp;rhs)=default']]],
   ['readrow',['ReadRow',['../classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a',1,'bigtable::v0::Table']]],
   ['readrows',['ReadRows',['../classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d',1,'bigtable::v0::Table::ReadRows(RowSet row_set, Filter filter)'],['../classbigtable_1_1v0_1_1Table.html#a156d76ffb347bc7422b16d5ae932a483',1,'bigtable::v0::Table::ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter)']]],

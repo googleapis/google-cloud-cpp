@@ -65,6 +65,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classbigtable_1_1v0_1_1Table-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -77,6 +78,13 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="table_8h_source.html">bigtable/client/table.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a2fefadfe9b9596a26794b77dcf601f75"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a2fefadfe9b9596a26794b77dcf601f75">RpcUtils</a> = bigtable::internal::UnaryRpcUtils&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt;</td></tr>
+<tr class="separator:a2fefadfe9b9596a26794b77dcf601f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6b0ca5d776dc3c6e88f65e51ad1090e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#ac6b0ca5d776dc3c6e88f65e51ad1090e">StubType</a> = RpcUtils::StubType</td></tr>
+<tr class="separator:ac6b0ca5d776dc3c6e88f65e51ad1090e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6382a12a12be3a3066e67be2b9fcb827"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a6382a12a12be3a3066e67be2b9fcb827">Table</a> (std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string const &amp;table_id)</td></tr>
@@ -106,6 +114,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1">CheckAndMutateRow</a> (std::string row_key, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; true_mutations, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; false_mutations)</td></tr>
 <tr class="memdesc:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomic test-and-set for a row using filter expressions.  <a href="#a91f8dd3d54bcccf61b7d2ba36cd802b1">More...</a><br /></td></tr>
 <tr class="separator:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae88d7887be866fc78e27451dca8bcd94"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:ae88d7887be866fc78e27451dca8bcd94"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#ae88d7887be866fc78e27451dca8bcd94">ReadModifyWriteRow</a> (std::string row_key, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</td></tr>
+<tr class="memdesc:ae88d7887be866fc78e27451dca8bcd94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically read and modify the row in the server, returning the resulting row.  <a href="#ae88d7887be866fc78e27451dca8bcd94">More...</a><br /></td></tr>
+<tr class="separator:ae88d7887be866fc78e27451dca8bcd94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main interface to interact with data in a Cloud Bigtable table. </p>
@@ -117,7 +129,36 @@ Public Member Functions</h2></td></tr>
 <li>update a row based on previous values: <code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1" title="Atomic test-and-set for a row using filter expressions. ">Table::CheckAndMutateRow()</a></code></li>
 </ul>
 <p>The class deals with the most common transient failures, and retries the underlying RPC calls subject to the policies configured by the application. These policies are documented in<code><a class="el" href="classbigtable_1_1v0_1_1Table.html#a6382a12a12be3a3066e67be2b9fcb827" title="Constructor with default policies. ">Table::Table()</a></code>. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a2fefadfe9b9596a26794b77dcf601f75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fefadfe9b9596a26794b77dcf601f75">&#9670;&nbsp;</a></span>RpcUtils</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classbigtable_1_1v0_1_1Table.html#a2fefadfe9b9596a26794b77dcf601f75">bigtable::v0::Table::RpcUtils</a> =  bigtable::internal::UnaryRpcUtils&lt;<a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6b0ca5d776dc3c6e88f65e51ad1090e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b0ca5d776dc3c6e88f65e51ad1090e">&#9670;&nbsp;</a></span>StubType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classbigtable_1_1v0_1_1Table.html#ac6b0ca5d776dc3c6e88f65e51ad1090e">bigtable::v0::Table::StubType</a> =  RpcUtils::StubType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6382a12a12be3a3066e67be2b9fcb827"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6382a12a12be3a3066e67be2b9fcb827">&#9670;&nbsp;</a></span>Table() <span class="overload">[1/2]</span></h2>
 
@@ -355,6 +396,67 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the filter passed. </dd></dl>
+
+</div>
+</div>
+<a id="ae88d7887be866fc78e27451dca8bcd94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae88d7887be866fc78e27451dca8bcd94">&#9670;&nbsp;</a></span>ReadModifyWriteRow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbigtable_1_1v0_1_1Row.html">Row</a> bigtable::v0::Table::ReadModifyWriteRow </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>row_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ReadModifyWriteRule&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Atomically read and modify the row in the server, returning the resulting row. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Args</td><td>this is zero or more ReadModifyWriteRules to apply on a row </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">row_key</td><td>the row to read </td></tr>
+    <tr><td class="paramname">rule</td><td>to modify the row. Two types of rules are applied here AppendValue which will read the existing value and append the text provided to the value. IncrementAmount which will read the existing uint64 big-endian-int and add the value provided. Both rules accept the family and column identifier to modify. </td></tr>
+    <tr><td class="paramname">rules</td><td>is the zero or more ReadModifyWriteRules to apply on a row. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>modified row </dd></dl>
 
 </div>
 </div>

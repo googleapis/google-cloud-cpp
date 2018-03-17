@@ -3,6 +3,7 @@ var searchData=
   ['range',['Range',['../classbigtable_1_1v0_1_1RowRange.html#a5e9aa048a862cb9b175985f247b89e32',1,'bigtable::v0::RowRange']]],
   ['read_5fmodify_5fwrite_5frule_2ecc',['read_modify_write_rule.cc',['../read__modify__write__rule_8cc.html',1,'']]],
   ['read_5fmodify_5fwrite_5frule_2eh',['read_modify_write_rule.h',['../read__modify__write__rule_8h.html',1,'']]],
+  ['readmodifywriterow',['ReadModifyWriteRow',['../classbigtable_1_1v0_1_1Table.html#ae88d7887be866fc78e27451dca8bcd94',1,'bigtable::v0::Table']]],
   ['readmodifywriterule',['ReadModifyWriteRule',['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html',1,'bigtable::v0::ReadModifyWriteRule'],['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html#a38cdaa1f884133583df4f6ad5e5c8567',1,'bigtable::v0::ReadModifyWriteRule::ReadModifyWriteRule(ReadModifyWriteRule &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html#a5fce39e33cc88c793424aa56cd1d4550',1,'bigtable::v0::ReadModifyWriteRule::ReadModifyWriteRule(ReadModifyWriteRule const &amp;rhs)=default']]],
   ['readrow',['ReadRow',['../classbigtable_1_1v0_1_1Table.html#abdb527ed7c658c736ccb973ff49f051a',1,'bigtable::v0::Table']]],
   ['readrows',['ReadRows',['../classbigtable_1_1v0_1_1Table.html#a07bf1327a1e247881ae98537e722812d',1,'bigtable::v0::Table::ReadRows(RowSet row_set, Filter filter)'],['../classbigtable_1_1v0_1_1Table.html#a156d76ffb347bc7422b16d5ae932a483',1,'bigtable::v0::Table::ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter)']]],
@@ -27,5 +28,6 @@ var searchData=
   ['rpc_5fretry_5fpolicy_2ecc',['rpc_retry_policy.cc',['../rpc__retry__policy_8cc.html',1,'']]],
   ['rpc_5fretry_5fpolicy_2eh',['rpc_retry_policy.h',['../rpc__retry__policy_8h.html',1,'']]],
   ['rpcbackoffpolicy',['RPCBackoffPolicy',['../classbigtable_1_1v0_1_1RPCBackoffPolicy.html',1,'bigtable::v0']]],
-  ['rpcretrypolicy',['RPCRetryPolicy',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html',1,'bigtable::v0']]]
+  ['rpcretrypolicy',['RPCRetryPolicy',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html',1,'bigtable::v0']]],
+  ['rpcutils',['RpcUtils',['../classbigtable_1_1v0_1_1Table.html#a2fefadfe9b9596a26794b77dcf601f75',1,'bigtable::v0::Table']]]
 ];
