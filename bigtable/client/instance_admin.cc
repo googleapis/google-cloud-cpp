@@ -34,8 +34,8 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
     request.set_parent(project_name_);
 
     auto response = RpcUtils::CallWithRetryBorrow(
-        *client_, *rpc_policy, *backoff_policy, &StubType::ListInstances,
-        request, error.c_str());
+        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
+        &StubType::ListInstances, request, error.c_str());
 
     for (auto& x : *response.mutable_instances()) {
       result.emplace_back(std::move(x));
