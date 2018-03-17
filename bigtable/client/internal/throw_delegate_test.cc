@@ -14,7 +14,7 @@
 
 #include "bigtable/client/internal/throw_delegate.h"
 #include <gtest/gtest.h>
-#include <bigtable/client/grpc_error.h>
+#include "bigtable/client/grpc_error.h"
 
 using namespace bigtable::internal;
 
