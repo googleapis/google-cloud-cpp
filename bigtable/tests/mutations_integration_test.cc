@@ -216,7 +216,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   EXPECT_THROW(
       table->Apply(bigtable::SingleRowMutation(
           key, bigtable::DeleteFromColumn(column_family2, "c2", 4000, 2000))),
-      bigtable::GRpcError);
+      bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
@@ -258,7 +258,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   EXPECT_THROW(
       table->Apply(bigtable::SingleRowMutation(
           key, bigtable::DeleteFromColumn(column_family2, "c2", 2000, 2000))),
-      bigtable::GRpcError);
+      bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(

@@ -78,7 +78,7 @@ CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
 if [ -r /etc/lsb-release ] && grep -q 14.04 /etc/lsb-release; then
   echo "Skipping integration tests, Go version too old in Ubuntu 14.04."
 else
-  (cd bigtable/tests && ../../../../bigtable/tests/run_integration_tests.sh)
+  (cd bigtable/tests && /v/bigtable/tests/run_integration_tests_emulator.sh)
 fi
 
 # Some of the sanitizers only emit errors and do not change the error code

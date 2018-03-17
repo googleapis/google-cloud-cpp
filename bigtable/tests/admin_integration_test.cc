@@ -103,6 +103,9 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 };
 
+bool UsingCloudBigtableEmulator() {
+  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
+}
 }  // namespace
 
 /**
@@ -191,6 +194,10 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
                                              value { gc_rule { max_age { seconds: 86400 } } }
                                           }
                                )""";
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (not UsingCloudBigtableEmulator()) {
+    expected_text_create += "granularity: MILLIS\n";
+  }
   auto table_detailed =
       table_admin_->GetTable(table_id, admin_proto::Table::FULL);
   bool valid_schema = CheckTableSchema(table_detailed, expected_text_create,
@@ -211,6 +218,10 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
                                                    } } }
                                           }
                         )""";
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (not UsingCloudBigtableEmulator()) {
+    expected_text += "granularity: MILLIS\n";
+  }
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
       bigtable::ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
