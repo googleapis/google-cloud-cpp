@@ -145,7 +145,7 @@ struct UnaryRpcUtils {
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
    * @param metadata_update_policy to keep metadata like
-   *     google-cloud-resource-prefix.
+   *     x-goog-request-params.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.
@@ -184,7 +184,7 @@ struct UnaryRpcUtils {
    * @param backoff_policy the policy controlling how long to wait before
    *     retrying.
    * @param metadata_update_policy to keep metadata like
-   *     google-cloud-resource-prefix.
+   *     x-goog-request-params.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.
@@ -242,7 +242,7 @@ struct UnaryRpcUtils {
    * @param client the object that holds the gRPC stub.
    * @param rpc_policy the policy to control timeouts.
    * @param metadata_update_policy to keep metadata like
-   *     google-cloud-resource-prefix.
+   *     x-goog-request-params.
    * @param function the pointer to the member function to call.
    * @param request an initialized request parameter for the RPC.
    * @param error_message include this message in any exception or error log.

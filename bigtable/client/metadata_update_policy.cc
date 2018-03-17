@@ -25,8 +25,7 @@ MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string resource_name, MetadataParamTypes metadata_param_type) {
-  std::string value;
-  value = metadata_param_type.type();
+  std::string value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   x_google_request_params_ =
@@ -36,8 +35,7 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string resource_name, MetadataParamTypes metadata_param_type,
     std::string table_id) {
-  std::string value;
-  value = metadata_param_type.type();
+  std::string value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   value += "/tables/" + table_id;
