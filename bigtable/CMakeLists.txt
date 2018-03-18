@@ -138,7 +138,7 @@ else ()
         set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
         include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
 
-        doxygen_add_docs(bigtable-docs doc client admin
+        doxygen_add_docs(bigtable-docs doc client
                 WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bigtable
                 COMMENT "Generate HTML documentation")
         add_dependencies(doxygen-docs bigtable-docs)
