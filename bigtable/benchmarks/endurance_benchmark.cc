@@ -158,9 +158,8 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto generator = MakeDefaultPRNG();
 
   auto start = std::chrono::steady_clock::now();
-  auto last_report = start;
-  auto report_at = start + std::chrono::minutes(kPartialResultsPeriod);
   auto end = start + test_duration;
+
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
     partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
     ++partial.row_count;
@@ -168,21 +167,16 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
     ++partial.row_count;
     partial.operations.emplace_back(RunOneApply(table, benchmark, generator));
     ++partial.row_count;
-    if (now >= report_at) {
-      // Every so many minutes print partial results and reset.
-      partial.elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-          now - last_report);
-      auto last_row_count = partial.row_count;
-      std::ostringstream msg;
-      benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
-      std::cout << msg.str() << std::flush;
-      partial = {};
-      partial.operations.reserve(last_row_count);
-      total_ops += last_row_count;
-      last_report = now;
-      report_at = now + std::chrono::minutes(kPartialResultsPeriod);
-    }
+    auto last_row_count = partial.row_count;
+    total_ops += last_row_count;
   }
+
+  partial.elapsed =
+      std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+  std::ostringstream msg;
+  benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
+  std::cout << msg.str() << std::flush;
+
   return total_ops;
 }
 
