@@ -161,7 +161,7 @@ struct UnaryRpcUtils {
   CallWithRetry(
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-      bigtable::MetadataUpdatePolicy const &metadata_update_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const& request,
       char const* error_message) {
@@ -257,7 +257,7 @@ struct UnaryRpcUtils {
       typename CheckSignature<MemberFunction>::ResponseType>::type
   CallWithoutRetry(
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
-      bigtable::MetadataUpdatePolicy const &metadata_update_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
       typename CheckSignature<MemberFunction>::RequestType const& request,
       char const* error_message) {
