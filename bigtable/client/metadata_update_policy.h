@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 
+#include "bigtable/client/version.h"
 #include <grpc++/grpc++.h>
 #include <memory>
-#include "bigtable/client/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
