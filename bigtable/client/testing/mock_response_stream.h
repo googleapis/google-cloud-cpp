@@ -25,8 +25,8 @@ class MockResponseStream : public grpc::ClientReaderInterface<
  public:
   MOCK_METHOD0(WaitForInitialMetadata, void());
   MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t *));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::ReadRowsResponse *));
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD1(Read, bool(::google::bigtable::v2::ReadRowsResponse*));
 };
 
 }  // namespace testing

@@ -2,9 +2,9 @@
 BasedOnStyle: Google
 
 # Some folks prefer to write "int& foo" while others prefer "int &foo".  The
-# Google Style Guide only asks for consistency within a project, we have
-# (mostly) been using "int& foo", but clang-format(1) sometimes guesses wrong,
-# so to enforce the consistency:
+# Google Style Guide only asks for consistency within a project, we chose
+# "int& foo" for this project:
+DerivePointerAlignment: false
 PointerAlignment: Left
 
 IncludeCategories:

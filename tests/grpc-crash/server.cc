@@ -21,22 +21,22 @@ class EchoImpl : public Echo::Service {
  public:
   EchoImpl() {}
 
-  grpc::Status Ping(grpc::ServerContext *context, Request const *request,
-                    Response *response) override {
+  grpc::Status Ping(grpc::ServerContext* context, Request const* request,
+                    Response* response) override {
     response->set_value(request->value());
     return grpc::Status::OK;
   }
 
   virtual grpc::Status StreamPing(
-      grpc::ServerContext *context, Request const *request,
-      grpc::ServerWriter<Response> *writer) override {
+      grpc::ServerContext* context, Request const* request,
+      grpc::ServerWriter<Response>* writer) override {
     Response response;
     writer->WriteLast(response, grpc::WriteOptions());
     return grpc::Status::OK;
   }
 };
 
-int main(int argc, char *argv[]) try {
+int main(int argc, char* argv[]) try {
   if (argc < 3) {
     std::cerr << "Usage: server <port> <thread-count>" << std::endl;
     return 1;
@@ -60,14 +60,14 @@ int main(int argc, char *argv[]) try {
     }
     std::this_thread::sleep_for(std::chrono::seconds(20));
     server->Shutdown();
-    for (auto &t : tasks) {
+    for (auto& t : tasks) {
       t.get();
     }
     std::cout << "Shutdown completed." << std::endl;
   }
 
   return 0;
-} catch (std::exception const &ex) {
+} catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }

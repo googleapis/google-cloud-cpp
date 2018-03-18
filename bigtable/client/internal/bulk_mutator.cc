@@ -24,9 +24,9 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
-BulkMutator::BulkMutator(std::string const &table_name,
-                         IdempotentMutationPolicy &idempotent_policy,
-                         BulkMutation &&mut) {
+BulkMutator::BulkMutator(std::string const& table_name,
+                         IdempotentMutationPolicy& idempotent_policy,
+                         BulkMutation&& mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
@@ -41,18 +41,18 @@ BulkMutator::BulkMutator(std::string const &table_name,
   // the index in the current array to the index in the original array.
   pending_annotations_.reserve(pending_mutations_.entries_size());
   int index = 0;
-  for (auto const &e : pending_mutations_.entries()) {
+  for (auto const& e : pending_mutations_.entries()) {
     // This is a giant && across all the mutations for each row.
     auto r = std::all_of(e.mutations().begin(), e.mutations().end(),
-                         [&idempotent_policy](btproto::Mutation const &m) {
+                         [&idempotent_policy](btproto::Mutation const& m) {
                            return idempotent_policy.is_idempotent(m);
                          });
     pending_annotations_.push_back(Annotations{index++, r, false});
   }
 }
 
-grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface &stub,
-                                         grpc::ClientContext &client_context) {
+grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface& stub,
+                                         grpc::ClientContext& client_context) {
   PrepareForRequest();
   // Send the request to the server and read the resulting result stream.
   auto stream = stub.MutateRows(&client_context, mutations_);
@@ -67,7 +67,7 @@ grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface &stub,
 void BulkMutator::PrepareForRequest() {
   mutations_.Swap(&pending_mutations_);
   annotations_.swap(pending_annotations_);
-  for (auto &a : annotations_) {
+  for (auto& a : annotations_) {
     a.has_mutation_result = false;
   }
   pending_mutations_ = {};
@@ -76,16 +76,16 @@ void BulkMutator::PrepareForRequest() {
 }
 
 void BulkMutator::ProcessResponse(
-    google::bigtable::v2::MutateRowsResponse &response) {
-  for (auto &entry : *response.mutable_entries()) {
+    google::bigtable::v2::MutateRowsResponse& response) {
+  for (auto& entry : *response.mutable_entries()) {
     auto index = entry.index();
     if (index < 0 or annotations_.size() <= std::size_t(index)) {
       // TODO(#72) - decide how this is logged.
       continue;
     }
-    auto &annotation = annotations_[index];
+    auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
-    auto &status = entry.status();
+    auto& status = entry.status();
     auto const code = static_cast<grpc::StatusCode>(status.code());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
@@ -93,7 +93,7 @@ void BulkMutator::ProcessResponse(
     if (grpc::OK == code) {
       continue;
     }
-    auto &original = *mutations_.mutable_entries(index);
+    auto& original = *mutations_.mutable_entries(index);
     // Failed responses are handled according to the current policies.
     if (IsRetryableStatusCode(code) and annotation.is_idempotent) {
       // Retryable requests are saved in the pending mutations, along with the
@@ -114,13 +114,13 @@ void BulkMutator::ProcessResponse(
 
 void BulkMutator::FinishRequest() {
   int index = 0;
-  for (auto const &annotation : annotations_) {
+  for (auto const& annotation : annotations_) {
     if (annotation.has_mutation_result) {
       ++index;
       continue;
     }
     // If there are any mutations with unknown state, they need to be handled.
-    auto &original = *mutations_.mutable_entries(index);
+    auto& original = *mutations_.mutable_entries(index);
     if (annotation.is_idempotent) {
       // If the mutation was retryable, move it to the pending mutations to try
       // again, along with their index.
@@ -143,7 +143,7 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
   google::rpc::Status ok_status;
   ok_status.set_code(grpc::StatusCode::OK);
-  for (auto &mutation : *pending_mutations_.mutable_entries()) {
+  for (auto& mutation : *pending_mutations_.mutable_entries()) {
     result.emplace_back(
         FailedMutation(SingleRowMutation(std::move(mutation)), ok_status));
   }

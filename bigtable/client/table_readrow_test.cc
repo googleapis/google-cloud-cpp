@@ -39,7 +39,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
   auto stream =
       bigtable::internal::make_unique<bigtable::testing::MockResponseStream>();
   EXPECT_CALL(*stream, Read(_))
-      .WillOnce(Invoke([&response](btproto::ReadRowsResponse *r) {
+      .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
         return true;
       }))
@@ -47,8 +47,8 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext *,
-                                       btproto::ReadRowsRequest const &req) {
+      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -72,8 +72,8 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext *,
-                                       btproto::ReadRowsRequest const &req) {
+      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());

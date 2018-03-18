@@ -25,8 +25,8 @@ class MockReader : public grpc::ClientReaderInterface<
  public:
   MOCK_METHOD0(WaitForInitialMetadata, void());
   MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t *));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::MutateRowsResponse *));
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD1(Read, bool(::google::bigtable::v2::MutateRowsResponse*));
 };
 
 class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
@@ -42,14 +42,14 @@ namespace bt = bigtable;
 TEST_F(TableBulkApplyTest, Simple) {
   auto reader = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(1);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -60,7 +60,7 @@ TEST_F(TableBulkApplyTest, Simple) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&reader](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return reader.release();
           }));
 
@@ -74,12 +74,12 @@ TEST_F(TableBulkApplyTest, Simple) {
 TEST_F(TableBulkApplyTest, RetryPartialFailure) {
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate a partial (recoverable) failure.
-        auto &e0 = *r->add_entries();
+        auto& e0 = *r->add_entries();
         e0.set_index(0);
         e0.mutable_status()->set_code(grpc::UNAVAILABLE);
-        auto &e1 = *r->add_entries();
+        auto& e1 = *r->add_entries();
         e1.set_index(1);
         e1.mutable_status()->set_code(grpc::OK);
         return true;
@@ -89,9 +89,9 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 
   auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -102,11 +102,11 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r1.release();
           }))
       .WillOnce(Invoke(
-          [&r2](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r2.release();
           }));
 
@@ -124,14 +124,14 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(1);
           e.mutable_status()->set_code(grpc::OUT_OF_RANGE);
         }
@@ -142,7 +142,7 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r1.release();
           }));
 
@@ -163,9 +163,9 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // which happens to be the case in this test.
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -177,9 +177,9 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // Create a second stream returned by the mocks when the client retries.
   auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -190,11 +190,11 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r1.release();
           }))
       .WillOnce(Invoke(
-          [&r2](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r2.release();
           }));
 
@@ -223,9 +223,9 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   // Setup the mocks to fail more than 3 times.
   auto r1 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r1, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -235,8 +235,8 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   EXPECT_CALL(*r1, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
 
-  auto create_cancelled_stream = [&](grpc::ClientContext *,
-                                     btproto::MutateRowsRequest const &) {
+  auto create_cancelled_stream = [&](grpc::ClientContext*,
+                                     btproto::MutateRowsRequest const&) {
     auto stream = bigtable::internal::make_unique<MockReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
@@ -246,7 +246,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r1.release();
           }))
       .WillOnce(Invoke(create_cancelled_stream))
@@ -271,9 +271,9 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 
   auto r2 = bigtable::internal::make_unique<MockReader>();
   EXPECT_CALL(*r2, Read(_))
-      .WillOnce(Invoke([](btproto::MutateRowsResponse *r) {
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
-          auto &e = *r->add_entries();
+          auto& e = *r->add_entries();
           e.set_index(0);
           e.mutable_status()->set_code(grpc::OK);
         }
@@ -284,11 +284,11 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r1.release();
           }))
       .WillOnce(Invoke(
-          [&r2](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return r2.release();
           }));
 
@@ -298,11 +298,11 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
                               {bt::SetCell("fam", "col", 0_ms, "qux")}),
         bt::SingleRowMutation("not-idempotent",
                               {bt::SetCell("fam", "col", "baz")})));
-  } catch (bt::PermanentMutationFailure const &ex) {
+  } catch (bt::PermanentMutationFailure const& ex) {
     ASSERT_EQ(1UL, ex.failures().size());
     EXPECT_EQ(1, ex.failures()[0].original_index());
     EXPECT_EQ("not-idempotent", ex.failures()[0].mutation().row_key());
-  } catch (std::exception const &ex) {
+  } catch (std::exception const& ex) {
     FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {
     FAIL() << "unexpected exception of unknown type raised";
@@ -319,7 +319,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
       .WillOnce(Invoke(
-          [&reader](grpc::ClientContext *, btproto::MutateRowsRequest const &) {
+          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
             return reader.release();
           }));
 
@@ -328,11 +328,11 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
         bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
         bt::SingleRowMutation("bar",
                               {bt::SetCell("fam", "col", 0_ms, "qux")})));
-  } catch (bt::PermanentMutationFailure const &ex) {
+  } catch (bt::PermanentMutationFailure const& ex) {
     EXPECT_EQ(2UL, ex.failures().size());
     EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, ex.status().error_code());
     EXPECT_EQ("no such table", ex.status().error_message());
-  } catch (std::exception const &ex) {
+  } catch (std::exception const& ex) {
     FAIL() << "unexpected std::exception raised: " << ex.what();
   } catch (...) {
     FAIL() << "unexpected exception of unknown type raised";

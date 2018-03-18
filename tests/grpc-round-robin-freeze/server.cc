@@ -21,15 +21,15 @@ class EchoImpl : public Echo::Service {
  public:
   EchoImpl() {}
 
-  grpc::Status Ping(grpc::ServerContext *context, Request const *request,
-                    Response *response) override {
+  grpc::Status Ping(grpc::ServerContext* context, Request const* request,
+                    Response* response) override {
     response->set_value(request->value());
     return grpc::Status::OK;
   }
 
   virtual grpc::Status StreamPing(
-      grpc::ServerContext *context, Request const *request,
-      grpc::ServerWriter<Response> *writer) override {
+      grpc::ServerContext* context, Request const* request,
+      grpc::ServerWriter<Response>* writer) override {
     Response response;
     writer->WriteLast(response, grpc::WriteOptions());
     return grpc::Status::OK;
@@ -42,7 +42,7 @@ struct Replica {
   std::future<void> task;
 };
 
-Replica CreateReplica(EchoImpl *echo_impl, std::string address) {
+Replica CreateReplica(EchoImpl* echo_impl, std::string address) {
   grpc::ServerBuilder builder;
   builder.AddListeningPort(address, grpc::InsecureServerCredentials());
   builder.RegisterService(echo_impl);
@@ -53,7 +53,7 @@ Replica CreateReplica(EchoImpl *echo_impl, std::string address) {
   return Replica{std::move(address), std::move(server), std::move(task)};
 }
 
-int main(int argc, char *argv[]) try {
+int main(int argc, char* argv[]) try {
   if (argc < 3) {
     std::cerr << "Usage: server <port> [port ...]" << std::endl;
     return 1;
@@ -70,18 +70,18 @@ int main(int argc, char *argv[]) try {
   // Continuously restart each server, to force reconnects from the client.
   while (true) {
     std::this_thread::sleep_for(std::chrono::seconds(20));
-    for (auto &replica : servers) {
+    for (auto& replica : servers) {
       replica.server->Shutdown();
       replica.task.get();
     }
     std::cout << "Shutdown completed." << std::endl;
-    for (auto &replica : servers) {
+    for (auto& replica : servers) {
       replica = CreateReplica(&echo_impl, std::move(replica.address));
     }
   }
 
   return 0;
-} catch (std::exception const &ex) {
+} catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }
