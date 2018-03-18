@@ -155,6 +155,17 @@ class GcRule {
   google::bigtable::admin::v2::GcRule gc_rule_;
 };
 
+/**
+ * Define the interfaces to create column family modifications.
+ *
+ * Applications can modify a Cloud Bigtable schema through a set of column
+ * family modifications. These modifications may include creating new column
+ * families, deleting existing column families, or changing the garbage
+ * collection rules for existing column families.
+ *
+ * This class contain helper functions to create the different protos
+ * encapsulating these changes.
+ */
 class ColumnFamilyModification {
  public:
   /// Return a modification that creates a new column family.

@@ -163,7 +163,6 @@ class RowRange {
     return std::move(row_range_);
   }
 
-  /// Streaming operator, mostly used for testing.
   friend std::ostream& operator<<(std::ostream& os, RowRange const& x);
 
  private:
@@ -179,6 +178,9 @@ class RowRange {
  private:
   ::google::bigtable::v2::RowRange row_range_;
 };
+
+/// Print a human-readable representation of the range, mostly for testing.
+std::ostream& operator<<(std::ostream& os, RowRange const& x);
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

@@ -22,6 +22,17 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/**
+ * Connects to Cloud Bigtable's instance administration APIs.
+ *
+ * This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable.
+ * Multiple `bigtable::InstanceAdmin` objects may share a connection via a
+ * single `InstanceAdminClient` object. The `InstanceAdminClient` object is
+ * configured at construction time, this configuration includes the credentials,
+ * access endpoints, default timeouts, and other gRPC configuration options.
+ * This is an interface class because it is also used as a dependency injection
+ * point in some of the tests.
+ */
 class InstanceAdminClient {
  public:
   virtual ~InstanceAdminClient() = default;
