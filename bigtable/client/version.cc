@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/version.h"
-#include <sstream>
 #include "bigtable/client/build_info.h"
+#include <sstream>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

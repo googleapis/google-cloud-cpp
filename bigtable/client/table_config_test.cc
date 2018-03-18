@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/table_config.h"
-#include <gmock/gmock.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
+#include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::admin::v2;
 

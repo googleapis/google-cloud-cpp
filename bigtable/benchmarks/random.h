@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_H_
 
-#include <algorithm>
-#include <random>
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
+#include <algorithm>
+#include <random>
 
 namespace bigtable {
 namespace benchmarks {

@@ -15,8 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_BACKOFF_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_BACKOFF_POLICY_H_
 
-#include <bigtable/client/version.h>
-
+#include "bigtable/client/version.h"
 #include <grpc++/grpc++.h>
 #include <chrono>
 #include <memory>

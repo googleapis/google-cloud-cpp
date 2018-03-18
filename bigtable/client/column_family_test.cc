@@ -13,8 +13,8 @@
 //   limitations under the License.
 
 #include "bigtable/client/column_family.h"
-#include <gmock/gmock.h>
 #include "bigtable/client/testing/chrono_literals.h"
+#include <gmock/gmock.h>
 
 using namespace bigtable::chrono_literals;
 

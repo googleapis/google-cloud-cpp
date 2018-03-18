@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/embedded_server.h"
-#include <gmock/gmock.h>
-#include <thread>
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
+#include <gmock/gmock.h>
+#include <thread>
 
 using namespace bigtable::benchmarks;
 using std::chrono::milliseconds;

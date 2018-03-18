@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/throw_delegate.h"
-#include <sstream>
 #include "bigtable/client/grpc_error.h"
+#include <sstream>
 
 namespace {
 template <typename Exception>

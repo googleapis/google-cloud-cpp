@@ -15,10 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
 
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
-#include <grpc++/grpc++.h>
-#include <cinttypes>
-#include <iterator>
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/internal/readrowsparser.h"
@@ -28,6 +24,10 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <grpc++/grpc++.h>
+#include <cinttypes>
+#include <iterator>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

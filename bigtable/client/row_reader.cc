@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/row_reader.h"
-#include <thread>
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include <thread>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

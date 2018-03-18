@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/mutations.h"
-#include <gmock/gmock.h>
-#include <google/rpc/error_details.pb.h>
 #include "bigtable/client/testing/chrono_literals.h"
+#include <google/rpc/error_details.pb.h>
+#include <gmock/gmock.h>
 
 using namespace bigtable::chrono_literals;
 

@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "bigtable/benchmarks/benchmark.h"
 #include <chrono>
 #include <future>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-
-#include "bigtable/benchmarks/benchmark.h"
 
 /**
  * @file
