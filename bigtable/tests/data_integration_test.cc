@@ -289,3 +289,79 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
   CheckEqualUnordered(expected_cells_ignore_timestamp,
                       actual_cells_ignore_timestamp);
 }
+
+TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
+  std::string const table_name = "table-read-modify-write-row-increment-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const key = "row-key";
+
+  // An initial; BigEndian int64 number with value 0.
+  std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1, {}}};
+
+  // The expected values as buffers containing BigEndian int64 numbers.
+  std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
+  std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
+  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1, {}},
+                                       {key, family1, "c2", 0, e2, {}}};
+
+  CreateCells(*table, created);
+  auto row = table->ReadModifyWriteRow(
+      key, bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c1", 42),
+      bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c2", 7));
+
+  // Ignore the server set timestamp on the returned cells because it is not
+  // predictable.
+  auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}
+
+TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
+  std::string const table_name = "table-read-modify-write-row-multiple-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const key = "row-key";
+
+  std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1, {}},
+                                      {key, family1, "c3", 0, "start;", {}},
+                                      {key, family2, "d1", 0, v1, {}},
+                                      {key, family2, "d3", 0, "start;", {}}};
+
+  // The expected values as buffers containing BigEndian int64 numbers.
+  std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
+  std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
+  std::string e3("\x00\x00\x00\x00\x00\x00\x07\xD0", 8);
+  std::string e4("\x00\x00\x00\x00\x00\x00\x0B\xB8", 8);
+  std::vector<bigtable::Cell> expected{
+      {key, family1, "c1", 0, e1, {}},
+      {key, family1, "c2", 0, e2, {}},
+      {key, family1, "c3", 0, "start;suffix", {}},
+      {key, family1, "c4", 0, "suffix", {}},
+      {key, family2, "d1", 0, e3, {}},
+      {key, family2, "d2", 0, e4, {}},
+      {key, family2, "d3", 0, "start;suffix", {}},
+      {key, family2, "d4", 0, "suffix", {}}};
+
+  CreateCells(*table, created);
+  using R = bigtable::ReadModifyWriteRule;
+  auto row =
+      table->ReadModifyWriteRow(key, R::IncrementAmount(family1, "c1", 42),
+                                R::IncrementAmount(family1, "c2", 7),
+                                R::IncrementAmount(family2, "d1", 2000),
+                                R::IncrementAmount(family2, "d2", 3000),
+                                R::AppendValue(family1, "c3", "suffix"),
+                                R::AppendValue(family1, "c4", "suffix"),
+                                R::AppendValue(family2, "d3", "suffix"),
+                                R::AppendValue(family2, "d4", "suffix"));
+
+  // Ignore the server set timestamp on the returned cells because it is not
+  // predictable.
+  auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}

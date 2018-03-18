@@ -208,10 +208,10 @@ Row Table::CallReadModifyWriteRowRequest(
         std::vector<std::string> labels;
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
-        bigtable::Cell new_cell(
-            std::move(row.key()), std::move(*family.mutable_name()),
-            std::move(*column.mutable_qualifier()), cell.timestamp_micros(),
-            std::move(*cell.mutable_value()), std::move(labels));
+        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
+                                cell.timestamp_micros(),
+                                std::move(*cell.mutable_value()),
+                                std::move(labels));
 
         cells.emplace_back(std::move(new_cell));
       }
