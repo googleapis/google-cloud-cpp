@@ -31,7 +31,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * configured at construction time, this configuration includes the credentials,
  * access endpoints, default timeouts, and other gRPC configuration options.
  * This is an interface class because it is also used as a dependency injection
- * points in some of the tests.
+ * point in some of the tests.
  */
 class InstanceAdminClient {
  public:

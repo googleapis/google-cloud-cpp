@@ -32,7 +32,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * single `AdminClient` object. The `AdminClient` object is configured at
  * construction time, this configuration includes the credentials, access
  * endpoints, default timeouts, and other gRPC configuration options. This is an
- * interface class because it is also used as a dependency injection points in
+ * interface class because it is also used as a dependency injection point in
  * some of the tests.
  */
 class AdminClient {
