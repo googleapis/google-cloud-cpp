@@ -119,6 +119,7 @@ set(bigtable_client_unit_tests
         internal/bulk_mutator_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
+        internal/throw_delegate_test.cc
         mutations_test.cc
         table_admin_test.cc
         table_apply_test.cc
