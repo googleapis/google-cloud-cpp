@@ -17,14 +17,16 @@
 #include "bigtable/client/build_info.h"
 
 namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 std::string version_string() {
   auto create_version = []() -> std::string {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch() << "-" << gitrev;
+       << version_patch() << "+" << gitrev;
     return os.str();
   };
   static std::string const version = create_version();
   return version;
 }
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
