@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Connects to Cloud Bigtable's instance administration APIs.  
+ <a href="classbigtable_1_1v0_1_1InstanceAdminClient.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="instance__admin__client_8h_source.html">bigtable/client/instance_admin_client.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -79,7 +82,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0511f0c6866bc46fb17cdb883e92850e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a0511f0c6866bc46fb17cdb883e92850e">~InstanceAdminClient</a> ()=default</td></tr>
 <tr class="separator:a0511f0c6866bc46fb17cdb883e92850e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d77548c56f1e4323945d8d10b908c98"><td class="memItemLeft" align="right" valign="top">virtual std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a7d77548c56f1e4323945d8d10b908c98">project</a> () const =0</td></tr>
-<tr class="memdesc:a7d77548c56f1e4323945d8d10b908c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html">AdminClient</a> works on.  <a href="#a7d77548c56f1e4323945d8d10b908c98">More...</a><br /></td></tr>
+<tr class="memdesc:a7d77548c56f1e4323945d8d10b908c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> works on.  <a href="#a7d77548c56f1e4323945d8d10b908c98">More...</a><br /></td></tr>
 <tr class="separator:a7d77548c56f1e4323945d8d10b908c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a152b7ada0fde072b1fdc116274cbab71"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; ::google::bigtable::admin::v2::BigtableInstanceAdmin::StubInterface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71">Stub</a> ()=0</td></tr>
 <tr class="memdesc:a152b7ada0fde072b1fdc116274cbab71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a new stub to handle admin operations.  <a href="#a152b7ada0fde072b1fdc116274cbab71">More...</a><br /></td></tr>
@@ -91,7 +94,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a754fbc2a8ff08e51f2ee320da5c7dffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback for completed RPCs.  <a href="#a754fbc2a8ff08e51f2ee320da5c7dffa">More...</a><br /></td></tr>
 <tr class="separator:a754fbc2a8ff08e51f2ee320da5c7dffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Connects to Cloud Bigtable's instance administration APIs. </p>
+<p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code>bigtable::InstanceAdmin</code> objects may share a connection via a single <code><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html" title="Connects to Cloud Bigtable&#39;s instance administration APIs. ">InstanceAdminClient</a></code> object. The <code><a class="el" href="classbigtable_1_1v0_1_1InstanceAdminClient.html" title="Connects to Cloud Bigtable&#39;s instance administration APIs. ">InstanceAdminClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0511f0c6866bc46fb17cdb883e92850e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0511f0c6866bc46fb17cdb883e92850e">&#9670;&nbsp;</a></span>~InstanceAdminClient()</h2>
 
@@ -170,7 +176,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html">AdminClient</a> works on. </p>
+<p>The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> works on. </p>
 
 </div>
 </div>

@@ -72,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Connects to Cloud Bigtable's table administration APIs.  
+ <a href="classbigtable_1_1v0_1_1AdminClient.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="admin__client_8h_source.html">bigtable/client/admin_client.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -79,7 +82,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0cd093ba6e7a0541e8c0e1d3f1b72b11"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a0cd093ba6e7a0541e8c0e1d3f1b72b11">~AdminClient</a> ()=default</td></tr>
 <tr class="separator:a0cd093ba6e7a0541e8c0e1d3f1b72b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c7df952e9ccc47a3b3d2cdc5aab11cf"><td class="memItemLeft" align="right" valign="top">virtual std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a0c7df952e9ccc47a3b3d2cdc5aab11cf">project</a> () const =0</td></tr>
-<tr class="memdesc:a0c7df952e9ccc47a3b3d2cdc5aab11cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html">AdminClient</a> works on.  <a href="#a0c7df952e9ccc47a3b3d2cdc5aab11cf">More...</a><br /></td></tr>
+<tr class="memdesc:a0c7df952e9ccc47a3b3d2cdc5aab11cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> works on.  <a href="#a0c7df952e9ccc47a3b3d2cdc5aab11cf">More...</a><br /></td></tr>
 <tr class="separator:a0c7df952e9ccc47a3b3d2cdc5aab11cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a956aa778cf4a2b80ca0c7885eb94ea19"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a956aa778cf4a2b80ca0c7885eb94ea19">Stub</a> ()=0</td></tr>
 <tr class="memdesc:a956aa778cf4a2b80ca0c7885eb94ea19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a new stub to handle admin operations.  <a href="#a956aa778cf4a2b80ca0c7885eb94ea19">More...</a><br /></td></tr>
@@ -91,7 +94,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa63e2240be4ad8fac22ccc2b414c421a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback for completed RPCs.  <a href="#aa63e2240be4ad8fac22ccc2b414c421a">More...</a><br /></td></tr>
 <tr class="separator:aa63e2240be4ad8fac22ccc2b414c421a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Connects to Cloud Bigtable's table administration APIs. </p>
+<p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code>bigtable::TableAdmin</code> objects may share a connection via a single <code><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object. The <code><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0cd093ba6e7a0541e8c0e1d3f1b72b11"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0cd093ba6e7a0541e8c0e1d3f1b72b11">&#9670;&nbsp;</a></span>~AdminClient()</h2>
 
@@ -170,7 +176,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html">AdminClient</a> works on. </p>
+<p>The project that this <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> works on. </p>
 
 </div>
 </div>
