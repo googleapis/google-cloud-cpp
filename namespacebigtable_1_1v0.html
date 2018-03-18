@@ -210,6 +210,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a315ce71b424f9a465d96a82e9a82d6b4"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a315ce71b424f9a465d96a82e9a82d6b4">DefaultRPCRetryPolicy</a> ()</td></tr>
 <tr class="memdesc:a315ce71b424f9a465d96a82e9a82d6b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an instance of the default <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a>.  <a href="#a315ce71b424f9a465d96a82e9a82d6b4">More...</a><br /></td></tr>
 <tr class="separator:a315ce71b424f9a465d96a82e9a82d6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54d52c6213d980959c7ae0f6de581c87"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a54d52c6213d980959c7ae0f6de581c87">version_string</a> ()</td></tr>
+<tr class="memdesc:a54d52c6213d980959c7ae0f6de581c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The version as a string, in MAJOR.MINOR.PATCH+gitrev format.  <a href="#a54d52c6213d980959c7ae0f6de581c87">More...</a><br /></td></tr>
+<tr class="separator:a54d52c6213d980959c7ae0f6de581c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fad7f14ac136fae05048446aa30d13b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a5fad7f14ac136fae05048446aa30d13b">CreateDefaultDataClient</a> (std::string project_id, std::string instance_id, <a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> options)</td></tr>
 <tr class="memdesc:a5fad7f14ac136fae05048446aa30d13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default implementation of ClientInterface.  <a href="#a5fad7f14ac136fae05048446aa30d13b">More...</a><br /></td></tr>
 <tr class="separator:a5fad7f14ac136fae05048446aa30d13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -225,6 +228,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a72bb85953311db08d89fe239462e5ddc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a72bb85953311db08d89fe239462e5ddc">TableName</a> (std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:a72bb85953311db08d89fe239462e5ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the full table name.  <a href="#a72bb85953311db08d89fe239462e5ddc">More...</a><br /></td></tr>
 <tr class="separator:a72bb85953311db08d89fe239462e5ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb51ffbb3b248ba5e66ef8ef5ec8702e"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#acb51ffbb3b248ba5e66ef8ef5ec8702e">version_major</a> ()</td></tr>
+<tr class="memdesc:acb51ffbb3b248ba5e66ef8ef5ec8702e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Cloud Bigtable C++ Client major version.  <a href="#acb51ffbb3b248ba5e66ef8ef5ec8702e">More...</a><br /></td></tr>
+<tr class="separator:acb51ffbb3b248ba5e66ef8ef5ec8702e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad517c0ab41e462a70dc59b35ea914063"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#ad517c0ab41e462a70dc59b35ea914063">version_minor</a> ()</td></tr>
+<tr class="memdesc:ad517c0ab41e462a70dc59b35ea914063"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Cloud Bigtable C++ Client minor version.  <a href="#ad517c0ab41e462a70dc59b35ea914063">More...</a><br /></td></tr>
+<tr class="separator:ad517c0ab41e462a70dc59b35ea914063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adccdf10ea76673fd666c668293c196d6"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#adccdf10ea76673fd666c668293c196d6">version_patch</a> ()</td></tr>
+<tr class="memdesc:adccdf10ea76673fd666c668293c196d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Cloud Bigtable C++ Client patch version.  <a href="#adccdf10ea76673fd666c668293c196d6">More...</a><br /></td></tr>
+<tr class="separator:adccdf10ea76673fd666c668293c196d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9be36d34a66576ab67bdaab15ef10330"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a9be36d34a66576ab67bdaab15ef10330">version</a> ()</td></tr>
+<tr class="memdesc:a9be36d34a66576ab67bdaab15ef10330"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single integer representing the Major/Minor/Patch version.  <a href="#a9be36d34a66576ab67bdaab15ef10330">More...</a><br /></td></tr>
+<tr class="separator:a9be36d34a66576ab67bdaab15ef10330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Create mutations to delete a range of cells from a column.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>The following functions create a mutation that deletes all the cells in the given column family and column within the given timestamp range.</p>
 <p>The ending timestamp is exclusive, while the beginning timestamp is inclusive. That is, the interval is [<code>timestamp_begin</code>, <code>timestamp_end</code>). The value 0 is special and treated as "unbounded" for both the begin and end endpoints of the time range. The Cloud Bigtable server rejects invalid and empty ranges, i.e., any range where the endpoint is smaller or equal than to the initial endpoint unless either endpoint is 0. </p>
@@ -847,6 +862,104 @@ Variables</h2></td></tr>
 <p>The full table name is:</p>
 <p><code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/tables/&lt;table_id&gt;</code></p>
 <p>Where the project id and instance id come from the <code>client</code> parameter. </p>
+
+</div>
+</div>
+<a id="a9be36d34a66576ab67bdaab15ef10330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be36d34a66576ab67bdaab15ef10330">&#9670;&nbsp;</a></span>version()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int constexpr bigtable::v0::version </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A single integer representing the Major/Minor/Patch version. </p>
+
+</div>
+</div>
+<a id="acb51ffbb3b248ba5e66ef8ef5ec8702e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb51ffbb3b248ba5e66ef8ef5ec8702e">&#9670;&nbsp;</a></span>version_major()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int constexpr bigtable::v0::version_major </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Cloud Bigtable C++ Client major version. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
+
+</div>
+</div>
+<a id="ad517c0ab41e462a70dc59b35ea914063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad517c0ab41e462a70dc59b35ea914063">&#9670;&nbsp;</a></span>version_minor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int constexpr bigtable::v0::version_minor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Cloud Bigtable C++ Client minor version. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
+
+</div>
+</div>
+<a id="adccdf10ea76673fd666c668293c196d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adccdf10ea76673fd666c668293c196d6">&#9670;&nbsp;</a></span>version_patch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int constexpr bigtable::v0::version_patch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Cloud Bigtable C++ Client patch version. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
+
+</div>
+</div>
+<a id="a54d52c6213d980959c7ae0f6de581c87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54d52c6213d980959c7ae0f6de581c87">&#9670;&nbsp;</a></span>version_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string bigtable::v0::version_string </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The version as a string, in MAJOR.MINOR.PATCH+gitrev format. </p>
 
 </div>
 </div>
