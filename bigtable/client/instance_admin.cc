@@ -13,35 +13,18 @@
 // limitations under the License.
 
 #include "bigtable/client/instance_admin.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
-  std::string error = "InstanceAdmin::ListInstances(" + project_id() + ")";
-
-  // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Instance> result;
-  std::string page_token;
-  do {
-    btproto::ListInstancesRequest request;
-    request.set_page_token(std::move(page_token));
-    request.set_parent(project_name_);
-
-    auto response = RpcUtils::CallWithRetryBorrow(
-        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-        &StubType::ListInstances, request, error.c_str());
-
-    for (auto& x : *response.mutable_instances()) {
-      result.emplace_back(std::move(x));
-    }
-    page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  grpc::Status status;
+  auto result = impl_.ListInstances(status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
   return result;
 }
 

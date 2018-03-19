@@ -53,6 +53,10 @@ add_library(bigtable_client
         internal/throw_delegate.cc
         internal/table.h
         internal/table.cc
+        internal/table_admin.h
+        internal/table_admin.cc
+        internal/instance_admin.h
+        internal/instance_admin.cc
         internal/unary_rpc_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
@@ -125,6 +129,8 @@ set(bigtable_client_unit_tests
         internal/readrowsparser_test.cc
         internal/table_test.cc
         internal/throw_delegate_test.cc
+        internal/table_admin_test.cc
+        internal/instance_admin_test.cc
         mutations_test.cc
         table_admin_test.cc
         table_apply_test.cc
