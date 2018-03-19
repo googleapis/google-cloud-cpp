@@ -18,6 +18,8 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/internal/table.h"
+#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/metadata_update_policy.h"
 #include "bigtable/client/mutations.h"
@@ -27,12 +29,9 @@
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
-#include "bigtable/client/internal/table.h"
-#include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
  *
@@ -113,9 +112,9 @@ class Table {
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-    : impl_(std::move(client), table_id, std::move(retry_policy),
-            std::move(backoff_policy),
-            std::move(idempotent_mutation_policy)) {}
+      : impl_(std::move(client), table_id, std::move(retry_policy),
+              std::move(backoff_policy),
+              std::move(idempotent_mutation_policy)) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
 
@@ -204,7 +203,6 @@ class Table {
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations);
 
-
   /**
    * Atomically read and modify the row in the server, returning the
    * resulting row
@@ -223,18 +221,18 @@ class Table {
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key,
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
-      grpc::Status status;
-      Row row = impl_.ReadModifyWriteRow(std::move(row_key),status, std::move(rule), std::forward<Args>(rules)...);
-      if(not status.ok()){
-          internal::RaiseRpcError(status,status.error_message());
-      }
-      return row;
+    grpc::Status status;
+    Row row =
+        impl_.ReadModifyWriteRow(std::move(row_key), status, std::move(rule),
+                                 std::forward<Args>(rules)...);
+    if (not status.ok()) {
+      internal::RaiseRpcError(status, status.error_message());
+    }
+    return row;
   }
 
-
-
  private:
-    noex::Table impl_;
+  noex::Table impl_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

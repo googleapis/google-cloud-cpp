@@ -17,11 +17,11 @@
 
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
+#include "bigtable/client/idempotent_mutation_policy.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/metadata_update_policy.h"
-#include "bigtable/client/read_modify_write_rule.h"
-#include "bigtable/client/idempotent_mutation_policy.h"
 #include "bigtable/client/mutations.h"
+#include "bigtable/client/read_modify_write_rule.h"
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
@@ -98,51 +98,50 @@ class Table {
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
                                grpc::Status& status);
 
+  bool CheckAndMutateRow(std::string row_key, Filter filter,
+                         std::vector<Mutation> true_mutations,
+                         std::vector<Mutation> false_mutations,
+                         grpc::Status& status);
 
-    bool CheckAndMutateRow(std::string row_key, Filter filter,
-                           std::vector<Mutation> true_mutations,
-                           std::vector<Mutation> false_mutations, grpc::Status& status);
-    
-    
+  template <typename... Args>
+  Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
+                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_table_name(table_name_);
+    request.set_row_key(std::move(row_key));
 
-    template <typename... Args>
-    Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
-                           bigtable::ReadModifyWriteRule rule, Args&&... rules) {
-        ::google::bigtable::v2::ReadModifyWriteRowRequest request;
-        request.set_table_name(table_name_);
-        request.set_row_key(std::move(row_key));
-        
-        // Generate a better compile time error message than the default one
-        // if the types do not match
-        static_assert(
-                      internal::conjunction<
-                      std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
-                      "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
-                      "convertible to bigtable::ReadModifyWriteRule");
-        
-        // TODO(#336) - optimize this code by not copying the parameter pack.
-        // Add first default rule
-        *request.add_rules() = rule.as_proto_move();
-        // Add if any additional rule is present
-        std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
-            std::forward<Args>(rules)...};
-        for (auto args_rule : rule_list) {
-            *request.add_rules() = args_rule.as_proto_move();
-        }
-        
-        return CallReadModifyWriteRowRequest(request,status);
+    // Generate a better compile time error message than the default one
+    // if the types do not match
+    static_assert(
+        internal::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    // TODO(#336) - optimize this code by not copying the parameter pack.
+    // Add first default rule
+    *request.add_rules() = rule.as_proto_move();
+    // Add if any additional rule is present
+    std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
+        std::forward<Args>(rules)...};
+    for (auto args_rule : rule_list) {
+      *request.add_rules() = args_rule.as_proto_move();
     }
-    
-    //@}
-    
-private:
-    using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<DataClient>;
-    using StubType = RpcUtils::StubType;
-    /**
-     * Send request ReadModifyWriteRowRequest to modify the row and get it back
-     */
-    Row CallReadModifyWriteRowRequest(
-                                      ::google::bigtable::v2::ReadModifyWriteRowRequest request, grpc::Status &status);
+
+    return CallReadModifyWriteRowRequest(request, status);
+  }
+
+  //@}
+
+ private:
+  using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<DataClient>;
+  using StubType = RpcUtils::StubType;
+  /**
+   * Send request ReadModifyWriteRowRequest to modify the row and get it back
+   */
+  Row CallReadModifyWriteRowRequest(
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request,
+      grpc::Status& status);
 
   std::shared_ptr<DataClient> client_;
   std::string table_name_;

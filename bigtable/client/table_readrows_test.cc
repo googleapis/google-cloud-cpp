@@ -15,10 +15,10 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
+using testing::_;
 using testing::DoAll;
 using testing::Return;
 using testing::SetArgPointee;
-using testing::_;
 
 /// Define helper types and functions for this test.
 namespace {
@@ -53,7 +53,6 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
-
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(

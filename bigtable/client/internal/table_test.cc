@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/internal_table_test_fixture.h"
 
@@ -42,9 +40,9 @@ class MockReader : public grpc::ClientReaderInterface<
 
 class TableBulkApplyTest
     : public bigtable::testing::internal::TableTestFixture {};
-    
-    class TableCheckAndMutateRowTest : public bigtable::testing::internal::TableTestFixture {
-    };
+
+class TableCheckAndMutateRowTest
+    : public bigtable::testing::internal::TableTestFixture {};
 }  // anonymous namespace
 
 TEST_F(TableTest, ClientProjectId) {
@@ -389,9 +387,10 @@ TEST_F(TableBulkApplyTest, Simple) {
           }));
   grpc::Status status;
   EXPECT_NO_THROW(table_.BulkApply(
-      bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+      bt::BulkMutation(bt::SingleRowMutation(
+                           "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                       bt::SingleRowMutation(
+                           "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status));
   EXPECT_TRUE(status.ok());
   SUCCEED();
@@ -442,10 +441,11 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
           }));
   grpc::Status status;
   EXPECT_NO_THROW(table_.BulkApply(
-      bt::BulkMutation(bt::SingleRowMutation(
-                           "foo", {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
-                       bt::SingleRowMutation(
-                           "bar", {bigtable::SetCell("fam", "col", 0_ms, "qux")})),
+      bt::BulkMutation(
+          bt::SingleRowMutation("foo",
+                                {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
+          bt::SingleRowMutation(
+              "bar", {bigtable::SetCell("fam", "col", 0_ms, "qux")})),
       status));
   EXPECT_TRUE(status.ok());
   SUCCEED();
@@ -483,9 +483,10 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
           }));
   grpc::Status status;
   EXPECT_NO_THROW(table_.BulkApply(
-      bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+      bt::BulkMutation(bt::SingleRowMutation(
+                           "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                       bt::SingleRowMutation(
+                           "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status));
   EXPECT_FALSE(status.ok());
 }
@@ -538,9 +539,10 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
           }));
   grpc::Status status;
   EXPECT_NO_THROW(table_.BulkApply(
-      bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+      bt::BulkMutation(bt::SingleRowMutation(
+                           "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                       bt::SingleRowMutation(
+                           "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status));
   EXPECT_TRUE(status.ok());
   SUCCEED();
@@ -599,9 +601,10 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream));
   grpc::Status status;
   EXPECT_NO_THROW(custom_table.BulkApply(
-      bt::BulkMutation(
-          bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-          bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+      bt::BulkMutation(bt::SingleRowMutation(
+                           "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                       bt::SingleRowMutation(
+                           "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status));
   EXPECT_FALSE(status.ok());
 }
@@ -677,13 +680,13 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
           }));
   std::vector<bigtable::FailedMutation> result;
   grpc::Status status;
-  EXPECT_NO_THROW(
-      result = table_.BulkApply(
-          bt::BulkMutation(bt::SingleRowMutation(
-                               "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-                           bt::SingleRowMutation(
-                               "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
-          status));
+  EXPECT_NO_THROW(result = table_.BulkApply(
+                      bt::BulkMutation(
+                          bt::SingleRowMutation(
+                              "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                          bt::SingleRowMutation(
+                              "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+                      status));
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, status.error_code());
   EXPECT_EQ("no such table", status.error_message());
@@ -693,30 +696,29 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {
-    using namespace ::testing;
-    
-    EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
-    .WillOnce(Return(grpc::Status::OK));
-    grpc::Status status;
-    EXPECT_NO_THROW(table_.CheckAndMutateRow(
-                             "foo", bigtable::Filter::PassAllFilter(),
-                             {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-                             {bigtable::SetCell("fam", "col", 0_ms, "it was false")},status));
-    EXPECT_TRUE(status.ok());
+  using namespace ::testing;
+
+  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+      .WillOnce(Return(grpc::Status::OK));
+  grpc::Status status;
+  EXPECT_NO_THROW(table_.CheckAndMutateRow(
+      "foo", bigtable::Filter::PassAllFilter(),
+      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+      {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status));
+  EXPECT_TRUE(status.ok());
 }
 
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
 TEST_F(TableCheckAndMutateRowTest, Failure) {
-    using namespace ::testing;
-    
-    EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
-    .WillRepeatedly(
-                    Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-    grpc::Status status;
-    EXPECT_NO_THROW(table_.CheckAndMutateRow(
-                                             "foo", bigtable::Filter::PassAllFilter(),
-                                             {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-                                             {bigtable::SetCell("fam", "col", 0_ms, "it was false")},status));
-    EXPECT_FALSE(status.ok());
-}
+  using namespace ::testing;
 
+  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+  grpc::Status status;
+  EXPECT_NO_THROW(table_.CheckAndMutateRow(
+      "foo", bigtable::Filter::PassAllFilter(),
+      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+      {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status));
+  EXPECT_FALSE(status.ok());
+}
