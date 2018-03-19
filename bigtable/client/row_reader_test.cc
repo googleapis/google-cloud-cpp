@@ -157,7 +157,8 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
   RowReaderTest()
       : retry_policy_(new RetryPolicyMock),
         backoff_policy_(new BackoffPolicyMock),
-        metadata_update_policy_(kTableName, bigtable::MetadataParamTypes::TABLE_NAME),
+        metadata_update_policy_(kTableName,
+                                bigtable::MetadataParamTypes::TABLE_NAME),
         parser_factory_(new ReadRowsParserMockFactory) {}
 
   std::unique_ptr<RetryPolicyMock> retry_policy_;
@@ -494,8 +495,8 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_),
-      std::move(backoff_policy_), std::move(metadata_update_policy_), std::move(parser_factory_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(metadata_update_policy_), std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -563,8 +564,8 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(bigtable::RowRange::Closed("r1", "r2")),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_), std::move(metadata_update_policy_),
-      std::move(parser_factory_));
+      std::move(retry_policy_), std::move(backoff_policy_),
+      std::move(metadata_update_policy_), std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());

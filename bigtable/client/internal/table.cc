@@ -130,8 +130,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter, bool raise_on_error) {
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
-                   rpc_backoff_policy_->clone(),
-                   metadata_update_policy_,
+                   rpc_backoff_policy_->clone(), metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>(),
                    raise_on_error);
@@ -157,56 +156,60 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
   }
   return result;
 }
-    
-    bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
-                                  std::vector<Mutation> true_mutations,
-                                  std::vector<Mutation> false_mutations, grpc::Status& status) {
-        btproto::CheckAndMutateRowRequest request;
-        request.set_table_name(table_name());
-        request.set_row_key(std::move(row_key));
-        *request.mutable_predicate_filter() = filter.as_proto_move();
-        for (auto& m : true_mutations) {
-            *request.add_true_mutations() = std::move(m.op);
-        }
-        for (auto& m : false_mutations) {
-            *request.add_false_mutations() = std::move(m.op);
-        }
-        auto response = RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(), metadata_update_policy_, &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow", status);
-        
-        return response.predicate_matched();
+
+bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
+                              std::vector<Mutation> true_mutations,
+                              std::vector<Mutation> false_mutations,
+                              grpc::Status& status) {
+  btproto::CheckAndMutateRowRequest request;
+  request.set_table_name(table_name());
+  request.set_row_key(std::move(row_key));
+  *request.mutable_predicate_filter() = filter.as_proto_move();
+  for (auto& m : true_mutations) {
+    *request.add_true_mutations() = std::move(m.op);
+  }
+  for (auto& m : false_mutations) {
+    *request.add_false_mutations() = std::move(m.op);
+  }
+  auto response = RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
+      status);
+
+  return response.predicate_matched();
+}
+
+Row Table::CallReadModifyWriteRowRequest(
+    btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
+  auto error_message =
+      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
+  auto response = RpcUtils::CallWithoutRetry(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &StubType::ReadModifyWriteRow, request, error_message.c_str(), status);
+  if (not status.ok()) {
+    return Row("", {});
+  }
+
+  std::vector<bigtable::Cell> cells;
+  auto& row = *response.mutable_row();
+  for (auto& family : *row.mutable_families()) {
+    for (auto& column : *family.mutable_columns()) {
+      for (auto& cell : *column.mutable_cells()) {
+        std::vector<std::string> labels;
+        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
+                  std::back_inserter(labels));
+        bigtable::Cell new_cell(
+            std::move(row.key()), std::move(*family.mutable_name()),
+            std::move(*column.mutable_qualifier()), cell.timestamp_micros(),
+            std::move(*cell.mutable_value()), std::move(labels));
+
+        cells.emplace_back(std::move(new_cell));
+      }
     }
-    
-    Row Table::CallReadModifyWriteRowRequest(
-                                             btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
-        auto error_message =
-        "ReadModifyWriteRowRequest(" + request.table_name() + ")";
-        auto response = RpcUtils::CallWithoutRetry(
-                                                   *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-                                                   &StubType::ReadModifyWriteRow, request, error_message.c_str(),status);
-        if( not status.ok()){
-            return Row("",{});
-        }
-        
-        std::vector<bigtable::Cell> cells;
-        auto& row = *response.mutable_row();
-        for (auto& family : *row.mutable_families()) {
-            for (auto& column : *family.mutable_columns()) {
-                for (auto& cell : *column.mutable_cells()) {
-                    std::vector<std::string> labels;
-                    std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
-                              std::back_inserter(labels));
-                    bigtable::Cell new_cell(
-                                            std::move(row.key()), std::move(*family.mutable_name()),
-                                            std::move(*column.mutable_qualifier()), cell.timestamp_micros(),
-                                            std::move(*cell.mutable_value()), std::move(labels));
-                    
-                    cells.emplace_back(std::move(new_cell));
-                }
-            }
-        }
-        
-        return Row(std::move(*row.mutable_key()), std::move(cells));
-    }
+  }
+
+  return Row(std::move(*row.mutable_key()), std::move(cells));
+}
 
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
