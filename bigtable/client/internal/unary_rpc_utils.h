@@ -165,13 +165,8 @@ struct UnaryRpcUtils {
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-<<<<<<< HEAD
-      typename CheckSignature<MemberFunction>::RequestType const& request,
-      char const* error_message) {
-=======
-      typename CheckSignature<MemberFunction>::RequestType const &request,
+     typename CheckSignature<MemberFunction>::RequestType const &request,
                 char const *error_message, grpc::Status &status) {
->>>>>>> Fix with feedback
     return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
                                metadata_update_policy, function, request,
                                error_message, status);
@@ -209,13 +204,8 @@ struct UnaryRpcUtils {
       bigtable::RPCBackoffPolicy& backoff_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-<<<<<<< HEAD
-      typename CheckSignature<MemberFunction>::RequestType const& request,
-      char const* error_message) {
-=======
       typename CheckSignature<MemberFunction>::RequestType const &request,
                       char const *error_message, grpc::Status &status) {
->>>>>>> Fix with feedback
     typename CheckSignature<MemberFunction>::ResponseType response;
     while (true) {
       grpc::ClientContext client_context;
@@ -232,7 +222,6 @@ struct UnaryRpcUtils {
       if (not rpc_policy.on_failure(status)) {
           status = grpc::Status(status.error_code(), error_message);
           break;
-//        RaiseRpcError(status, error_message);
       }
       auto delay = backoff_policy.on_completion(status);
       std::this_thread::sleep_for(delay);
@@ -273,13 +262,8 @@ struct UnaryRpcUtils {
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-<<<<<<< HEAD
-      typename CheckSignature<MemberFunction>::RequestType const& request,
-      char const* error_message) {
-=======
       typename CheckSignature<MemberFunction>::RequestType const &request,
                    char const *error_message, grpc::Status &status) {
->>>>>>> Fix with feedback
     typename CheckSignature<MemberFunction>::ResponseType response;
 
     grpc::ClientContext client_context;
