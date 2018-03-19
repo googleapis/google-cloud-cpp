@@ -160,6 +160,12 @@ class SingleRowMutation {
     entry->mutable_mutations()->Swap(&ops_);
   }
 
+    /// Transfer the contents to @p request.
+    void MoveTo(google::bigtable::v2::MutateRowRequest& request) {
+        request.set_row_key(std::move(row_key_));
+        request.mutable_mutations()->Swap(&ops_);
+    }
+    
  private:
   /// Add multiple mutations to single row
   template <typename... M>

@@ -54,16 +54,6 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-TEST_F(TableReadRowsTest, ReadRowsFailsForIllegalRowLimit) {
-  EXPECT_THROW(
-      table_.ReadRows(bigtable::RowSet(), 0, bigtable::Filter::PassAllFilter()),
-      std::invalid_argument);
-  EXPECT_THROW(table_.ReadRows(bigtable::RowSet(), -1,
-                               bigtable::Filter::PassAllFilter()),
-               std::invalid_argument);
-}
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(

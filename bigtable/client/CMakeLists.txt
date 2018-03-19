@@ -51,6 +51,8 @@ add_library(bigtable_client
         internal/rowreaderiterator.cc
         internal/throw_delegate.h
         internal/throw_delegate.cc
+        internal/table.h
+        internal/table.cc
         internal/unary_rpc_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
@@ -97,7 +99,9 @@ add_library(bigtable_client_testing
         testing/table_integration_test.h
         testing/table_integration_test.cc
         testing/table_test_fixture.h
-        testing/table_test_fixture.cc)
+        testing/table_test_fixture.cc
+        testing/internal_table_test_fixture.h
+        testing/internal_table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing PUBLIC
         bigtable_client bigtable_protos
         gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
@@ -119,6 +123,7 @@ set(bigtable_client_unit_tests
         internal/bulk_mutator_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
+        internal/table_test.cc
         internal/throw_delegate_test.cc
         mutations_test.cc
         table_admin_test.cc
