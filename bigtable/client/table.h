@@ -60,6 +60,12 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  */
 class Table {
  public:
+  /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
+  struct RowKeySample {
+    std::string row_key;
+    std::int64_t offset_bytes;
+  };
+
   /**
    * Constructor with default policies.
    *
@@ -224,6 +230,27 @@ class Table {
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations);
 
+  /**
+  * Sample of the row keys in the table, including approximate data sizes.
+  *
+  * The application/user can specify the collection type(list and vector
+  * supported at this moment), for example:
+  * @code
+  * auto as_vector = table.SampleRows<std::vector>();
+  * auto as_list = table.SampleRows<std::list>();
+  * @endcode
+  */
+  template <template <typename...> class Collection>
+  Collection<Table::RowKeySample> SampleRows() {
+    Collection<Table::RowKeySample> result;
+    SampleRowsImpl(
+        [&result](Table::RowKeySample rs) {
+          result.emplace_back(std::move(rs));
+        },
+        [&result]() { result.clear(); });
+    return result;
+  }
+
   using RpcUtils = bigtable::internal::UnaryRpcUtils<DataClient>;
   using StubType = RpcUtils::StubType;
 
@@ -277,7 +304,18 @@ class Table {
   Row CallReadModifyWriteRowRequest(
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
- private:
+  /**
+   * Refactor implementation to `.cc` file.
+   *
+   * Provides a compilation barrier so that the application is not
+   * exposed to all the implementation details.
+   *
+   * @param inserter Function to insert the object to result.
+   * @param clearer Function to clear the result object if RPC fails.
+   */
+  void SampleRowsImpl(std::function<void(Table::RowKeySample)> inserter,
+                      std::function<void()> clearer);
+
   std::shared_ptr<DataClient> client_;
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;

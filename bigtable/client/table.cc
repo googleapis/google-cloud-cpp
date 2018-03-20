@@ -133,6 +133,48 @@ void Table::BulkApply(BulkMutation&& mut) {
   }
 }
 
+// Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until
+// successful. When RPC is finished, this function returns the SampleRowKeys
+// as a Collection specified by the user. If the RPC fails, it will keep
+// retrying until the policies in effect tell us to stop.
+void Table::SampleRowsImpl(std::function<void(Table::RowKeySample)> inserter,
+                           std::function<void()> clearer) {
+  // Copy the policies in effect for this operation.
+  auto backoff_policy = rpc_backoff_policy_->clone();
+  auto retry_policy = rpc_retry_policy_->clone();
+
+  // Build the RPC request for SampleRowKeys
+  btproto::SampleRowKeysRequest request;
+  btproto::SampleRowKeysResponse response;
+  request.set_table_name(table_name_);
+
+  while (true) {
+    grpc::ClientContext client_context;
+    backoff_policy->setup(client_context);
+    retry_policy->setup(client_context);
+    metadata_update_policy_.setup(client_context);
+
+    auto stream = client_->Stub()->SampleRowKeys(&client_context, request);
+    while (stream->Read(&response)) {
+      // Assuming collection will be either list or vector.
+      Table::RowKeySample row_sample;
+      row_sample.offset_bytes = response.offset_bytes();
+      row_sample.row_key = std::move(response.row_key());
+      inserter(std::move(row_sample));
+    }
+    auto status = stream->Finish();
+    if (status.ok()) {
+      break;
+    }
+    if (not retry_policy->on_failure(status)) {
+      internal::RaiseRuntimeError("No more retries allowed as per policy.");
+    }
+    clearer();
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+}
+
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
   return RowReader(client_, table_name(), std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
@@ -145,7 +187,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
   if (rows_limit <= 0) {
-    internal::RaiseInvalidArgument("rows_limit must be >0");
+    internal::RaiseInvalidArgument("rows_limit must be > 0");
   }
   return RowReader(client_, table_name(), std::move(row_set), rows_limit,
                    std::move(filter), rpc_retry_policy_->clone(),
