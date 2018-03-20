@@ -1,6 +1,7 @@
 var searchData=
 [
   ['safeidempotentmutationpolicy',['SafeIdempotentMutationPolicy',['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html',1,'bigtable::v0::SafeIdempotentMutationPolicy'],['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a12d4e0b60e03282cb98ca8cbe21c1edc',1,'bigtable::v0::SafeIdempotentMutationPolicy::SafeIdempotentMutationPolicy()']]],
+  ['samplerows',['SampleRows',['../classbigtable_1_1v0_1_1Table.html#aa4eca7d395bef979124f84e4e600b0c5',1,'bigtable::v0::Table']]],
   ['serversettimestamp',['ServerSetTimestamp',['../namespacebigtable_1_1v0.html#a85536d8b5f2bdd21afbc78a78d37d803',1,'bigtable::v0']]],
   ['set_5fadmin_5fendpoint',['set_admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a67d5cd1969e1362e8ae05a1344ad4ee6',1,'bigtable::v0::ClientOptions']]],
   ['set_5fchannel_5farguments',['set_channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a81f63a8313a4d600b305d4fe672a419b',1,'bigtable::v0::ClientOptions']]],
