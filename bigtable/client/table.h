@@ -240,7 +240,7 @@ class Table {
   * auto as_list = table.SampleRows<std::list>();
   * @endcode
   */
-  template <template <typename...> class Collection>
+  template <template <typename...> class Collection = std::vector>
   Collection<Table::RowKeySample> SampleRows() {
     Collection<Table::RowKeySample> result;
     SampleRowsImpl(
