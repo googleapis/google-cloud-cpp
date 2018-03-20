@@ -63,12 +63,12 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
-row_key: "RK"
-family_name: < value: "F">
-qualifier: < value: "C">
-timestamp_micros: 42
-value: "V"
-commit_row: true
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    value: "V"
+    commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
   grpc::Status status;
@@ -98,12 +98,12 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
-row_key: "RK"
-family_name: < value: "F">
-qualifier: < value: "C">
-timestamp_micros: 42
-value: "V"
-commit_row: true
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    value: "V"
+    commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
   grpc::Status status;
@@ -135,11 +135,11 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
-row_key: "RK"
-family_name: < value: "F">
-qualifier: < value: "C">
-timestamp_micros: 42
-commit_row: true
+    row_key: "RK"
+    family_name: < value: "F">
+    qualifier: < value: "C">
+    timestamp_micros: 42
+    commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
 

@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ namespace bigtable {
 namespace testing {
 namespace internal {
 
-/// Common fixture for the bigtable::Table tests.
+/// Common fixture for the bigtable::noex::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
   TableTestFixture() {}
@@ -50,7 +50,7 @@ class TableTestFixture : public ::testing::Test {
 };
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
-    std::string repr, grpc::Status &status);
+    std::string repr, grpc::Status& status);
 
 }  // namespace internal
 }  // namespace testing

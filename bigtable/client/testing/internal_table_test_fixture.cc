@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,17 +13,15 @@
 // limitations under the License.
 
 #include "bigtable/client/testing/internal_table_test_fixture.h"
-
-#include <google/protobuf/text_format.h>
-
 #include "bigtable/client/internal/throw_delegate.h"
+#include <google/protobuf/text_format.h>
 
 namespace bigtable {
 namespace testing {
 namespace internal {
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
-    std::string repr, grpc::Status &status) {
+    std::string repr, grpc::Status& status) {
   google::bigtable::v2::ReadRowsResponse response;
   if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
     status = grpc::Status(grpc::StatusCode::INTERNAL, "can not parse");

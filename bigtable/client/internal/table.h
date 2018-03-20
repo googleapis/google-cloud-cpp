@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {
@@ -49,6 +48,8 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  * This namespace contains implementations of the API that do not raise
  * exceptions. It is subject to change without notice, and therefore, not
  * recommended for direct use by applications.
+ *
+ * Provide APIs to access and modify data in a Cloud Bigtable table.
  */
 namespace noex {
 class Table {
