@@ -13,11 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/table.h"
-
-#include <thread>
-
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
+#include <thread>
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -53,6 +51,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
     grpc::ClientContext client_context;
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
+    metadata_update_policy_.setup(client_context);
     status = client_->Stub()->MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return failures;
@@ -65,7 +64,6 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
       rpc_status.set_message(status.error_message());
       failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
                             0);
-      // TODO(#234) - just return the failures instead
       status = grpc::Status(
           status.error_code(),
           "Permanent (or too many transient) errors in Table::Apply()");
@@ -95,7 +93,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
     retry_policy->setup(client_context);
-
+    metadata_update_policy_.setup(client_context);
     status = mutator.MakeOneRequest(*client_->Stub(), client_context);
     if (not status.ok() and not retry_policy->on_failure(status)) {
       break;
@@ -108,7 +106,6 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
     return failures;
   }
   if (not failures.empty()) {
-    // TODO(#234) - just return the failures instead
     status = grpc::Status(
         grpc::StatusCode::INTERNAL,
         "Permanent (or too many transient) errors in Table::BulkApply()");
@@ -198,10 +195,10 @@ Row Table::CallReadModifyWriteRowRequest(
         std::vector<std::string> labels;
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
-        bigtable::Cell new_cell(
-            std::move(row.key()), std::move(*family.mutable_name()),
-            std::move(*column.mutable_qualifier()), cell.timestamp_micros(),
-            std::move(*cell.mutable_value()), std::move(labels));
+        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
+                                cell.timestamp_micros(),
+                                std::move(*cell.mutable_value()),
+                                std::move(labels));
 
         cells.emplace_back(std::move(new_cell));
       }

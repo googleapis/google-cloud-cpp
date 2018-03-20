@@ -24,8 +24,7 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-    
-    namespace noex {
+namespace noex {
 /**
  * Helper functions to make (unary) gRPC calls under the right policies.
  *
@@ -165,8 +164,8 @@ struct UnaryRpcUtils {
       std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-     typename CheckSignature<MemberFunction>::RequestType const &request,
-                char const *error_message, grpc::Status &status) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message, grpc::Status& status) {
     return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
                                metadata_update_policy, function, request,
                                error_message, status);
@@ -204,8 +203,8 @@ struct UnaryRpcUtils {
       bigtable::RPCBackoffPolicy& backoff_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const &request,
-                      char const *error_message, grpc::Status &status) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message, grpc::Status& status) {
     typename CheckSignature<MemberFunction>::ResponseType response;
     while (true) {
       grpc::ClientContext client_context;
@@ -220,8 +219,8 @@ struct UnaryRpcUtils {
         break;
       }
       if (not rpc_policy.on_failure(status)) {
-          status = grpc::Status(status.error_code(), error_message);
-          break;
+        status = grpc::Status(status.error_code(), error_message);
+        break;
       }
       auto delay = backoff_policy.on_completion(status);
       std::this_thread::sleep_for(delay);
@@ -262,8 +261,8 @@ struct UnaryRpcUtils {
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const &request,
-                   char const *error_message, grpc::Status &status) {
+      typename CheckSignature<MemberFunction>::RequestType const& request,
+      char const* error_message, grpc::Status& status) {
     typename CheckSignature<MemberFunction>::ResponseType response;
 
     grpc::ClientContext client_context;
@@ -272,74 +271,87 @@ struct UnaryRpcUtils {
     rpc_policy->setup(client_context);
     metadata_update_policy.setup(client_context);
     // Call the pointer to member function.
-    status =
-        ((*client.Stub()).*function)(&client_context, request, &response);
+    status = ((*client.Stub()).*function)(&client_context, request, &response);
     client.on_completion(status);
 
     return response;
   }
 };
-    } // namespace noex
     
-    template <typename ClientType>
-    struct UnaryRpcUtils {
-        
-        using StubType = typename noex::UnaryRpcUtils<ClientType>::DiscoverStubType::type;
-        
-        template <typename MemberFunction>
-        static typename std::enable_if<
-        noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::value,
-        typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::ResponseType>::type CallWithRetryBorrow(
-                            ClientType &client, bigtable::RPCRetryPolicy &rpc_policy,
-                            bigtable::RPCBackoffPolicy &backoff_policy,
-                            bigtable::MetadataUpdatePolicy const &metadata_update_policy,
-                            MemberFunction function,
-                             typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::RequestType const &request,
-                            char const *error_message){
-            grpc::Status status;
-            auto response = noex::UnaryRpcUtils<ClientType>::CallWithRetryBorrow(client,rpc_policy,backoff_policy,metadata_update_policy,function,request,error_message,status);
-            if(not status.ok()){
-                RaiseRpcError(status,status.error_message());
-            }
-            return response;
-        }
-        
-        template <typename MemberFunction>
-        static typename std::enable_if<
-        noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::value,
-        typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::ResponseType>::type
-        CallWithRetry(
-                      ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
-                      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-                      bigtable::MetadataUpdatePolicy const &metadata_update_policy,
-                      MemberFunction function,
-                                typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::RequestType const &request,
-                      char const *error_message){
-            return CallWithRetryBorrow(client,*rpc_policy,*backoff_policy,metadata_update_policy,function,
-                                       request,error_message);
-        }
-        
-        template <typename MemberFunction>
-        static typename std::enable_if<
-        noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::value,
-        typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::ResponseType>::type
-        CallWithoutRetry(
-                         ClientType &client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
-                         bigtable::MetadataUpdatePolicy const &metadata_update_policy,
-                         MemberFunction function,
-                                typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<MemberFunction>::RequestType const &request,
-                         char const *error_message){
-            grpc::Status status;
-            auto response = noex::UnaryRpcUtils<ClientType>::CallWithoutRetry(client, std::move(rpc_policy), std::move(metadata_update_policy), function, request, error_message, status);
-            if(not status.ok()){
-                RaiseRpcError(status,status.error_message());
-            }
-            return response;
-        }
-    };
-    
-    
-    
+}  // namespace noex
+
+template <typename ClientType>
+struct UnaryRpcUtils {
+  using StubType =
+      typename noex::UnaryRpcUtils<ClientType>::DiscoverStubType::type;
+
+  template <typename MemberFunction>
+  static typename std::enable_if<
+      noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::value,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::ResponseType>::type
+  CallWithRetryBorrow(
+      ClientType& client, bigtable::RPCRetryPolicy& rpc_policy,
+      bigtable::RPCBackoffPolicy& backoff_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
+      MemberFunction function,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::RequestType const& request,
+      char const* error_message) {
+    grpc::Status status;
+    auto response = noex::UnaryRpcUtils<ClientType>::CallWithRetryBorrow(
+        client, rpc_policy, backoff_policy, metadata_update_policy, function,
+        request, error_message, status);
+    if (not status.ok()) {
+      RaiseRpcError(status, status.error_message());
+    }
+    return response;
+  }
+
+  template <typename MemberFunction>
+  static typename std::enable_if<
+      noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::value,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::ResponseType>::type
+  CallWithRetry(
+      ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
+      MemberFunction function,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::RequestType const& request,
+      char const* error_message) {
+    return CallWithRetryBorrow(client, *rpc_policy, *backoff_policy,
+                               metadata_update_policy, function, request,
+                               error_message);
+  }
+
+  template <typename MemberFunction>
+  static typename std::enable_if<
+      noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::value,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::ResponseType>::type
+  CallWithoutRetry(
+      ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
+      MemberFunction function,
+      typename noex::UnaryRpcUtils<ClientType>::template CheckSignature<
+          MemberFunction>::RequestType const& request,
+      char const* error_message) {
+    grpc::Status status;
+    auto response = noex::UnaryRpcUtils<ClientType>::CallWithoutRetry(
+        client, std::move(rpc_policy), std::move(metadata_update_policy),
+        function, request, error_message, status);
+    if (not status.ok()) {
+      RaiseRpcError(status, status.error_message());
+    }
+    return response;
+  }
+};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -21,7 +21,7 @@ namespace internal {
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
-                                 grpc::Status &status) {
+                                 grpc::Status& status) {
   if (end_of_stream_) {
     status = grpc::Status(grpc::StatusCode::INTERNAL,
                           "HandleChunk after end of stream");
@@ -121,7 +121,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   }
 }
 
-void ReadRowsParser::HandleEndOfStream(grpc::Status &status) {
+void ReadRowsParser::HandleEndOfStream(grpc::Status& status) {
   if (end_of_stream_) {
     status = grpc::Status(grpc::StatusCode::INTERNAL,
                           "HandleEndOfStream called twice");
@@ -144,7 +144,7 @@ void ReadRowsParser::HandleEndOfStream(grpc::Status &status) {
 
 bool ReadRowsParser::HasNext() const { return row_ready_; }
 
-Row ReadRowsParser::Next(grpc::Status &status) {
+Row ReadRowsParser::Next(grpc::Status& status) {
   if (not row_ready_) {
     status =
         grpc::Status(grpc::StatusCode::INTERNAL, "Next with row not ready");
