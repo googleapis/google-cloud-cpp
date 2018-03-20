@@ -690,7 +690,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
   EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, status.error_code());
   EXPECT_EQ("no such table", status.error_message());
   EXPECT_FALSE(result.empty());
-  EXPECT_EQ(2, result.size());
+  EXPECT_EQ(2UL, result.size());
 }
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
