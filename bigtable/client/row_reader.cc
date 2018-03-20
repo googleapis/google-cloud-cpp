@@ -143,19 +143,8 @@ bool RowReader::NextChunk() {
 
 void RowReader::Advance(internal::OptionalRow& row) {
   while (true) {
-    grpc::Status status = grpc::Status::OK;
-
-    if (raise_on_error_) {
-      try {
-        status_ = status = AdvanceOrFail(row);
-      } catch (std::exception const& ex) {
-        // Parser exceptions arrive here.
-        status_ = status = grpc::Status(grpc::INTERNAL, ex.what());
-      }
-    } else {
-      status_ = status = AdvanceOrFail(row);
-    }
-
+    grpc::Status status;
+    status_ = status = AdvanceOrFail(row);
     if (status.ok()) {
       return;
     }
