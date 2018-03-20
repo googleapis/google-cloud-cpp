@@ -49,10 +49,11 @@ using bigtable::Row;
 namespace {
 class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
  public:
-  MOCK_METHOD1(HandleChunkHook, void(ReadRowsResponse_CellChunk chunk));
+  MOCK_METHOD2(HandleChunkHook,
+               void(ReadRowsResponse_CellChunk chunk, grpc::Status& status));
   void HandleChunk(ReadRowsResponse_CellChunk chunk,
                    grpc::Status& status) override {
-    HandleChunkHook(chunk);
+    HandleChunkHook(chunk, status);
   }
 
   MOCK_METHOD1(HandleEndOfStreamHook, void(grpc::Status& status));
@@ -406,8 +407,9 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
     EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
     EXPECT_CALL(*stream, Read(_))
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
-    EXPECT_CALL(*parser, HandleChunkHook(_))
-        .WillOnce(Throw(std::runtime_error("parser exception")));
+    EXPECT_CALL(*parser, HandleChunkHook(_, _))
+        .WillOnce(testing::SetArgReferee<1>(
+            grpc::Status(grpc::StatusCode::INTERNAL, "parser exception")));
 
     EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
