@@ -188,6 +188,6 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   // request failed.
   grpc::Status status;
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
-  EXPECT_NO_THROW(tested.ListInstances(status));
+  tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
 }
