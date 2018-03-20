@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <typeinfo>
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_test_fixture.h"
-#include <typeinfo>
 
 /// Define types and functions used for this tests.
 namespace {
@@ -50,10 +50,8 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<>();
+  std::vector<bigtable::Table::RowKeySample> result = table_.SampleRows<>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>),
-            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
@@ -77,10 +75,9 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<std::vector>();
+  std::vector<bigtable::Table::RowKeySample> result =
+      table_.SampleRows<std::vector>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>),
-            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
@@ -104,7 +101,8 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<std::list>();
+  std::list<bigtable::Table::RowKeySample> result =
+      table_.SampleRows<std::list>();
   auto it = result.begin();
   EXPECT_EQ(typeid(std::list<bigtable::v0::Table::RowKeySample>),
             typeid(result));
