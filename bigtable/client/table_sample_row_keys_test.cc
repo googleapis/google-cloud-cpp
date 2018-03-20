@@ -16,6 +16,7 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_test_fixture.h"
+#include <typeinfo>
 
 /// Define types and functions used for this tests.
 namespace {
@@ -31,6 +32,32 @@ class MockReader : public grpc::ClientReaderInterface<
 
 class TableSampleRowKeysTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
+
+/// @test Verify that Table::SampleRows<T>() works for default parameter.
+TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+
+  auto reader = new MockReader;
+  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  EXPECT_CALL(*reader, Read(_))
+      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+        {
+          r->set_row_key("test1");
+          r->set_offset_bytes(11);
+        }
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  auto result = table_.SampleRows<>();
+  auto it = result.begin();
+  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>), typeid(result));
+  EXPECT_NE(it, result.end());
+  EXPECT_EQ(it->row_key, "test1");
+  EXPECT_EQ(it->offset_bytes, 11);
+  EXPECT_EQ(++it, result.end());
+}
 
 /// @test Verify that Table::SampleRows<T>() works for std::vector.
 TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
@@ -51,6 +78,7 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows<std::vector>();
   auto it = result.begin();
+  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>), typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
@@ -76,6 +104,7 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows<std::list>();
   auto it = result.begin();
+  EXPECT_EQ(typeid(std::list<bigtable::v0::Table::RowKeySample>), typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
