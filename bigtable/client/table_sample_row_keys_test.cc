@@ -52,7 +52,8 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows<>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>), typeid(result));
+  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>),
+            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
@@ -78,7 +79,8 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows<std::vector>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>), typeid(result));
+  EXPECT_EQ(typeid(std::vector<bigtable::v0::Table::RowKeySample>),
+            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
@@ -104,7 +106,8 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows<std::list>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::list<bigtable::v0::Table::RowKeySample>), typeid(result));
+  EXPECT_EQ(typeid(std::list<bigtable::v0::Table::RowKeySample>),
+            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
