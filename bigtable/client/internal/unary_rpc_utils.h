@@ -277,7 +277,7 @@ struct UnaryRpcUtils {
     return response;
   }
 };
-    
+
 }  // namespace noex
 
 template <typename ClientType>

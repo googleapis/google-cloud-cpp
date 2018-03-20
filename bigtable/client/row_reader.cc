@@ -79,7 +79,7 @@ RowReader::RowReader(
       rows_count_(0),
       status_(grpc::Status::OK),
       raise_on_error_(raise_on_error),
-      error_retrieved_(raise_on_error ? true : false) {}
+      error_retrieved_(raise_on_error) {}
 
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
