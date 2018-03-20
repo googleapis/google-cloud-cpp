@@ -104,8 +104,6 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   std::list<bigtable::Table::RowKeySample> result =
       table_.SampleRows<std::list>();
   auto it = result.begin();
-  EXPECT_EQ(typeid(std::list<bigtable::v0::Table::RowKeySample>),
-            typeid(result));
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
