@@ -19,7 +19,7 @@ namespace btproto = ::google::bigtable::admin::v2;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
-    
+
 std::vector<btproto::Instance> InstanceAdmin::ListInstances(
     grpc::Status& status) {
   // Copy the policies in effect for the operation.
@@ -50,7 +50,7 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances(
   } while (not page_token.empty());
   return result;
 }
-    
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

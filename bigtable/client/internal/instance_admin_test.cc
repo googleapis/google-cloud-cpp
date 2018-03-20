@@ -54,9 +54,8 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
-             grpc::ClientContext* ctx,
-             btproto::ListInstancesRequest const& request,
-             btproto::ListInstancesResponse* response) {
+      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
+      btproto::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -143,11 +142,11 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-         btproto::ListInstancesResponse* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](
+      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
+      btproto::ListInstancesResponse* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
