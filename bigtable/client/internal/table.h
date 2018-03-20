@@ -151,6 +151,7 @@ class Table {
   MetadataUpdatePolicy metadata_update_policy_;
   std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
+    
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
