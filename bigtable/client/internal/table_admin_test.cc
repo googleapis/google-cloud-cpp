@@ -193,7 +193,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
-  EXPECT_NO_THROW(tested.ListTables(btproto::Table::FULL, status));
+  tested.ListTables(btproto::Table::FULL, status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -222,7 +222,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.ListTables(btproto::Table::FULL, status));
+  tested.ListTables(btproto::Table::FULL, status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -284,8 +284,7 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(
-      tested.CreateTable("other-table", bigtable::TableConfig(), status));
+  tested.CreateTable("other-table", bigtable::TableConfig(), status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -328,7 +327,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.GetTable("other-table", status));
+  tested.GetTable("other-table", status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -353,7 +352,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.GetTable("other-table", status));
+  tested.GetTable("other-table", status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -394,8 +393,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  EXPECT_NO_THROW(
-      tested.CreateTable("other-table", bigtable::TableConfig(), status));
+  tested.CreateTable("other-table", bigtable::TableConfig(), status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -460,8 +458,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  EXPECT_NO_THROW(
-      tested.ModifyColumnFamilies("other-table", std::move(changes), status));
+  tested.ModifyColumnFamilies("other-table", std::move(changes), status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -502,7 +499,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  EXPECT_NO_THROW(tested.DropRowsByPrefix("other-table", "prefix", status));
+  tested.DropRowsByPrefix("other-table", "prefix", status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -543,6 +540,6 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   grpc::Status status;
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_NO_THROW(tested.DropAllRows("other-table", status));
+  tested.DropAllRows("other-table", status);
   EXPECT_FALSE(status.ok());
 }

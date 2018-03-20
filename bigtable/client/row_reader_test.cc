@@ -347,7 +347,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_), false);
 
-  EXPECT_NO_THROW(reader.begin());
+  reader.begin();
   grpc::Status status = reader.Finish();
   EXPECT_FALSE(status.ok());
 }
@@ -529,7 +529,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_), false);
 
-  EXPECT_NO_THROW(reader.begin());
+  reader.begin();
   grpc::Status status = reader.Finish();
   EXPECT_FALSE(status.ok());
 }
@@ -723,7 +723,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
   EXPECT_NE(it, reader.end());
   // Manually cancel the call.
   reader.Cancel();
-  EXPECT_NO_THROW(reader.begin());
+  reader.begin();
   grpc::Status status = reader.Finish();
   EXPECT_FALSE(status.ok());
 }
@@ -737,7 +737,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   // Manually cancel the call before a stream was created.
   reader.Cancel();
 
-  EXPECT_NO_THROW(reader.begin());
+  reader.begin();
   grpc::Status status = reader.Finish();
   EXPECT_FALSE(status.ok());
 }

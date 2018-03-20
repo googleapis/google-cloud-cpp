@@ -39,7 +39,7 @@ TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
-  EXPECT_NO_THROW(parser.HandleEndOfStream(status));
+  parser.HandleEndOfStream(status);
   EXPECT_FALSE(status.ok());
   EXPECT_FALSE(parser.HasNext());
 }
@@ -53,7 +53,7 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
 
-  EXPECT_NO_THROW(parser.HandleChunk(chunk, status));
+  parser.HandleChunk(chunk, status);
   EXPECT_FALSE(status.ok());
   EXPECT_FALSE(parser.HasNext());
 }
@@ -126,7 +126,7 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   parser.HandleEndOfStream(status);
   EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
-  EXPECT_NO_THROW(parser.Next(status));
+  parser.Next(status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -152,7 +152,7 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
   chunk.mutable_value()->swap(value);
   grpc::Status status;
   ASSERT_FALSE(parser.HasNext());
-  EXPECT_NO_THROW(parser.HandleChunk(std::move(chunk), status));
+  parser.HandleChunk(std::move(chunk), status);
   EXPECT_TRUE(status.ok());
   ASSERT_TRUE(parser.HasNext());
   bigtable::Row r = parser.Next(status);
