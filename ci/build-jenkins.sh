@@ -38,6 +38,9 @@ case ${BENCHMARK} in
     scan)
         bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 1800;
         ;;
+    integration)
+        (cd bigtable/tests && ../../../bigtable/tests/run_integration_tests_production.sh);
+        ;;
     # The following cases are used to test the script when making changes, they are not good
     # benchmarks.
     endurance-quick)

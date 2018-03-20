@@ -22,8 +22,8 @@ function kill_emulator {
   cat emulator.log >&2
 }
 
-readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
-readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+readonly BINDIR=$(dirname $0)
+source ${BINDIR}/integration_tests_utils.sh
 
 echo "Launching Cloud Bigtable emulator in the background"
 # The tests typically run in a Docker container, where the ports are largely
@@ -57,25 +57,8 @@ else
   echo "Successfully connected to the Cloud Bigtable emulator."
 fi
 
-# Run the integration tests
-
 # The project and instance do not matter for the Cloud Bigtable emulator.
 # Use a unique project name to allow multiple runs of the test with
 # an externally launched emulator.
-NONCE=$(date +%s)
-
-echo
-echo "Running Table::Apply() integration test."
-./data_integration_test emulated$NONCE data-test 
-
-echo
-echo "Running TableAdmin integration test."
-./admin_integration_test emulated$NONCE admin-test
-
-echo
-echo "Running bigtable::Filters integration tests."
-./filters_integration_test emulated$NONCE filters-test
-
-echo
-echo "Running bigtable::Filters integration tests."
-./mutations_integration_test emulated$NONCE mutations-test
+readonly NONCE=$(date +%s)
+run_all_integration_tests "emulated-${NONCE}"
