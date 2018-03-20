@@ -365,3 +365,51 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   DeleteTable(table_name);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
+
+TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
+  std::string const table_name = "table-sample-row-keys-test";
+  auto table = CreateTable(table_name, table_config);
+
+  // Create BATCH_SIZE * BATCH_COUNT rows.
+  constexpr int BATCH_COUNT = 10;
+  constexpr int BATCH_SIZE = 5000;
+  constexpr int COLUMN_COUNT = 10;
+  int rowid = 0;
+  for (int batch = 0; batch != BATCH_COUNT; ++batch) {
+    bigtable::BulkMutation bulk;
+    for (int row = 0; row != BATCH_SIZE; ++row) {
+      std::ostringstream os;
+      os << "row:" << std::setw(9) << std::setfill('0') << rowid;
+
+      // Build a mutation that creates 10 columns.
+      bigtable::SingleRowMutation mutation(os.str());
+      for (int col = 0; col != COLUMN_COUNT; ++col) {
+        std::string colid = "c" + std::to_string(col);
+        std::string value = colid + "#" + os.str();
+        mutation.emplace_back(
+            bigtable::SetCell(family1, std::move(colid), std::move(value)));
+      }
+      bulk.emplace_back(std::move(mutation));
+      ++rowid;
+    }
+    table->BulkApply(std::move(bulk));
+  }
+  auto samples = table->SampleRows<std::vector>();
+  DeleteTable(table_name);
+
+  // It is somewhat hard to verify that the values returned here are correct.
+  // We cannot check the specific values, not even the format, of the row keys
+  // because Cloud Bigtable might return an empty row key (for "end of table"),
+  // and it might return row keys that have never been written to.
+  // All we can check is that this is not empty, and that the offsets are in
+  // ascending order.
+  EXPECT_FALSE(samples.empty());
+  std::int64_t previous = 0;
+  for (auto const& s : samples) {
+    EXPECT_LE(previous, s.offset_bytes);
+    previous = s.offset_bytes;
+  }
+  // At least one of the samples should have non-zero offset:
+  auto last = samples.back();
+  EXPECT_LT(0, last.offset_bytes);
+}
