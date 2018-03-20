@@ -121,7 +121,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1">CheckAndMutateRow</a> (std::string row_key, <a class="el" href="classbigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; true_mutations, std::vector&lt; <a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; false_mutations)</td></tr>
 <tr class="memdesc:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomic test-and-set for a row using filter expressions.  <a href="#a91f8dd3d54bcccf61b7d2ba36cd802b1">More...</a><br /></td></tr>
 <tr class="separator:a91f8dd3d54bcccf61b7d2ba36cd802b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4eca7d395bef979124f84e4e600b0c5"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; class Collection&gt; </td></tr>
+<tr class="memitem:aa4eca7d395bef979124f84e4e600b0c5"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </td></tr>
 <tr class="memitem:aa4eca7d395bef979124f84e4e600b0c5"><td class="memTemplItemLeft" align="right" valign="top">Collection&lt; <a class="el" href="structbigtable_1_1v0_1_1Table_1_1RowKeySample.html">Table::RowKeySample</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html#aa4eca7d395bef979124f84e4e600b0c5">SampleRows</a> ()</td></tr>
 <tr class="memdesc:aa4eca7d395bef979124f84e4e600b0c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample of the row keys in the table, including approximate data sizes.  <a href="#aa4eca7d395bef979124f84e4e600b0c5">More...</a><br /></td></tr>
 <tr class="separator:aa4eca7d395bef979124f84e4e600b0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -602,7 +602,7 @@ template&lt;typename... Args&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename... &gt; class Collection&gt; </div>
+template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
