@@ -29,8 +29,9 @@ function delete_all_tables() {
   if [ -z "${instance_id}" ]; then
     return 0
   fi
-  ${CBT_CMD} -project "${project_id}" -instance "${instance_id}" ls |
-      xargs -i ${CBT_CMD} -project "${project_id}" -instance "${instance_id}" deletetable {}
+  local args=("-project" "${project_id}" "-instance" "${instance_id}")
+  # TODO(#356) - change the tests so we do not clear the instance.
+  ${CBT_CMD} ${args[*]} ls | xargs -i ${CBT_CMD} ${args[*]} deletetable {}
 }
 
 # Run all the integration tests against the emulator or production.
