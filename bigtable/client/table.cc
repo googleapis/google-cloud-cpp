@@ -159,7 +159,7 @@ void Table::SampleRowsImpl(std::function<void(Table::RowKeySample)> inserter,
       // Assuming collection will be either list or vector.
       Table::RowKeySample row_sample;
       row_sample.offset_bytes = response.offset_bytes();
-      row_sample.row_key = std::move(response.row_key());
+      row_sample.row_key = std::move(*response.mutable_row_key());
       inserter(std::move(row_sample));
     }
     auto status = stream->Finish();
