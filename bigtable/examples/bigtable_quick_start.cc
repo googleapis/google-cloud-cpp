@@ -28,23 +28,53 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
 
+  //! [create table]
   // Connect to the Cloud Bigtable Admin API.
-  //! [connect]
   bigtable::TableAdmin table_admin(
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions()),
       instance_id);
-  //! [connect]
 
   // Define the desired schema for the Table.
-  //! [define schema]
   auto gc_rule = bigtable::GcRule::MaxNumVersions(1);
   bigtable::TableConfig schema({{"family", gc_rule}}, {});
-  //! [define schema]
+  //! [create table]
 
   // Create a table.
-  //! [create table]
   auto returned_schema = table_admin.CreateTable(table_id, schema);
-  //! [create table]
+
+  // Create an object to access the Cloud Bigtable Data API.
+  //! [connect data]
+  bigtable::Table table(bigtable::CreateDefaultDataClient(
+                            project_id, instance_id, bigtable::ClientOptions()),
+                        table_id);
+  //! [connect data]
+
+  // Modify (and create if necessary) a row.
+  //! [write row]
+  table.Apply(bigtable::SingleRowMutation(
+      "my-key", bigtable::SetCell("family", "value", "Hello World!")));
+  //! [write row]
+
+  // Read a single row.
+  //! [read row]
+  auto result = table.ReadRow("my-key", bigtable::Filter::PassAllFilter());
+
+  // Handle the case where the row does not exist.
+  if (not result.first) {
+    std::cout << "Cannot find row 'my-key' in the table: " << table.table_name()
+              << std::endl;
+    return 0;
+  }
+  //! [read row]
+
+  // Print the contents of the row.
+  //! [use value]
+  for (auto const& cell : result.second.cells()) {
+    std::cout << cell.family_name() << ":" << cell.column_qualifier()
+              << "    @ " << cell.timestamp() << "us\n"
+              << '"' << cell.value() << '"' << std::endl;
+  }
+  //! [use value]
 
   return 0;
 } catch (std::exception const& ex) {

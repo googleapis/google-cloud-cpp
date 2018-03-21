@@ -160,7 +160,7 @@ add_subdirectory(tests)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)
-    add_subdirectory(examples/quick_start)
+    add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 option(BIGTABLE_CLIENT_CLANG_TIDY

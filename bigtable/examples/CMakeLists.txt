@@ -16,11 +16,5 @@
 # to keep this particular file as simple as possible, as it is intended to be
 # part of the examples.
 
-add_executable(bigtable_create_table bigtable_create_table.cc)
-target_link_libraries(bigtable_create_table bigtable_client)
-
-add_executable(bigtable_write_row bigtable_write_row.cc)
-target_link_libraries(bigtable_write_row bigtable_client)
-
-add_executable(bigtable_read_row bigtable_read_row.cc)
-target_link_libraries(bigtable_read_row bigtable_client)
+add_executable(bigtable_quick_start bigtable_quick_start.cc)
+target_link_libraries(bigtable_quick_start bigtable_client)
