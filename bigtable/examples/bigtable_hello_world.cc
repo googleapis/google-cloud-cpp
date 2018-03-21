@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all code]
+
 //! [bigtable includes]
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
@@ -79,27 +81,40 @@ int main(int argc, char* argv[]) try {
 
   // Read a single row.
   //! [read row]
-  auto result = table.ReadRow("my-key", bigtable::Filter::PassAllFilter());
-
-  // Handle the case where the row does not exist.
+  auto result = table.ReadRow(
+      "key-0", bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
   if (not result.first) {
-    std::cout << "Cannot find row 'my-key' in the table: " << table.table_name()
+    std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << std::endl;
     return 0;
   }
+  auto const& cell = result.second.cells().front();
+  std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
+            << cell.timestamp() << "us\n"
+            << '"' << cell.value() << '"' << std::endl;
   //! [read row]
 
-  // Print the contents of the row.
-  //! [use value]
-  for (auto const& cell : result.second.cells()) {
-    std::cout << cell.family_name() << ":" << cell.column_qualifier()
-              << "    @ " << cell.timestamp() << "us\n"
-              << '"' << cell.value() << '"' << std::endl;
+  // Read a single row.
+  //! [scan all]
+  for (auto& row : table.ReadRows(bigtable::RowRange::InfiniteRange(),
+                                  bigtable::Filter::PassAllFilter())) {
+    std::cout << row.row_key() << ":\n";
+    for (auto& cell : row.cells()) {
+      std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
+                << "    @ " << cell.timestamp() << "us\n"
+                << "\t\"" << cell.value() << '"' << std::endl;
+    }
   }
-  //! [use value]
+  //! [scan all]
+
+  // Delete the table
+  //! [delete table]
+  table_admin.DeleteTable(table_id);
+  //! [delete table]
 
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }
+//! [all code]

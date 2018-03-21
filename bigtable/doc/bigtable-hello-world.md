@@ -34,7 +34,7 @@ To manage tables, connect to Cloud Bigtable using
 
 ### Creating a table
 
-Create a table with `bigtable::AdminClient::CreateTable()`:
+Create a table with `bigtable::TableAdmin::CreateTable()`:
 
 @snippet bigtable_hello_world.cc create table
 
@@ -48,32 +48,43 @@ To manage data, connect to Cloud Bigtable using
 
 @snippet bigtable_hello_world.cc connect data
 
-
 ### Writing Rows to a table
 
-First connect to Cloud Bigtable C++ using the Data API:
+Then write the data:
 
-@snippet bigtable_hello_world.cc connect data
-
-Then write the row.
-
-@snippet bigtable_hello_world.cc write row
+@snippet bigtable_hello_world.cc write rows
 
 @see `bigtable::v0::Table::BulkApply()` to modify multiple rows in a single
 operation.  In addition to `SetCell()` there
 are functions to delete columns (e.g., `DeleteFromFamily()`) or to delete the
 whole row (`DeleteFromRow()`).
 
-### Read a Table
+### Reading a row by its key
 
-Request the row that you want, and verify that the row is found:
+Get a row directly using its key with `bigtable::Table::ReadRow()`:
 
 @snippet bigtable_hello_world.cc read row
-
-Then iterate over the cells in the row:
-
-@snippet bigtable_hello_world.cc use value
 
 @see `bigtable::v0::Filter` to filter the column families, columns, and even
   the timestamps returned by `ReadRow()`.
 @see `bigtable::v0::Table::ReadRows()` to iterate over multiple rows.
+
+### Scanning all table rows
+
+Use `bigtable::Table::ReadRows()` to scan all of the rows in a table.
+
+@snippet bigtable_hello_world.cc scan all
+
+@see `bigtable::v0::RowRange` to scan only a portion of the table.
+
+### Deleting a table
+
+Delete a table with `TableAdmin::DeleteTable`.
+
+@snippet bigtable_hello_world.cc delete table
+
+## Putting it all together
+
+Here is the full example
+
+@snippet bigtable_hello_world.cc all code
