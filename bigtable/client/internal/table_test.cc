@@ -28,6 +28,7 @@ class TableReadRowTest : public bigtable::testing::internal::TableTestFixture {
 class TableReadRowsTest : public bigtable::testing::internal::TableTestFixture {
 };
 class TableApplyTest : public bigtable::testing::internal::TableTestFixture {};
+
 class TableSampleRowKeysTest
     : public bigtable::testing::internal::TableTestFixture {};
 class MockReader : public grpc::ClientReaderInterface<
@@ -904,3 +905,4 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   custom_table.SampleRows<std::vector>(status);
   EXPECT_FALSE(status.ok());
 }
+
