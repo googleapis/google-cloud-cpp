@@ -44,171 +44,38 @@ namespace {
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-// Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
-// successful, or until the policies in effect tell us to stop.
 void Table::Apply(SingleRowMutation&& mut) {
-  // Copy the policies in effect for this operation.  Many policy classes change
-  // their state as the operation makes progress (or fails to make progress), so
-  // we need fresh instances.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-  auto idempotent_policy = idempotent_mutation_policy_->clone();
-
-  // Build the RPC request, try to minimize copying.
-  btproto::MutateRowRequest request;
-  request.set_table_name(table_name_);
-  request.set_row_key(std::move(mut.row_key_));
-  request.mutable_mutations()->Swap(&mut.ops_);
-  bool const is_idempotent =
-      std::all_of(request.mutations().begin(), request.mutations().end(),
-                  [&idempotent_policy](btproto::Mutation const& m) {
-                    return idempotent_policy->is_idempotent(m);
-                  });
-
-  btproto::MutateRowResponse response;
-  while (true) {
-    grpc::ClientContext client_context;
-    rpc_policy->setup(client_context);
-    backoff_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
-    grpc::Status status =
-        client_->Stub()->MutateRow(&client_context, request, &response);
-    if (status.ok()) {
-      return;
-    }
-    // It is up to the policy to terminate this loop, it could run
-    // forever, but that would be a bad policy (pun intended).
-    if (not rpc_policy->on_failure(status) or not is_idempotent) {
-      std::vector<FailedMutation> failures;
-      google::rpc::Status rpc_status;
-      rpc_status.set_code(status.error_code());
-      rpc_status.set_message(status.error_message());
-      failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
-                            0);
-      // TODO(#234) - just return the failures instead
-      ReportPermanentFailures(
-          "Permanent (or too many transient) errors in Table::Apply()", status,
-          std::move(failures));
-    }
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
-  }
-}
-
-// Call the `google.bigtable.v2.Bigtable.MutateRows` RPC repeatedly until
-// successful, or until the policies in effect tell us to stop.  When the RPC
-// is partially successful, this function retries only the mutations that did
-// not succeed.
-void Table::BulkApply(BulkMutation&& mut) {
-  // Copy the policies in effect for this operation.  Many policy classes change
-  // their state as the operation makes progress (or fails to make progress), so
-  // we need fresh instances.
-  auto backoff_policy = rpc_backoff_policy_->clone();
-  auto retry_policy = rpc_retry_policy_->clone();
-  auto idemponent_policy = idempotent_mutation_policy_->clone();
-
-  internal::BulkMutator mutator(table_name_, *idemponent_policy,
-                                std::forward<BulkMutation>(mut));
-
-  grpc::Status status = grpc::Status::OK;
-  while (mutator.HasPendingMutations()) {
-    grpc::ClientContext client_context;
-    backoff_policy->setup(client_context);
-    retry_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
-
-    status = mutator.MakeOneRequest(*client_->Stub(), client_context);
-    if (not status.ok() and not retry_policy->on_failure(status)) {
-      break;
-    }
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
-  }
-  auto failures = mutator.ExtractFinalFailures();
+  std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (not failures.empty()) {
-    // TODO(#234) - just return the failures instead
-    ReportPermanentFailures(
-        "Permanent (or too many transient) errors in Table::BulkApply()",
-        status, std::move(failures));
+    grpc::Status status = failures.front().status();
+    ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
 
-// Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until
-// successful. When RPC is finished, this function returns the SampleRowKeys
-// as a Collection specified by the user. If the RPC fails, it will keep
-// retrying until the policies in effect tell us to stop.
-void Table::SampleRowsImpl(std::function<void(Table::RowKeySample)> inserter,
-                           std::function<void()> clearer) {
-  // Copy the policies in effect for this operation.
-  auto backoff_policy = rpc_backoff_policy_->clone();
-  auto retry_policy = rpc_retry_policy_->clone();
-
-  // Build the RPC request for SampleRowKeys
-  btproto::SampleRowKeysRequest request;
-  btproto::SampleRowKeysResponse response;
-  request.set_table_name(table_name_);
-
-  while (true) {
-    grpc::ClientContext client_context;
-    backoff_policy->setup(client_context);
-    retry_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
-
-    auto stream = client_->Stub()->SampleRowKeys(&client_context, request);
-    while (stream->Read(&response)) {
-      // Assuming collection will be either list or vector.
-      Table::RowKeySample row_sample;
-      row_sample.offset_bytes = response.offset_bytes();
-      row_sample.row_key = std::move(*response.mutable_row_key());
-      inserter(std::move(row_sample));
-    }
-    auto status = stream->Finish();
-    if (status.ok()) {
-      break;
-    }
-    if (not retry_policy->on_failure(status)) {
-      internal::RaiseRuntimeError("No more retries allowed as per policy.");
-    }
-    clearer();
-    auto delay = backoff_policy->on_completion(status);
-    std::this_thread::sleep_for(delay);
+void Table::BulkApply(BulkMutation&& mut) {
+  grpc::Status status;
+  std::vector<FailedMutation> failures =
+      impl_.BulkApply(std::move(mut), status);
+  if (not status.ok()) {
+    ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  return RowReader(client_, table_name(), std::move(row_set),
-                   RowReader::NO_ROWS_LIMIT, std::move(filter),
-                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-                   metadata_update_policy_,
-                   bigtable::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>());
+  return impl_.ReadRows(std::move(row_set), std::move(filter), true);
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  if (rows_limit <= 0) {
-    internal::RaiseInvalidArgument("rows_limit must be > 0");
-  }
-  return RowReader(client_, table_name(), std::move(row_set), rows_limit,
-                   std::move(filter), rpc_retry_policy_->clone(),
-                   rpc_backoff_policy_->clone(), metadata_update_policy_,
-                   bigtable::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>());
+  return impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter),
+                        true);
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
-  RowSet row_set(std::move(row_key));
-  std::int64_t const rows_limit = 1;
-  RowReader reader =
-      ReadRows(std::move(row_set), rows_limit, std::move(filter));
-  auto it = reader.begin();
-  if (it == reader.end()) {
-    return std::make_pair(false, Row("", {}));
-  }
-  auto result = std::make_pair(true, std::move(*it));
-  if (++it != reader.end()) {
-    internal::RaiseRuntimeError(
-        "internal error - RowReader returned 2 rows in ReadRow()");
+  grpc::Status status;
+  auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
+  if (not status.ok()) {
+    internal::RaiseRuntimeError(status.error_message());
   }
   return result;
 }
@@ -216,51 +83,14 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
 bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               std::vector<Mutation> true_mutations,
                               std::vector<Mutation> false_mutations) {
-  using RpcUtils = internal::UnaryRpcUtils<DataClient>;
-  using StubType = RpcUtils::StubType;
-  btproto::CheckAndMutateRowRequest request;
-  request.set_table_name(table_name());
-  request.set_row_key(std::move(row_key));
-  *request.mutable_predicate_filter() = filter.as_proto_move();
-  for (auto& m : true_mutations) {
-    *request.add_true_mutations() = std::move(m.op);
+  grpc::Status status;
+  bool value = impl_.CheckAndMutateRow(std::move(row_key), std::move(filter),
+                                       std::move(true_mutations),
+                                       std::move(false_mutations), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
   }
-  for (auto& m : false_mutations) {
-    *request.add_false_mutations() = std::move(m.op);
-  }
-  auto response = RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow");
-  return response.predicate_matched();
-}
-
-Row Table::CallReadModifyWriteRowRequest(
-    btproto::ReadModifyWriteRowRequest request) {
-  auto error_message =
-      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
-  auto response = RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::ReadModifyWriteRow, request, error_message.c_str());
-
-  std::vector<bigtable::Cell> cells;
-  auto& row = *response.mutable_row();
-  for (auto& family : *row.mutable_families()) {
-    for (auto& column : *family.mutable_columns()) {
-      for (auto& cell : *column.mutable_cells()) {
-        std::vector<std::string> labels;
-        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
-                  std::back_inserter(labels));
-        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
-                                cell.timestamp_micros(),
-                                std::move(*cell.mutable_value()),
-                                std::move(labels));
-
-        cells.emplace_back(std::move(new_cell));
-      }
-    }
-  }
-
-  return Row(std::move(*row.mutable_key()), std::move(cells));
+  return value;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -44,6 +44,12 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
 
+/// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
+struct RowKeySample {
+  std::string row_key;
+  std::int64_t offset_bytes;
+};
+
 /**
  * This namespace contains implementations of the API that do not raise
  * exceptions. It is subject to change without notice, and therefore, not
@@ -132,6 +138,17 @@ class Table {
     return CallReadModifyWriteRowRequest(request, status);
   }
 
+  template <template <typename...> class Collection = std::vector>
+  Collection<bigtable::RowKeySample> SampleRows(grpc::Status& status) {
+    Collection<bigtable::RowKeySample> result;
+    SampleRowsImpl(
+        [&result](bigtable::RowKeySample rs) {
+          result.emplace_back(std::move(rs));
+        },
+        [&result]() { result.clear(); }, status);
+    return result;
+  }
+
   //@}
 
  private:
@@ -143,6 +160,18 @@ class Table {
   Row CallReadModifyWriteRowRequest(
       ::google::bigtable::v2::ReadModifyWriteRowRequest request,
       grpc::Status& status);
+
+  /**
+   * Refactor implementation to `.cc` file.
+   *
+   * Provides a compilation barrier so that the application is not
+   * exposed to all the implementation details.
+   *
+   * @param inserter Function to insert the object to result.
+   * @param clearer Function to clear the result object if RPC fails.
+   */
+  void SampleRowsImpl(std::function<void(bigtable::RowKeySample)> inserter,
+                      std::function<void()> clearer, grpc::Status& status);
 
   std::shared_ptr<DataClient> client_;
   std::string table_name_;
