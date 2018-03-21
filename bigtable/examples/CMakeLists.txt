@@ -16,5 +16,5 @@
 # to keep this particular file as simple as possible, as it is intended to be
 # part of the examples.
 
-add_executable(bigtable_quick_start bigtable_quick_start.cc)
-target_link_libraries(bigtable_quick_start bigtable_client)
+add_executable(bigtable_hello_world bigtable_hello_world.cc)
+target_link_libraries(bigtable_hello_world bigtable_client)

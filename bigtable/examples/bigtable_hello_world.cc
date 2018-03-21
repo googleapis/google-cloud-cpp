@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [bigtable includes]
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
+//! [bigtable includes]
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -28,19 +30,21 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
 
-  //! [create table]
   // Connect to the Cloud Bigtable Admin API.
+  //! [connect admin]
   bigtable::TableAdmin table_admin(
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions()),
       instance_id);
+  //! [connect admin]
 
+  //! [create table]
   // Define the desired schema for the Table.
   auto gc_rule = bigtable::GcRule::MaxNumVersions(1);
   bigtable::TableConfig schema({{"family", gc_rule}}, {});
-  //! [create table]
 
   // Create a table.
   auto returned_schema = table_admin.CreateTable(table_id, schema);
+  //! [create table]
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
@@ -50,10 +54,28 @@ int main(int argc, char* argv[]) try {
   //! [connect data]
 
   // Modify (and create if necessary) a row.
-  //! [write row]
-  table.Apply(bigtable::SingleRowMutation(
-      "my-key", bigtable::SetCell("family", "value", "Hello World!")));
-  //! [write row]
+  //! [write rows]
+  std::vector<std::string> greetings{"Hello World!", "Hello Cloud Bigtable!",
+                                     "Hello C++!"};
+  int i = 0;
+  for (auto const& greeting : greetings) {
+    // Each row has a unique row key.
+    //
+    // Note: This example uses sequential numeric IDs for simplicity, but
+    // this can result in poor performance in a production application.
+    // Since rows are stored in sorted order by key, sequential keys can
+    // result in poor distribution of operations across nodes.
+    //
+    // For more information about how to design a Bigtable schema for the
+    // best performance, see the documentation:
+    //
+    //     https://cloud.google.com/bigtable/docs/schema-design
+    std::string row_key = "key-" + std::to_string(i);
+    table.Apply(bigtable::SingleRowMutation(
+        std::move(row_key), bigtable::SetCell("family", "c0", greeting)));
+    ++i;
+  }
+  //! [write rows]
 
   // Read a single row.
   //! [read row]
