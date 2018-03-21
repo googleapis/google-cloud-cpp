@@ -138,7 +138,6 @@ class Table {
     return CallReadModifyWriteRowRequest(request, status);
   }
 
-
   template <template <typename...> class Collection = std::vector>
   Collection<bigtable::RowKeySample> SampleRows(grpc::Status& status) {
     Collection<bigtable::RowKeySample> result;
@@ -162,7 +161,6 @@ class Table {
       ::google::bigtable::v2::ReadModifyWriteRowRequest request,
       grpc::Status& status);
 
-
   /**
    * Refactor implementation to `.cc` file.
    *
@@ -174,7 +172,6 @@ class Table {
    */
   void SampleRowsImpl(std::function<void(bigtable::RowKeySample)> inserter,
                       std::function<void()> clearer, grpc::Status& status);
-
 
   std::shared_ptr<DataClient> client_;
   std::string table_name_;
