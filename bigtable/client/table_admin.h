@@ -17,6 +17,7 @@
 
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
+#include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
@@ -35,12 +36,7 @@ class TableAdmin {
    *   the project id in the @p client parameter.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
-      : client_(std::move(client)),
-        instance_id_(std::move(instance_id)),
-        instance_name_(InstanceName()),
-        rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
+      : impl_(std::move(client), std::move(instance_id)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -58,16 +54,12 @@ class TableAdmin {
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : client_(std::move(client)),
-        instance_id_(std::move(instance_id)),
-        instance_name_(InstanceName()),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
+      : impl_(std::move(client), std::move(instance_id),
+              std::move(retry_policy), std::move(backoff_policy)) {}
 
-  std::string const& project() const { return client_->project(); }
-  std::string const& instance_id() const { return instance_id_; }
-  std::string const& instance_name() const { return instance_name_; }
+  std::string const& project() const { return impl_.project(); }
+  std::string const& instance_id() const { return impl_.instance_id(); }
+  std::string const& instance_name() const { return impl_.instance_name(); }
 
   /**
    * Create a new table in the instance.
@@ -173,25 +165,7 @@ class TableAdmin {
   void DropAllRows(std::string table_id);
 
  private:
-  /// Compute the fully qualified instance name.
-  std::string InstanceName() const;
-
-  /// Return the fully qualified name of a table in this object's instance.
-  std::string TableName(std::string const& table_id) const {
-    return instance_name() + "/tables/" + table_id;
-  }
-
-  /// Shortcuts to avoid typing long names over and over.
-  using RpcUtils = bigtable::internal::UnaryRpcUtils<AdminClient>;
-  using StubType = RpcUtils::StubType;
-
- private:
-  std::shared_ptr<AdminClient> client_;
-  std::string instance_id_;
-  std::string instance_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  noex::TableAdmin impl_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

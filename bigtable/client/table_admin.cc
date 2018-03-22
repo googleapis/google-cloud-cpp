@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/table_admin.h"
+#include "bigtable/client/internal/throw_delegate.h"
 #include <sstream>
 
 namespace btproto = ::google::bigtable::admin::v2;
@@ -21,117 +22,70 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
     std::string table_id, TableConfig config) {
-  auto request = config.as_proto_move();
-  request.set_parent(instance_name());
-  request.set_table_id(std::move(table_id));
-
-  auto error_message = "CreateTable(" + request.table_id() + ")";
-
-  // This API is not idempotent, lets call it without retry
-  return RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CreateTable, request, error_message.c_str());
+  grpc::Status status;
+  auto result =
+      impl_.CreateTable(std::move(table_id), std::move(config), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     ::google::bigtable::admin::v2::Table::View view) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
-  std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
-
-  // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Table> result;
-  std::string page_token;
-  do {
-    btproto::ListTablesRequest request;
-    request.set_page_token(std::move(page_token));
-    request.set_parent(instance_name());
-    request.set_view(view);
-
-    auto response = RpcUtils::CallWithRetryBorrow(
-        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-        &StubType::ListTables, request, msg.c_str());
-
-    for (auto& x : *response.mutable_tables()) {
-      result.emplace_back(std::move(x));
-    }
-    page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  grpc::Status status;
+  auto result = impl_.ListTables(std::move(view), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
   return result;
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::GetTable(
     std::string table_id, ::google::bigtable::admin::v2::Table::View view) {
-  btproto::GetTableRequest request;
-  request.set_name(TableName(table_id));
-  request.set_view(view);
-
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "GetTable(" + request.name() + ")";
-  return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
-                                 rpc_backoff_policy_->clone(),
-                                 metadata_update_policy, &StubType::GetTable,
-                                 request, error_message.c_str());
+  grpc::Status status;
+  auto result = impl_.GetTable(std::move(table_id), status, std::move(view));
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
 }
 
 void TableAdmin::DeleteTable(std::string table_id) {
-  btproto::DeleteTableRequest request;
-  request.set_name(TableName(table_id));
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id);
-
-  // This API is not idempotent, lets call it without retry
-  auto error_message = "DeleteTable(" + request.name() + ")";
-  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                             metadata_update_policy, &StubType::DeleteTable,
-                             request, error_message.c_str());
+  grpc::Status status;
+  impl_.DeleteTable(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
     std::string table_id, std::vector<ColumnFamilyModification> modifications) {
-  btproto::ModifyColumnFamiliesRequest request;
-  request.set_name(TableName(table_id));
-  for (auto& m : modifications) {
-    *request.add_modifications() = m.as_proto_move();
+  grpc::Status status;
+  auto result = impl_.ModifyColumnFamilies(std::move(table_id),
+                                           std::move(modifications), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
   }
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
-  return RpcUtils::CallWithoutRetry(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy,
-      &StubType::ModifyColumnFamilies, request, error_message.c_str());
+  return result;
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
                                   std::string row_key_prefix) {
-  btproto::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
-  request.set_row_key_prefix(std::move(row_key_prefix));
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "DropRowsByPrefix(" + request.name() + ")";
-  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                             metadata_update_policy, &StubType::DropRowRange,
-                             request, error_message.c_str());
+  grpc::Status status;
+  impl_.DropRowsByPrefix(std::move(table_id), std::move(row_key_prefix),
+                         status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
 }
 
 void TableAdmin::DropAllRows(std::string table_id) {
-  btproto::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
-  request.set_delete_all_data_from_table(true);
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "DropAllRows(" + request.name() + ")";
-  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
-                             metadata_update_policy, &StubType::DropRowRange,
-                             request, error_message.c_str());
-}
-
-std::string TableAdmin::InstanceName() const {
-  return "projects/" + client_->project() + "/instances/" + instance_id_;
+  grpc::Status status;
+  impl_.DropAllRows(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

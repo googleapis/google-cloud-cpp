@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_INSTANCE_ADMIN_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_INSTANCE_ADMIN_H_
 
 #include "bigtable/client/instance_admin_client.h"
-#include "bigtable/client/internal/instance_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include <memory>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace noex {
+
 /**
  * Implements a minimal API to administer Cloud Bigtable instances.
  */
@@ -31,7 +32,11 @@ class InstanceAdmin {
    * @param client the interface to create grpc stubs, report errors, etc.
    */
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
-      : impl_(std::move(client)) {}
+      : client_(std::move(client)),
+        project_name_("projects/" + project_id()),
+        rpc_retry_policy_(DefaultRPCRetryPolicy()),
+        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
+        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -46,28 +51,48 @@ class InstanceAdmin {
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                 RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : impl_(std::move(client), std::move(retry_policy),
-              std::move(backoff_policy)) {}
+      : client_(std::move(client)),
+        project_name_("projects/" + project_id()),
+        rpc_retry_policy_(retry_policy.clone()),
+        rpc_backoff_policy_(backoff_policy.clone()),
+        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /// The full name (`projects/<project_id>`) of the project.
-  std::string const& project_name() const { return impl_.project_name(); }
+  std::string const& project_name() const { return project_name_; }
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
-  std::string const& project_id() const { return impl_.project_id(); }
+  std::string const& project_id() const { return client_->project(); }
 
+  //@{
   /**
-   * Return the list of instances in the project.
-   * @return
+   * @name No exception versions of InstanceAdmin::*
+   *
+   * These functions provide the same functionality as their counterparts in the
+   * `bigtable::InstanceAdmin` class, but do not raise exceptions on errors,
+   * instead they return the error on the status parameter.
    */
-  std::vector<::google::bigtable::admin::v2::Instance> ListInstances();
+  std::vector<::google::bigtable::admin::v2::Instance> ListInstances(
+      grpc::Status& status);
+
+  //@}
 
   InstanceAdmin(InstanceAdmin const&) = delete;
   InstanceAdmin operator=(InstanceAdmin const&) = delete;
 
  private:
-  noex::InstanceAdmin impl_;
+  /// Shortcuts to avoid typing long names over and over.
+  using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<InstanceAdminClient>;
+  using StubType = RpcUtils::StubType;
+
+ private:
+  std::shared_ptr<InstanceAdminClient> client_;
+  std::string project_name_;
+  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
 };
 
+}  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_INSTANCE_ADMIN_H_

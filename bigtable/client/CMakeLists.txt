@@ -41,6 +41,8 @@ add_library(bigtable_client
         internal/common_client.h
         internal/common_client.cc
         internal/conjunction.h
+        internal/instance_admin.h
+        internal/instance_admin.cc
         internal/make_unique.h
         internal/port_platform.h
         internal/prefix_range_end.h
@@ -49,6 +51,10 @@ add_library(bigtable_client
         internal/readrowsparser.cc
         internal/rowreaderiterator.h
         internal/rowreaderiterator.cc
+        internal/table.h
+        internal/table.cc
+        internal/table_admin.h
+        internal/table_admin.cc
         internal/throw_delegate.h
         internal/throw_delegate.cc
         internal/unary_rpc_utils.h
@@ -92,6 +98,8 @@ add_library(bigtable::client ALIAS bigtable_client)
 
 add_library(bigtable_client_testing
         testing/chrono_literals.h
+        testing/internal_table_test_fixture.h
+        testing/internal_table_test_fixture.cc
         testing/mock_data_client.h
         testing/mock_response_stream.h
         testing/table_integration_test.h
@@ -117,8 +125,11 @@ set(bigtable_client_unit_tests
         instance_admin_client_test.cc
         instance_admin_test.cc
         internal/bulk_mutator_test.cc
+        internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
+        internal/table_admin_test.cc
+        internal/table_test.cc
         internal/throw_delegate_test.cc
         mutations_test.cc
         table_admin_test.cc
