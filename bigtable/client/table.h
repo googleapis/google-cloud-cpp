@@ -15,20 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/filters.h"
-#include "bigtable/client/idempotent_mutation_policy.h"
 #include "bigtable/client/internal/table.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include "bigtable/client/internal/unary_rpc_utils.h"
-#include "bigtable/client/metadata_update_policy.h"
-#include "bigtable/client/mutations.h"
-#include "bigtable/client/read_modify_write_rule.h"
-#include "bigtable/client/row_reader.h"
-#include "bigtable/client/row_set.h"
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -168,7 +155,8 @@ class Table {
    *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * @throws std::invalid_argument if rows_limit is <= 0.
+   * @throws std::runtime_error if rows_limit is < 0. rows_limit = 0(default)
+   * will return all rows
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 

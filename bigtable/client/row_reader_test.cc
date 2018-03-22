@@ -13,13 +13,10 @@
 // limitations under the License.
 
 #include "bigtable/client/row_reader.h"
-
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/table_test_fixture.h"
-
 #include <gmock/gmock.h>
-
 #include <deque>
 #include <initializer_list>
 
@@ -744,18 +741,16 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   EXPECT_FALSE(status.ok());
 }
 
-TEST_F(RowReaderTest, NoExceptionShouldExpectDeathIfErrorIsNotRetrieved) {
-  EXPECT_DEATH_IF_SUPPORTED(
-      {
-        bigtable::RowReader reader(
-            client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
-            bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
-            std::move(backoff_policy_), metadata_update_policy_,
-            std::move(parser_factory_), false);
-        reader.Cancel();
-        reader.begin();
-      },
-      "");
+TEST_F(RowReaderTest, NoExceptionDestructorWillRaiseIfErrorNotRetrived) {
+  std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
+      client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+      bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
+      std::move(backoff_policy_), metadata_update_policy_,
+      std::move(parser_factory_), false));
+  reader->Cancel();
+  reader->begin();
+  EXPECT_DEATH_IF_SUPPORTED(reader.reset(), "");
+  reader->Finish();
 }
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {

@@ -172,9 +172,9 @@ void RowReader::Advance(internal::OptionalRow& row) {
       if (raise_on_error_) {
         internal::RaiseRuntimeError("Unretriable error: " +
                                     status.error_message());
-      } else {
-        return;
+        /*NOTREACHED*/  // because internal::RaiseRuntimeError is [[noreturn]]
       }
+      return;
     }
 
     auto delay = backoff_policy_->on_completion(status);
