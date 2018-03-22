@@ -660,10 +660,10 @@ Use either the `//` or `/* */` syntax, as long as you are consistent.
 
 #### Legal Notice and Author Line
 
-Every file should contain license boilerplate, in this project use:
+Every file should contain license boilerplate, for new files use:
 
 ```C++
-// Copyright 2018 Google Inc.
+// Copyright YYYY Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -677,6 +677,8 @@ Every file should contain license boilerplate, in this project use:
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ```
+
+where `YYYY` is the year when the file is being introduced. Do not change existing files boilerplate.
 
 #### File Contents
 
