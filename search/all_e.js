@@ -1,7 +1,7 @@
 var searchData=
 [
   ['safeidempotentmutationpolicy',['SafeIdempotentMutationPolicy',['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html',1,'bigtable::v0::SafeIdempotentMutationPolicy'],['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a12d4e0b60e03282cb98ca8cbe21c1edc',1,'bigtable::v0::SafeIdempotentMutationPolicy::SafeIdempotentMutationPolicy()']]],
-  ['samplerows',['SampleRows',['../classbigtable_1_1v0_1_1Table.html#aa4eca7d395bef979124f84e4e600b0c5',1,'bigtable::v0::Table']]],
+  ['samplerows',['SampleRows',['../classbigtable_1_1v0_1_1Table.html#a700b2e0b0aef8d58998161d70104c2d8',1,'bigtable::v0::Table']]],
   ['serversettimestamp',['ServerSetTimestamp',['../namespacebigtable_1_1v0.html#a85536d8b5f2bdd21afbc78a78d37d803',1,'bigtable::v0']]],
   ['set_5fadmin_5fendpoint',['set_admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a67d5cd1969e1362e8ae05a1344ad4ee6',1,'bigtable::v0::ClientOptions']]],
   ['set_5fchannel_5farguments',['set_channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a81f63a8313a4d600b305d4fe672a419b',1,'bigtable::v0::ClientOptions']]],
@@ -26,6 +26,5 @@ var searchData=
   ['startingat',['StartingAt',['../classbigtable_1_1v0_1_1RowRange.html#a85e316a2710f9586faf02747e3178e77',1,'bigtable::v0::RowRange']]],
   ['status',['status',['../classbigtable_1_1v0_1_1FailedMutation.html#a7fff954d284395bf778921f7125cfe8d',1,'bigtable::v0::FailedMutation::status()'],['../classbigtable_1_1v0_1_1PermanentMutationFailure.html#a16c4f7c440d2fd328e922e911093908c',1,'bigtable::v0::PermanentMutationFailure::status()']]],
   ['stripvaluetransformer',['StripValueTransformer',['../classbigtable_1_1v0_1_1Filter.html#a505d824fe90db39aa78e141321f3d4ce',1,'bigtable::v0::Filter']]],
-  ['stub',['Stub',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a0dafaf3792e79e794734ce8ae3823ef3',1,'bigtable::v0::DefaultDataClient::Stub()'],['../classbigtable_1_1v0_1_1AdminClient.html#a956aa778cf4a2b80ca0c7885eb94ea19',1,'bigtable::v0::AdminClient::Stub()'],['../classbigtable_1_1v0_1_1DataClient.html#a86366430e2f86c46208013a53ad96aba',1,'bigtable::v0::DataClient::Stub()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71',1,'bigtable::v0::InstanceAdminClient::Stub()']]],
-  ['stubtype',['StubType',['../classbigtable_1_1v0_1_1Table.html#ac6b0ca5d776dc3c6e88f65e51ad1090e',1,'bigtable::v0::Table']]]
+  ['stub',['Stub',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a0dafaf3792e79e794734ce8ae3823ef3',1,'bigtable::v0::DefaultDataClient::Stub()'],['../classbigtable_1_1v0_1_1AdminClient.html#a956aa778cf4a2b80ca0c7885eb94ea19',1,'bigtable::v0::AdminClient::Stub()'],['../classbigtable_1_1v0_1_1DataClient.html#a86366430e2f86c46208013a53ad96aba',1,'bigtable::v0::DataClient::Stub()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a152b7ada0fde072b1fdc116274cbab71',1,'bigtable::v0::InstanceAdminClient::Stub()']]]
 ];

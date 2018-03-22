@@ -6,5 +6,6 @@ var searchData=
   ['familyregex',['FamilyRegex',['../classbigtable_1_1v0_1_1Filter.html#ad907c363c631e213ffe271b21beee2b2',1,'bigtable::v0::Filter']]],
   ['filter',['Filter',['../classbigtable_1_1v0_1_1Filter.html',1,'bigtable::v0::Filter'],['../classbigtable_1_1v0_1_1Filter.html#a5dfe16f0fb944c2d54e948092dc61a35',1,'bigtable::v0::Filter::Filter(Filter &amp;&amp;rhs) noexcept=default'],['../classbigtable_1_1v0_1_1Filter.html#aebec8660badba0e46ea5b3ae386a0428',1,'bigtable::v0::Filter::Filter(Filter const &amp;rhs)=default']]],
   ['filters_2ecc',['filters.cc',['../filters_8cc.html',1,'']]],
-  ['filters_2eh',['filters.h',['../filters_8h.html',1,'']]]
+  ['filters_2eh',['filters.h',['../filters_8h.html',1,'']]],
+  ['finish',['Finish',['../classbigtable_1_1v0_1_1RowReader.html#af43fbf6f0f4550c88751fc2e73776353',1,'bigtable::v0::RowReader']]]
 ];

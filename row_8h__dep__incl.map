@@ -1,6 +1,4 @@
 <map id="client/row.h" name="client/row.h">
-<area shape="rect" id="node2" href="$row__reader_8h.html" title="client/row_reader.h" alt="" coords="79,80,211,107"/>
+<area shape="rect" id="node2" href="$row__reader_8h.html" title="client/row_reader.h" alt="" coords="9,80,141,107"/>
 <area shape="rect" id="node3" href="$row__reader_8cc.html" title="client/row_reader.cc" alt="" coords="5,155,144,181"/>
-<area shape="rect" id="node4" href="$table_8h.html" title="client/table.h" alt="" coords="168,155,264,181"/>
-<area shape="rect" id="node5" href="$table_8cc.html" title="client/table.cc" alt="" coords="165,229,267,256"/>
 </map>

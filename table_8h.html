@@ -66,44 +66,17 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">table.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="data__client_8h_source.html">bigtable/client/data_client.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="filters_8h_source.html">bigtable/client/filters.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="idempotent__mutation__policy_8h_source.html">bigtable/client/idempotent_mutation_policy.h</a>&quot;</code><br />
-<code>#include &quot;bigtable/client/internal/unary_rpc_utils.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="metadata__update__policy_8h_source.html">bigtable/client/metadata_update_policy.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="mutations_8h_source.html">bigtable/client/mutations.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="read__modify__write__rule_8h_source.html">bigtable/client/read_modify_write_rule.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="row__reader_8h_source.html">bigtable/client/row_reader.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="row__set_8h_source.html">bigtable/client/row_set.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="rpc__backoff__policy_8h_source.html">bigtable/client/rpc_backoff_policy.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="rpc__retry__policy_8h_source.html">bigtable/client/rpc_retry_policy.h</a>&quot;</code><br />
-<code>#include &lt;google/bigtable/v2/bigtable.grpc.pb.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;bigtable/client/internal/table.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for table.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="table_8h__incl.png" border="0" usemap="#client_2table_8h" alt=""/></div>
 <map name="client_2table_8h" id="client_2table_8h">
-<area shape="rect" id="node2" href="data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="2129,169,2260,211"/>
-<area shape="rect" id="node11" href="filters_8h.html" title="bigtable/client/filters.h" alt="" coords="408,266,557,293"/>
-<area shape="rect" id="node15" href="idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="835,169,1005,211"/>
-<area shape="rect" id="node16" href="mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="209,266,383,293"/>
-<area shape="rect" id="node21" href="metadata__update__policy_8h.html" title="bigtable/client/metadata\l_update_policy.h" alt="" coords="1201,259,1361,300"/>
-<area shape="rect" id="node22" href="read__modify__write__rule_8h.html" title="bigtable/client/read\l_modify_write_rule.h" alt="" coords="733,259,875,300"/>
-<area shape="rect" id="node23" href="row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="1337,80,1463,121"/>
-<area shape="rect" id="node29" href="row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="582,169,709,211"/>
-<area shape="rect" id="node32" href="rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="1386,259,1510,300"/>
-<area shape="rect" id="node34" href="rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="1002,259,1126,300"/>
-<area shape="rect" id="node3" href="client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="1767,259,1905,300"/>
-<area shape="rect" id="node4" href="version_8h.html" title="bigtable/client/version.h" alt="" coords="985,355,1143,382"/>
-<area shape="rect" id="node26" href="row_8h.html" title="bigtable/client/row.h" alt="" coords="1916,177,2055,203"/>
-<area shape="rect" id="node27" href="cell_8h.html" title="bigtable/client/cell.h" alt="" coords="1606,266,1743,293"/>
-<area shape="rect" id="node30" href="row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="582,259,709,300"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -122,9 +95,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1Table.html">bigtable::v0::Table</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main interface to interact with data in a Cloud Bigtable table.  <a href="classbigtable_1_1v0_1_1Table.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbigtable_1_1v0_1_1Table_1_1RowKeySample.html">bigtable::v0::Table::RowKeySample</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple wrapper to represent the response from <code>Table::SampleRowKeys()</code>.  <a href="structbigtable_1_1v0_1_1Table_1_1RowKeySample.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -134,12 +104,6 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacebigtable_1_1v0"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html">bigtable::v0</a></td></tr>
 <tr class="memdesc:namespacebigtable_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a72bb85953311db08d89fe239462e5ddc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a72bb85953311db08d89fe239462e5ddc">bigtable::v0::TableName</a> (std::shared_ptr&lt; DataClient &gt; client, std::string const &amp;table_id)</td></tr>
-<tr class="memdesc:a72bb85953311db08d89fe239462e5ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the full table name.  <a href="namespacebigtable_1_1v0.html#a72bb85953311db08d89fe239462e5ddc">More...</a><br /></td></tr>
-<tr class="separator:a72bb85953311db08d89fe239462e5ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

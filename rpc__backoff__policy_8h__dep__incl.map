@@ -1,7 +1,5 @@
 <map id="client/rpc_backoff_policy.h" name="client/rpc_backoff_policy.h">
 <area shape="rect" id="node2" href="$rpc__backoff__policy_8cc.html" title="client/rpc_backoff\l_policy.cc" alt="" coords="5,95,131,136"/>
 <area shape="rect" id="node3" href="$row__reader_8h.html" title="client/row_reader.h" alt="" coords="155,102,287,129"/>
-<area shape="rect" id="node5" href="$table_8h.html" title="client/table.h" alt="" coords="277,184,373,211"/>
-<area shape="rect" id="node4" href="$row__reader_8cc.html" title="client/row_reader.cc" alt="" coords="115,184,253,211"/>
-<area shape="rect" id="node6" href="$table_8cc.html" title="client/table.cc" alt="" coords="274,259,377,285"/>
+<area shape="rect" id="node4" href="$row__reader_8cc.html" title="client/row_reader.cc" alt="" coords="152,184,291,211"/>
 </map>

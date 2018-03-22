@@ -1,17 +1,2 @@
 <map id="client/table.h" name="client/table.h">
-<area shape="rect" id="node2" href="$data__client_8h.html" title="bigtable/client/data\l_client.h" alt="" coords="2129,169,2260,211"/>
-<area shape="rect" id="node11" href="$filters_8h.html" title="bigtable/client/filters.h" alt="" coords="408,266,557,293"/>
-<area shape="rect" id="node15" href="$idempotent__mutation__policy_8h.html" title="bigtable/client/idempotent\l_mutation_policy.h" alt="" coords="835,169,1005,211"/>
-<area shape="rect" id="node16" href="$mutations_8h.html" title="bigtable/client/mutations.h" alt="" coords="209,266,383,293"/>
-<area shape="rect" id="node21" href="$metadata__update__policy_8h.html" title="bigtable/client/metadata\l_update_policy.h" alt="" coords="1201,259,1361,300"/>
-<area shape="rect" id="node22" href="$read__modify__write__rule_8h.html" title="bigtable/client/read\l_modify_write_rule.h" alt="" coords="733,259,875,300"/>
-<area shape="rect" id="node23" href="$row__reader_8h.html" title="bigtable/client/row\l_reader.h" alt="" coords="1337,80,1463,121"/>
-<area shape="rect" id="node29" href="$row__set_8h.html" title="bigtable/client/row\l_set.h" alt="" coords="582,169,709,211"/>
-<area shape="rect" id="node32" href="$rpc__backoff__policy_8h.html" title="bigtable/client/rpc\l_backoff_policy.h" alt="" coords="1386,259,1510,300"/>
-<area shape="rect" id="node34" href="$rpc__retry__policy_8h.html" title="bigtable/client/rpc\l_retry_policy.h" alt="" coords="1002,259,1126,300"/>
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="1767,259,1905,300"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="985,355,1143,382"/>
-<area shape="rect" id="node26" href="$row_8h.html" title="bigtable/client/row.h" alt="" coords="1916,177,2055,203"/>
-<area shape="rect" id="node27" href="$cell_8h.html" title="bigtable/client/cell.h" alt="" coords="1606,266,1743,293"/>
-<area shape="rect" id="node30" href="$row__range_8h.html" title="bigtable/client/row\l_range.h" alt="" coords="582,259,709,300"/>
 </map>
