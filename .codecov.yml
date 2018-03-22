@@ -23,3 +23,5 @@ ignore:
   # Ignore the benchmarks, they are not important for the experience for our
   # users.
   - "/bigtable/benchmarks/**"
+  # Also ignore the unit tests.
+  - "*_test.cc"
