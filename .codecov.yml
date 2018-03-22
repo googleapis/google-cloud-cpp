@@ -24,4 +24,4 @@ ignore:
   # users.
   - "/bigtable/benchmarks/**"
   # Also ignore the unit tests.
-  - "*_test.cc"
+  - "**/*_test.cc$"
