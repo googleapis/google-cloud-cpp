@@ -12,8 +12,8 @@ illustrates how to:
 ## Running the example
 
 This example uses the
-[Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/) to
-communicate with Cloud Bigtable.
+[Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/google-cloud-cpp)
+to communicate with Cloud Bigtable.
 
 To run the example program, follow the
 [instructions](https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/bigtable/examples/)
