@@ -15,7 +15,7 @@
 # Define common settings for all google-cloud-cpp subprojects.
 
 set(DOXYGEN_RECURSIVE YES)
-set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.md)
+set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.md *.dox)
 set(DOXYGEN_EXAMPLE_RECURSIVE YES)
 set(DOXYGEN_EXCLUDE third_party)
 set(DOXYGEN_EXCLUDE_SYMLINKS YES)

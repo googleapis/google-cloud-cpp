@@ -132,7 +132,6 @@ else ()
         set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
         set(DOXYGEN_PROJECT_NUMBER
                 "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
-        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
         set(DOXYGEN_EXAMPLE_PATH examples)
         set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
         set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")

@@ -1,13 +1,14 @@
-# Example: C++ Hello World Application
+/*!
+@page bigtable-hello-world Example: C++ Hello World Application
 
 This example is a very simple "hello world" application, written in C++, that
 illustrates how to:
 
-* Connect to a Cloud Bigtable instance.
-* Create a new table.
-* Write data to the table.
-* Read the data back.
-* Delete the table.
+- Connect to a Cloud Bigtable instance.
+- Create a new table.
+- Write data to the table.
+- Read the data back.
+- Delete the table.
 
 ## Running the example
 
@@ -88,3 +89,4 @@ Delete a table with `TableAdmin::DeleteTable`.
 Here is the full example
 
 @snippet bigtable_hello_world.cc all code
+*/
