@@ -141,6 +141,7 @@ set(bigtable_client_unit_tests
         table_readrows_test.cc
         table_sample_row_keys_test.cc
         table_test.cc
+        table_readmodifywriterow_test.cc
         read_modify_write_rule_test.cc
         row_reader_test.cc
         row_test.cc
