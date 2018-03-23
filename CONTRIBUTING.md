@@ -31,6 +31,22 @@ accept your pull requests.
 1. Ensure that your code has an appropriate set of unit tests which all pass.
 1. Submit a pull request.
 
+### More Information on Forks and Pull Requests
+
+If you are just getting started with `git` and [GitHub](https://github.com),
+we think the following links may help you understand the usual workflow used
+in this project:
+
+* [Forking Projects](https://guides.github.com/activities/forking/)
+* [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
+* [Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
+  * A more succinct guide to [Keeing a Fork up to date](https://gist.github.com/CristinaSolana/1885435)
+
+If your pull request has a conflict with the destination branch we request
+that you [rebase](https://help.github.com/articles/about-git-rebase/) your
+branch against the destination branch. Reviewing PRs that include both existing
+and new changes is a source of error that we would rather eliminate.
+
 ## Style
 
 This repository follow the [Google C++ Style Guide](
