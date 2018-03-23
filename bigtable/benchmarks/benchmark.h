@@ -31,7 +31,7 @@ struct OperationResult {
 
 struct BenchmarkResult {
   std::chrono::milliseconds elapsed;
-  std::vector<OperationResult> operations;
+  std::deque<OperationResult> operations;
   long row_count;
 };
 

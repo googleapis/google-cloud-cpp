@@ -150,7 +150,7 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   // We pre-allocate the buffer based on largely a guess, at 2.5ms per call, a
   // run of 30 minutes produces 400 * 15 * 60 elements, allocate twice as much
   // because why not?
-  partial.operations.reserve(kPartialResultsPeriod * 60 * 400);
+  partial.operations.resize(kPartialResultsPeriod * 60 * 400);
 
   auto data_client = benchmark.MakeDataClient();
   bigtable::Table table(std::move(data_client), table_id);
