@@ -40,3 +40,10 @@ target_link_libraries(mutations_integration_test
         gmock bigtable_client bigtable_client_testing bigtable_protos
         gRPC::grpc protobuf::libprotobuf)
 add_dependencies(tests-local mutations_integration_test)
+
+# Integration tests for bigtable::InstanceAdmin.
+add_executable(instance_admin_integration_test instance_admin_integration_test.cc)
+target_link_libraries(instance_admin_integration_test PRIVATE
+    gmock bigtable_client bigtable_client_testing bigtable_protos
+    gRPC::grpc protobuf::libprotobuf)
+add_dependencies(tests-local instance_admin_integration_test)
