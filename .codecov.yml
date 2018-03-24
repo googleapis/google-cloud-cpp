@@ -14,3 +14,14 @@ ignore:
   - "*.pb.h"
   # Ignore third party code and dependencies too.
   - "/third_party/**"
+  # Ignore the bigtable/client/testing directory, because these are components
+  # to drive testing, their coverage is not interesting.
+  - "/bigtable/client/testing/**"
+  # Ignore the bigtable/tests/ directory, because these are integration tests,
+  # also used to drive testing and therefore their coverage is not interesting.
+  - "/bigtable/tests/**"
+  # Ignore the benchmarks, they are not important for the experience for our
+  # users.
+  - "/bigtable/benchmarks/**"
+  # Also ignore the unit tests.
+  - "**/*_test.cc$"
