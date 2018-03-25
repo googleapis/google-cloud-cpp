@@ -52,6 +52,10 @@ function run_all_integration_tests() {
   fi
 
   echo
+  echo "Running bigtable::InstanceAdmin integration test."
+  ./instance_admin_integration_test "${project_id}"
+
+  echo
   echo "Running bigtable::TableAdmin integration test."
   delete_all_tables "${project_id}" "${instance_id:-}"
   ./admin_integration_test "${project_id}" "${instance_id:-admin-test}"
