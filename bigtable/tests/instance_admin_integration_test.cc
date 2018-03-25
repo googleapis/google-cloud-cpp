@@ -31,16 +31,17 @@ class InstanceTestEnvironment : public ::testing::Environment {
 
 std::string InstanceTestEnvironment::project_id_;
 
-class InstanceAdminIntegrationTest : public testing::Test {
+class InstanceAdminIntegrationTest : public ::testing::Test {
  protected:
-  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
-
   void SetUp() override {
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
         InstanceTestEnvironment::project_id(), bigtable::ClientOptions());
     instance_admin_ = bigtable::internal::make_unique<bigtable::InstanceAdmin>(
         instance_admin_client);
   }
+
+ protected:
+  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
 };
 
 bool UsingCloudBigtableEmulator() {
@@ -67,7 +68,7 @@ int main(int argc, char* argv[]) {
   if (argc != 2) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
-    // Show Usage if invalid no of arguments
+    // Show usage if number of arguments is invalid.
     std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
               << std::endl;
     return 1;
