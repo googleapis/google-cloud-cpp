@@ -37,5 +37,5 @@ var searchData=
   ['createdefaultinstanceadminclient',['CreateDefaultInstanceAdminClient',['../namespacebigtable_1_1v0.html#ae4b9a4e9c41350c46cb09105c5d0f23a',1,'bigtable::v0']]],
   ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]],
-  ['cloud_20bigtable_20c_2b_2b_20client_20libraries',['Cloud Bigtable C++ Client Libraries',['../index.html',1,'']]]
+  ['cloud_20bigtable_20c_2b_2b_20client_20library',['Cloud Bigtable C++ Client Library',['../index.html',1,'']]]
 ];
