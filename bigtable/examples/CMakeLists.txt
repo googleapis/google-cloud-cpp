@@ -18,3 +18,6 @@
 
 add_executable(bigtable_hello_world bigtable_hello_world.cc)
 target_link_libraries(bigtable_hello_world bigtable_client)
+
+add_executable(bigtable_samples bigtable_samples.cc)
+target_link_libraries(bigtable_samples bigtable_client)
