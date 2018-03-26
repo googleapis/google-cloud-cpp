@@ -132,7 +132,6 @@ else ()
         set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
         set(DOXYGEN_PROJECT_NUMBER
                 "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
-        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE ./doc/bigtable-main.md)
         set(DOXYGEN_EXAMPLE_PATH examples)
         set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
         set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
@@ -160,7 +159,7 @@ add_subdirectory(tests)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)
-    add_subdirectory(examples/quick_start)
+    add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 option(BIGTABLE_CLIENT_CLANG_TIDY
