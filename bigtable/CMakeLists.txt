@@ -21,6 +21,16 @@ set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
+set(DOXYGEN_PROJECT_NUMBER
+    "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
+set(DOXYGEN_EXAMPLE_PATH examples)
+set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
+
+include(GoogleCloudCppCommon)
+
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
 # target_link_libraries(target PRIVATE bigtable_common_options), which
@@ -29,40 +39,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # targets without having to painfully set special variables, it also allows
 # users to add more common options without having to touch the code.
 add_library(bigtable_common_options INTERFACE)
-
-if (MSVC)
-    include(CheckCXXCompilerFlag)
-    CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-    if (_cpp_latest_flag_supported)
-        target_compile_options(bigtable_common_options INTERFACE "/std:c++latest")
-    endif ()
-endif ()
-
-# Find out what flags turn on all available warnings and turn those warnings
-# into errors.
-include(CheckCXXCompilerFlag)
-if (NOT MSVC)
-    CHECK_CXX_COMPILER_FLAG(-Wall COMPILER_SUPPORTS_WALL)
-    if (COMPILER_SUPPORTS_WALL)
-        target_compile_options(bigtable_common_options INTERFACE "-Wall")
-    endif ()
-    CHECK_CXX_COMPILER_FLAG(-Werror COMPILER_SUPPORTS_WERROR)
-    if (COMPILER_SUPPORTS_WERROR)
-        target_compile_options(bigtable_common_options INTERFACE "-Werror")
-    endif ()
-endif ()
-
-# If possible, enable a code coverage build type.
-include(${PROJECT_SOURCE_DIR}/cmake/EnableCoverage.cmake)
-
-# Include the functions to enable Clang sanitizers.
-include(${PROJECT_SOURCE_DIR}/cmake/EnableSanitizers.cmake)
-
-# Include support for clang-tidy if available
-include(${PROJECT_SOURCE_DIR}/cmake/EnableClangTidy.cmake)
-
-# C++ Exceptions are enabled by default, but allow the user to turn them off.
-include(${PROJECT_SOURCE_DIR}/cmake/EnableCxxExceptions.cmake)
+google_cloud_cpp_add_common_options(bigtable_common_options)
 
 # Configure the location of proto files, particulary the googleapis protos.
 set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
@@ -70,11 +47,8 @@ if(GRPC_ROOT_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
 endif(GRPC_ROOT_DIR)
 
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
 # Include the functions to compile proto files.
-include(${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake)
+include(CompileProtos)
 PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
@@ -120,29 +94,7 @@ string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
 string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
 configure_file(client/build_info.cc.in client/build_info.cc)
 
-include(${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake)
-
-if (${CMAKE_VERSION} VERSION_LESS "3.9")
-    # Old versions of CMake have really poor support for Doxygen generation.
-    message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
-else ()
-    find_package(Doxygen)
-    if (Doxygen_FOUND)
-        set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
-        set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
-        set(DOXYGEN_PROJECT_NUMBER
-                "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
-        set(DOXYGEN_EXAMPLE_PATH examples)
-        set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
-        set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
-        include(${PROJECT_SOURCE_DIR}/cmake/DoxygenCommon.cmake)
-
-        doxygen_add_docs(bigtable-docs doc client
-                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bigtable
-                COMMENT "Generate HTML documentation")
-        add_dependencies(doxygen-docs bigtable-docs)
-    endif ()
-endif ()
+include(IncludeGMock)
 
 # Define custom targets to simplify the scan-build static analysis scripts: we
 # want to compile these targets without static analysis, as they are not part
@@ -161,17 +113,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-
-option(BIGTABLE_CLIENT_CLANG_TIDY
-        "If set compiles the Cloud Bigtable client with clang-tidy."
-        "")
-if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
-    message(STATUS "clang-tidy build enabled.")
-    set_target_properties(
-            bigtable_client PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-endif ()
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs

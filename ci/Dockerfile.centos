@@ -28,6 +28,7 @@ RUN yum makecache && yum install -y \
     clang-tools-extra \
     cmake3 \
     curl \
+    curl-devel \
     dia \
     doxygen \
     gcc-c++ \
