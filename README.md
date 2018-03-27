@@ -1,6 +1,6 @@
 # Google Cloud Platform C++ Client Libraries
 
-C++ Idiomatic Client for [Google Cloud Platform][cloud-platform] services.
+C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 
 [![Travis CI status][travis-shield]][travis-link]
 [![AppVeyor CI status][appveyor-shield]][appveyor-link]
@@ -8,7 +8,6 @@ C++ Idiomatic Client for [Google Cloud Platform][cloud-platform] services.
 [![Documentation][doxygen-shield]][doxygen-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
-- [Client Library Documentation][client-lib-docs]
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
@@ -20,7 +19,6 @@ C++ Idiomatic Client for [Google Cloud Platform][cloud-platform] services.
 [doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
 [cloud-platform]: https://cloud.google.com/
 [cloud-platform-docs]: https://cloud.google.com/docs/
-[client-lib-docs]: http://googlecloudplatform.github.io/google-cloud-java/latest/apidocs
 
 This library supports the following Google Cloud Platform services with clients
 at an [Alpha](#versioning) quality level:
