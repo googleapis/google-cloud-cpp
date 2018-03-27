@@ -96,16 +96,9 @@ configure_file(client/build_info.cc.in client/build_info.cc)
 
 include(IncludeGMock)
 
-# Define custom targets to simplify the scan-build static analysis scripts: we
-# want to compile these targets without static analysis, as they are not part
-# of this project, and we also do not want to list all the dependencies in the
-# scripts and here.  So we create a target to build the dependencies, build that
-# without static analysis, and then build "all" with static analysis.
-add_custom_target(depends-local)
-add_dependencies(depends-local gmock bigtable_protos)
+add_dependencies(skip-scanbuild-targets gmock bigtable_protos)
 
 # All tests get added to this target below.
-add_custom_target(tests-local)
 add_subdirectory(client)
 add_subdirectory(tests)
 

@@ -43,7 +43,6 @@ foreach (fname ${bigtable_benchmarks_unit_tests})
             bigtable_protos bigtable_common_options
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
     add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(tests-local ${target})
 endforeach ()
 
 # Benchmark Table::ReadRows().

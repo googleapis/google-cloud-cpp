@@ -37,8 +37,7 @@ fi
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-mkdir -p "build-output/${IMAGE}"
-cd "build-output/${IMAGE}"
+readonly BUILD_DIR="build-output/${IMAGE}"
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
@@ -46,7 +45,7 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
 fi
 
 echo "travis_fold:start:configure-cmake"
-${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} ../..
+${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} -H. -B"${BUILD_DIR}"
 echo "travis_fold:end:configure-cmake"
 
 # If scan-build is enabled, we need to manually compile the dependencies;
@@ -55,7 +54,7 @@ echo "travis_fold:end:configure-cmake"
 # we can fold the output in Travis and make the log more interesting.
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
-make -j ${NCPU} -C bigtable depends-local
+cmake --build "${BUILD_DIR}" --target skip-scanbuild-targets -- -j ${NCPU}
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 
@@ -64,15 +63,12 @@ echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
 echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
-if [ "${SCAN_BUILD}" = "yes" ]; then
-  scan-build make -j ${NCPU} -C bigtable tests-local
-else
-  make -j ${NCPU} all
-fi
+${CMAKE_COMMAND} --build "${BUILD_DIR}" -- -j ${NCPU}
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # Run the tests and output any failures.
-CTEST_OUTPUT_ON_FAILURE=1 make -j ${NCPU} test
+cd "${BUILD_DIR}"
+ctest --stop-on-failure
 
 # Run the integration tests.
 (cd bigtable/tests && /v/bigtable/tests/run_integration_tests_emulator.sh)
@@ -95,7 +91,7 @@ fi
 if [ "${TEST_INSTALL}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-  make install
+  cmake --build . --target install
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   make -C /v/ci/test-install all

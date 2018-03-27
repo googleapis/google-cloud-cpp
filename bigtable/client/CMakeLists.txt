@@ -172,7 +172,6 @@ foreach (fname ${bigtable_client_unit_tests})
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
             bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(tests-local ${target})
 endforeach ()
 
 option(FORCE_SANITIZER_ERRORS
