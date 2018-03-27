@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,11 +33,9 @@ namespace testing {
  */
 class InProcessAdminClient : public bigtable::AdminClient {
  public:
-  InProcessAdminClient(std::string project, ClientOptions options,
+  InProcessAdminClient(std::string project,
                        std::shared_ptr<grpc::Channel> channel)
-      : project_(std::move(project)),
-        options_(std::move(options)),
-        channel_(std::move(channel)) {}
+      : project_(std::move(project)), channel_(std::move(channel)) {}
 
   using BigtableAdminStubPtr =
       std::shared_ptr<btadmin::BigtableTableAdmin::StubInterface>;
@@ -51,7 +49,6 @@ class InProcessAdminClient : public bigtable::AdminClient {
 
  private:
   std::string project_;
-  ClientOptions options_;
   std::shared_ptr<grpc::Channel> channel_;
 };
 

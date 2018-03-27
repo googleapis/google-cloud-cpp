@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,20 +25,19 @@ namespace bigtable {
 namespace testing {
 
 /**
- * Connects to Cloud Bigtable's data manipulation APIs.
+ * Connect to an embedded Cloud Bigtable server implementing the data
+ * manipulation APIs.
  *
  * This class is mainly for testing purpose, it enable use of a single embedded
  * server
  * for multiple test cases. This dataclient uses a pre-defined channel.
  */
-class InProcessDtaClient : public bigtable::DataClient {
+class InProcessDataClient : public bigtable::DataClient {
  public:
-  InProcessDtaClient(std::string project, std::string instance,
-                     ClientOptions options,
-                     std::shared_ptr<grpc::Channel> channel)
+  InProcessDataClient(std::string project, std::string instance,
+                      std::shared_ptr<grpc::Channel> channel)
       : project_(std::move(project)),
         instance_(std::move(instance)),
-        options_(std::move(options)),
         channel_(std::move(channel)) {}
 
   using BigtableStubPtr =
@@ -55,7 +54,6 @@ class InProcessDtaClient : public bigtable::DataClient {
  private:
   std::string project_;
   std::string instance_;
-  ClientOptions options_;
   std::shared_ptr<grpc::Channel> channel_;
 };
 

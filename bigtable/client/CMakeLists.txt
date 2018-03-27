@@ -98,6 +98,8 @@ add_library(bigtable::client ALIAS bigtable_client)
 
 add_library(bigtable_client_testing
         testing/chrono_literals.h
+        testing/embedded_server_test_fixture.h
+        testing/embedded_server_test_fixture.cc
         testing/internal_table_test_fixture.h
         testing/internal_table_test_fixture.cc
         testing/mock_data_client.h
@@ -107,9 +109,7 @@ add_library(bigtable_client_testing
         testing/table_integration_test.h
         testing/table_integration_test.cc
         testing/table_test_fixture.h
-        testing/table_test_fixture.cc
-        testing/embedded_server_test_fixture.h
-        testing/embedded_server_test_fixture.cc)
+        testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing PUBLIC
         bigtable_client bigtable_protos
         gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf

@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,12 +29,10 @@ using ReceivedMetadata = std::multimap<std::string, std::string>;
 
 inline void GetClientMetadata(grpc::ServerContext* context,
                               ReceivedMetadata& client_metadata) {
-  for (auto it = context->client_metadata().begin();
-       it != context->client_metadata().end(); ++it) {
-    auto ele =
-        std::make_pair(std::string(it->first.begin(), it->first.end()),
-                       std::string(it->second.begin(), it->second.end()));
-    client_metadata.emplace(ele);
+  for (auto const& kv : context->client_metadata()) {
+    auto ele = std::make_pair(std::string(kv.first.begin(), kv.first.end()),
+                              std::string(kv.second.begin(), kv.second.end()));
+    client_metadata.emplace(std::move(ele));
   }
 }
 
@@ -119,7 +117,7 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   TableAdminImpl admin_service_;
   grpc::ServerBuilder builder_;
   std::unique_ptr<grpc::Server> server_;
-  bool is_server_started_ = false;
+  bool server_thread_active_ = false;
 };
 
 }  // namespace testing

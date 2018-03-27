@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include "bigtable/client/table_admin.h"
 #include "bigtable/client/testing/embedded_server_test_fixture.h"
 #include <gtest/gtest.h>
+#include <map>
 #include <thread>
 
 namespace btproto = google::bigtable::v2;
@@ -37,12 +38,9 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
   // Get metadata from embedded server
   auto client_metadata = admin_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
-  // first check to see if client_metadata has only one occurance of parameter.
-  EXPECT_EQ(1, std::distance(range.first, range.second));
-  for (auto it = range.first; it != range.second; ++it) {
-    std::string actual = it->second;
-    EXPECT_EQ(expected, actual);
-  }
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  std::string actual = range.first->second;
+  EXPECT_EQ(expected, range.first->second);
 }
 
 /// @test A test for setting metadata when table is not known.
@@ -52,12 +50,9 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
   // Get metadata from embedded server
   auto client_metadata = admin_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
-  // first check to see if client_metadata has only one occurance of parameter.
-  EXPECT_EQ(1, std::distance(range.first, range.second));
-  for (auto it = range.first; it != range.second; ++it) {
-    std::string actual = it->second;
-    EXPECT_EQ(expected, actual);
-  }
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  std::string actual = range.first->second;
+  EXPECT_EQ(expected, range.first->second);
 }
 
 /// @test A test for setting metadata when table is known.
@@ -70,12 +65,9 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   // Get metadata from embedded server
   auto client_metadata = bigtable_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
-  // first check to see if client_metadata has only one occurance of parameter.
-  EXPECT_EQ(1, std::distance(range.first, range.second));
-  for (auto it = range.first; it != range.second; ++it) {
-    std::string actual = it->second;
-    EXPECT_EQ(expected, actual);
-  }
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  std::string actual = range.first->second;
+  EXPECT_EQ(expected, range.first->second);
 }
 
 /// @test A cloning test for normal construction of metadata .
