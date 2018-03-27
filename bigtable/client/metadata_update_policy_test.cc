@@ -39,7 +39,6 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
   auto client_metadata = admin_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
   ASSERT_EQ(1, std::distance(range.first, range.second));
-  std::string actual = range.first->second;
   EXPECT_EQ(expected, range.first->second);
 }
 
@@ -51,7 +50,6 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
   auto client_metadata = admin_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
   ASSERT_EQ(1, std::distance(range.first, range.second));
-  std::string actual = range.first->second;
   EXPECT_EQ(expected, range.first->second);
 }
 
@@ -66,7 +64,6 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   auto client_metadata = bigtable_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
   ASSERT_EQ(1, std::distance(range.first, range.second));
-  std::string actual = range.first->second;
   EXPECT_EQ(expected, range.first->second);
 }
 
