@@ -27,7 +27,6 @@ void EmbeddedServerTestFixture::StartServer() {
   builder_.RegisterService(&bigtable_service_);
   builder_.RegisterService(&admin_service_);
   server_ = builder_.BuildAndStart();
-  address_ = "localhost:" + std::to_string(port);
   wait_thread_ = std::thread([this]() { server_->Wait(); });
 }
 

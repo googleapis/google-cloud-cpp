@@ -111,13 +111,11 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   std::shared_ptr<AdminClient> admin_client_;
   std::shared_ptr<bigtable::Table> table_;
   std::shared_ptr<bigtable::TableAdmin> admin_;
-  std::string address_;
   std::thread wait_thread_;
   BigtableImpl bigtable_service_;
   TableAdminImpl admin_service_;
   grpc::ServerBuilder builder_;
   std::unique_ptr<grpc::Server> server_;
-  bool server_thread_active_ = false;
 };
 
 }  // namespace testing
