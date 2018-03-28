@@ -51,6 +51,7 @@ add_library(bigtable_client
         internal/readrowsparser.cc
         internal/rowreaderiterator.h
         internal/rowreaderiterator.cc
+        internal/snapshot.h
         internal/table.h
         internal/table.cc
         internal/table_admin.h
@@ -132,6 +133,7 @@ set(bigtable_client_unit_tests
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
         internal/readrowsparser_test.cc
+        internal/snapshot_test.cc
         internal/table_admin_test.cc
         internal/table_test.cc
         internal/throw_delegate_test.cc

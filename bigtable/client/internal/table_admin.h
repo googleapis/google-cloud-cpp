@@ -18,6 +18,7 @@
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/internal/snapshot.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 
@@ -101,6 +102,9 @@ class TableAdmin {
                         grpc::Status& status);
 
   void DropAllRows(std::string table_id, grpc::Status& status);
+
+  bigtable::internal::Snapshot GetSnapshot(std::string name,
+                                           grpc::Status& status);
 
   //@}
 
