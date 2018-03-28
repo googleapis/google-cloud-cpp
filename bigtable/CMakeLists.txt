@@ -83,6 +83,8 @@ PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/table.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/data.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/iam_policy.proto
+    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/policy.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/status.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/error_details.proto
