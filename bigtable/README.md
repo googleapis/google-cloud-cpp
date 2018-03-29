@@ -21,6 +21,8 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
+### v0.1.0 - 2018-03
+
 * This release implements all the APIs for table and data manipulation in Cloud
   Bigtable.
 * This release does not implement APIs to manipulate instances, please use the
