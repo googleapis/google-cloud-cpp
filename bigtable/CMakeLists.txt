@@ -14,7 +14,7 @@
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
-set(BIGTABLE_CLIENT_VERSION_MINOR 1)
+set(BIGTABLE_CLIENT_VERSION_MINOR 2)
 set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 
 # Configure the Compiler options, we will be using C++11 features.
