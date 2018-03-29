@@ -557,7 +557,7 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
     )""";
   auto mock =
       MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
-      expected_text);
+          expected_text);
   EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))

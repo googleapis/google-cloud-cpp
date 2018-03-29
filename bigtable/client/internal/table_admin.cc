@@ -153,9 +153,8 @@ std::string TableAdmin::InstanceName() const {
 
   return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                                  rpc_backoff_policy_->clone(),
-                                 metadata_update_policy,
-                                 &StubType::GetSnapshot, request,
-                                 error_message.c_str(), status);
+                                 metadata_update_policy, &StubType::GetSnapshot,
+                                 request, error_message.c_str(), status);
 }
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
