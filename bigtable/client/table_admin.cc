@@ -88,5 +88,16 @@ void TableAdmin::DropAllRows(std::string table_id) {
   }
 }
 
+::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+    std::string snapshot_name, std::string cluster) {
+  grpc::Status status;
+  auto result = impl_.GetSnapshot(std::move(snapshot_name), std::move(cluster),
+                                  status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

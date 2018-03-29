@@ -142,21 +142,20 @@ std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
 
-bigtable::internal::Snapshot TableAdmin::GetSnapshot(std::string name,
-                                                     grpc::Status& status) {
+::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+    std::string snapshot_name, std::string cluster, grpc::Status& status) {
   btproto::GetSnapshotRequest request;
-  request.set_name(std::move(name));
+  request.set_name(SnapshotName(snapshot_name, cluster));
 
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, snapshot_name, cluster);
   auto error_message = "GetSnapshot(" + request.name() + ")";
 
-  auto response = RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
+  return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                                  rpc_backoff_policy_->clone(),
-                                 metadata_update_policy_, &StubType::GetSnapshot,
-                                 request, error_message.c_str(), status);
-  bigtable::internal::Snapshot snapshot(response.data_size_bytes(),
-                                            *response.mutable_description(),
-                                            *response.mutable_name());
-  return snapshot;
+                                 metadata_update_policy,
+                                 &StubType::GetSnapshot, request,
+                                 error_message.c_str(), status);
 }
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS

@@ -18,7 +18,6 @@
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
-#include "bigtable/client/internal/snapshot.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 
@@ -103,8 +102,9 @@ class TableAdmin {
 
   void DropAllRows(std::string table_id, grpc::Status& status);
 
-  bigtable::internal::Snapshot GetSnapshot(std::string name,
-                                           grpc::Status& status);
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string name,
+                                                      std::string cluster,
+                                                      grpc::Status& status);
 
   //@}
 
@@ -115,6 +115,12 @@ class TableAdmin {
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
     return instance_name() + "/tables/" + table_id;
+  }
+
+  /// Return the fully qualified name of a snapshot.
+  std::string SnapshotName(std::string const& name,
+                           std::string const& cluster_id) {
+    return instance_name() + "/clusters/" + cluster_id + "/snapshots/" + name;
   }
 
   /// Shortcuts to avoid typing long names over and over.

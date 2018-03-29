@@ -164,6 +164,12 @@ class TableAdmin {
    */
   void DropAllRows(std::string table_id);
 
+  /**
+   *
+   */
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string name,
+                                                      std::string cluster);
+
  private:
   noex::TableAdmin impl_;
 };

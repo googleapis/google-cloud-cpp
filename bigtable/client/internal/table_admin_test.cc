@@ -543,3 +543,69 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   tested.DropAllRows("other-table", status);
   EXPECT_FALSE(status.ok());
 }
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
+ */
+TEST_F(TableAdminTest, GetSnapshotSimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+  grpc::Status status;
+  tested.GetSnapshot("random-snapshot", "the-cluster", status);
+  EXPECT_TRUE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` reports unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "No snapshot.")));
+
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  grpc::Status status;
+  tested.GetSnapshot("other-snapshot", "other-cluster", status);
+  EXPECT_FALSE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` works with too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+  grpc::Status status;
+  tested.GetSnapshot("other-snapshot", "other-cluster", status);
+  EXPECT_FALSE(status.ok());
+}

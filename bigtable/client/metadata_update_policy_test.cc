@@ -82,3 +82,13 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
       kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }
+
+/// @test Another test for lazy behaviour of metadata.
+TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
+  auto const x_google_request_params = "name=" + kInstanceName +
+      "/clusters/test_cluster/snapshots/test-snapshot";
+  bigtable::MetadataUpdatePolicy created(kInstanceName,
+                                         bigtable::MetadataParamTypes::NAME,
+                                         kSnapshotId, kClusterId);
+  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+}
