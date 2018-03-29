@@ -28,6 +28,7 @@ RUN yum makecache && yum install -y \
     clang-tools-extra \
     cmake3 \
     curl \
+    curl-devel \
     dia \
     doxygen \
     gcc-c++ \
@@ -46,8 +47,9 @@ RUN yum makecache && yum install -y \
     which \
     zlib-devel
 
-# Install cmake3 as cmake.
-RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake
+# Install cmake3 + ctest3 as cmake + ctest.
+RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \
+    ln -sf /usr/bin/ctest3 /usr/bin/ctest
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

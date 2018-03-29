@@ -96,6 +96,17 @@ target_include_directories(bigtable_client PUBLIC
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 
+option(BIGTABLE_CLIENT_CLANG_TIDY
+    "If set compiles the Cloud Bigtable client with clang-tidy."
+    "")
+if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
+    message(STATUS "clang-tidy build enabled.")
+    set_target_properties(
+        bigtable_client PROPERTIES
+        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+    )
+endif ()
+
 add_library(bigtable_client_testing
         testing/chrono_literals.h
         testing/embedded_server_test_fixture.h
@@ -165,7 +176,6 @@ foreach (fname ${bigtable_client_unit_tests})
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
             bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(tests-local ${target})
 endforeach ()
 
 option(FORCE_SANITIZER_ERRORS

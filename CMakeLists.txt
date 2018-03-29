@@ -19,11 +19,12 @@ set(PACKAGE_BUGREPORT "https://github.com/GoogleCloudPlatform/google-cloud-cpp/i
 project(google-cloud-cpp CXX C)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 # Add gRPC and protobuf targets as submodules or packages, depending on the
 # configuration.  This should happen before enable_testing(), because we are
 # not interested in compiling and running the gRPC tests.
-include (${PROJECT_SOURCE_DIR}/cmake/IncludeGrpc.cmake)
+include(IncludeGrpc)
 
 # Enable testing in this directory so we can do a top-level `make test`.
 enable_testing()
@@ -31,8 +32,16 @@ enable_testing()
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
 
+# There are a number of targets we cannot, or do not care to compile with the
+# static analyzer enabled. Either because the build times are too long, or
+# or because the code is an external dependency, or generated code, or all of
+# above. These targets are added as depedencies of `skip-scanbuild-targets` and
+# compiled with, obviously, scan-build disabled.
+add_custom_target(skip-scanbuild-targets)
+
 # Add subprojects here.
 add_subdirectory(bigtable)
+add_subdirectory(storage)
 
 # These are tests to reproduce problems in gRPC and other dependencies.
 add_subdirectory(tests/grpc-crash)
