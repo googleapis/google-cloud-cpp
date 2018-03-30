@@ -26,10 +26,19 @@ if [ "${GENERATE_DOCS:-}" != "yes" ]; then
   exit 0
 fi
 
-if [ "${TRAVIS_BRANCH:-}" != "master" ]; then
-  echo "Skipping document generation as it is disabled for non-master branches."
-  exit 0
-fi
+subdir=""
+case "${TRAVIS_BRANCH:-}" in
+    master)
+      subdir="latest"
+      ;;
+    v[0-9]+\.[0-9]+\.[0-9]+)
+      subdir=$(echo "${TRAVIS_BRANCH:-}" | sed 's/^v//')
+      ;;
+    *)
+      echo "Skipping document generation as it is only used in master and release branches."
+      exit 0
+      ;;
+esac
 
 # The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
 # is to create a branch (gh-pages) and post the documentation in that branch.
@@ -37,20 +46,34 @@ fi
 
 # Clone the gh-pages branch into a staging directory.
 readonly REPO_URL=$(git config remote.origin.url)
-git clone -b gh-pages "${REPO_URL}" github-io-staging
+if [ -d github-io-staging ]; then
+  if [ ! -d github-io-staging/.git ]; then
+    echo "github-io-staging exists but it is not a git repository."
+    exit 1
+  fi
+  (cd github-io-staging && git checkout gh-pages && git pull)
+else
+  git clone -b gh-pages "${REPO_URL}" github-io-staging
+fi
 
-# Remove any previous content of the branch.  We will recover any unmodified
-# files in a second.
-(cd github-io-staging && git rm -qfr --ignore-unmatch .)
+# Remove any previous content on the subdirectory used for this release. We will
+# recover any unmodified files in a second.
+(cd github-io-staging && git rm -qfr --ignore-unmatch ${subdir})
 
 # Copy the build results into the gh-pages clone.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-cp -r build-output/${IMAGE}/bigtable/html/. github-io-staging
+mkdir -p github-io-staging/${subdir} || echo "${subdir} already exists"
+cp -r build-output/${IMAGE}/bigtable/html/. github-io-staging/${subdir}/bigtable
+cp -r build-output/${IMAGE}/storage/html/. github-io-staging/${subdir}/storage
+cp -r doc/landing/css github-io-staging/${subdir}
+cp -r doc/landing/img github-io-staging/${subdir}
+cp -r doc/landing/js github-io-staging/${subdir}
+cp -r doc/landing/index.html github-io-staging/${subdir}
 
 cd github-io-staging
 git config user.name "Google Cloud C++ Project Robot"
 git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
-git add --all .
+git add --all ${subdir}
 
 if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
