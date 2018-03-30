@@ -64,15 +64,6 @@ class TableAdmin {
   /**
    * Create a new table in the instance.
    *
-   * This function creates a new table and sets its initial schema, for example:
-   *
-   * @code
-   * bigtable::TableAdmin admin = ...;
-   * admin.CreateTable(
-   *     "my-table", bigtable::TableConfig(
-   *         {{"family", bigtable::GcRule::MaxNumVersions(1)}}, {}));
-   * @endcode
-   *
    * @param table_id the name of the table relative to the instance managed by
    *     this object.  The full table name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
@@ -82,6 +73,9 @@ class TableAdmin {
    * @return the attributes of the newly created table.  Notice that the server
    *     only populates the table_name() field at this time.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc create table
    */
   ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
                                                    TableConfig config);
@@ -90,10 +84,13 @@ class TableAdmin {
    * Return all the tables in the instance.
    *
    * @param view define what information about the tables is retrieved.
-   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
-   *   - NAME: return only the name of the table.
-   *   - VIEW_SCHEMA: return the name and the schema.
-   *   - FULL: return all the information about the table.
+   *   - `VIEW_UNSPECIFIED`: equivalent to `VIEW_SCHEMA`.
+   *   - `NAME`: return only the name of the table.
+   *   - `VIEW_SCHEMA`: return the name and the schema.
+   *   - `FULL`: return all the information about the table.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc list tables
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
       ::google::bigtable::admin::v2::Table::View view);
@@ -112,6 +109,9 @@ class TableAdmin {
    * @return the information about the table.
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc get table
    */
   ::google::bigtable::admin::v2::Table GetTable(
       std::string table_id,
@@ -126,6 +126,9 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @throws std::exception if the table could not be deleted before the RPC
    *     policies in effect gave up.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc delete table
    */
   void DeleteTable(std::string table_id);
 
@@ -138,6 +141,9 @@ class TableAdmin {
    * @param modifications the list of modifications to the schema.
    * @return the resulting table schema.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc modify table
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
       std::string table_id,
@@ -151,6 +157,9 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @param row_key_prefix drop any rows that start with this prefix.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc drop rows by prefix
    */
   void DropRowsByPrefix(std::string table_id, std::string row_key_prefix);
 
@@ -161,6 +170,9 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    * @throws std::exception if the operation cannot be completed.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc drop all rows
    */
   void DropAllRows(std::string table_id);
 
