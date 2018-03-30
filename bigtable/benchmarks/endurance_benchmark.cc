@@ -167,16 +167,13 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
     ++partial.row_count;
     partial.operations.emplace_back(RunOneApply(table, benchmark, generator));
     ++partial.row_count;
-    auto last_row_count = partial.row_count;
-    total_ops += last_row_count;
   }
-
   partial.elapsed =
       std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
   std::ostringstream msg;
   benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
   std::cout << msg.str() << std::flush;
-
+  total_ops = partial.operations.size();
   return total_ops;
 }
 
