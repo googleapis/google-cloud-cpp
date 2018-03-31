@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
@@ -342,6 +343,48 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
       {key, family1, "c4", 0, "suffix", {}},
       {key, family2, "d1", 0, e3, {}},
       {key, family2, "d2", 0, e4, {}},
+      {key, family2, "d3", 0, "start;suffix", {}},
+      {key, family2, "d4", 0, "suffix", {}}};
+
+  CreateCells(*table, created);
+  using R = bigtable::ReadModifyWriteRule;
+  auto row =
+      table->ReadModifyWriteRow(key, R::IncrementAmount(family1, "c1", 42),
+                                R::IncrementAmount(family1, "c2", 7),
+                                R::IncrementAmount(family2, "d1", 2000),
+                                R::IncrementAmount(family2, "d2", 3000),
+                                R::AppendValue(family1, "c3", "suffix"),
+                                R::AppendValue(family1, "c4", "suffix"),
+                                R::AppendValue(family2, "d3", "suffix"),
+                                R::AppendValue(family2, "d4", "suffix"));
+
+  // Ignore the server set timestamp on the returned cells because it is not
+  // predictable.
+  auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+
+  DeleteTable(table_name);
+  CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}
+
+TEST_F(DataIntegrationTest, TableBigEndianCellValueTest) {
+  std::string const table_name = "table-read-modify-write-row-multiple-test";
+  auto table = CreateTable(table_name, table_config);
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, 2, {}},
+                                      {key, family1, "c3", 0, "start;", {}},
+                                      {key, family2, "d1", 0, 3, {}},
+                                      {key, family2, "d3", 0, "start;", {}}};
+
+  // The expected values as buffers containing BigEndian int64 numbers.
+  std::vector<bigtable::Cell> expected{
+      {key, family1, "c1", 0, 44, {}},
+      {key, family1, "c2", 0, 7, {}},
+      {key, family1, "c3", 0, "start;suffix", {}},
+      {key, family1, "c4", 0, "suffix", {}},
+      {key, family2, "d1", 0, 2003, {}},
+      {key, family2, "d2", 0, 3000, {}},
       {key, family2, "d3", 0, "start;suffix", {}},
       {key, family2, "d4", 0, "suffix", {}}};
 

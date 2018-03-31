@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 namespace {
@@ -75,6 +76,32 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
       {row_key, column_family1, "column_id1", 2000, "v-c-0-2", {}},
       {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
       {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+  };
+
+  CreateCells(*table, created_cells);
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+
+  CheckEqualUnordered(created_cells, actual_cells);
+}
+
+/**
+ * Check if the BigEndian values inserted by SetCell are correctly
+ * inserted into Cloud Bigtable
+ */
+TEST_F(MutationIntegrationTest, SetCellBigEndianValueTest) {
+  std::string const table_name = "table-setcell";
+
+  auto table = CreateTable(table_name, table_config);
+  // Create a vector of cells which will be inserted into bigtable
+  std::string const row_key = "SetCellRowKey";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key, column_family1, "column_id1", 0, 2100, {}},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id1", 2000, 32100, {}},
+      {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
+      {row_key, column_family2, "column_id3", 1000, 2912, {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
 

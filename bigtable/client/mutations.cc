@@ -29,6 +29,18 @@ Mutation SetCell(std::string family, std::string column,
   return m;
 }
 
+Mutation SetCell(std::string family, std::string column,
+                 std::chrono::milliseconds timestamp, std::uint64_t value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::move(column));
+  set_cell.set_timestamp_micros(
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
+  set_cell.set_value(std::move(bigtable::NumericToBigEndian(value)));
+  return m;
+}
+
 Mutation SetCell(std::string family, std::string column, std::string value) {
   Mutation m;
   auto& set_cell = *m.op.mutable_set_cell();
@@ -36,6 +48,16 @@ Mutation SetCell(std::string family, std::string column, std::string value) {
   set_cell.set_column_qualifier(std::move(column));
   set_cell.set_timestamp_micros(ServerSetTimestamp());
   set_cell.set_value(std::move(value));
+  return m;
+}
+
+Mutation SetCell(std::string family, std::string column, std::uint64_t value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::move(column));
+  set_cell.set_timestamp_micros(ServerSetTimestamp());
+  set_cell.set_value(std::move(bigtable::NumericToBigEndian(value)));
   return m;
 }
 
