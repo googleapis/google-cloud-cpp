@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/version.h"
 
 #include <chrono>
@@ -46,6 +47,17 @@ class Cell {
         value_(std::move(value)),
         labels_(std::move(labels)) {}
 
+  /// Create a Cell and fill it with bigendian 64 bit value.
+  Cell(std::string row_key, std::string family_name,
+       std::string column_qualifier, int64_t timestamp, std::uint64_t value,
+       std::vector<std::string> labels)
+      : row_key_(std::move(row_key)),
+        family_name_(std::move(family_name)),
+        column_qualifier_(std::move(column_qualifier)),
+        timestamp_(timestamp),
+        value_(std::move(bigtable::NumericToBigEndian(value))),
+        labels_(std::move(labels)) {}
+
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
   std::string const& row_key() const { return row_key_; }
@@ -67,6 +79,12 @@ class Cell {
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
   std::string const& value() const { return value_; }
+
+  /// Return the contents of this cell. The returned value is not valid after
+  /// this object is deleted.
+  std::uint64_t value_as_numeric() {
+    return bigtable::BigEndianToNumeric(value_);
+  }
 
   /// Return the labels applied to this cell by label transformer read filters.
   std::vector<std::string> const& labels() const { return labels_; }

@@ -36,3 +36,23 @@ TEST(CellTest, Simple) {
   EXPECT_EQ(value, cell.value());
   EXPECT_EQ(0U, cell.labels().size());
 }
+
+TEST(CellTest, SimpleBigEndianValueTest) {
+  using namespace ::testing;
+
+  std::string row_key = "row";
+  std::string family_name = "family";
+  std::string column_qualifier = "column";
+  int64_t timestamp = 42;
+  std::uint64_t value = 4000;
+  std::vector<std::string> labels;
+
+  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value,
+                      labels);
+  EXPECT_EQ(row_key, cell.row_key());
+  EXPECT_EQ(family_name, cell.family_name());
+  EXPECT_EQ(column_qualifier, cell.column_qualifier());
+  EXPECT_EQ(timestamp, cell.timestamp());
+  EXPECT_EQ(value, cell.value_as_numeric());
+  EXPECT_EQ(0U, cell.labels().size());
+}
