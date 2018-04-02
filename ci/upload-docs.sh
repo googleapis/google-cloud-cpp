@@ -56,21 +56,24 @@ else
   git clone -b gh-pages "${REPO_URL}" github-io-staging
 fi
 
-# Remove any previous content on the subdirectory used for this release. We will
+# Remove any previous content in the subdirectory used for this release. We will
 # recover any unmodified files in a second.
-(cd github-io-staging && git rm -qfr --ignore-unmatch ${subdir})
+cd github-io-staging
+git rm -qfr --ignore-unmatch ${subdir}/bigtable
+git rm -qfr --ignore-unmatch ${subdir}/storage
 
 # Copy the build results into the gh-pages clone.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-mkdir -p github-io-staging/${subdir} || echo "${subdir} already exists"
-cp -r build-output/${IMAGE}/bigtable/html/. github-io-staging/${subdir}/bigtable
-cp -r build-output/${IMAGE}/storage/html/. github-io-staging/${subdir}/storage
-cp -r doc/landing/css github-io-staging/${subdir}
-cp -r doc/landing/img github-io-staging/${subdir}
-cp -r doc/landing/js github-io-staging/${subdir}
-cp -r doc/landing/index.html github-io-staging/${subdir}
+mkdir -p "${subdir}" || echo "${subdir} already exists"
+cp -r ../build-output/${IMAGE}/bigtable/html/. "${subdir}/bigtable"
+cp -r ../build-output/${IMAGE}/storage/html/. "${subdir}/storage"
+if [ "${subdir}" != "latest" ]; then
+  cp -r latest/css "${subdir}"
+  cp -r latest/img "${subdir}"
+  cp -r latest/js "${subdir}"
+fi
+cp -r ../doc/landing/index.html "${subdir}"
 
-cd github-io-staging
 git config user.name "Google Cloud C++ Project Robot"
 git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
 git add --all ${subdir}
