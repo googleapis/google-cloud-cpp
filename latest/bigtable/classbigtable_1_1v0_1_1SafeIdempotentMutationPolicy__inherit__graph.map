@@ -1,3 +1,0 @@
-<map id="bigtable::v0::SafeIdempotentMutationPolicy" name="bigtable::v0::SafeIdempotentMutationPolicy">
-<area shape="rect" id="node2" href="$classbigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re&#45;tried..." alt="" coords="19,5,181,47"/>
-</map>
