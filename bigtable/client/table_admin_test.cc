@@ -615,9 +615,7 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
-  grpc::Status status;
   tested.GetSnapshot("random-snapshot", "the-cluster");
-  EXPECT_TRUE(status.ok());
 }
 
 /**
