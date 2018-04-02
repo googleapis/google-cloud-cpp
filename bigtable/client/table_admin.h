@@ -167,7 +167,7 @@ class TableAdmin {
   /**
    *
    */
-  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string name,
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string snapshot_name,
                                                       std::string cluster);
 
  private:

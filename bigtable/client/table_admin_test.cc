@@ -642,7 +642,7 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot("other-snapshot"),
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot("other-snapshot", "other-cluster"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -674,7 +674,7 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot("other-snapshot"),
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot("other-snapshot", "other-cluster"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
