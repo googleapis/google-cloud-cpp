@@ -166,7 +166,7 @@ class TableAdmin {
 
   /**
    * Get information about a single snapshot.
-   * 
+   *
    * @param snapshot_name the name of the snapshot.
    * @param cluster the cluster name to which snapshot is associated.
    * @return the information about the snapshot.
