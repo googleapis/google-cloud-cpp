@@ -52,6 +52,7 @@ class Table {
    * The policies are passed by value, because this makes it easy for
    * applications to create them.  For example:
    *
+   * **Example**
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
    * auto client = bigtable::CreateDefaultClient(...); // details ommitted
@@ -118,6 +119,7 @@ class Table {
    *     exception contains a copy of the original mutation, in case the
    *     application wants to retry, log, or otherwise handle the failure.
    *
+   * **Example**
    * @snippet bigtable_samples.cc apply
    */
   void Apply(SingleRowMutation&& mut);
@@ -250,7 +252,7 @@ class Table {
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns modified row
    *
-   * **Examples**
+   * **Example**
    * @snippet bigtable_samples.cc read modify write
    */
   template <typename... Args>
