@@ -255,8 +255,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div><div class="memdoc">
 
 <p>Create a new table in the instance. </p>
-<p>This function creates a new table and sets its initial schema, for example:</p>
-<div class="fragment"><div class="line">bigtable::TableAdmin admin = ...;</div><div class="line">admin.CreateTable(</div><div class="line">    <span class="stringliteral">&quot;my-table&quot;</span>, bigtable::TableConfig(</div><div class="line">        {{<span class="stringliteral">&quot;family&quot;</span>, bigtable::GcRule::MaxNumVersions(1)}}, {}));</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">table_id</td><td>the name of the table relative to the instance managed by this object. The full table name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/tables/&lt;table_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a6a0c66bf3946d07856647dce645ff009">instance_id()</a> of this object. </td></tr>
     <tr><td class="paramname">config</td><td>the initial schema for the table. </td></tr>
@@ -266,11 +265,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the attributes of the newly created table. Notice that the server only populates the table_name() field at this time. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e">CreateTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">      table_id, bigtable::TableConfig(</div><div class="line">                    {{<span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                     {<span class="stringliteral">&quot;foo&quot;</span>, bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">                    {}));</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="ae670a1488c00ef8b4963ea927bd6bacc"></a>
@@ -298,11 +297,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the table could not be deleted before the RPC policies in effect gave up. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the table could not be deleted before the RPC policies in effect gave up.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ae670a1488c00ef8b4963ea927bd6bacc">DeleteTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DeleteTable(table_id);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a8b361b16e1a1cf513426deea4f201458"></a>
@@ -330,11 +329,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a8b361b16e1a1cf513426deea4f201458">DropAllRows</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropAllRows(table_id);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a3d7e88a53e5dcc73fc7be17ada226bc3"></a>
@@ -373,11 +372,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a10c70391a9f665d6e421b6df32df227b"></a>
@@ -423,11 +422,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the information about the table. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the information could not be obtained before the RPC policies in effect gave up. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the information could not be obtained before the RPC policies in effect gave up.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a10c70391a9f665d6e421b6df32df227b">GetTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> table =</div><div class="line">      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">  std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">    std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">    std::string gc_rule;</div><div class="line">    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                &amp;gc_rule);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a6a0c66bf3946d07856647dce645ff009"></a>
@@ -500,16 +499,16 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">view</td><td>define what information about the tables is retrieved.<ul>
-<li>VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.</li>
-<li>NAME: return only the name of the table.</li>
-<li>VIEW_SCHEMA: return the name and the schema.</li>
-<li>FULL: return all the information about the table. </li>
+<li><code>VIEW_UNSPECIFIED</code>: equivalent to <code>VIEW_SCHEMA</code>.</li>
+<li><code>NAME</code>: return only the name of the table.</li>
+<li><code>VIEW_SCHEMA</code>: return the name and the schema.</li>
+<li><code>FULL</code>: return all the information about the table.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a18be6d39746e6795fc82efb59cd6e34c"></a>
@@ -549,11 +548,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the resulting table schema. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ModifyTable(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.ModifyColumnFamilies(</div><div class="line">      table_id,</div><div class="line">      {bigtable::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div><div class="line">       bigtable::ColumnFamilyModification::Update(</div><div class="line">           <span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::Union(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(5),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(24 * 7)))),</div><div class="line">       bigtable::ColumnFamilyModification::Create(</div><div class="line">           <span class="stringliteral">&quot;bar&quot;</span>, bigtable::GcRule::Intersection(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(3),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(72))))});</div><div class="line"></div><div class="line">  std::string formatted;</div><div class="line">  google::protobuf::TextFormat::PrintToString(schema, &amp;formatted);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Schema modified to: &quot;</span> &lt;&lt; formatted &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a1b2ce8caf21a523936a95d6d20190022"></a>
