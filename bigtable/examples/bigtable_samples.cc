@@ -15,6 +15,8 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
 #include <google/protobuf/text_format.h>
+#include <deque>
+#include <list>
 #include <sstream>
 
 namespace {
@@ -28,15 +30,12 @@ namespace {
 const std::string MAGIC_ROW_KEY = "key-000009";
 
 //! [create table]
-void CreateTable(bigtable::TableAdmin& admin, std::string const& table_id) try {
+void CreateTable(bigtable::TableAdmin& admin, std::string const& table_id) {
   auto schema = admin.CreateTable(
       table_id, bigtable::TableConfig(
                     {{"fam", bigtable::GcRule::MaxNumVersions(10)},
                      {"foo", bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
                     {}));
-} catch (std::exception const& ex) {
-  std::cerr << "Ignoring exceptions raised by CreateTable(): " << ex.what()
-            << std::endl;
 }
 //! [create table]
 
@@ -207,6 +206,29 @@ void ReadRows(bigtable::Table& table) {
 }
 //! [read rows]
 
+//! [read rows with limit]
+void ReadRowsWithLimit(bigtable::Table& table) {
+  // Create the range of rows to read.
+  auto range = bigtable::RowRange::Range("key-000010", "key-000020");
+  // Filter the results, only include values from the "col0" column in the
+  // "fam" column family, and only get the latest value.
+  auto filter = bigtable::Filter::Chain(
+      bigtable::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+      bigtable::Filter::Latest(1));
+  // Read and print the first 5 rows in the range.
+  for (auto const& row : table.ReadRows(range, 5, filter)) {
+    if (row.cells().size() != 1) {
+      std::ostringstream os;
+      os << "Unexpected number of cells in " << row.row_key();
+      throw std::runtime_error(os.str());
+    }
+    auto const& cell = row.cells().at(0);
+    std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
+  }
+  std::cout << std::flush;
+}
+//! [read rows with limit]
+
 //! [check and mutate]
 void CheckAndMutate(bigtable::Table& table) {
   // Check if the latest value of the flip-flop column is "on".
@@ -238,7 +260,7 @@ void ReadModifyWrite(bigtable::Table& table) {
 
 //! [sample row keys]
 void SampleRows(bigtable::Table& table) {
-  auto samples = table.SampleRows<std::vector>();
+  auto samples = table.SampleRows<>();
   for (auto const& sample : samples) {
     std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
               << "\n";
@@ -246,6 +268,22 @@ void SampleRows(bigtable::Table& table) {
   std::cout << std::flush;
 }
 //! [sample row keys]
+
+//! [sample row keys collections]
+void SampleRowsCollections(bigtable::Table& table) {
+  auto list_samples = table.SampleRows<std::list>();
+  for (auto const& sample : list_samples) {
+    std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
+              << "\n";
+  }
+  auto deque_samples = table.SampleRows<std::deque>();
+  for (auto const& sample : deque_samples) {
+    std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
+              << "\n";
+  }
+  std::cout << std::flush;
+}
+//! [sample row keys collections]
 
 }  // anonymous namespace
 
@@ -310,6 +348,8 @@ int main(int argc, char* argv[]) try {
     ReadRow(table);
   } else if (command == "read-rows" or command == "scan") {
     ReadRows(table);
+  } else if (command == "read-rows-with-limit") {
+    ReadRowsWithLimit(table);
   } else if (command == "check-and-mutate") {
     CheckAndMutate(table);
   } else if (command == "read-modify-write") {

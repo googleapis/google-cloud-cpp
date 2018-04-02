@@ -52,6 +52,7 @@ class Table {
    * The policies are passed by value, because this makes it easy for
    * applications to create them.  For example:
    *
+   * **Example**
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
    * auto client = bigtable::CreateDefaultClient(...); // details ommitted
@@ -117,6 +118,9 @@ class Table {
    *     successfully apply the mutation given the current policies. The
    *     exception contains a copy of the original mutation, in case the
    *     application wants to retry, log, or otherwise handle the failure.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc apply
    */
   void Apply(SingleRowMutation&& mut);
 
@@ -136,6 +140,9 @@ class Table {
    *     in the exception. The exception contains a copy of the original
    *     mutations, in case the application wants to retry, log, or otherwise
    *     handle the failed mutations.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc bulk apply
    */
   void BulkApply(BulkMutation&& mut);
 
@@ -144,6 +151,9 @@ class Table {
    *
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc read rows
    */
   RowReader ReadRows(RowSet row_set, Filter filter);
 
@@ -157,6 +167,9 @@ class Table {
    *
    * @throws std::runtime_error if rows_limit is < 0. rows_limit = 0(default)
    * will return all rows
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc read rows with limit
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
@@ -170,6 +183,9 @@ class Table {
    *     row does not exist.  If the first element is `true` the second element
    *     has the contents of the Row.  Note that the contents may be empty
    *     if the filter expression removes all column families and columns.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc read row
    */
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
 
@@ -186,6 +202,9 @@ class Table {
    * @param true_mutations the mutations for the "filter passed" case.
    * @param false_mutations the mutations for the "filter did not pass" case.
    * @returns true if the filter passed.
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc check and mutate
    */
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
@@ -194,12 +213,18 @@ class Table {
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
-   * The application/user can specify the collection type(list and vector
-   * supported at this moment), for example:
-   * @code
-   * auto as_vector = table.SampleRows<std::vector>();
-   * auto as_list = table.SampleRows<std::list>();
-   * @endcode
+   * @tparam Collection the type of collection where the samples are returned.
+   * @returns Note that the sample may only include one element for small
+   *     tables.  In addition, the sample may include row keys that do not exist
+   *     on the table, and may include the empty row key to indicate
+   *     "end of table".
+   *
+   * **Examples**
+   * @snippet bigtable_samples.cc sample row keys
+   *
+   * In addition, application developers can specify other collection types, for
+   * example `std::list<>` or `std::deque<>`:
+   * @snippet bigtable_samples.cc sample row keys collections
    */
   template <template <typename...> class Collection = std::vector>
   Collection<bigtable::RowKeySample> SampleRows() {
@@ -226,6 +251,9 @@ class Table {
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns modified row
+   *
+   * **Example**
+   * @snippet bigtable_samples.cc read modify write
    */
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key,
