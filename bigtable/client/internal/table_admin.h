@@ -102,7 +102,7 @@ class TableAdmin {
 
   void DropAllRows(std::string table_id, grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string name,
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string snapshot_name,
                                                       std::string cluster,
                                                       grpc::Status& status);
 
