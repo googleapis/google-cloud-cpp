@@ -165,7 +165,13 @@ class TableAdmin {
   void DropAllRows(std::string table_id);
 
   /**
-   *
+   * Get information about a single snapshot.
+   * 
+   * @param snapshot_name the name of the snapshot.
+   * @param cluster the cluster name to which snapshot is associated.
+   * @return the information about the snapshot.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
    */
   ::google::bigtable::admin::v2::Snapshot GetSnapshot(std::string snapshot_name,
                                                       std::string cluster);
