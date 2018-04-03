@@ -604,9 +604,9 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
 consistency_token: 'test-token'
     )""";
-  auto mock = MockRpcFactory<
-      btproto::CheckConsistencyRequest,
-      btproto::CheckConsistencyResponse>::Create(expected_text);
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
   EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))

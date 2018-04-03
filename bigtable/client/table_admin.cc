@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/table_admin.h"
-#include <sstream>
 #include "bigtable/client/internal/throw_delegate.h"
+#include <sstream>
 
 namespace btproto = ::google::bigtable::admin::v2;
 

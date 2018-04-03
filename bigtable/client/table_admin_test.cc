@@ -658,9 +658,9 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
 consistency_token: 'test-token'
     )""";
-  auto mock = MockRpcFactory<
-      btproto::CheckConsistencyRequest,
-      btproto::CheckConsistencyResponse>::Create(expected_text);
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
   EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
@@ -696,8 +696,9 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(tested.CheckConsistency(table_id,
-                            consistency_token), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CheckConsistency(table_id, consistency_token),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
