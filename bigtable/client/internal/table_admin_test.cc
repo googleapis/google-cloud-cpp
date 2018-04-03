@@ -590,7 +590,6 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
   EXPECT_FALSE(status.ok());
 }
 
-
 /**
  * @test Verify that `bigtable::TableAdmin::CheckConsistency` works in the easy
  * case.
