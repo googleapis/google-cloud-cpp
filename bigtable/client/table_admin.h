@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 
+#include <memory>
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
-#include <memory>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -189,6 +189,29 @@ class TableAdmin {
   ::google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id);
+
+  /**
+   * Generates consistency token for a table.
+   *
+   * @param table_id the id of the table for which we want to generate
+   * consistency token.
+   * @return the consistency token for table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::string GenerateConsistencyToken(std::string const& table_id);
+
+  /**
+   * Checks consistency of a table.
+   *
+   * @param table_id  the id of the table for which we want to check
+   * consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  bool CheckConsistency(
+      bigtable::noex::TableAdmin::TableId const& table_id,
+      bigtable::noex::TableAdmin::ConsistencyToken const& consistency_token);
 
  private:
   noex::TableAdmin impl_;

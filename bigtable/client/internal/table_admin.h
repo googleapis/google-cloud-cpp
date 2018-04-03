@@ -31,6 +31,17 @@ namespace noex {
  */
 class TableAdmin {
  public:
+  template <typename T, typename Parameter>
+  class StrongType {
+   public:
+    explicit StrongType(T const& value) : value_(value) {}
+    explicit StrongType(T&& value) : value_(std::move(value)) {}
+    T& get() { return value_; }
+    T const& get() const { return value_; }
+
+   private:
+    T value_;
+  };
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    * @param instance_id the id of the instance, e.g., "my-instance", the full
@@ -106,6 +117,16 @@ class TableAdmin {
   ::google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id, grpc::Status& status);
+
+  std::string GenerateConsistencyToken(std::string const& table_id,
+                                       grpc::Status& status);
+
+  using TableId = StrongType<std::string, struct TableParam>;
+  using ConsistencyToken = StrongType<std::string,
+                                      struct ConsistencyTokenParam>;
+  bool CheckConsistency(TableId const& table_id,
+                        ConsistencyToken const& consistency_token,
+                        grpc::Status& status);
 
   //@}
 

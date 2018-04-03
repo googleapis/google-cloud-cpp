@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/table_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
 #include <sstream>
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace btproto = ::google::bigtable::admin::v2;
 
@@ -97,6 +97,27 @@ void TableAdmin::DropAllRows(std::string table_id) {
     internal::RaiseRpcError(status, status.error_message());
   }
   return result;
+}
+
+std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
+  grpc::Status status;
+  std::string token =
+      impl_.GenerateConsistencyToken(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return token;
+}
+
+bool TableAdmin::CheckConsistency(
+    bigtable::noex::TableAdmin::TableId const& table_id,
+    bigtable::noex::TableAdmin::ConsistencyToken const& consistency_token) {
+  grpc::Status status;
+  bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return consistent;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
