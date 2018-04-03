@@ -1,7 +1,0 @@
-<map id="client/row_range.h" name="client/row_range.h">
-<area shape="rect" id="node2" href="$row__range_8cc.html" title="client/row_range.cc" alt="" coords="5,80,140,107"/>
-<area shape="rect" id="node3" href="$row__set_8h.html" title="client/row_set.h" alt="" coords="165,80,279,107"/>
-<area shape="rect" id="node4" href="$row__set_8cc.html" title="client/row_set.cc" alt="" coords="87,155,208,181"/>
-<area shape="rect" id="node5" href="$row__reader_8h.html" title="client/row_reader.h" alt="" coords="232,155,364,181"/>
-<area shape="rect" id="node6" href="$row__reader_8cc.html" title="client/row_reader.cc" alt="" coords="229,229,367,256"/>
-</map>
