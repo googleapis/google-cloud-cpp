@@ -51,6 +51,7 @@ add_library(bigtable_client
         internal/readrowsparser.cc
         internal/rowreaderiterator.h
         internal/rowreaderiterator.cc
+        internal/strong_type.h
         internal/table.h
         internal/table.cc
         internal/table_admin.h
@@ -81,6 +82,7 @@ add_library(bigtable_client
         table.cc
         table_admin.h
         table_admin.cc
+        table_admin_strong_types.h
         table_config.h
         table_config.cc
         version.h

@@ -89,10 +89,10 @@ void TableAdmin::DropAllRows(std::string table_id) {
 }
 
 ::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
-    std::string snapshot_name, std::string cluster) {
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
-  auto result =
-      impl_.GetSnapshot(std::move(snapshot_name), std::move(cluster), status);
+  auto result = impl_.GetSnapshot(cluster_id, snapshot_id, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }

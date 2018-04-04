@@ -564,7 +564,9 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
-  tested.GetSnapshot("random-snapshot", "the-cluster", status);
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.GetSnapshot(cluster_id, snapshot_id, status);
   EXPECT_TRUE(status.ok());
 }
 
@@ -583,7 +585,9 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
 
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   grpc::Status status;
-  tested.GetSnapshot("other-snapshot", "other-cluster", status);
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+  tested.GetSnapshot(cluster_id, snapshot_id, status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -606,6 +610,8 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status;
-  tested.GetSnapshot("other-snapshot", "other-cluster", status);
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+  tested.GetSnapshot(cluster_id, snapshot_id, status);
   EXPECT_FALSE(status.ok());
 }

@@ -615,7 +615,9 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
-  tested.GetSnapshot("random-snapshot", "the-cluster");
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.GetSnapshot(cluster_id, snapshot_id);
 }
 
 /**
@@ -630,19 +632,19 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
   EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "No snapshot.")));
-
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetSnapshot("other-snapshot", "other-cluster"),
+  EXPECT_THROW(tested.GetSnapshot(cluster_id, snapshot_id),
                bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.GetSnapshot("other-snapshot", "other-cluster"),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -660,21 +662,21 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.GetSnapshot("other-snapshot", "other-cluster"),
+  EXPECT_THROW(tested.GetSnapshot(cluster_id, snapshot_id),
                bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.GetSnapshot("other-snapshot", "other-cluster"),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

@@ -16,7 +16,6 @@
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
 #include "bigtable/client/testing/embedded_server_test_fixture.h"
 #include <gtest/gtest.h>
 #include <map>
@@ -88,8 +87,10 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
   auto const x_google_request_params =
       "name=" + kInstanceName +
       "/clusters/test_cluster/snapshots/test-snapshot";
+  bigtable::ClusterId cluster_id(kClusterId);
+  bigtable::SnapshotId snapshot_id(kSnapshotId);
   bigtable::MetadataUpdatePolicy created(kInstanceName,
                                          bigtable::MetadataParamTypes::NAME,
-                                         kSnapshotId, kClusterId);
+                                         cluster_id, snapshot_id);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }

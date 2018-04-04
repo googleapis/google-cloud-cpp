@@ -143,12 +143,13 @@ std::string TableAdmin::InstanceName() const {
 }
 
 ::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
-    std::string snapshot_name, std::string cluster, grpc::Status& status) {
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, grpc::Status& status) {
   btproto::GetSnapshotRequest request;
-  request.set_name(SnapshotName(snapshot_name, cluster));
+  request.set_name(SnapshotName(cluster_id, snapshot_id));
 
   MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, snapshot_name, cluster);
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
   auto error_message = "GetSnapshot(" + request.name() + ")";
 
   return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
