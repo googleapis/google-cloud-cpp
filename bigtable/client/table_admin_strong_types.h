@@ -19,7 +19,6 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
 using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
 
