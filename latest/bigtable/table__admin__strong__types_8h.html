@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Bigtable C++ Client: client/metadata_update_policy.h File Reference</title>
+<title>Google Cloud Bigtable C++ Client: client/table_admin_strong_types.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,28 +65,16 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">metadata_update_policy.h File Reference</div>  </div>
+<div class="title">table_admin_strong_types.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="table__admin__strong__types_8h_source.html">bigtable/client/table_admin_strong_types.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="version_8h_source.html">bigtable/client/version.h</a>&quot;</code><br />
-<code>#include &lt;grpc++/grpc++.h&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &quot;bigtable/client/internal/strong_type.h&quot;</code><br />
 </div>
-<p><a href="metadata__update__policy_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="table__admin__strong__types_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1MetadataParamTypes.html">bigtable::v0::MetadataParamTypes</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the class for governing x-goog-request-params metadata value.  <a href="classbigtable_1_1v0_1_1MetadataParamTypes.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1MetadataUpdatePolicy.html">bigtable::v0::MetadataUpdatePolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classbigtable_1_1v0_1_1MetadataUpdatePolicy.html" title="MetadataUpdatePolicy holds supported metadata and setup ClientContext. ">MetadataUpdatePolicy</a> holds supported metadata and setup ClientContext.  <a href="classbigtable_1_1v0_1_1MetadataUpdatePolicy.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacebigtable"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable.html">bigtable</a></td></tr>
@@ -95,6 +83,13 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacebigtable_1_1v0"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html">bigtable::v0</a></td></tr>
 <tr class="memdesc:namespacebigtable_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ac2df1fbaaaeadc05349f2694edbe6f8f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#ac2df1fbaaaeadc05349f2694edbe6f8f">bigtable::v0::ClusterId</a> = internal::StrongType&lt; std::string, struct ClusterTag &gt;</td></tr>
+<tr class="separator:ac2df1fbaaaeadc05349f2694edbe6f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb558a3673c3c46e27c2a6659037902"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#affb558a3673c3c46e27c2a6659037902">bigtable::v0::SnapshotId</a> = internal::StrongType&lt; std::string, struct SnapshotTag &gt;</td></tr>
+<tr class="separator:affb558a3673c3c46e27c2a6659037902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

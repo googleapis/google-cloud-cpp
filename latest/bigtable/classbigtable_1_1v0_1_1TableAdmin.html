@@ -112,6 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b361b16e1a1cf513426deea4f201458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a8b361b16e1a1cf513426deea4f201458">DropAllRows</a> (std::string table_id)</td></tr>
 <tr class="memdesc:a8b361b16e1a1cf513426deea4f201458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows in a table.  <a href="#a8b361b16e1a1cf513426deea4f201458">More...</a><br /></td></tr>
 <tr class="separator:a8b361b16e1a1cf513426deea4f201458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78b10d08e7326197167df77342f3eee"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Snapshot&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#af78b10d08e7326197167df77342f3eee">GetSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
+<tr class="memdesc:af78b10d08e7326197167df77342f3eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single snapshot.  <a href="#af78b10d08e7326197167df77342f3eee">More...</a><br /></td></tr>
+<tr class="separator:af78b10d08e7326197167df77342f3eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
@@ -377,6 +380,50 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </dd>
 </dl>
 <p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="af78b10d08e7326197167df77342f3eee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af78b10d08e7326197167df77342f3eee">&#9670;&nbsp;</a></span>GetSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::bigtable::admin::v2::Snapshot bigtable::v0::TableAdmin::GetSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::SnapshotId const &amp;&#160;</td>
+          <td class="paramname"><em>snapshot_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get information about a single snapshot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the cluster id to which snapshot is associated. </td></tr>
+    <tr><td class="paramname">snapshot_id</td><td>the id of the snapshot. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the information about the snapshot. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the information could not be obtained before the RPC policies in effect gave up. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a10c70391a9f665d6e421b6df32df227b"></a>
