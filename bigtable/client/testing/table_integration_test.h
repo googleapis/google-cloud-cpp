@@ -65,6 +65,8 @@ class TableIntegrationTest : public ::testing::Test {
                                        std::int64_t rows_limit,
                                        bigtable::Filter filter);
 
+  std::vector<bigtable::Cell> MoveCellsFromReader(bigtable::RowReader& reader);
+
   /// Return all the cells in @p table that pass @p filter.
   void CreateCells(bigtable::Table& table,
                    std::vector<bigtable::Cell> const& cells);

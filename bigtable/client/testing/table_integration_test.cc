@@ -71,6 +71,16 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
+std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
+    bigtable::RowReader& reader) {
+  std::vector<bigtable::Cell> result;
+  for (auto const& row : reader) {
+    std::copy(row.cells().begin(), row.cells().end(),
+              std::back_inserter(result));
+  }
+  return result;
+}
+
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
