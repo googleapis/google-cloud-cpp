@@ -141,6 +141,22 @@ void TableAdmin::DropAllRows(std::string table_id, grpc::Status& status) {
 std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
+
+::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, grpc::Status& status) {
+  btproto::GetSnapshotRequest request;
+  request.set_name(SnapshotName(cluster_id, snapshot_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+  auto error_message = "GetSnapshot(" + request.name() + ")";
+
+  return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
+                                 rpc_backoff_policy_->clone(),
+                                 metadata_update_policy, &StubType::GetSnapshot,
+                                 request, error_message.c_str(), status);
+}
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

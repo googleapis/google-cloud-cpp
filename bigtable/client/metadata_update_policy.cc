@@ -43,6 +43,19 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
       std::make_pair("x-goog-request-params", std::move(value));
 }
 
+MetadataUpdatePolicy::MetadataUpdatePolicy(
+    std::string const& resource_name, MetadataParamTypes metadata_param_type,
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id) {
+  std::string value = metadata_param_type.type();
+  value += "=";
+  value += resource_name;
+  value += "/clusters/" + cluster_id.get();
+  value += "/snapshots/" + snapshot_id.get();
+  x_google_request_params_ =
+      std::make_pair("x-goog-request-params", std::move(value));
+}
+
 MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) {
   x_google_request_params_ = rhs.x_google_request_params_;
 }

@@ -19,6 +19,7 @@
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 
@@ -175,6 +176,19 @@ class TableAdmin {
    * @snippet bigtable_samples.cc drop all rows
    */
   void DropAllRows(std::string table_id);
+
+  /**
+   * Get information about a single snapshot.
+   *
+   * @param cluster_id the cluster id to which snapshot is associated.
+   * @param snapshot_id the id of the snapshot.
+   * @return the information about the snapshot.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
+   */
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id);
 
  private:
   noex::TableAdmin impl_;
