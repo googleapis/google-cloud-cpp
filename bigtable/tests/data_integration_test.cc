@@ -40,6 +40,10 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
                             {});
 };
 
+bool UsingCloudBigtableEmulator() {
+  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
@@ -243,6 +247,12 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(created, MoveCellsFromReader(read3));
 
+  if (!UsingCloudBigtableEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    auto read4 =
+        table->ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
+    CheckEqualUnordered(created, MoveCellsFromReader(read4));
+  }
   DeleteTable(table_name);
 }
 
@@ -312,6 +322,8 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
                       bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, MoveCellsFromReader(read2));
 
+  // TODO(#404): also call with bigtable::RowSet(bigtable::RowRange::Empty())
+
   DeleteTable(table_name);
 }
 
@@ -322,7 +334,11 @@ TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
   auto read1 =
       table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
                      bigtable::Filter::PassAllFilter());
-  EXPECT_THROW(read1.begin(), std::exception);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(read1.begin(), std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(read1.begin(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
