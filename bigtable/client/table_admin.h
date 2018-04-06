@@ -194,7 +194,7 @@ class TableAdmin {
    * Generates consistency token for a table.
    *
    * @param table_id the id of the table for which we want to generate
-   * consistency token.
+   *     consistency token.
    * @return the consistency token for table.
    * @throws std::exception if the operation cannot be completed.
    */
@@ -204,7 +204,7 @@ class TableAdmin {
    * Checks consistency of a table.
    *
    * @param table_id  the id of the table for which we want to check
-   * consistency.
+   *     consistency.
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
