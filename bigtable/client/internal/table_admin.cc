@@ -175,9 +175,9 @@ std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
   return *response.mutable_consistency_token();
 }
 
-bool TableAdmin::CheckConsistency(bigtable::TableId const& table_id,
-                                  bigtable::ConsistencyToken const& consistency_token,
-                                  grpc::Status& status) {
+bool TableAdmin::CheckConsistency(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token, grpc::Status& status) {
   btproto::CheckConsistencyRequest request;
   request.set_name(TableName(table_id.get()));
   request.set_consistency_token(consistency_token.get());

@@ -209,9 +209,8 @@ class TableAdmin {
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
    */
-  bool CheckConsistency(
-      bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+  bool CheckConsistency(bigtable::TableId const& table_id,
+                        bigtable::ConsistencyToken const& consistency_token);
 
  private:
   noex::TableAdmin impl_;
