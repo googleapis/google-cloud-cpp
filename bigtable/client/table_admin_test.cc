@@ -597,6 +597,112 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
 }
 
 /**
+ * @test Verify that `bigtagble::TableAdmin::GenerateConsistencyToken` works as
+ * expected.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+)""";
+  auto mock = MockRpcFactory<
+      btproto::GenerateConsistencyTokenRequest,
+      btproto::GenerateConsistencyTokenResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  tested.GenerateConsistencyToken("the-table");
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GenerateConsistencyToken("other-table"),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GenerateConsistencyToken("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtagble::TableAdmin::CheckConsistency` works as
+ * expected.
+ */
+TEST_F(TableAdminTest, CheckConsistencySimple) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+consistency_token: 'test-token'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  bigtable::TableId table_id("the-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
+  // After all the setup, make the actual call we want to test.
+  tested.CheckConsistency(table_id, consistency_token);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, CheckConsistencyFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  bigtable::TableId table_id("other-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.CheckConsistency(table_id, consistency_token),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CheckConsistency(table_id, consistency_token),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
  * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
  */
 TEST_F(TableAdminTest, GetSnapshotSimple) {

@@ -99,5 +99,26 @@ void TableAdmin::DropAllRows(std::string table_id) {
   return result;
 }
 
+std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
+  grpc::Status status;
+  std::string token =
+      impl_.GenerateConsistencyToken(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return token;
+}
+
+bool TableAdmin::CheckConsistency(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  grpc::Status status;
+  bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return consistent;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

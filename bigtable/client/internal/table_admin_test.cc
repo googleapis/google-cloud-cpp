@@ -545,6 +545,103 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
 }
 
 /**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` works in
+ * the easy case.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+    )""";
+  auto mock = MockRpcFactory<
+      btproto::GenerateConsistencyTokenRequest,
+      btproto::GenerateConsistencyTokenResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+  grpc::Status status;
+  tested.GenerateConsistencyToken("the-table", status);
+  EXPECT_TRUE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
+  using namespace ::testing;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  tested.GenerateConsistencyToken("other-table", status);
+  EXPECT_FALSE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` works in the easy
+ * case.
+ */
+TEST_F(TableAdminTest, CheckConsistencySimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+consistency_token: 'test-token'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+  grpc::Status status;
+  bigtable::TableId table_id("the-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
+  tested.CheckConsistency(table_id, consistency_token, status);
+  EXPECT_TRUE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, CheckConsistencyFailure) {
+  using namespace ::testing;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  bigtable::TableId table_id("other-table");
+  bigtable::ConsistencyToken consistency_token("other-token");
+  tested.CheckConsistency(table_id, consistency_token, status);
+  EXPECT_FALSE(status.ok());
+}
+
+/**
  * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
  */
 TEST_F(TableAdminTest, GetSnapshotSimple) {

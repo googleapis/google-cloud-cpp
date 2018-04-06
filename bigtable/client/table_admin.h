@@ -190,6 +190,28 @@ class TableAdmin {
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id);
 
+  /**
+   * Generates consistency token for a table.
+   *
+   * @param table_id the id of the table for which we want to generate
+   *     consistency token.
+   * @return the consistency token for table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::string GenerateConsistencyToken(std::string const& table_id);
+
+  /**
+   * Checks consistency of a table.
+   *
+   * @param table_id  the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  bool CheckConsistency(bigtable::TableId const& table_id,
+                        bigtable::ConsistencyToken const& consistency_token);
+
  private:
   noex::TableAdmin impl_;
 };

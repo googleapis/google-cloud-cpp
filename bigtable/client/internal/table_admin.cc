@@ -157,6 +157,42 @@ std::string TableAdmin::InstanceName() const {
                                  metadata_update_policy, &StubType::GetSnapshot,
                                  request, error_message.c_str(), status);
 }
+
+std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
+                                                 grpc::Status& status) {
+  btproto::GenerateConsistencyTokenRequest request;
+  request.set_name(TableName(table_id));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  auto error_message = "GenerateConsistencyToken(" + request.name() + ")";
+
+  auto response = RpcUtils::CallWithRetry(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy, &StubType::GenerateConsistencyToken, request,
+      error_message.c_str(), status);
+
+  return *response.mutable_consistency_token();
+}
+
+bool TableAdmin::CheckConsistency(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token, grpc::Status& status) {
+  btproto::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+
+  auto error_message = "CheckConsistency(" + request.name() + ")";
+
+  auto response = RpcUtils::CallWithRetry(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy, &StubType::CheckConsistency, request,
+      error_message.c_str(), status);
+  return response.consistent();
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

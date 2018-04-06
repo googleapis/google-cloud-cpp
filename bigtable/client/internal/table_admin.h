@@ -107,6 +107,13 @@ class TableAdmin {
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id, grpc::Status& status);
 
+  std::string GenerateConsistencyToken(std::string const& table_id,
+                                       grpc::Status& status);
+
+  bool CheckConsistency(bigtable::TableId const& table_id,
+                        bigtable::ConsistencyToken const& consistency_token,
+                        grpc::Status& status);
+
   //@}
 
  private:
