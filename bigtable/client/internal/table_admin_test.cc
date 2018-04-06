@@ -612,8 +612,8 @@ consistency_token: 'test-token'
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
-  bigtable::noex::TableAdmin::TableId table_id("the-table");
-  bigtable::noex::TableAdmin::ConsistencyToken consistency_token("test-token");
+  bigtable::TableId table_id("the-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
   tested.CheckConsistency(table_id, consistency_token, status);
   EXPECT_TRUE(status.ok());
 }
@@ -635,8 +635,8 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  bigtable::noex::TableAdmin::TableId table_id("other-table");
-  bigtable::noex::TableAdmin::ConsistencyToken consistency_token("other-token");
+  bigtable::TableId table_id("other-table");
+  bigtable::ConsistencyToken consistency_token("other-token");
   tested.CheckConsistency(table_id, consistency_token, status);
   EXPECT_FALSE(status.ok());
 }

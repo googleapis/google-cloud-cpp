@@ -121,11 +121,8 @@ class TableAdmin {
   std::string GenerateConsistencyToken(std::string const& table_id,
                                        grpc::Status& status);
 
-  using TableId = StrongType<std::string, struct TableParam>;
-  using ConsistencyToken =
-      StrongType<std::string, struct ConsistencyTokenParam>;
-  bool CheckConsistency(TableId const& table_id,
-                        ConsistencyToken const& consistency_token,
+  bool CheckConsistency(bigtable::TableId const& table_id,
+                        bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
 
   //@}

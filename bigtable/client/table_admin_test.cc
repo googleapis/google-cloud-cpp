@@ -665,8 +665,8 @@ consistency_token: 'test-token'
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
-  bigtable::noex::TableAdmin::TableId table_id("the-table");
-  bigtable::noex::TableAdmin::ConsistencyToken consistency_token("test-token");
+  bigtable::TableId table_id("the-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
   // After all the setup, make the actual call we want to test.
   tested.CheckConsistency(table_id, consistency_token);
 }
@@ -683,8 +683,8 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  bigtable::noex::TableAdmin::TableId table_id("other-table");
-  bigtable::noex::TableAdmin::ConsistencyToken consistency_token("test-token");
+  bigtable::TableId table_id("other-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.

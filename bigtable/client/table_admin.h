@@ -210,8 +210,8 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    */
   bool CheckConsistency(
-      bigtable::noex::TableAdmin::TableId const& table_id,
-      bigtable::noex::TableAdmin::ConsistencyToken const& consistency_token);
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
 
  private:
   noex::TableAdmin impl_;

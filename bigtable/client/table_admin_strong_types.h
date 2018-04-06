@@ -19,8 +19,11 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+using ConsistencyToken =
+internal::StrongType<std::string, struct ConsistencyTokenParam>;
 using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
 using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
+using TableId = internal::StrongType<std::string, struct TableParam>;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

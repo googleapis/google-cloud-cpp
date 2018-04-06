@@ -110,8 +110,8 @@ std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
 }
 
 bool TableAdmin::CheckConsistency(
-    bigtable::noex::TableAdmin::TableId const& table_id,
-    bigtable::noex::TableAdmin::ConsistencyToken const& consistency_token) {
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
   bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
   if (not status.ok()) {
