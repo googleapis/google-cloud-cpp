@@ -31,17 +31,6 @@ namespace noex {
  */
 class TableAdmin {
  public:
-  template <typename T, typename Parameter>
-  class StrongType {
-   public:
-    explicit StrongType(T const& value) : value_(value) {}
-    explicit StrongType(T&& value) : value_(std::move(value)) {}
-    T& get() { return value_; }
-    T const& get() const { return value_; }
-
-   private:
-    T value_;
-  };
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    * @param instance_id the id of the instance, e.g., "my-instance", the full
