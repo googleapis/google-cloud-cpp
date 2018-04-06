@@ -115,6 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af78b10d08e7326197167df77342f3eee"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Snapshot&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#af78b10d08e7326197167df77342f3eee">GetSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:af78b10d08e7326197167df77342f3eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single snapshot.  <a href="#af78b10d08e7326197167df77342f3eee">More...</a><br /></td></tr>
 <tr class="separator:af78b10d08e7326197167df77342f3eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5285020b63ac454b113fa6d5eb3c338"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#af5285020b63ac454b113fa6d5eb3c338">GenerateConsistencyToken</a> (std::string const &amp;table_id)</td></tr>
+<tr class="memdesc:af5285020b63ac454b113fa6d5eb3c338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates consistency token for a table.  <a href="#af5285020b63ac454b113fa6d5eb3c338">More...</a><br /></td></tr>
+<tr class="separator:af5285020b63ac454b113fa6d5eb3c338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae58bc777024d5b68c6abbb04ac05e37e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ae58bc777024d5b68c6abbb04ac05e37e">CheckConsistency</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
+<tr class="memdesc:ae58bc777024d5b68c6abbb04ac05e37e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table.  <a href="#ae58bc777024d5b68c6abbb04ac05e37e">More...</a><br /></td></tr>
+<tr class="separator:ae58bc777024d5b68c6abbb04ac05e37e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
@@ -231,6 +237,50 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae58bc777024d5b68c6abbb04ac05e37e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae58bc777024d5b68c6abbb04ac05e37e">&#9670;&nbsp;</a></span>CheckConsistency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bigtable::v0::TableAdmin::CheckConsistency </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::TableId const &amp;&#160;</td>
+          <td class="paramname"><em>table_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ConsistencyToken const &amp;&#160;</td>
+          <td class="paramname"><em>consistency_token</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks consistency of a table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">table_id</td><td>the id of the table for which we want to check consistency. </td></tr>
+    <tr><td class="paramname">consistency_token</td><td>the consistency token of the table. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the consistency status for the table. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6e3c4e6dd4057944c38f1898e69f339e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e3c4e6dd4057944c38f1898e69f339e">&#9670;&nbsp;</a></span>CreateTable()</h2>
 
@@ -380,6 +430,39 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </dd>
 </dl>
 <p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="af5285020b63ac454b113fa6d5eb3c338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5285020b63ac454b113fa6d5eb3c338">&#9670;&nbsp;</a></span>GenerateConsistencyToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string bigtable::v0::TableAdmin::GenerateConsistencyToken </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>table_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates consistency token for a table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">table_id</td><td>the id of the table for which we want to generate consistency token. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the consistency token for table. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af78b10d08e7326197167df77342f3eee"></a>
