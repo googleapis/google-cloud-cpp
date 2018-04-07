@@ -127,6 +127,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   CheckEqualUnordered(created_cells, actual_cells);
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /**
  * Check if assert is thrown while string value set and numeric value
  * retrieve into Cloud Bigtable
@@ -138,6 +139,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
   EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
                std::range_error);
 }
+#endif
 
 /**
  * Verify that the values inserted by SetCell with server-side timestamp are
