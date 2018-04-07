@@ -20,6 +20,7 @@
 #include "bigtable/benchmarks/setup.h"
 
 #include <chrono>
+#include <deque>
 
 namespace bigtable {
 namespace benchmarks {

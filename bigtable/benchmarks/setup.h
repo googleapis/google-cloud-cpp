@@ -17,7 +17,6 @@
 
 #include "bigtable/benchmarks/constants.h"
 #include <chrono>
-#include <deque>
 #include <string>
 #include <vector>
 
