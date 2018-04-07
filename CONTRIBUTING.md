@@ -40,7 +40,7 @@ in this project:
 * [Forking Projects](https://guides.github.com/activities/forking/)
 * [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
 * [Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
-  * A more succinct guide to [Keeing a Fork up to date](https://gist.github.com/CristinaSolana/1885435)
+  * A more succinct guide to [Keeping a Fork up to date](https://gist.github.com/CristinaSolana/1885435)
 
 If your pull request has a conflict with the destination branch we request
 that you [rebase](https://help.github.com/articles/about-git-rebase/) your
