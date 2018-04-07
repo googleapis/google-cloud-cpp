@@ -49,13 +49,13 @@ class Cell {
 
   /// Create a Cell and fill it with bigendian 64 bit value.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, int64_t timestamp, std::uint64_t value,
-       std::vector<std::string> labels)
+       std::string column_qualifier, int64_t timestamp,
+       bigtable::bigendian64_t value, std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        value_(std::move(bigtable::NumericToBigEndian(value))),
+        value_(bigtable::as_bigendian64(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
@@ -80,10 +80,18 @@ class Cell {
   /// this object is deleted.
   std::string const& value() const { return value_; }
 
-  /// Return the contents of this cell. The returned value is not valid after
-  /// this object is deleted.
-  std::uint64_t value_as_numeric() {
-    return bigtable::BigEndianToNumeric(value_);
+  /**
+   * Interpret the value as an encoded `T` and return it.
+   *
+   * Google Cloud Bigtable stores arbitrary blobs in each cell. Some
+   * applications interpret these blobs as strings, other as encoded protos,
+   * and sometimes as BigEndian or LittleEndian integers. This is a helper
+   * function to convert the blob into a T value. It uses
+   * `bigtable::internal::encoder<>` to decode the value.
+   */
+  template <typename T>
+  T value_as() const {
+    return bigtable::internal::encoder<T>::decode(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.
