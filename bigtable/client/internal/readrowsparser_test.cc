@@ -87,7 +87,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   EXPECT_EQ("F", cell_it->family_name());
   EXPECT_EQ("C", cell_it->column_qualifier());
   EXPECT_EQ("V", cell_it->value());
-  EXPECT_EQ(42, cell_it->timestamp());
+  EXPECT_EQ(42, cell_it->timestamp().count());
 
   parser.HandleEndOfStream(status);
   EXPECT_TRUE(status.ok());
@@ -170,7 +170,7 @@ void PrintTo(Cell const& c, std::ostream* os) {
   *os << "rk: " << std::string(c.row_key()) << "\n";
   *os << "fm: " << std::string(c.family_name()) << "\n";
   *os << "qual: " << std::string(c.column_qualifier()) << "\n";
-  *os << "ts: " << c.timestamp() << "\n";
+  *os << "ts: " << c.timestamp().count() << "\n";
   *os << "value: " << std::string(c.value()) << "\n";
   *os << "label: ";
   char const* del = "";

@@ -17,6 +17,7 @@
 
 #include "bigtable/client/version.h"
 
+#include <chrono>
 #include <vector>
 
 namespace bigtable {
@@ -58,7 +59,10 @@ class Cell {
   std::string const& column_qualifier() const { return column_qualifier_; }
 
   /// Return the timestamp of this cell.
-  int64_t timestamp() const { return timestamp_; }
+  std::chrono::microseconds timestamp() const {
+    std::chrono::microseconds timestamp(timestamp_);
+    return timestamp;
+  }
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
