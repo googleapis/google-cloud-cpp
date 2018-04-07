@@ -61,12 +61,6 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
                   std::string const& table_id,
                   std::chrono::seconds test_duration);
 
-//@{
-/// @name Test constants.  Defined as requirements in the original bug (#189).
-/// How often does the test emit partial results, in minutes.
-constexpr int kPartialResultsPeriod = 5;
-//@}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
