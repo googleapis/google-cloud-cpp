@@ -87,21 +87,36 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
 }
 
 /**
- * Check if the BigEndian values inserted by SetCell are correctly
- * inserted into Cloud Bigtable
+ * Check if the numeric and string values inserted by SetCell are
+ * correctly inserted into Cloud Bigtable
  */
-TEST_F(MutationIntegrationTest, SetCellBigEndianValueTest) {
-  std::string const table_name = "table-setcell";
+TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
+  std::string const table_name = "table-setcell-num-value";
 
   auto table = CreateTable(table_name, table_config);
   // Create a vector of cells which will be inserted into bigtable
-  std::string const row_key = "SetCellRowKey";
+  std::string const row_key = "SetCellNumRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, 2100, {}},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000, 32100, {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key,
+       column_family1,
+       "column_id1",
+       1000,
+       bigtable::bigendian64_t(2000),
+       {}},
+      {row_key,
+       column_family1,
+       "column_id1",
+       2000,
+       bigtable::bigendian64_t(3000),
+       {}},
       {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id3", 1000, 2912, {}},
+      {row_key,
+       column_family2,
+       "column_id3",
+       1000,
+       bigtable::bigendian64_t(5000),
+       {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
 
@@ -110,6 +125,18 @@ TEST_F(MutationIntegrationTest, SetCellBigEndianValueTest) {
   DeleteTable(table_name);
 
   CheckEqualUnordered(created_cells, actual_cells);
+}
+
+/**
+ * Check if assert is thrown while string value set and numeric value
+ * retrieve into Cloud Bigtable
+ */
+TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
+  std::string const table_name = "table-setcell-num-value-exception";
+  bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
+                          "string-value", {});
+  EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
+               std::range_error);
 }
 
 /**

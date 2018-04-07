@@ -42,24 +42,12 @@ struct Mutation {
 Mutation SetCell(std::string family, std::string column,
                  std::chrono::milliseconds timestamp, std::string value);
 
-/// Create a mutation to set a cell value as BigEndian bytes.
-Mutation SetCell(std::string family, std::string column,
-                 std::chrono::milliseconds timestamp, std::uint64_t value);
-
 /**
  * Create a mutation to set a cell value where the server sets the time.
  *
  * These mutations are not idempotent and not retried by default.
  */
 Mutation SetCell(std::string family, std::string column, std::string value);
-
-/**
- * Create a mutation to set a cell value as BigEndian bytes
- * where the server sets the time.
- *
- * These mutations are not idempotent and not retried by default.
- */
-Mutation SetCell(std::string family, std::string column, std::uint64_t value);
 
 /**
  * A magic value where the server sets the timestamp.
