@@ -32,7 +32,7 @@ TEST(CellTest, Simple) {
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
-  EXPECT_EQ(timestamp, cell.timestamp());
+  EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value, cell.value());
   EXPECT_EQ(0U, cell.labels().size());
 }

@@ -166,7 +166,7 @@ bool operator<(Cell const& lhs, Cell const& rhs) {
 void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
-      << ", timestamp=" << cell.timestamp() << ", value=<";
+      << ", timestamp=" << cell.timestamp().count() << ", value=<";
   // Replace non-printable values with '.' to make the output more readable.
   bool has_non_printable = false;
   for (char c : cell.value()) {
