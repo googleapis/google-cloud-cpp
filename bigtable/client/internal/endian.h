@@ -15,12 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ENDIAN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ENDIAN_H_
 
-#include <bitset>
-#include <limits>
-#include <vector>
-
 #include "bigtable/client/internal/strong_type.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include <limits>
 
 #ifdef _MSC_VER
 #include <stdlib.h>
@@ -28,56 +25,72 @@
 #include <byteswap.h>
 #endif
 
-#include <string>
-
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using bigendian64_t = internal::StrongType<std::int64_t, struct BigEndianType>;
 
 namespace internal {
 
-#ifndef _MSC_VER
-#ifndef __GNUC__
-#ifndef __clang__
-static std::int64_t explicit_swap64(std::int64_t value) {
-  std::int64_t return_value = ((((value)&0xff00000000000000ull) >> 56) |
-                               (((value)&0x00ff000000000000ull) >> 40) |
-                               (((value)&0x0000ff0000000000ull) >> 24) |
-                               (((value)&0x000000ff00000000ull) >> 8) |
-                               (((value)&0x00000000ff000000ull) << 8) |
-                               (((value)&0x0000000000ff0000ull) << 24) |
-                               (((value)&0x000000000000ff00ull) << 40) |
-                               (((value)&0x00000000000000ffull) << 56));
-
-  return return_value;
-}
-#endif
-#endif
-#endif
-
-inline bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value) {
-#ifdef _MSC_VER
-  return bigtable::bigendian64_t(_byteswap_uint64(value.get()));
-#elif defined(__GNUC__) || defined(__clang__)
-  return bigtable::bigendian64_t(__builtin_bswap64(value.get()));
-#else
-  return bigtable::bigendian64_t(explicit_swap64(value.get()));
-#endif
-}
-
 constexpr char c[sizeof(int)] = {1};
 constexpr bool IsBigEndian() {
   return c[0] != 1;  // ignore different type comparison
 }
 
+/**
+ * This struct is used to provide the functionality to convert
+ * from/to BigEndian numeric value to/from string of bytes.
+ *
+ * Why this functionality:
+ * In Google Cloud Bigtable, values are stored in a cell as a std::string
+ * data type only. But still this cell contains string and numeric values.
+ * String can be stored into cell as it is, but Numeric values are stored
+ * as a 64-bit BigEndian hex bytes converted into string of bytes.
+ * For human readability it should be easy to put string and numeric
+ * values into the cell. So using functions of this struct we can
+ * convert human readable numeric values into string of BigEndian hex
+ * bytes and get it back into human readable numeric values.
+ *
+ * Currently we only support conversion of 64 bit BigEndian values
+ * from/to numeric values. This structure can be extended to support
+ * other types of data also.
+ *
+ * How to use for coding:
+ * Convert from Numeric Value to string of BigEndian bytes.
+ * @code
+ * bigtable::Cell new_cell("row_key", "column_family", "column_id3", 1000,
+ *                         bigtable::bigendian64_t(5000), {});
+ * @endcode
+ *
+ * Convert from string of BigEndian bytes to Numeric Value.
+ * @code
+ * std::int64_t cell_value = new_cell.value_as<bigtable::bigendian64_t>().get();
+ * @endcode
+ *
+ * How to use to support new data types:
+ * Recommended way is to define your own Strong Type
+ * (see: bigtable/internal/strong_type.h) to use with this struct.
+ *
+ *  // Following code shows how to support new type for Encode and Decode
+ *  // functions. Code shows support fot bigtable::bigendian64_t strong type
+ *
+ *  // Encode function : Convert BigEndian 64 bit hex bytes inside
+ *  // strong type bigendian64_t into string of bytes.
+ * @code
+ * template<>
+ * std::string Encoder<bigtable::bigendian64_t>::Encode
+ *                               (bigtable::bigendian64_t const& value) {}
+ *  // Decode function : Convert BigEndian 64 bit string of bytes into
+ *  // strong type bigendian64_t
+ * template<>
+ * bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode
+ *                               (std::string const& value) {}
+ * @endcode
+ *
+ * Implement above two functions for conversion and use it as mentioned
+ * above how to use example.
+ */
 template <typename T>
-struct encoder {
-  static std::string encode(T const& value);
-  static T decode(std::string const& value);
-};
-
-template <>
-struct encoder<bigtable::bigendian64_t> {
+struct Encoder {
   /**
    * Convert BigEndian numeric value into a string of bytes and return it.
    *
@@ -90,23 +103,10 @@ struct encoder<bigtable::bigendian64_t> {
    * So If machine architecture does not define char as 8 bit then we
    * raise the assert.
    *
-   * @param value reference to a number need to be converted into
+   * @param value const reference to a number need to be converted into
    *        string of bytes.
    */
-  static std::string encode(bigtable::bigendian64_t const& value) {
-    static_assert(std::numeric_limits<unsigned char>::digits == 8,
-                  "This code assumes char is an 8-bit number");
-
-    std::string big_endian_string("", 8);
-    if (IsBigEndian()) {
-      std::memcpy((void*)big_endian_string.data(), &value, sizeof(value));
-    } else {
-      bigtable::bigendian64_t swapped_value = byteswap64(value);
-      std::memcpy((void*)big_endian_string.data(), &swapped_value,
-                  sizeof(swapped_value));
-    }
-    return big_endian_string;
-  }
+  static std::string Encode(T const& value);
 
   /**
    * Convert BigEndian string of bytes into BigEndian numeric value and
@@ -124,25 +124,14 @@ struct encoder<bigtable::bigendian64_t> {
    * @param value reference to a string of bytes need to be converted into
    *        BigEndian numeric value.
    */
-  static bigtable::bigendian64_t decode(std::string const& value) {
-    // Check if value is BigEndian 64-bit integer
-    if (value.size() != 8) {
-      internal::RaiseRangeError("Value is not convertible to uint64");
-    }
-    bigtable::bigendian64_t big_endian_value(0);
-    std::memcpy(&big_endian_value, value.c_str(), 8);
-    if (!IsBigEndian()) {
-      big_endian_value = byteswap64(big_endian_value);
-    }
-    return big_endian_value;
-  }
+  static T Decode(std::string const& value);
 };
+
+bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value);
 
 }  // namespace internal
 
-inline std::string as_bigendian64(bigtable::bigendian64_t value) {
-  return internal::encoder<bigtable::bigendian64_t>::encode(value);
-}
+std::string as_bigendian64(bigtable::bigendian64_t value);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

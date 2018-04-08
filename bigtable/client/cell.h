@@ -91,7 +91,7 @@ class Cell {
    */
   template <typename T>
   T value_as() const {
-    return bigtable::internal::encoder<T>::decode(value_);
+    return bigtable::internal::Encoder<T>::Decode(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.

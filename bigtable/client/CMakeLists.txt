@@ -42,6 +42,7 @@ add_library(bigtable_client
         internal/common_client.cc
         internal/conjunction.h
         internal/endian.h
+        internal/endian.cc
         internal/instance_admin.h
         internal/instance_admin.cc
         internal/make_unique.h

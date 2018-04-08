@@ -60,7 +60,7 @@ TEST(MutationsTest, SetCellNumericValue) {
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
   EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
   EXPECT_EQ(bigtable::bigendian64_t(9876543210).get(),
-            bigtable::internal::encoder<bigtable::bigendian64_t>::decode(
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
                 actual.op.set_cell().value())
                 .get());
 
@@ -71,7 +71,7 @@ TEST(MutationsTest, SetCellNumericValue) {
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
   EXPECT_EQ(bigtable::bigendian64_t(32234401).get(),
-            bigtable::internal::encoder<bigtable::bigendian64_t>::decode(
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
                 server_set.op.set_cell().value())
                 .get());
   EXPECT_EQ(bigtable::ServerSetTimestamp(),
