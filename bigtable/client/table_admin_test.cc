@@ -796,7 +796,8 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
 )""";
   auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
