@@ -882,7 +882,6 @@ TEST_F(TableAdminTest, ListSnapshots_Simple) {
             actual_snapshots[1].name());
 }
 
-
 /**
  * @test Verify that `bigtable::TableAdmin::ListSnapshots` handles failures.
  */
