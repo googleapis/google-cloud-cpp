@@ -222,6 +222,10 @@ class TableAdmin {
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
 
+  std::vector<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      int32_t page_size,
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-"));
+
  private:
   noex::TableAdmin impl_;
 };

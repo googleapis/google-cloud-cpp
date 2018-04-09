@@ -100,8 +100,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleClusterId_Test) {
   auto const x_google_request_params =
       "parent=" + kInstanceName + "/clusters/" + kClusterId;
   bigtable::ClusterId cluster_id(kClusterId);
-  bigtable::MetadataUpdatePolicy created(kInstanceName,
-                                         bigtable::MetadataParamTypes::PARENT,
-                                         cluster_id);
+  bigtable::MetadataUpdatePolicy created(
+      kInstanceName, bigtable::MetadataParamTypes::PARENT, cluster_id);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }

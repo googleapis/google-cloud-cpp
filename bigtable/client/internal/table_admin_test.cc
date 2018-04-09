@@ -78,17 +78,14 @@ auto create_list_tables_lambda = [](std::string expected_token,
   };
 };
 
-
 // A lambda to generate snapshot list.
-auto create_list_snapshots_lambda = [](std::string expected_token,
-                                       std::string returned_token,
-                                       std::vector<std::string> snapshot_names)
-{
+auto create_list_snapshots_lambda = [](
+    std::string expected_token, std::string returned_token,
+    std::vector<std::string> snapshot_names) {
   return [expected_token, returned_token, snapshot_names](
       grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
       btproto::ListSnapshotsResponse* response) {
-    auto cluster_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
+    auto cluster_name = "projects/" + kProjectId + "/instances/" + kInstanceId;
     cluster_name += "/clusters/" + kClusterId;
     EXPECT_EQ(cluster_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -786,7 +783,9 @@ TEST_F(TableAdminTest, DeleteSnapshotFailure) {
   EXPECT_FALSE(status.ok());
 }
 
-/// @test Verify that `TableAdmin::ListSnapshots` works in simple case.
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` works in simple case.
+ */
 TEST_F(TableAdminTest, ListSnapshotsSimple) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
@@ -813,8 +812,10 @@ parent: 'projects/the-project/instances/the-instance/clusters/the-cluster'
             actual_snapshots[1].name());
 }
 
-/// @test Verify that `TableAdmin::ListSnapshots` handles failures.
-TEST_F(TableAdminTest, ListTables_RecoverableFailure) {
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` handles failures.
+ */
+TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
 
@@ -852,9 +853,10 @@ TEST_F(TableAdminTest, ListTables_RecoverableFailure) {
 }
 
 /**
- * @test Verify that `TableAdmin::ListSnapshots` handles unrecoverable failures.
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` handles unrecoverable
+ * failures.
  */
-TEST_F(TableAdminTest, ListTables_UnrecoverableFailures) {
+TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
