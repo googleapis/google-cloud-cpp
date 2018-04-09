@@ -722,9 +722,8 @@ TEST_F(TableAdminTest, DeleteSnapshotSimple) {
   std::string expected_text = R"""(
 name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
     )""";
-  auto mock =
-      MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
-          expected_text);
+  auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
+      expected_text);
   EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
       .WillOnce(Invoke(mock));
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
