@@ -38,7 +38,7 @@ class Cell {
  public:
   /// Create a Cell and fill it with data.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, int64_t timestamp, std::string value,
+       std::string column_qualifier, std::int64_t timestamp, std::string value,
        std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
@@ -49,13 +49,13 @@ class Cell {
 
   /// Create a Cell and fill it with bigendian 64 bit value.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, int64_t timestamp,
+       std::string column_qualifier, std::int64_t timestamp,
        bigtable::bigendian64_t value, std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        value_(bigtable::as_bigendian64(value)),
+        value_(bigtable::internal::as_bigendian64(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
@@ -72,8 +72,7 @@ class Cell {
 
   /// Return the timestamp of this cell.
   std::chrono::microseconds timestamp() const {
-    std::chrono::microseconds timestamp(timestamp_);
-    return timestamp;
+    return std::chrono::microseconds(timestamp_);
   }
 
   /// Return the contents of this cell. The returned value is not valid after
@@ -101,7 +100,7 @@ class Cell {
   std::string row_key_;
   std::string family_name_;
   std::string column_qualifier_;
-  int64_t timestamp_;
+  std::int64_t timestamp_;
   std::string value_;
   std::vector<std::string> labels_;
 };
