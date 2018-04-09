@@ -118,6 +118,10 @@ class TableAdmin {
                       bigtable::SnapshotId const& snapshot_id,
                       grpc::Status& status);
 
+  std::vector<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      int32_t page_size, grpc::Status& status,
+      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
+
   //@}
 
  private:
@@ -134,6 +138,11 @@ class TableAdmin {
                            bigtable::SnapshotId const& snapshot_id) {
     return instance_name() + "/clusters/" + cluster_id.get() + "/snapshots/" +
            snapshot_id.get();
+  }
+
+  /// Return the fully qualified name of a Cluster.
+  std::string ClusterName(bigtable::ClusterId const& cluster_id) {
+    return instance_name() + "/clusters/" + cluster_id.get();
   }
 
   /// Shortcuts to avoid typing long names over and over.

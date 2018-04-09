@@ -208,6 +208,42 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                              request, error_message.c_str(), status);
 }
 
+std::vector<btproto::Snapshot> TableAdmin::ListSnapshots(
+    int32_t page_size, grpc::Status& status,
+    bigtable::ClusterId const& cluster_id) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  std::string msg = "TableAdmin(" + instance_name() + ")::ListSnapshots()";
+
+  // Build the RPC request, try to minimize copying.
+  std::vector<btproto::Snapshot> result;
+  std::string page_token;
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::PARENT, cluster_id);
+  do {
+    btproto::ListSnapshotsRequest request;
+    request.set_parent(ClusterName(cluster_id));
+    request.set_page_size(page_size);
+    request.set_page_token(page_token);
+
+    auto response = RpcUtils::CallWithRetryBorrow(
+        *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+        &StubType::ListSnapshots, request, msg.c_str(), status);
+    if (not status.ok()) {
+      return result;
+    }
+
+    for (auto& x : *response.mutable_snapshots()) {
+      result.emplace_back(std::move(x));
+    }
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (not page_token.empty());
+  return result;
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
