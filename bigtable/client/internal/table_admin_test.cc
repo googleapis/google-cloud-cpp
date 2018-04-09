@@ -377,14 +377,14 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * @test Verify that `bigtable::TableAdmin::DeleteTable` supports
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, DeleteTableFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -393,7 +393,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  tested.CreateTable("other-table", bigtable::TableConfig(), status);
+  tested.DeleteTable("other-table", status);
   EXPECT_FALSE(status.ok());
 }
 

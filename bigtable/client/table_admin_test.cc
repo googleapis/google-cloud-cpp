@@ -405,14 +405,14 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * @test Verify that `bigtable::TableAdmin::DeleteTable` supports
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, DeleteTableFailure) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -421,15 +421,13 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               bigtable::GRpcError);
+  EXPECT_THROW(tested.DeleteTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.CreateTable("other-table", bigtable::TableConfig()),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteTable("other-table"),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
