@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,10 +14,24 @@
 
 #include "bigtable/client/internal/endian.h"
 
+#ifdef _MSC_VER
+#include <stdlib.h>
+#elif defined(__GNUC__) || defined(__clang__)
+#include <byteswap.h>
+#endif
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+constexpr char c[sizeof(int)] = {1};
+constexpr bool IsBigEndian() {
+  return c[0] != 1;  // ignore different type comparison
+}
+
+/**
+ * Convert BigEndian numeric value into a string of bytes and return it.
+ */
 template <>
 std::string Encoder<bigtable::bigendian64_t>::Encode(
     bigtable::bigendian64_t const& value) {
@@ -27,15 +41,19 @@ std::string Encoder<bigtable::bigendian64_t>::Encode(
 
   std::string big_endian_string("", sizeof(bigtable::bigendian64_t));
   if (IsBigEndian()) {
-    std::memcpy((void*)big_endian_string.data(), &value, sizeof(value));
+    std::memcpy(static_cast<void*>((void*)big_endian_string.data()), &value,
+                sizeof(value));
   } else {
     bigtable::bigendian64_t swapped_value = byteswap64(value);
-    std::memcpy((void*)big_endian_string.data(), &swapped_value,
-                sizeof(swapped_value));
+    std::memcpy(static_cast<void*>((void*)big_endian_string.data()),
+                &swapped_value, sizeof(swapped_value));
   }
   return big_endian_string;
 }
 
+/**
+ * Convert BigEndian string of bytes into BigEndian numeric value and return it.
+ */
 template <>
 bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
     std::string const& value) {
@@ -73,11 +91,11 @@ inline bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value) {
 #endif
 }
 
-}  // namespace internal
-
 std::string as_bigendian64(bigtable::bigendian64_t value) {
   return bigtable::internal::Encoder<bigtable::bigendian64_t>::Encode(value);
 }
+
+}  // namespace internal
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

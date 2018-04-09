@@ -23,7 +23,7 @@ TEST(CellTest, Simple) {
   std::string row_key = "row";
   std::string family_name = "family";
   std::string column_qualifier = "column";
-  int64_t timestamp = 42;
+  std::int64_t timestamp = 42;
   std::string value = "value";
   std::vector<std::string> labels;
 
@@ -52,7 +52,7 @@ TEST(CellTest, SimpleNumericValue) {
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
-  EXPECT_EQ(timestamp, cell.timestamp());
+  EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value.get(), cell.value_as<bigtable::bigendian64_t>().get());
   EXPECT_EQ(0U, cell.labels().size());
 }
@@ -72,7 +72,7 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
-  EXPECT_EQ(timestamp, cell.timestamp());
+  EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value.get(), cell.value_as<bigtable::bigendian64_t>().get());
   EXPECT_EQ(0U, cell.labels().size());
 }
