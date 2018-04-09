@@ -114,6 +114,10 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
 
+  void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                      bigtable::SnapshotId const& snapshot_id,
+                      grpc::Status& status);
+
   //@}
 
  private:
