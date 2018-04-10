@@ -81,6 +81,30 @@ class Table {
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
+  Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
+        std::string const& table_id) :
+      client_(std::move(client)), app_profile_id_(app_profile_id),
+      table_name_(TableName(client_, table_id)),
+      rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
+      rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
+      metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
+      idempotent_mutation_policy_(
+          bigtable::DefaultIdempotentMutationPolicy()) {}
+
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+      typename IdempotentMutationPolicy>
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id, RPCRetryPolicy retry_policy,
+        RPCBackoffPolicy backoff_policy,
+        IdempotentMutationPolicy idempotent_mutation_policy)
+      : client_(std::move(client)), app_profile_id_(app_profile_id),
+        table_name_(TableName(client_, table_id)),
+        rpc_retry_policy_(retry_policy.clone()),
+        rpc_backoff_policy_(backoff_policy.clone()),
+        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
+        idempotent_mutation_policy_(
+            idempotent_mutation_policy.clone()) {}
+
   std::string const& table_name() const { return table_name_; }
 
   //@{
@@ -116,6 +140,9 @@ class Table {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_table_name(table_name_);
     request.set_row_key(std::move(row_key));
+    if (!app_profile_id_.empty()) {
+      request.set_app_profile_id(app_profile_id_);
+    }
 
     // Generate a better compile time error message than the default one
     // if the types do not match
@@ -174,6 +201,7 @@ class Table {
                       std::function<void()> clearer, grpc::Status& status);
 
   std::shared_ptr<DataClient> client_;
+  std::string app_profile_id_;
   std::string table_name_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;

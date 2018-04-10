@@ -47,6 +47,20 @@ class Table {
       : impl_(std::move(client), table_id) {}
 
   /**
+   * Constructor with default policies.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param app_profile_id the app_profile_id needed for using replication and
+   * snapshot APIs.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + '/tables/' + table_id`.
+   */
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id)
+      : impl_(std::move(client), app_profile_id, table_id) {}
+
+  /**
    * Constructor with explicit policies.
    *
    * The policies are passed by value, because this makes it easy for
@@ -102,6 +116,67 @@ class Table {
         IdempotentMutationPolicy idempotent_mutation_policy)
       : impl_(std::move(client), table_id, std::move(retry_policy),
               std::move(backoff_policy),
+              std::move(idempotent_mutation_policy)) {}
+
+  /**
+   * Constructor with explicit policies.
+   *
+   * The policies are passed by value, because this makes it easy for
+   * applications to create them.  For example:
+   *
+   * **Example**
+   * @code
+   * using namespace std::chrono_literals; // assuming C++14.
+   * auto client = bigtable::CreateDefaultClient(...); // details ommitted
+   * bigtable::Table table(client, "app_id", "my-table",
+   *                       // Allow up to 20 minutes to retry operations
+   *                       bigtable::LimitedTimeRetryPolicy(20min),
+   *                       // Start with 50 milliseconds backoff, grow
+   *                       // exponentially to 5 minutes.
+   *                       bigtable::ExponentialBackoffPolicy(50ms, 5min),
+   *                       // Only retry idempotent mutations.
+   *                       bigtable::SafeIdempotentMutationPolicy());
+   * @endcode
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param app_profile_id the app_profile_id needed for using replication and
+   * snapshot APIs.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   * @param retry_policy the value of the `RPCRetryPolicy`, for example, the
+   *     policy type may be `LimitedErrorCountRetryPolicy` which
+   *     tolerates a maximum number of errors, the value controls how many.
+   * @param backoff_policy the value of the `RPCBackoffPolicy`, for example, the
+   *     policy type may be `ExponentialBackoffPolicy` which will
+   *     double the wait period on each failure, up to a limit.  The value
+   *     controls the initial and maximum wait periods.
+   * @param idempotent_mutation_policy the value of the
+   *     `IdempotentMutationPolicy`. The policies implemented by this library
+   *     (`SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy`) are
+   *     stateless, but the application may implement stateful policies.
+   *
+   * @tparam IdempotentMutationPolicy which mutations are retried. Use
+   *     `SafeIdempotentMutationPolicy` to only retry idempotent operations, use
+   *     `AlwaysRetryMutationPolicy` to retry all operations.  Read the caveats
+   *     in the class defintion to understand the downsides of the latter. You
+   *     can also create your own policies that decide which mutations to retry.
+   * @tparam RPCBackoffPolicy how to backoff from a failed RPC.  Currently only
+   *     `ExponentialBackoffPolicy` is implemented. You can also create your
+   *     own policies that backoff using a different algorithm.
+   * @tparam RPCRetryPolicy for how long to retry failed RPCs. Use
+   *     `LimitedErrorCountRetryPolicy` to limit the number of failures allowed.
+   *     Use `LimitedTimeRetryPolicy` to bound the time for any request.  You
+   *     can also create your own policies that combine time and error counts.
+   */
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+      typename IdempotentMutationPolicy>
+  Table(std::shared_ptr<DataClient> client, std::string const&  app_profile_id,
+        std::string const& table_id, RPCRetryPolicy retry_policy,
+        RPCBackoffPolicy backoff_policy,
+        IdempotentMutationPolicy idempotent_mutation_policy)
+      : impl_(std::move(client), app_profile_id,
+              table_id, std::move(retry_policy), std::move(backoff_policy),
               std::move(idempotent_mutation_policy)) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
