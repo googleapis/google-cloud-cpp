@@ -39,15 +39,15 @@ std::string Encoder<bigtable::bigendian64_t>::Encode(
                     sizeof(bigtable::bigendian64_t),
                 "This code assumes char is an 8-bit number");
 
-  std::string big_endian_string("", sizeof(bigtable::bigendian64_t));
+  char big_endian_buffer[9] = "";
   if (IsBigEndian()) {
-    std::memcpy(static_cast<void*>((void*)big_endian_string.data()), &value,
-                sizeof(value));
+    std::memcpy(&big_endian_buffer, &value, sizeof(value));
   } else {
     bigtable::bigendian64_t swapped_value = byteswap64(value);
-    std::memcpy(static_cast<void*>((void*)big_endian_string.data()),
-                &swapped_value, sizeof(swapped_value));
+    std::memcpy(&big_endian_buffer, &swapped_value, sizeof(swapped_value));
   }
+  std::string big_endian_string(big_endian_buffer,
+                                sizeof(bigtable::bigendian64_t));
   return big_endian_string;
 }
 
