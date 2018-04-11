@@ -2,7 +2,7 @@ var searchData=
 [
   ['can_5fretry',['can_retry',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html#a4d53aa7f16dda1187f0bd72c40716b45',1,'bigtable::v0::RPCRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#a83e1faa5fc4c6e306077b7082407000c',1,'bigtable::v0::LimitedErrorCountRetryPolicy::can_retry()'],['../classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#aec1939c7298faaf6359ae9b16e6779b6',1,'bigtable::v0::LimitedTimeRetryPolicy::can_retry()']]],
   ['cancel',['Cancel',['../classbigtable_1_1v0_1_1RowReader.html#a59457f0baf7d6dc4f42a8a5d53d00295',1,'bigtable::v0::RowReader']]],
-  ['cell',['Cell',['../classbigtable_1_1v0_1_1Cell.html#afd76f5a24fea82bc10f65f8eba450576',1,'bigtable::v0::Cell']]],
+  ['cell',['Cell',['../classbigtable_1_1v0_1_1Cell.html#aa2069b82b26cfeffce462a9caa4706aa',1,'bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, std::string value, std::vector&lt; std::string &gt; labels)'],['../classbigtable_1_1v0_1_1Cell.html#a7845e4925e4b4401d1d4d15950ff309d',1,'bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, bigtable::bigendian64_t value, std::vector&lt; std::string &gt; labels)']]],
   ['cells',['cells',['../classbigtable_1_1v0_1_1Row.html#a2cf226032c6f85de0151ba2024811200',1,'bigtable::v0::Row']]],
   ['cellsrowlimit',['CellsRowLimit',['../classbigtable_1_1v0_1_1Filter.html#a7892e342330e4df57ce7f3260ebb0030',1,'bigtable::v0::Filter']]],
   ['cellsrowoffset',['CellsRowOffset',['../classbigtable_1_1v0_1_1Filter.html#ad634656247f743765edff8d8edb377f2',1,'bigtable::v0::Filter']]],
