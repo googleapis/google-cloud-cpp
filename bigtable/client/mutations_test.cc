@@ -54,7 +54,7 @@ TEST(MutationsTest, SetCell) {
 TEST(MutationsTest, SetCellNumericValue) {
   auto actual = bigtable::SetCell(
       "family", "col", 1234_ms,
-      bigtable::internal::as_bigendian64(bigtable::bigendian64_t(9876543210)));
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(9876543210)));
   ASSERT_TRUE(actual.op.has_set_cell());
   EXPECT_EQ("family", actual.op.set_cell().family_name());
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
@@ -66,7 +66,7 @@ TEST(MutationsTest, SetCellNumericValue) {
 
   auto server_set = bigtable::SetCell(
       "fam", "col",
-      bigtable::internal::as_bigendian64(bigtable::bigendian64_t(32234401)));
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(32234401)));
   ASSERT_TRUE(server_set.op.has_set_cell());
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
