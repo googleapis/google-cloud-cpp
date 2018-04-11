@@ -171,7 +171,7 @@ class Table {
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, std::string const&  app_profile_id,
+  Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
         std::string const& table_id, RPCRetryPolicy retry_policy,
         RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)

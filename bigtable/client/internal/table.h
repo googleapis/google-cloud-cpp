@@ -83,7 +83,8 @@ class Table {
 
   Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
         std::string const& table_id)
-      : client_(std::move(client)), app_profile_id_(std::move(app_profile_id)),
+      : client_(std::move(client)),
+        app_profile_id_(std::move(app_profile_id)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
@@ -102,8 +103,7 @@ class Table {
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
-        idempotent_mutation_policy_(
-            idempotent_mutation_policy.clone()) {}
+        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
   std::string const& table_name() const { return table_name_; }
 
