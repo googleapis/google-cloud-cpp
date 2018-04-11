@@ -98,7 +98,8 @@ class Table {
         std::string const& table_id, RPCRetryPolicy retry_policy,
         RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(std::move(client)), app_profile_id_(std::move(app_profile_id)),
+      : client_(std::move(client)),
+        app_profile_id_(std::move(app_profile_id)),
         table_name_(TableName(client_, table_id)),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
