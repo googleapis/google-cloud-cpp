@@ -51,6 +51,33 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
+TEST(MutationsTest, SetCellNumericValue) {
+  auto actual = bigtable::SetCell(
+      "family", "col", 1234_ms,
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(9876543210)));
+  ASSERT_TRUE(actual.op.has_set_cell());
+  EXPECT_EQ("family", actual.op.set_cell().family_name());
+  EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
+  EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
+  EXPECT_EQ(bigtable::bigendian64_t(9876543210).get(),
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
+                actual.op.set_cell().value())
+                .get());
+
+  auto server_set = bigtable::SetCell(
+      "fam", "col",
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(32234401)));
+  ASSERT_TRUE(server_set.op.has_set_cell());
+  EXPECT_EQ("fam", server_set.op.set_cell().family_name());
+  EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
+  EXPECT_EQ(bigtable::bigendian64_t(32234401).get(),
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
+                server_set.op.set_cell().value())
+                .get());
+  EXPECT_EQ(bigtable::ServerSetTimestamp(),
+            server_set.op.set_cell().timestamp_micros());
+}
+
 /// @test Verify that DeleteFromColumn() does not validates inputs.
 TEST(MutationsTest, DeleteFromColumnNoValidation) {
   auto reversed = bigtable::DeleteFromColumn("family", "col", 20, 0);

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/version.h"
 
 #include <chrono>
@@ -37,13 +38,24 @@ class Cell {
  public:
   /// Create a Cell and fill it with data.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, int64_t timestamp, std::string value,
+       std::string column_qualifier, std::int64_t timestamp, std::string value,
        std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
         value_(std::move(value)),
+        labels_(std::move(labels)) {}
+
+  /// Create a Cell and fill it with bigendian 64 bit value.
+  Cell(std::string row_key, std::string family_name,
+       std::string column_qualifier, std::int64_t timestamp,
+       bigtable::bigendian64_t value, std::vector<std::string> labels)
+      : row_key_(std::move(row_key)),
+        family_name_(std::move(family_name)),
+        column_qualifier_(std::move(column_qualifier)),
+        timestamp_(timestamp),
+        value_(bigtable::internal::AsBigEndian64(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
@@ -60,13 +72,26 @@ class Cell {
 
   /// Return the timestamp of this cell.
   std::chrono::microseconds timestamp() const {
-    std::chrono::microseconds timestamp(timestamp_);
-    return timestamp;
+    return std::chrono::microseconds(timestamp_);
   }
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
   std::string const& value() const { return value_; }
+
+  /**
+   * Interpret the value as an encoded `T` and return it.
+   *
+   * Google Cloud Bigtable stores arbitrary blobs in each cell. Some
+   * applications interpret these blobs as strings, other as encoded protos,
+   * and sometimes as BigEndian or LittleEndian integers. This is a helper
+   * function to convert the blob into a T value. It uses
+   * `bigtable::internal::encoder<>` to decode the value.
+   */
+  template <typename T>
+  T value_as() const {
+    return bigtable::internal::Encoder<T>::Decode(value_);
+  }
 
   /// Return the labels applied to this cell by label transformer read filters.
   std::vector<std::string> const& labels() const { return labels_; }
@@ -75,7 +100,7 @@ class Cell {
   std::string row_key_;
   std::string family_name_;
   std::string column_qualifier_;
-  int64_t timestamp_;
+  std::int64_t timestamp_;
   std::string value_;
   std::vector<std::string> labels_;
 };

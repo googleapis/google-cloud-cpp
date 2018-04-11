@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
 
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/version.h"
 
 #include <google/bigtable/v2/bigtable.pb.h>

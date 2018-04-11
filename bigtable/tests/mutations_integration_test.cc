@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/endian.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 namespace {
@@ -84,6 +85,61 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
 
   CheckEqualUnordered(created_cells, actual_cells);
 }
+
+/**
+ * Check if the numeric and string values inserted by SetCell are
+ * correctly inserted into Cloud Bigtable
+ */
+TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
+  std::string const table_name = "table-setcell-num-value";
+
+  auto table = CreateTable(table_name, table_config);
+  // Create a vector of cells which will be inserted into bigtable
+  std::string const row_key = "SetCellNumRowKey";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key,
+       column_family1,
+       "column_id1",
+       1000,
+       bigtable::bigendian64_t(2000),
+       {}},
+      {row_key,
+       column_family1,
+       "column_id1",
+       2000,
+       bigtable::bigendian64_t(3000),
+       {}},
+      {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
+      {row_key,
+       column_family2,
+       "column_id3",
+       1000,
+       bigtable::bigendian64_t(5000),
+       {}},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+  };
+
+  CreateCells(*table, created_cells);
+  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_name);
+
+  CheckEqualUnordered(created_cells, actual_cells);
+}
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+/**
+ * Check if assert is thrown while string value set and numeric value
+ * retrieve into Cloud Bigtable
+ */
+TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
+  std::string const table_name = "table-setcell-num-value-exception";
+  bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
+                          "string-value", {});
+  EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
+               std::range_error);
+}
+#endif
 
 /**
  * Verify that the values inserted by SetCell with server-side timestamp are
