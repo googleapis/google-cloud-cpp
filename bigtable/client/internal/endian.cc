@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/endian.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 #ifdef _MSC_VER
 #include <stdlib.h>
@@ -32,29 +33,26 @@ constexpr bool IsBigEndian() {
 /**
  * Convert BigEndian numeric value into a string of bytes and return it.
  */
-template <>
 std::string Encoder<bigtable::bigendian64_t>::Encode(
     bigtable::bigendian64_t const& value) {
   static_assert(std::numeric_limits<unsigned char>::digits ==
                     sizeof(bigtable::bigendian64_t),
                 "This code assumes char is an 8-bit number");
 
-  char big_endian_buffer[9] = "";
+  char big_endian_buffer[sizeof(bigtable::bigendian64_t) + 1] = "";
   if (IsBigEndian()) {
     std::memcpy(&big_endian_buffer, &value, sizeof(value));
   } else {
-    bigtable::bigendian64_t swapped_value = byteswap64(value);
+    bigtable::bigendian64_t swapped_value = ByteSwap64(value);
     std::memcpy(&big_endian_buffer, &swapped_value, sizeof(swapped_value));
   }
-  std::string big_endian_string(big_endian_buffer,
-                                sizeof(bigtable::bigendian64_t));
-  return big_endian_string;
+
+  return std::string(big_endian_buffer, sizeof(bigtable::bigendian64_t));
 }
 
 /**
  * Convert BigEndian string of bytes into BigEndian numeric value and return it.
  */
-template <>
 bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
     std::string const& value) {
   // Check if value is BigEndian 64-bit integer
@@ -65,12 +63,12 @@ bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
   std::memcpy(&big_endian_value, value.c_str(),
               sizeof(bigtable::bigendian64_t));
   if (!IsBigEndian()) {
-    big_endian_value = byteswap64(big_endian_value);
+    big_endian_value = ByteSwap64(big_endian_value);
   }
   return big_endian_value;
 }
 
-inline bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value) {
+inline bigtable::bigendian64_t ByteSwap64(bigtable::bigendian64_t value) {
 #ifdef _MSC_VER
   return bigtable::bigendian64_t(_byteswap_uint64(value.get()));
 #elif defined(__GNUC__) || defined(__clang__)
@@ -91,7 +89,7 @@ inline bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value) {
 #endif
 }
 
-std::string as_bigendian64(bigtable::bigendian64_t value) {
+std::string AsBigEndian64(bigtable::bigendian64_t value) {
   return bigtable::internal::Encoder<bigtable::bigendian64_t>::Encode(value);
 }
 

@@ -24,8 +24,14 @@ using bigendian64_t = internal::StrongType<std::int64_t, struct BigEndianType>;
 
 namespace internal {
 
-bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value);
-std::string as_bigendian64(bigtable::bigendian64_t value);
+template <>
+struct Encoder<bigtable::bigendian64_t> {
+  static std::string Encode(bigtable::bigendian64_t const& value);
+  static bigtable::bigendian64_t Decode(std::string const& value);
+};
+
+bigtable::bigendian64_t ByteSwap64(bigtable::bigendian64_t value);
+std::string AsBigEndian64(bigtable::bigendian64_t value);
 
 }  // namespace internal
 

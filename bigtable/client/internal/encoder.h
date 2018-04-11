@@ -16,14 +16,9 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ENCODER_H_
 
 #include "bigtable/client/internal/strong_type.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include <limits>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-// using bigendian64_t = internal::StrongType<std::int64_t, struct
-// BigEndianType> ;
-
 namespace internal {
 
 /**
@@ -117,12 +112,7 @@ struct Encoder {
   static T Decode(std::string const& value);
 };
 
-// bigtable::bigendian64_t byteswap64(bigtable::bigendian64_t value) ;
-
 }  // namespace internal
-
-// std::string as_bigendian64(bigtable::bigendian64_t value) ;
-
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 

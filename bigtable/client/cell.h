@@ -55,7 +55,7 @@ class Cell {
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        value_(bigtable::internal::as_bigendian64(value)),
+        value_(bigtable::internal::AsBigEndian64(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
