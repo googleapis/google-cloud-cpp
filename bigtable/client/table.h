@@ -170,13 +170,13 @@ class Table {
    *     can also create your own policies that combine time and error counts.
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-      typename IdempotentMutationPolicy>
+            typename IdempotentMutationPolicy>
   Table(std::shared_ptr<DataClient> client, std::string const&  app_profile_id,
         std::string const& table_id, RPCRetryPolicy retry_policy,
         RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
-      : impl_(std::move(client), app_profile_id,
-              table_id, std::move(retry_policy), std::move(backoff_policy),
+      : impl_(std::move(client), app_profile_id, table_id,
+              std::move(retry_policy), std::move(backoff_policy),
               std::move(idempotent_mutation_policy)) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
