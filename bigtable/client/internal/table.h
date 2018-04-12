@@ -81,7 +81,7 @@ class Table {
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
-  Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
