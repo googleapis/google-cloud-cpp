@@ -17,6 +17,8 @@
 
 #ifdef _MSC_VER
 #include <stdlib.h>
+#elif defined(__APPLE__)
+#include <libkern/OSByteOrder.h>
 #elif defined(__GNUC__) || defined(__clang__)
 #include <byteswap.h>
 #endif
@@ -71,6 +73,8 @@ bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
 inline bigtable::bigendian64_t ByteSwap64(bigtable::bigendian64_t value) {
 #ifdef _MSC_VER
   return bigtable::bigendian64_t(_byteswap_uint64(value.get()));
+#elif defined(__APPLE__)
+  return bigtable::bigendian64_t(OSSwapInt64(value.get()));
 #elif defined(__GNUC__) || defined(__clang__)
   return bigtable::bigendian64_t(__builtin_bswap64(value.get()));
 #else
