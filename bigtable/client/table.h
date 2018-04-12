@@ -56,7 +56,7 @@ class Table {
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
-  Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
       : impl_(std::move(client), app_profile_id, table_id) {}
 
@@ -171,7 +171,7 @@ class Table {
    */
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, std::string const& app_profile_id,
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id, RPCRetryPolicy retry_policy,
         RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
