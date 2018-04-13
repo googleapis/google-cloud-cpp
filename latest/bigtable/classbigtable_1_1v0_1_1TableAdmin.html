@@ -121,6 +121,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae58bc777024d5b68c6abbb04ac05e37e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ae58bc777024d5b68c6abbb04ac05e37e">CheckConsistency</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
 <tr class="memdesc:ae58bc777024d5b68c6abbb04ac05e37e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table.  <a href="#ae58bc777024d5b68c6abbb04ac05e37e">More...</a><br /></td></tr>
 <tr class="separator:ae58bc777024d5b68c6abbb04ac05e37e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a351081fbe08adc5b380e169d660083"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a5a351081fbe08adc5b380e169d660083">DeleteSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
+<tr class="memdesc:a5a351081fbe08adc5b380e169d660083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a snapshot.  <a href="#a5a351081fbe08adc5b380e169d660083">More...</a><br /></td></tr>
+<tr class="separator:a5a351081fbe08adc5b380e169d660083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
@@ -323,6 +326,49 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </dd>
 </dl>
 <p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e">CreateTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">      table_id, bigtable::TableConfig(</div><div class="line">                    {{<span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                     {<span class="stringliteral">&quot;foo&quot;</span>, bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">                    {}));</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a5a351081fbe08adc5b380e169d660083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a351081fbe08adc5b380e169d660083">&#9670;&nbsp;</a></span>DeleteSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bigtable::v0::TableAdmin::DeleteSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::SnapshotId const &amp;&#160;</td>
+          <td class="paramname"><em>snapshot_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Delete a snapshot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the id of the cluster to which snapshot belongs. </td></tr>
+    <tr><td class="paramname">snapshot_id</td><td>the id of the snapshot which needs to be deleted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ae670a1488c00ef8b4963ea927bd6bacc"></a>
