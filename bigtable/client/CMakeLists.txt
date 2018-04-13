@@ -25,6 +25,8 @@ add_library(bigtable_client
         cell.h
         client_options.h
         client_options.cc
+        cluster_config.h
+        cluster_config.cc
         column_family.h
         data_client.h
         data_client.cc
@@ -138,6 +140,7 @@ set(bigtable_client_unit_tests
         admin_client_test.cc
         cell_test.cc
         client_options_test.cc
+        cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
         filters_test.cc
