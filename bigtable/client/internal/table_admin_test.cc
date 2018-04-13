@@ -712,3 +712,49 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   tested.GetSnapshot(cluster_id, snapshot_id, status);
   EXPECT_FALSE(status.ok());
 }
+
+/// @test Verify that bigtable::TableAdmin::DeleteSnapshot works as expected.
+TEST_F(TableAdminTest, DeleteSnapshotSimple) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+    )""";
+  auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  grpc::Status status;
+  // After all the setup, make the actual call we want to test.
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.DeleteSnapshot(cluster_id, snapshot_id, status);
+  EXPECT_TRUE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::DeleteSnapshot` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, DeleteSnapshotFailure) {
+  using namespace ::testing;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+  tested.DeleteSnapshot(cluster_id, snapshot_id, status);
+  EXPECT_FALSE(status.ok());
+}

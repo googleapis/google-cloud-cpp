@@ -120,5 +120,14 @@ bool TableAdmin::CheckConsistency(
   return consistent;
 }
 
+void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                                bigtable::SnapshotId const& snapshot_id) {
+  grpc::Status status;
+  impl_.DeleteSnapshot(cluster_id, snapshot_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

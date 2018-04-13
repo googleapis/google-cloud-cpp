@@ -193,6 +193,21 @@ bool TableAdmin::CheckConsistency(
   return response.consistent();
 }
 
+void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                                bigtable::SnapshotId const& snapshot_id,
+                                grpc::Status& status) {
+  btproto::DeleteSnapshotRequest request;
+  request.set_name(SnapshotName(cluster_id, snapshot_id));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+
+  // This API is not idempotent, lets call it without retry
+  auto error_message = "DeleteSnapshot(" + request.name() + ")";
+  RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
+                             metadata_update_policy, &StubType::DeleteSnapshot,
+                             request, error_message.c_str(), status);
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

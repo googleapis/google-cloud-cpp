@@ -784,3 +784,54 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/// @test Verify that bigtable::TableAdmin::DeleteSnapshot works as expected.
+TEST_F(TableAdminTest, DeleteSnapshotSimple) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+)""";
+  auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.DeleteSnapshot(cluster_id, snapshot_id);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::DeleteSnapshot` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, DeleteSnapshotFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.DeleteSnapshot(cluster_id, snapshot_id),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
