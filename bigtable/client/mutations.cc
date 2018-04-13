@@ -40,14 +40,14 @@ Mutation SetCell(std::string family, std::string column, std::string value) {
 }
 
 Mutation DeleteFromColumn(std::string family, std::string column,
-                          std::int64_t timestamp_begin,
-                          std::int64_t timestamp_end) {
+                          std::chrono::duration<std::int64_t> timestamp_begin,
+                          std::chrono::duration<std::int64_t> timestamp_end) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin);
-  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end);
+  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin.count());
+  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end.count());
   return m;
 }
 
@@ -59,23 +59,25 @@ Mutation DeleteFromColumn(std::string family, std::string column) {
   return m;
 }
 
-Mutation DeleteFromColumnStartingFrom(std::string family, std::string column,
-                                      std::int64_t timestamp_begin) {
+Mutation DeleteFromColumnStartingFrom(
+    std::string family, std::string column,
+    std::chrono::duration<std::int64_t> timestamp_begin) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin);
+  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin.count());
   return m;
 }
 
-Mutation DeleteFromColumnEndingAt(std::string family, std::string column,
-                                  std::int64_t timestamp_end) {
+Mutation DeleteFromColumnEndingAt(
+    std::string family, std::string column,
+    std::chrono::duration<std::int64_t> timestamp_end) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end);
+  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end.count());
   return m;
 }
 

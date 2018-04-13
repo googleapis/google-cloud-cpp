@@ -22,6 +22,7 @@
 #include <google/bigtable/v2/data.pb.h>
 #include <grpc++/grpc++.h>
 
+#include <chrono>
 #include <type_traits>
 
 #include "bigtable/client/internal/conjunction.h"
@@ -75,16 +76,18 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
 
 /// Delete only within the timestamp range provided.
 Mutation DeleteFromColumn(std::string family, std::string column,
-                          std::int64_t timestamp_begin,
-                          std::int64_t timestamp_end);
+                          std::chrono::duration<std::int64_t> timestamp_begin,
+                          std::chrono::duration<std::int64_t> timestamp_end);
 /// Delete all the values for the column.
 Mutation DeleteFromColumn(std::string family, std::string column);
 /// Delete starting from, and including, @a timestamp_begin.
-Mutation DeleteFromColumnStartingFrom(std::string family, std::string column,
-                                      std::int64_t timestamp_begin);
+Mutation DeleteFromColumnStartingFrom(
+    std::string family, std::string column,
+    std::chrono::duration<std::int64_t> timestamp_begin);
 /// Delete up to, but excluding, @a timestamp_end.
-Mutation DeleteFromColumnEndingAt(std::string family, std::string column,
-                                  std::int64_t timestamp_end);
+Mutation DeleteFromColumnEndingAt(
+    std::string family, std::string column,
+    std::chrono::duration<std::int64_t> timestamp_end);
 //@}
 
 /// Create a mutation to delete all the cells in a column family.
