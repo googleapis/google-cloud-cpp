@@ -18,6 +18,7 @@
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/internal/instance_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
+#include <future>
 #include <memory>
 
 namespace bigtable {
@@ -54,11 +55,14 @@ class InstanceAdmin {
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
   std::string const& project_id() const { return impl_.project_id(); }
 
+  std::future<google::bigtable::admin::v2::Instance> CreateInstance(
+      std::string instance_id, std::string display_name);
+
   /**
    * Return the list of instances in the project.
    * @return
    */
-  std::vector<::google::bigtable::admin::v2::Instance> ListInstances();
+  std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
   InstanceAdmin(InstanceAdmin const&) = delete;
   InstanceAdmin operator=(InstanceAdmin const&) = delete;

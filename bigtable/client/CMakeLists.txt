@@ -36,6 +36,8 @@ add_library(bigtable_client
         instance_admin_client.cc
         instance_admin.h
         instance_admin.cc
+        instance_config.h
+        instance_config.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
