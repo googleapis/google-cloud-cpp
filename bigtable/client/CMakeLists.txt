@@ -149,6 +149,7 @@ set(bigtable_client_unit_tests
         idempotent_mutation_policy_test.cc
         instance_admin_client_test.cc
         instance_admin_test.cc
+        instance_config_test.cc
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
