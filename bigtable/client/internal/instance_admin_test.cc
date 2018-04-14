@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/instance_admin.h"
+#include "bigtable/client/testing/mock_instance_admin_client.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -21,14 +22,7 @@
 namespace {
 namespace btproto = ::google::bigtable::admin::v2;
 
-class MockAdminClient : public bigtable::InstanceAdminClient {
- public:
-  MOCK_CONST_METHOD0(project, std::string const&());
-  MOCK_METHOD0(
-      Stub, std::shared_ptr<btproto::BigtableInstanceAdmin::StubInterface>());
-  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
-  MOCK_METHOD0(reset, void());
-};
+using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 
 std::string const kProjectId = "the-project";
 

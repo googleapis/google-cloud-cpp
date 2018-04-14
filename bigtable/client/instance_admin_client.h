@@ -46,6 +46,14 @@ class InstanceAdminClient {
   Stub() = 0;
 
   /**
+   * Return a new channel to handle admin operations.
+   *
+   * Intended to access rarely used services in the same endpoints as the
+   * Bigtable admin interfaces, for example, the google.longrunning.Operations.
+   */
+  virtual std::shared_ptr<grpc::Channel> Channel() = 0;
+
+  /**
    * Reset and create a new Stub().
    *
    * Currently this is only used in testing.  In the future, we expect this,

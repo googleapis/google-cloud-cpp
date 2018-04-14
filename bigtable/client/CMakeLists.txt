@@ -123,6 +123,7 @@ add_library(bigtable_client_testing
         testing/internal_table_test_fixture.h
         testing/internal_table_test_fixture.cc
         testing/mock_data_client.h
+        testing/mock_instance_admin_client.h
         testing/inprocess_data_client.h
         testing/inprocess_admin_client.h
         testing/mock_response_stream.h

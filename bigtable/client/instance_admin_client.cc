@@ -51,6 +51,7 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
 
   std::string const& project() const override { return project_; }
   AdminStubPtr Stub() override { return impl_.Stub(); }
+  Impl::ChannelPtr Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
   void on_completion(grpc::Status const& status) override {}
 

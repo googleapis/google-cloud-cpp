@@ -32,3 +32,21 @@ TEST(InstanceAdminClientTest, Default) {
   EXPECT_TRUE(stub1);
   EXPECT_NE(stub0.get(), stub1.get());
 }
+
+TEST(InstanceAdminClientTest, Channel) {
+  auto admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      "test-project", bigtable::ClientOptions().set_connection_pool_size(1));
+  ASSERT_TRUE(admin_client);
+  EXPECT_EQ("test-project", admin_client->project());
+
+  auto channel0 = admin_client->Channel();
+  EXPECT_TRUE(channel0);
+
+  auto channel1 = admin_client->Channel();
+  EXPECT_EQ(channel0.get(), channel1.get());
+
+  admin_client->reset();
+  channel1 = admin_client->Channel();
+  EXPECT_TRUE(channel1);
+  EXPECT_NE(channel0.get(), channel1.get());
+}

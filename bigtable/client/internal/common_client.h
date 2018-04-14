@@ -39,10 +39,11 @@ class CommonClient {
   //@{
   /// @name Type traits.
   using StubPtr = std::shared_ptr<typename Interface::StubInterface>;
+  using ChannelPtr = std::shared_ptr<grpc::Channel>;
   //@}
 
   CommonClient(bigtable::ClientOptions options)
-      : options_(std::move(options)), current_stub_index_(0) {}
+      : options_(std::move(options)), current_index_(0) {}
 
   /**
    * Reset the channel and stub.
@@ -58,43 +59,65 @@ class CommonClient {
 
   StubPtr Stub() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (stubs_.empty()) {
-      // Release the lock while making remote calls.  gRPC uses the current
-      // thread to make remote connections (and probably authenticate), holding
-      // a lock for long operations like that is a bad practice.  Releasing
-      // the lock here can result in wasted work, but that is a smaller problem
-      // than a deadlock or an unbounded priority inversion.
-      // Note that only one connection per application is created by gRPC, even
-      // if multiple threads are calling this function at the same time. gRPC
-      // only opens one socket per destination+attributes combo, we artificially
-      // introduce attributes in the implementation of CreateChannelPool() to
-      // create one socket per element in the pool.
-      lk.unlock();
-      auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
-      std::vector<StubPtr> tmp;
-      std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
-                     [](std::shared_ptr<grpc::Channel> ch) {
-                       return Interface::NewStub(ch);
-                     });
-      lk.lock();
-      if (stubs_.empty()) {
-        tmp.swap(stubs_);
-        current_stub_index_ = 0;
-      }
-    }
-    auto stub = stubs_[current_stub_index_];
-    // Round robin through the connections.
-    if (++current_stub_index_ >= stubs_.size()) {
-      current_stub_index_ = 0;
-    }
+    CheckConnections(lk);
+    auto stub = stubs_[GetIndex(lk)];
     return stub;
+  }
+
+  ChannelPtr Channel() {
+    std::unique_lock<std::mutex> lk(mu_);
+    CheckConnections(lk);
+    auto channel = channels_[GetIndex(lk)];
+    return channel;
+  }
+
+ private:
+  /// Make sure the connections exit, and create them if needed.
+  void CheckConnections(std::unique_lock<std::mutex>& lk) {
+    if (not stubs_.empty()) {
+      return;
+    }
+    // Release the lock while making remote calls.  gRPC uses the current
+    // thread to make remote connections (and probably authenticate), holding
+    // a lock for long operations like that is a bad practice.  Releasing
+    // the lock here can result in wasted work, but that is a smaller problem
+    // than a deadlock or an unbounded priority inversion.
+    // Note that only one connection per application is created by gRPC, even
+    // if multiple threads are calling this function at the same time. gRPC
+    // only opens one socket per destination+attributes combo, we artificially
+    // introduce attributes in the implementation of CreateChannelPool() to
+    // create one socket per element in the pool.
+    lk.unlock();
+    auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
+    std::vector<StubPtr> tmp;
+    std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
+                   [](std::shared_ptr<grpc::Channel> ch) {
+                     return Interface::NewStub(ch);
+                   });
+    lk.lock();
+    if (stubs_.empty()) {
+      channels.swap(channels_);
+      tmp.swap(stubs_);
+      current_index_ = 0;
+    }
+  }
+
+  /// Get the current index for round-robin over connections.
+  std::size_t GetIndex(std::unique_lock<std::mutex>& lk) {
+    std::size_t current = current_index_++;
+    // Round robin through the connections.
+    if (current_index_ >= stubs_.size()) {
+      current_index_ = 0;
+    }
+    return current;
   }
 
  private:
   std::mutex mu_;
   ClientOptions options_;
+  std::vector<ChannelPtr> channels_;
   std::vector<StubPtr> stubs_;
-  std::size_t current_stub_index_;
+  std::size_t current_index_;
 };
 
 }  // namespace internal
