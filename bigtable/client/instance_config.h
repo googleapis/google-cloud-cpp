@@ -60,6 +60,7 @@ class InstanceConfig {
     (*proto_.mutable_instance()->mutable_labels())[key] = value;
     return *this;
   }
+
   InstanceConfig& emplace_label(std::string const& key, std::string&& value) {
     (*proto_.mutable_instance()->mutable_labels())[key] = std::move(value);
     return *this;
