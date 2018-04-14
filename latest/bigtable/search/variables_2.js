@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['millis',['MILLIS',['../classbigtable_1_1v0_1_1TableConfig.html#a03141fbe6dc2d31ea0f7086da7e6c74d',1,'bigtable::v0::TableConfig']]]
+  ['gitrev',['gitrev',['../namespacebigtable_1_1v0.html#ab1d1fa2d38a4a3487a19dd5a6bd21a28',1,'bigtable::v0']]]
 ];

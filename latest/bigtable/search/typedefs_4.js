@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tableid',['TableId',['../namespacebigtable_1_1v0.html#abc96c2c6fa996b6d72fc1360a074e7e6',1,'bigtable::v0']]],
-  ['timestampgranularity',['TimestampGranularity',['../classbigtable_1_1v0_1_1TableConfig.html#a84929395dfbe1dbcd4e6d4abbddee46d',1,'bigtable::v0::TableConfig']]]
+  ['snapshotid',['SnapshotId',['../namespacebigtable_1_1v0.html#affb558a3673c3c46e27c2a6659037902',1,'bigtable::v0']]],
+  ['storagetype',['StorageType',['../classbigtable_1_1v0_1_1ClusterConfig.html#a5d46f87cc2bc237dd9c31098ed56f4cf',1,'bigtable::v0::ClusterConfig']]]
 ];

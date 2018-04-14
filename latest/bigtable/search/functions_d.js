@@ -9,6 +9,7 @@ var searchData=
   ['set_5fconnection_5fpool_5fsize',['set_connection_pool_size',['../classbigtable_1_1v0_1_1ClientOptions.html#ad1c54755268568c21045c8fa187c01cb',1,'bigtable::v0::ClientOptions']]],
   ['set_5fdata_5fendpoint',['set_data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a081925cdcd39b29f8e319a3220e14366',1,'bigtable::v0::ClientOptions']]],
   ['set_5ftimestamp_5fgranularity',['set_timestamp_granularity',['../classbigtable_1_1v0_1_1TableConfig.html#a60b7853e3e5ae4b0bcca55ba4bc4f6e8',1,'bigtable::v0::TableConfig']]],
+  ['set_5ftype',['set_type',['../classbigtable_1_1v0_1_1InstanceConfig.html#a06144862e3b32dae347a2e8f330224db',1,'bigtable::v0::InstanceConfig']]],
   ['setcell',['SetCell',['../namespacebigtable_1_1v0.html#aef996eb933092af76b2709fc37b70e36',1,'bigtable::v0::SetCell(std::string family, std::string column, std::chrono::milliseconds timestamp, std::string value)'],['../namespacebigtable_1_1v0.html#a44708fa951907ec1f0a8bca148b7dff5',1,'bigtable::v0::SetCell(std::string family, std::string column, std::string value)']]],
   ['setcompressionalgorithm',['SetCompressionAlgorithm',['../classbigtable_1_1v0_1_1ClientOptions.html#aea362ad4d4c8333d3ed516c38d1bc49f',1,'bigtable::v0::ClientOptions']]],
   ['setcredentials',['SetCredentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a789dd24997ee0e6cd4722ae00ba2416f',1,'bigtable::v0::ClientOptions']]],
