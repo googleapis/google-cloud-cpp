@@ -25,6 +25,8 @@ add_library(bigtable_client
         cell.h
         client_options.h
         client_options.cc
+        cluster_config.h
+        cluster_config.cc
         column_family.h
         data_client.h
         data_client.cc
@@ -36,6 +38,8 @@ add_library(bigtable_client
         instance_admin_client.cc
         instance_admin.h
         instance_admin.cc
+        instance_config.h
+        instance_config.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
@@ -136,6 +140,7 @@ set(bigtable_client_unit_tests
         admin_client_test.cc
         cell_test.cc
         client_options_test.cc
+        cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
         filters_test.cc
@@ -144,6 +149,7 @@ set(bigtable_client_unit_tests
         idempotent_mutation_policy_test.cc
         instance_admin_client_test.cc
         instance_admin_test.cc
+        instance_config_test.cc
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
