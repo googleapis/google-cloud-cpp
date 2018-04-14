@@ -27,12 +27,10 @@ namespace noex {
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  auto error_message = "CreateTable(" + request.table_id() + ")";
-
   // This API is not idempotent, lets call it without retry
   return RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CreateTable, request, error_message.c_str(), status);
+      &StubType::CreateTable, request, "CreateTable", status);
 }
 
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
@@ -40,8 +38,6 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
-
-  std::string msg = "TableAdmin(" + instance_name() + ")::ListTables()";
 
   // Build the RPC request, try to minimize copying.
   std::vector<btproto::Table> result;
@@ -54,7 +50,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 
     auto response = RpcUtils::CallWithRetryBorrow(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-        &StubType::ListTables, request, msg.c_str(), status);
+        &StubType::ListTables, request, "TableAdmin", status);
     if (not status.ok()) {
       return result;
     }
@@ -76,11 +72,9 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "GetTable(" + request.name() + ")";
-  return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
-                                 rpc_backoff_policy_->clone(),
-                                 metadata_update_policy, &StubType::GetTable,
-                                 request, error_message.c_str(), status);
+  return RpcUtils::CallWithRetry(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy, &StubType::GetTable, request, "GetTable", status);
 }
 
 void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
@@ -90,10 +84,9 @@ void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
       instance_name(), MetadataParamTypes::NAME, table_id);
 
   // This API is not idempotent, lets call it without retry
-  auto error_message = "DeleteTable(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
                              metadata_update_policy, &StubType::DeleteTable,
-                             request, error_message.c_str(), status);
+                             request, "DeleteTable", status);
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
@@ -106,10 +99,9 @@ void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
   }
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "ModifyColumnFamilies(" + request.name() + ")";
   return RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy,
-      &StubType::ModifyColumnFamilies, request, error_message.c_str(), status);
+      &StubType::ModifyColumnFamilies, request, "ModifyColumnFamilies", status);
 }
 
 void TableAdmin::DropRowsByPrefix(std::string table_id,
@@ -120,10 +112,9 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
   request.set_row_key_prefix(std::move(row_key_prefix));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "DropRowsByPrefix(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
                              metadata_update_policy, &StubType::DropRowRange,
-                             request, error_message.c_str(), status);
+                             request, "DropByPrefix", status);
 }
 
 void TableAdmin::DropAllRows(std::string table_id, grpc::Status& status) {
@@ -132,10 +123,9 @@ void TableAdmin::DropAllRows(std::string table_id, grpc::Status& status) {
   request.set_delete_all_data_from_table(true);
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto error_message = "DropAllRows(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
                              metadata_update_policy, &StubType::DropRowRange,
-                             request, error_message.c_str(), status);
+                             request, "DropAllRows", status);
 }
 
 std::string TableAdmin::InstanceName() const {
@@ -150,12 +140,10 @@ std::string TableAdmin::InstanceName() const {
 
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
-  auto error_message = "GetSnapshot(" + request.name() + ")";
-
   return RpcUtils::CallWithRetry(*client_, rpc_retry_policy_->clone(),
                                  rpc_backoff_policy_->clone(),
                                  metadata_update_policy, &StubType::GetSnapshot,
-                                 request, error_message.c_str(), status);
+                                 request, "GetSnapshot", status);
 }
 
 std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
@@ -165,12 +153,10 @@ std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
 
-  auto error_message = "GenerateConsistencyToken(" + request.name() + ")";
-
   auto response = RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       metadata_update_policy, &StubType::GenerateConsistencyToken, request,
-      error_message.c_str(), status);
+      "GenerateConsistencyToken", status);
 
   return *response.mutable_consistency_token();
 }
@@ -184,12 +170,10 @@ bool TableAdmin::CheckConsistency(
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id.get());
 
-  auto error_message = "CheckConsistency(" + request.name() + ")";
-
   auto response = RpcUtils::CallWithRetry(
       *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       metadata_update_policy, &StubType::CheckConsistency, request,
-      error_message.c_str(), status);
+      "CheckConsistency", status);
   return response.consistent();
 }
 
@@ -202,10 +186,9 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
       instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
 
   // This API is not idempotent, lets call it without retry
-  auto error_message = "DeleteSnapshot(" + request.name() + ")";
   RpcUtils::CallWithoutRetry(*client_, rpc_retry_policy_->clone(),
                              metadata_update_policy, &StubType::DeleteSnapshot,
-                             request, error_message.c_str(), status);
+                             request, "DeleteSnapshot", status);
 }
 
 }  // namespace noex
