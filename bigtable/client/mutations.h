@@ -75,19 +75,54 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  */
 
 /// Delete only within the timestamp range provided.
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 Mutation DeleteFromColumn(std::string family, std::string column,
-                          std::chrono::duration<std::int64_t> timestamp_begin,
-                          std::chrono::duration<std::int64_t> timestamp_end);
-/// Delete all the values for the column.
-Mutation DeleteFromColumn(std::string family, std::string column);
+                          std::chrono::duration<Rep1, Period1> timestamp_begin,
+                          std::chrono::duration<Rep2, Period2> timestamp_end) {
+  Mutation m;
+  using namespace std::chrono;
+  auto& d = *m.op.mutable_delete_from_column();
+  d.set_family_name(std::move(family));
+  d.set_column_qualifier(std::move(column));
+  d.mutable_time_range()->set_start_timestamp_micros(
+      duration_cast<microseconds>(timestamp_begin).count());
+  d.mutable_time_range()->set_end_timestamp_micros(
+      duration_cast<microseconds>(timestamp_end).count());
+  return m;
+}
+
 /// Delete starting from, and including, @a timestamp_begin.
+template <typename Rep1, typename Period1>
 Mutation DeleteFromColumnStartingFrom(
     std::string family, std::string column,
-    std::chrono::duration<std::int64_t> timestamp_begin);
+    std::chrono::duration<Rep1, Period1> timestamp_begin) {
+  Mutation m;
+  using namespace std::chrono;
+  auto& d = *m.op.mutable_delete_from_column();
+  d.set_family_name(std::move(family));
+  d.set_column_qualifier(std::move(column));
+  d.mutable_time_range()->set_start_timestamp_micros(
+      duration_cast<microseconds>(timestamp_begin).count());
+  return m;
+}
+
 /// Delete up to, but excluding, @a timestamp_end.
+template <typename Rep2, typename Period2>
 Mutation DeleteFromColumnEndingAt(
     std::string family, std::string column,
-    std::chrono::duration<std::int64_t> timestamp_end);
+    std::chrono::duration<Rep2, Period2> timestamp_end) {
+  Mutation m;
+  using namespace std::chrono;
+  auto& d = *m.op.mutable_delete_from_column();
+  d.set_family_name(std::move(family));
+  d.set_column_qualifier(std::move(column));
+  d.mutable_time_range()->set_end_timestamp_micros(
+      duration_cast<microseconds>(timestamp_end).count());
+  return m;
+}
+
+/// Delete all the values for the column.
+Mutation DeleteFromColumn(std::string family, std::string column);
 //@}
 
 /// Create a mutation to delete all the cells in a column family.
