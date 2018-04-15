@@ -33,13 +33,10 @@ class InstanceAdminTest : public ::testing::Test {
     using namespace ::testing;
 
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, Stub()).WillRepeatedly(Return(instance_admin_stub_));
   }
 
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
-  std::shared_ptr<btproto::MockBigtableInstanceAdminStub> instance_admin_stub_ =
-      std::make_shared<btproto::MockBigtableInstanceAdminStub>();
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
@@ -161,9 +158,8 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillOnce(Invoke(mock_list_instances));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -187,15 +183,12 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch0))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch1));
-  // We expect the InstanceAdmin to make 5 calls and to let the client know
-  // about them.
-  EXPECT_CALL(*client_, on_completion(_)).Times(5);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -217,15 +210,14 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::InstanceAdmin tested(client_);
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
-      .WillRepeatedly(
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
+      .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   // We expect the InstanceAdmin to make a call to let the client know the
   // request failed.
   grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
 }

@@ -24,13 +24,13 @@ namespace testing {
 class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
  public:
   MOCK_CONST_METHOD0(project, std::string const&());
-  MOCK_METHOD0(
-      Stub,
-      std::shared_ptr<
-          google::bigtable::admin::v2::BigtableInstanceAdmin::StubInterface>());
   MOCK_METHOD0(Channel, std::shared_ptr<grpc::Channel>());
-  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
   MOCK_METHOD0(reset, void());
+  MOCK_METHOD3(
+      ListInstances,
+      grpc::Status(grpc::ClientContext*,
+                   google::bigtable::admin::v2::ListInstancesRequest const&,
+                   google::bigtable::admin::v2::ListInstancesResponse*));
 };
 
 }  // namespace testing

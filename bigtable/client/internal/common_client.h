@@ -27,7 +27,15 @@ std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
     std::string const& endpoint, bigtable::ClientOptions const& options);
 
 /**
- * Refactor implementation of `bigtable::AdminClient` and `bigtable::DataClient`
+ * Refactor implementation of `bigtable::{Data,Admin,InstanceAdmin}Client`.
+ *
+ * All the clients need to keep a collection (sometimes with a single element)
+ * of channels, update the collection when needed and round-robin across the
+ * channels. At least `bigtable::DataClient` needs to optimize the creation of
+ * the stub objects.
+ *
+ * The class exposes the channels because they are needed for clients that
+ * use more than one type of Stub.
  *
  * @tparam Traits encapsulates variations between the clients.  Currently, which
  *   `*_endpoint()` member function is used.
@@ -57,6 +65,7 @@ class CommonClient {
     stubs_.clear();
   }
 
+  /// Return the next Stub to make a call.
   StubPtr Stub() {
     std::unique_lock<std::mutex> lk(mu_);
     CheckConnections(lk);
@@ -64,6 +73,7 @@ class CommonClient {
     return stub;
   }
 
+  /// Return the next Channel to make a call.
   ChannelPtr Channel() {
     std::unique_lock<std::mutex> lk(mu_);
     CheckConnections(lk);
