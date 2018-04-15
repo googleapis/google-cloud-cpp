@@ -17,10 +17,8 @@
 
 // clang-format off
 #if defined(__clang__)
-# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wc++14-extensions"
 #elif defined(__GNUC__)
-# pragma GCC diagnostic push
 #elif defined(_MSC_VER)
-# pragma warning(push)
 #endif
 // clang-format on

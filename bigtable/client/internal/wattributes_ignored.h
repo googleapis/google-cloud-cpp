@@ -17,10 +17,9 @@
 
 // clang-format off
 #if defined(__clang__)
-# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wattributes"
 #elif defined(__GNUC__)
-# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wattributes"
 #elif defined(_MSC_VER)
-# pragma warning(push)
 #endif
 // clang-format on

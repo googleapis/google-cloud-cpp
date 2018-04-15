@@ -691,7 +691,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 }
 
 #include "bigtable/client/internal/diagnostic_push.h"
-#include "bigtable/client/internal/wnoerror_deprecated.h"
+#include "bigtable/client/internal/wdeprecated_as_warnings.h"
 
 /**
  * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.

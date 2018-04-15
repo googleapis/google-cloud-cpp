@@ -14,10 +14,16 @@
 
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
+// clang-format off
+#include "bigtable/client/internal/diagnostic_push.h"
+// clang-format on
 
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
+#include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/internal/wcxx14_extentions_ignored.h"
+#include "bigtable/client/internal/wattributes_ignored.h"
 #include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
@@ -275,4 +281,7 @@ class TableAdmin {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
+// clang-format off
+#include "bigtable/client/internal/diagnostic_pop.h"
+// clang-format on
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_

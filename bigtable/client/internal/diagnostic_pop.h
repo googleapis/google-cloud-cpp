@@ -15,14 +15,12 @@
 // This file is special, it should not have include guards or #pragma once
 // directives
 
+// clang-format off
 #if defined(__clang__)
-#pragma clang diagnostic pop
+# pragma clang diagnostic pop
+#elif defined(__GNUC__)
+# pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+# pragma warning(pop)
 #endif
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
+// clang-format on
