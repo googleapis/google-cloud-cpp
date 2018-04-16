@@ -52,7 +52,7 @@ struct MockRpcFactory {
   static std::function<SignatureType> Create(std::string expected_id) {
     return std::function<SignatureType>(
         [expected_id](grpc::ClientContext* ctx, RequestType const& request,
-                           ResponseType* response) {
+                      ResponseType* response) {
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
           std::string delta;
@@ -363,11 +363,10 @@ TEST_F(TableApplyTest, Apply_App_Profile_Id) {
   std::string expected_id = "test-id";
   auto mock = MockRpcFactory<btproto::MutateRowRequest,
                              btproto::MutateRowResponse>::Create(expected_id);
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
-      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _)).WillOnce(Invoke(mock));
 
-  bigtable::noex::Table table = bigtable::noex::Table(
-      client_, "test-id", kTableId);
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, "test-id", kTableId);
   auto result = table.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
   EXPECT_TRUE(result.empty());
@@ -750,8 +749,8 @@ TEST_F(TableApplyTest, CheckAndMutateRow_App_Profile_Id) {
   EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
       .WillOnce(Invoke(mock));
 
-  bigtable::noex::Table table = bigtable::noex::Table(
-      client_, "test-id", kTableId);
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, "test-id", kTableId);
   grpc::Status status;
   table.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -812,9 +811,8 @@ TEST_F(TableApplyTest, SampleRowKeys_App_Profile_Id) {
   std::string expected_id = "test-id";
   auto reader = new MockSampleRowKeysReader;
   EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
-      .WillOnce(
-          Invoke([expected_id, reader](grpc::ClientContext* ctx,
-                                       btproto::SampleRowKeysRequest request) {
+      .WillOnce(Invoke([expected_id, reader](
+          grpc::ClientContext* ctx, btproto::SampleRowKeysRequest request) {
         EXPECT_EQ(expected_id, request.app_profile_id());
         return reader;
       }));
@@ -822,8 +820,8 @@ TEST_F(TableApplyTest, SampleRowKeys_App_Profile_Id) {
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  bigtable::noex::Table table = bigtable::noex::Table(
-      client_, "test-id", kTableId);
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, "test-id", kTableId);
   grpc::Status status;
   table.SampleRows<>(status);
   EXPECT_TRUE(status.ok());
