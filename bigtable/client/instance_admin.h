@@ -17,7 +17,6 @@
 
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/internal/instance_admin.h"
-#include "bigtable/client/internal/unary_rpc_utils.h"
 #include <memory>
 
 namespace bigtable {

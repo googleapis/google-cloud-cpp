@@ -42,13 +42,16 @@ class AdminClient {
   /// The project that this AdminClient works on.
   virtual std::string const& project() const = 0;
 
-  /// Return a new stub to handle admin operations.
-  virtual std::shared_ptr<
-      ::google::bigtable::admin::v2::BigtableTableAdmin::StubInterface>
-  Stub() = 0;
+  /**
+   * Return a new channel to handle admin operations.
+   *
+   * Intended to access rarely used services in the same endpoints as the
+   * Bigtable admin interfaces, for example, the google.longrunning.Operations.
+   */
+  virtual std::shared_ptr<grpc::Channel> Channel() = 0;
 
   /**
-   * Reset and create a new Stub().
+   * Reset and create new Channels.
    *
    * Currently this is only used in testing.  In the future, we expect this,
    * or a similar member function, will be needed to handle errors that require
@@ -56,13 +59,64 @@ class AdminClient {
    */
   virtual void reset() = 0;
 
-  /**
-   * A callback for completed RPCs.
-   *
-   * Currently this is only used in testing.  In the future, we expect that
-   * some errors may require the class to update its state.
-   */
-  virtual void on_completion(grpc::Status const&) = 0;
+  //@{
+  /// @name the google.bigtable.admin.v2.TableAdmin operations.
+  virtual grpc::Status CreateTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateTableRequest const& request,
+      google::bigtable::admin::v2::Table* response) = 0;
+  virtual grpc::Status CreateTableFromSnapshot(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
+          request,
+      google::longrunning::Operation* response) = 0;
+  virtual grpc::Status ListTables(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListTablesRequest const& request,
+      google::bigtable::admin::v2::ListTablesResponse* response) = 0;
+  virtual grpc::Status GetTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetTableRequest const& request,
+      google::bigtable::admin::v2::Table* response) = 0;
+  virtual grpc::Status DeleteTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteTableRequest const& request,
+      google::protobuf::Empty* response) = 0;
+  virtual grpc::Status ModifyColumnFamilies(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
+      google::bigtable::admin::v2::Table* response) = 0;
+  virtual grpc::Status DropRowRange(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DropRowRangeRequest const& request,
+      google::protobuf::Empty* response) = 0;
+  virtual grpc::Status GenerateConsistencyToken(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
+          request,
+      google::bigtable::admin::v2::GenerateConsistencyTokenResponse*
+          response) = 0;
+  virtual grpc::Status CheckConsistency(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
+      google::bigtable::admin::v2::CheckConsistencyResponse* response) = 0;
+  virtual grpc::Status SnapshotTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::SnapshotTableRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  virtual grpc::Status GetSnapshot(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetSnapshotRequest const& request,
+      google::bigtable::admin::v2::Snapshot* response) = 0;
+  virtual grpc::Status ListSnapshots(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListSnapshotsRequest const& request,
+      google::bigtable::admin::v2::ListSnapshotsResponse* response) = 0;
+  virtual grpc::Status DeleteSnapshot(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
+      google::protobuf::Empty* response) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.

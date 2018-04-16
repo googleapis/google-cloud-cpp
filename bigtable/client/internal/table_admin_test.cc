@@ -15,6 +15,7 @@
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/grpc_error.h"
 #include "bigtable/client/testing/chrono_literals.h"
+#include "bigtable/client/testing/mock_admin_client.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -23,14 +24,7 @@
 namespace {
 namespace btproto = ::google::bigtable::admin::v2;
 
-class MockAdminClient : public bigtable::AdminClient {
- public:
-  MOCK_CONST_METHOD0(project, std::string const&());
-  MOCK_METHOD0(Stub,
-               std::shared_ptr<btproto::BigtableTableAdmin::StubInterface>());
-  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
-  MOCK_METHOD0(reset, void());
-};
+using MockAdminClient = bigtable::testing::MockAdminClient;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
@@ -43,13 +37,10 @@ class TableAdminTest : public ::testing::Test {
     using namespace ::testing;
 
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, Stub()).WillRepeatedly(Return(table_admin_stub_));
   }
 
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
-  std::shared_ptr<btproto::MockBigtableTableAdminStub> table_admin_stub_ =
-      std::make_shared<btproto::MockBigtableTableAdminStub>();
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
@@ -154,9 +145,7 @@ TEST_F(TableAdminTest, ListTables) {
 
   bigtable::noex::TableAdmin tested(client_, kInstanceId);
   auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
-      .WillOnce(Invoke(mock_list_tables));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, ListTables(_, _, _)).WillOnce(Invoke(mock_list_tables));
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -180,15 +169,12 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
-  EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
+  EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch0))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch1));
-  // We expect the TableAdmin to make 5 calls and to let the client know about
-  // them.
-  EXPECT_CALL(*client_, on_completion(_)).Times(5);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -210,13 +196,12 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
+  EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   tested.ListTables(btproto::Table::FULL, status);
   EXPECT_FALSE(status.ok());
 }
@@ -237,13 +222,9 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
                                      btproto::ListTablesResponse* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  EXPECT_CALL(*table_admin_stub_, ListTables(_, _, _))
+  EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillRepeatedly(Invoke(mock_recoverable_failure));
   grpc::Status status;
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
-  // fourth failure that actually raises an error.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   // After all the setup, make the actual call we want to test.
   tested.ListTables(btproto::Table::FULL, status);
@@ -278,9 +259,8 @@ table_id: 'new-table'
   auto mock_create_table =
       MockRpcFactory<btproto::CreateTableRequest, btproto::Table>::Create(
           expected_text);
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+  EXPECT_CALL(*client_, CreateTable(_, _, _))
       .WillOnce(Invoke(mock_create_table));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   using GC = bigtable::GcRule;
@@ -300,13 +280,10 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+  EXPECT_CALL(*client_, CreateTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   grpc::Status status;
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   tested.CreateTable("other-table", bigtable::TableConfig(), status);
   EXPECT_FALSE(status.ok());
@@ -347,14 +324,9 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
   bigtable::noex::TableAdmin table_admin(tested);
 
-  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
-  // fourth failure that actually raises an error.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   table_admin.GetTable("other-table", status);
@@ -363,14 +335,9 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
   bigtable::noex::TableAdmin table_admin_assign(client_, "the-assign-instance");
   table_admin_assign = tested;
 
-  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
-  // fourth failure that actually raises an error.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status_assign;
   // After all the setup, make the actual call we want to test.
   table_admin_assign.GetTable("other-table", status_assign);
@@ -389,11 +356,10 @@ view: SCHEMA_VIEW
     )""";
   auto mock = MockRpcFactory<btproto::GetTableRequest, btproto::Table>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   tested.GetTable("the-table", status);
@@ -409,11 +375,10 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   using namespace bigtable::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   tested.GetTable("other-table", status);
@@ -431,14 +396,10 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
-  // fourth failure that actually raises an error.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   tested.GetTable("other-table", status);
@@ -456,8 +417,7 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
     )""";
   auto mock =
       MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
-  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
 
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
@@ -473,13 +433,10 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
+  EXPECT_CALL(*client_, DeleteTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   tested.DeleteTable("other-table", status);
@@ -509,9 +466,7 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
     )""";
   auto mock = MockRpcFactory<btproto::ModifyColumnFamiliesRequest,
                              btproto::Table>::Create(expected_text);
-  EXPECT_CALL(*table_admin_stub_, ModifyColumnFamilies(_, _, _))
-      .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
   using M = bigtable::ColumnFamilyModification;
@@ -533,7 +488,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   using namespace bigtable::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, ModifyColumnFamilies(_, _, _))
+  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -542,9 +497,6 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   std::vector<M> changes{M::Create("foo", GC::MaxAge(48_h)),
                          M::Update("bar", GC::MaxAge(24_h))};
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   tested.ModifyColumnFamilies("other-table", std::move(changes), status);
@@ -563,8 +515,7 @@ row_key_prefix: 'foobar'
     )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   tested.DropRowsByPrefix("the-table", "foobar", status);
@@ -579,13 +530,10 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+  EXPECT_CALL(*client_, DropRowRange(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   tested.DropRowsByPrefix("other-table", "prefix", status);
@@ -604,8 +552,7 @@ delete_all_data_from_table: true
     )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
   tested.DropAllRows("the-table", status);
@@ -620,14 +567,13 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, DropRowRange(_, _, _))
+  EXPECT_CALL(*client_, DropRowRange(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // We expect the TableAdmin to make a call to let the client know the request
   // failed.
   grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   tested.DropAllRows("other-table", status);
   EXPECT_FALSE(status.ok());
@@ -648,11 +594,10 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
   auto mock = MockRpcFactory<
       btproto::GenerateConsistencyTokenRequest,
       btproto::GenerateConsistencyTokenResponse>::Create(expected_text);
-  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
   tested.GenerateConsistencyToken("the-table", status);
   EXPECT_TRUE(status.ok());
@@ -666,13 +611,10 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   tested.GenerateConsistencyToken("other-table", status);
@@ -695,11 +637,10 @@ consistency_token: 'test-token'
   auto mock =
       MockRpcFactory<btproto::CheckConsistencyRequest,
                      btproto::CheckConsistencyResponse>::Create(expected_text);
-  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
   bigtable::TableId table_id("the-table");
   bigtable::ConsistencyToken consistency_token("test-token");
@@ -715,13 +656,10 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   bigtable::TableId table_id("other-table");
@@ -744,11 +682,10 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
   auto mock =
       MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
           expected_text);
-  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+  EXPECT_CALL(*client_, GetSnapshot(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
@@ -765,11 +702,10 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
   using namespace bigtable::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+  EXPECT_CALL(*client_, GetSnapshot(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "No snapshot.")));
 
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   grpc::Status status;
   bigtable::ClusterId cluster_id("other-cluster");
   bigtable::SnapshotId snapshot_id("other-snapshot");
@@ -788,13 +724,10 @@ TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+  EXPECT_CALL(*client_, GetSnapshot(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
   grpc::Status status;
   bigtable::ClusterId cluster_id("other-cluster");
   bigtable::SnapshotId snapshot_id("other-snapshot");
@@ -813,9 +746,7 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
     )""";
   auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
       expected_text);
-  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
-      .WillOnce(Invoke(mock));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  EXPECT_CALL(*client_, DeleteSnapshot(_, _, _)).WillOnce(Invoke(mock));
 
   grpc::Status status;
   // After all the setup, make the actual call we want to test.
@@ -833,13 +764,10 @@ TEST_F(TableAdminTest, DeleteSnapshotFailure) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+  EXPECT_CALL(*client_, DeleteSnapshot(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  // We expect the TableAdmin to make a call to let the client know the request
-  // failed.
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   bigtable::ClusterId cluster_id("other-cluster");
@@ -860,11 +788,10 @@ TEST_F(TableAdminTest, ListSnapshotsSimple) {
 parent: 'projects/the-project/instances/the-instance/clusters/the-cluster'
     )""";
   auto mock_list_snapshots = create_list_snapshots_lambda("", "", {"s0", "s1"});
-  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+  EXPECT_CALL(*client_, ListSnapshots(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock_list_snapshots));
-  EXPECT_CALL(*client_, on_completion(_)).Times(2);
   grpc::Status status;
   bigtable::ClusterId cluster_id("the-cluster");
   auto actual_snapshots = tested.ListSnapshots(status, cluster_id);
@@ -885,9 +812,8 @@ TEST_F(TableAdminTest, ListSnapshots_SimpleList) {
   using namespace ::testing;
   bigtable::noex::TableAdmin tested(client_, kInstanceId);
   auto mock_list_snapshots = create_list_snapshots_lambda("", "", {"s0", "s1"});
-  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+  EXPECT_CALL(*client_, ListSnapshots(_, _, _))
       .WillOnce(Invoke(mock_list_snapshots));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   bigtable::ClusterId cluster_id("the-cluster");
   grpc::Status status;
@@ -920,13 +846,11 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
 
   auto list0 = create_list_snapshots_lambda("", "token-001", {"s0", "s1"});
   auto list1 = create_list_snapshots_lambda("token-001", "", {"s2", "s3"});
-  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+  EXPECT_CALL(*client_, ListSnapshots(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(list0))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(list1));
-
-  EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   grpc::Status status;
   bigtable::ClusterId cluster_id("the-cluster");
@@ -952,12 +876,11 @@ TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+  EXPECT_CALL(*client_, ListSnapshots(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   bigtable::ClusterId cluster_id("other-cluster");
   tested.ListSnapshots(status, cluster_id);
   EXPECT_FALSE(status.ok());

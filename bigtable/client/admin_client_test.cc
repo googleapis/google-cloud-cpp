@@ -21,14 +21,14 @@ TEST(AdminClientTest, Default) {
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 
-  auto stub0 = admin_client->Stub();
-  EXPECT_TRUE(stub0);
+  auto channel0 = admin_client->Channel();
+  EXPECT_TRUE(channel0);
 
-  auto stub1 = admin_client->Stub();
-  EXPECT_EQ(stub0.get(), stub1.get());
+  auto channel1 = admin_client->Channel();
+  EXPECT_EQ(channel0.get(), channel1.get());
 
   admin_client->reset();
-  stub1 = admin_client->Stub();
-  EXPECT_TRUE(stub1);
-  EXPECT_NE(stub0.get(), stub1.get());
+  channel1 = admin_client->Channel();
+  EXPECT_TRUE(channel1);
+  EXPECT_NE(channel0.get(), channel1.get());
 }

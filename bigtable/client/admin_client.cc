@@ -16,6 +16,8 @@
 #include "bigtable/client/internal/common_client.h"
 
 namespace {
+namespace btadmin = google::bigtable::admin::v2;
+
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all
  * gRPC errors.
@@ -39,8 +41,8 @@ class DefaultAdminClient : public bigtable::AdminClient {
     }
   };
 
-  using Impl = bigtable::internal::CommonClient<
-      AdminTraits, ::google::bigtable::admin::v2::BigtableTableAdmin>;
+  using Impl = bigtable::internal::CommonClient<AdminTraits,
+                                                btadmin::BigtableTableAdmin>;
 
  public:
   using AdminStubPtr = Impl::StubPtr;
@@ -49,9 +51,92 @@ class DefaultAdminClient : public bigtable::AdminClient {
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  AdminStubPtr Stub() override { return impl_.Stub(); }
+  std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
-  void on_completion(grpc::Status const& status) override {}
+
+  grpc::Status CreateTable(grpc::ClientContext* context,
+                           btadmin::CreateTableRequest const& request,
+                           btadmin::Table* response) override {
+    return impl_.Stub()->CreateTable(context, request, response);
+  }
+
+  grpc::Status CreateTableFromSnapshot(
+      grpc::ClientContext* context,
+      btadmin::CreateTableFromSnapshotRequest const& request,
+      google::longrunning::Operation* response) override {
+    return impl_.Stub()->CreateTableFromSnapshot(context, request, response);
+  }
+
+  grpc::Status ListTables(grpc::ClientContext* context,
+                          btadmin::ListTablesRequest const& request,
+                          btadmin::ListTablesResponse* response) override {
+    return impl_.Stub()->ListTables(context, request, response);
+  }
+
+  grpc::Status GetTable(grpc::ClientContext* context,
+                        btadmin::GetTableRequest const& request,
+                        btadmin::Table* response) override {
+    return impl_.Stub()->GetTable(context, request, response);
+  }
+
+  grpc::Status DeleteTable(grpc::ClientContext* context,
+                           btadmin::DeleteTableRequest const& request,
+                           google::protobuf::Empty* response) override {
+    return impl_.Stub()->DeleteTable(context, request, response);
+  }
+
+  grpc::Status ModifyColumnFamilies(
+      grpc::ClientContext* context,
+      btadmin::ModifyColumnFamiliesRequest const& request,
+      btadmin::Table* response) override {
+    return impl_.Stub()->ModifyColumnFamilies(context, request, response);
+  }
+
+  grpc::Status DropRowRange(grpc::ClientContext* context,
+                            btadmin::DropRowRangeRequest const& request,
+                            google::protobuf::Empty* response) override {
+    return impl_.Stub()->DropRowRange(context, request, response);
+  }
+
+  grpc::Status GenerateConsistencyToken(
+      grpc::ClientContext* context,
+      btadmin::GenerateConsistencyTokenRequest const& request,
+      btadmin::GenerateConsistencyTokenResponse* response) override {
+    return impl_.Stub()->GenerateConsistencyToken(context, request, response);
+  }
+
+  grpc::Status CheckConsistency(
+      grpc::ClientContext* context,
+      btadmin::CheckConsistencyRequest const& request,
+      btadmin::CheckConsistencyResponse* response) override {
+    return impl_.Stub()->CheckConsistency(context, request, response);
+  }
+
+  grpc::Status SnapshotTable(
+      grpc::ClientContext* context,
+      btadmin::SnapshotTableRequest const& request,
+      google::longrunning::Operation* response) override {
+    return impl_.Stub()->SnapshotTable(context, request, response);
+  }
+
+  grpc::Status GetSnapshot(grpc::ClientContext* context,
+                           btadmin::GetSnapshotRequest const& request,
+                           btadmin::Snapshot* response) override {
+    return impl_.Stub()->GetSnapshot(context, request, response);
+  }
+
+  grpc::Status ListSnapshots(
+      grpc::ClientContext* context,
+      btadmin::ListSnapshotsRequest const& request,
+      btadmin::ListSnapshotsResponse* response) override {
+    return impl_.Stub()->ListSnapshots(context, request, response);
+  }
+
+  grpc::Status DeleteSnapshot(grpc::ClientContext* context,
+                              btadmin::DeleteSnapshotRequest const& request,
+                              google::protobuf::Empty* response) override {
+    return impl_.Stub()->DeleteSnapshot(context, request, response);
+  }
 
  private:
   std::string project_;
