@@ -200,8 +200,8 @@ TEST_F(TableReadRowTest, ReadRow_AppProfileId) {
 
   std::string expected_id = "test-id";
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillOnce(Invoke([&stream, expected_id, this](grpc::ClientContext*,
-                                       btproto::ReadRowsRequest const& req) {
+      .WillOnce(Invoke([&stream, expected_id, this](
+          grpc::ClientContext*, btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
