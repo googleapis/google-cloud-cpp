@@ -67,7 +67,7 @@ TEST_F(TableTest, MoveConstructor) {
 TEST_F(TableTest, CopyAssignment) {
   bigtable::Table source(client_, "my-table");
   std::string expected = source.table_name();
-  bigtable::Table dest(client_, "anpother-table");
+  bigtable::Table dest(client_, "another-table");
   dest = source;
   EXPECT_EQ(expected, dest.table_name());
 }

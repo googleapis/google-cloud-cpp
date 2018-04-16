@@ -104,7 +104,7 @@ TEST_F(TableTest, MoveConstructor) {
 TEST_F(TableTest, CopyAssignment) {
   bigtable::noex::Table source(client_, "my-table");
   std::string expected = source.table_name();
-  bigtable::noex::Table dest(client_, "anpother-table");
+  bigtable::noex::Table dest(client_, "another-table");
   dest = source;
   EXPECT_EQ(expected, dest.table_name());
 }
