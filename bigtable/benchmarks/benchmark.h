@@ -18,9 +18,9 @@
 #include "bigtable/benchmarks/embedded_server.h"
 #include "bigtable/benchmarks/random.h"
 #include "bigtable/benchmarks/setup.h"
-
 #include <chrono>
 #include <deque>
+#include <thread>
 
 namespace bigtable {
 namespace benchmarks {

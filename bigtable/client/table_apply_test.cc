@@ -28,8 +28,7 @@ using namespace bigtable::chrono_literals;
 TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
-      .WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, MutateRow(_, _, _)).WillOnce(Return(grpc::Status::OK));
 
   table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
@@ -39,7 +38,7 @@ TEST_F(TableApplyTest, Simple) {
 TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
@@ -59,7 +58,7 @@ TEST_F(TableApplyTest, Failure) {
 TEST_F(TableApplyTest, Retry) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(
@@ -76,7 +75,7 @@ TEST_F(TableApplyTest, Retry) {
 TEST_F(TableApplyTest, RetryIdempotent) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 

@@ -15,9 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
 
+#include "bigtable/client/data_client.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
-
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -34,9 +33,8 @@ class BulkMutator {
   }
 
   /// Send one batch request to the given stub.
-  grpc::Status MakeOneRequest(
-      google::bigtable::v2::Bigtable::StubInterface& stub,
-      grpc::ClientContext& client_context);
+  grpc::Status MakeOneRequest(bigtable::DataClient& client,
+                              grpc::ClientContext& client_context);
 
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> ExtractFinalFailures();

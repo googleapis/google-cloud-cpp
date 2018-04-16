@@ -21,54 +21,42 @@
 using testing::_;
 using testing::Return;
 using testing::SetArgPointee;
+using testing::Invoke;
 using namespace bigtable::chrono_literals;
+namespace btproto = google::bigtable::v2;
 
 /// Define types and functions used in the tests.
 namespace {
-class TableTest : public bigtable::testing::internal::TableTestFixture {};
-class TableReadRowTest : public bigtable::testing::internal::TableTestFixture {
-};
-class TableReadRowsTest : public bigtable::testing::internal::TableTestFixture {
-};
-class TableApplyTest : public bigtable::testing::internal::TableTestFixture {};
-
-class TableSampleRowKeysTest
-    : public bigtable::testing::internal::TableTestFixture {};
-
-class TableBulkApplyTest
-    : public bigtable::testing::internal::TableTestFixture {};
-
-class TableCheckAndMutateRowTest
-    : public bigtable::testing::internal::TableTestFixture {};
+class NoexTableTest : public bigtable::testing::internal::TableTestFixture {};
 
 using bigtable::testing::MockMutateRowsReader;
 using bigtable::testing::MockReadRowsReader;
 using bigtable::testing::MockSampleRowKeysReader;
 }  // anonymous namespace
 
-TEST_F(TableTest, ClientProjectId) {
+TEST_F(NoexTableTest, ClientProjectId) {
   EXPECT_EQ(kProjectId, client_->project_id());
 }
 
-TEST_F(TableTest, ClientInstanceId) {
+TEST_F(NoexTableTest, ClientInstanceId) {
   EXPECT_EQ(kInstanceId, client_->instance_id());
 }
 
-TEST_F(TableTest, StandaloneInstanceName) {
+TEST_F(NoexTableTest, StandaloneInstanceName) {
   EXPECT_EQ(kInstanceName, bigtable::InstanceName(client_));
 }
 
-TEST_F(TableTest, StandaloneTableName) {
+TEST_F(NoexTableTest, StandaloneTableName) {
   EXPECT_EQ(kTableName, bigtable::TableName(client_, kTableId));
 }
 
-TEST_F(TableTest, TableName) {
+TEST_F(NoexTableTest, TableName) {
   // clang-format: you are drunk, placing this short function in a single line
   // is not nice.
   EXPECT_EQ(kTableName, table_.table_name());
 }
 
-TEST_F(TableTest, TableConstructor) {
+TEST_F(NoexTableTest, TableConstructor) {
   std::string const kOtherTableId = "my-table";
   std::string const kOtherTableName =
       bigtable::TableName(client_, kOtherTableId);
@@ -76,21 +64,21 @@ TEST_F(TableTest, TableConstructor) {
   EXPECT_EQ(kOtherTableName, table.table_name());
 }
 
-TEST_F(TableTest, CopyConstructor) {
+TEST_F(NoexTableTest, CopyConstructor) {
   bigtable::noex::Table source(client_, "my-table");
   std::string expected = source.table_name();
   bigtable::noex::Table copy(source);
   EXPECT_EQ(expected, copy.table_name());
 }
 
-TEST_F(TableTest, MoveConstructor) {
+TEST_F(NoexTableTest, MoveConstructor) {
   bigtable::noex::Table source(client_, "my-table");
   std::string expected = source.table_name();
   bigtable::noex::Table copy(std::move(source));
   EXPECT_EQ(expected, copy.table_name());
 }
 
-TEST_F(TableTest, CopyAssignment) {
+TEST_F(NoexTableTest, CopyAssignment) {
   bigtable::noex::Table source(client_, "my-table");
   std::string expected = source.table_name();
   bigtable::noex::Table dest(client_, "another-table");
@@ -98,7 +86,7 @@ TEST_F(TableTest, CopyAssignment) {
   EXPECT_EQ(expected, dest.table_name());
 }
 
-TEST_F(TableTest, MoveAssignment) {
+TEST_F(NoexTableTest, MoveAssignment) {
   bigtable::noex::Table source(client_, "my-table");
   std::string expected = source.table_name();
   bigtable::noex::Table dest(client_, "another-table");
@@ -106,21 +94,21 @@ TEST_F(TableTest, MoveAssignment) {
   EXPECT_EQ(expected, dest.table_name());
 }
 
-TEST_F(TableReadRowTest, ReadRowSimple) {
+TEST_F(NoexTableTest, ReadRowSimple) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   grpc::Status status;
   auto response =
       bigtable::testing::internal::ReadRowsResponseFromString(R"(
-                                                                  chunks {
-                                                                  row_key: "r1"
-                                                                      family_name { value: "fam" }
-                                                                      qualifier { value: "col" }
-                                                                  timestamp_micros: 42000
-                                                                  value: "value"
-                                                                  commit_row: true
-                                                                  }
-                                                                  )",
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
                                                               status);
   EXPECT_TRUE(status.ok());
 
@@ -133,14 +121,14 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
-        return stream.release();
+        return stream.release()->AsUniqueMocked();
       }));
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
@@ -150,7 +138,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
   EXPECT_EQ("r1", row.row_key());
 }
 
-TEST_F(TableReadRowTest, ReadRowMissing) {
+TEST_F(NoexTableTest, ReadRowMissing) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
@@ -158,14 +146,14 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
-        return stream.release();
+        return stream.release()->AsUniqueMocked();
       }));
   grpc::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
@@ -173,7 +161,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   EXPECT_FALSE(std::get<0>(result));
 }
 
-TEST_F(TableReadRowTest, ReadRowError) {
+TEST_F(NoexTableTest, ReadRowError) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
@@ -183,14 +171,14 @@ TEST_F(TableReadRowTest, ReadRowError) {
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::INTERNAL, "Internal Error")));
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
-        return stream.release();
+        return stream.release()->AsUniqueMocked();
       }));
   grpc::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
@@ -198,29 +186,30 @@ TEST_F(TableReadRowTest, ReadRowError) {
   EXPECT_FALSE(std::get<0>(result));
 }
 
-TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
+TEST_F(NoexTableTest, ReadRowsCanReadOneRow) {
   grpc::Status status;
   auto response =
       bigtable::testing::internal::ReadRowsResponseFromString(R"(
-                                                                  chunks {
-                                                                  row_key: "r1"
-                                                                      family_name { value: "fam" }
-                                                                      qualifier { value: "qual" }
-                                                                  timestamp_micros: 42000
-                                                                  value: "value"
-                                                                  commit_row: true
-                                                                  }
-                                                                  )",
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "qual" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader;
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(testing::_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(stream.release()->MakeMockReturner()));
 
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
@@ -233,43 +222,38 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_TRUE(status.ok());
 }
 
-TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
+TEST_F(NoexTableTest, ReadRowsCanReadWithRetries) {
   grpc::Status status;
   auto response =
       bigtable::testing::internal::ReadRowsResponseFromString(R"(
-                                                                  chunks {
-                                                                  row_key: "r1"
-                                                                      family_name { value: "fam" }
-                                                                      qualifier { value: "qual" }
-                                                                  timestamp_micros: 42000
-                                                                  value: "value"
-                                                                  commit_row: true
-                                                                  }
-                                                                  )",
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "qual" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
                                                               status);
   EXPECT_TRUE(status.ok());
 
   auto response_retry =
       bigtable::testing::internal::ReadRowsResponseFromString(R"(
-                                                                        chunks {
-                                                                        row_key: "r2"
-                                                                            family_name { value: "fam" }
-                                                                            qualifier { value: "qual" }
-                                                                        timestamp_micros: 42000
-                                                                        value: "value"
-                                                                        commit_row: true
-                                                                        }
-                                                                        )",
+chunks {
+row_key: "r2"
+    family_name { value: "fam" }
+    qualifier { value: "qual" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader;
-  auto stream_retry = new MockReadRowsReader;
-
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillOnce(Return(stream))
-      .WillOnce(Return(stream_retry));
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream_retry = bigtable::internal::make_unique<MockReadRowsReader>();
 
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -285,6 +269,10 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 
   EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
 
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(stream.release()->MakeMockReturner()))
+      .WillOnce(Invoke(stream_retry.release()->MakeMockReturner()));
+
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
 
@@ -299,16 +287,17 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   EXPECT_TRUE(status.ok());
 }
 
-TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
+TEST_F(NoexTableTest, ReadRowsThrowsWhenTooManyErrors) {
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillRepeatedly(testing::Invoke([](grpc::ClientContext*,
+                                         btproto::ReadRowsRequest const&) {
         auto stream = new MockReadRowsReader;
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
             .WillOnce(
                 Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
-        return stream;
-      })));
+        return stream->AsUniqueMocked();
+      }));
 
   auto table = bigtable::noex::Table(
       client_, "table_id", bigtable::LimitedErrorCountRetryPolicy(3),
@@ -324,11 +313,10 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
 }
 
 /// @test Verify that Table::Apply() works in a simplest case.
-TEST_F(TableApplyTest, Simple) {
+TEST_F(NoexTableTest, ApplySimple) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
-      .WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, MutateRow(_, _, _)).WillOnce(Return(grpc::Status::OK));
 
   auto result = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
@@ -336,10 +324,10 @@ TEST_F(TableApplyTest, Simple) {
 }
 
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
-TEST_F(TableApplyTest, Failure) {
+TEST_F(NoexTableTest, ApplyFailure) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
   std::vector<bigtable::FailedMutation> result;
@@ -351,10 +339,10 @@ TEST_F(TableApplyTest, Failure) {
 }
 
 /// @test Verify that Table::Apply() retries on partial failures.
-TEST_F(TableApplyTest, Retry) {
+TEST_F(NoexTableTest, ApplyRetry) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(
@@ -368,10 +356,10 @@ TEST_F(TableApplyTest, Retry) {
 }
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.
-TEST_F(TableApplyTest, RetryIdempotent) {
+TEST_F(NoexTableTest, ApplyRetryIdempotent) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
   auto result = table_.Apply(bigtable::SingleRowMutation(
@@ -382,7 +370,7 @@ TEST_F(TableApplyTest, RetryIdempotent) {
 }
 
 /// @test Verify that Table::BulkApply() works in the easy case.
-TEST_F(TableBulkApplyTest, Simple) {
+TEST_F(NoexTableTest, BulkApplySimple) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -405,11 +393,8 @@ TEST_F(TableBulkApplyTest, Simple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return reader.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
   grpc::Status status;
   table_.BulkApply(
       bt::BulkMutation(bt::SingleRowMutation(
@@ -422,7 +407,7 @@ TEST_F(TableBulkApplyTest, Simple) {
 }
 
 /// @test Verify that Table::BulkApply() retries partial failures.
-TEST_F(TableBulkApplyTest, RetryPartialFailure) {
+TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -455,15 +440,9 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
   grpc::Status status;
   table_.BulkApply(
       bt::BulkMutation(
@@ -478,7 +457,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 
 // TODO(#234) - this test could be enabled when bug is closed.
 /// @test Verify that Table::BulkApply() handles permanent failures.
-TEST_F(TableBulkApplyTest, PermanentFailure) {
+TEST_F(NoexTableTest, BulkApplyPermanentFailure) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -501,11 +480,8 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()));
   grpc::Status status;
   table_.BulkApply(
       bt::BulkMutation(bt::SingleRowMutation(
@@ -517,7 +493,7 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
 }
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
-TEST_F(TableBulkApplyTest, CanceledStream) {
+TEST_F(NoexTableTest, BulkApplyCanceledStream) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -553,15 +529,9 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
   grpc::Status status;
   table_.BulkApply(
       bt::BulkMutation(bt::SingleRowMutation(
@@ -574,7 +544,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
 }
 
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
-TEST_F(TableBulkApplyTest, TooManyFailures) {
+TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -614,14 +584,11 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream.release();
+    return stream.release()->AsUniqueMocked();
   };
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
   grpc::Status status;
@@ -635,7 +602,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
-TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
+TEST_F(NoexTableTest, BulkApplyRetryOnlyIdempotent) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -660,15 +627,9 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
   grpc::Status status;
   auto result = table_.BulkApply(
       bt::BulkMutation(
@@ -685,7 +646,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 }
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.
-TEST_F(TableBulkApplyTest, FailedRPC) {
+TEST_F(NoexTableTest, BulkApplyFailedRPC) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
@@ -696,11 +657,8 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
                                     "no such table")));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return reader.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
   std::vector<bigtable::FailedMutation> result;
   grpc::Status status;
   result = table_.BulkApply(
@@ -717,10 +675,10 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 }
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
-TEST_F(TableCheckAndMutateRowTest, Simple) {
+TEST_F(NoexTableTest, CheckAndMutateRowSimple) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillOnce(Return(grpc::Status::OK));
   grpc::Status status;
   table_.CheckAndMutateRow(
@@ -731,10 +689,10 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 }
 
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
-TEST_F(TableCheckAndMutateRowTest, Failure) {
+TEST_F(NoexTableTest, CheckAndMutateRowFailure) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
   grpc::Status status;
@@ -746,12 +704,11 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
-TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
+TEST_F(NoexTableTest, SampleRowsDefaultParameterTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -762,6 +719,9 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
+
   grpc::Status status;
   std::vector<bigtable::RowKeySample> result = table_.SampleRows<>(status);
   EXPECT_TRUE(status.ok());
@@ -773,12 +733,11 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
 }
 
 /// @test Verify that Table::SampleRows<T>() works for std::vector.
-TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
+TEST_F(NoexTableTest, SampleRowsSimpleVectorTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -789,6 +748,9 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
+
   grpc::Status status;
   std::vector<bigtable::RowKeySample> result =
       table_.SampleRows<std::vector>(status);
@@ -801,12 +763,11 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
 }
 
 /// @test Verify that Table::SampleRows<T>() works for std::list.
-TEST_F(TableSampleRowKeysTest, SimpleListTest) {
+TEST_F(NoexTableTest, SampleRowsSimpleListTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -817,6 +778,9 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
+
   grpc::Status status;
   std::list<bigtable::RowKeySample> result =
       table_.SampleRows<std::list>(status);
@@ -828,15 +792,13 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   EXPECT_EQ(++it, result.end());
 }
 
-TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
+TEST_F(NoexTableTest, SampleRowsSampleRowKeysRetryTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockSampleRowKeysReader;
-  auto reader_retry = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
-      .WillOnce(Return(reader))
-      .WillOnce(Return(reader_retry));
+  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader_retry =
+      bigtable::internal::make_unique<MockSampleRowKeysReader>();
 
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -870,6 +832,11 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
       .WillOnce(Return(false));
 
   EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()))
+      .WillOnce(Invoke(reader_retry.release()->MakeMockReturner()));
+
   grpc::Status status;
   auto results = table_.SampleRows<std::vector>(status);
   EXPECT_TRUE(status.ok());
@@ -883,8 +850,9 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
   EXPECT_EQ(++it, results.end());
 }
 
-/// @test Verify that Table::sample_rows() reports correctly on too many errors.
-TEST_F(TableSampleRowKeysTest, TooManyFailures) {
+/// @test Verify that Table::SampleRows<T>() reports correctly on too many
+/// errors.
+TEST_F(NoexTableTest, SampleRowsTooManyFailures) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
@@ -901,7 +869,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       ::bigtable::SafeIdempotentMutationPolicy());
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = new MockSampleRowKeysReader;
+  auto r1 = bigtable::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -920,11 +888,11 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream;
+    return stream->AsUniqueMocked();
   };
 
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
-      .WillOnce(Return(r1))
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
   grpc::Status status;

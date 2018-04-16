@@ -24,14 +24,14 @@ TEST(DataClientTest, Default) {
   EXPECT_EQ("test-project", data_client->project_id());
   EXPECT_EQ("test-instance", data_client->instance_id());
 
-  auto stub0 = data_client->Stub();
-  EXPECT_TRUE(stub0);
+  auto channel0 = data_client->Channel();
+  EXPECT_TRUE(channel0);
 
-  auto stub1 = data_client->Stub();
-  EXPECT_EQ(stub0.get(), stub1.get());
+  auto channel1 = data_client->Channel();
+  EXPECT_EQ(channel0.get(), channel1.get());
 
   data_client->reset();
-  stub1 = data_client->Stub();
-  EXPECT_TRUE(stub1);
-  EXPECT_NE(stub0.get(), stub1.get());
+  channel1 = data_client->Channel();
+  EXPECT_TRUE(channel1);
+  EXPECT_NE(channel0.get(), channel1.get());
 }

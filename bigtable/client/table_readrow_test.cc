@@ -47,14 +47,14 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
-        return stream.release();
+        return stream.release()->AsUniqueMocked();
       }));
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
@@ -71,14 +71,14 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
-        return stream.release();
+        return stream.release()->AsUniqueMocked();
       }));
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());

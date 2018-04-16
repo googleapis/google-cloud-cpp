@@ -26,10 +26,42 @@ class MockDataClient : public bigtable::DataClient {
  public:
   MOCK_CONST_METHOD0(project_id, std::string const&());
   MOCK_CONST_METHOD0(instance_id, std::string const&());
-  MOCK_METHOD0(
-      Stub, std::shared_ptr<::google::bigtable::v2::Bigtable::StubInterface>());
+  MOCK_METHOD0(Channel, std::shared_ptr<grpc::Channel>());
   MOCK_METHOD0(reset, void());
-  MOCK_METHOD1(on_completion, void(grpc::Status const&));
+
+  MOCK_METHOD3(
+      MutateRow,
+      grpc::Status(grpc::ClientContext* context,
+                   google::bigtable::v2::MutateRowRequest const& request,
+                   google::bigtable::v2::MutateRowResponse* response));
+  MOCK_METHOD3(
+      CheckAndMutateRow,
+      grpc::Status(
+          grpc::ClientContext* context,
+          google::bigtable::v2::CheckAndMutateRowRequest const& request,
+          google::bigtable::v2::CheckAndMutateRowResponse* response));
+  MOCK_METHOD3(
+      ReadModifyWriteRow,
+      grpc::Status(
+          grpc::ClientContext* context,
+          google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+          google::bigtable::v2::ReadModifyWriteRowResponse* response));
+  MOCK_METHOD2(
+      ReadRows,
+      std::unique_ptr<
+          grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>(
+          grpc::ClientContext* context,
+          google::bigtable::v2::ReadRowsRequest const& request));
+  MOCK_METHOD2(SampleRowKeys,
+               std::unique_ptr<grpc::ClientReaderInterface<
+                   google::bigtable::v2::SampleRowKeysResponse>>(
+                   grpc::ClientContext* context,
+                   google::bigtable::v2::SampleRowKeysRequest const& request));
+  MOCK_METHOD2(MutateRows,
+               std::unique_ptr<grpc::ClientReaderInterface<
+                   google::bigtable::v2::MutateRowsResponse>>(
+                   grpc::ClientContext* context,
+                   google::bigtable::v2::MutateRowsRequest const& request));
 };
 
 }  // namespace testing

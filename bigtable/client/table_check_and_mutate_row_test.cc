@@ -28,7 +28,7 @@ using namespace bigtable::chrono_literals;
 TEST_F(TableCheckAndMutateRowTest, Simple) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillOnce(Return(grpc::Status::OK));
 
   table_.CheckAndMutateRow(
@@ -41,7 +41,7 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 TEST_F(TableCheckAndMutateRowTest, Failure) {
   using namespace ::testing;
 
-  EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 

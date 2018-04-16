@@ -21,6 +21,7 @@
 #include "bigtable/client/testing/inprocess_data_client.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gtest/gtest.h>
+#include <thread>
 
 namespace bigtable {
 namespace testing {

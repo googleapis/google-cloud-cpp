@@ -31,7 +31,8 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   namespace btproto = ::google::bigtable::v2;
 
   auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader->MakeMockReturner()));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -56,7 +57,8 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   namespace btproto = ::google::bigtable::v2;
 
   auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader->MakeMockReturner()));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -81,7 +83,8 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   namespace btproto = ::google::bigtable::v2;
 
   auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader->MakeMockReturner()));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -106,9 +109,9 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   auto reader = new MockSampleRowKeysReader;
   auto reader_retry = new MockSampleRowKeysReader;
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
-      .WillOnce(Return(reader))
-      .WillOnce(Return(reader_retry));
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(reader->MakeMockReturner()))
+      .WillOnce(Invoke(reader_retry->MakeMockReturner()));
 
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -192,11 +195,11 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream;
+    return stream->AsUniqueMocked();
   };
 
-  EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
-      .WillOnce(Return(r1))
+  EXPECT_CALL(*client_, SampleRowKeys(_, _))
+      .WillOnce(Invoke(r1->MakeMockReturner()))
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 

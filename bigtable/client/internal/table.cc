@@ -15,6 +15,7 @@
 #include "bigtable/client/internal/table.h"
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/internal/unary_client_utils.h"
 #include <thread>
 #include <type_traits>
 
@@ -23,6 +24,7 @@ namespace btproto = ::google::bigtable::v2;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+using ClientUtils = bigtable::internal::noex::UnaryClientUtils<DataClient>;
 
 static_assert(std::is_copy_assignable<bigtable::noex::Table>::value,
               "bigtable::noex::Table must be CopyAssignable");
@@ -56,7 +58,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
     rpc_policy->setup(client_context);
     backoff_policy->setup(client_context);
     metadata_update_policy_.setup(client_context);
-    status = client_->Stub()->MutateRow(&client_context, request, &response);
+    status = client_->MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return failures;
     }
@@ -98,7 +100,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
     backoff_policy->setup(client_context);
     retry_policy->setup(client_context);
     metadata_update_policy_.setup(client_context);
-    status = mutator.MakeOneRequest(*client_->Stub(), client_context);
+    status = mutator.MakeOneRequest(*client_, client_context);
     if (not status.ok() and not retry_policy->on_failure(status)) {
       break;
     }
@@ -172,18 +174,19 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   for (auto& m : false_mutations) {
     *request.add_false_mutations() = std::move(m.op);
   }
-  auto response = RpcUtils::CallWithoutRetry(
+  auto response = ClientUtils::MakeNonIdemponentCall(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CheckAndMutateRow, request, "CheckAndMutateRow", status);
+      &DataClient::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
+      status);
 
   return response.predicate_matched();
 }
 
 Row Table::CallReadModifyWriteRowRequest(
     btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
-  auto response = RpcUtils::CallWithoutRetry(
+  auto response = ClientUtils::MakeNonIdemponentCall(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
+      &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
       status);
   if (not status.ok()) {
     return Row("", {});
@@ -232,7 +235,7 @@ void Table::SampleRowsImpl(std::function<void(bigtable::RowKeySample)> inserter,
     retry_policy->setup(client_context);
     metadata_update_policy_.setup(client_context);
 
-    auto stream = client_->Stub()->SampleRowKeys(&client_context, request);
+    auto stream = client_->SampleRowKeys(&client_context, request);
     while (stream->Read(&response)) {
       // Assuming collection will be either list or vector.
       bigtable::RowKeySample row_sample;

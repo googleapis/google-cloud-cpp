@@ -15,7 +15,7 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/internal/throw_delegate.h"
 #include <thread>
 #include <type_traits>
 
@@ -79,7 +79,7 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
   grpc::Status status;
   auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
   if (not status.ok()) {
-    internal::RaiseRuntimeError(status.error_message());
+    bigtable::internal::RaiseRuntimeError(status.error_message());
   }
   return result;
 }
@@ -92,7 +92,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                                        std::move(true_mutations),
                                        std::move(false_mutations), status);
   if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
+    bigtable::internal::RaiseRpcError(status, status.error_message());
   }
   return value;
 }

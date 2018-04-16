@@ -24,7 +24,8 @@ namespace testing {
 /**
  * Refactor code common to several mock objects.
  *
- * Mocking a grpc::ClientReaderInterface<> was getting tedious.
+ * Mocking a grpc::ClientReaderInterface<> was getting tedious. This refactors
+ * most (but unfortunately cannnot refactor all) the code for such objects.
  *
  * @tparam Response the response type.
  */
@@ -35,6 +36,30 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
   MOCK_METHOD0(Finish, grpc::Status());
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
   MOCK_METHOD1_T(Read, bool(Response*));
+
+  using UniquePtr = std::unique_ptr<grpc::ClientReaderInterface<Response>>;
+
+  /// Return a `std::unique_ptr< mocked-class >`
+  UniquePtr AsUniqueMocked() { return UniquePtr(this); }
+
+  /**
+   * Create a lambda that returns a `std::unique_ptr< mocked-class >`.
+   *
+   * Often the test code has to create a lambda that returns one of these mocks
+   * wrapped in the correct (the base class) `std::unique_ptr<>`.
+   *
+   * We cannot use just `::testing::Return()` because that binds to the static
+   * type of the returned object, and we need to return a `std::unique_ptr<Foo>`
+   * where we have a `MockFoo*`.  And we cannot create a `std::unique_ptr<>`
+   * and pass it because `::testing::Return()` assumes copy constructions and
+   * `std::unique_ptr<>` only supports move constructors.
+   */
+  std::function<UniquePtr(grpc::ClientContext*, Request const&)>
+  MakeMockReturner() {
+    return [this](grpc::ClientContext*, Request const&) {
+      return UniquePtr(this);
+    };
+  };
 };
 
 }  // namespace testing

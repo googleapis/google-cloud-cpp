@@ -18,6 +18,7 @@
 
 using testing::_;
 using testing::DoAll;
+using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
 
@@ -41,11 +42,12 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
   auto stream = new MockReadRowsReader;
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(stream->MakeMockReturner()));
 
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
@@ -83,9 +85,9 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
   auto stream = new MockReadRowsReader;
   auto stream_retry = new MockReadRowsReader;
 
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-      .WillOnce(Return(stream))
-      .WillOnce(Return(stream_retry));
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(stream->MakeMockReturner()))
+      .WillOnce(Invoke(stream_retry->MakeMockReturner()));
 
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -115,14 +117,14 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+  EXPECT_CALL(*client_, ReadRows(_, _))
       .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
         auto stream = new MockReadRowsReader;
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
             .WillOnce(
                 Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
-        return stream;
+        return stream->AsUniqueMocked();
       })));
 
   auto table = bigtable::Table(

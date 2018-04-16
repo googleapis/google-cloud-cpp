@@ -34,8 +34,6 @@ std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
       .WillRepeatedly(::testing::ReturnRef(project_id_));
   EXPECT_CALL(*client, instance_id())
       .WillRepeatedly(::testing::ReturnRef(instance_id_));
-  EXPECT_CALL(*client, Stub())
-      .WillRepeatedly(::testing::Return(bigtable_stub_));
   return client;
 }
 
