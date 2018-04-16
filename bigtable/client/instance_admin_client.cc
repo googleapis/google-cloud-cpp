@@ -50,9 +50,15 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  AdminStubPtr Stub() override { return impl_.Stub(); }
+  Impl::ChannelPtr Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
-  void on_completion(grpc::Status const& status) override {}
+
+  grpc::Status ListInstances(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      google::bigtable::admin::v2::ListInstancesResponse* response) override {
+    return impl_.Stub()->ListInstances(context, request, response);
+  }
 
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =

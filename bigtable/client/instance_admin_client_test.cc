@@ -21,14 +21,14 @@ TEST(InstanceAdminClientTest, Default) {
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 
-  auto stub0 = admin_client->Stub();
+  auto stub0 = admin_client->Channel();
   EXPECT_TRUE(stub0);
 
-  auto stub1 = admin_client->Stub();
+  auto stub1 = admin_client->Channel();
   EXPECT_EQ(stub0.get(), stub1.get());
 
   admin_client->reset();
-  stub1 = admin_client->Stub();
+  stub1 = admin_client->Channel();
   EXPECT_TRUE(stub1);
   EXPECT_NE(stub0.get(), stub1.get());
 }
