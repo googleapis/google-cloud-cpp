@@ -170,7 +170,56 @@ commit_row: true
   EXPECT_EQ("r1", row.row_key());
 }
 
-TEST_F(NoexTableTest, ReadRowMissing) {
+TEST_F(TableReadRowTest, ReadRow_AppProfileId) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+  grpc::Status status;
+  auto response =
+      bigtable::testing::internal::ReadRowsResponseFromString(R"(
+                                                                  chunks {
+                                                                  row_key: "r1"
+                                                                      family_name { value: "fam" }
+                                                                      qualifier { value: "col" }
+                                                                  timestamp_micros: 42000
+                                                                  value: "value"
+                                                                  commit_row: true
+                                                                  }
+                                                                  )",
+                                                              status);
+  EXPECT_TRUE(status.ok());
+
+  auto stream =
+      bigtable::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_))
+      .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
+        *r = response;
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  std::string expected_id = "test-id";
+  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+      .WillOnce(Invoke([&stream, expected_id, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+        EXPECT_EQ(1, req.rows().row_keys_size());
+        EXPECT_EQ("r1", req.rows().row_keys(0));
+        EXPECT_EQ(1, req.rows_limit());
+        EXPECT_EQ(table_.table_name(), req.table_name());
+        EXPECT_EQ(expected_id, req.app_profile_id());
+        return stream.release();
+      }));
+
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, "test-id", kTableId);
+  auto result = table.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
+  EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(std::get<0>(result));
+  auto row = std::get<1>(result);
+  EXPECT_EQ("r1", row.row_key());
+}
+
+TEST_F(TableReadRowTest, ReadRowMissing) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
@@ -481,18 +530,17 @@ TEST_F(TableBulkApplyTest, BulkApply_AppProfileId) {
 
   std::string expected_id = "test-id";
   EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&reader, expected_id](
-              grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
-            EXPECT_EQ(expected_id, req.app_profile_id());
-            return reader.release();
-          }));
+      .WillOnce(Invoke([&reader, expected_id](
+          grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
+        EXPECT_EQ(expected_id, req.app_profile_id());
+        return reader.release();
+      }));
   grpc::Status status;
   bigtable::noex::Table table =
       bigtable::noex::Table(client_, "test-id", kTableId);
   table.BulkApply(
       bt::BulkMutation(bt::SingleRowMutation(
-          "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                           "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
                        bt::SingleRowMutation(
                            "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status);

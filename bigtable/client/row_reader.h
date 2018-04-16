@@ -61,6 +61,21 @@ class RowReader {
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
             bool raise_on_error);
 
+  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
+            std::string table_name, RowSet row_set, std::int64_t rows_limit,
+            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            MetadataUpdatePolicy metadata_update_policy,
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+
+  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
+            std::string table_name, RowSet row_set, std::int64_t rows_limit,
+            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            MetadataUpdatePolicy metadata_update_policy,
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+            bool raise_on_error);
+
   RowReader(RowReader&& rhs) noexcept = default;
 
   ~RowReader();
@@ -131,6 +146,7 @@ class RowReader {
   void MakeRequest();
 
   std::shared_ptr<DataClient> client_;
+  std::string app_profile_id_;
   std::string table_name_;
   RowSet row_set_;
   std::int64_t rows_limit_;

@@ -81,6 +81,46 @@ RowReader::RowReader(
       raise_on_error_(raise_on_error),
       error_retrieved_(raise_on_error) {}
 
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, std::string app_profile_id,
+    std::string table_name, RowSet row_set, std::int64_t rows_limit,
+    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    : RowReader(std::move(client), std::move(app_profile_id),
+                std::move(table_name), std::move(row_set), rows_limit,
+                std::move(filter), std::move(retry_policy),
+                std::move(backoff_policy), std::move(metadata_update_policy),
+                std::move(parser_factory), true) {}
+
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, std::string app_profile_id,
+    std::string table_name, RowSet row_set, std::int64_t rows_limit,
+    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+    bool raise_on_error)
+    : client_(std::move(client)),
+      app_profile_id_(std::move(app_profile_id)),
+      table_name_(std::move(table_name)),
+      row_set_(std::move(row_set)),
+      rows_limit_(rows_limit),
+      filter_(std::move(filter)),
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)),
+      metadata_update_policy_(std::move(metadata_update_policy)),
+      context_(),
+      parser_factory_(std::move(parser_factory)),
+      stream_is_open_(false),
+      operation_cancelled_(false),
+      processed_chunks_count_(0),
+      rows_count_(0),
+      status_(grpc::Status::OK),
+      raise_on_error_(raise_on_error),
+      error_retrieved_(raise_on_error) {}
+
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
     if (raise_on_error_) {
@@ -117,6 +157,10 @@ void RowReader::MakeRequest() {
 
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
+  }
+
+  if (!app_profile_id_.empty()) {
+    request.set_app_profile_id(app_profile_id_);
   }
 
   context_ = bigtable::internal::make_unique<grpc::ClientContext>();

@@ -203,6 +203,39 @@ TEST_F(RowReaderTest, ReadOneRow) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
+  using namespace ::testing;
+  auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
+  auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
+  {
+    testing::InSequence s;
+    std::string expected_id = "test-id";
+    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
+        .WillOnce(Invoke([expected_id, stream](
+            grpc::ClientContext* ctx, ReadRowsRequest req) {
+          EXPECT_EQ(expected_id, req.app_profile_id());
+          return stream;
+        }));
+    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
+    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "test-id", "", bigtable::RowSet(),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_),
+      metadata_update_policy_, std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  EXPECT_EQ(it->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
 TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
   auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();

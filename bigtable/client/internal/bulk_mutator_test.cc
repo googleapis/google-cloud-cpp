@@ -114,9 +114,9 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   EXPECT_CALL(stub, MutateRowsRaw(_, _))
       .WillOnce(Invoke([expected_id, &reader](
           grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
-            EXPECT_EQ(expected_id, req.app_profile_id());
-            return reader.release();
-          }));
+        EXPECT_EQ(expected_id, req.app_profile_id());
+        return reader.release();
+      }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
