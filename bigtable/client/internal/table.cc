@@ -42,6 +42,9 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
   request.set_table_name(table_name_);
+  if (!app_profile_id_.empty()) {
+    request.set_app_profile_id(app_profile_id_);
+  }
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -167,6 +170,9 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   btproto::CheckAndMutateRowRequest request;
   request.set_table_name(table_name());
   request.set_row_key(std::move(row_key));
+  if (!app_profile_id_.empty()) {
+    request.set_app_profile_id(app_profile_id_);
+  }
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -228,6 +234,9 @@ void Table::SampleRowsImpl(
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
   request.set_table_name(table_name_);
+  if (!app_profile_id_.empty()) {
+    request.set_app_profile_id(app_profile_id_);
+  }
 
   while (true) {
     grpc::ClientContext client_context;
