@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/instance_admin.h"
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+static_assert(std::is_copy_assignable<bigtable::noex::InstanceAdmin>::value,
+              "bigtable::noex::InstanceAdmin must be CopyAssignable");
 
 std::vector<btproto::Instance> InstanceAdmin::ListInstances(
     grpc::Status& status) {

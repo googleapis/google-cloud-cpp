@@ -116,6 +116,50 @@ TEST_F(InstanceAdminTest, Default) {
   EXPECT_EQ("the-project", tested.project_id());
 }
 
+TEST_F(InstanceAdminTest, CopyConstructor) {
+  bigtable::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::InstanceAdmin copy(source);
+  EXPECT_EQ(expected, copy.project_id());
+}
+
+TEST_F(InstanceAdminTest, MoveConstructor) {
+  bigtable::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::InstanceAdmin copy(std::move(source));
+  EXPECT_EQ(expected, copy.project_id());
+}
+
+TEST_F(InstanceAdminTest, CopyAssignment) {
+  std::shared_ptr<MockAdminClient> other_client =
+      std::make_shared<MockAdminClient>();
+  std::string other_project = "other-project";
+  EXPECT_CALL(*other_client, project())
+      .WillRepeatedly(testing::ReturnRef(other_project));
+
+  bigtable::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::InstanceAdmin dest(other_client);
+  EXPECT_NE(expected, dest.project_id());
+  dest = source;
+  EXPECT_EQ(expected, dest.project_id());
+}
+
+TEST_F(InstanceAdminTest, MoveAssignment) {
+  std::shared_ptr<MockAdminClient> other_client =
+      std::make_shared<MockAdminClient>();
+  std::string other_project = "other-project";
+  EXPECT_CALL(*other_client, project())
+      .WillRepeatedly(testing::ReturnRef(other_project));
+
+  bigtable::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::InstanceAdmin dest(other_client);
+  EXPECT_NE(expected, dest.project_id());
+  dest = std::move(source);
+  EXPECT_EQ(expected, dest.project_id());
+}
+
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListInstances) {

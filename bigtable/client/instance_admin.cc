@@ -14,11 +14,15 @@
 
 #include "bigtable/client/instance_admin.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
+              "bigtable::InstanceAdmin must be CopyAssignable");
+
 std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
   grpc::Status status;
   auto result = impl_.ListInstances(status);
