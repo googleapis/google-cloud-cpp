@@ -312,7 +312,6 @@ TEST_F(TableAdminTest, CreateTableFailure) {
  */
 TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
 
   bigtable::TableAdmin tested(client_, "the-copy-instance");
   bigtable::TableAdmin table_admin(tested);

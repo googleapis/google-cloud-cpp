@@ -294,7 +294,6 @@ TEST_F(TableAdminTest, CreateTableFailure) {
  */
 TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-copy-instance");
   bigtable::noex::TableAdmin table_admin(tested);

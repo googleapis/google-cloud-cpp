@@ -71,22 +71,22 @@ class TableAdmin {
   /**
    * Create a new TableAdmin using explicit copy constructor implementation.
    */
-  TableAdmin(const TableAdmin& table_admin)
-      : client_(std::move(table_admin.client_)),
-        instance_id_(std::move(table_admin.instance_id_)),
+  TableAdmin(TableAdmin const& table_admin)
+      : client_(table_admin.client_),
+        instance_id_(table_admin.instance_id_),
         instance_name_(table_admin.InstanceName()),
         rpc_retry_policy_(table_admin.rpc_retry_policy_.get()->clone()),
         rpc_backoff_policy_(table_admin.rpc_backoff_policy_.get()->clone()),
         metadata_update_policy_(table_admin.instance_name(),
-                                MetadataParamTypes::PARENT){};
+                                MetadataParamTypes::PARENT) {}
 
   /**
    * Create a new TableAdmin using explicit assignment operator implementation.
    */
-  TableAdmin& operator=(const TableAdmin& table_admin) {
+  TableAdmin& operator=(TableAdmin const& table_admin) {
     if (this != &table_admin) {
-      client_ = std::move(table_admin.client_);
-      instance_id_ = std::move(table_admin.instance_id_);
+      client_ = table_admin.client_;
+      instance_id_ = table_admin.instance_id_;
       instance_name_ = table_admin.InstanceName();
       rpc_retry_policy_ = table_admin.rpc_retry_policy_.get()->clone();
       rpc_backoff_policy_ = table_admin.rpc_backoff_policy_.get()->clone();
@@ -173,10 +173,11 @@ class TableAdmin {
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;
   std::string instance_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 };
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

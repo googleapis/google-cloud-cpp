@@ -61,19 +61,12 @@ class TableAdmin {
   /**
    * Create a new TableAdmin using explicit copy constructor implementation.
    */
-  TableAdmin(const TableAdmin& table_admin)
-      : impl_(std::move(table_admin.impl_)) {}
+  TableAdmin(TableAdmin const& table_admin) = default;
 
   /**
    * Create a new TableAdmin using explicit assignment operator implementation.
    */
-  TableAdmin& operator=(const TableAdmin& table_admin) {
-    if (this != &table_admin) {
-      impl_ = table_admin.impl_;
-    }
-
-    return *this;
-  }
+  TableAdmin& operator=(TableAdmin const& table_admin) = default;
 
   std::string const& project() const { return impl_.project(); }
   std::string const& instance_id() const { return impl_.instance_id(); }

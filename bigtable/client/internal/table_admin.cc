@@ -21,6 +21,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
 
+static_assert(std::is_copy_constructible<bigtable::noex::TableAdmin>::value,
+              "bigtable::noex::TableAdmin must be constructible");
+static_assert(std::is_copy_assignable<bigtable::noex::TableAdmin>::value,
+              "bigtable::noex::TableAdmin must be assignable");
+
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
     std::string table_id, TableConfig config, grpc::Status& status) {
   auto request = config.as_proto_move();
