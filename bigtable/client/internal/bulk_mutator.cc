@@ -64,6 +64,20 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   return stream->Finish();
 }
 
+grpc::Status BulkMutator::MakeOneRequest(
+    google::bigtable::v2::Bigtable::StubInterface& stub,
+    grpc::ClientContext& client_context, std::string const& app_profile_id) {
+  PrepareForRequest();
+  mutations_.set_app_profile_id(app_profile_id);
+  auto stream = stub.MutateRows(&client_context, mutations_);
+  btproto::MutateRowsResponse response;
+  while (stream->Read(&response)) {
+    ProcessResponse(response);
+  }
+  FinishRequest();
+  return stream->Finish();
+}
+
 void BulkMutator::PrepareForRequest() {
   mutations_.Swap(&pending_mutations_);
   annotations_.swap(pending_annotations_);

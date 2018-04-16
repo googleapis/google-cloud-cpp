@@ -74,6 +74,62 @@ TEST(MultipleRowsMutatorTest, Simple) {
   EXPECT_TRUE(failures.empty());
 }
 
+/// @test Verify that MultipleRowsMutator uses app_profile_id when set.
+TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
+  namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  // In this test we create a Mutation for two rows, which succeeds in the
+  // first RPC request.  First create the mutation.
+  bt::BulkMutation mut(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
+
+  // Prepare the mocks.  The mutator should issue a RPC which must return a
+  // stream of responses, we prepare the stream first because it is easier than
+  // to create one of the fly.
+  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
+  EXPECT_CALL(*reader, Read(_))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
+        {
+          auto& e = *r->add_entries();
+          e.set_index(0);
+          e.mutable_status()->set_code(grpc::OK);
+        }
+        {
+          auto& e = *r->add_entries();
+          e.set_index(1);
+          e.mutable_status()->set_code(grpc::OK);
+        }
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  // Now prepare the client for the one request.
+  btproto::MockBigtableStub stub;
+  std::string expected_id = "test-id";
+  EXPECT_CALL(stub, MutateRowsRaw(_, _))
+      .WillOnce(Invoke([expected_id, &reader](
+          grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return reader.release();
+          }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  bt::internal::BulkMutator mutator("foo/bar/baz/table", *policy,
+                                    std::move(mut));
+
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  grpc::ClientContext context;
+  auto status = mutator.MakeOneRequest(stub, context, "test-id");
+  EXPECT_TRUE(status.ok());
+  auto failures = mutator.ExtractFinalFailures();
+  EXPECT_TRUE(failures.empty());
+}
+
 /// @test Verify that MultipleRowsMutator retries partial failures.
 TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   // In this test we create a Mutation for two rows, one of which will fail.

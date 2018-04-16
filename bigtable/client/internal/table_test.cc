@@ -455,6 +455,51 @@ TEST_F(NoexTableTest, BulkApplySimple) {
   SUCCEED();
 }
 
+/// @test Verify that Table::BulkApply() uses app_profile_id when set.
+TEST_F(TableBulkApplyTest, BulkApply_AppProfileId) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+  namespace bt = ::bigtable;
+
+  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
+  EXPECT_CALL(*reader, Read(_))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
+        {
+          auto& e = *r->add_entries();
+          e.set_index(0);
+          e.mutable_status()->set_code(grpc::OK);
+        }
+        {
+          auto& e = *r->add_entries();
+          e.set_index(1);
+          e.mutable_status()->set_code(grpc::OK);
+        }
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  std::string expected_id = "test-id";
+  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
+      .WillOnce(Invoke(
+          [&reader, expected_id](
+              grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return reader.release();
+          }));
+  grpc::Status status;
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, "test-id", kTableId);
+  table.BulkApply(
+      bt::BulkMutation(bt::SingleRowMutation(
+          "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+                       bt::SingleRowMutation(
+                           "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
+      status);
+  EXPECT_TRUE(status.ok());
+  SUCCEED();
+}
+
 /// @test Verify that Table::BulkApply() retries partial failures.
 TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
   using namespace ::testing;

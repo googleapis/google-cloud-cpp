@@ -36,6 +36,11 @@ class BulkMutator {
   grpc::Status MakeOneRequest(bigtable::DataClient& client,
                               grpc::ClientContext& client_context);
 
+  /// Send one batch request to the given with app_profile_id set.
+  grpc::Status MakeOneRequest(
+      google::bigtable::v2::Bigtable::StubInterface& stub,
+      grpc::ClientContext& client_context, std::string const& app_profile_id);
+
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> ExtractFinalFailures();
 
