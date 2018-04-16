@@ -15,22 +15,14 @@
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/chrono_literals.h"
+#include "bigtable/client/testing/mock_sample_row_keys_reader.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 #include <typeinfo>
 
 /// Define types and functions used for this tests.
 namespace {
-
-class MockReader : public grpc::ClientReaderInterface<
-                       ::google::bigtable::v2::SampleRowKeysResponse> {
- public:
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::SampleRowKeysResponse*));
-};
-
 class TableSampleRowKeysTest : public bigtable::testing::TableTestFixture {};
+using bigtable::testing::MockSampleRowKeysReader;
 }  // anonymous namespace
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
@@ -38,7 +30,7 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockReader;
+  auto reader = new MockSampleRowKeysReader;
   EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -63,7 +55,7 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockReader;
+  auto reader = new MockSampleRowKeysReader;
   EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -88,7 +80,7 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockReader;
+  auto reader = new MockSampleRowKeysReader;
   EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _)).WillOnce(Return(reader));
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -112,8 +104,8 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = new MockReader;
-  auto reader_retry = new MockReader;
+  auto reader = new MockSampleRowKeysReader;
+  auto reader_retry = new MockSampleRowKeysReader;
   EXPECT_CALL(*bigtable_stub_, SampleRowKeysRaw(_, _))
       .WillOnce(Return(reader))
       .WillOnce(Return(reader_retry));
@@ -181,7 +173,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       ::bigtable::SafeIdempotentMutationPolicy());
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = new MockReader;
+  auto r1 = new MockSampleRowKeysReader;
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -196,7 +188,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
 
   auto create_cancelled_stream = [&](grpc::ClientContext*,
                                      btproto::SampleRowKeysRequest const&) {
-    auto stream = new MockReader;
+    auto stream = new MockSampleRowKeysReader;
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));

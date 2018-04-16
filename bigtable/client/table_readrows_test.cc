@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/mock_read_rows_reader.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
 using testing::_;
@@ -23,6 +24,7 @@ using testing::SetArgPointee;
 /// Define helper types and functions for this test.
 namespace {
 class TableReadRowsTest : public bigtable::testing::TableTestFixture {};
+using bigtable::testing::MockReadRowsReader;
 }  // anonymous namespace
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
@@ -38,7 +40,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new bigtable::testing::MockResponseStream;
+  auto stream = new MockReadRowsReader;
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -78,8 +80,8 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new bigtable::testing::MockResponseStream;
-  auto stream_retry = new bigtable::testing::MockResponseStream;
+  auto stream = new MockReadRowsReader;
+  auto stream_retry = new MockReadRowsReader;
 
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
       .WillOnce(Return(stream))
@@ -115,7 +117,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
       .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
-        auto stream = new bigtable::testing::MockResponseStream;
+        auto stream = new MockReadRowsReader;
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
             .WillOnce(

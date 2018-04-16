@@ -20,8 +20,7 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
-#include "bigtable/client/testing/mock_data_client.h"
-#include "bigtable/client/testing/mock_response_stream.h"
+#include <gmock/gmock.h>
 
 namespace bigtable {
 namespace testing {

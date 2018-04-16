@@ -15,21 +15,13 @@
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/chrono_literals.h"
+#include "bigtable/client/testing/mock_mutate_rows_reader.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define types and functions used in the tests.
 namespace {
-
-class MockReader : public grpc::ClientReaderInterface<
-                       ::google::bigtable::v2::MutateRowsResponse> {
- public:
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::MutateRowsResponse*));
-};
-
 class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
+using bigtable::testing::MockMutateRowsReader;
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
@@ -40,7 +32,7 @@ namespace btproto = google::bigtable::v2;
 namespace bt = bigtable;
 
 TEST_F(TableBulkApplyTest, Simple) {
-  auto reader = bigtable::internal::make_unique<MockReader>();
+  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -72,7 +64,7 @@ TEST_F(TableBulkApplyTest, Simple) {
 
 /// @test Verify that Table::BulkApply() retries partial failures.
 TEST_F(TableBulkApplyTest, RetryPartialFailure) {
-  auto r1 = bigtable::internal::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate a partial (recoverable) failure.
@@ -87,7 +79,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = bigtable::internal::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -122,7 +114,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
-  auto r1 = bigtable::internal::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -161,7 +153,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // the BulkApply() operation to retry the request, because the mutation is in
   // an undetermined state.  Well, it should retry assuming it is idempotent,
   // which happens to be the case in this test.
-  auto r1 = bigtable::internal::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -175,7 +167,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   // Create a second stream returned by the mocks when the client retries.
-  auto r2 = bigtable::internal::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -221,7 +213,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       bt::SafeIdempotentMutationPolicy());
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = bigtable::internal::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -237,7 +229,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
 
   auto create_cancelled_stream = [&](grpc::ClientContext*,
                                      btproto::MutateRowsRequest const&) {
-    auto stream = bigtable::internal::make_unique<MockReader>();
+    auto stream = bigtable::internal::make_unique<MockMutateRowsReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
@@ -265,11 +257,11 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   // We will send both idempotent and non-idempotent mutations.  We prepare the
   // mocks to return an empty stream in the first RPC request.  That will force
   // the client to only retry the idempotent mutations.
-  auto r1 = bigtable::internal::make_unique<MockReader>();
+  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = bigtable::internal::make_unique<MockReader>();
+  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -311,7 +303,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.
 TEST_F(TableBulkApplyTest, FailedRPC) {
-  auto reader = bigtable::internal::make_unique<MockReader>();
+  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
