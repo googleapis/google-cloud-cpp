@@ -75,9 +75,6 @@ class InstanceAdmin {
 
   //@}
 
-  InstanceAdmin(InstanceAdmin const&) = delete;
-  InstanceAdmin operator=(InstanceAdmin const&) = delete;
-
  private:
   /// Shortcuts to avoid typing long names over and over.
   using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<InstanceAdminClient>;
@@ -86,8 +83,8 @@ class InstanceAdmin {
  private:
   std::shared_ptr<InstanceAdminClient> client_;
   std::string project_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 };
 

@@ -60,9 +60,6 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
-  InstanceAdmin(InstanceAdmin const&) = delete;
-  InstanceAdmin operator=(InstanceAdmin const&) = delete;
-
  private:
   noex::InstanceAdmin impl_;
 };
