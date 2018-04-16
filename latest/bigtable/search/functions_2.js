@@ -7,6 +7,7 @@ var searchData=
   ['cellsrowlimit',['CellsRowLimit',['../classbigtable_1_1v0_1_1Filter.html#a7892e342330e4df57ce7f3260ebb0030',1,'bigtable::v0::Filter']]],
   ['cellsrowoffset',['CellsRowOffset',['../classbigtable_1_1v0_1_1Filter.html#ad634656247f743765edff8d8edb377f2',1,'bigtable::v0::Filter']]],
   ['chain',['Chain',['../classbigtable_1_1v0_1_1Filter.html#a1f1fe5a74d501d1e09fc873f059ddd14',1,'bigtable::v0::Filter']]],
+  ['channel',['Channel',['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a6fe170a4f0a644b7b06c7901aa7574df',1,'bigtable::v0::InstanceAdminClient']]],
   ['channel_5farguments',['channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a8178490fb038925bb1b097aeb5a87e86',1,'bigtable::v0::ClientOptions']]],
   ['checkandmutaterow',['CheckAndMutateRow',['../classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1',1,'bigtable::v0::Table']]],
   ['checkconsistency',['CheckConsistency',['../classbigtable_1_1v0_1_1TableAdmin.html#ae58bc777024d5b68c6abbb04ac05e37e',1,'bigtable::v0::TableAdmin']]],
