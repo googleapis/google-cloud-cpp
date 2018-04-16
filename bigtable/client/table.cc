@@ -17,6 +17,7 @@
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
 #include <thread>
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -44,6 +45,9 @@ namespace {
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+static_assert(std::is_copy_assignable<bigtable::Table>::value,
+              "bigtable::Table must be CopyAssignable");
+
 void Table::Apply(SingleRowMutation&& mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (not failures.empty()) {

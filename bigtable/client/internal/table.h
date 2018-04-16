@@ -204,10 +204,10 @@ class Table {
   std::shared_ptr<DataClient> client_;
   std::string app_profile_id_;
   std::string table_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::unique_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
+  std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace noex

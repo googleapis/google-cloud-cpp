@@ -49,3 +49,33 @@ TEST_F(TableTest, TableConstructor) {
   bigtable::Table table(client_, kOtherTableId);
   EXPECT_EQ(kOtherTableName, table.table_name());
 }
+
+TEST_F(TableTest, CopyConstructor) {
+  bigtable::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::Table copy(source);
+  EXPECT_EQ(expected, copy.table_name());
+}
+
+TEST_F(TableTest, MoveConstructor) {
+  bigtable::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::Table copy(std::move(source));
+  EXPECT_EQ(expected, copy.table_name());
+}
+
+TEST_F(TableTest, CopyAssignment) {
+  bigtable::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::Table dest(client_, "anpother-table");
+  dest = source;
+  EXPECT_EQ(expected, dest.table_name());
+}
+
+TEST_F(TableTest, MoveAssignment) {
+  bigtable::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::Table dest(client_, "another-table");
+  dest = std::move(source);
+  EXPECT_EQ(expected, dest.table_name());
+}

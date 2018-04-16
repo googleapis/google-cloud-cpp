@@ -16,12 +16,16 @@
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
 #include <thread>
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+
+static_assert(std::is_copy_assignable<bigtable::noex::Table>::value,
+              "bigtable::noex::Table must be CopyAssignable");
 
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.

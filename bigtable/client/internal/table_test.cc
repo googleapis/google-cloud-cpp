@@ -87,6 +87,36 @@ TEST_F(TableTest, TableConstructor) {
   EXPECT_EQ(kOtherTableName, table.table_name());
 }
 
+TEST_F(TableTest, CopyConstructor) {
+  bigtable::noex::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::noex::Table copy(source);
+  EXPECT_EQ(expected, copy.table_name());
+}
+
+TEST_F(TableTest, MoveConstructor) {
+  bigtable::noex::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::noex::Table copy(std::move(source));
+  EXPECT_EQ(expected, copy.table_name());
+}
+
+TEST_F(TableTest, CopyAssignment) {
+  bigtable::noex::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::noex::Table dest(client_, "anpother-table");
+  dest = source;
+  EXPECT_EQ(expected, dest.table_name());
+}
+
+TEST_F(TableTest, MoveAssignment) {
+  bigtable::noex::Table source(client_, "my-table");
+  std::string expected = source.table_name();
+  bigtable::noex::Table dest(client_, "another-table");
+  dest = std::move(source);
+  EXPECT_EQ(expected, dest.table_name());
+}
+
 TEST_F(TableReadRowTest, ReadRowSimple) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
