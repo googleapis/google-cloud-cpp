@@ -209,7 +209,7 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
 }
 
 std::vector<btproto::Snapshot> TableAdmin::ListSnapshots(
-    int32_t page_size, grpc::Status& status,
+    std::int32_t page_size, grpc::Status& status,
     bigtable::ClusterId const& cluster_id) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();

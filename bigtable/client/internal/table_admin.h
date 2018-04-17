@@ -119,7 +119,7 @@ class TableAdmin {
                       grpc::Status& status);
 
   std::vector<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      int32_t page_size, grpc::Status& status,
+      std::int32_t page_size, grpc::Status& status,
       bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
 
   //@}

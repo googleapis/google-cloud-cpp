@@ -222,8 +222,16 @@ class TableAdmin {
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
 
+  /**
+   * List snapshots in the given instance.
+   * @param page_size the maximum number of snapshots to return.
+   * @param cluster_id the name of the cluster for which snapshots should be
+   * listed.
+   * @return vector containing the snapshots for the given cluster.
+   * @throws std::exception if the operation cannot be completed.
+   */
   std::vector<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      int32_t page_size,
+      std::int32_t page_size,
       bigtable::ClusterId cluster_id = bigtable::ClusterId("-"));
 
  private:
