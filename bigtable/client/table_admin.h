@@ -59,7 +59,6 @@ class TableAdmin {
               std::move(retry_policy), std::move(backoff_policy)) {}
 
   TableAdmin(TableAdmin const& table_admin) = default;
-
   TableAdmin& operator=(TableAdmin const& table_admin) = default;
 
   std::string const& project() const { return impl_.project(); }
