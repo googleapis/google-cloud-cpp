@@ -41,6 +41,7 @@ bigtable_client_HDRS = [
     "table.h",
     "table_admin.h",
     "table_config.h",
+    "table_strong_types.h",
     "version.h",
 ]
 

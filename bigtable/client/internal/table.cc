@@ -41,10 +41,8 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
-  request.set_table_name(table_name_);
-  if (!app_profile_id_.empty()) {
-    request.set_app_profile_id(app_profile_id_);
-  }
+  SetCommonTableOperationRequest<MutateRowRequest>(request, table_name_.get(),
+                                                   app_profile_id_.get());
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -96,7 +94,8 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
-  internal::BulkMutator mutator(table_name_, *idemponent_policy,
+  internal::BulkMutator mutator(table_name_, app_profile_id_,
+                                *idemponent_policy,
                                 std::forward<BulkMutation>(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
@@ -185,11 +184,9 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               std::vector<Mutation> false_mutations,
                               grpc::Status& status) {
   btproto::CheckAndMutateRowRequest request;
-  request.set_table_name(table_name());
   request.set_row_key(std::move(row_key));
-  if (!app_profile_id_.empty()) {
-    request.set_app_profile_id(app_profile_id_);
-  }
+  SetCommonTableOperationRequest(request, table_name_.get(),
+                                 app_profile_id_.get());
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -250,10 +247,8 @@ void Table::SampleRowsImpl(
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
-  request.set_table_name(table_name_);
-  if (!app_profile_id_.empty()) {
-    request.set_app_profile_id(app_profile_id_);
-  }
+  SetCommonTableOperationRequest(request, table_name_.get(),
+                                 app_profile_id_.get());
 
   while (true) {
     grpc::ClientContext client_context;

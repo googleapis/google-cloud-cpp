@@ -17,6 +17,8 @@
 
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
+#include "bigtable/client/table_admin_strong_types.h"
+#include "bigtable/client/table_strong_types.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -24,7 +26,8 @@ namespace internal {
 /// Keep the state in the Table::BulkApply() member function.
 class BulkMutator {
  public:
-  BulkMutator(std::string const& table_name,
+  BulkMutator(bigtable::TableId const& table_name,
+              bigtable::AppProfileId const& app_profile_id,
               IdempotentMutationPolicy& idempotent_policy, BulkMutation&& mut);
 
   /// Return true if there are pending mutations in the mutator
@@ -35,11 +38,6 @@ class BulkMutator {
   /// Send one batch request to the given stub.
   grpc::Status MakeOneRequest(bigtable::DataClient& client,
                               grpc::ClientContext& client_context);
-
-  /// Send one batch request to the given with app_profile_id set.
-  grpc::Status MakeOneRequest(
-      google::bigtable::v2::Bigtable::StubInterface& stub,
-      grpc::ClientContext& client_context, std::string const& app_profile_id);
 
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> ExtractFinalFailures();
