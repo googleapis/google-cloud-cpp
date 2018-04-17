@@ -21,7 +21,6 @@
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpc++/grpc++.h>
-
 #include <chrono>
 #include <type_traits>
 
@@ -64,7 +63,15 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  *
  * The following functions create a mutation that deletes all the
  * cells in the given column family and column within the given
- * timestamp range.
+ * timestamp in the range.
+ *
+ * The function accepts any instantiation of `std::chrono::duration<>` for the
+ * @p timestamp_begin and @p timestamp_end parameters.  For example:
+ *
+ * @code
+ * using namespace std::chrono_literals; // C++14
+ * bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us)
+ * @endcode
  *
  * The ending timestamp is exclusive, while the beginning timestamp is
  * inclusive.  That is, the interval is [@p timestamp_begin, @p timestamp_end).
@@ -72,9 +79,22 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  * endpoints of the time range.  The Cloud Bigtable server rejects invalid and
  * empty ranges, i.e., any range where the endpoint is smaller or equal than to
  * the initial endpoint unless either endpoint is 0.
+ *
+ * @tparam Rep1 a placeholder to match the Rep tparam for @p timestamp_begin
+ * type,
+ *     the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
+ *     used to store the number of ticks), for our purposes it is simply a
+ *     formal parameter.
+ * @tparam Rep2 similar formal parameter for the type of @p timestamp_end.
+ * @tparam Period1 a placeholder to match the Period tparam for @p
+ * timestamp_begin
+ *     type, the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
+ *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
+ *     parameter.
+ * @tparam Period2 similar formal parameter for the type of @p timestamp_end.
  */
-
-/// Delete only within the timestamp range provided.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 Mutation DeleteFromColumn(std::string family, std::string column,
                           std::chrono::duration<Rep1, Period1> timestamp_begin,
@@ -91,7 +111,33 @@ Mutation DeleteFromColumn(std::string family, std::string column,
   return m;
 }
 
-/// Delete starting from, and including, @a timestamp_begin.
+//@{
+/**
+ * @name The following functions create a mutation that deletes all the
+ * cells in the given column family and column, starting from and
+ * including, @a timestamp_begin.
+ *
+ * The function accepts any instantiation of `std::chrono::duration<>` for the
+ * @p timestamp_begin For example:
+ *
+ * @code
+ * using namespace std::chrono_literals; // C++14
+ * bigtable::DeleteFromColumn("fam", "col", 10_us)
+ * @endcode
+ *
+ * @tparam Rep1 a placeholder to match the Rep tparam for @p timestamp_begin
+ * type,
+ *     the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
+ *     used to store the number of ticks), for our purposes it is simply a
+ *     formal parameter.
+ * @tparam Period1 a placeholder to match the Period tparam for @p
+ * timestamp_begin
+ *     type, the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
+ *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
+ *     parameter.
+ */
 template <typename Rep1, typename Period1>
 Mutation DeleteFromColumnStartingFrom(
     std::string family, std::string column,
@@ -106,7 +152,31 @@ Mutation DeleteFromColumnStartingFrom(
   return m;
 }
 
-/// Delete up to, but excluding, @a timestamp_end.
+//@{
+/**
+ * @name The following functions create a mutation that deletes all the
+ * cells in the given column family and column, Delete up to @a timestamp_end,
+ * but excluding, @a timestamp_end.
+ *
+ * The function accepts any instantiation of `std::chrono::duration<>` for the
+ * @p timestamp_end For example:
+ *
+ * @code
+ * using namespace std::chrono_literals; // C++14
+ * bigtable::DeleteFromColumn("fam", "col", 10_us)
+ * @endcode
+ *
+ * @tparam Rep2 a placeholder to match the Rep tparam for @p timestamp_end type,
+ *     the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
+ *     used to store the number of ticks), for our purposes it is simply a
+ *     formal parameter.
+ * @tparam Period2 a placeholder to match the Period tparam for @p timestamp_end
+ *     type, the semantics of this template parameter are documented in
+ *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
+ *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
+ *     parameter.
+ */
 template <typename Rep2, typename Period2>
 Mutation DeleteFromColumnEndingAt(
     std::string family, std::string column,

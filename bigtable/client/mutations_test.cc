@@ -80,22 +80,22 @@ TEST(MutationsTest, SetCellNumericValue) {
 
 /// @test Verify that DeleteFromColumn() does not validates inputs.
 TEST(MutationsTest, DeleteFromColumnNoValidation) {
-  auto reversed = bigtable::DeleteFromColumn("family", "col", 20_ms, 0_ms);
+  auto reversed = bigtable::DeleteFromColumn("family", "col", 20_us, 0_us);
   EXPECT_TRUE(reversed.op.has_delete_from_column());
-  auto empty = bigtable::DeleteFromColumn("family", "col", 1000_ms, 1000_ms);
+  auto empty = bigtable::DeleteFromColumn("family", "col", 1000_us, 1000_us);
   EXPECT_TRUE(empty.op.has_delete_from_column());
 }
 
 /// @test Verify that DeleteFromColumn() and friends work as expected.
 TEST(MutationsTest, DeleteFromColumn) {
-  auto actual = bigtable::DeleteFromColumn("family", "col", 1234_ms, 1235_ms);
+  auto actual = bigtable::DeleteFromColumn("family", "col", 1234_us, 1235_us);
   ASSERT_TRUE(actual.op.has_delete_from_column());
   {
     auto const& mut = actual.op.delete_from_column();
     EXPECT_EQ("family", mut.family_name());
     EXPECT_EQ("col", mut.column_qualifier());
-    EXPECT_EQ(1234000, mut.time_range().start_timestamp_micros());
-    EXPECT_EQ(1235000, mut.time_range().end_timestamp_micros());
+    EXPECT_EQ(1234, mut.time_range().start_timestamp_micros());
+    EXPECT_EQ(1235, mut.time_range().end_timestamp_micros());
   }
 
   auto full = bigtable::DeleteFromColumn("family", "col");
@@ -107,22 +107,22 @@ TEST(MutationsTest, DeleteFromColumn) {
     EXPECT_EQ(0, mut.time_range().start_timestamp_micros());
     EXPECT_EQ(0, mut.time_range().end_timestamp_micros());
   }
-  auto end = bigtable::DeleteFromColumnEndingAt("family", "col", 1235_ms);
+  auto end = bigtable::DeleteFromColumnEndingAt("family", "col", 1235_us);
   ASSERT_TRUE(end.op.has_delete_from_column());
   {
     auto const& mut = end.op.delete_from_column();
     EXPECT_EQ("family", mut.family_name());
     EXPECT_EQ("col", mut.column_qualifier());
     EXPECT_EQ(0, mut.time_range().start_timestamp_micros());
-    EXPECT_EQ(1235000, mut.time_range().end_timestamp_micros());
+    EXPECT_EQ(1235, mut.time_range().end_timestamp_micros());
   }
-  auto start = bigtable::DeleteFromColumnStartingFrom("family", "col", 1234_ms);
+  auto start = bigtable::DeleteFromColumnStartingFrom("family", "col", 1234_us);
   ASSERT_TRUE(start.op.has_delete_from_column());
   {
     auto const& mut = start.op.delete_from_column();
     EXPECT_EQ("family", mut.family_name());
     EXPECT_EQ("col", mut.column_qualifier());
-    EXPECT_EQ(1234000, mut.time_range().start_timestamp_micros());
+    EXPECT_EQ(1234, mut.time_range().start_timestamp_micros());
     EXPECT_EQ(0, mut.time_range().end_timestamp_micros());
   }
 }

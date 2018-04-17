@@ -195,33 +195,33 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   std::string const row_key = "DeleteColumn-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", 1000000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id2", 1000000, "v-c0-0-1", {}},
-      {row_key, column_family2, "column_id2", 3000000, "v-c0-0-2", {}},
-      {row_key, column_family2, "column_id2", 4000000, "v-c0-0-3", {}},
-      {row_key, column_family2, "column_id3", 1000000, "v-c1-0-1", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c1-0-2", {}},
-      {row_key, column_family3, "column_id1", 2000000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1", {}},
+      {row_key, column_family2, "column_id2", 3000, "v-c0-0-2", {}},
+      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3", {}},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c1-0-2", {}},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
 
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", 1000000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 1000000, "v-c0-0-1", {}},
-      {row_key, column_family2, "column_id2", 4000000, "v-c0-0-3", {}},
-      {row_key, column_family2, "column_id3", 1000000, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", 2000000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1", {}},
+      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3", {}},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
 
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier as column_id2
   table->Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2",
-                                          2000000_us, 4000000_us)));
+      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
+                                          4000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -261,13 +261,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   // Try to delete the columns with an invalid range:
   EXPECT_THROW(table->Apply(bigtable::SingleRowMutation(
                    key, bigtable::DeleteFromColumn(column_family2, "c2",
-                                                   4000_ms, 2000_ms))),
+                                                   4000_us, 2000_us))),
                bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 4000_ms,
-                                          2000_ms))),
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 4000_us,
+                                          2000_us))),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
@@ -304,13 +304,13 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   // TODO(#119) - change the expected exception to the wrapper.
   EXPECT_THROW(table->Apply(bigtable::SingleRowMutation(
                    key, bigtable::DeleteFromColumn(column_family2, "c2",
-                                                   2000_ms, 2000_ms))),
+                                                   2000_us, 2000_us))),
                bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_ms,
-                                          2000_ms))),
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
+                                          2000_us))),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
@@ -366,25 +366,25 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   std::string const row_key = "DeleteColumnStartingFrom-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family2, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000000, "v-c1-0-2", {}},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
 
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier column_id1
   table->Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumnStartingFrom(
-                   column_family1, "column_id1", 1000000_us)));
+      row_key, bigtable::DeleteFromColumnStartingFrom(column_family1,
+                                                      "column_id1", 1000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -404,17 +404,17 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   std::string const row_key = "DeleteColumnEndingAt-Key";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 2000000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
   };
 
   // Create records
@@ -424,7 +424,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // Delete the columns with column identifier column_id1
   table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
-                                                  2000000_us)));
+                                                  2000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
