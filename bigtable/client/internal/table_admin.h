@@ -68,35 +68,6 @@ class TableAdmin {
         rpc_backoff_policy_(backoff_policy.clone()),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
 
-  /**
-   * Create a new TableAdmin using explicit copy constructor implementation.
-   */
-  TableAdmin(TableAdmin const& table_admin)
-      : client_(table_admin.client_),
-        instance_id_(table_admin.instance_id_),
-        instance_name_(table_admin.InstanceName()),
-        rpc_retry_policy_(table_admin.rpc_retry_policy_.get()->clone()),
-        rpc_backoff_policy_(table_admin.rpc_backoff_policy_.get()->clone()),
-        metadata_update_policy_(table_admin.instance_name(),
-                                MetadataParamTypes::PARENT) {}
-
-  /**
-   * Create a new TableAdmin using explicit assignment operator implementation.
-   */
-  TableAdmin& operator=(TableAdmin const& table_admin) {
-    if (this != &table_admin) {
-      client_ = table_admin.client_;
-      instance_id_ = table_admin.instance_id_;
-      instance_name_ = table_admin.InstanceName();
-      rpc_retry_policy_ = table_admin.rpc_retry_policy_.get()->clone();
-      rpc_backoff_policy_ = table_admin.rpc_backoff_policy_.get()->clone();
-      metadata_update_policy_ = MetadataUpdatePolicy(
-          table_admin.instance_name(), MetadataParamTypes::PARENT);
-    }
-
-    return *this;
-  }
-
   std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }

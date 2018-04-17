@@ -58,14 +58,8 @@ class TableAdmin {
       : impl_(std::move(client), std::move(instance_id),
               std::move(retry_policy), std::move(backoff_policy)) {}
 
-  /**
-   * Create a new TableAdmin using explicit copy constructor implementation.
-   */
   TableAdmin(TableAdmin const& table_admin) = default;
 
-  /**
-   * Create a new TableAdmin using explicit assignment operator implementation.
-   */
   TableAdmin& operator=(TableAdmin const& table_admin) = default;
 
   std::string const& project() const { return impl_.project(); }
