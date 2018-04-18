@@ -89,7 +89,7 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  * @tparam Rep2 similar formal parameter for the type of @p timestamp_end.
  *
  * @tparam Period1 a placeholder to match the Period tparam for
- * @p timestamp_begin type. the semantics of this template parameter are
+ * @p timestamp_begin type. The semantics of this template parameter are
  * documented in `std::chrono::duration<>` (in brief, the length of the tick
  * in seconds,vexpressed as a `std::ratio<>`), for our purposes it is simply
  * a formal parameter.
@@ -133,7 +133,7 @@ Mutation DeleteFromColumn(std::string family, std::string column,
  * formal parameter.
  *
  * @tparam Period1 a placeholder to match the Period tparam for @p
- * timestamp_begin type. the semantics of this template parameter
+ * timestamp_begin type. The semantics of this template parameter
  * are documented in `std::chrono::duration<>` (in brief, the length
  * of the tick in seconds, expressed as a `std::ratio<>`), for our
  * purposes it is simply a formal parameter.
