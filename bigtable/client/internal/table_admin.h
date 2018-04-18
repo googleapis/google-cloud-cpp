@@ -180,10 +180,11 @@ class TableAdmin {
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;
   std::string instance_name_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 };
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

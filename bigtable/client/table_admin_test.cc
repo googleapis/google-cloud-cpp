@@ -330,6 +330,73 @@ TEST_F(TableAdminTest, CreateTableFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+/**
+ * @test Verify that Copy Constructor and assignment operator
+ * copies all properties.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-copy-instance");
+  bigtable::TableAdmin table_admin(tested);
+
+  EXPECT_EQ(tested.instance_id(), table_admin.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin.instance_name());
+  EXPECT_EQ(tested.project(), table_admin.project());
+
+  bigtable::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  EXPECT_NE(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_NE(tested.instance_name(), table_admin_assign.instance_name());
+
+  table_admin_assign = tested;
+  EXPECT_EQ(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin_assign.instance_name());
+  EXPECT_EQ(tested.project(), table_admin_assign.project());
+}
+
+/**
+ * @test Verify that Copy Constructor and assignment operator copies
+ * all properties including policies applied.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(
+      client_, "the-construct-instance",
+      bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  // Copy Constructor
+  bigtable::TableAdmin table_admin(tested);
+  // Create New Instance
+  bigtable::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  // Copy assignable
+  table_admin_assign = table_admin;
+
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
+  // fourth failure that actually raises an error.
+  EXPECT_CALL(*client_, on_completion(_)).Times(8);
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(table_admin.GetTable("other-table"), bigtable::GRpcError);
+  EXPECT_THROW(table_admin_assign.GetTable("other-table"), bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(table_admin.GetTable("other-table"),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(table_admin_assign.GetTable("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
   using namespace ::testing;

@@ -312,6 +312,71 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   EXPECT_FALSE(status.ok());
 }
 
+/**
+ * @test Verify that Copy Constructor and assignment operator
+ * copies all properties.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
+  using namespace ::testing;
+
+  bigtable::noex::TableAdmin tested(client_, "the-copy-instance");
+  bigtable::noex::TableAdmin table_admin(tested);
+
+  EXPECT_EQ(tested.instance_id(), table_admin.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin.instance_name());
+
+  bigtable::noex::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  EXPECT_NE(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_NE(tested.instance_name(), table_admin_assign.instance_name());
+
+  table_admin_assign = tested;
+  EXPECT_EQ(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin_assign.instance_name());
+}
+
+/**
+ * @test Verify that Copy Constructor and assignment operator copies
+ * all properties including policies applied.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  bigtable::noex::TableAdmin table_admin(tested);
+
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
+  // fourth failure that actually raises an error.
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+  grpc::Status status;
+  // After all the setup, make the actual call we want to test.
+  table_admin.GetTable("other-table", status);
+  EXPECT_FALSE(status.ok());
+
+  bigtable::noex::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  table_admin_assign = tested;
+
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
+  // fourth failure that actually raises an error.
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+  grpc::Status status_assign;
+  // After all the setup, make the actual call we want to test.
+  table_admin_assign.GetTable("other-table", status_assign);
+  EXPECT_FALSE(status_assign.ok());
+}
+
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
   using namespace ::testing;
