@@ -124,8 +124,8 @@ class TableAdmin {
       bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-")) {
     Collection<::google::bigtable::admin::v2::Snapshot> result;
     ListSnapshotsImpl(
-        cluster_id, [&result](::google::bigtable::admin::v2::Snapshot snapshot)
-        {
+        cluster_id, 
+        [&result](::google::bigtable::admin::v2::Snapshot snapshot) {
           result.emplace_back(std::move(snapshot));
         },
         [&result]() { result.clear(); }, status);
