@@ -219,7 +219,10 @@ struct UnaryRpcUtils {
         break;
       }
       if (not rpc_policy.on_failure(status)) {
-        status = grpc::Status(status.error_code(), error_message);
+        std::string full_message = error_message;
+        full_message +=
+            "(" + metadata_update_policy.x_google_request_params().second + ")";
+        status = grpc::Status(status.error_code(), full_message);
         break;
       }
       auto delay = backoff_policy.on_completion(status);

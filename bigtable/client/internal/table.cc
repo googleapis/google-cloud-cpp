@@ -174,19 +174,17 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   }
   auto response = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
-      status);
+      &StubType::CheckAndMutateRow, request, "CheckAndMutateRow", status);
 
   return response.predicate_matched();
 }
 
 Row Table::CallReadModifyWriteRowRequest(
     btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
-  auto error_message =
-      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
   auto response = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::ReadModifyWriteRow, request, error_message.c_str(), status);
+      &StubType::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
+      status);
   if (not status.ok()) {
     return Row("", {});
   }
