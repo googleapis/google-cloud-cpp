@@ -85,6 +85,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab8c84e337ace09591f205b4b11b32711"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ab8c84e337ace09591f205b4b11b32711">TableAdmin</a> (std::shared_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1AdminClient.html">AdminClient</a> &gt; client, std::string <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a6a0c66bf3946d07856647dce645ff009">instance_id</a>, <a class="el" href="classbigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> retry_policy, <a class="el" href="classbigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> backoff_policy)</td></tr>
 <tr class="memdesc:ab8c84e337ace09591f205b4b11b32711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">TableAdmin</a> using explicit policies to handle RPC errors.  <a href="#ab8c84e337ace09591f205b4b11b32711">More...</a><br /></td></tr>
 <tr class="separator:ab8c84e337ace09591f205b4b11b32711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38cab5f304db9c445f6dde537ec57085"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a38cab5f304db9c445f6dde537ec57085">TableAdmin</a> (<a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> const &amp;table_admin)=default</td></tr>
+<tr class="separator:a38cab5f304db9c445f6dde537ec57085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ebab02504e6d6ea9f5109adf1652d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ac7ebab02504e6d6ea9f5109adf1652d9">operator=</a> (<a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> const &amp;table_admin)=default</td></tr>
+<tr class="separator:ac7ebab02504e6d6ea9f5109adf1652d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b2ce8caf21a523936a95d6d20190022"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a1b2ce8caf21a523936a95d6d20190022">project</a> () const</td></tr>
 <tr class="separator:a1b2ce8caf21a523936a95d6d20190022"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a0c66bf3946d07856647dce645ff009"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a6a0c66bf3946d07856647dce645ff009">instance_id</a> () const</td></tr>
@@ -133,7 +137,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a93d72b852557df5677f555af3b450ef1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93d72b852557df5677f555af3b450ef1">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a93d72b852557df5677f555af3b450ef1">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +180,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab8c84e337ace09591f205b4b11b32711"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8c84e337ace09591f205b4b11b32711">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8c84e337ace09591f205b4b11b32711">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,6 +244,32 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a38cab5f304db9c445f6dde537ec57085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38cab5f304db9c445f6dde537ec57085">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bigtable::v0::TableAdmin::TableAdmin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> const &amp;&#160;</td>
+          <td class="paramname"><em>table_admin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -776,6 +806,32 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </dd>
 </dl>
 <p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ModifyTable(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.ModifyColumnFamilies(</div><div class="line">      table_id,</div><div class="line">      {bigtable::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div><div class="line">       bigtable::ColumnFamilyModification::Update(</div><div class="line">           <span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::Union(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(5),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(24 * 7)))),</div><div class="line">       bigtable::ColumnFamilyModification::Create(</div><div class="line">           <span class="stringliteral">&quot;bar&quot;</span>, bigtable::GcRule::Intersection(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(3),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(72))))});</div><div class="line"></div><div class="line">  std::string formatted;</div><div class="line">  google::protobuf::TextFormat::PrintToString(schema, &amp;formatted);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Schema modified to: &quot;</span> &lt;&lt; formatted &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="ac7ebab02504e6d6ea9f5109adf1652d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7ebab02504e6d6ea9f5109adf1652d9">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a>&amp; bigtable::v0::TableAdmin::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> const &amp;&#160;</td>
+          <td class="paramname"><em>table_admin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a id="a1b2ce8caf21a523936a95d6d20190022"></a>
