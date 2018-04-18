@@ -14,11 +14,13 @@
 
 #include "bigtable/client/grpc_error.h"
 #include "bigtable/client/internal/endian.h"
+#include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/table_integration_test.h"
 
 namespace {
 
 namespace admin_proto = ::google::bigtable::admin::v2;
+using namespace bigtable::chrono_literals;
 
 class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -203,8 +205,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
       {row_key, column_family2, "column_id2", 2000, "v-c1-0-2", {}},
       {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
   };
-  std::int64_t timestamp_begin = 2000;
-  std::int64_t timestamp_end = 4000;  // timestamp_end is not inclusive.
+
   std::vector<bigtable::Cell> expected_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
       {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
@@ -219,8 +220,8 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier as column_id2
   table->Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2",
-                                          timestamp_begin, timestamp_end)));
+      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
+                                          4000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -255,17 +256,18 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   };
 
   CreateCells(*table, created_cells);
+
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Try to delete the columns with an invalid range:
-  EXPECT_THROW(
-      table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "c2", 4000, 2000))),
-      bigtable::PermanentMutationFailure);
+  EXPECT_THROW(table->Apply(bigtable::SingleRowMutation(
+                   key, bigtable::DeleteFromColumn(column_family2, "c2",
+                                                   4000_us, 2000_us))),
+               bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 4000,
-                                          2000))),
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 4000_us,
+                                          2000_us))),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
@@ -296,18 +298,19 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   };
 
   CreateCells(*table, created_cells);
+
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Try to delete the columns with an invalid range:
   // TODO(#119) - change the expected exception to the wrapper.
-  EXPECT_THROW(
-      table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "c2", 2000, 2000))),
-      bigtable::PermanentMutationFailure);
+  EXPECT_THROW(table->Apply(bigtable::SingleRowMutation(
+                   key, bigtable::DeleteFromColumn(column_family2, "c2",
+                                                   2000_us, 2000_us))),
+               bigtable::PermanentMutationFailure);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       table->Apply(bigtable::SingleRowMutation(
-          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000,
-                                          2000))),
+          key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
+                                          2000_us))),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
@@ -378,11 +381,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
 
   // Create records
   CreateCells(*table, created_cells);
-  std::int64_t time_begin = 1000;
   // Delete the columns with column identifier column_id1
   table->Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumnStartingFrom(
-                   column_family1, "column_id1", time_begin)));
+      row_key, bigtable::DeleteFromColumnStartingFrom(column_family1,
+                                                      "column_id1", 1000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 
@@ -419,11 +421,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   CreateCells(*table, created_cells);
   // end_time is not inclusive, only records with timestamp < time_end
   // will be deleted
-  std::int64_t time_end = 2000;
   // Delete the columns with column identifier column_id1
   table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
-                                                  time_end)));
+                                                  2000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
 

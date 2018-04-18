@@ -39,43 +39,11 @@ Mutation SetCell(std::string family, std::string column, std::string value) {
   return m;
 }
 
-Mutation DeleteFromColumn(std::string family, std::string column,
-                          std::int64_t timestamp_begin,
-                          std::int64_t timestamp_end) {
-  Mutation m;
-  auto& d = *m.op.mutable_delete_from_column();
-  d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin);
-  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end);
-  return m;
-}
-
 Mutation DeleteFromColumn(std::string family, std::string column) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::move(column));
-  return m;
-}
-
-Mutation DeleteFromColumnStartingFrom(std::string family, std::string column,
-                                      std::int64_t timestamp_begin) {
-  Mutation m;
-  auto& d = *m.op.mutable_delete_from_column();
-  d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_start_timestamp_micros(timestamp_begin);
-  return m;
-}
-
-Mutation DeleteFromColumnEndingAt(std::string family, std::string column,
-                                  std::int64_t timestamp_end) {
-  Mutation m;
-  auto& d = *m.op.mutable_delete_from_column();
-  d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
-  d.mutable_time_range()->set_end_timestamp_micros(timestamp_end);
   return m;
 }
 
