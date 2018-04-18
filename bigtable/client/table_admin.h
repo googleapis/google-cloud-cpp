@@ -224,15 +224,21 @@ class TableAdmin {
 
   /**
    * List snapshots in the given instance.
-   * @param page_size the maximum number of snapshots to return.
    * @param cluster_id the name of the cluster for which snapshots should be
    * listed.
-   * @return vector containing the snapshots for the given cluster.
+   * @return collection containing the snapshots for the given cluster.
    * @throws std::exception if the operation cannot be completed.
    */
-  std::vector<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      std::int32_t page_size,
-      bigtable::ClusterId cluster_id = bigtable::ClusterId("-"));
+  template <template <typename...> class Collection = std::vector>
+  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
+    grpc::Status status;
+    auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
+    if (not status.ok()) {
+      internal::RaiseRpcError(status, status.error_message());
+    }
+    return result;
+  }
 
  private:
   noex::TableAdmin impl_;

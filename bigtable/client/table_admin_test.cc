@@ -873,13 +873,39 @@ TEST_F(TableAdminTest, ListSnapshots_Simple) {
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   bigtable::ClusterId cluster_id("the-cluster");
-  auto actual_snapshots = tested.ListSnapshots(10, cluster_id);
+  auto actual_snapshots = tested.ListSnapshots(cluster_id);
   ASSERT_EQ(2UL, actual_snapshots.size());
   std::string instance_name = tested.instance_name();
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",
             actual_snapshots[0].name());
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1",
             actual_snapshots[1].name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` works for std::list
+ * container.
+ */
+TEST_F(TableAdminTest, ListSnapshots_SimpleList) {
+  using namespace ::testing;
+  bigtable::TableAdmin tested(client_, kInstanceId);
+  auto mock_list_snapshots = create_list_snapshots_lambda("", "", {"s0", "s1"});
+  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+      .WillOnce(Invoke(mock_list_snapshots));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  bigtable::ClusterId cluster_id("the-cluster");
+  std::list<::google::bigtable::admin::v2::Snapshot> actual_snapshots =
+      tested.ListSnapshots<std::list>(cluster_id);
+  ASSERT_EQ(2UL, actual_snapshots.size());
+  std::string instance_name = tested.instance_name();
+  std::list<::google::bigtable::admin::v2::Snapshot>::iterator it =
+      actual_snapshots.begin();
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0", it->name());
+  it++;
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1", it->name());
+  it++;
+  EXPECT_EQ(actual_snapshots.end(), it);
 }
 
 /**
@@ -907,7 +933,7 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
   EXPECT_CALL(*client_, on_completion(_)).Times(4);
 
   bigtable::ClusterId cluster_id("the-cluster");
-  auto actual_snapshots = tested.ListSnapshots(10, cluster_id);
+  auto actual_snapshots = tested.ListSnapshots(cluster_id);
   ASSERT_EQ(4UL, actual_snapshots.size());
   std::string instance_name = tested.instance_name();
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",
@@ -927,14 +953,23 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
 TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
   using namespace ::testing;
 
-  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
 
-  grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   bigtable::ClusterId cluster_id("other-cluster");
-  tested.ListSnapshots(10, status, cluster_id);
-  EXPECT_FALSE(status.ok());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.ListSnapshots(cluster_id), bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListSnapshots(cluster_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

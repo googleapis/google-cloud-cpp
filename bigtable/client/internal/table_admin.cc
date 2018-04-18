@@ -208,17 +208,16 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                              request, error_message.c_str(), status);
 }
 
-std::vector<btproto::Snapshot> TableAdmin::ListSnapshots(
-    std::int32_t page_size, grpc::Status& status,
-    bigtable::ClusterId const& cluster_id) {
+void TableAdmin::ListSnapshotsImpl(
+    bigtable::ClusterId const& cluster_id,
+    std::function<void(::google::bigtable::admin::v2::Snapshot)> inserter,
+    std::function<void()> clearer, grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   std::string msg = "TableAdmin(" + instance_name() + ")::ListSnapshots()";
 
-  // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Snapshot> result;
   std::string page_token;
 
   MetadataUpdatePolicy metadata_update_policy(
@@ -226,22 +225,21 @@ std::vector<btproto::Snapshot> TableAdmin::ListSnapshots(
   do {
     btproto::ListSnapshotsRequest request;
     request.set_parent(ClusterName(cluster_id));
-    request.set_page_size(page_size);
+    request.set_page_size(0);
     request.set_page_token(page_token);
 
     auto response = RpcUtils::CallWithRetryBorrow(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
         &StubType::ListSnapshots, request, msg.c_str(), status);
     if (not status.ok()) {
-      return result;
+      break;
     }
 
     for (auto& x : *response.mutable_snapshots()) {
-      result.emplace_back(std::move(x));
+      inserter(x);
     }
     page_token = std::move(*response.mutable_next_page_token());
   } while (not page_token.empty());
-  return result;
 }
 
 }  // namespace noex

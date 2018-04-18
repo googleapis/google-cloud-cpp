@@ -129,15 +129,5 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
   }
 }
 
-std::vector<btproto::Snapshot> TableAdmin::ListSnapshots(std::int32_t page_size,
-                                                         ClusterId cluster_id) {
-  grpc::Status status;
-  auto result = impl_.ListSnapshots(page_size, status, cluster_id);
-  if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
-  }
-  return result;
-}
-
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
