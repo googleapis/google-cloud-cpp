@@ -124,6 +124,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5a351081fbe08adc5b380e169d660083"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a5a351081fbe08adc5b380e169d660083">DeleteSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:a5a351081fbe08adc5b380e169d660083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a snapshot.  <a href="#a5a351081fbe08adc5b380e169d660083">More...</a><br /></td></tr>
 <tr class="separator:a5a351081fbe08adc5b380e169d660083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4357f6b49096fc83049bb36733649e77"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </td></tr>
+<tr class="memitem:a4357f6b49096fc83049bb36733649e77"><td class="memTemplItemLeft" align="right" valign="top">Collection&lt;::google::bigtable::admin::v2::Snapshot &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a4357f6b49096fc83049bb36733649e77">ListSnapshots</a> (bigtable::ClusterId cluster_id=bigtable::ClusterId(&quot;-&quot;))</td></tr>
+<tr class="memdesc:a4357f6b49096fc83049bb36733649e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">List snapshots in the given instance.  <a href="#a4357f6b49096fc83049bb36733649e77">More...</a><br /></td></tr>
+<tr class="separator:a4357f6b49096fc83049bb36733649e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
@@ -652,6 +656,49 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4357f6b49096fc83049bb36733649e77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4357f6b49096fc83049bb36733649e77">&#9670;&nbsp;</a></span>ListSnapshots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Collection&lt;::google::bigtable::admin::v2::Snapshot&gt; bigtable::v0::TableAdmin::ListSnapshots </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::ClusterId&#160;</td>
+          <td class="paramname"><em>cluster_id</em> = <code>bigtable::ClusterId(&quot;-&quot;)</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>List snapshots in the given instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the name of the cluster for which snapshots should be listed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>collection containing the snapshots for the given cluster. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
