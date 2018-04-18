@@ -91,6 +91,19 @@ class MetadataUpdatePolicy {
                        bigtable::ClusterId const& cluster_id,
                        bigtable::SnapshotId const& snapshot_id);
 
+  /**
+   * Constructor with default metadata pair.
+   *
+   * @param resource_name hierarchical name of resource, including  project id,
+   * instance id and/or table_id.
+   * @param metadata_param_type type to decide prefix for the value of
+   *     x-goog-request-params.
+   * @param cluster_id cluster_id of the cluster.
+   */
+  MetadataUpdatePolicy(std::string const& resource_name,
+                       MetadataParamTypes metadata_param_type,
+                       bigtable::ClusterId const& cluster_id);
+
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs);
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const& rhs) = default;

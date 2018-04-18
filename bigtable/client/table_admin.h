@@ -222,6 +222,24 @@ class TableAdmin {
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
 
+  /**
+   * List snapshots in the given instance.
+   * @param cluster_id the name of the cluster for which snapshots should be
+   * listed.
+   * @return collection containing the snapshots for the given cluster.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  template <template <typename...> class Collection = std::vector>
+  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
+    grpc::Status status;
+    auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
+    if (not status.ok()) {
+      internal::RaiseRpcError(status, status.error_message());
+    }
+    return result;
+  }
+
  private:
   noex::TableAdmin impl_;
 };

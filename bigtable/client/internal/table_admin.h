@@ -118,6 +118,20 @@ class TableAdmin {
                       bigtable::SnapshotId const& snapshot_id,
                       grpc::Status& status);
 
+  template <template <typename...> class Collection = std::vector>
+  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      grpc::Status& status,
+      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-")) {
+    Collection<::google::bigtable::admin::v2::Snapshot> result;
+    ListSnapshotsImpl(
+        cluster_id,
+        [&result](::google::bigtable::admin::v2::Snapshot snapshot) {
+          result.emplace_back(std::move(snapshot));
+        },
+        [&result]() { result.clear(); }, status);
+    return result;
+  }
+
   //@}
 
  private:
@@ -135,6 +149,28 @@ class TableAdmin {
     return instance_name() + "/clusters/" + cluster_id.get() + "/snapshots/" +
            snapshot_id.get();
   }
+
+  /// Return the fully qualified name of a Cluster.
+  std::string ClusterName(bigtable::ClusterId const& cluster_id) {
+    return instance_name() + "/clusters/" + cluster_id.get();
+  }
+
+  /**
+   * Refactor implementation to `.cc` file.
+   *
+   * Provides a compilation barrier so that the application is not
+   * exposed to all the implementation details.
+   *
+   * @param cluster_id cluster_id which contains the snapshots.
+   * @param inserter Function to insert the object to result.
+   * @param clearer Function to clear the result object if RPC fails.
+   * @param status Status which contains the information whether the operation
+   * succeeded successfully or not.
+   */
+  void ListSnapshotsImpl(
+      bigtable::ClusterId const& cluster_id,
+      std::function<void(::google::bigtable::admin::v2::Snapshot)> inserter,
+      std::function<void()> clearer, grpc::Status& status);
 
   /// Shortcuts to avoid typing long names over and over.
   using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<AdminClient>;
