@@ -29,7 +29,7 @@ namespace firestore {
 class FieldPath {
  public:
   // Construct FieldPath from a vector of field names
-  FieldPath(const std::vector<std::string>& parts);
+  FieldPath(std::vector<std::string> const parts);
 
   // Construct FieldPath from a field path string
   static const FieldPath from_string(const std::string& string);
@@ -64,7 +64,7 @@ class FieldPath {
   static void check_invalid_characters(const std::string& string);
 
   // Splits string via field path delimiter '.'
-  static std::vector<std::string> split(const std::string& string);
+  static const std::vector<std::string> split(std::string const string);
 
   // The components of this FieldPath
   std::vector<std::string> parts;

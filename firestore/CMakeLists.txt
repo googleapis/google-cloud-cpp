@@ -118,12 +118,4 @@ add_subdirectory(tests)
 #     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 #     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-# Install proto generated files into firestore/google.
-install(DIRECTORY ${CMAKE_BINARY_DIR}/firestore/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
-
-# The exports can only be installed if all the dependencies are installed.
-# CMake needs to know where the submodules will be installed from,
-# if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
-#     # Export the CMake targets to make it easy to create configuration files.
-#     install(EXPORT firestore-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
-# endif ()
+install(EXPORT firestore-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)

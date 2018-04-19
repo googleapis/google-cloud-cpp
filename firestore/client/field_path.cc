@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "field_path.h"
+#include "firestore/client/field_path.h"
+//#include "field_path.h"
+
+std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
 
 namespace firestore {
-std::regex FieldPath::simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
 
-FieldPath::FieldPath(const std::vector<std::string>& parts) : parts(parts) {
+FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
   for (const auto part : parts) {
     if (part.empty()) {
       throw std::invalid_argument("One or more components is empty.");
@@ -34,16 +36,15 @@ void FieldPath::check_invalid_characters(const std::string& string) {
   }
 }
 
-std::vector<std::string> FieldPath::split(const std::string& string) {
+const std::vector<std::string> FieldPath::split(std::string string) {
   std::vector<std::string> parts;
-  auto copy(string);
-  auto index = copy.find('.');
+  auto index = string.find('.');
   while (index != std::string::npos) {
-    parts.push_back(copy.substr(0, index));
-    copy = copy.substr(index + 1);
-    index = copy.find('.');
+    parts.push_back(string.substr(0, index));
+    string = string.substr(index + 1);
+    index = string.find('.');
   }
-  parts.push_back(copy);
+  parts.push_back(string);
   return parts;
 }
 
@@ -69,9 +70,9 @@ const FieldPath FieldPath::append(const FieldPath& field_path) const {
 
 const std::string FieldPath::to_api_repr() const {
   std::string s;
-  for (auto part : parts) {
-    auto match = std::regex_match(part, simple_field_name);
-    if (std::regex_match(part, simple_field_name)) {
+  for (auto part : parts_) {
+    auto match = std::regex_match(part, ::simple_field_name);
+    if (std::regex_match(part, ::simple_field_name)) {
       s += part + '.';
     } else {
       part = std::regex_replace(part, std::regex("\\\\"), "\\\\");
@@ -79,7 +80,8 @@ const std::string FieldPath::to_api_repr() const {
       s += '`' + part + "`.";
     }
   }
-  return s.substr(0, s.size() - 1);
+  s.resize(s.size() - 1); // cannot be empty and remove final period
+  return s;
 }
 
 bool FieldPath::operator==(const FieldPath& other) const {
