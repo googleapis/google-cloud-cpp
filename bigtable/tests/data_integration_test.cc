@@ -340,6 +340,10 @@ TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
                      bigtable::Filter::PassAllFilter());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(read1.begin(), std::runtime_error);
+#else
+  EXPECT_EQ(read1.begin(), read1.end());
+  grpc::Status status1 = read1.Finish();
+  EXPECT_FALSE(status1.ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
