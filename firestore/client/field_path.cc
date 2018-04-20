@@ -35,7 +35,7 @@ void FieldPath::CheckInvalidCharacters(std::string const& string) {
   }
 }
 
-const std::vector<std::string> FieldPath::split(std::string string) {
+std::vector<std::string> FieldPath::split(std::string string) {
   std::vector<std::string> parts;
   auto index = string.find('.');
   while (index != std::string::npos) {
@@ -47,27 +47,27 @@ const std::vector<std::string> FieldPath::split(std::string string) {
   return parts;
 }
 
-const FieldPath FieldPath::FromString(std::string const& string) {
+FieldPath FieldPath::FromString(std::string const& string) {
   CheckInvalidCharacters(string);
   const auto parts = split(string);
   return FieldPath(parts);
 };
 
-const FieldPath FieldPath::append(std::string const& path) const {
+FieldPath FieldPath::append(std::string const& path) const {
   std::vector<std::string> parts(this->parts_);
   auto field_path = FieldPath::FromString(path);
   return this->append(field_path);
 }
 
-const FieldPath FieldPath::append(const FieldPath& field_path) const {
-  std::vector<std::string> parts(this->parts);
-  for (auto part : field_path.parts) {
+FieldPath FieldPath::append(FieldPath const& field_path) const {
+  std::vector<std::string> parts(this->parts_);
+  for (auto part : field_path.parts_) {
     parts.push_back(part);
   }
   return FieldPath(parts);
 }
 
-const std::string FieldPath::ToApiRepr() const {
+std::string FieldPath::ToApiRepr() const {
   std::string s;
   for (auto part : parts_) {
     auto match = std::regex_match(part, ::simple_field_name);
