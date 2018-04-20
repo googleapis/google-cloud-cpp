@@ -323,9 +323,8 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
                       bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, MoveCellsFromReader(read2));
 
-  auto read3 =
-      table->ReadRows(bigtable::RowSet(bigtable::RowRange::Empty()),
-                      bigtable::Filter::PassAllFilter());
+  auto read3 = table->ReadRows(bigtable::RowSet(bigtable::RowRange::Empty()),
+                               bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, MoveCellsFromReader(read3));
 
   DeleteTable(table_name);
