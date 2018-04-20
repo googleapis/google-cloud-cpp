@@ -124,7 +124,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter, bool raise_on_error) {
                    metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>(),
-                   false);
+                   raise_on_error);
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
@@ -134,7 +134,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                    rpc_backoff_policy_->clone(), metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>(),
-                   false);
+                   raise_on_error);
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,

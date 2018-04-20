@@ -57,7 +57,7 @@ class InProcessDataClient : public bigtable::DataClient {
   std::shared_ptr<grpc::Channel> channel_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace testing
 }  // namespace bigtable
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_INPROCESS_DATA_CLIENT_H_

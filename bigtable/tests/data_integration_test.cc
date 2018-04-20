@@ -332,11 +332,17 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
 
 TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
   std::string const table_name = "table-read-rows-wrong-table";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   bigtable::Table table(data_client_, table_name);
+#else
+  bigtable::noex::Table table(data_client_, table_name);
+#endif
 
   auto read1 =
       table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
                      bigtable::Filter::PassAllFilter());
+
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(read1.begin(), std::runtime_error);
 #else
