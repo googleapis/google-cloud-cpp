@@ -52,6 +52,14 @@ bool RowRange::IsEmpty() const {
       return false;
   }
 
+  // Special case of an open interval of two consecutive strings.
+  // The only way for two strings to be consecutive is for the
+  // second to be equal to the first with an appended zero char.
+  if (start_open and end_open and (end->length() == start->length() + 1) and
+      (*(end->rbegin()) == '\0') and
+      (end->compare(0, start->length(), *start) == 0))
+    return true;
+
   // Compare the strings as byte vectors (careful with unsigned chars).
   int cmp = start->compare(*end);
   if (cmp == 0) {

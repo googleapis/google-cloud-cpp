@@ -291,7 +291,7 @@ TEST(RowRangeTest, EqualsStartingAt) {
 TEST(RowRangeTest, EqualsEndingAt) {
   using R = bigtable::RowRange;
   EXPECT_EQ(R::EndingAt("b"), R::EndingAt("b"));
-  EXPECT_EQ(R::EndingAt("b"), R::Closed("", "b"));
+  EXPECT_NE(R::EndingAt("b"), R::Closed("", "b"));
   EXPECT_NE(R::EndingAt("b"), R::EndingAt("a"));
   EXPECT_NE(R::EndingAt("b"), R::RightOpen("a", "b"));
   EXPECT_NE(R::EndingAt("b"), R::LeftOpen("a", "b"));
