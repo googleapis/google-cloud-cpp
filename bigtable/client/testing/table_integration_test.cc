@@ -15,6 +15,7 @@
 #include "bigtable/client/testing/table_integration_test.h"
 #include "bigtable/client/internal/make_unique.h"
 #include <google/protobuf/text_format.h>
+#include <algorithm>
 #include <cctype>
 
 namespace bigtable {
@@ -66,6 +67,16 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
     std::copy(row.cells().begin(), row.cells().end(),
+              std::back_inserter(result));
+  }
+  return result;
+}
+
+std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
+    bigtable::RowReader& reader) {
+  std::vector<bigtable::Cell> result;
+  for (auto const& row : reader) {
+    std::move(row.cells().begin(), row.cells().end(),
               std::back_inserter(result));
   }
   return result;

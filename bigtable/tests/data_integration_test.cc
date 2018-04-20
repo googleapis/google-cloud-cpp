@@ -41,6 +41,10 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
                             {});
 };
 
+bool UsingCloudBigtableEmulator() {
+  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
@@ -210,6 +214,142 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
   auto row_cell = table->ReadRow(row_key2, bigtable::Filter::PassAllFilter());
   DeleteTable(table_name);
   EXPECT_FALSE(row_cell.first);
+}
+
+TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
+  std::string const table_name = "table-read-rows-all-rows";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3(1024, '3');    // a long key
+  std::string const long_value(1024, 'v');  // a long value
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "data1", {}},
+      {row_key1, family, "c2", 1000, "data2", {}},
+      {row_key2, family, "c1", 1000, "", {}},
+      {row_key3, family, "c1", 1000, long_value, {}}};
+
+  CreateCells(*table, created);
+
+  // Some equivalent ways to read the three rows
+  auto read1 =
+      table->ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+                      bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(created, MoveCellsFromReader(read1));
+
+  auto read2 =
+      table->ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()), 3,
+                      bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(created, MoveCellsFromReader(read2));
+
+  auto read3 = table->ReadRows(
+      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(created, MoveCellsFromReader(read3));
+
+  if (!UsingCloudBigtableEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    auto read4 =
+        table->ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
+    CheckEqualUnordered(created, MoveCellsFromReader(read4));
+  }
+  DeleteTable(table_name);
+}
+
+TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
+  std::string const table_name = "table-read-rows-partial-rows";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3 = "row-key-3";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "data1", {}},
+      {row_key1, family, "c2", 1000, "data2", {}},
+      {row_key2, family, "c1", 1000, "data3", {}},
+      {row_key3, family, "c1", 1000, "data4", {}}};
+
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected{
+      {row_key1, family, "c1", 1000, "data1", {}},
+      {row_key1, family, "c2", 1000, "data2", {}},
+      {row_key2, family, "c1", 1000, "data3", {}}};
+
+  // Some equivalent ways of reading just the first two rows
+  auto read1 =
+      table->ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()), 2,
+                      bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read1));
+
+  bigtable::RowSet rs2;
+  rs2.Append(row_key1);
+  rs2.Append(row_key2);
+  auto read2 =
+      table->ReadRows(std::move(rs2), bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read2));
+
+  bigtable::RowSet rs3(bigtable::RowRange::Closed(row_key1, row_key2));
+  auto read3 =
+      table->ReadRows(std::move(rs3), bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read3));
+
+  DeleteTable(table_name);
+}
+
+TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
+  std::string const table_name = "table-read-rows-no-rows";
+  auto table = CreateTable(table_name, table_config);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3 = "row-key-3";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "data1", {}},
+      {row_key3, family, "c1", 1000, "data2", {}}};
+
+  CreateCells(*table, created);
+
+  std::vector<bigtable::Cell> expected;  // empty
+
+  // read nonexistent rows
+  auto read1 = table->ReadRows(bigtable::RowSet(row_key2),
+                               bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read1));
+
+  auto read2 =
+      table->ReadRows(bigtable::RowSet(bigtable::RowRange::Prefix(row_key2)),
+                      bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read2));
+
+  auto read3 = table->ReadRows(bigtable::RowSet(bigtable::RowRange::Empty()),
+                               bigtable::Filter::PassAllFilter());
+  CheckEqualUnordered(expected, MoveCellsFromReader(read3));
+
+  DeleteTable(table_name);
+}
+
+TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
+  std::string const table_name = "table-read-rows-wrong-table";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  bigtable::Table table(data_client_, table_name);
+#else
+  bigtable::noex::Table table(data_client_, table_name);
+#endif
+
+  auto read1 =
+      table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+                     bigtable::Filter::PassAllFilter());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(read1.begin(), std::runtime_error);
+#else
+  EXPECT_EQ(read1.begin(), read1.end());
+  grpc::Status status1 = read1.Finish();
+  EXPECT_FALSE(status1.ok());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
