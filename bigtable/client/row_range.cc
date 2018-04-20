@@ -18,6 +18,23 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace btproto = ::google::bigtable::v2;
 
+namespace {
+
+/// Returns true iff a < b and there is no string c such that a < c < b.
+inline bool Consecutive(std::string const& a, std::string const& b) {
+  // The only way for two strings to be consecutive is for the
+  // second to be equal to the first with an appended zero char.
+  if (b.length() != a.length() + 1) {
+    return false;
+  }
+  if (b.back() != '\0') {
+    return false;
+  }
+  return b.compare(0, a.length(), a) == 0;
+}
+
+}  // anonymous namespace
+
 bool RowRange::IsEmpty() const {
   std::string unused;
   // We do not want to copy the strings unnecessarily, so initialize a reference
@@ -53,12 +70,9 @@ bool RowRange::IsEmpty() const {
   }
 
   // Special case of an open interval of two consecutive strings.
-  // The only way for two strings to be consecutive is for the
-  // second to be equal to the first with an appended zero char.
-  if (start_open and end_open and (end->length() == start->length() + 1) and
-      (*(end->rbegin()) == '\0') and
-      (end->compare(0, start->length(), *start) == 0))
+  if (start_open and end_open and Consecutive(*start, *end)) {
     return true;
+  }
 
   // Compare the strings as byte vectors (careful with unsigned chars).
   int cmp = start->compare(*end);
