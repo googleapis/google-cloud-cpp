@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) try {
   }
   auto const& cell = result.second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
-            << cell.timestamp() << "us\n"
+            << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << std::endl;
   //! [read row]
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) try {
     std::cout << row.row_key() << ":\n";
     for (auto& cell : row.cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
-                << "    @ " << cell.timestamp() << "us\n"
+                << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << std::endl;
     }
   }

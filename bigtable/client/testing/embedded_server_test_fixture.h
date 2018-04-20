@@ -97,6 +97,8 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   std::string const kProjectId = "foo-project";
   std::string const kInstanceId = "bar-instance";
   std::string const kTableId = "baz-table";
+  std::string const kClusterId = "test_cluster";
+  std::string const kSnapshotId = "test-snapshot";
 
   // These are hardcoded, and not computed, because we want to test the
   // computation.

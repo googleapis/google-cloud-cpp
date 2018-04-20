@@ -13,20 +13,25 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/instance_admin.h"
+#include "bigtable/client/internal/unary_client_utils.h"
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+static_assert(std::is_copy_assignable<bigtable::noex::InstanceAdmin>::value,
+              "bigtable::noex::InstanceAdmin must be CopyAssignable");
+
+using ClientUtils =
+    bigtable::internal::noex::UnaryClientUtils<bigtable::InstanceAdminClient>;
 
 std::vector<btproto::Instance> InstanceAdmin::ListInstances(
     grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
-
-  std::string error = "InstanceAdmin::ListInstances(" + project_id() + ")";
 
   // Build the RPC request, try to minimize copying.
   std::vector<btproto::Instance> result;
@@ -36,9 +41,10 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances(
     request.set_page_token(std::move(page_token));
     request.set_parent(project_name_);
 
-    auto response = RpcUtils::CallWithRetryBorrow(
+    auto response = ClientUtils::MakeCall(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-        &StubType::ListInstances, request, error.c_str(), status);
+        &InstanceAdminClient::ListInstances, request,
+        "InstanceAdmin::ListInstances", status, true);
     if (not status.ok()) {
       return result;
     }

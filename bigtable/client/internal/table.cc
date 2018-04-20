@@ -16,12 +16,16 @@
 #include "bigtable/client/internal/bulk_mutator.h"
 #include "bigtable/client/internal/make_unique.h"
 #include <thread>
+#include <type_traits>
 
 namespace btproto = ::google::bigtable::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
+
+static_assert(std::is_copy_assignable<bigtable::noex::Table>::value,
+              "bigtable::noex::Table must be CopyAssignable");
 
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.
@@ -170,19 +174,17 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   }
   auto response = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
-      status);
+      &StubType::CheckAndMutateRow, request, "CheckAndMutateRow", status);
 
   return response.predicate_matched();
 }
 
 Row Table::CallReadModifyWriteRowRequest(
     btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
-  auto error_message =
-      "ReadModifyWriteRowRequest(" + request.table_name() + ")";
   auto response = RpcUtils::CallWithoutRetry(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &StubType::ReadModifyWriteRow, request, error_message.c_str(), status);
+      &StubType::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
+      status);
   if (not status.ok()) {
     return Row("", {});
   }

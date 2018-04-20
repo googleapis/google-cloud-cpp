@@ -94,8 +94,10 @@ TEST(RowRangeTest, IsEmpty) {
   EXPECT_TRUE(bigtable::RowRange::Range("foo", "foo").IsEmpty());
   EXPECT_TRUE(bigtable::RowRange::Range("foo", "bar").IsEmpty());
   EXPECT_FALSE(bigtable::RowRange::StartingAt("").IsEmpty());
-  EXPECT_FALSE(
-      bigtable::RowRange::RightOpen("", std::string("\0", 1)).IsEmpty());
+
+  std::string const only_00 = std::string("\0", 1);
+  EXPECT_FALSE(bigtable::RowRange::RightOpen("", only_00).IsEmpty());
+  EXPECT_TRUE(bigtable::RowRange::Open("", only_00).IsEmpty());
 }
 
 TEST(RowRangeTest, ContainsRightOpen) {
@@ -289,7 +291,7 @@ TEST(RowRangeTest, EqualsStartingAt) {
 TEST(RowRangeTest, EqualsEndingAt) {
   using R = bigtable::RowRange;
   EXPECT_EQ(R::EndingAt("b"), R::EndingAt("b"));
-  EXPECT_EQ(R::EndingAt("b"), R::Closed("", "b"));
+  EXPECT_NE(R::EndingAt("b"), R::Closed("", "b"));
   EXPECT_NE(R::EndingAt("b"), R::EndingAt("a"));
   EXPECT_NE(R::EndingAt("b"), R::RightOpen("a", "b"));
   EXPECT_NE(R::EndingAt("b"), R::LeftOpen("a", "b"));

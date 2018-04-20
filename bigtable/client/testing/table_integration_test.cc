@@ -177,7 +177,7 @@ bool operator<(Cell const& lhs, Cell const& rhs) {
 void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
-      << ", timestamp=" << cell.timestamp() << ", value=<";
+      << ", timestamp=" << cell.timestamp().count() << ", value=<";
   // Replace non-printable values with '.' to make the output more readable.
   bool has_non_printable = false;
   for (char c : cell.value()) {
@@ -204,21 +204,7 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
     // such because it makes debugging much easier ...
     static_assert(std::numeric_limits<unsigned char>::digits == 8,
                   "This code assumes char is an 8-bit number");
-    // There are more efficients way to do this, but this is just to print debug
-    // lines in a test.
-    auto bigendian64 = [](char const* buf) -> std::uint64_t {
-      auto bigendian32 = [](char const* buf) -> std::uint32_t {
-        auto bigendian16 = [](char const* buf) -> std::uint16_t {
-          return (static_cast<std::uint16_t>(buf[0]) << 8) +
-                 std::uint8_t(buf[1]);
-        };
-        return (static_cast<std::uint32_t>(bigendian16(buf)) << 16) +
-               bigendian16(buf + 2);
-      };
-      return (static_cast<std::uint64_t>(bigendian32(buf)) << 32) +
-             bigendian32(buf + 4);
-    };
-    *os << "[uint64:" << bigendian64(cell.value().c_str()) << "]";
+    *os << "[uint64:" << cell.value_as<bigtable::bigendian64_t>().get() << "]";
   }
   *os << ", labels={";
   char const* del = "";

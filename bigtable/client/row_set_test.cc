@@ -73,6 +73,8 @@ TEST(RowSetTest, VariadicConstructor) {
   ASSERT_EQ(2, proto.row_keys_size());
   EXPECT_EQ("foo", proto.row_keys(0));
   EXPECT_EQ("bar", proto.row_keys(1));
+
+  EXPECT_TRUE(bigtable::RowSet(R::Empty()).IsEmpty());
 }
 
 TEST(RowSetTest, IntersectRightOpen) {

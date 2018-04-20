@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/instance_admin.h"
+#include "bigtable/client/testing/mock_instance_admin_client.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -21,14 +22,7 @@
 namespace {
 namespace btproto = ::google::bigtable::admin::v2;
 
-class MockAdminClient : public bigtable::InstanceAdminClient {
- public:
-  MOCK_CONST_METHOD0(project, std::string const&());
-  MOCK_METHOD0(
-      Stub, std::shared_ptr<btproto::BigtableInstanceAdmin::StubInterface>());
-  MOCK_METHOD1(on_completion, void(grpc::Status const& status));
-  MOCK_METHOD0(reset, void());
-};
+using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 
 std::string const kProjectId = "the-project";
 
@@ -39,13 +33,10 @@ class InstanceAdminTest : public ::testing::Test {
     using namespace ::testing;
 
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, Stub()).WillRepeatedly(Return(instance_admin_stub_));
   }
 
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
-  std::shared_ptr<btproto::MockBigtableInstanceAdminStub> instance_admin_stub_ =
-      std::make_shared<btproto::MockBigtableInstanceAdminStub>();
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
@@ -116,6 +107,50 @@ TEST_F(InstanceAdminTest, Default) {
   EXPECT_EQ("the-project", tested.project_id());
 }
 
+TEST_F(InstanceAdminTest, CopyConstructor) {
+  bigtable::noex::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::noex::InstanceAdmin copy(source);
+  EXPECT_EQ(expected, copy.project_id());
+}
+
+TEST_F(InstanceAdminTest, MoveConstructor) {
+  bigtable::noex::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::noex::InstanceAdmin copy(std::move(source));
+  EXPECT_EQ(expected, copy.project_id());
+}
+
+TEST_F(InstanceAdminTest, CopyAssignment) {
+  std::shared_ptr<MockAdminClient> other_client =
+      std::make_shared<MockAdminClient>();
+  std::string other_project = "other-project";
+  EXPECT_CALL(*other_client, project())
+      .WillRepeatedly(testing::ReturnRef(other_project));
+
+  bigtable::noex::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::noex::InstanceAdmin dest(other_client);
+  EXPECT_NE(expected, dest.project_id());
+  dest = source;
+  EXPECT_EQ(expected, dest.project_id());
+}
+
+TEST_F(InstanceAdminTest, MoveAssignment) {
+  std::shared_ptr<MockAdminClient> other_client =
+      std::make_shared<MockAdminClient>();
+  std::string other_project = "other-project";
+  EXPECT_CALL(*other_client, project())
+      .WillRepeatedly(testing::ReturnRef(other_project));
+
+  bigtable::noex::InstanceAdmin source(client_);
+  std::string expected = source.project_id();
+  bigtable::noex::InstanceAdmin dest(other_client);
+  EXPECT_NE(expected, dest.project_id());
+  dest = std::move(source);
+  EXPECT_EQ(expected, dest.project_id());
+}
+
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListInstances) {
@@ -123,9 +158,8 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillOnce(Invoke(mock_list_instances));
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -149,15 +183,12 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch0))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch1));
-  // We expect the InstanceAdmin to make 5 calls and to let the client know
-  // about them.
-  EXPECT_CALL(*client_, on_completion(_)).Times(5);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -179,15 +210,14 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::InstanceAdmin tested(client_);
-  EXPECT_CALL(*instance_admin_stub_, ListInstances(_, _, _))
-      .WillRepeatedly(
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
+      .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   // We expect the InstanceAdmin to make a call to let the client know the
   // request failed.
   grpc::Status status;
-  EXPECT_CALL(*client_, on_completion(_)).Times(1);
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
 }

@@ -58,10 +58,7 @@ class InstanceAdmin {
    * Return the list of instances in the project.
    * @return
    */
-  std::vector<::google::bigtable::admin::v2::Instance> ListInstances();
-
-  InstanceAdmin(InstanceAdmin const&) = delete;
-  InstanceAdmin operator=(InstanceAdmin const&) = delete;
+  std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
  private:
   noex::InstanceAdmin impl_;

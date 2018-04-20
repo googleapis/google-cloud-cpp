@@ -51,17 +51,44 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
+TEST(MutationsTest, SetCellNumericValue) {
+  auto actual = bigtable::SetCell(
+      "family", "col", 1234_ms,
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(9876543210)));
+  ASSERT_TRUE(actual.op.has_set_cell());
+  EXPECT_EQ("family", actual.op.set_cell().family_name());
+  EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
+  EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
+  EXPECT_EQ(bigtable::bigendian64_t(9876543210).get(),
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
+                actual.op.set_cell().value())
+                .get());
+
+  auto server_set = bigtable::SetCell(
+      "fam", "col",
+      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(32234401)));
+  ASSERT_TRUE(server_set.op.has_set_cell());
+  EXPECT_EQ("fam", server_set.op.set_cell().family_name());
+  EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
+  EXPECT_EQ(bigtable::bigendian64_t(32234401).get(),
+            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
+                server_set.op.set_cell().value())
+                .get());
+  EXPECT_EQ(bigtable::ServerSetTimestamp(),
+            server_set.op.set_cell().timestamp_micros());
+}
+
 /// @test Verify that DeleteFromColumn() does not validates inputs.
 TEST(MutationsTest, DeleteFromColumnNoValidation) {
-  auto reversed = bigtable::DeleteFromColumn("family", "col", 20, 0);
+  auto reversed = bigtable::DeleteFromColumn("family", "col", 20_us, 0_us);
   EXPECT_TRUE(reversed.op.has_delete_from_column());
-  auto empty = bigtable::DeleteFromColumn("family", "col", 1000, 1000);
+  auto empty = bigtable::DeleteFromColumn("family", "col", 1000_us, 1000_us);
   EXPECT_TRUE(empty.op.has_delete_from_column());
 }
 
 /// @test Verify that DeleteFromColumn() and friends work as expected.
 TEST(MutationsTest, DeleteFromColumn) {
-  auto actual = bigtable::DeleteFromColumn("family", "col", 1234, 1235);
+  auto actual = bigtable::DeleteFromColumn("family", "col", 1234_us, 1235_us);
   ASSERT_TRUE(actual.op.has_delete_from_column());
   {
     auto const& mut = actual.op.delete_from_column();
@@ -80,7 +107,7 @@ TEST(MutationsTest, DeleteFromColumn) {
     EXPECT_EQ(0, mut.time_range().start_timestamp_micros());
     EXPECT_EQ(0, mut.time_range().end_timestamp_micros());
   }
-  auto end = bigtable::DeleteFromColumnEndingAt("family", "col", 1235);
+  auto end = bigtable::DeleteFromColumnEndingAt("family", "col", 1235_us);
   ASSERT_TRUE(end.op.has_delete_from_column());
   {
     auto const& mut = end.op.delete_from_column();
@@ -89,7 +116,7 @@ TEST(MutationsTest, DeleteFromColumn) {
     EXPECT_EQ(0, mut.time_range().start_timestamp_micros());
     EXPECT_EQ(1235, mut.time_range().end_timestamp_micros());
   }
-  auto start = bigtable::DeleteFromColumnStartingFrom("family", "col", 1234);
+  auto start = bigtable::DeleteFromColumnStartingFrom("family", "col", 1234_us);
   ASSERT_TRUE(start.op.has_delete_from_column());
   {
     auto const& mut = start.op.delete_from_column();

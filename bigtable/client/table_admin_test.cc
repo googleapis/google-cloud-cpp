@@ -34,6 +34,7 @@ class MockAdminClient : public bigtable::AdminClient {
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
+std::string const kClusterId = "the-cluster";
 
 /// A fixture for the bigtable::TableAdmin tests.
 class TableAdminTest : public ::testing::Test {
@@ -70,6 +71,29 @@ auto create_list_tables_lambda = [](std::string expected_token,
       auto& table = *response->add_tables();
       table.set_name(instance_name + "/tables/" + table_name);
       table.set_granularity(btproto::Table::MILLIS);
+    }
+    // Return the right token.
+    response->set_next_page_token(returned_token);
+    return grpc::Status::OK;
+  };
+};
+
+// A lambda to generate snapshot list.
+auto create_list_snapshots_lambda = [](
+    std::string expected_token, std::string returned_token,
+    std::vector<std::string> snapshot_names) {
+  return [expected_token, returned_token, snapshot_names](
+      grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
+      btproto::ListSnapshotsResponse* response) {
+    auto cluster_name = "projects/" + kProjectId + "/instances/" + kInstanceId;
+    cluster_name += "/clusters/" + kClusterId;
+    EXPECT_EQ(cluster_name, request.parent());
+    EXPECT_EQ(expected_token, request.page_token());
+
+    EXPECT_NE(nullptr, response);
+    for (auto const& snapshot_name : snapshot_names) {
+      auto& snapshot = *response->add_snapshots();
+      snapshot.set_name(cluster_name + "/snapshots/" + snapshot_name);
     }
     // Return the right token.
     response->set_next_page_token(returned_token);
@@ -306,6 +330,73 @@ TEST_F(TableAdminTest, CreateTableFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+/**
+ * @test Verify that Copy Constructor and assignment operator
+ * copies all properties.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-copy-instance");
+  bigtable::TableAdmin table_admin(tested);
+
+  EXPECT_EQ(tested.instance_id(), table_admin.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin.instance_name());
+  EXPECT_EQ(tested.project(), table_admin.project());
+
+  bigtable::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  EXPECT_NE(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_NE(tested.instance_name(), table_admin_assign.instance_name());
+
+  table_admin_assign = tested;
+  EXPECT_EQ(tested.instance_id(), table_admin_assign.instance_id());
+  EXPECT_EQ(tested.instance_name(), table_admin_assign.instance_name());
+  EXPECT_EQ(tested.project(), table_admin_assign.project());
+}
+
+/**
+ * @test Verify that Copy Constructor and assignment operator copies
+ * all properties including policies applied.
+ */
+TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(
+      client_, "the-construct-instance",
+      bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  // Copy Constructor
+  bigtable::TableAdmin table_admin(tested);
+  // Create New Instance
+  bigtable::TableAdmin table_admin_assign(client_, "the-assign-instance");
+  // Copy assignable
+  table_admin_assign = table_admin;
+
+  EXPECT_CALL(*table_admin_stub_, GetTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed. Notice that it is prepared to tolerate 3 failures, so it is the
+  // fourth failure that actually raises an error.
+  EXPECT_CALL(*client_, on_completion(_)).Times(8);
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(table_admin.GetTable("other-table"), bigtable::GRpcError);
+  EXPECT_THROW(table_admin_assign.GetTable("other-table"), bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(table_admin.GetTable("other-table"),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(table_admin_assign.GetTable("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
   using namespace ::testing;
@@ -405,14 +496,14 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * @test Verify that `bigtable::TableAdmin::DeleteTable` supports
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, DeleteTableFailure) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*table_admin_stub_, CreateTable(_, _, _))
+  EXPECT_CALL(*table_admin_stub_, DeleteTable(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -421,15 +512,13 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   // failed.
   EXPECT_CALL(*client_, on_completion(_)).Times(1);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               bigtable::GRpcError);
+  EXPECT_THROW(tested.DeleteTable("other-table"), bigtable::GRpcError);
 #else
   // Death tests happen on a separate process, so we do not get to observe the
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.CreateTable("other-table", bigtable::TableConfig()),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteTable("other-table"),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -592,6 +681,362 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   // calls to on_completion().
   EXPECT_CALL(*client_, on_completion(_)).Times(0);
   EXPECT_DEATH_IF_SUPPORTED(tested.DropAllRows("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtagble::TableAdmin::GenerateConsistencyToken` works as
+ * expected.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+)""";
+  auto mock = MockRpcFactory<
+      btproto::GenerateConsistencyTokenRequest,
+      btproto::GenerateConsistencyTokenResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  tested.GenerateConsistencyToken("the-table");
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, GenerateConsistencyToken(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GenerateConsistencyToken("other-table"),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GenerateConsistencyToken("other-table"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtagble::TableAdmin::CheckConsistency` works as
+ * expected.
+ */
+TEST_F(TableAdminTest, CheckConsistencySimple) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/tables/the-table'
+consistency_token: 'test-token'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  bigtable::TableId table_id("the-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
+  // After all the setup, make the actual call we want to test.
+  tested.CheckConsistency(table_id, consistency_token);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, CheckConsistencyFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  bigtable::TableId table_id("other-table");
+  bigtable::ConsistencyToken consistency_token("test-token");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.CheckConsistency(table_id, consistency_token),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.CheckConsistency(table_id, consistency_token),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
+ */
+TEST_F(TableAdminTest, GetSnapshotSimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
+          expected_text);
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(2);
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.GetSnapshot(cluster_id, snapshot_id);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` reports unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "No snapshot.")));
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GetSnapshot(cluster_id, snapshot_id),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetSnapshot` works with too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  EXPECT_CALL(*table_admin_stub_, GetSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.GetSnapshot(cluster_id, snapshot_id),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that bigtable::TableAdmin::DeleteSnapshot works as expected.
+TEST_F(TableAdminTest, DeleteSnapshotSimple) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+)""";
+  auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  // After all the setup, make the actual call we want to test.
+  bigtable::ClusterId cluster_id("the-cluster");
+  bigtable::SnapshotId snapshot_id("random-snapshot");
+  tested.DeleteSnapshot(cluster_id, snapshot_id);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::DeleteSnapshot` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, DeleteSnapshotFailure) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, DeleteSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  bigtable::ClusterId cluster_id("other-cluster");
+  bigtable::SnapshotId snapshot_id("other-snapshot");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.DeleteSnapshot(cluster_id, snapshot_id),
+               bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteSnapshot(cluster_id, snapshot_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` works in the easy
+ * case.
+ */
+TEST_F(TableAdminTest, ListSnapshots_Simple) {
+  using namespace ::testing;
+  bigtable::TableAdmin tested(client_, kInstanceId);
+  auto mock_list_snapshots = create_list_snapshots_lambda("", "", {"s0", "s1"});
+  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+      .WillOnce(Invoke(mock_list_snapshots));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  bigtable::ClusterId cluster_id("the-cluster");
+  auto actual_snapshots = tested.ListSnapshots(cluster_id);
+  ASSERT_EQ(2UL, actual_snapshots.size());
+  std::string instance_name = tested.instance_name();
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",
+            actual_snapshots[0].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1",
+            actual_snapshots[1].name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` works for std::list
+ * container.
+ */
+TEST_F(TableAdminTest, ListSnapshots_SimpleList) {
+  using namespace ::testing;
+  bigtable::TableAdmin tested(client_, kInstanceId);
+  auto mock_list_snapshots = create_list_snapshots_lambda("", "", {"s0", "s1"});
+  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+      .WillOnce(Invoke(mock_list_snapshots));
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+
+  bigtable::ClusterId cluster_id("the-cluster");
+  std::list<::google::bigtable::admin::v2::Snapshot> actual_snapshots =
+      tested.ListSnapshots<std::list>(cluster_id);
+  ASSERT_EQ(2UL, actual_snapshots.size());
+  std::string instance_name = tested.instance_name();
+  std::list<::google::bigtable::admin::v2::Snapshot>::iterator it =
+      actual_snapshots.begin();
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0", it->name());
+  it++;
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1", it->name());
+  it++;
+  EXPECT_EQ(actual_snapshots.end(), it);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` handles failures.
+ */
+TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_recoverable_failure = [](
+      grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
+      btproto::ListSnapshotsResponse* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto list0 = create_list_snapshots_lambda("", "token-001", {"s0", "s1"});
+  auto list1 = create_list_snapshots_lambda("token-001", "", {"s2", "s3"});
+  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(list0))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(list1));
+
+  EXPECT_CALL(*client_, on_completion(_)).Times(4);
+
+  bigtable::ClusterId cluster_id("the-cluster");
+  auto actual_snapshots = tested.ListSnapshots(cluster_id);
+  ASSERT_EQ(4UL, actual_snapshots.size());
+  std::string instance_name = tested.instance_name();
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",
+            actual_snapshots[0].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1",
+            actual_snapshots[1].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s2",
+            actual_snapshots[2].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s3",
+            actual_snapshots[3].name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListSnapshots` handles unrecoverable
+ * failure.
+ */
+TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*table_admin_stub_, ListSnapshots(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
+
+  bigtable::ClusterId cluster_id("other-cluster");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // We expect the TableAdmin to make a call to let the client know the request
+  // failed.
+  EXPECT_CALL(*client_, on_completion(_)).Times(1);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(tested.ListSnapshots(cluster_id), bigtable::GRpcError);
+#else
+  // Death tests happen on a separate process, so we do not get to observe the
+  // calls to on_completion().
+  EXPECT_CALL(*client_, on_completion(_)).Times(0);
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListSnapshots(cluster_id),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

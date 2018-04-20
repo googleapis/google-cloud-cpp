@@ -16,7 +16,6 @@
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
 #include "bigtable/client/testing/embedded_server_test_fixture.h"
 #include <gtest/gtest.h>
 #include <map>
@@ -80,5 +79,28 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
   auto const x_google_request_params = "name=" + kTableName;
   bigtable::MetadataUpdatePolicy created(
       kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
+  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+}
+
+/// @test Another test for lazy behaviour of metadata.
+TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
+  auto const x_google_request_params =
+      "name=" + kInstanceName +
+      "/clusters/test_cluster/snapshots/test-snapshot";
+  bigtable::ClusterId cluster_id(kClusterId);
+  bigtable::SnapshotId snapshot_id(kSnapshotId);
+  bigtable::MetadataUpdatePolicy created(kInstanceName,
+                                         bigtable::MetadataParamTypes::NAME,
+                                         cluster_id, snapshot_id);
+  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+}
+
+//@test Another test for lazy behaviour of metadata.
+TEST_F(MetadataUpdatePolicyTest, SimpleClusterId_Test) {
+  auto const x_google_request_params =
+      "parent=" + kInstanceName + "/clusters/" + kClusterId;
+  bigtable::ClusterId cluster_id(kClusterId);
+  bigtable::MetadataUpdatePolicy created(
+      kInstanceName, bigtable::MetadataParamTypes::PARENT, cluster_id);
   EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
 }

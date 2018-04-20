@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,24 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_STREAM_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_STREAM_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_SAMPLE_ROW_KEYS_READER_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_SAMPLE_ROW_KEYS_READER_H_
 
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "mock_response_reader.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 
 namespace bigtable {
 namespace testing {
-class MockResponseStream : public grpc::ClientReaderInterface<
-                               ::google::bigtable::v2::ReadRowsResponse> {
- public:
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1(Read, bool(::google::bigtable::v2::ReadRowsResponse*));
-};
+using MockSampleRowKeysReader =
+    MockResponseReader<google::bigtable::v2::SampleRowKeysResponse,
+                       google::bigtable::v2::SampleRowKeysRequest>;
 
 }  // namespace testing
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_STREAM_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_SAMPLE_ROW_KEYS_READER_H_

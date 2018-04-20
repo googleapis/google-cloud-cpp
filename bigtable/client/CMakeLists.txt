@@ -25,6 +25,8 @@ add_library(bigtable_client
         cell.h
         client_options.h
         client_options.cc
+        cluster_config.h
+        cluster_config.cc
         column_family.h
         data_client.h
         data_client.cc
@@ -36,11 +38,16 @@ add_library(bigtable_client
         instance_admin_client.cc
         instance_admin.h
         instance_admin.cc
+        instance_config.h
+        instance_config.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
         internal/common_client.cc
         internal/conjunction.h
+        internal/encoder.h
+        internal/endian.h
+        internal/endian.cc
         internal/instance_admin.h
         internal/instance_admin.cc
         internal/make_unique.h
@@ -51,12 +58,14 @@ add_library(bigtable_client
         internal/readrowsparser.cc
         internal/rowreaderiterator.h
         internal/rowreaderiterator.cc
+        internal/strong_type.h
         internal/table.h
         internal/table.cc
         internal/table_admin.h
         internal/table_admin.cc
         internal/throw_delegate.h
         internal/throw_delegate.cc
+        internal/unary_client_utils.h
         internal/unary_rpc_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
@@ -81,6 +90,7 @@ add_library(bigtable_client
         table.cc
         table_admin.h
         table_admin.cc
+        table_admin_strong_types.h
         table_config.h
         table_config.cc
         version.h
@@ -114,9 +124,13 @@ add_library(bigtable_client_testing
         testing/internal_table_test_fixture.h
         testing/internal_table_test_fixture.cc
         testing/mock_data_client.h
+        testing/mock_instance_admin_client.h
         testing/inprocess_data_client.h
         testing/inprocess_admin_client.h
-        testing/mock_response_stream.h
+        testing/mock_mutate_rows_reader.h
+        testing/mock_read_rows_reader.h
+        testing/mock_response_reader.h
+        testing/mock_sample_row_keys_reader.h
         testing/table_integration_test.h
         testing/table_integration_test.cc
         testing/table_test_fixture.h
@@ -131,6 +145,7 @@ set(bigtable_client_unit_tests
         admin_client_test.cc
         cell_test.cc
         client_options_test.cc
+        cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
         filters_test.cc
@@ -139,6 +154,7 @@ set(bigtable_client_unit_tests
         idempotent_mutation_policy_test.cc
         instance_admin_client_test.cc
         instance_admin_test.cc
+        instance_config_test.cc
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc

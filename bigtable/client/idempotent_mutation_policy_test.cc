@@ -21,7 +21,7 @@ TEST(IdempotentMutationPolicyTest, Simple) {
   using namespace bigtable::chrono_literals;
   auto policy = bigtable::DefaultIdempotentMutationPolicy();
   EXPECT_TRUE(policy->is_idempotent(
-      bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
+      bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
   EXPECT_TRUE(policy->is_idempotent(bigtable::DeleteFromFamily("fam").op));
 
   EXPECT_TRUE(
@@ -33,8 +33,8 @@ TEST(IdempotentMutationPolicyTest, Simple) {
 TEST(IdempotentMutationPolicyTest, AlwaysRetry) {
   using namespace bigtable::chrono_literals;
   bigtable::AlwaysRetryMutationPolicy policy;
-  EXPECT_TRUE(
-      policy.is_idempotent(bigtable::DeleteFromColumn("fam", "col", 0, 10).op));
+  EXPECT_TRUE(policy.is_idempotent(
+      bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
   EXPECT_TRUE(policy.is_idempotent(bigtable::DeleteFromFamily("fam").op));
 
   EXPECT_TRUE(

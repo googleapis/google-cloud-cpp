@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/instance_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include <type_traits>
-
-namespace btproto = ::google::bigtable::admin::v2;
+#include "bigtable/client/instance_config.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
-              "bigtable::InstanceAdmin must be CopyAssignable");
-
-std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
-  grpc::Status status;
-  auto result = impl_.ListInstances(status);
-  if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
-  }
-  return result;
-}
-
+constexpr InstanceConfig::InstanceType InstanceConfig::TYPE_UNSPECIFIED;
+constexpr InstanceConfig::InstanceType InstanceConfig::PRODUCTION;
+constexpr InstanceConfig::InstanceType InstanceConfig::DEVELOPMENT;
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

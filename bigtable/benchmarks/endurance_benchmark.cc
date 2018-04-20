@@ -61,12 +61,6 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
                   std::string const& table_id,
                   std::chrono::seconds test_duration);
 
-//@{
-/// @name Test constants.  Defined as requirements in the original bug (#189).
-/// How often does the test emit partial results, in minutes.
-constexpr int kPartialResultsPeriod = 5;
-//@}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -147,10 +141,6 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   long total_ops = 0;
 
   BenchmarkResult partial = {};
-  // We pre-allocate the buffer based on largely a guess, at 2.5ms per call, a
-  // run of 30 minutes produces 400 * 15 * 60 elements, allocate twice as much
-  // because why not?
-  partial.operations.reserve(kPartialResultsPeriod * 60 * 400);
 
   auto data_client = benchmark.MakeDataClient();
   bigtable::Table table(std::move(data_client), table_id);
@@ -158,9 +148,8 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto generator = MakeDefaultPRNG();
 
   auto start = std::chrono::steady_clock::now();
-  auto last_report = start;
-  auto report_at = start + std::chrono::minutes(kPartialResultsPeriod);
   auto end = start + test_duration;
+
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
     partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
     ++partial.row_count;
@@ -168,21 +157,13 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
     ++partial.row_count;
     partial.operations.emplace_back(RunOneApply(table, benchmark, generator));
     ++partial.row_count;
-    if (now >= report_at) {
-      // Every so many minutes print partial results and reset.
-      partial.elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-          now - last_report);
-      auto last_row_count = partial.row_count;
-      std::ostringstream msg;
-      benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
-      std::cout << msg.str() << std::flush;
-      partial = {};
-      partial.operations.reserve(last_row_count);
-      total_ops += last_row_count;
-      last_report = now;
-      report_at = now + std::chrono::minutes(kPartialResultsPeriod);
-    }
   }
+  partial.elapsed =
+      std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+  std::ostringstream msg;
+  benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
+  std::cout << msg.str() << std::flush;
+  total_ops = partial.operations.size();
   return total_ops;
 }
 

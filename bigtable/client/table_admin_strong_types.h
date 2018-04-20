@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/instance_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include <type_traits>
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_
 
-namespace btproto = ::google::bigtable::admin::v2;
+#include "bigtable/client/internal/strong_type.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
-              "bigtable::InstanceAdmin must be CopyAssignable");
-
-std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
-  grpc::Status status;
-  auto result = impl_.ListInstances(status);
-  if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
-  }
-  return result;
-}
+using ConsistencyToken =
+    internal::StrongType<std::string, struct ConsistencyTokenParam>;
+using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
+using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
+using TableId = internal::StrongType<std::string, struct TableParam>;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_

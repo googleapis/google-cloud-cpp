@@ -20,6 +20,11 @@ namespace btproto = ::google::bigtable::admin::v2;
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
+              "bigtable::TableAdmin must be constructible");
+static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
+              "bigtable::TableAdmin must be assignable");
+
 ::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
     std::string table_id, TableConfig config) {
   grpc::Status status;
@@ -83,6 +88,47 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
 void TableAdmin::DropAllRows(std::string table_id) {
   grpc::Status status;
   impl_.DropAllRows(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+}
+
+::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id) {
+  grpc::Status status;
+  auto result = impl_.GetSnapshot(cluster_id, snapshot_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
+std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
+  grpc::Status status;
+  std::string token =
+      impl_.GenerateConsistencyToken(std::move(table_id), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return token;
+}
+
+bool TableAdmin::CheckConsistency(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  grpc::Status status;
+  bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return consistent;
+}
+
+void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                                bigtable::SnapshotId const& snapshot_id) {
+  grpc::Status status;
+  impl_.DeleteSnapshot(cluster_id, snapshot_id, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }

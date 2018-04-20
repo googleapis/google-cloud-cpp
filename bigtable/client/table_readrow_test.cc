@@ -14,11 +14,13 @@
 
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/mock_read_rows_reader.h"
 #include "bigtable/client/testing/table_test_fixture.h"
 
 /// Define helper types and functions for this test.
 namespace {
 class TableReadRowTest : public bigtable::testing::TableTestFixture {};
+using bigtable::testing::MockReadRowsReader;
 }  // anonymous namespace
 
 TEST_F(TableReadRowTest, ReadRowSimple) {
@@ -36,8 +38,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       }
 )");
 
-  auto stream =
-      bigtable::internal::make_unique<bigtable::testing::MockResponseStream>();
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
@@ -66,8 +67,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto stream =
-      bigtable::internal::make_unique<bigtable::testing::MockResponseStream>();
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 

@@ -19,6 +19,7 @@
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 
@@ -56,6 +57,9 @@ class TableAdmin {
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : impl_(std::move(client), std::move(instance_id),
               std::move(retry_policy), std::move(backoff_policy)) {}
+
+  TableAdmin(TableAdmin const& table_admin) = default;
+  TableAdmin& operator=(TableAdmin const& table_admin) = default;
 
   std::string const& project() const { return impl_.project(); }
   std::string const& instance_id() const { return impl_.instance_id(); }
@@ -175,6 +179,69 @@ class TableAdmin {
    * @snippet bigtable_samples.cc drop all rows
    */
   void DropAllRows(std::string table_id);
+
+  /**
+   * Get information about a single snapshot.
+   *
+   * @param cluster_id the cluster id to which snapshot is associated.
+   * @param snapshot_id the id of the snapshot.
+   * @return the information about the snapshot.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
+   */
+  ::google::bigtable::admin::v2::Snapshot GetSnapshot(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id);
+
+  /**
+   * Generates consistency token for a table.
+   *
+   * @param table_id the id of the table for which we want to generate
+   *     consistency token.
+   * @return the consistency token for table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::string GenerateConsistencyToken(std::string const& table_id);
+
+  /**
+   * Checks consistency of a table.
+   *
+   * @param table_id  the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  bool CheckConsistency(bigtable::TableId const& table_id,
+                        bigtable::ConsistencyToken const& consistency_token);
+
+  /**
+   * Delete a snapshot.
+   *
+   * @param cluster_id the id of the cluster to which snapshot belongs.
+   * @param snapshot_id the id of the snapshot which needs to be deleted.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                      bigtable::SnapshotId const& snapshot_id);
+
+  /**
+   * List snapshots in the given instance.
+   * @param cluster_id the name of the cluster for which snapshots should be
+   * listed.
+   * @return collection containing the snapshots for the given cluster.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  template <template <typename...> class Collection = std::vector>
+  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
+    grpc::Status status;
+    auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
+    if (not status.ok()) {
+      internal::RaiseRpcError(status, status.error_message());
+    }
+    return result;
+  }
 
  private:
   noex::TableAdmin impl_;
