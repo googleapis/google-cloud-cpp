@@ -64,8 +64,10 @@ class RowRange {
   /// Return an empty range.
   static RowRange Empty() {
     RowRange result;
+    // Return an open interval that contains no key, using "\0" for the end key.
+    // We can't use "", because when appearing as the end it means 'infinity'.
     result.row_range_.set_start_key_open("");
-    result.row_range_.set_end_key_open("");
+    result.row_range_.set_end_key_open(std::string("\0", 1));
     return result;
   }
 
@@ -85,9 +87,7 @@ class RowRange {
   /// Return a range representing the interval [@p begin, @p end).
   static RowRange RightOpen(std::string begin, std::string end) {
     RowRange result;
-    if (not begin.empty()) {
-      result.row_range_.set_start_key_closed(std::move(begin));
-    }
+    result.row_range_.set_start_key_closed(std::move(begin));
     if (not end.empty()) {
       result.row_range_.set_end_key_open(std::move(end));
     }
@@ -97,9 +97,7 @@ class RowRange {
   /// Return a range representing the interval (@p begin, @p end].
   static RowRange LeftOpen(std::string begin, std::string end) {
     RowRange result;
-    if (not begin.empty()) {
-      result.row_range_.set_start_key_open(std::move(begin));
-    }
+    result.row_range_.set_start_key_open(std::move(begin));
     if (not end.empty()) {
       result.row_range_.set_end_key_closed(std::move(end));
     }
@@ -109,9 +107,7 @@ class RowRange {
   /// Return a range representing the interval (@p begin, @p end).
   static RowRange Open(std::string begin, std::string end) {
     RowRange result;
-    if (not begin.empty()) {
-      result.row_range_.set_start_key_open(std::move(begin));
-    }
+    result.row_range_.set_start_key_open(std::move(begin));
     if (not end.empty()) {
       result.row_range_.set_end_key_open(std::move(end));
     }
@@ -121,9 +117,7 @@ class RowRange {
   /// Return a range representing the interval [@p begin, @p end].
   static RowRange Closed(std::string begin, std::string end) {
     RowRange result;
-    if (not begin.empty()) {
-      result.row_range_.set_start_key_closed(std::move(begin));
-    }
+    result.row_range_.set_start_key_closed(std::move(begin));
     if (not end.empty()) {
       result.row_range_.set_end_key_closed(std::move(end));
     }
