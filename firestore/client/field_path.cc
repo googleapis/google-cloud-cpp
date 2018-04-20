@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "firestore/client/field_path.h"
-//#include "field_path.h"
 
 std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
 
@@ -27,7 +26,7 @@ FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
   }
 }
 
-void FieldPath::check_invalid_characters(const std::string& string) {
+void FieldPath::CheckInvalidCharacters(std::string const& string) {
   std::array<char, 6> invalid_chars = {"~*/[]"};
   for (const auto invalid_char : invalid_chars) {
     if (string.find(invalid_char) != std::string::npos) {
@@ -48,15 +47,15 @@ const std::vector<std::string> FieldPath::split(std::string string) {
   return parts;
 }
 
-const FieldPath FieldPath::from_string(const std::string& string) {
-  check_invalid_characters(string);
+const FieldPath FieldPath::FromString(std::string const& string) {
+  CheckInvalidCharacters(string);
   const auto parts = split(string);
   return FieldPath(parts);
 };
 
-const FieldPath FieldPath::append(const std::string& path) const {
-  std::vector<std::string> parts(this->parts);
-  auto field_path = FieldPath::from_string(path);
+const FieldPath FieldPath::append(std::string const& path) const {
+  std::vector<std::string> parts(this->parts_);
+  auto field_path = FieldPath::FromString(path);
   return this->append(field_path);
 }
 
@@ -68,7 +67,7 @@ const FieldPath FieldPath::append(const FieldPath& field_path) const {
   return FieldPath(parts);
 }
 
-const std::string FieldPath::to_api_repr() const {
+const std::string FieldPath::ToApiRepr() const {
   std::string s;
   for (auto part : parts_) {
     auto match = std::regex_match(part, ::simple_field_name);
@@ -84,16 +83,16 @@ const std::string FieldPath::to_api_repr() const {
   return s;
 }
 
-bool FieldPath::operator==(const FieldPath& other) const {
-  return this->to_api_repr() == other.to_api_repr();
+bool FieldPath::operator==(FieldPath const& other) const {
+  return this->ToApiRepr() == other.ToApiRepr();
 }
 
 bool FieldPath::operator!=(const FieldPath& other) const {
   return !((*this) == other);
 }
 
-std::ostream& operator<<(std::ostream& os, const FieldPath& field_path) {
-  os << field_path.to_api_repr();
+std::ostream& operator<<(std::ostream& os, FieldPath const& field_path) {
+  os << field_path.ToApiRepr();
   return os;
 }
 }  // namespace firestore

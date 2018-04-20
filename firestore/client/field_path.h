@@ -32,7 +32,7 @@ class FieldPath {
   FieldPath(std::vector<std::string> const parts);
 
   // Construct FieldPath from a field path string
-  static const FieldPath from_string(const std::string& string);
+  static const FieldPath FromString(std::string const& string);
 
   // The regex for a simple field name
   static std::regex simple_field_name;
@@ -44,7 +44,7 @@ class FieldPath {
   const FieldPath append(const FieldPath& field_path) const;
 
   // Convert the FieldPath into a unique representation for the server
-  const std::string to_api_repr() const;
+  const std::string ToApiRepr() const;
 
   // Return the length of components for this FieldPath
   size_t size() const { return parts.size(); }
