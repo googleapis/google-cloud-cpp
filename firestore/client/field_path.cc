@@ -49,8 +49,7 @@ std::vector<std::string> FieldPath::split(std::string string) {
 
 FieldPath FieldPath::FromString(std::string const& string) {
   CheckInvalidCharacters(string);
-  const auto parts = split(string);
-  return FieldPath(parts);
+  return FieldPath(split(string));
 };
 
 FieldPath FieldPath::append(std::string const& path) const {
