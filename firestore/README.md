@@ -12,7 +12,7 @@ client.
 ## Status
 
 This library support Google Cloud Firestore at the
-[Alpha](../README.md#versioning) quality level.
+[Experimental](../README.md#versioning) quality level.
 
 ## Documentation
 

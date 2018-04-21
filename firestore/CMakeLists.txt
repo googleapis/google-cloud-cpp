@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,83 +39,22 @@ include(GoogleCloudCppCommon)
 # targets without having to painfully set special variables, it also allows
 # users to add more common options without having to touch the code.
 add_library(firestore_common_options INTERFACE)
-google_cloud_cpp_add_common_options(firestore_common_options)
-
-# Configure the location of proto files, particulary the googleapis protos.
-set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis" "${PROJECT_SOURCE_DIR}")
-if(GRPC_ROOT_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${GRPC_ROOT_DIR}/third_party/protobuf/src")
-endif(GRPC_ROOT_DIR)
-
-# Include the functions to compile proto files.
-include(CompileProtos)
-# PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/firestore_instance_admin.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/firestore_table_admin.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/common.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/instance.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/table.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/v2/firestore.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/v2/data.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/iam_policy.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/policy.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/status.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/error_details.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/annotations.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/auth.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/http.proto)
-# GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/firestore_instance_admin.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/admin/v2/firestore_table_admin.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/firestore/v2/firestore.proto
-#     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto)
-
-# Create a library with the generated files from the relevant protos.
-# add_library(firestore_protos ${PROTO_SOURCES} ${PROTO_HDRS} ${GRPCPP_SOURCES} ${GRPCPP_HDRS})
-# target_link_libraries(firestore_protos gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-# target_include_directories(firestore_protos PUBLIC
-#     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-#     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-#     $<INSTALL_INTERFACE:include>)
-# target_compile_options(firestore_protos PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-# add_library(firestore::protos ALIAS firestore_protos)
+    google_cloud_cpp_add_common_options(firestore_common_options)
 
 # Enable unit tests
 enable_testing()
 
-# Capture the compiler version and the git revision into variables, then
-# generate a config file with the values.
-# if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
-#     execute_process(COMMAND git rev-parse --short HEAD
-#             OUTPUT_VARIABLE GIT_HEAD_LOG ERROR_VARIABLE GIT_HEAD_LOG)
-# else ()
-#     set(GIT_HEAD_LOG "(unknown-git-commit)")
-# endif ()
-# string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
-# string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
-# configure_file(client/build_info.cc.in client/build_info.cc)
-
-# include(IncludeGMock)
-
-# add_dependencies(skip-scanbuild-targets gmock firestore_protos)
-
 # All tests get added to this target below.
-add_subdirectory(google)
 add_subdirectory(client)
-add_subdirectory(tests)
-
-# if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-#     add_subdirectory(benchmarks)
-#     add_subdirectory(examples)
-# endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-# install(TARGETS firestore_protos firestore_common_options
-#     EXPORT firestore-targets
-#     RUNTIME DESTINATION bin
-#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS 
+    EXPORT firestore-targets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+# The exports can only be installed if all the dependencies are installed.
+# CMake needs to know where the submodules will be installed from,
 install(EXPORT firestore-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)

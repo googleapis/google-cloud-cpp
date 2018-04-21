@@ -27,6 +27,9 @@ target_include_directories(firestore_client PUBLIC
 target_compile_options(firestore_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(firestore::client ALIAS firestore_client)
 
+include(CreateBazelConfig)
+create_bazel_config(firestore_client)
+
 option(FIRESTORE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Firestore client with clang-tidy."
     "")
@@ -39,12 +42,19 @@ if (CLANG_TIDY_EXE AND FIRESTORE_CLIENT_CLANG_TIDY)
 endif ()
 
 add_library(firestore_client_testing
-        field_path.h
-	field_path_test.cc)
+    field_path.h
+    field_path_test.cc
+    )
+target_link_libraries(firestore_client_testing
+    PUBLIC firestore_client gmock
+    PRIVATE firestore_common_options protobuf::libprotobuf)
 
 # List the unit tests, then setup the targets and dependencies.
 set(firestore_client_unit_tests
-  	field_path_test.cc)
+    field_path_test.cc)
+
+# Export the list of unit tests so the Bazel BUILD file can pick it up.
+export_list_to_bazel("firestore_client_unit_tests.bzl" "firestore_client_unit_tests")
 
 foreach (fname ${firestore_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
@@ -52,9 +62,27 @@ foreach (fname ${firestore_client_unit_tests})
     set(target "firestore_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-            firestore_client_testing firestore_client gtest pthread)
+        firestore_client_testing firestore_client gmock firestore_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
+
+create_bazel_config(firestore_client_testing)
+
+option(FORCE_SANITIZER_ERRORS
+        "If set, enable tests that force errors detected by the sanitizers."
+        "")
+if (FORCE_SANITIZER_ERRORS)
+    target_compile_definitions(firestore_client_force_sanitizer_failures_test
+            PRIVATE -DFIRESTORE_CLIENT_FORCE_SANITIZER_ERRORS)
+endif (FORCE_SANITIZER_ERRORS)
+
+option(FORCE_STATIC_ANALYZER_ERRORS
+        "If set, enable tests that force errors detected by the static analyzer."
+        "")
+if (FORCE_STATIC_ANALYZER_ERRORS)
+    target_compile_definitions(firestore_client_force_sanitizer_failures_test
+            PRIVATE -DFIRESTORE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
+endif (FORCE_STATIC_ANALYZER_ERRORS)
 
 install(TARGETS firestore_client
     EXPORT firestore-targets
@@ -67,14 +95,22 @@ install(DIRECTORY . DESTINATION include/firestore/client
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     DESTINATION include/firestore/client)
 
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${FIRESTORE_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${FIRESTORE_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${FIRESTORE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Firestore C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud Firestore.")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lfirestore_client -lfirestore_protos")
+
 # Install the pkg-config files.
-configure_file("config.pc.in" "firestore_client.pc" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in" "firestore_client.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Install the CMake configuration files.
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
-configure_file("config-version.cmake.in"
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
     "firestore_client-config-version.cmake" @ONLY)
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"

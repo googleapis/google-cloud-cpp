@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLECLOUDCPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
-#define GOOGLECLOUDCPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
+#ifndef GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
+#define GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
 
 #include <iostream>
 #include <regex>
@@ -28,46 +28,127 @@ namespace firestore {
  */
 class FieldPath {
  public:
-  // Construct FieldPath from a vector of field names
+  /**
+   * Construct FieldPath from a vector of field name *parts*.
+   * @param parts.  A const vector of strings which are field path components.
+   */
   FieldPath(std::vector<std::string> const parts);
 
-  // Construct FieldPath from a field path string
+  /**
+   * Construct an invalid FieldPath.
+   */
+  static FieldPath InvalidFieldPath();
+
+  /**
+   * Construct FieldPath from a field path string *string*.
+   * @param string.  A const field path string for creating a FieldPath.
+   */
   static FieldPath FromString(std::string const& string);
 
-  // The regex for a simple field name
-  static std::regex simple_field_name;
+  /**
+   * Construct a new FieldPath by appending a field path string *string*.
+   * @param string.  A const field path string to append to this FieldPath.
+   */
 
-  // Construct a new FieldPath by appending a field path string
-  FieldPath append(std::string const& path) const;
+  FieldPath Append(std::string const& string) const;
 
-  // Construct a new FieldPath by appending a field path string
-  FieldPath append(FieldPath const& field_path) const;
+  /**
+   * Construct a new FieldPath by appending a FieldPath *field_path*.
+   * @param field_path.  A const FieldPath to append to this FieldPath.
+   */
+  FieldPath Append(FieldPath const& field_path) const;
 
-  // Convert the FieldPath into a unique representation for the server
+  /**
+   * Convert the FieldPath into a unique representation for the server.
+   */
   std::string ToApiRepr() const;
 
-  // Return the length of components for this FieldPath
-  size_t size() const { return parts.size(); }
+  /**
+   * Return the length of components for this FieldPath.
+   */
+  size_t size() const { return parts_.size(); }
 
-  // Compare the equality of this FieldPath with another FieldPath
-  bool operator==(const FieldPath& other) const;
+  /**
+   * Compare the equality of this FieldPath with another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator==(FieldPath const& other) const;
 
-  // Compare the non-equality of this FieldPath with another FieldPath
-  bool operator!=(const FieldPath& other) const;
+  /**
+   * Compare the non-equality of this FieldPath with another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator!=(FieldPath const& other) const;
 
-  // The representation of this FieldPath for ostream
+  /**
+   * Compare if this FieldPath is before another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator<(FieldPath const& other) const;
+
+  /**
+   * Compare if this FieldPath is before or equal to another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator<=(FieldPath const& other) const;
+
+  /**
+   * Compare if this FieldPath is after another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator>(FieldPath const& other) const;
+
+  /**
+   * Compare if this FieldPath is after or equal to another FieldPath *other*.
+   * @param other.  The other const FieldPath to compare to.
+   */
+  bool operator>=(FieldPath const& other) const;
+
+  /**
+   * The representation of this FieldPath *field_path* for ostream *os*.
+   * @param os.  ostream to write to.
+   * @param field_path.  This const FieldPath.
+   */
   friend std::ostream& operator<<(std::ostream& os,
                                   const FieldPath& field_path);
 
+  /**
+   * Returns whether this FieldPath is valid or not.
+   */
+  bool valid() const { return valid_; }
+
  private:
-  // Ensures string has no invalid characters
-  static void check_invalid_characters(const std::string& string);
+  /**
+   * Ensures *string* has no invalid characters.
+   * @param string.  A const string to write to.
+   */
+  static bool InvalidCharacters(std::string const& string);
 
-  // Splits string via field path delimiter '.'
-  static std::vector<std::string> split(std::string const string);
+  /**
+   * Splits *string* via field path delimiter '.'.
+   * @param string.  A const string to write to.
+   */
+  static std::vector<std::string> Split(std::string const string);
 
-  // The components of this FieldPath
-  std::vector<std::string> parts;
+  /**
+   * Replace all occurences of *find* in *string* with *replace*.
+   * @param string.  A string to search and replace
+   * @param find.  A const String to find and replace with *replace*
+   * @param replace.  A const String to replace *find* with.
+   */
+  static void ReplaceAll(std::string& string, std::string const& find,
+                         std::string const& replace);
+
+  /**
+   * The components of this FieldPath.
+   */
+  std::vector<std::string> parts_;
+
+  /**
+   * Whether this FieldPath is valid or not.
+   */
+  bool valid_;
 };
 }  // namespace firestore
-#endif
+
+#endif  // GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
