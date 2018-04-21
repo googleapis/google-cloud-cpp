@@ -14,7 +14,9 @@
 
 #include "firestore/client/field_path.h"
 
+namespace{
 std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
+}
 
 namespace firestore {
 
