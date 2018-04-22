@@ -202,7 +202,7 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
 }
 
 TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
-  std::string const table_name = "table-read-row-test";
+  std::string const table_name = "table-read-row-not-exist-test";
   auto table = CreateTable(table_name, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
