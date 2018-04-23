@@ -17,7 +17,9 @@
 
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
-#include "bigtable/client/internal/unary_rpc_utils.h"
+#include "bigtable/client/metadata_update_policy.h"
+#include "bigtable/client/rpc_backoff_policy.h"
+#include "bigtable/client/rpc_retry_policy.h"
 #include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
@@ -172,17 +174,13 @@ class TableAdmin {
       std::function<void(::google::bigtable::admin::v2::Snapshot)> inserter,
       std::function<void()> clearer, grpc::Status& status);
 
-  /// Shortcuts to avoid typing long names over and over.
-  using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<AdminClient>;
-  using StubType = RpcUtils::StubType;
-
  private:
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;
   std::string instance_name_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
 };
 
 }  // namespace noex
