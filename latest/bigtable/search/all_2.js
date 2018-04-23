@@ -8,10 +8,10 @@ var searchData=
   ['cellsrowlimit',['CellsRowLimit',['../classbigtable_1_1v0_1_1Filter.html#a7892e342330e4df57ce7f3260ebb0030',1,'bigtable::v0::Filter']]],
   ['cellsrowoffset',['CellsRowOffset',['../classbigtable_1_1v0_1_1Filter.html#ad634656247f743765edff8d8edb377f2',1,'bigtable::v0::Filter']]],
   ['chain',['Chain',['../classbigtable_1_1v0_1_1Filter.html#a1f1fe5a74d501d1e09fc873f059ddd14',1,'bigtable::v0::Filter']]],
-  ['channel',['Channel',['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a6fe170a4f0a644b7b06c7901aa7574df',1,'bigtable::v0::InstanceAdminClient']]],
+  ['channel',['Channel',['../classbigtable_1_1v0_1_1AdminClient.html#acb477f402a96f10816eccc135b628fa7',1,'bigtable::v0::AdminClient::Channel()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a6fe170a4f0a644b7b06c7901aa7574df',1,'bigtable::v0::InstanceAdminClient::Channel()']]],
   ['channel_5farguments',['channel_arguments',['../classbigtable_1_1v0_1_1ClientOptions.html#a8178490fb038925bb1b097aeb5a87e86',1,'bigtable::v0::ClientOptions']]],
   ['checkandmutaterow',['CheckAndMutateRow',['../classbigtable_1_1v0_1_1Table.html#a91f8dd3d54bcccf61b7d2ba36cd802b1',1,'bigtable::v0::Table']]],
-  ['checkconsistency',['CheckConsistency',['../classbigtable_1_1v0_1_1TableAdmin.html#ae58bc777024d5b68c6abbb04ac05e37e',1,'bigtable::v0::TableAdmin']]],
+  ['checkconsistency',['CheckConsistency',['../classbigtable_1_1v0_1_1AdminClient.html#a0c8d83b8cffd5a32860e56bcc4be2942',1,'bigtable::v0::AdminClient::CheckConsistency()'],['../classbigtable_1_1v0_1_1TableAdmin.html#ae58bc777024d5b68c6abbb04ac05e37e',1,'bigtable::v0::TableAdmin::CheckConsistency()']]],
   ['client_5foptions_2ecc',['client_options.cc',['../client__options_8cc.html',1,'']]],
   ['client_5foptions_2eh',['client_options.h',['../client__options_8h.html',1,'']]],
   ['clientoptions',['ClientOptions',['../classbigtable_1_1v0_1_1ClientOptions.html',1,'bigtable::v0::ClientOptions'],['../classbigtable_1_1v0_1_1ClientOptions.html#acbe23e2a42d99f1b080bd1f92edb3257',1,'bigtable::v0::ClientOptions::ClientOptions()']]],
@@ -42,7 +42,8 @@ var searchData=
   ['createdefaultadminclient',['CreateDefaultAdminClient',['../namespacebigtable_1_1v0.html#a47ed425d2e8281836e0222e8993b828c',1,'bigtable::v0']]],
   ['createdefaultdataclient',['CreateDefaultDataClient',['../namespacebigtable_1_1v0.html#af479e95a27d852df7e5cad07cbeab7e9',1,'bigtable::v0']]],
   ['createdefaultinstanceadminclient',['CreateDefaultInstanceAdminClient',['../namespacebigtable_1_1v0.html#ae4b9a4e9c41350c46cb09105c5d0f23a',1,'bigtable::v0']]],
-  ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin']]],
+  ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1AdminClient.html#a6f9a1f5dbb7373b252a996a352291363',1,'bigtable::v0::AdminClient::CreateTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin::CreateTable()']]],
+  ['createtablefromsnapshot',['CreateTableFromSnapshot',['../classbigtable_1_1v0_1_1AdminClient.html#ac346a05a40052e342f1dc7dd29fdd405',1,'bigtable::v0::AdminClient']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]],
   ['cloud_20bigtable_20c_2b_2b_20client_20library',['Cloud Bigtable C++ Client Library',['../index.html',1,'']]]
 ];
