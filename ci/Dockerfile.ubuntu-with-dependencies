@@ -25,21 +25,6 @@ ARG CC=clang
 # itself if the dependendencies are built as submodules. We use CMake to build
 # and install the libraries because that way we get the CMake config files.
 
-# Many distributions include c-ares, but they do not include the CMake support
-# files for the library, so manually install it.  c-ares requires two install
-# steps because (1) the CMake-based build does not install pkg-config files, and
-# (2) the Makefile-based build does not install CMake config files.
-WORKDIR /var/tmp/build-dependencies
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-RUN tar -xf cares-1_14_0.tar.gz
-WORKDIR /var/tmp/build-dependencies/c-ares-cares-1_14_0
-RUN cmake \
-  -DCMAKE_BUILD_TYPE=Release \
-  -H. -B.build
-RUN cmake --build .build --target install -- -j ${NCPU}
-RUN ./buildconf && ./configure
-RUN install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
-
 # Install protobuf using CMake.  Some distributions include protobuf, gRPC
 # requires 3.4.x or newer, and many of those distribution use older versions.
 WORKDIR /var/tmp/build-dependencies
@@ -52,11 +37,27 @@ RUN cmake \
   -H. -B.build
 RUN cmake --build .build --target install -- -j ${NCPU}
 
+# Many distributions include c-ares, but they do not include the CMake support
+# files for the library, so manually install it.  c-ares requires two install
+# steps because (1) the CMake-based build does not install pkg-config files, and
+# (2) the Makefile-based build does not install CMake config files.
+WORKDIR /var/tmp/build-dependencies
+RUN apt-get remove -y libc-ares-dev libc-ares2
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN tar -xf cares-1_14_0.tar.gz
+WORKDIR /var/tmp/build-dependencies/c-ares-cares-1_14_0
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -H. -B.build
+RUN cmake --build .build --target install -- -j ${NCPU}
+RUN ./buildconf && ./configure
+RUN install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
+
 # Install gRPC. Note that we use the system's zlib and ssl libraries.
 WORKDIR /var/tmp/build-dependencies
-RUN wget -q https://github.com/grpc/grpc/archive/v1.11.0.tar.gz
-RUN tar -xf v1.11.0.tar.gz
-WORKDIR /var/tmp/build-dependencies/grpc-1.11.0
+RUN wget -q https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
+RUN tar -xf v1.10.0.tar.gz
+WORKDIR /var/tmp/build-dependencies/grpc-1.10.0
 RUN cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DgRPC_BUILD_TESTS=OFF \
