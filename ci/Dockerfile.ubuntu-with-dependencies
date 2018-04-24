@@ -73,6 +73,7 @@ FROM cached-${DISTRO}-${DISTRO_VERSION}:tip
 COPY --from=staging /usr/local/include /usr/local/include
 COPY --from=staging /usr/local/bin /usr/local/bin
 COPY --from=staging /usr/local/lib /usr/local/lib
+COPY --from=staging /usr/local/share /usr/local/share
 
 # Update the dynamic loader cache because we changed /usr/local/lib.
 RUN ldconfig
