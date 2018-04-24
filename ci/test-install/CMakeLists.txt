@@ -27,7 +27,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
-find_package(bigtable_client 0.1.0 REQUIRED)
+find_package(bigtable_client 0.2.0 REQUIRED)
 
 # Defining new targets should be easy.
 add_executable(install_integration_test install_integration_test.cc)
