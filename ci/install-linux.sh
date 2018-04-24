@@ -35,6 +35,7 @@ readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 min_wait=180
 for i in 1 2 3; do
   sudo docker build -t "${IMAGE}:tip" \
+       --build-arg NCPU="${NCPU:-2}" \
        --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
        -f "ci/Dockerfile.${DISTRO}" ci
   if [ $? -eq 0 ]; then

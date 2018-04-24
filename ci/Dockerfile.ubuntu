@@ -32,11 +32,13 @@ RUN apt-get update && apt-get install -y \
   clang \
   cmake \
   libcurl4-openssl-dev \
+  libssl-dev \
   libtool \
   lsb-release \
   make \
   tar \
-  wget
+  wget \
+  zlib1g-dev
 
 # Install packages that are required for 14.04, but do not exist in later
 # versions.
