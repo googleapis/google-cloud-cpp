@@ -124,5 +124,6 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/googl
 # CMake needs to know where the submodules will be installed from,
 if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
     # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT bigtable-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+    install(EXPORT bigtable-targets DESTINATION
+            "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
 endif ()

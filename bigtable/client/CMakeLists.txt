@@ -233,4 +233,4 @@ configure_file("config-version.cmake.in"
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")

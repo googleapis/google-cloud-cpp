@@ -78,4 +78,4 @@ configure_file("config-version.cmake.in"
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
