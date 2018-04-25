@@ -112,9 +112,9 @@ class Table {
   std::string const& table_name() const { return table_name_.get(); }
 
   template<typename Request>
-  void SetCommonTableOperationRequest(
-      Request& request, std::string const& table_name,
-      std::string const& app_profile_id) {
+  void SetCommonTableOperationRequest(Request& request,
+                                      std::string const& table_name,
+                                      std::string const& app_profile_id) {
    request.set_table_name(table_name);
    request.set_app_profile_id(app_profile_id);
   }

@@ -176,20 +176,18 @@ TEST_F(TableReadRowTest, ReadRow_AppProfileId) {
   grpc::Status status;
   auto response =
       bigtable::testing::internal::ReadRowsResponseFromString(R"(
-                                                                  chunks {
-                                                                  row_key: "r1"
-                                                                      family_name { value: "fam" }
-                                                                      qualifier { value: "col" }
-                                                                  timestamp_micros: 42000
-                                                                  value: "value"
-                                                                  commit_row: true
-                                                                  }
-                                                                  )",
-                                                              status);
+chunks {
+row_key: "r1"
+family_name { value: "fam" }
+qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)", status);
   EXPECT_TRUE(status.ok());
 
-  auto stream =
-      bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
