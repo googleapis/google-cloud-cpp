@@ -19,8 +19,6 @@
 #include "bigtable/client/data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
-namespace btproto = ::google::bigtable::v2;
-
 namespace bigtable {
 namespace testing {
 
@@ -45,11 +43,41 @@ class InProcessDataClient : public bigtable::DataClient {
 
   std::string const& project_id() const override { return project_; }
   std::string const& instance_id() const override { return instance_; }
-  BigtableStubPtr Stub() override {
-    return btproto::Bigtable::NewStub(channel_);
-  }
+  std::shared_ptr<grpc::Channel> Channel() override { return channel_; }
   void reset() override {}
-  void on_completion(grpc::Status const& status) override {}
+
+  std::unique_ptr<google::bigtable::v2::Bigtable::Stub> Stub() {
+    return google::bigtable::v2::Bigtable::NewStub(Channel());
+  }
+
+  //@{
+  /// @name the google.bigtable.v2.Bigtable operations.
+  grpc::Status MutateRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::MutateRowRequest const& request,
+      google::bigtable::v2::MutateRowResponse* response) override;
+  grpc::Status CheckAndMutateRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::CheckAndMutateRowRequest const& request,
+      google::bigtable::v2::CheckAndMutateRowResponse* response) override;
+  grpc::Status ReadModifyWriteRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+      google::bigtable::v2::ReadModifyWriteRowResponse* response) override;
+  std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+  ReadRows(grpc::ClientContext* context,
+           google::bigtable::v2::ReadRowsRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(
+      grpc::ClientContext* context,
+      google::bigtable::v2::SampleRowKeysRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
+  MutateRows(grpc::ClientContext* context,
+             google::bigtable::v2::MutateRowsRequest const& request) override;
+  //@}
 
  private:
   std::string project_;

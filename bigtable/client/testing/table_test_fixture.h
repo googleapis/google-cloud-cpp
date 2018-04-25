@@ -41,8 +41,6 @@ class TableTestFixture : public ::testing::Test {
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
-  std::shared_ptr<::google::bigtable::v2::MockBigtableStub> bigtable_stub_ =
-      std::make_shared<::google::bigtable::v2::MockBigtableStub>();
   std::shared_ptr<MockDataClient> client_ = SetupMockClient();
   bigtable::Table table_ = bigtable::Table(client_, kTableId);
 };

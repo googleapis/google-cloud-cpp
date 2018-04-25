@@ -24,6 +24,7 @@
 using testing::_;
 using testing::DoAll;
 using testing::Eq;
+using testing::Invoke;
 using testing::Matcher;
 using testing::Property;
 using testing::Return;
@@ -160,7 +161,8 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
 
 TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(stream->MakeMockReturner()));
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
@@ -180,7 +182,8 @@ TEST_F(RowReaderTest, ReadOneRow) {
   EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -206,7 +209,8 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -232,7 +236,8 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
@@ -261,7 +266,8 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
@@ -271,8 +277,8 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -297,7 +303,8 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
   auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
@@ -322,7 +329,8 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
   auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
@@ -350,8 +358,8 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   {
     testing::InSequence s;
     // For sanity, check we have two rows in the initial request
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(2)))
-        .WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(2)))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -364,8 +372,8 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
     // First row should be removed from the retried request, leaving one row
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(1)))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
@@ -394,7 +402,8 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto response = bigtable::testing::ReadRowsResponseFromString("chunks {}");
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_))
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
     EXPECT_CALL(*parser, HandleChunkHook(_, _))
@@ -406,8 +415,8 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -431,7 +440,8 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
   auto parser = bigtable::internal::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
     grpc::Status status;
@@ -460,8 +470,8 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   {
     testing::InSequence s;
     // For sanity, check we have two rows in the initial request
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(2)))
-        .WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(2)))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -477,8 +487,8 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
     // First row should be removed from the retried request, leaving one row
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowKeysCount(1)))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(1)))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
@@ -503,7 +513,8 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
   {
     testing::InSequence s;
 
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
     grpc::Status status;
@@ -532,7 +543,8 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   parser->SetRows({"r2"});
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -561,8 +573,8 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
 
 TEST_F(RowReaderTest, RowLimitIsSent) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(442)))
-      .WillOnce(Return(stream));
+  EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(442)))
+      .WillOnce(Invoke(stream->MakeMockReturner()));
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
@@ -581,8 +593,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(42)))
-        .WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(42)))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -595,8 +607,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
     // 41 instead of 42
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(41)))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(41)))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
   }
@@ -619,8 +631,8 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, RequestWithRowsLimit(1)))
-        .WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(1)))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -651,7 +663,8 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
   auto* stream = new MockReadRowsReader;
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
@@ -694,7 +707,8 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
   auto* stream = new MockReadRowsReader;
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
@@ -750,7 +764,7 @@ TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   // The RowReader constructor/destructor by themselves should not
   // invoke the RPC or create parsers (the latter restriction because
   // parsers are per-connection and non-reusable).
-  EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).Times(0);
+  EXPECT_CALL(*client_, ReadRows(_, _)).Times(0);
   EXPECT_CALL(*parser_factory_, CreateHook()).Times(0);
 
   bigtable::RowReader reader(
@@ -779,7 +793,8 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
 
   {
     testing::InSequence s;
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _)).WillOnce(Return(stream));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::INTERNAL, "retry")));
@@ -789,8 +804,8 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-        .WillOnce(Return(stream_retry));
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));

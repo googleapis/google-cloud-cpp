@@ -18,7 +18,6 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
-#include "bigtable/client/internal/unary_rpc_utils.h"
 #include "bigtable/client/metadata_update_policy.h"
 #include "bigtable/client/mutations.h"
 #include "bigtable/client/read_modify_write_rule.h"
@@ -180,8 +179,6 @@ class Table {
   //@}
 
  private:
-  using RpcUtils = bigtable::internal::noex::UnaryRpcUtils<DataClient>;
-  using StubType = RpcUtils::StubType;
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */

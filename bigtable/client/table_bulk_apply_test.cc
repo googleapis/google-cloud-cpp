@@ -50,11 +50,8 @@ TEST_F(TableBulkApplyTest, Simple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return reader.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
@@ -92,15 +89,9 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo",
@@ -110,7 +101,6 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
   SUCCEED();
 }
 
-// TODO(#234) - this test could be enabled when bug is closed.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
@@ -132,11 +122,8 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()));
 
   EXPECT_THROW(table_.BulkApply(bt::BulkMutation(
                    bt::SingleRowMutation(
@@ -180,15 +167,9 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
@@ -196,7 +177,6 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   SUCCEED();
 }
 
-// TODO(#234) - these test should be modified and enabled when bug is closed.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
@@ -233,14 +213,11 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream.release();
+    return stream.release()->AsUniqueMocked();
   };
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
@@ -274,15 +251,9 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r1.release();
-          }))
-      .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return r2.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(r1.release()->MakeMockReturner()))
+      .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   try {
     table_.BulkApply(bt::BulkMutation(
@@ -309,11 +280,8 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
                                     "no such table")));
 
-  EXPECT_CALL(*bigtable_stub_, MutateRowsRaw(_, _))
-      .WillOnce(Invoke(
-          [&reader](grpc::ClientContext*, btproto::MutateRowsRequest const&) {
-            return reader.release();
-          }));
+  EXPECT_CALL(*client_, MutateRows(_, _))
+      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   try {
     table_.BulkApply(bt::BulkMutation(

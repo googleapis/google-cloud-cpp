@@ -66,7 +66,6 @@ add_library(bigtable_client
         internal/throw_delegate.h
         internal/throw_delegate.cc
         internal/unary_client_utils.h
-        internal/unary_rpc_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
         mutations.h
@@ -127,6 +126,7 @@ add_library(bigtable_client_testing
         testing/mock_data_client.h
         testing/mock_instance_admin_client.h
         testing/inprocess_data_client.h
+        testing/inprocess_data_client.cc
         testing/inprocess_admin_client.h
         testing/inprocess_admin_client.cc
         testing/mock_mutate_rows_reader.h

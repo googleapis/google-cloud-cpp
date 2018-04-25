@@ -51,11 +51,11 @@ BulkMutator::BulkMutator(std::string const& table_name,
   }
 }
 
-grpc::Status BulkMutator::MakeOneRequest(btproto::Bigtable::StubInterface& stub,
+grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
                                          grpc::ClientContext& client_context) {
   PrepareForRequest();
   // Send the request to the server and read the resulting result stream.
-  auto stream = stub.MutateRows(&client_context, mutations_);
+  auto stream = client.MutateRows(&client_context, mutations_);
   btproto::MutateRowsResponse response;
   while (stream->Read(&response)) {
     ProcessResponse(response);

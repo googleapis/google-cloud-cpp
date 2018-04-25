@@ -122,7 +122,7 @@ void RowReader::MakeRequest() {
   retry_policy_->setup(*context_);
   backoff_policy_->setup(*context_);
   metadata_update_policy_.setup(*context_);
-  stream_ = client_->Stub()->ReadRows(context_.get(), request);
+  stream_ = client_->ReadRows(context_.get(), request);
   stream_is_open_ = true;
 
   parser_ = parser_factory_->Create();

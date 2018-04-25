@@ -37,11 +37,16 @@ class DataClient {
   virtual std::string const& project_id() const = 0;
   virtual std::string const& instance_id() const = 0;
 
-  virtual std::shared_ptr<google::bigtable::v2::Bigtable::StubInterface>
-  Stub() = 0;
+  /**
+   * Return a new channel to handle admin operations.
+   *
+   * Intended to access rarely used services in the same endpoints as the
+   * Bigtable admin interfaces, for example, the google.longrunning.Operations.
+   */
+  virtual std::shared_ptr<grpc::Channel> Channel() = 0;
 
   /**
-   * Reset and create a new Stub().
+   * Reset and create new Channels.
    *
    * Currently this is only used in testing.  In the future, we expect this,
    * or a similar member function, will be needed to handle errors that require
@@ -49,13 +54,33 @@ class DataClient {
    */
   virtual void reset() = 0;
 
-  /**
-   * A callback for completed RPCs.
-   *
-   * Currently this is only used in testing.  In the future, we expect that
-   * some errors may require the class to update its state.
-   */
-  virtual void on_completion(grpc::Status const&) = 0;
+  //@{
+  /// @name the google.bigtable.v2.Bigtable operations.
+  virtual grpc::Status MutateRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::MutateRowRequest const& request,
+      google::bigtable::v2::MutateRowResponse* response) = 0;
+  virtual grpc::Status CheckAndMutateRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::CheckAndMutateRowRequest const& request,
+      google::bigtable::v2::CheckAndMutateRowResponse* response) = 0;
+  virtual grpc::Status ReadModifyWriteRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+      google::bigtable::v2::ReadModifyWriteRowResponse* response) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+  ReadRows(grpc::ClientContext* context,
+           google::bigtable::v2::ReadRowsRequest const& request) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(grpc::ClientContext* context,
+                google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
+  MutateRows(grpc::ClientContext* context,
+             google::bigtable::v2::MutateRowsRequest const& request) = 0;
+  //@}
 };
 
 /// Create the default implementation of ClientInterface.

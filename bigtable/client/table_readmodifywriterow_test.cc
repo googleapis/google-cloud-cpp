@@ -86,7 +86,7 @@ row {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*bigtable_stub_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
       .WillOnce(Invoke(mock_read_modify_write_row));
 
   auto row = table_.ReadModifyWriteRow(
@@ -155,7 +155,7 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*bigtable_stub_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
       .WillOnce(Invoke(mock_read_modify_write_row));
 
   auto row = table_.ReadModifyWriteRow(
@@ -228,7 +228,7 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*bigtable_stub_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
       .WillOnce(Invoke(mock_read_modify_write_row));
 
   auto row = table_.ReadModifyWriteRow(
