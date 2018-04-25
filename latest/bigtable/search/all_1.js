@@ -11,7 +11,6 @@ var searchData=
   ['bigtable_5fclient_5fns',['BIGTABLE_CLIENT_NS',['../version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37',1,'version.h']]],
   ['bigtable_5fclient_5fvconcat',['BIGTABLE_CLIENT_VCONCAT',['../version_8h.html#a337f0c4db29f33f05b85d371e826a5df',1,'version.h']]],
   ['bigtable_5fclient_5fveval',['BIGTABLE_CLIENT_VEVAL',['../version_8h.html#aea0294a9fcdf2bfaae45e52ddcb9f135',1,'version.h']]],
-  ['bigtablestubptr',['BigtableStubPtr',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a80bb775b18d44effed7a039d74c3c72e',1,'bigtable::v0::DefaultDataClient']]],
   ['blockallfilter',['BlockAllFilter',['../classbigtable_1_1v0_1_1Filter.html#a3c99a00451ee7a6dcbc47c739a005366',1,'bigtable::v0::Filter']]],
   ['build_5finfo_2eh',['build_info.h',['../build__info_8h.html',1,'']]],
   ['bulkapply',['BulkApply',['../classbigtable_1_1v0_1_1Table.html#a5714f0f923da7544cccd11fa943f320b',1,'bigtable::v0::Table']]],

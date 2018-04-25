@@ -1,6 +1,7 @@
 var searchData=
 [
   ['safeidempotentmutationpolicy',['SafeIdempotentMutationPolicy',['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html',1,'bigtable::v0::SafeIdempotentMutationPolicy'],['../classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a12d4e0b60e03282cb98ca8cbe21c1edc',1,'bigtable::v0::SafeIdempotentMutationPolicy::SafeIdempotentMutationPolicy()']]],
+  ['samplerowkeys',['SampleRowKeys',['../classbigtable_1_1v0_1_1DefaultDataClient.html#ad0566e91aeb3044e24f00fe3d20aa613',1,'bigtable::v0::DefaultDataClient::SampleRowKeys()'],['../classbigtable_1_1v0_1_1DataClient.html#a036a11da64e43effaa3be382dc14cc05',1,'bigtable::v0::DataClient::SampleRowKeys()']]],
   ['samplerows',['SampleRows',['../classbigtable_1_1v0_1_1Table.html#a700b2e0b0aef8d58998161d70104c2d8',1,'bigtable::v0::Table']]],
   ['serversettimestamp',['ServerSetTimestamp',['../namespacebigtable_1_1v0.html#a85536d8b5f2bdd21afbc78a78d37d803',1,'bigtable::v0']]],
   ['set_5fadmin_5fendpoint',['set_admin_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a67d5cd1969e1362e8ae05a1344ad4ee6',1,'bigtable::v0::ClientOptions']]],
@@ -31,6 +32,5 @@ var searchData=
   ['status',['status',['../classbigtable_1_1v0_1_1FailedMutation.html#a7fff954d284395bf778921f7125cfe8d',1,'bigtable::v0::FailedMutation::status()'],['../classbigtable_1_1v0_1_1PermanentMutationFailure.html#a16c4f7c440d2fd328e922e911093908c',1,'bigtable::v0::PermanentMutationFailure::status()']]],
   ['storage_5ftype_5funspecified',['STORAGE_TYPE_UNSPECIFIED',['../classbigtable_1_1v0_1_1ClusterConfig.html#a2cb63d295bde9f7fec41d1d274cdf8e3',1,'bigtable::v0::ClusterConfig']]],
   ['storagetype',['StorageType',['../classbigtable_1_1v0_1_1ClusterConfig.html#a5d46f87cc2bc237dd9c31098ed56f4cf',1,'bigtable::v0::ClusterConfig']]],
-  ['stripvaluetransformer',['StripValueTransformer',['../classbigtable_1_1v0_1_1Filter.html#a505d824fe90db39aa78e141321f3d4ce',1,'bigtable::v0::Filter']]],
-  ['stub',['Stub',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a0dafaf3792e79e794734ce8ae3823ef3',1,'bigtable::v0::DefaultDataClient::Stub()'],['../classbigtable_1_1v0_1_1DataClient.html#a86366430e2f86c46208013a53ad96aba',1,'bigtable::v0::DataClient::Stub()']]]
+  ['stripvaluetransformer',['StripValueTransformer',['../classbigtable_1_1v0_1_1Filter.html#a505d824fe90db39aa78e141321f3d4ce',1,'bigtable::v0::Filter']]]
 ];

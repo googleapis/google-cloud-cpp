@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bigtablestubptr',['BigtableStubPtr',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a80bb775b18d44effed7a039d74c3c72e',1,'bigtable::v0::DefaultDataClient']]]
+  ['clusterid',['ClusterId',['../namespacebigtable_1_1v0.html#ac2df1fbaaaeadc05349f2694edbe6f8f',1,'bigtable::v0']]],
+  ['consistencytoken',['ConsistencyToken',['../namespacebigtable_1_1v0.html#a81041ddca70e9bcb3f9650f3dfba5ec8',1,'bigtable::v0']]]
 ];
