@@ -3,16 +3,15 @@
 _build/
 build-output/
 
+# Common bazel output directories
+bazel-*
+
 # Backup files for Emacs
 *~
 
 # Ignore IDEA / IntelliJ files
 .idea/
 cmake-build-*/
-
-# The Doxygen-generated documentation goes here:
-bigtable/doc/html/
-doc/html/
 
 # This is a staging directory used to upload the documents to gihub.io
 github-io-staging/

@@ -16,7 +16,6 @@
 #include "bigtable/client/grpc_error.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/mock_admin_client.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>

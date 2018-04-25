@@ -14,7 +14,6 @@
 
 #include "bigtable/client/internal/instance_admin.h"
 #include "bigtable/client/testing/mock_instance_admin_client.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin_mock.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>

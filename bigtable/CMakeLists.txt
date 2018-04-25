@@ -65,7 +65,7 @@ PROTOBUF_GENERATE_CPP(PROTO_SOURCES PROTO_HDRS
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/annotations.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/auth.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/http.proto)
-GRPC_GENERATE_CPP_MOCKS(GRPCPP_SOURCES GRPCPP_HDRS GRPC_MOCK_HDRS
+GRPC_GENERATE_CPP(GRPCPP_SOURCES GRPCPP_HDRS
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
     ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto

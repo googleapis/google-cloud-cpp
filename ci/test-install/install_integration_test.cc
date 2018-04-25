@@ -48,11 +48,11 @@ int main(int argc, char* argv[]) try {
 
   bigtable::BulkMutation bulk{
       bigtable::SingleRowMutation("row-key-0",
-                                  {bigtable::SetCell(family, "c0", 0, "v0"),
-                                   bigtable::SetCell(family, "c1", 0, "v1")}),
+                                  {bigtable::SetCell(family, "c0", "v0"),
+                                   bigtable::SetCell(family, "c1", "v1")}),
       bigtable::SingleRowMutation("row-key-1",
-                                  {bigtable::SetCell(family, "c0", 0, "v2"),
-                                   bigtable::SetCell(family, "c1", 0, "v3")}),
+                                  {bigtable::SetCell(family, "c0", "v2"),
+                                   bigtable::SetCell(family, "c1", "v3")}),
   };
   table.BulkApply(std::move(bulk));
   std::cout << "bulk mutation successful" << std::endl;

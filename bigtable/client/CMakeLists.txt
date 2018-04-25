@@ -105,6 +105,9 @@ target_include_directories(bigtable_client PUBLIC
 target_compile_options(bigtable_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 
+include(CreateBazelConfig)
+create_bazel_config(bigtable_client)
+
 option(BIGTABLE_CLIENT_CLANG_TIDY
     "If set compiles the Cloud Bigtable client with clang-tidy."
     "")
@@ -142,6 +145,8 @@ target_link_libraries(bigtable_client_testing PUBLIC
         gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
     PRIVATE bigtable_common_options)
 
+create_bazel_config(bigtable_client_testing)
+
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
         admin_client_test.cc
@@ -160,7 +165,6 @@ set(bigtable_client_unit_tests
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
-        internal/readrowsparser_test.cc
         internal/table_admin_test.cc
         internal/table_test.cc
         internal/throw_delegate_test.cc
@@ -183,6 +187,12 @@ set(bigtable_client_unit_tests
         rpc_backoff_policy_test.cc
         metadata_update_policy_test.cc
         rpc_retry_policy_test.cc)
+
+# Export the list of unit tests so the Bazel BUILD file can pick it up.
+export_list_to_bazel("bigtable_client_unit_tests.bzl" "bigtable_client_unit_tests")
+
+# Append this unit test after exporting to Bazel because it requires special treatment
+list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
 
 foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
