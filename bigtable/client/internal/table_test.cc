@@ -210,8 +210,9 @@ TEST_F(TableReadRowTest, ReadRow_AppProfileId) {
         return stream.release();
       }));
 
+  bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
-      bigtable::noex::Table(client_, "test-id", kTableId);
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
   auto result = table.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
   EXPECT_TRUE(status.ok());
   EXPECT_TRUE(std::get<0>(result));
@@ -414,8 +415,9 @@ TEST_F(TableApplyTest, Apply_App_Profile_Id) {
                              btproto::MutateRowResponse>::Create(expected_id);
   EXPECT_CALL(*bigtable_stub_, MutateRow(_, _, _)).WillOnce(Invoke(mock));
 
+  bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
-      bigtable::noex::Table(client_, "test-id", kTableId);
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
   auto result = table.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
   EXPECT_TRUE(result.empty());
@@ -536,8 +538,9 @@ TEST_F(TableBulkApplyTest, BulkApply_AppProfileId) {
         return reader.release();
       }));
   grpc::Status status;
+  bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
-      bigtable::noex::Table(client_, "test-id", kTableId);
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
   table.BulkApply(
       bt::BulkMutation(bt::SingleRowMutation(
                            "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
@@ -842,8 +845,9 @@ TEST_F(TableApplyTest, CheckAndMutateRow_App_Profile_Id) {
   EXPECT_CALL(*bigtable_stub_, CheckAndMutateRow(_, _, _))
       .WillOnce(Invoke(mock));
 
+  bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
-      bigtable::noex::Table(client_, "test-id", kTableId);
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
   grpc::Status status;
   table.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -913,8 +917,9 @@ TEST_F(TableApplyTest, SampleRowKeys_App_Profile_Id) {
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
+  bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
-      bigtable::noex::Table(client_, "test-id", kTableId);
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
   grpc::Status status;
   table.SampleRows<>(status);
   EXPECT_TRUE(status.ok());

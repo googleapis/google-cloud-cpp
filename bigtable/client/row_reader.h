@@ -64,7 +64,7 @@ class RowReader {
             bool raise_on_error);
 
   RowReader(std::shared_ptr<DataClient> client,
-            bigtable::TableId table_name, bigtable::AppProfileId app_profile_id,
+            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -72,7 +72,7 @@ class RowReader {
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(std::shared_ptr<DataClient> client,
-            bigtable::TableId table_name, bigtable::AppProfileId app_profile_id,
+            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
