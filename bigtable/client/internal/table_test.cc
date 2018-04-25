@@ -184,7 +184,8 @@ timestamp_micros: 42000
 value: "value"
 commit_row: true
 }
-)", status);
+)",
+                                                              status);
   EXPECT_TRUE(status.ok());
 
   auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
