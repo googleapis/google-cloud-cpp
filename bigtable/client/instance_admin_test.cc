@@ -294,7 +294,7 @@ TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 #else
-  EXPECT_DEATH_IF_SUPPORTEDTHROW(future.get(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -379,7 +379,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 #else
-  EXPECT_DEATH_IF_SUPPORTEDTHROW(future.get(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -429,6 +429,6 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 #else
-  EXPECT_DEATH_IF_SUPPORTEDTHROW(future.get(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
