@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "bigtable/client/internal/table.h"
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -148,8 +149,10 @@ void RowReader::MakeRequest() {
   processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
-  request.set_table_name(std::string(table_name_.get()));
 
+  bigtable::noex::internal::SetCommonTableOperationRequest<
+      google::bigtable::v2::ReadRowsRequest>(request, table_name_.get(),
+                                             app_profile_id_.get());
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 
@@ -159,7 +162,6 @@ void RowReader::MakeRequest() {
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
-  request.set_app_profile_id(app_profile_id_.get());
 
   context_ = bigtable::internal::make_unique<grpc::ClientContext>();
   retry_policy_->setup(*context_);

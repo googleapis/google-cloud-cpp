@@ -41,8 +41,9 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
-  SetCommonTableOperationRequest<btproto::MutateRowRequest>(
-      request, table_name_.get(), app_profile_id_.get());
+  bigtable::noex::internal::SetCommonTableOperationRequest<
+      btproto::MutateRowRequest>(request, table_name_.get(),
+                                 app_profile_id_.get());
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -94,9 +95,9 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
-  internal::BulkMutator mutator(table_name_, app_profile_id_,
-                                *idemponent_policy,
-                                std::forward<BulkMutation>(mut));
+  bigtable::internal::BulkMutator mutator(table_name_, app_profile_id_,
+                                          *idemponent_policy,
+                                          std::forward<BulkMutation>(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
@@ -185,8 +186,9 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               grpc::Status& status) {
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
-  SetCommonTableOperationRequest(request, table_name_.get(),
-                                 app_profile_id_.get());
+  bigtable::noex::internal::SetCommonTableOperationRequest<
+      btproto::CheckAndMutateRowRequest>(request, table_name_.get(),
+                                         app_profile_id_.get());
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -247,8 +249,9 @@ void Table::SampleRowsImpl(
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
-  SetCommonTableOperationRequest(request, table_name_.get(),
-                                 app_profile_id_.get());
+  bigtable::noex::internal::SetCommonTableOperationRequest<
+      btproto::SampleRowKeysRequest>(request, table_name_.get(),
+                                     app_profile_id_.get());
 
   while (true) {
     grpc::ClientContext client_context;

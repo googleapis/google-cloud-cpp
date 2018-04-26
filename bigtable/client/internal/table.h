@@ -59,6 +59,15 @@ struct RowKeySample {
  * Provide APIs to access and modify data in a Cloud Bigtable table.
  */
 namespace noex {
+namespace internal {
+  template <typename Request>
+  void SetCommonTableOperationRequest(Request& request,
+                                      std::string const& table_name,
+                                      std::string const& app_profile_id) {
+    request.set_table_name(table_name);
+    request.set_app_profile_id(app_profile_id);
+  }
+}  // namespace internal
 class Table {
  public:
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
@@ -111,14 +120,6 @@ class Table {
 
   std::string const& table_name() const { return table_name_.get(); }
 
-  template <typename Request>
-  void SetCommonTableOperationRequest(Request& request,
-                                      std::string const& table_name,
-                                      std::string const& app_profile_id) {
-    request.set_table_name(table_name);
-    request.set_app_profile_id(app_profile_id);
-  }
-
   //@{
   /**
    * @name No exception versions of Table::*
@@ -151,13 +152,14 @@ class Table {
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
-    SetCommonTableOperationRequest(request, table_name_.get(),
-                                   app_profile_id_.get());
+    bigtable::noex::internal::SetCommonTableOperationRequest<
+        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+            request, table_name_.get(), app_profile_id_.get());
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        internal::conjunction<
+        bigtable::internal::conjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
