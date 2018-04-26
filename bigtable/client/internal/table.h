@@ -60,13 +60,13 @@ struct RowKeySample {
  */
 namespace noex {
 namespace internal {
-  template <typename Request>
-  void SetCommonTableOperationRequest(Request& request,
-                                      std::string const& table_name,
-                                      std::string const& app_profile_id) {
-    request.set_table_name(table_name);
-    request.set_app_profile_id(app_profile_id);
-  }
+template <typename Request>
+void SetCommonTableOperationRequest(Request& request,
+                                    std::string const& table_name,
+                                    std::string const& app_profile_id) {
+  request.set_table_name(table_name);
+  request.set_app_profile_id(app_profile_id);
+}
 }  // namespace internal
 class Table {
  public:
@@ -154,7 +154,7 @@ class Table {
     request.set_row_key(std::move(row_key));
     bigtable::noex::internal::SetCommonTableOperationRequest<
         ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-            request, table_name_.get(), app_profile_id_.get());
+        request, table_name_.get(), app_profile_id_.get());
 
     // Generate a better compile time error message than the default one
     // if the types do not match

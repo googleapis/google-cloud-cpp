@@ -213,11 +213,11 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
   {
     testing::InSequence s;
     std::string expected_id = "test-id";
-    EXPECT_CALL(*bigtable_stub_, ReadRowsRaw(_, _))
-        .WillOnce(Invoke([expected_id, stream](grpc::ClientContext* ctx,
+    EXPECT_CALL(*client_, ReadRows(_, _))
+        .WillOnce(Invoke([expected_id, &stream](grpc::ClientContext* ctx,
                                                ReadRowsRequest req) {
           EXPECT_EQ(expected_id, req.app_profile_id());
-          return stream;
+          return stream->AsUniqueMocked();
         }));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));

@@ -110,13 +110,13 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
   // Now prepare the client for the one request.
-  btproto::MockBigtableStub stub;
   std::string expected_id = "test-id";
-  EXPECT_CALL(stub, MutateRowsRaw(_, _))
+  bigtable::testing::MockDataClient client;
+  EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(Invoke([expected_id, &reader](
           grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
         EXPECT_EQ(expected_id, req.app_profile_id());
-        return reader.release();
+        return reader.release()->AsUniqueMocked();
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
@@ -126,7 +126,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;
-  auto status = mutator.MakeOneRequest(stub, context);
+  auto status = mutator.MakeOneRequest(client, context);
   EXPECT_TRUE(status.ok());
   auto failures = mutator.ExtractFinalFailures();
   EXPECT_TRUE(failures.empty());
