@@ -65,7 +65,7 @@ matrix:
     - # Build with the AddressSanitizer.
       os: linux
       compiler: clang
-      env: DISTRO=ubuntu DISTRO_VERSION=16.04 BUILD_TYPE=Debug
+      env: DISTRO=ubuntu DISTRO_VERSION=18.04 BUILD_TYPE=Debug
            CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux

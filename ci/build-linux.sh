@@ -22,7 +22,7 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-sudo docker run -it \
+sudo docker run --cap-add SYS_PTRACE -it \
      --env DISTRO="${DISTRO}" \
      --env DISTRO_VERSION="${DISTRO_VERSION}" \
      --env CXX="${CXX}" \
