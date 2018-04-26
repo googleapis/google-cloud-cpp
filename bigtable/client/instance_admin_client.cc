@@ -14,6 +14,7 @@
 
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/internal/common_client.h"
+#include <google/longrunning/operations.grpc.pb.h>
 
 namespace {
 /**
@@ -58,6 +59,21 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
       google::bigtable::admin::v2::ListInstancesRequest const& request,
       google::bigtable::admin::v2::ListInstancesResponse* response) override {
     return impl_.Stub()->ListInstances(context, request, response);
+  }
+
+  grpc::Status CreateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      google::longrunning::Operation* response) override {
+    return impl_.Stub()->CreateInstance(context, request, response);
+  }
+
+  grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) override {
+    auto stub = google::longrunning::Operations::NewStub(Channel());
+    return stub->GetOperation(context, request, response);
   }
 
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;

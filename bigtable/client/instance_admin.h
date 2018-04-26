@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 
 #include "bigtable/client/instance_admin_client.h"
+#include "bigtable/client/instance_config.h"
 #include "bigtable/client/internal/instance_admin.h"
+#include <future>
 #include <memory>
 
 namespace bigtable {
@@ -54,10 +56,34 @@ class InstanceAdmin {
   std::string const& project_id() const { return impl_.project_id(); }
 
   /**
+   * Create a new instance of Cloud Bigtable.
+   *
+   * @warning Note that this is operation can take seconds or minutes to
+   * complete. The application may prefer to perform other work while waiting
+   * for this operation.
+   *
+   * @param instance_config a description of the new instance to be created.
+   * @return a future that becomes satisfied when (a) the operation has
+   *   completed successfully, in which case it returns a proto with the
+   *   Instance details, (b) the operation has failed, in which case the future
+   *   contains an exception (typically `bigtable::GrpcError`) with the details
+   *   of the failure, or (c) the state of the operation is unknown after the
+   *   time allocated by the retry policies has expired, in which case the
+   *   future contains an exception of type `bigtable::PollTimeout`.
+   */
+  std::future<google::bigtable::admin::v2::Instance> CreateInstance(
+      InstanceConfig instance_config);
+
+  /**
    * Return the list of instances in the project.
    * @return
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
+
+ private:
+  /// Implement CreateInstance() with a separate thread.
+  google::bigtable::admin::v2::Instance CreateInstanceImpl(
+      InstanceConfig instance_config);
 
  private:
   noex::InstanceAdmin impl_;
