@@ -57,14 +57,18 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
                            kv.second.location());
   }
 
-  using RpcUtils =
+  using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
 
   grpc::Status status;
-  auto response = RpcUtils::MakeCall(
+  auto response = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateInstance,
       request, error.c_str(), status, false);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "unrecoverable error calling InstanceAdmin::CreateInstance()");
+  }
 
   google::bigtable::admin::v2::Instance result;
   while (not response.done()) {
@@ -72,7 +76,18 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
     op.set_name(response.name());
     grpc::ClientContext context;
     status = impl_.client_->GetOperation(&context, op, &response);
-    if (status.ok() and response.done()) {
+    if (not status.ok()) {
+      if (not rpc_policy->on_failure(status)) {
+        bigtable::internal::RaiseRpcError(
+            status,
+            "unrecoverable error polling longrunning Operation in "
+            "CreateInstance()");
+      }
+      auto delay = backoff_policy->on_completion(status);
+      std::this_thread::sleep_for(delay);
+      continue;
+    }
+    if (response.done()) {
       if (response.has_response()) {
         auto const& any = response.response();
         if (not any.Is<google::bigtable::admin::v2::Instance>()) {
@@ -87,9 +102,9 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
                          response.error().message()),
             "long running op failed");
       }
-      // TODO() - use policies to retry polling.
-      std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
   }
   return result;
 }
