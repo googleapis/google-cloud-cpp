@@ -215,7 +215,7 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
     std::string expected_id = "test-id";
     EXPECT_CALL(*client_, ReadRows(_, _))
         .WillOnce(Invoke([expected_id, &stream](grpc::ClientContext* ctx,
-                                               ReadRowsRequest req) {
+                                                ReadRowsRequest req) {
           EXPECT_EQ(expected_id, req.app_profile_id());
           return stream->AsUniqueMocked();
         }));

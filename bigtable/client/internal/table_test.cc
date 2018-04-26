@@ -841,8 +841,7 @@ TEST_F(NoexTableTest, CheckAndMutateRow_AppProfileId) {
   auto mock =
       MockRpcFactory<btproto::CheckAndMutateRowRequest,
                      btproto::CheckAndMutateRowResponse>::Create(expected_id);
-  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _)).WillOnce(Invoke(mock));
 
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
