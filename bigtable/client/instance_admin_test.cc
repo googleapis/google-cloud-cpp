@@ -278,26 +278,6 @@ type: PRODUCTION
   EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
 }
 
-/// @test Failures in `bigtable::InstanceAdmin::CreateInstance`.
-TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
-  using namespace ::testing;
-
-  bigtable::InstanceAdmin tested(client_);
-  EXPECT_CALL(*client_, CreateInstance(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-
-  auto future = tested.CreateInstance(bigtable::InstanceConfig(
-      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
 TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
   using ::testing::_;
@@ -355,6 +335,23 @@ type: PRODUCTION
   EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+/// @test Failures in `bigtable::InstanceAdmin::CreateInstance`.
+TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
 TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
   using namespace ::testing;
@@ -376,11 +373,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Polling in `bigtable::InstanceAdmin::CreateInstance` returns failure.
@@ -426,9 +419,6 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

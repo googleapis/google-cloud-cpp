@@ -67,7 +67,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
       request, error.c_str(), status, false);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
-        status, "unrecoverable error calling InstanceAdmin::CreateInstance()");
+        status, "unrecoverable error in MakeCall()");
   }
 
   google::bigtable::admin::v2::Instance result;
