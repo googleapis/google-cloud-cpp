@@ -86,6 +86,14 @@ verify and fix the format of your code using:
 $ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/build-linux.sh
 ```
 
+### Updating CMakeLists.txt and/or BUILD files
+
+If you need to change the list of files associated with a library, please change
+the existing `CMakeLists.txt` files, even if you use Bazel as your preferred
+build system.  Changing the CMake files automatically update the corresponding
+`.bzl` files, but changing the `.bzl` files will not. More details in the short
+[design doc](doc/working-with-bazel-and-cmake.md).
+
 ## Advanced Compilation and Testing
 
 Please see the [README](README.md) for the basic instructions on how to compile

@@ -47,6 +47,17 @@ matrix:
       compiler: clang
       script: ci/build-macosx.sh
       if: type != pull_request
+    - # Compile on Travis' native environment with Bazel
+      os: linux
+      compiler: gcc
+      git:
+        submodules: false
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+      install: ci/install-bazel.sh
+      script: ci/build-bazel.sh
     - # Compile against an installed version of gRPC.
       os: linux
       compiler: clang

@@ -14,31 +14,23 @@
 
 # The integration tests, these are simply programs that connect to the
 # Cloud Bigtable emulator.
-add_executable(data_integration_test data_integration_test.cc)
-target_link_libraries(data_integration_test
-        gmock bigtable_client bigtable_client_testing bigtable_protos
-        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+set(bigtable_client_integration_tests
+    admin_integration_test.cc
+    data_integration_test.cc
+    filters_integration_test.cc
+    instance_admin_integration_test.cc
+    mutations_integration_test.cc)
 
-# An integration test for bigtable::TableAdmin.
-add_executable(admin_integration_test admin_integration_test.cc)
-target_link_libraries(admin_integration_test
-        gmock bigtable_client bigtable_client_testing bigtable_protos
-        gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
+include(CreateBazelConfig)
+export_list_to_bazel("bigtable_client_integration_tests.bzl"
+    "bigtable_client_integration_tests")
 
-# An integration test for bigtable::Filter.
-add_executable(filters_integration_test filters_integration_test.cc)
-target_link_libraries(filters_integration_test
-        gmock bigtable_client bigtable_client_testing bigtable_protos
-        gRPC::grpc protobuf::libprotobuf)
-
-# An integration test for bigtable::Mutations.
-add_executable(mutations_integration_test mutations_integration_test.cc)
-target_link_libraries(mutations_integration_test
-        gmock bigtable_client bigtable_client_testing bigtable_protos
-        gRPC::grpc protobuf::libprotobuf)
-
-# Integration tests for bigtable::InstanceAdmin.
-add_executable(instance_admin_integration_test instance_admin_integration_test.cc)
-target_link_libraries(instance_admin_integration_test PRIVATE
-    gmock bigtable_client bigtable_client_testing bigtable_protos
-    gRPC::grpc protobuf::libprotobuf)
+foreach (fname ${bigtable_client_integration_tests})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname})
+    target_link_libraries(${target} PRIVATE
+        bigtable_client_testing bigtable_client bigtable_protos
+        gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+        bigtable_common_options)
+endforeach ()
