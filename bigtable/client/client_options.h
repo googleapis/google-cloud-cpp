@@ -34,8 +34,29 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class ClientOptions {
  public:
-  ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
+  /**
+   * Initialize the client options with the default credentials.
+   *
+   * If the `BIGTABLE_EMULATOR_HOST` environment variable is set this
+   * constructor configures the object to connect to the host and port set in
+   * that environment variable. If the environment variable is not set, this
+   * constructor configures the object to connect to the production instance of
+   * Cloud Bigtable using the aplication default credentials.
+   *
+   * @see The Google Cloud Platform introduction to
+   * [application default
+   * credentials](https://cloud.google.com/docs/authentication/production)
+   */
   ClientOptions();
+
+  /**
+   * Connect to the production instance of Cloud Bigtable using @p creds.
+   *
+   * This constructor always connects to the production instance of Cloud
+   * Bigtable, and can be used when the application default credentials are
+   * not configured in the environment where the application is running.
+   */
+  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
 
   /// Return the current endpoint for data RPCs.
   std::string const& data_endpoint() const { return data_endpoint_; }
@@ -253,12 +274,12 @@ class ClientOptions {
   }
 
  private:
-  std::string data_endpoint_;
-  std::string admin_endpoint_;
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
   std::string connection_pool_name_;
   std::size_t connection_pool_size_;
+  std::string data_endpoint_;
+  std::string admin_endpoint_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

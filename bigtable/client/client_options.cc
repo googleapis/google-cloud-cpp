@@ -26,28 +26,28 @@ std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
   }
   return grpc::GoogleDefaultCredentials();
 }
-}
+}  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
-    : credentials_(creds)
-    , connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE) {
-  channel_arguments_ = grpc::ChannelArguments();
-  static std::string const prefix = "cbt-c++/" + version_string();
-  channel_arguments_.SetUserAgentPrefix(prefix);
+    : credentials_(std::move(creds)),
+      channel_arguments_(),
+      connection_pool_name_(),
+      connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE),
+      data_endpoint_("bigtable.googleapis.com"),
+      admin_endpoint_("bigtableadmin.googleapis.com") {
+  static std::string const USER_AGENT_PREFIX = "cbt-c++/" + version_string();
+  channel_arguments_.SetUserAgentPrefix(USER_AGENT_PREFIX);
+}
 
+ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
   char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
     data_endpoint_ = emulator;
     admin_endpoint_ = emulator;
-  } else {
-    data_endpoint_ = "bigtable.googleapis.com";
-    admin_endpoint_ = "bigtableadmin.googleapis.com";
   }
 }
-
-ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {}
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
