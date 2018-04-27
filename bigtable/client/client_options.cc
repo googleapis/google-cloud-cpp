@@ -32,13 +32,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
     : credentials_(std::move(creds)),
-      channel_arguments_(),
-      connection_pool_name_(),
       connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE),
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com") {
-  static std::string const USER_AGENT_PREFIX = "cbt-c++/" + version_string();
-  channel_arguments_.SetUserAgentPrefix(USER_AGENT_PREFIX);
+  static std::string const user_agent_prefix = "cbt-c++/" + version_string();
+  channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
