@@ -54,8 +54,8 @@ RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
 WORKDIR /var/tmp/install/cbt-components
-RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-187.0.0-linux-x86_64.tar.gz
-RUN tar x -C /usr/local -f google-cloud-sdk-187.0.0-linux-x86_64.tar.gz
+RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-199.0.0-linux-x86_64.tar.gz
+RUN tar x -C /usr/local -f google-cloud-sdk-199.0.0-linux-x86_64.tar.gz
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components update || \
     echo "Ignoring update failure for Google Cloud SDK"
