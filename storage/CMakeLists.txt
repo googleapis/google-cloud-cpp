@@ -77,4 +77,5 @@ install(TARGETS storage_common_options
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT storage-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+install(EXPORT storage-targets DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")

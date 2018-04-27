@@ -69,8 +69,8 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         OR "${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "vcpkg")
-    find_package(GRPC REQUIRED grpc>=1.9)
-    find_package(PROTOBUF REQUIRED protobuf>=3.5)
+    find_package(protobuf REQUIRED protobuf>=3.5)
+    find_package(gRPC REQUIRED gRPC>=1.9)
 
     if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
         message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")

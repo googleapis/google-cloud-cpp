@@ -1,0 +1,79 @@
+# Copyright 2017 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO=ubuntu
+ARG DISTRO_VERSION=16.04
+FROM cached-${DISTRO}-${DISTRO_VERSION}:tip AS staging
+MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+
+ARG NCPU=2
+ARG CXX=clang++
+ARG CC=clang
+
+# We need to install the dependencies of gRPC because gRPC does not install
+# itself if the dependendencies are built as submodules. We use CMake to build
+# and install the libraries because that way we get the CMake config files.
+
+# Install protobuf using CMake.  Some distributions include protobuf, gRPC
+# requires 3.4.x or newer, and many of those distribution use older versions.
+WORKDIR /var/tmp/build-dependencies
+RUN wget -q https://github.com/google/protobuf/archive/v3.5.2.tar.gz
+RUN tar -xf v3.5.2.tar.gz
+WORKDIR /var/tmp/build-dependencies/protobuf-3.5.2/cmake
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -Dprotobuf_BUILD_TESTS=OFF \
+  -H. -B.build
+RUN cmake --build .build --target install -- -j ${NCPU}
+
+# Many distributions include c-ares, but they do not include the CMake support
+# files for the library, so manually install it.  c-ares requires two install
+# steps because (1) the CMake-based build does not install pkg-config files, and
+# (2) the Makefile-based build does not install CMake config files.
+WORKDIR /var/tmp/build-dependencies
+RUN apt-get remove -y libc-ares-dev libc-ares2
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN tar -xf cares-1_14_0.tar.gz
+WORKDIR /var/tmp/build-dependencies/c-ares-cares-1_14_0
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -H. -B.build
+RUN cmake --build .build --target install -- -j ${NCPU}
+RUN ./buildconf && ./configure
+RUN install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
+
+# Install gRPC. Note that we use the system's zlib and ssl libraries.
+WORKDIR /var/tmp/build-dependencies
+RUN wget -q https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
+RUN tar -xf v1.10.0.tar.gz
+WORKDIR /var/tmp/build-dependencies/grpc-1.10.0
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DgRPC_BUILD_TESTS=OFF \
+  -DgRPC_ZLIB_PROVIDER=package \
+  -DgRPC_SSL_PROVIDER=package \
+  -DgRPC_CARES_PROVIDER=package \
+  -DgRPC_PROTOBUF_PROVIDER=package \
+  -H. -B.build/grpc
+RUN cmake --build .build/grpc --target install -- -j ${NCPU}
+RUN make install-pkg-config_c install-pkg-config_cxx install-certs
+
+FROM cached-${DISTRO}-${DISTRO_VERSION}:tip
+COPY --from=staging /usr/local/include /usr/local/include
+COPY --from=staging /usr/local/bin /usr/local/bin
+COPY --from=staging /usr/local/lib /usr/local/lib
+COPY --from=staging /usr/local/share /usr/local/share
+
+# Update the dynamic loader cache because we changed /usr/local/lib.
+RUN ldconfig

@@ -27,33 +27,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
-
-find_package(bigtable_client 0.1.0 REQUIRED)
-
-# The dependencies are hard-coded because we just want to test the
-# google-cloud-cpp installed files.  A real application would use find_package()
-# for them too, but we do not install the CMake config files as part of the
-# continous integration build.
-
-# With cmake-3.9 and higher this can be simplified to:
-#    find_package(Protobuf REQUIRED)
-add_library(protobuf::libprotobuf INTERFACE IMPORTED)
-set_target_properties(protobuf::libprotobuf PROPERTIES
-        INTERFACE_LINK_LIBRARIES "/usr/local/lib/libprotobuf.a;Threads::Threads"
-        INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
-
-# Ideally these are provided by grpc-config.cmake (or gRPCConfig.cmake), and
-# that file is installed by the gRPC cmake, but the continuous integration build
-# does not install (yet) those files.
-add_library(gRPC::grpc INTERFACE IMPORTED)
-set_target_properties(gRPC::grpc PROPERTIES
-        INTERFACE_LINK_LIBRARIES "/usr/local/lib/libgrpc.so;protobuf::libprotobuf"
-        INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
-
-add_library(gRPC::grpc++ INTERFACE IMPORTED)
-set_target_properties(gRPC::grpc++ PROPERTIES
-        INTERFACE_LINK_LIBRARIES "/usr/local/lib/libgrpc++.so;gRPC::grpc++"
-        INTERFACE_INCLUDE_DIRECTORIES "/usr/local/include")
+find_package(bigtable_client 0.2.0 REQUIRED)
 
 # Defining new targets should be easy.
 add_executable(install_integration_test install_integration_test.cc)
