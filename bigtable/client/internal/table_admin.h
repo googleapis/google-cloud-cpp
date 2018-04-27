@@ -90,20 +90,21 @@ class TableAdmin {
       ::google::bigtable::admin::v2::Table::View view, grpc::Status& status);
 
   ::google::bigtable::admin::v2::Table GetTable(
-      std::string table_id, grpc::Status& status,
+      std::string const& table_id, grpc::Status& status,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
 
-  void DeleteTable(std::string table_id, grpc::Status& status);
+  void DeleteTable(std::string const& table_id, grpc::Status& status);
 
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
-      std::string table_id, std::vector<ColumnFamilyModification> modifications,
+      std::string const& table_id,
+      std::vector<ColumnFamilyModification> modifications,
       grpc::Status& status);
 
-  void DropRowsByPrefix(std::string table_id, std::string row_key_prefix,
+  void DropRowsByPrefix(std::string const& table_id, std::string row_key_prefix,
                         grpc::Status& status);
 
-  void DropAllRows(std::string table_id, grpc::Status& status);
+  void DropAllRows(std::string const& table_id, grpc::Status& status);
 
   ::google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
@@ -171,8 +172,9 @@ class TableAdmin {
    */
   void ListSnapshotsImpl(
       bigtable::ClusterId const& cluster_id,
-      std::function<void(::google::bigtable::admin::v2::Snapshot)> inserter,
-      std::function<void()> clearer, grpc::Status& status);
+      std::function<void(google::bigtable::admin::v2::Snapshot)> const&
+          inserter,
+      std::function<void()> const& clearer, grpc::Status& status);
 
  private:
   std::shared_ptr<AdminClient> client_;

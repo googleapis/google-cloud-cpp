@@ -16,6 +16,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+// NOLINTNEXTLINE(readability-identifier-naming)
 ::google::bigtable::admin::v2::CreateTableRequest TableConfig::as_proto_move() {
   // As a challenge, we implement the strong exception guarantee in this
   // function.

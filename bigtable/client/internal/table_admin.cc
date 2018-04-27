@@ -73,7 +73,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::GetTable(
-    std::string table_id, grpc::Status& status,
+    std::string const& table_id, grpc::Status& status,
     ::google::bigtable::admin::v2::Table::View view) {
   btproto::GetTableRequest request;
   request.set_name(TableName(table_id));
@@ -87,7 +87,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
                                request, "GetTable", status, true);
 }
 
-void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
+void TableAdmin::DeleteTable(std::string const& table_id,
+                             grpc::Status& status) {
   btproto::DeleteTableRequest request;
   request.set_name(TableName(table_id));
   MetadataUpdatePolicy metadata_update_policy(
@@ -100,8 +101,8 @@ void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
-    std::string table_id, std::vector<ColumnFamilyModification> modifications,
-    grpc::Status& status) {
+    std::string const& table_id,
+    std::vector<ColumnFamilyModification> modifications, grpc::Status& status) {
   btproto::ModifyColumnFamiliesRequest request;
   request.set_name(TableName(table_id));
   for (auto& m : modifications) {
@@ -115,7 +116,7 @@ void TableAdmin::DeleteTable(std::string table_id, grpc::Status& status) {
       status);
 }
 
-void TableAdmin::DropRowsByPrefix(std::string table_id,
+void TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                   std::string row_key_prefix,
                                   grpc::Status& status) {
   btproto::DropRowRangeRequest request;
@@ -128,7 +129,8 @@ void TableAdmin::DropRowsByPrefix(std::string table_id,
       &AdminClient::DropRowRange, request, "DropRowByPrefix", status);
 }
 
-void TableAdmin::DropAllRows(std::string table_id, grpc::Status& status) {
+void TableAdmin::DropAllRows(std::string const& table_id,
+                             grpc::Status& status) {
   btproto::DropRowRangeRequest request;
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
@@ -204,8 +206,8 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
 
 void TableAdmin::ListSnapshotsImpl(
     bigtable::ClusterId const& cluster_id,
-    std::function<void(::google::bigtable::admin::v2::Snapshot)> inserter,
-    std::function<void()> clearer, grpc::Status& status) {
+    std::function<void(google::bigtable::admin::v2::Snapshot)> const& inserter,
+    std::function<void()> const& clearer, grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();

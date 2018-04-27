@@ -117,7 +117,7 @@ class TableAdmin {
    * @snippet bigtable_samples.cc get table
    */
   ::google::bigtable::admin::v2::Table GetTable(
-      std::string table_id,
+      std::string const& table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
 
@@ -133,7 +133,7 @@ class TableAdmin {
    * **Example**
    * @snippet bigtable_samples.cc delete table
    */
-  void DeleteTable(std::string table_id);
+  void DeleteTable(std::string const& table_id);
 
   /**
    * Modify the schema for an existing table.
@@ -149,7 +149,7 @@ class TableAdmin {
    * @snippet bigtable_samples.cc modify table
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
-      std::string table_id,
+      std::string const& table_id,
       std::vector<ColumnFamilyModification> modifications);
 
   /**
@@ -164,7 +164,8 @@ class TableAdmin {
    * **Example**
    * @snippet bigtable_samples.cc drop rows by prefix
    */
-  void DropRowsByPrefix(std::string table_id, std::string row_key_prefix);
+  void DropRowsByPrefix(std::string const& table_id,
+                        std::string row_key_prefix);
 
   /**
    * Delete all the rows in a table.
@@ -177,7 +178,7 @@ class TableAdmin {
    * **Example**
    * @snippet bigtable_samples.cc drop all rows
    */
-  void DropAllRows(std::string table_id);
+  void DropAllRows(std::string const& table_id);
 
   /**
    * Get information about a single snapshot.

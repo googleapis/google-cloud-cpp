@@ -39,7 +39,7 @@ static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
 std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
     ::google::bigtable::admin::v2::Table::View view) {
   grpc::Status status;
-  auto result = impl_.ListTables(std::move(view), status);
+  auto result = impl_.ListTables(view, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
@@ -47,47 +47,48 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::GetTable(
-    std::string table_id, ::google::bigtable::admin::v2::Table::View view) {
+    std::string const& table_id,
+    ::google::bigtable::admin::v2::Table::View view) {
   grpc::Status status;
-  auto result = impl_.GetTable(std::move(table_id), status, std::move(view));
+  auto result = impl_.GetTable(table_id, status, view);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
   return result;
 }
 
-void TableAdmin::DeleteTable(std::string table_id) {
+void TableAdmin::DeleteTable(std::string const& table_id) {
   grpc::Status status;
-  impl_.DeleteTable(std::move(table_id), status);
+  impl_.DeleteTable(table_id, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
 }
 
 ::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
-    std::string table_id, std::vector<ColumnFamilyModification> modifications) {
+    std::string const& table_id,
+    std::vector<ColumnFamilyModification> modifications) {
   grpc::Status status;
-  auto result = impl_.ModifyColumnFamilies(std::move(table_id),
-                                           std::move(modifications), status);
+  auto result =
+      impl_.ModifyColumnFamilies(table_id, std::move(modifications), status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
   return result;
 }
 
-void TableAdmin::DropRowsByPrefix(std::string table_id,
+void TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                   std::string row_key_prefix) {
   grpc::Status status;
-  impl_.DropRowsByPrefix(std::move(table_id), std::move(row_key_prefix),
-                         status);
+  impl_.DropRowsByPrefix(table_id, std::move(row_key_prefix), status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
 }
 
-void TableAdmin::DropAllRows(std::string table_id) {
+void TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
-  impl_.DropAllRows(std::move(table_id), status);
+  impl_.DropAllRows(table_id, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
@@ -106,8 +107,7 @@ void TableAdmin::DropAllRows(std::string table_id) {
 
 std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
   grpc::Status status;
-  std::string token =
-      impl_.GenerateConsistencyToken(std::move(table_id), status);
+  std::string token = impl_.GenerateConsistencyToken(table_id, status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }

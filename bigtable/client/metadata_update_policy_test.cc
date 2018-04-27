@@ -71,7 +71,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   auto const x_google_request_params = "parent=" + kInstanceName;
   bigtable::MetadataUpdatePolicy created(kInstanceName,
                                          bigtable::MetadataParamTypes::PARENT);
-  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+  EXPECT_EQ(x_google_request_params, created.value());
 }
 
 /// @test A test for lazy behaviour of metadata .
@@ -79,7 +79,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
   auto const x_google_request_params = "name=" + kTableName;
   bigtable::MetadataUpdatePolicy created(
       kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
-  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+  EXPECT_EQ(x_google_request_params, created.value());
 }
 
 /// @test Another test for lazy behaviour of metadata.
@@ -92,7 +92,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
   bigtable::MetadataUpdatePolicy created(kInstanceName,
                                          bigtable::MetadataParamTypes::NAME,
                                          cluster_id, snapshot_id);
-  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+  EXPECT_EQ(x_google_request_params, created.value());
 }
 
 //@test Another test for lazy behaviour of metadata.
@@ -102,5 +102,5 @@ TEST_F(MetadataUpdatePolicyTest, SimpleClusterId_Test) {
   bigtable::ClusterId cluster_id(kClusterId);
   bigtable::MetadataUpdatePolicy created(
       kInstanceName, bigtable::MetadataParamTypes::PARENT, cluster_id);
-  EXPECT_EQ(x_google_request_params, created.x_google_request_params().second);
+  EXPECT_EQ(x_google_request_params, created.value());
 }

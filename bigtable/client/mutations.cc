@@ -66,7 +66,7 @@ grpc::Status FailedMutation::to_grpc_status(google::rpc::Status const& status) {
     details = "error [could not print details as string]";
   }
   return grpc::Status(static_cast<grpc::StatusCode>(status.code()),
-                      status.message(), std::move(details));
+                      status.message(), details);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

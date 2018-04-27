@@ -24,27 +24,28 @@ MetadataParamTypes const MetadataParamTypes::NAME("name");
 MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
-    std::string resource_name, MetadataParamTypes metadata_param_type) {
+    std::string const& resource_name,
+    MetadataParamTypes const& metadata_param_type) {
   std::string value = metadata_param_type.type();
   value += "=";
   value += resource_name;
-  x_google_request_params_ =
-      std::make_pair("x-goog-request-params", std::move(value));
+  value_ = std::move(value);
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
-    std::string resource_name, MetadataParamTypes metadata_param_type,
-    std::string table_id) {
+    std::string const& resource_name,
+    MetadataParamTypes const& metadata_param_type,
+    std::string const& table_id) {
   std::string value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   value += "/tables/" + table_id;
-  x_google_request_params_ =
-      std::make_pair("x-goog-request-params", std::move(value));
+  value_ = std::move(value);
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
-    std::string const& resource_name, MetadataParamTypes metadata_param_type,
+    std::string const& resource_name,
+    MetadataParamTypes const& metadata_param_type,
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id) {
   std::string value = metadata_param_type.type();
@@ -52,28 +53,22 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value += resource_name;
   value += "/clusters/" + cluster_id.get();
   value += "/snapshots/" + snapshot_id.get();
-  x_google_request_params_ =
-      std::make_pair("x-goog-request-params", std::move(value));
+  value_ = std::move(value);
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
-    std::string const& resource_name, MetadataParamTypes metadata_param_type,
+    std::string const& resource_name,
+    MetadataParamTypes const& metadata_param_type,
     bigtable::ClusterId const& cluster_id) {
   std::string value = metadata_param_type.type();
   value += "=";
   value += resource_name;
   value += "/clusters/" + cluster_id.get();
-  x_google_request_params_ =
-      std::make_pair("x-goog-request-params", std::move(value));
-}
-
-MetadataUpdatePolicy::MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) {
-  x_google_request_params_ = rhs.x_google_request_params_;
+  value_ = std::move(value);
 }
 
 void MetadataUpdatePolicy::setup(grpc::ClientContext& context) const {
-  context.AddMetadata(x_google_request_params_.first,
-                      x_google_request_params_.second);
+  context.AddMetadata(std::string("x-goog-request-params"), value());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
