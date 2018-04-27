@@ -19,9 +19,12 @@
 #include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/metadata_update_policy.h"
+#include "bigtable/client/polling_policy.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 #include "bigtable/client/table_config.h"
+
+#include <future>
 #include <memory>
 
 namespace bigtable {
@@ -116,6 +119,20 @@ class TableAdmin {
   bool CheckConsistency(bigtable::TableId const& table_id,
                         bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
+
+  std::future<bool> WaitForConsistencyCheck(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
+    return std::async(std::launch::async,
+                      &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
+                      consistency_token, std::move(polling_policy));
+  }
+
+  bool WaitForConsistencyCheckImpl(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy);
 
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id,

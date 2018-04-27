@@ -20,7 +20,9 @@
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include "bigtable/client/polling_policy.h"
 #include "bigtable/client/table_config.h"
+#include <future>
 #include <memory>
 
 namespace bigtable {
@@ -189,6 +191,33 @@ class TableAdmin {
    */
   bool CheckConsistency(bigtable::TableId const& table_id,
                         bigtable::ConsistencyToken const& consistency_token);
+
+  /**
+   * Checks consistency of a table with multiple calls using std::async.
+   *
+   * @param table_id  the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::future<bool> WaitForConsistencyCheck(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
+    return std::async(std::launch::async,
+                      &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
+                      consistency_token, std::move(polling_policy));
+  }
+
+  /**
+   * Helper function for 'WaitForConsistencyCheck'. It execute one task
+   * in one thread.
+   */
+  bool WaitForConsistencyCheckImpl(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy);
 
   /**
    * Delete all the rows in a table.

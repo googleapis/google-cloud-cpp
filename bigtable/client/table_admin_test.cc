@@ -14,6 +14,7 @@
 
 #include "bigtable/client/table_admin.h"
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/mock_admin_client.h"
 #include <google/protobuf/text_format.h>
@@ -669,7 +670,7 @@ consistency_token: 'test-token'
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` makes only
  * one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, CheckConsistencyFailure) {
@@ -690,6 +691,64 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   EXPECT_DEATH_IF_SUPPORTED(
       tested.CheckConsistency(table_id, consistency_token),
       "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtagble::TableAdmin::CheckConsistency` works as
+ * expected, with multiple asynchronus calls.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-async-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
+consistency_token: 'test-async-token'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(Invoke(mock));
+
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
+      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+
+  bigtable::TableId table_id("the-async-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+  // After all the setup, make the actual call we want to test.
+  std::future<bool> result = tested.WaitForConsistencyCheck(
+      table_id, consistency_token, std::move(polling_policy));
+  EXPECT_TRUE(result.get());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-async-instance");
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
+      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+
+  bigtable::TableId table_id("other-async-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+
+  std::future<bool> result = tested.WaitForConsistencyCheck(
+      table_id, consistency_token, std::move(polling_policy));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(result.get(), bigtable::GRpcError);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(result.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

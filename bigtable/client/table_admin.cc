@@ -125,6 +125,19 @@ bool TableAdmin::CheckConsistency(
   return consistent;
 }
 
+bool TableAdmin::WaitForConsistencyCheckImpl(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token,
+    std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
+  grpc::Status status;
+  bool consistent = impl_.WaitForConsistencyCheckImpl(
+      table_id, consistency_token, std::move(polling_policy));
+  if (not consistent) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return consistent;
+}
+
 void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;

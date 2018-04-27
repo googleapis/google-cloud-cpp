@@ -190,6 +190,33 @@ bool TableAdmin::CheckConsistency(
   return response.consistent();
 }
 
+bool TableAdmin::WaitForConsistencyCheckImpl(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token,
+    std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
+  btproto::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+
+  grpc::Status status;
+  do {
+    auto response = ClientUtils::MakeCall(
+        *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy, &AdminClient::CheckConsistency, request,
+        "CheckConsistency", status, true);
+
+    if (status.ok()) {
+      return true;
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  } while (not polling_policy->exhausted());
+
+  return false;
+}
+
 void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id,
                                 grpc::Status& status) {

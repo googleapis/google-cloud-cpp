@@ -68,6 +68,8 @@ add_library(bigtable_client
         internal/unary_client_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
+        polling_policy.h
+        polling_policy.cc
         mutations.h
         mutations.cc
         polling_policy.h

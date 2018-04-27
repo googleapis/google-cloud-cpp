@@ -14,6 +14,7 @@
 
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/mock_admin_client.h"
 #include <google/protobuf/text_format.h>
@@ -668,6 +669,63 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   bigtable::ConsistencyToken consistency_token("other-token");
   tested.CheckConsistency(table_id, consistency_token, status);
   EXPECT_FALSE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` works in the easy
+ * case. Try multiple calls for consistency check using async call.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencyTest) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-async-instance");
+  std::string expected_text = R"""(
+name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
+consistency_token: 'test-async-token'
+    )""";
+  auto mock =
+      MockRpcFactory<btproto::CheckConsistencyRequest,
+                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
+      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+
+  grpc::Status status;
+  bigtable::TableId table_id("the-async-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+  std::future<bool> result = tested.WaitForConsistencyCheck(
+      table_id, consistency_token, std::move(polling_policy));
+  EXPECT_TRUE(result.get());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` supports
+ * only one try and throw exception if request made are more than 1.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencyFailureTest) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-async-instance");
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
+      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  bigtable::TableId table_id("other-async-table");
+  bigtable::ConsistencyToken consistency_token("other-async-token");
+  std::future<bool> result = tested.WaitForConsistencyCheck(
+      table_id, consistency_token, std::move(polling_policy));
+  EXPECT_FALSE(result.get());
 }
 
 /**
