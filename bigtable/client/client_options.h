@@ -34,6 +34,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class ClientOptions {
  public:
+  ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
   ClientOptions();
 
   /// Return the current endpoint for data RPCs.

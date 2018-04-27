@@ -18,25 +18,36 @@
 #define BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE 4
 #endif  // BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
 
+namespace {
+std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
+  char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
+  if (emulator != nullptr) {
+    return grpc::InsecureChannelCredentials();
+  }
+  return grpc::GoogleDefaultCredentials();
+}
+}
+
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-ClientOptions::ClientOptions()
-    : connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE) {
+ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
+    : credentials_(creds)
+    , connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE) {
+  channel_arguments_ = grpc::ChannelArguments();
+  static std::string const prefix = "cbt-c++/" + version_string();
+  channel_arguments_.SetUserAgentPrefix(prefix);
+
   char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
   if (emulator != nullptr) {
     data_endpoint_ = emulator;
     admin_endpoint_ = emulator;
-    credentials_ = grpc::InsecureChannelCredentials();
   } else {
     data_endpoint_ = "bigtable.googleapis.com";
     admin_endpoint_ = "bigtableadmin.googleapis.com";
-    credentials_ = grpc::GoogleDefaultCredentials();
   }
-  channel_arguments_ = grpc::ChannelArguments();
-
-  static std::string const prefix = "cbt-c++/" + version_string();
-  channel_arguments_.SetUserAgentPrefix(prefix);
 }
+
+ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {}
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
