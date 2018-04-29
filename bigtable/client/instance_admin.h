@@ -97,6 +97,12 @@ class InstanceAdmin {
    */
   void DeleteInstance(std::string const& instance_id);
 
+  /**
+   * Return the list of clusters in the project.
+   * @return
+   */
+  std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(

@@ -74,6 +74,29 @@ auto create_instance = [](std::string expected_token,
   };
 };
 
+// A lambda to create lambdas.  Basically we would be rewriting the same
+// lambda twice without this thing.
+auto create_list_clusters_lambda = [](std::string expected_token,
+                                       std::string returned_token,
+                                       std::vector<std::string> cluster_ids) {
+  return [expected_token, returned_token, cluster_ids](
+      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
+      btproto::ListClustersResponse* response) {
+    auto const project_name = "projects/" + kProjectId;
+    EXPECT_EQ(project_name, request.parent());
+    EXPECT_EQ(expected_token, request.page_token());
+
+    EXPECT_NE(nullptr, response);
+    for (auto const& cluster_id : cluster_ids) {
+      auto& cluster = *response->add_clusters();
+      cluster.set_name(project_name + "/clusters/" + cluster_id);
+    }
+    // Return the right token.
+    response->set_next_page_token(returned_token);
+    return grpc::Status::OK;
+  };
+};
+
 /**
  * Helper class to create the expectations for a simple RPC call.
  *
@@ -290,5 +313,76 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
   tested.DeleteInstance("the-instance", status);
+  EXPECT_FALSE(status.ok());
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
+/// case.
+TEST_F(InstanceAdminTest, ListClusters) {
+  using namespace ::testing;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_list_clusters = create_list_clusters_lambda("", "", {"t0", "t1"});
+  EXPECT_CALL(*client_, ListClusters(_, _, _))
+      .WillOnce(Invoke(mock_list_clusters));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListClusters(status);
+  EXPECT_TRUE(status.ok());
+  std::string cluster_name = tested.project_name();
+  ASSERT_EQ(2UL, actual.size());
+  EXPECT_EQ(cluster_name + "/clusters/t0", actual[0].name());
+  EXPECT_EQ(cluster_name + "/clusters/t1", actual[1].name());
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
+TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
+  using namespace ::testing;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_recoverable_failure = [](
+      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
+      btproto::ListClustersResponse* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto batch0 = create_list_clusters_lambda("", "token-001", {"t0", "t1"});
+  auto batch1 = create_list_clusters_lambda("token-001", "", {"t2", "t3"});
+  EXPECT_CALL(*client_, ListClusters(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch0))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch1));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListClusters(status);
+  EXPECT_TRUE(status.ok());
+  std::string project_name = tested.project_name();
+  ASSERT_EQ(4UL, actual.size());
+  EXPECT_EQ(project_name + "/clusters/t0", actual[0].name());
+  EXPECT_EQ(project_name + "/clusters/t1", actual[1].name());
+  EXPECT_EQ(project_name + "/clusters/t2", actual[2].name());
+  EXPECT_EQ(project_name + "/clusters/t3", actual[3].name());
+}
+
+/**
+ * @test Verify that `bigtable::InstanceAdmin::ListClusters` handles
+ * unrecoverable failures.
+ */
+TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
+  using namespace ::testing;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, ListClusters(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  // We expect the InstanceAdmin to make a call to let the client know the
+  // request failed.
+  grpc::Status status;
+  tested.ListClusters(status);
   EXPECT_FALSE(status.ok());
 }
