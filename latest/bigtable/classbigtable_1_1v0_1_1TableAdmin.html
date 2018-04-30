@@ -101,21 +101,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5a1b18d58345517ba1e7fd5ab8c6708"><td class="memItemLeft" align="right" valign="top">std::vector&lt;::google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a> (::google::bigtable::admin::v2::Table::View view)</td></tr>
 <tr class="memdesc:ad5a1b18d58345517ba1e7fd5ab8c6708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the tables in the instance.  <a href="#ad5a1b18d58345517ba1e7fd5ab8c6708">More...</a><br /></td></tr>
 <tr class="separator:ad5a1b18d58345517ba1e7fd5ab8c6708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10c70391a9f665d6e421b6df32df227b"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a10c70391a9f665d6e421b6df32df227b">GetTable</a> (std::string table_id, ::google::bigtable::admin::v2::Table::View view=::google::bigtable::admin::v2::Table::SCHEMA_VIEW)</td></tr>
-<tr class="memdesc:a10c70391a9f665d6e421b6df32df227b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single table.  <a href="#a10c70391a9f665d6e421b6df32df227b">More...</a><br /></td></tr>
-<tr class="separator:a10c70391a9f665d6e421b6df32df227b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae670a1488c00ef8b4963ea927bd6bacc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#ae670a1488c00ef8b4963ea927bd6bacc">DeleteTable</a> (std::string table_id)</td></tr>
-<tr class="memdesc:ae670a1488c00ef8b4963ea927bd6bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a table.  <a href="#ae670a1488c00ef8b4963ea927bd6bacc">More...</a><br /></td></tr>
-<tr class="separator:ae670a1488c00ef8b4963ea927bd6bacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18be6d39746e6795fc82efb59cd6e34c"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a18be6d39746e6795fc82efb59cd6e34c">ModifyColumnFamilies</a> (std::string table_id, std::vector&lt; <a class="el" href="classbigtable_1_1v0_1_1ColumnFamilyModification.html">ColumnFamilyModification</a> &gt; modifications)</td></tr>
-<tr class="memdesc:a18be6d39746e6795fc82efb59cd6e34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the schema for an existing table.  <a href="#a18be6d39746e6795fc82efb59cd6e34c">More...</a><br /></td></tr>
-<tr class="separator:a18be6d39746e6795fc82efb59cd6e34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d7e88a53e5dcc73fc7be17ada226bc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3">DropRowsByPrefix</a> (std::string table_id, std::string row_key_prefix)</td></tr>
-<tr class="memdesc:a3d7e88a53e5dcc73fc7be17ada226bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows that start with a given prefix.  <a href="#a3d7e88a53e5dcc73fc7be17ada226bc3">More...</a><br /></td></tr>
-<tr class="separator:a3d7e88a53e5dcc73fc7be17ada226bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b361b16e1a1cf513426deea4f201458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a8b361b16e1a1cf513426deea4f201458">DropAllRows</a> (std::string table_id)</td></tr>
-<tr class="memdesc:a8b361b16e1a1cf513426deea4f201458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows in a table.  <a href="#a8b361b16e1a1cf513426deea4f201458">More...</a><br /></td></tr>
-<tr class="separator:a8b361b16e1a1cf513426deea4f201458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64cb787e730ee37187d05c9efca66aaf"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a64cb787e730ee37187d05c9efca66aaf">GetTable</a> (std::string const &amp;table_id, ::google::bigtable::admin::v2::Table::View view=::google::bigtable::admin::v2::Table::SCHEMA_VIEW)</td></tr>
+<tr class="memdesc:a64cb787e730ee37187d05c9efca66aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single table.  <a href="#a64cb787e730ee37187d05c9efca66aaf">More...</a><br /></td></tr>
+<tr class="separator:a64cb787e730ee37187d05c9efca66aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4c02c5fc34839026117a1b35283705d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#af4c02c5fc34839026117a1b35283705d">DeleteTable</a> (std::string const &amp;table_id)</td></tr>
+<tr class="memdesc:af4c02c5fc34839026117a1b35283705d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a table.  <a href="#af4c02c5fc34839026117a1b35283705d">More...</a><br /></td></tr>
+<tr class="separator:af4c02c5fc34839026117a1b35283705d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dfa109c44585715ec1d7b154d37fcb8"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#a6dfa109c44585715ec1d7b154d37fcb8">ModifyColumnFamilies</a> (std::string const &amp;table_id, std::vector&lt; <a class="el" href="classbigtable_1_1v0_1_1ColumnFamilyModification.html">ColumnFamilyModification</a> &gt; modifications)</td></tr>
+<tr class="memdesc:a6dfa109c44585715ec1d7b154d37fcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the schema for an existing table.  <a href="#a6dfa109c44585715ec1d7b154d37fcb8">More...</a><br /></td></tr>
+<tr class="separator:a6dfa109c44585715ec1d7b154d37fcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b532f1e5bb6f41435510640e7d8d39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#aa7b532f1e5bb6f41435510640e7d8d39">DropRowsByPrefix</a> (std::string const &amp;table_id, std::string row_key_prefix)</td></tr>
+<tr class="memdesc:aa7b532f1e5bb6f41435510640e7d8d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows that start with a given prefix.  <a href="#aa7b532f1e5bb6f41435510640e7d8d39">More...</a><br /></td></tr>
+<tr class="separator:aa7b532f1e5bb6f41435510640e7d8d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe7da02f76f5611538b0ad294a40e6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#aabe7da02f76f5611538b0ad294a40e6c">DropAllRows</a> (std::string const &amp;table_id)</td></tr>
+<tr class="memdesc:aabe7da02f76f5611538b0ad294a40e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows in a table.  <a href="#aabe7da02f76f5611538b0ad294a40e6c">More...</a><br /></td></tr>
+<tr class="separator:aabe7da02f76f5611538b0ad294a40e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af78b10d08e7326197167df77342f3eee"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Snapshot&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html#af78b10d08e7326197167df77342f3eee">GetSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:af78b10d08e7326197167df77342f3eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single snapshot.  <a href="#af78b10d08e7326197167df77342f3eee">More...</a><br /></td></tr>
 <tr class="separator:af78b10d08e7326197167df77342f3eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -405,8 +405,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 
 </div>
 </div>
-<a id="ae670a1488c00ef8b4963ea927bd6bacc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae670a1488c00ef8b4963ea927bd6bacc">&#9670;&nbsp;</a></span>DeleteTable()</h2>
+<a id="af4c02c5fc34839026117a1b35283705d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4c02c5fc34839026117a1b35283705d">&#9670;&nbsp;</a></span>DeleteTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +414,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
         <tr>
           <td class="memname">void bigtable::v0::TableAdmin::DeleteTable </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em></td><td>)</td>
           <td></td>
         </tr>
@@ -434,11 +434,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ae670a1488c00ef8b4963ea927bd6bacc">DeleteTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DeleteTable(table_id);</div><div class="line">}</div></div><!-- fragment -->
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#af4c02c5fc34839026117a1b35283705d">DeleteTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DeleteTable(table_id);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
-<a id="a8b361b16e1a1cf513426deea4f201458"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b361b16e1a1cf513426deea4f201458">&#9670;&nbsp;</a></span>DropAllRows()</h2>
+<a id="aabe7da02f76f5611538b0ad294a40e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabe7da02f76f5611538b0ad294a40e6c">&#9670;&nbsp;</a></span>DropAllRows()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -446,7 +446,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
         <tr>
           <td class="memname">void bigtable::v0::TableAdmin::DropAllRows </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em></td><td>)</td>
           <td></td>
         </tr>
@@ -466,11 +466,11 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a8b361b16e1a1cf513426deea4f201458">DropAllRows</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropAllRows(table_id);</div><div class="line">}</div></div><!-- fragment -->
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aabe7da02f76f5611538b0ad294a40e6c">DropAllRows</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropAllRows(table_id);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
-<a id="a3d7e88a53e5dcc73fc7be17ada226bc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d7e88a53e5dcc73fc7be17ada226bc3">&#9670;&nbsp;</a></span>DropRowsByPrefix()</h2>
+<a id="aa7b532f1e5bb6f41435510640e7d8d39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7b532f1e5bb6f41435510640e7d8d39">&#9670;&nbsp;</a></span>DropRowsByPrefix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -478,7 +478,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
         <tr>
           <td class="memname">void bigtable::v0::TableAdmin::DropRowsByPrefix </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
         </tr>
         <tr>
@@ -509,7 +509,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a3d7e88a53e5dcc73fc7be17ada226bc3">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aa7b532f1e5bb6f41435510640e7d8d39">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="af5285020b63ac454b113fa6d5eb3c338"></a>
@@ -589,8 +589,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 
 </div>
 </div>
-<a id="a10c70391a9f665d6e421b6df32df227b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10c70391a9f665d6e421b6df32df227b">&#9670;&nbsp;</a></span>GetTable()</h2>
+<a id="a64cb787e730ee37187d05c9efca66aaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64cb787e730ee37187d05c9efca66aaf">&#9670;&nbsp;</a></span>GetTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -598,7 +598,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
         <tr>
           <td class="memname">google::bigtable::admin::v2::Table bigtable::v0::TableAdmin::GetTable </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
         </tr>
         <tr>
@@ -636,7 +636,7 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a10c70391a9f665d6e421b6df32df227b">GetTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> table =</div><div class="line">      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">  std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">    std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">    std::string gc_rule;</div><div class="line">    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                &amp;gc_rule);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a64cb787e730ee37187d05c9efca66aaf">GetTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> table =</div><div class="line">      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">  std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">    std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">    std::string gc_rule;</div><div class="line">    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                &amp;gc_rule);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a6a0c66bf3946d07856647dce645ff009"></a>
@@ -764,8 +764,8 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 <p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
 </div>
 </div>
-<a id="a18be6d39746e6795fc82efb59cd6e34c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18be6d39746e6795fc82efb59cd6e34c">&#9670;&nbsp;</a></span>ModifyColumnFamilies()</h2>
+<a id="a6dfa109c44585715ec1d7b154d37fcb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dfa109c44585715ec1d7b154d37fcb8">&#9670;&nbsp;</a></span>ModifyColumnFamilies()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -773,7 +773,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
         <tr>
           <td class="memname">google::bigtable::admin::v2::Table bigtable::v0::TableAdmin::ModifyColumnFamilies </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
         </tr>
         <tr>
