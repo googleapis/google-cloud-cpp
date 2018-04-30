@@ -88,8 +88,22 @@ TEST_F(ClientOptionsEmulatorTest, Default) {
             client_options_object.data_endpoint());
   EXPECT_EQ("testendpoint.googleapis.com",
             client_options_object.admin_endpoint());
-  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
-            typeid(client_options_object.credentials()));
+}
+
+TEST_F(ClientOptionsEmulatorTest, WithCredentials) {
+  auto credentials = grpc::GoogleDefaultCredentials();
+  bigtable::ClientOptions tested(credentials);
+  EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
+  EXPECT_EQ(credentials.get(), tested.credentials().get());
+}
+
+TEST_F(ClientOptionsEmulatorTest, DefaultNoEmulator) {
+  UnsetEnv("BIGTABLE_EMULATOR_HOST");  // TearDown() will restore
+  auto credentials = grpc::GoogleDefaultCredentials();
+  bigtable::ClientOptions tested(credentials);
+  EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {
