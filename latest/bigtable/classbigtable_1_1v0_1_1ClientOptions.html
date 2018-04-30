@@ -80,7 +80,11 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acbe23e2a42d99f1b080bd1f92edb3257"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#acbe23e2a42d99f1b080bd1f92edb3257">ClientOptions</a> ()</td></tr>
+<tr class="memdesc:acbe23e2a42d99f1b080bd1f92edb3257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the client options with the default credentials.  <a href="#acbe23e2a42d99f1b080bd1f92edb3257">More...</a><br /></td></tr>
 <tr class="separator:acbe23e2a42d99f1b080bd1f92edb3257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af46dacc5fdbb34c5b98c11215e55dca7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#af46dacc5fdbb34c5b98c11215e55dca7">ClientOptions</a> (std::shared_ptr&lt; grpc::ChannelCredentials &gt; creds)</td></tr>
+<tr class="memdesc:af46dacc5fdbb34c5b98c11215e55dca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to the production instance of Cloud Bigtable using <code>creds</code>.  <a href="#af46dacc5fdbb34c5b98c11215e55dca7">More...</a><br /></td></tr>
+<tr class="separator:af46dacc5fdbb34c5b98c11215e55dca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5753fef1cb30d384f24905cefb497aee"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ClientOptions.html#a5753fef1cb30d384f24905cefb497aee">data_endpoint</a> () const</td></tr>
 <tr class="memdesc:a5753fef1cb30d384f24905cefb497aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current endpoint for data RPCs.  <a href="#a5753fef1cb30d384f24905cefb497aee">More...</a><br /></td></tr>
 <tr class="separator:a5753fef1cb30d384f24905cefb497aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,7 +150,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Configuration options for the Bigtable Client. </p>
 <p>Applications typically configure the client class using: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> client =</div><div class="line">  bigtable::Client(bigtable::ClientOptions().<a class="code" href="classbigtable_1_1v0_1_1ClientOptions.html#a789dd24997ee0e6cd4722ae00ba2416f">SetCredentials</a>(...));</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acbe23e2a42d99f1b080bd1f92edb3257"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe23e2a42d99f1b080bd1f92edb3257">&#9670;&nbsp;</a></span>ClientOptions()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe23e2a42d99f1b080bd1f92edb3257">&#9670;&nbsp;</a></span>ClientOptions() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,6 +163,39 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initialize the client options with the default credentials. </p>
+<p>If the <code>BIGTABLE_EMULATOR_HOST</code> environment variable is set this constructor configures the object to connect to the host and port set in that environment variable. If the environment variable is not set, this constructor configures the object to connect to the production instance of Cloud Bigtable using the aplication default credentials.</p>
+<dl class="section see"><dt>See also</dt><dd>The Google Cloud Platform introduction to <a href="https://cloud.google.com/docs/authentication/production">application default credentials</a> </dd></dl>
+
+</div>
+</div>
+<a id="af46dacc5fdbb34c5b98c11215e55dca7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af46dacc5fdbb34c5b98c11215e55dca7">&#9670;&nbsp;</a></span>ClientOptions() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bigtable::v0::ClientOptions::ClientOptions </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; grpc::ChannelCredentials &gt;&#160;</td>
+          <td class="paramname"><em>creds</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Connect to the production instance of Cloud Bigtable using <code>creds</code>. </p>
+<p>This constructor always connects to the production instance of Cloud Bigtable, and can be used when the application default credentials are not configured in the environment where the application is running. </p>
 
 </div>
 </div>
