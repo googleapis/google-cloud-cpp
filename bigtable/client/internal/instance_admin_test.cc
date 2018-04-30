@@ -220,3 +220,21 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
 }
+
+/// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the easy
+/// case.
+TEST_F(InstanceAdminTest, GetInstance) {
+  using namespace ::testing;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
+      .WillOnce(Invoke(mock_list_instances));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  std::string instance_id = "projects/the-project/instances/t1";
+  auto actual = tested.GetInstance(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ("projects/the-project/instances/t1", actual.name());
+}

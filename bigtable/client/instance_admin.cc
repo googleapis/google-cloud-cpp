@@ -109,5 +109,14 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   return result;
 }
 
+btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
+  grpc::Status status;
+  auto result = impl_.GetInstance(instance_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

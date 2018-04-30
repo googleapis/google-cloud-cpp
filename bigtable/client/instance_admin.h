@@ -80,6 +80,15 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
+  /**
+   * @param Provide Instance based on Instance ID.
+   *
+   * Return the instance in the project.
+   * @return
+   */
+  google::bigtable::admin::v2::Instance GetInstance(
+      std::string const& instance_id);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
