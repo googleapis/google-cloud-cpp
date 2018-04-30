@@ -65,28 +65,19 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
 
   // Build the RPC request, try to minimize copying.
   btproto::Instance result;
-  std::string page_token;
-  do {
-    btproto::ListInstancesRequest request;
-    request.set_page_token(std::move(page_token));
-    request.set_parent(project_name_);
+  btproto::GetInstanceRequest request;
+  // Set Instance ID
+  request.set_name(instance_id);
 
-    auto response = ClientUtils::MakeCall(
-        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-        &InstanceAdminClient::ListInstances, request,
-        "InstanceAdmin::ListInstances", status, true);
-    if (not status.ok()) {
-      return result;
-    }
+  // Call RPC call to get response
+  auto response = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
+      &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
+      status, true);
 
-    for (auto& x : *response.mutable_instances()) {
-      if (instance_id == x.name()) {
-        result = std::move(x);
-        return result;
-      }
-    }
-    page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  if (status.ok()) {
+    result = response;
+  }
   return result;
 }
 
