@@ -81,7 +81,7 @@ class InstanceAdmin {
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
   /**
-   * @param Provide Instance based on Instance ID.
+   * Provide Instance based on Instance ID.
    *
    * Return the instance in the project.
    * @return
