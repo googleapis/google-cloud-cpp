@@ -60,8 +60,8 @@ class MetadataUpdatePolicy {
    * @param metadata_param_type type to decide prefix for the value of
    *     x-goog-request-params
    */
-  MetadataUpdatePolicy(std::string resource_name,
-                       MetadataParamTypes metadata_param_type);
+  MetadataUpdatePolicy(std::string const& resource_name,
+                       MetadataParamTypes const& metadata_param_type);
 
   /**
    * Constructor with default metadata pair.
@@ -72,9 +72,9 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param table_id table_id used in RPC call.
    */
-  MetadataUpdatePolicy(std::string resource_name,
-                       MetadataParamTypes metadata_param_type,
-                       std::string table_id);
+  MetadataUpdatePolicy(std::string const& resource_name,
+                       MetadataParamTypes const& metadata_param_type,
+                       std::string const& table_id);
 
   /**
    * Constructor with default metadata pair.
@@ -87,7 +87,7 @@ class MetadataUpdatePolicy {
    * @param snapshot_id snapshot_id used in RPC call.
    */
   MetadataUpdatePolicy(std::string const& resource_name,
-                       MetadataParamTypes metadata_param_type,
+                       MetadataParamTypes const& metadata_param_type,
                        bigtable::ClusterId const& cluster_id,
                        bigtable::SnapshotId const& snapshot_id);
 
@@ -101,22 +101,20 @@ class MetadataUpdatePolicy {
    * @param cluster_id cluster_id of the cluster.
    */
   MetadataUpdatePolicy(std::string const& resource_name,
-                       MetadataParamTypes metadata_param_type,
+                       MetadataParamTypes const& metadata_param_type,
                        bigtable::ClusterId const& cluster_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
-  MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs);
+  MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) = default;
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const& rhs) = default;
 
   // Update the ClientContext for the next call.
   void setup(grpc::ClientContext& context) const;
 
-  std::pair<std::string, std::string> x_google_request_params() const {
-    return x_google_request_params_;
-  }
+  std::string const& value() const { return value_; }
 
  private:
-  std::pair<std::string, std::string> x_google_request_params_;
+  std::string value_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

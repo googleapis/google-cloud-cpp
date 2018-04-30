@@ -183,7 +183,7 @@ class Table {
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
   Row CallReadModifyWriteRowRequest(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest request,
+      ::google::bigtable::v2::ReadModifyWriteRowRequest const& request,
       grpc::Status& status);
 
   /**
@@ -195,8 +195,9 @@ class Table {
    * @param inserter Function to insert the object to result.
    * @param clearer Function to clear the result object if RPC fails.
    */
-  void SampleRowsImpl(std::function<void(bigtable::RowKeySample)> inserter,
-                      std::function<void()> clearer, grpc::Status& status);
+  void SampleRowsImpl(
+      std::function<void(bigtable::RowKeySample)> const& inserter,
+      std::function<void()> const& clearer, grpc::Status& status);
 
   std::shared_ptr<DataClient> client_;
   std::string app_profile_id_;

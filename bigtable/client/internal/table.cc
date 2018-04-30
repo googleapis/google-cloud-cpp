@@ -183,7 +183,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
 }
 
 Row Table::CallReadModifyWriteRowRequest(
-    btproto::ReadModifyWriteRowRequest request, grpc::Status& status) {
+    btproto::ReadModifyWriteRowRequest const& request, grpc::Status& status) {
   auto response = ClientUtils::MakeNonIdemponentCall(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
@@ -217,9 +217,9 @@ Row Table::CallReadModifyWriteRowRequest(
 // successful. When RPC is finished, this function returns the SampleRowKeys
 // as a Collection specified by the user. If the RPC fails, it will keep
 // retrying until the policies in effect tell us to stop.
-void Table::SampleRowsImpl(std::function<void(bigtable::RowKeySample)> inserter,
-                           std::function<void()> clearer,
-                           grpc::Status& status) {
+void Table::SampleRowsImpl(
+    std::function<void(bigtable::RowKeySample)> const& inserter,
+    std::function<void()> const& clearer, grpc::Status& status) {
   // Copy the policies in effect for this operation.
   auto backoff_policy = rpc_backoff_policy_->clone();
   auto retry_policy = rpc_retry_policy_->clone();

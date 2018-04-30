@@ -180,8 +180,7 @@ struct UnaryClientUtils {
       }
       if (not rpc_policy.on_failure(status)) {
         std::string full_message = error_message;
-        full_message +=
-            "(" + metadata_update_policy.x_google_request_params().second + ")";
+        full_message += "(" + metadata_update_policy.value() + ")";
         status = grpc::Status(status.error_code(), full_message);
         break;
       }
