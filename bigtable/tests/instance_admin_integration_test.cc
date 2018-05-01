@@ -109,6 +109,8 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
+
+  // TODO(#418) - create an instance and test that its cluster is returned here.
   auto clusters = instance_admin_->ListClusters();
   for (auto const& i : clusters) {
     auto const npos = std::string::npos;
