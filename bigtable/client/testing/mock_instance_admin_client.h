@@ -40,7 +40,8 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                grpc::Status(grpc::ClientContext*,
                             google::longrunning::GetOperationRequest const&,
                             google::longrunning::Operation*));
-MOCK_METHOD3(
+
+  MOCK_METHOD3(
       GetInstance,
       grpc::Status(grpc::ClientContext*,
                    google::bigtable::admin::v2::GetInstanceRequest const&,
