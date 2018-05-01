@@ -91,6 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e880ece8b190a88351d2d31a4439abf"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a2e880ece8b190a88351d2d31a4439abf">project_id</a> () const</td></tr>
 <tr class="memdesc:a2e880ece8b190a88351d2d31a4439abf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The project id, i.e., <code><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a249f770d2da4b4a6055c2e4624f44cf6" title="The full name (projects/&lt;project_id&gt;) of the project. ">project_name()</a></code> without the <code>projects/</code> prefix.  <a href="#a2e880ece8b190a88351d2d31a4439abf">More...</a><br /></td></tr>
 <tr class="separator:a2e880ece8b190a88351d2d31a4439abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed16545b8be97b6df46b956c67e36ec5"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Instance &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#aed16545b8be97b6df46b956c67e36ec5">CreateInstance</a> (<a class="el" href="classbigtable_1_1v0_1_1InstanceConfig.html">InstanceConfig</a> instance_config)</td></tr>
+<tr class="memdesc:aed16545b8be97b6df46b956c67e36ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new instance of Cloud Bigtable.  <a href="#aed16545b8be97b6df46b956c67e36ec5">More...</a><br /></td></tr>
+<tr class="separator:aed16545b8be97b6df46b956c67e36ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22372449d93bc0f17b8781748cd4e056"><td class="memItemLeft" align="right" valign="top">std::vector&lt; google::bigtable::admin::v2::Instance &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a22372449d93bc0f17b8781748cd4e056">ListInstances</a> ()</td></tr>
 <tr class="memdesc:a22372449d93bc0f17b8781748cd4e056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the list of instances in the project.  <a href="#a22372449d93bc0f17b8781748cd4e056">More...</a><br /></td></tr>
 <tr class="separator:a22372449d93bc0f17b8781748cd4e056"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,6 +195,34 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aed16545b8be97b6df46b956c67e36ec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed16545b8be97b6df46b956c67e36ec5">&#9670;&nbsp;</a></span>CreateInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; google::bigtable::admin::v2::Instance &gt; bigtable::v0::InstanceAdmin::CreateInstance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1InstanceConfig.html">InstanceConfig</a>&#160;</td>
+          <td class="paramname"><em>instance_config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new instance of Cloud Bigtable. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Note that this is operation can take seconds or minutes to complete. The application may prefer to perform other work while waiting for this operation.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance_config</td><td>a description of the new instance to be created. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when (a) the operation has completed successfully, in which case it returns a proto with the Instance details, (b) the operation has failed, in which case the future contains an exception (typically <code>bigtable::GrpcError</code>) with the details of the failure, or (c) the state of the operation is unknown after the time allocated by the retry policies has expired, in which case the future contains an exception of type <code>bigtable::PollTimeout</code>. </dd></dl>
+
+</div>
+</div>
 <a id="a22372449d93bc0f17b8781748cd4e056"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22372449d93bc0f17b8781748cd4e056">&#9670;&nbsp;</a></span>ListInstances()</h2>
 

@@ -32,6 +32,7 @@ var searchData=
   ['createdefaultadminclient',['CreateDefaultAdminClient',['../namespacebigtable_1_1v0.html#a47ed425d2e8281836e0222e8993b828c',1,'bigtable::v0']]],
   ['createdefaultdataclient',['CreateDefaultDataClient',['../namespacebigtable_1_1v0.html#af479e95a27d852df7e5cad07cbeab7e9',1,'bigtable::v0']]],
   ['createdefaultinstanceadminclient',['CreateDefaultInstanceAdminClient',['../namespacebigtable_1_1v0.html#ae4b9a4e9c41350c46cb09105c5d0f23a',1,'bigtable::v0']]],
+  ['createinstance',['CreateInstance',['../classbigtable_1_1v0_1_1InstanceAdmin.html#aed16545b8be97b6df46b956c67e36ec5',1,'bigtable::v0::InstanceAdmin::CreateInstance()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a773d508cb7e527a2c869aa30baed04a9',1,'bigtable::v0::InstanceAdminClient::CreateInstance()']]],
   ['createtable',['CreateTable',['../classbigtable_1_1v0_1_1AdminClient.html#a6f9a1f5dbb7373b252a996a352291363',1,'bigtable::v0::AdminClient::CreateTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e',1,'bigtable::v0::TableAdmin::CreateTable()']]],
   ['createtablefromsnapshot',['CreateTableFromSnapshot',['../classbigtable_1_1v0_1_1AdminClient.html#ac346a05a40052e342f1dc7dd29fdd405',1,'bigtable::v0::AdminClient']]],
   ['credentials',['credentials',['../classbigtable_1_1v0_1_1ClientOptions.html#a2f303dd87947045a0fa68535b68dabd5',1,'bigtable::v0::ClientOptions']]]
