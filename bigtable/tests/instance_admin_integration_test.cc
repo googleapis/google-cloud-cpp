@@ -103,6 +103,19 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
       IsInstancePresent(instance_admin_->ListInstances(), instance_id));
 }
 
+/// @test Verify that InstanceAdmin::ListClusters works as expected.
+TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
+  // The emulator does not support cluster operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  auto clusters = instance_admin_->ListClusters();
+  for (auto const& i : clusters) {
+    auto const npos = std::string::npos;
+    EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
+  }
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 
