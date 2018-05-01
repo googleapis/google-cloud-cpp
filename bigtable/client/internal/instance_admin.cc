@@ -69,12 +69,10 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
   request.set_name(project_name_ + "/instances/" + instance_id);
 
   // Call RPC call to get response
-  auto response = ClientUtils::MakeCall(
-      *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
-      &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
-      status, true);
-
-  return response;
+  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
+                               metadata_update_policy_,
+                               &InstanceAdminClient::GetInstance, request,
+                               "InstanceAdmin::GetInstance", status, true);
 }
 
 }  // namespace noex

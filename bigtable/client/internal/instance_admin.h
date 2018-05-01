@@ -76,16 +76,6 @@ class InstanceAdmin {
   std::vector<::google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
 
-  /**
-  * Get the details of @p instance_id
-  *
-  * @code
-  * bigtable::nox::InstanceAdmin impl_;
-  * grpc::Status status;
-  * auto result = impl_.GetInstance(instance_id,status);
-  * @endcode
-  *
-  */
   ::google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
   //@}
