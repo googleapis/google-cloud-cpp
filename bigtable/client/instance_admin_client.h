@@ -75,11 +75,10 @@ class InstanceAdminClient {
       google::longrunning::Operation* response) = 0;
   //@}
 
-virtual grpc::Status GetInstance(
+  virtual grpc::Status GetInstance(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetInstanceRequest const& request,
       google::bigtable::admin::v2::Instance* response) = 0;
-};
 };
 
 /// Create a new admin client configured via @p options.

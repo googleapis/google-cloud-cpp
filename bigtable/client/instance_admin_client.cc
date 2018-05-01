@@ -76,6 +76,13 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return stub->GetOperation(context, request, response);
   }
 
+  grpc::Status GetInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      google::bigtable::admin::v2::Instance* response) override {
+    return impl_.Stub()->GetInstance(context, request, response);
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;
