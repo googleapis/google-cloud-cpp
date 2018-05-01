@@ -23,6 +23,7 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class InstanceAdmin;
 namespace noex {
 
 /**
@@ -77,6 +78,7 @@ class InstanceAdmin {
   //@}
 
  private:
+  friend class bigtable::BIGTABLE_CLIENT_NS::InstanceAdmin;
   std::shared_ptr<InstanceAdminClient> client_;
   std::string project_name_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;

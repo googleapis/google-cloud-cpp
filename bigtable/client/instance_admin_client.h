@@ -61,6 +61,19 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListInstancesRequest const& request,
       google::bigtable::admin::v2::ListInstancesResponse* response) = 0;
+
+  virtual grpc::Status CreateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      google::longrunning::Operation* response) = 0;
+
+  //@{
+  /// @name Implement the google.longrunning.Operations wrappers.
+  virtual grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.

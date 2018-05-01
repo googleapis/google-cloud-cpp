@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/instance_admin.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/mock_instance_admin_client.h"
+#include "grpc_error.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -216,3 +218,207 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   EXPECT_DEATH_IF_SUPPORTED(tested.ListInstances(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
+TEST_F(InstanceAdminTest, CreateInstance) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::CreateInstanceRequest const& request,
+                          google::longrunning::Operation* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        return grpc::Status::OK;
+      }));
+
+  std::string expected_text = R"(
+name: 'projects/my-project/instances/test-instance'
+display_name: 'foo bar'
+state: READY
+type: PRODUCTION
+)";
+  btproto::Instance expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke(
+          [&expected](grpc::ClientContext*,
+                      google::longrunning::GetOperationRequest const& request,
+                      google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
+TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::CreateInstanceRequest const& request,
+                          google::longrunning::Operation* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        return grpc::Status::OK;
+      }));
+
+  std::string expected_text = R"(
+name: 'projects/my-project/instances/test-instance'
+display_name: 'foo bar'
+state: READY
+type: PRODUCTION
+)";
+  btproto::Instance expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation*) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation*) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      }))
+      .WillOnce(Invoke(
+          [&expected](grpc::ClientContext*,
+                      google::longrunning::GetOperationRequest const& request,
+                      google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+/// @test Failures in `bigtable::InstanceAdmin::CreateInstance`.
+TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
+TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::CreateInstanceRequest const& request,
+                          google::longrunning::Operation* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Polling in `bigtable::InstanceAdmin::CreateInstance` returns failure.
+TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::CreateInstanceRequest const& request,
+                          google::longrunning::Operation* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto error = bigtable::internal::make_unique<google::rpc::Status>();
+            error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
+            error->set_message("something is broken");
+            operation->set_allocated_error(error.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
