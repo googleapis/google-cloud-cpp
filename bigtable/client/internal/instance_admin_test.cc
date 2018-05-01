@@ -246,7 +246,7 @@ TEST_F(InstanceAdminTest, GetInstanceSimpleCase) {
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  std::string instance_id = "projects/the-project/instances/t0";
+  std::string instance_id = "t0";
   auto actual = tested.GetInstance(instance_id, status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ("projects/the-project/instances/t0", actual.name());
@@ -263,7 +263,7 @@ TEST_F(InstanceAdminTest, GetInstanceFailCase) {
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  std::string instance_id = "projects/the-project/instances/t1";
+  std::string instance_id = "t1";
   auto actual = tested.GetInstance(instance_id, status);
   EXPECT_TRUE(status.ok());
   EXPECT_NE("projects/the-project/instances/t0", actual.name());

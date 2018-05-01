@@ -75,30 +75,20 @@ class InstanceAdmin {
    */
   std::vector<::google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
-  //@}
 
-  //@{
   /**
-   * Provide Instance based on instance ID.
-   *
-   * @name No exception versions of InstanceAdmin::*
-   *
-   * These functions provide the same functionality as their counterparts in the
-   * `bigtable::InstanceAdmin` class, but do not raise exceptions on errors,
-   * instead they return the error on the status parameter.
-   *
-   * @code
-   * bigtable::nox::InstanceAdmin impl_;
-   * grpc::Status status;
-   * auto result = impl_.GetInstance(instance_id,status);
-   * @endcode
-   *
-   * @param Instance ID
-   * @return Instance
-   */
+  * Get the details of @p instance_id
+  *
+  * @code
+  * bigtable::nox::InstanceAdmin impl_;
+  * grpc::Status status;
+  * auto result = impl_.GetInstance(instance_id,status);
+  * @endcode
+  *
+  */
   ::google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
-  //@{
+  //@}
 
  private:
   friend class bigtable::BIGTABLE_CLIENT_NS::InstanceAdmin;

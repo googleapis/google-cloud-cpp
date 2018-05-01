@@ -64,10 +64,9 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  btproto::Instance result;
   btproto::GetInstanceRequest request;
   // Set Instance ID
-  request.set_name(instance_id);
+  request.set_name(project_name_ + "/instances/" + instance_id);
 
   // Call RPC call to get response
   auto response = ClientUtils::MakeCall(
@@ -75,10 +74,7 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
       &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
       status, true);
 
-  if (status.ok()) {
-    result = response;
-  }
-  return result;
+  return response;
 }
 
 }  // namespace noex
