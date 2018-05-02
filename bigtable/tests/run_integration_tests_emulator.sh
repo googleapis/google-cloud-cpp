@@ -19,7 +19,6 @@ set -eu
 function kill_emulator {
   kill "${EMULATOR_PID}"
   wait >/dev/null 2>&1
-  cat emulator.log >&2
 }
 
 readonly BINDIR=$(dirname $0)
