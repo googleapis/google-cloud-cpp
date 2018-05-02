@@ -691,9 +691,6 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-#include "bigtable/client/internal/diagnostic_push.h"
-#include "bigtable/client/internal/wdeprecated_as_warnings.h"
-
 /**
  * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
  */
@@ -913,5 +910,3 @@ TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
-
-#include "bigtable/client/internal/diagnostic_pop.h"

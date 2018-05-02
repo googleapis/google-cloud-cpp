@@ -45,6 +45,11 @@ add_library(bigtable_client
         internal/common_client.h
         internal/common_client.cc
         internal/conjunction.h
+        internal/diagnostic_attributes_ignored.h
+        internal/diagnostic_pop.h
+        internal/diagnostic_push.h
+        internal/diagnostic_cxx14_extentions_ignored.h
+        internal/diagnostic_deprecated_as_warnings.h
         internal/encoder.h
         internal/endian.h
         internal/endian.cc
