@@ -77,12 +77,25 @@ class InstanceAdmin {
   /**
    * Return the list of instances in the project.
    * @return
+   *
+   *  **Example**
+   *  @snippet bigtable_samples_instance_admin.cc list instances
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
   /// Get the details of @p instance_id.
   google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id);
+
+  /**
+   * Deletes the instances in the project.
+   * @param instance_id the id of the instance in the project that needs to be
+   * deleted
+   *
+   *  **Example**
+   *  @snippet bigtable_samples_instance_admin.cc delete instance
+   */
+  void DeleteInstance(std::string const& instance_id);
 
  private:
   /// Implement CreateInstance() with a separate thread.

@@ -26,3 +26,9 @@ cc_binary(
     srcs=["bigtable_samples.cc"],
     deps=["//bigtable/client:bigtable_client"],
 )
+
+cc_binary(
+    name="bigtable_samples_instance_admin",
+    srcs=["bigtable_samples_instance_admin.cc"],
+    deps=["//bigtable/client:bigtable_client"],
+)
