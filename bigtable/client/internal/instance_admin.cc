@@ -57,6 +57,23 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances(
   return result;
 }
 
+btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
+                                             grpc::Status& status) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  btproto::GetInstanceRequest request;
+  // Setting instance name.
+  request.set_name(project_name_ + "/instances/" + instance_id);
+
+  // Call RPC call to get response
+  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
+                               metadata_update_policy_,
+                               &InstanceAdminClient::GetInstance, request,
+                               "InstanceAdmin::GetInstance", status, true);
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

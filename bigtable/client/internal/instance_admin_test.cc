@@ -61,6 +61,19 @@ auto create_list_instances_lambda = [](std::string expected_token,
   };
 };
 
+// A lambda to create lambdas.  Basically we would be rewriting the same
+// lambda twice without this thing.
+auto create_instance = [](std::string expected_token,
+                          std::string returned_token) {
+  return [expected_token, returned_token](
+      grpc::ClientContext* ctx, btproto::GetInstanceRequest const& request,
+      btproto::Instance* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
+};
+
 /**
  * Helper class to create the expectations for a simple RPC call.
  *
@@ -219,4 +232,21 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   grpc::Status status;
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the simple
+/// case.
+TEST_F(InstanceAdminTest, GetInstance) {
+  using namespace ::testing;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_instances = create_instance("", "");
+  EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(Invoke(mock_instances));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  std::string instance_id = "t0";
+  auto actual = tested.GetInstance(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ("projects/the-project/instances/t0", actual.name());
 }

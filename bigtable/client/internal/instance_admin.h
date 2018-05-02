@@ -75,6 +75,9 @@ class InstanceAdmin {
    */
   std::vector<::google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
+
+  ::google::bigtable::admin::v2::Instance GetInstance(
+      std::string const& instance_id, grpc::Status& status);
   //@}
 
  private:
