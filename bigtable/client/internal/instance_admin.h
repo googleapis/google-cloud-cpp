@@ -84,8 +84,7 @@ class InstanceAdmin {
   ::google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
 
-  void DeleteInstance(std::string const& instance_id,
-      grpc::Status& status);
+  void DeleteInstance(std::string const& instance_id, grpc::Status& status);
 
   //@}
 
