@@ -116,6 +116,7 @@ install:
 after_success:
   - ci/upload-codecov.sh
   - ci/upload-docs.sh
+  - ci/dump-logs.sh
 
 after_failure:
   - ci/dump-logs.sh
