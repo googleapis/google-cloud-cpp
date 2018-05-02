@@ -20,6 +20,7 @@
 
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
+#include "bigtable/client/internal/port_platform.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/wcxx14_extentions_ignored.h"
 #include "bigtable/client/internal/wattributes_ignored.h"
@@ -232,8 +233,7 @@ class TableAdmin {
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
    */
-  [[deprecated(
-      "private alpha release")]] ::google::bigtable::admin::v2::Snapshot
+  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA google::bigtable::admin::v2::Snapshot
   GetSnapshot(bigtable::ClusterId const& cluster_id,
               bigtable::SnapshotId const& snapshot_id);
 
@@ -250,7 +250,7 @@ class TableAdmin {
    * @param snapshot_id the id of the snapshot which needs to be deleted.
    * @throws std::exception if the operation cannot be completed.
    */
-  [[deprecated("private alpha release")]] void DeleteSnapshot(
+  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA void DeleteSnapshot(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id);
   //@}
@@ -263,8 +263,9 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    */
   template <template <typename...> class Collection = std::vector>
-  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
+  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA
+      Collection<::google::bigtable::admin::v2::Snapshot>
+      ListSnapshots(bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
     grpc::Status status;
     auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
     if (not status.ok()) {
