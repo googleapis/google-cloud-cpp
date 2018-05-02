@@ -117,5 +117,8 @@ after_success:
   - ci/upload-codecov.sh
   - ci/upload-docs.sh
 
+after_failure:
+  - ci/dump-logs.sh
+
 notifications:
   email: false
