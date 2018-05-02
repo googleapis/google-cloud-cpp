@@ -63,9 +63,8 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
-  // Build the RPC request, try to minimize copying.
   btproto::GetInstanceRequest request;
-  // Set Instance ID
+  // Setting instance name.
   request.set_name(project_name_ + "/instances/" + instance_id);
 
   // Call RPC call to get response

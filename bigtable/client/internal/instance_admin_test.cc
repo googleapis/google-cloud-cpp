@@ -64,11 +64,10 @@ auto create_list_instances_lambda = [](std::string expected_token,
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_instance = [](std::string expected_token,
-                          std::string returned_token, std::string instance_id) {
-  return [expected_token, returned_token, instance_id](
+                          std::string returned_token) {
+  return [expected_token, returned_token](
       grpc::ClientContext* ctx, btproto::GetInstanceRequest const& request,
       btproto::Instance* response) {
-    auto const project_name = "projects/" + kProjectId;
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
     return grpc::Status::OK;
@@ -237,11 +236,11 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
 
 /// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the simple
 /// case.
-TEST_F(InstanceAdminTest, GetInstanceSimpleCase) {
+TEST_F(InstanceAdminTest, GetInstance) {
   using namespace ::testing;
 
   bigtable::noex::InstanceAdmin tested(client_);
-  auto mock_instances = create_instance("", "", {"t0"});
+  auto mock_instances = create_instance("", "");
   EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(Invoke(mock_instances));
 
   // After all the setup, make the actual call we want to test.
@@ -250,21 +249,4 @@ TEST_F(InstanceAdminTest, GetInstanceSimpleCase) {
   auto actual = tested.GetInstance(instance_id, status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ("projects/the-project/instances/t0", actual.name());
-}
-
-/// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the fail
-/// case.
-TEST_F(InstanceAdminTest, GetInstanceFailCase) {
-  using namespace ::testing;
-
-  bigtable::noex::InstanceAdmin tested(client_);
-  auto mock_instances = create_instance("", "", {"t0"});
-  EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(Invoke(mock_instances));
-
-  // After all the setup, make the actual call we want to test.
-  grpc::Status status;
-  std::string instance_id = "t1";
-  auto actual = tested.GetInstance(instance_id, status);
-  EXPECT_TRUE(status.ok());
-  EXPECT_NE("projects/the-project/instances/t0", actual.name());
 }
