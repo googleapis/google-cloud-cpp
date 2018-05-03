@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/benchmark.h"
-#include "bigtable/client/build_info.h"
+#include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;
@@ -178,8 +178,8 @@ TEST(BenchmarkTest, PrintCsv) {
 
   // The output includes the version and compiler info.
   EXPECT_NE(std::string::npos, output.find(bigtable::version_string()));
-  EXPECT_NE(std::string::npos, output.find(bigtable::compiler));
-  EXPECT_NE(std::string::npos, output.find(bigtable::compiler_flags));
+  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::compiler));
+  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::compiler_flags));
 
   // The output includes the latency results.
   EXPECT_NE(std::string::npos, output.find(",100,"));    // p0

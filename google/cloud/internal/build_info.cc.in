@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/build_info.h"
+#include "google/cloud/internal/build_info.h"
 
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 
 char const compiler[] = R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
 
@@ -23,5 +25,7 @@ char const compiler_flags[] = R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${BUILD_T
 
 char const gitrev[] = R"""(@GIT_HEAD@)""";
 
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

@@ -40,6 +40,7 @@ add_custom_target(doxygen-docs)
 add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
+add_subdirectory(google/cloud)
 add_subdirectory(bigtable)
 add_subdirectory(storage)
 

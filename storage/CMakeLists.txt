@@ -45,18 +45,6 @@ google_cloud_cpp_add_common_options(storage_common_options)
 # Enable unit tests
 enable_testing()
 
-# Capture the compiler version and the git revision into variables, then
-# generate a config file with the values.
-if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/../.git)
-    execute_process(COMMAND git rev-parse --short HEAD
-        OUTPUT_VARIABLE GIT_HEAD_LOG ERROR_VARIABLE GIT_HEAD_LOG)
-else ()
-    set(GIT_HEAD_LOG "(unknown-git-commit)")
-endif ()
-string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
-string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
-configure_file(client/build_info.cc.in client/build_info.cc)
-
 # Search for libcurl
 find_package(CURL REQUIRED)
 if (NOT TARGET CURL::CURL)

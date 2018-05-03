@@ -17,12 +17,10 @@ configure_file(version_info.h.in version_info.h)
 
 # the client library
 add_library(storage_client
-    build_info.h
-    ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     version.h
     version.cc)
-target_link_libraries(storage_client PUBLIC CURL::CURL Threads::Threads
+target_link_libraries(storage_client PUBLIC google_cloud_cpp_common CURL::CURL Threads::Threads
     PRIVATE storage_common_options)
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

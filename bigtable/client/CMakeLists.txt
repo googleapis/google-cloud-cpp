@@ -19,9 +19,7 @@ configure_file(version_info.h.in version_info.h)
 add_library(bigtable_client
         admin_client.h
         admin_client.cc
-        ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-        build_info.h
         cell.h
         client_options.h
         client_options.cc
@@ -51,7 +49,6 @@ add_library(bigtable_client
         internal/instance_admin.h
         internal/instance_admin.cc
         internal/make_unique.h
-        internal/port_platform.h
         internal/prefix_range_end.h
         internal/prefix_range_end.cc
         internal/readrowsparser.h
@@ -95,7 +92,7 @@ add_library(bigtable_client
         version.h
         version.cc)
 target_link_libraries(bigtable_client PUBLIC
-        bigtable_protos
+        bigtable_protos google_cloud_cpp_common
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
         PRIVATE bigtable_common_options)
 target_include_directories(bigtable_client PUBLIC
