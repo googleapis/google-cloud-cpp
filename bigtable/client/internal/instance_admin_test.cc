@@ -77,8 +77,8 @@ auto create_instance = [](std::string expected_token,
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda = [](std::string expected_token,
-                                       std::string returned_token,
-                                       std::vector<std::string> cluster_ids) {
+                                      std::string returned_token,
+                                      std::vector<std::string> cluster_ids) {
   return [expected_token, returned_token, cluster_ids](
       grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
       btproto::ListClustersResponse* response) {
