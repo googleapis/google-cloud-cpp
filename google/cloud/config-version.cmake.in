@@ -1,4 +1,4 @@
-# Copyright 2018 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set(PACKAGE_VERSION @BIGTABLE_CLIENT_VERSION@)
+set(PACKAGE_VERSION @DOXYGEN_PROJECT_NUMBER@)
 
-if (@BIGTABLE_CLIENT_VERSION_MAJOR@ EQUAL 0)
+if (@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR@ EQUAL 0)
     # Only exact matches for the 0.x.y releases, i.e., no backwards
     # compatibility guarantees.
-    if (("${PACKAGE_FIND_VERSION_MAJOR}" EQUAL "@BIGTABLE_CLIENT_VERSION_MAJOR@")
-         AND ("${PACKAGE_FIND_VERSION_MINOR}" EQUAL "@BIGTABLE_CLIENT_VERSION_MINOR@"))
+    if (("${PACKAGE_FIND_VERSION_MAJOR}" EQUAL "@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR@")
+         AND ("${PACKAGE_FIND_VERSION_MINOR}" EQUAL "@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR@"))
         set(PACKAGE_VERSION_EXACT TRUE)
     else ()
         set(PACKAGE_VERSION_UNSUITABLE TRUE)
     endif ()
-elseif ("${PACKAGE_FIND_VERSION_MAJOR}" EQUAL "@BIGTABLE_CLIENT_VERSION_MAJOR@")
+elseif ("${PACKAGE_FIND_VERSION_MAJOR}" EQUAL "@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR@")
     # For versions after 1.x.y we will require backwards compatibility.
-    if ("${PACKAGE_FIND_VERSION_MINOR}" EQUAL "@BIGTABLE_CLIENT_VERSION_MINOR@")
+    if ("${PACKAGE_FIND_VERSION_MINOR}" EQUAL "@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR@")
         set(PACKAGE_VERSION_EXACT TRUE)
-    elseif("${PACKAGE_FIND_VERSION_MINOR}" LESS "@BIGTABLE_CLIENT_VERSION_MINOR@")
+    elseif("${PACKAGE_FIND_VERSION_MINOR}" LESS "@GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR@")
         set(PACKAGE_VERSION_COMPATIBLE TRUE)
     else ()
         set(PACKAGE_VERSION_UNSUITABLE TRUE)
