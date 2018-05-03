@@ -15,17 +15,18 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 
-#include "bigtable/benchmarks/random.h"
 #include "bigtable/client/table.h"
+#include "bigtable/client/testing/random.h"
 
 namespace bigtable {
 namespace benchmarks {
 
 /// Create a mutation that changes field @p f to random values.
-bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f);
+bigtable::Mutation MakeRandomMutation(bigtable::testing::DefaultPRNG& gen,
+                                      int f);
 
 /// Create a random value to store in a field.
-std::string MakeRandomValue(DefaultPRNG& gen);
+std::string MakeRandomValue(bigtable::testing::DefaultPRNG& gen);
 
 }  // namespace benchmarks
 }  // namespace bigtable

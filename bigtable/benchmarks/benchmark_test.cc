@@ -68,7 +68,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
   BenchmarkSetup setup("key", argc, argv);
 
   Benchmark bm(setup);
-  auto gen = MakeDefaultPRNG();
+  auto gen = bigtable::testing::MakeDefaultPRNG();
 
   // First make sure that the keys are not always the same.
   auto make_some_keys = [&bm, &gen]() {

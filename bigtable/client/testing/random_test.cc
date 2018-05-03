@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/random.h"
-#include "bigtable/benchmarks/constants.h"
+#include "bigtable/client/testing/random.h"
 #include <gmock/gmock.h>
 
-using namespace bigtable::benchmarks;
+using namespace bigtable::testing;
 
 TEST(BenchmarksRandom, Basic) {
   // This is not a statistical test for PRNG, basically we want to make

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/setup.h"
-#include "bigtable/benchmarks/random.h"
 #include "bigtable/client/build_info.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include "bigtable/client/testing/random.h"
 #include <cctype>
 #include <iomanip>
 #include <sstream>
@@ -43,9 +43,9 @@ std::string FormattedAnnotations() {
 std::string MakeRandomTableId(std::string const& prefix) {
   static std::string const table_id_chars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
-  auto gen = bigtable::benchmarks::MakeDefaultPRNG();
+  auto gen = bigtable::testing::MakeDefaultPRNG();
   return prefix + "-" +
-         bigtable::benchmarks::Sample(
+         bigtable::testing::Sample(
              gen, bigtable::benchmarks::kTableIdRandomLetters, table_id_chars);
 }
 }  // anonymous namespace

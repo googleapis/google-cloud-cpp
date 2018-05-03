@@ -15,6 +15,7 @@
 #include "bigtable/benchmarks/embedded_server.h"
 #include "bigtable/benchmarks/random_mutation.h"
 #include "bigtable/benchmarks/setup.h"
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <atomic>
 #include <iomanip>
@@ -42,7 +43,7 @@ class BigtableImpl final : public btproto::Bigtable::Service {
     // want the overhead of this implementation to be as small as possible.
     // Using a single value is an option, but compresses too well and makes the
     // tests a bit unrealistic.
-    auto generator = MakeDefaultPRNG();
+    auto generator = bigtable::testing::MakeDefaultPRNG();
     values_.resize(1000);
     std::generate(values_.begin(), values_.end(),
                   [&generator]() { return MakeRandomValue(generator); });
