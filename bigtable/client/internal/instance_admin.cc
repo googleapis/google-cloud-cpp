@@ -74,6 +74,17 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
                                "InstanceAdmin::GetInstance", status, true);
 }
 
+void InstanceAdmin::DeleteInstance(std::string const& instance_id,
+                                   grpc::Status& status) {
+  btproto::DeleteInstanceRequest request;
+  request.set_name(InstanceName(instance_id));
+
+  // This API is not idempotent, lets call it without retry
+  ClientUtils::MakeNonIdemponentCall(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &InstanceAdminClient::DeleteInstance, request,
+      "InstanceAdmin::DeleteInstance", status);
+}
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

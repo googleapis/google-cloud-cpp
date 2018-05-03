@@ -47,6 +47,20 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
+
+bool IsInstancePresent(
+    std::vector<::google::bigtable::admin::v2::Instance> instances,
+    std::string const& instance_name) {
+  bool instance_present = false;
+  for (auto const& i : instances) {
+    if (instance_name == i.name()) {
+      instance_present = true;
+      std::cout << "Instance Name " << i.name();
+      break;
+    }
+  }
+  return instance_present;
+}
 }  // namespace
 
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
@@ -60,6 +74,33 @@ TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }
+}
+
+/// @test Verify that InstanceAdmin::DeleteInstances works as expected.
+TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
+  // The emulator does not support instance operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  std::string instance_id = "DeleteInstancesTest_instance";
+  bigtable::InstanceId instance(instance_id);
+  bigtable::DisplayName diplay_name(instance_id);
+  EXPECT_FALSE(
+      IsInstancePresent(instance_admin_->ListInstances(), instance_id));
+
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters;
+  clusters.push_back(std::make_pair(
+      "sample-cluster",
+      bigtable::ClusterConfig("sample-cluster", 1,
+                              google::bigtable::admin::v2::StorageType::HDD)));
+  auto instance_config =
+      bigtable::InstanceConfig(instance, diplay_name, clusters);
+  instance_admin_->CreateInstance(instance_config);
+  EXPECT_TRUE(IsInstancePresent(instance_admin_->ListInstances(), instance_id));
+
+  instance_admin_->DeleteInstance(instance_id);
+  EXPECT_FALSE(
+      IsInstancePresent(instance_admin_->ListInstances(), instance_id));
 }
 
 int main(int argc, char* argv[]) {

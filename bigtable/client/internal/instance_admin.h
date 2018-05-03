@@ -65,6 +65,11 @@ class InstanceAdmin {
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
   std::string const& project_id() const { return client_->project(); }
 
+  /// Return the fully qualified name of the given instance_id.
+  std::string InstanceName(std::string const& instance_id) const {
+    return project_name() + "/instances/" + instance_id;
+  }
+
   //@{
   /**
    * @name No exception versions of InstanceAdmin::*
@@ -78,6 +83,9 @@ class InstanceAdmin {
 
   ::google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
+
+  void DeleteInstance(std::string const& instance_id, grpc::Status& status);
+
   //@}
 
  private:

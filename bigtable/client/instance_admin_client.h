@@ -79,6 +79,11 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetInstanceRequest const& request,
       google::bigtable::admin::v2::Instance* response) = 0;
+
+  virtual grpc::Status DeleteInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+      google::protobuf::Empty* response) = 0;
 };
 
 /// Create a new admin client configured via @p options.

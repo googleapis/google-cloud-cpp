@@ -422,3 +422,51 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+/// @test Verify that DeleteInstance works in the positive case.
+TEST_F(InstanceAdminTest, DeleteInstance) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+  bigtable::InstanceAdmin tested(client_);
+  std::string expected_text = R"""(
+  name: 'projects/the-project/instances/the-instance'
+      )""";
+  auto mock = MockRpcFactory<btproto::DeleteInstanceRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(Invoke(mock));
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteInstance("the-instance");
+}
+
+/// @test Verify unrecoverable error for DeleteInstance
+TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
+  using namespace ::testing;
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteInstance(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+// After all the setup, make the actual call we want to test.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested.DeleteInstance("other-instance"), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteInstance("other-instance"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that recoverable error for DeleteInstance
+TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
+  using namespace ::testing;
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteInstance(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+// After all the setup, make the actual call we want to test.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested.DeleteInstance("other-instance"), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteInstance("other-instance"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}

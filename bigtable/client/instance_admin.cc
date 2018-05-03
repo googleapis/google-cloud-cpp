@@ -118,5 +118,13 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   return result;
 }
 
+void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
+  grpc::Status status;
+  impl_.DeleteInstance(instance_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
