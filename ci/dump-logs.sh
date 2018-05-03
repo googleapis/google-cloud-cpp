@@ -16,7 +16,7 @@
 
 set -eu
 
-# Dump the emulator log file.
+# Dump the emulator log file. Tests run in the bigtable/tests directory.
 echo "================================================================"
-cat emulator.log >&2
+cat bigtable/tests/emulator.log >&2
 echo "================================================================"
