@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/random.h"
+#include "bigtable/benchmarks/random_mutation.h"
 #include "bigtable/benchmarks/constants.h"
 
 namespace bigtable {
 namespace benchmarks {
-std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
-  std::uniform_int_distribution<std::size_t> rd(0, population.size() - 1);
-
-  std::string result(std::size_t(n), '0');
-  std::generate(result.begin(), result.end(),
-                [&rd, &gen, &population]() { return population[rd(gen)]; });
-  return result;
+bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f) {
+  std::string field = "field" + std::to_string(f);
+  return bigtable::SetCell(kColumnFamily, std::move(field),
+                           std::chrono::milliseconds(0), MakeRandomValue(gen));
 }
 
+std::string MakeRandomValue(DefaultPRNG& generator) {
+  static std::string const letters(
+      "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/_");
+  return Sample(generator, kFieldSize, letters);
+}
 }  // namespace benchmarks
 }  // namespace bigtable

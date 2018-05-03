@@ -13,15 +13,12 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/embedded_server.h"
-
+#include "bigtable/benchmarks/random_mutation.h"
+#include "bigtable/benchmarks/setup.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <atomic>
 #include <iomanip>
 #include <sstream>
-
-#include "google/bigtable/v2/bigtable.grpc.pb.h"
-
-#include "bigtable/benchmarks/random.h"
-#include "bigtable/benchmarks/setup.h"
 
 namespace btproto = google::bigtable::v2;
 namespace adminproto = google::bigtable::admin::v2;

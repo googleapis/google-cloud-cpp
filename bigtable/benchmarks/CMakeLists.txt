@@ -20,6 +20,8 @@ add_library(bigtable_benchmark_common
         embedded_server.cc
         random.h
         random.cc
+        random_mutation.h
+        random_mutation.cc
         setup.h
         setup.cc)
 target_link_libraries(bigtable_benchmark_common

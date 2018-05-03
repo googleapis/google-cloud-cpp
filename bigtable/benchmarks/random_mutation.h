@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
+
 #include "bigtable/benchmarks/random.h"
-#include "bigtable/benchmarks/constants.h"
+#include "bigtable/client/table.h"
 
 namespace bigtable {
 namespace benchmarks {
-std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
-  std::uniform_int_distribution<std::size_t> rd(0, population.size() - 1);
 
-  std::string result(std::size_t(n), '0');
-  std::generate(result.begin(), result.end(),
-                [&rd, &gen, &population]() { return population[rd(gen)]; });
-  return result;
-}
+/// Create a mutation that changes field @p f to random values.
+bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f);
+
+/// Create a random value to store in a field.
+std::string MakeRandomValue(DefaultPRNG& gen);
 
 }  // namespace benchmarks
 }  // namespace bigtable
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_H_

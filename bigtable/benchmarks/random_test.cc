@@ -30,22 +30,3 @@ TEST(BenchmarksRandom, Basic) {
   std::string s1 = gen_string();
   EXPECT_NE(s0, s1);
 }
-
-TEST(BenchmarksRandom, RandomValue) {
-  auto g = MakeDefaultPRNG();
-  std::string val = MakeRandomValue(g);
-  EXPECT_EQ(static_cast<std::size_t>(kFieldSize), val.size());
-  std::string val2 = MakeRandomValue(g);
-  EXPECT_NE(val, val2);
-}
-
-TEST(BenchmarksRandom, RandomMutation) {
-  auto g = MakeDefaultPRNG();
-  auto m = MakeRandomMutation(g, 0).op;
-
-  ASSERT_TRUE(m.has_set_cell());
-  EXPECT_EQ(kColumnFamily, m.set_cell().family_name());
-  EXPECT_EQ("field0", m.set_cell().column_qualifier());
-  EXPECT_EQ(0, m.set_cell().timestamp_micros());
-  EXPECT_EQ(static_cast<std::size_t>(kFieldSize), m.set_cell().value().size());
-}

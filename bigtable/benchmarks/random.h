@@ -78,12 +78,6 @@ inline DefaultPRNG MakeDefaultPRNG() { return MakePRNG<DefaultPRNG>(); }
  */
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population);
 
-/// Create a mutation that changes field @p f to random values.
-bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f);
-
-/// Create a random value to store in a field.
-std::string MakeRandomValue(DefaultPRNG& gen);
-
 }  // namespace benchmarks
 }  // namespace bigtable
 
