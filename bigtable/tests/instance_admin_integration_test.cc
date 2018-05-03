@@ -47,14 +47,16 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
+
 bool IsInstancePresent(
     std::vector<::google::bigtable::admin::v2::Instance> instances,
-    std::string instance_name) {
+    std::string const& instance_name) {
   bool instance_present = false;
   for (auto const& i : instances) {
-    if (instance_name.compare(i.name()) == 0) {
+    if (instance_name == i.name()) {
       instance_present = true;
       std::cout << "Instance Name " << i.name();
+      break;
     }
   }
   return instance_present;
@@ -89,9 +91,8 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters;
   clusters.push_back(std::make_pair(
       "sample-cluster",
-      bigtable::ClusterConfig(
-          "sample-cluster", 1234,
-          google::bigtable::admin::v2::StorageType::STORAGE_TYPE_UNSPECIFIED)));
+      bigtable::ClusterConfig("sample-cluster", 1,
+                              google::bigtable::admin::v2::StorageType::HDD)));
   auto instance_config =
       bigtable::InstanceConfig(instance, diplay_name, clusters);
   instance_admin_->CreateInstance(instance_config);

@@ -273,7 +273,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
   using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
-      .WillRepeatedly(
+      .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
@@ -286,7 +286,6 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
-      .Times(1)
       .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
   // After all the setup, make the actual call we want to test.
   grpc::Status status;

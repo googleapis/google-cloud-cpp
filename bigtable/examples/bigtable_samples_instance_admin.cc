@@ -20,24 +20,24 @@ namespace btproto = ::google::bigtable::admin::v2;
 namespace {
 
 //! [create instance]
-void CreateInstance(bigtable::InstanceAdmin& instance_admin,
+void CreateInstance(bigtable::InstanceAdmin instance_admin,
                     std::string const& project_id,
                     std::string const& instance_id) {
   // TODO(#418) implement tests and examples for CreateInstance
 }
 //! [create instance]
 
-//! [list instance]
-void ListInstances(bigtable::InstanceAdmin& instance_admin) {
+//! [list instances]
+void ListInstances(bigtable::InstanceAdmin instance_admin) {
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances) {
     std::cout << instance.name() << std::endl;
   }
 }
-//! [list instance]
+//! [list instances]
 
 //! [get instance]
-void GetInstance(bigtable::InstanceAdmin& instance_admin,
+void GetInstance(bigtable::InstanceAdmin instance_admin,
                  std::string const& project_id,
                  std::string const& instance_id) {
   // TODO(#419) implement tests and examples for GetInstance
@@ -45,18 +45,17 @@ void GetInstance(bigtable::InstanceAdmin& instance_admin,
 //! [get instance]
 
 //! [delete instance]
-void DeleteInstance(bigtable::InstanceAdmin& instance_admin,
-                    std::string const& project_id,
+void DeleteInstance(bigtable::InstanceAdmin instance_admin,
                     std::string const& instance_id) {
   instance_admin.DeleteInstance(instance_id);
 }
 //! [delete instance]
 
-//! [list cluster]
-void ListClusters(bigtable::InstanceAdmin& instance_admin) {
+//! [list clusters]
+void ListClusters(bigtable::InstanceAdmin instance_admin) {
   // TODO(#423) implement tests and examples for ListCluster
 }
-//! [list cluster]
+//! [list clusters]
 
 }  // anonymous namespace
 
@@ -69,7 +68,7 @@ int main(int argc, char* argv[]) try {
               << "\n\n"
               << "Examples:\n"
               << "  " << program << " create-instance my-project my-instance\n"
-              << "  " << program << " list-cluster my-project my-instance"
+              << "  " << program << " list-clusters my-project my-instance"
               << std::endl;
   };
 
@@ -96,13 +95,13 @@ int main(int argc, char* argv[]) try {
 
   if (command == "create-instance") {
     CreateInstance(instance_admin, project_id, instance_id);
-  } else if (command == "list-instance") {
+  } else if (command == "list-instances") {
     ListInstances(instance_admin);
   } else if (command == "get-instance") {
     GetInstance(instance_admin, project_id, instance_id);
   } else if (command == "delete-instance") {
-    DeleteInstance(instance_admin, project_id, instance_id);
-  } else if (command == "list-cluster") {
+    DeleteInstance(instance_admin, instance_id);
+  } else if (command == "list-clusters") {
     ListClusters(instance_admin);
   } else {
     std::cerr << "Unknown command: " << command << std::endl;

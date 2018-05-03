@@ -459,8 +459,8 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
-      .Times(1)
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
 // After all the setup, make the actual call we want to test.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
