@@ -33,8 +33,9 @@ std::string FormattedStartTime() {
 }
 
 std::string FormattedAnnotations() {
-  std::string notes = bigtable::version_string() + ";" + google::cloud::internal::compiler +
-                      ";" + google::cloud::internal::compiler_flags;
+  std::string notes = bigtable::version_string() + ";" +
+                      google::cloud::internal::compiler + ";" +
+                      google::cloud::internal::compiler_flags;
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
   return notes;
