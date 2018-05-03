@@ -30,6 +30,9 @@ target_include_directories(storage_client PUBLIC
     $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CreateBazelConfig)
+create_bazel_config(storage_client)
+
 option(STORAGE_CLIENT_CLANG_TIDY
     "If set compiles the Google Cloud Storage client with clang-tidy."
     "")
@@ -54,6 +57,9 @@ foreach (fname ${storage_client_unit_tests})
         storage_client gmock CURL::CURL storage_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
+
+# Export the list of unit tests so the Bazel BUILD file can pick it up.
+export_list_to_bazel("storage_client_unit_tests.bzl" "storage_client_unit_tests")
 
 install(TARGETS storage_client
     EXPORT storage-targets
