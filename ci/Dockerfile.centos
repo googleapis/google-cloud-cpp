@@ -20,24 +20,18 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 RUN rpm -Uvh \
     https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
+RUN yum install -y centos-release-scl
+RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
+
 RUN yum makecache && yum install -y \
-    autoconf \
-    automake \
+    devtoolset-7 \
     c-ares-devel \
-    clang \
-    clang-tools-extra \
     cmake3 \
     curl \
     curl-devel \
-    dia \
-    doxygen \
-    gcc-c++ \
     git \
     golang \
     graphviz \
-    lcov \
-    libtool \
-    make \
     openssl-devel \
     pkgconfig \
     python \
