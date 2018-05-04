@@ -52,8 +52,12 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin,
 //! [delete instance]
 
 //! [list clusters]
-void ListClusters(bigtable::InstanceAdmin instance_admin) {
-  // TODO(#423) implement tests and examples for ListCluster
+void ListClusters(bigtable::InstanceAdmin& instance_admin) {
+  auto cluster_list = instance_admin.ListClusters();
+  std::cout << "Cluster Name List" << std::endl;
+  for (auto const& cluster : cluster_list) {
+    std::cout << "Cluster Name:" << cluster.name() << std::endl;
+  }
 }
 //! [list clusters]
 
