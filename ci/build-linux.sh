@@ -22,6 +22,12 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+if [ "${IMAGE}" = "cached-centos-7" ]; then
+  build_script="scl enable devtoolset-7 /v/ci/build-docker.sh";
+else
+  build_script="/v/ci/build-docker.sh";
+fi
+
 sudo docker run --cap-add SYS_PTRACE -it \
      --env DISTRO="${DISTRO}" \
      --env DISTRO_VERSION="${DISTRO_VERSION}" \
@@ -37,4 +43,4 @@ sudo docker run --cap-add SYS_PTRACE -it \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
      --env TERM=${TERM:-dumb} \
-     --volume $PWD:/v --workdir /v "${IMAGE}:tip" /v/ci/build-docker.sh
+     --volume $PWD:/v --workdir /v "${IMAGE}:tip" ${build_script}
