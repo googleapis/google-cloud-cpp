@@ -51,15 +51,12 @@ bool UsingCloudBigtableEmulator() {
 bool IsInstancePresent(
     std::vector<::google::bigtable::admin::v2::Instance> instances,
     std::string const& instance_name) {
-  bool instance_present = false;
   for (auto const& i : instances) {
     if (instance_name == i.name()) {
-      instance_present = true;
-      std::cout << "Instance Name " << i.name();
-      break;
+      return true;
     }
   }
-  return instance_present;
+  return false;
 }
 }  // namespace
 
@@ -82,25 +79,29 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
-  std::string instance_id = "DeleteInstancesTest_instance";
-  bigtable::InstanceId instance(instance_id);
-  bigtable::DisplayName diplay_name(instance_id);
+  std::string id = "delete-instance-test";
+  bigtable::InstanceId instance_id(id);
+  bigtable::DisplayName display_name(id);
   EXPECT_FALSE(
-      IsInstancePresent(instance_admin_->ListInstances(), instance_id));
+      IsInstancePresent(instance_admin_->ListInstances(),
+                        instance_admin_->project_name() + "/instances/" + id));
 
   std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters;
   clusters.push_back(std::make_pair(
-      "sample-cluster",
-      bigtable::ClusterConfig("sample-cluster", 1,
-                              google::bigtable::admin::v2::StorageType::HDD)));
+      id + "-c1", bigtable::ClusterConfig("us-central1-f", 0,
+                                          bigtable::ClusterConfig::HDD)));
   auto instance_config =
-      bigtable::InstanceConfig(instance, diplay_name, clusters);
-  instance_admin_->CreateInstance(instance_config);
-  EXPECT_TRUE(IsInstancePresent(instance_admin_->ListInstances(), instance_id));
+      bigtable::InstanceConfig(instance_id, display_name, clusters)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+  EXPECT_NE(std::string::npos, instance_details.name().find(id));
+  EXPECT_TRUE(IsInstancePresent(instance_admin_->ListInstances(),
+                                instance_details.name()));
 
-  instance_admin_->DeleteInstance(instance_id);
-  EXPECT_FALSE(
-      IsInstancePresent(instance_admin_->ListInstances(), instance_id));
+  instance_admin_->DeleteInstance(id);
+  EXPECT_FALSE(IsInstancePresent(instance_admin_->ListInstances(),
+                                 instance_details.name()));
 }
 
 int main(int argc, char* argv[]) {
