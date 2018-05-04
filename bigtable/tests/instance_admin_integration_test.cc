@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/grpc_error.h"
 #include "bigtable/client/instance_admin.h"
 #include "bigtable/client/internal/make_unique.h"
 #include <gmock/gmock.h>
