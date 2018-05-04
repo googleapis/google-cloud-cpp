@@ -66,7 +66,7 @@ class Table {
    * The policies are passed by value, because this makes it easy for
    * applications to create them.  For example:
    *
-   * **Example**
+   * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
    * auto client = bigtable::CreateDefaultClient(...); // details ommitted
@@ -124,7 +124,7 @@ class Table {
    * The policies are passed by value, because this makes it easy for
    * applications to create them.  For example:
    *
-   * **Example**
+   * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
    * auto client = bigtable::CreateDefaultClient(...); // details ommitted
@@ -194,7 +194,7 @@ class Table {
    *     exception contains a copy of the original mutation, in case the
    *     application wants to retry, log, or otherwise handle the failure.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc apply
    */
   void Apply(SingleRowMutation&& mut);
@@ -216,7 +216,7 @@ class Table {
    *     mutations, in case the application wants to retry, log, or otherwise
    *     handle the failed mutations.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc bulk apply
    */
   void BulkApply(BulkMutation&& mut);
@@ -227,7 +227,7 @@ class Table {
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc read rows
    */
   RowReader ReadRows(RowSet row_set, Filter filter);
@@ -243,7 +243,7 @@ class Table {
    * @throws std::runtime_error if rows_limit is < 0. rows_limit = 0(default)
    * will return all rows
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc read rows with limit
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
@@ -259,7 +259,7 @@ class Table {
    *     has the contents of the Row.  Note that the contents may be empty
    *     if the filter expression removes all column families and columns.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc read row
    */
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
@@ -278,7 +278,7 @@ class Table {
    * @param false_mutations the mutations for the "filter did not pass" case.
    * @returns true if the filter passed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc check and mutate
    */
   bool CheckAndMutateRow(std::string row_key, Filter filter,
@@ -294,7 +294,7 @@ class Table {
    *     on the table, and may include the empty row key to indicate
    *     "end of table".
    *
-   * **Examples**
+   * @par Examples
    * @snippet bigtable_samples.cc sample row keys
    *
    * In addition, application developers can specify other collection types, for
@@ -327,7 +327,7 @@ class Table {
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns modified row
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc read modify write
    */
   template <typename... Args>

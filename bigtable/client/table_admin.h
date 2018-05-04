@@ -78,7 +78,7 @@ class TableAdmin {
    *     only populates the table_name() field at this time.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc create table
    */
   ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
@@ -93,7 +93,7 @@ class TableAdmin {
    *   - `VIEW_SCHEMA`: return the name and the schema.
    *   - `FULL`: return all the information about the table.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc list tables
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
@@ -114,7 +114,7 @@ class TableAdmin {
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc get table
    */
   ::google::bigtable::admin::v2::Table GetTable(
@@ -131,7 +131,7 @@ class TableAdmin {
    * @throws std::exception if the table could not be deleted before the RPC
    *     policies in effect gave up.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc delete table
    */
   void DeleteTable(std::string const& table_id);
@@ -146,7 +146,7 @@ class TableAdmin {
    * @return the resulting table schema.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc modify table
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
@@ -162,7 +162,7 @@ class TableAdmin {
    * @param row_key_prefix drop any rows that start with this prefix.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc drop rows by prefix
    */
   void DropRowsByPrefix(std::string const& table_id,
@@ -198,7 +198,7 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc drop all rows
    */
   void DropAllRows(std::string const& table_id);
