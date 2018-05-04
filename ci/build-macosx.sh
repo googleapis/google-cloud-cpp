@@ -21,12 +21,6 @@ if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   exit 0
 fi
 
-# On my local workstation I prefer to keep all the build artifacts in
-# a sub-directory, not so important for Travis builds, but that makes
-# this script easier to test.
-test -d .build || mkdir .build
-
-cd .build
-cmake ..
-make -j "${NCPU:-2}" all
-make -j "${NCPU:-2}" test || ( cat Testing/Temporary/LastTest.log; exit 1 )
+cmake -H. -B.build -DCMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}"
+cmake --build .build -- -j "${NCPU:-2}"
+(cd .build && ctest --output-on-failure)
