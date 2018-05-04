@@ -42,7 +42,7 @@ void CreateTable(bigtable::TableAdmin& admin, std::string const& table_id) {
 //! [list tables]
 void ListTables(bigtable::TableAdmin& admin) {
   auto tables =
-      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);
+      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
   for (auto const& table : tables) {
     std::cout << table.name() << std::endl;
   }
@@ -177,7 +177,15 @@ void ReadRow(bigtable::Table& table) {
   std::cout << "key: " << tuple.second.row_key() << "\n";
   for (auto& cell : tuple.second.cells()) {
     std::cout << "    " << cell.family_name() << ":" << cell.column_qualifier()
-              << " = <" << cell.value() << ">\n";
+                                                     << " = <";
+    if (cell.column_qualifier() == "counter") {
+      // This example uses "counter" to store 64-bit numbers in BigEndiant
+      // format, extract them as such:
+      std::cout << cell.value_as<bigtable::bigendian64_t>().get();
+    } else {
+      std::cout << cell.value();
+    }
+    std::cout << ">\n";
   }
   std::cout << std::flush;
 }
