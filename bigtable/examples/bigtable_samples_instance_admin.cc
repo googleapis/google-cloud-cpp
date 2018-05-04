@@ -18,17 +18,69 @@
 namespace btproto = ::google::bigtable::admin::v2;
 
 namespace {
+struct Usage {
+  std::string msg;
+};
+
+char const* ConsumeArg(int& argc, char* argv[]) {
+  if (argc < 2) {
+    return nullptr;
+  }
+  char const* result = argv[1];
+  std::copy(argv + 2, argv + argc, argv + 1);
+  argc--;
+  return result;
+}
+
+void PrintUsage(int argc, char* argv[], std::string const& msg) {
+  std::string const cmd = argv[0];
+  auto last_slash = std::string(cmd).find_last_of('/');
+  auto program = cmd.substr(last_slash + 1);
+  std::cerr << msg << "\nUsage: " << program
+            << " <command> <project_id> [arguments]\n\n"
+            << "Examples:\n";
+  for (auto example : {"create-instance my-project my-instance us-central1-f",
+                       "list-clusters my-project my-instance"}) {
+    std::cerr << "  " << program << " " << example << "\n";
+  }
+  std::cerr << std::flush;
+}
 
 //! [create instance]
-void CreateInstance(bigtable::InstanceAdmin instance_admin,
-                    std::string const& project_id,
-                    std::string const& instance_id) {
-  // TODO(#418) implement tests and examples for CreateInstance
+void CreateInstance(bigtable::InstanceAdmin instance_admin, int argc,
+                    char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-instance: <instance-id> <zone>"};
+  }
+  std::string const instance_id = ConsumeArg(argc, argv);
+  std::string const zone = ConsumeArg(argc, argv);
+
+  bigtable::DisplayName display_name("Put description here");
+  std::string cluster_id = instance_id + "-c1";
+  auto cluster_config =
+      bigtable::ClusterConfig(zone, 0, bigtable::ClusterConfig::HDD);
+  bigtable::InstanceConfig config(bigtable::InstanceId(instance_id),
+                                  display_name, {{cluster_id, cluster_config}});
+  config.set_type(bigtable::InstanceConfig::DEVELOPMENT);
+
+  auto future = instance_admin.CreateInstance(config);
+  // Most applications would simply call future.get(), here we show how to
+  // perform additional work while the long running operation completes.
+  std::cout << "Waiting for instance creation to complete ";
+  for (int i = 0; i != 100; ++i) {
+    if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
+      std::cout << "DONE: " << future.get().name() << std::endl;
+      return;
+    }
+    std::cout << '.' << std::flush;
+  }
+  std::cout << "TIMEOUT" << std::endl;
 }
 //! [create instance]
 
 //! [list instances]
-void ListInstances(bigtable::InstanceAdmin instance_admin) {
+void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
+                   char* argv[]) {
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances) {
     std::cout << instance.name() << std::endl;
@@ -37,22 +89,26 @@ void ListInstances(bigtable::InstanceAdmin instance_admin) {
 //! [list instances]
 
 //! [get instance]
-void GetInstance(bigtable::InstanceAdmin instance_admin,
-                 std::string const& project_id,
-                 std::string const& instance_id) {
+void GetInstance(bigtable::InstanceAdmin instance_admin, int argc,
+                 char* argv[]) {
   // TODO(#419) implement tests and examples for GetInstance
 }
 //! [get instance]
 
 //! [delete instance]
-void DeleteInstance(bigtable::InstanceAdmin instance_admin,
-                    std::string const& instance_id) {
+void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
+                    char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"delete-instance: <project-id> <instance-id>"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
   instance_admin.DeleteInstance(instance_id);
 }
 //! [delete instance]
 
 //! [list clusters]
-void ListClusters(bigtable::InstanceAdmin& instance_admin) {
+void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
+                  char* argv[]) {
   auto cluster_list = instance_admin.ListClusters();
   std::cout << "Cluster Name List" << std::endl;
   for (auto const& cluster : cluster_list) {
@@ -64,26 +120,13 @@ void ListClusters(bigtable::InstanceAdmin& instance_admin) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  auto print_usage = [argv]() {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(cmd).find_last_of('/');
-    auto program = cmd.substr(last_slash + 1);
-    std::cerr << "Usage: " << program << " <command> <project_id> <instance_id>"
-              << "\n\n"
-              << "Examples:\n"
-              << "  " << program << " create-instance my-project my-instance\n"
-              << "  " << program << " list-clusters my-project my-instance"
-              << std::endl;
-  };
-
-  if (argc != 4) {
-    print_usage();
+  if (argc < 3) {
+    PrintUsage(argc, argv, "Missing command");
     return 1;
   }
 
-  std::string const command = argv[1];
-  std::string const project_id = argv[2];
-  std::string const instance_id = argv[3];
+  std::string const command = ConsumeArg(argc, argv);
+  std::string const project_id = ConsumeArg(argc, argv);
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect instance admin client]
@@ -98,21 +141,25 @@ int main(int argc, char* argv[]) try {
   //! [connect instance admin]
 
   if (command == "create-instance") {
-    CreateInstance(instance_admin, project_id, instance_id);
+    CreateInstance(instance_admin, argc, argv);
   } else if (command == "list-instances") {
-    ListInstances(instance_admin);
+    ListInstances(instance_admin, argc, argv);
   } else if (command == "get-instance") {
-    GetInstance(instance_admin, project_id, instance_id);
+    GetInstance(instance_admin, argc, argv);
   } else if (command == "delete-instance") {
-    DeleteInstance(instance_admin, instance_id);
+    DeleteInstance(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
-    ListClusters(instance_admin);
+    ListClusters(instance_admin, argc, argv);
   } else {
-    std::cerr << "Unknown command: " << command << std::endl;
-    print_usage();
+    std::string msg("Unknown_command ");
+    msg += command;
+    PrintUsage(argc, argv, msg);
   }
 
   return 0;
+} catch (Usage const& ex) {
+  PrintUsage(argc, argv, ex.msg);
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
