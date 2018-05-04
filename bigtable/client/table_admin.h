@@ -14,16 +14,11 @@
 
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
-// clang-format off
-#include "bigtable/client/internal/diagnostic_push.h"
-// clang-format on
 
 #include "bigtable/client/admin_client.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/port_platform.h"
 #include "bigtable/client/internal/table_admin.h"
-#include "bigtable/client/internal/diagnostic_cxx14_extentions_ignored.h"
-#include "bigtable/client/internal/diagnostic_attributes_ignored.h"
 #include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
@@ -233,9 +228,9 @@ class TableAdmin {
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
    */
-  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA google::bigtable::admin::v2::Snapshot
-  GetSnapshot(bigtable::ClusterId const& cluster_id,
-              bigtable::SnapshotId const& snapshot_id);
+  google::bigtable::admin::v2::Snapshot GetSnapshot(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id);
 
   /**
    * Delete a snapshot.
@@ -250,9 +245,8 @@ class TableAdmin {
    * @param snapshot_id the id of the snapshot which needs to be deleted.
    * @throws std::exception if the operation cannot be completed.
    */
-  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA void DeleteSnapshot(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id);
+  void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                      bigtable::SnapshotId const& snapshot_id);
   //@}
 
   /**
@@ -263,9 +257,8 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    */
   template <template <typename...> class Collection = std::vector>
-  GOOGLE_CLOUD_CPP_PRIVATE_ALPHA
-      Collection<::google::bigtable::admin::v2::Snapshot>
-      ListSnapshots(bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
+  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
     grpc::Status status;
     auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
     if (not status.ok()) {
@@ -281,7 +274,4 @@ class TableAdmin {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-// clang-format off
-#include "bigtable/client/internal/diagnostic_pop.h"
-// clang-format on
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#define GOOGLE_CLOUD_CPP_DISABLE_PRIVATE_ALPHA_WARNINGS 1
 #include "bigtable/client/table_admin.h"
 #include "bigtable/client/grpc_error.h"
 #include "bigtable/client/testing/chrono_literals.h"
