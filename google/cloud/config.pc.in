@@ -1,4 +1,4 @@
-# Copyright 2018 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@ exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
-Name: The Cloud Bigtable C++ Client Library
-Description: Provides C++ APIs to access the Cloud Bigtable.
-Version: @PROJECT_VERSION@
+Name: @GOOGLE_CLOUD_CPP_PC_NAME@
+Description: @GOOGLE_CLOUD_CPP_PC_DESCRIPTION@
+Version: @DOXYGEN_PROJECT_NUMBER@
 
-Libs: -L${libdir} -lbigtable_client -lbigtable_protos
+Libs: -L${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
 Cflags: -I${includedir}
