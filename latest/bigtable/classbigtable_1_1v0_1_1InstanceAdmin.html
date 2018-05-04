@@ -255,7 +255,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a6826e63f8726dc579c005143a49b2212">DeleteInstance</a>(bigtable::InstanceAdmin instance_admin,</div><div class="line">                    std::string <span class="keyword">const</span>&amp; instance_id) {</div><div class="line">  instance_admin.DeleteInstance(instance_id);</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a6826e63f8726dc579c005143a49b2212">DeleteInstance</a>(bigtable::InstanceAdmin instance_admin,</div><div class="line">                    std::string <span class="keyword">const</span>&amp; instance_id) {</div><div class="line">  instance_admin.DeleteInstance(instance_id);</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a628dba6a913aa937fc784e1deea3ff8b"></a>
@@ -294,7 +295,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the list of clusters in the project. </p>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#ad49589cc748f05ec4f7a07d16ec3c31c">ListClusters</a>(bigtable::InstanceAdmin&amp; instance_admin) {</div><div class="line">  <span class="keyword">auto</span> cluster_list = instance_admin.ListClusters();</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Cluster Name List&quot;</span> &lt;&lt; std::endl;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; cluster : cluster_list) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Cluster Name:&quot;</span> &lt;&lt; cluster.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#ad49589cc748f05ec4f7a07d16ec3c31c">ListClusters</a>(bigtable::InstanceAdmin&amp; instance_admin) {</div><div class="line">  <span class="keyword">auto</span> cluster_list = instance_admin.ListClusters();</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Cluster Name List&quot;</span> &lt;&lt; std::endl;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; cluster : cluster_list) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Cluster Name:&quot;</span> &lt;&lt; cluster.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a22372449d93bc0f17b8781748cd4e056"></a>
@@ -313,7 +315,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the list of instances in the project. </p>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a22372449d93bc0f17b8781748cd4e056">ListInstances</a>(bigtable::InstanceAdmin instance_admin) {</div><div class="line">  <span class="keyword">auto</span> instances = instance_admin.ListInstances();</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; instance : instances) {</div><div class="line">    std::cout &lt;&lt; instance.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1InstanceAdmin.html#a22372449d93bc0f17b8781748cd4e056">ListInstances</a>(bigtable::InstanceAdmin instance_admin) {</div><div class="line">  <span class="keyword">auto</span> instances = instance_admin.ListInstances();</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; instance : instances) {</div><div class="line">    std::cout &lt;&lt; instance.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a2e880ece8b190a88351d2d31a4439abf"></a>

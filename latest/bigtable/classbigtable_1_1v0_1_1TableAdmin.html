@@ -362,7 +362,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e">CreateTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">      table_id, bigtable::TableConfig(</div><div class="line">                    {{<span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                     {<span class="stringliteral">&quot;foo&quot;</span>, bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">                    {}));</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a6e3c4e6dd4057944c38f1898e69f339e">CreateTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">      table_id, bigtable::TableConfig(</div><div class="line">                    {{<span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                     {<span class="stringliteral">&quot;foo&quot;</span>, bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">                    {}));</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a5a351081fbe08adc5b380e169d660083"></a>
@@ -438,7 +439,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#af4c02c5fc34839026117a1b35283705d">DeleteTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DeleteTable(table_id);</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#af4c02c5fc34839026117a1b35283705d">DeleteTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DeleteTable(table_id);</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="aabe7da02f76f5611538b0ad294a40e6c"></a>
@@ -470,7 +472,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aabe7da02f76f5611538b0ad294a40e6c">DropAllRows</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropAllRows(table_id);</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aabe7da02f76f5611538b0ad294a40e6c">DropAllRows</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropAllRows(table_id);</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="aa7b532f1e5bb6f41435510640e7d8d39"></a>
@@ -513,7 +516,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aa7b532f1e5bb6f41435510640e7d8d39">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#aa7b532f1e5bb6f41435510640e7d8d39">DropRowsByPrefix</a>(bigtable::TableAdmin&amp; admin,</div><div class="line">                      std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="af5285020b63ac454b113fa6d5eb3c338"></a>
@@ -641,7 +645,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a64cb787e730ee37187d05c9efca66aaf">GetTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> table =</div><div class="line">      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">  std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">    std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">    std::string gc_rule;</div><div class="line">    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                &amp;gc_rule);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#a64cb787e730ee37187d05c9efca66aaf">GetTable</a>(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> table =</div><div class="line">      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">  std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">    std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">    std::string gc_rule;</div><div class="line">    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                &amp;gc_rule);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a6a0c66bf3946d07856647dce645ff009"></a>
@@ -766,7 +771,8 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="a6dfa109c44585715ec1d7b154d37fcb8"></a>
@@ -810,7 +816,8 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ModifyTable(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.ModifyColumnFamilies(</div><div class="line">      table_id,</div><div class="line">      {bigtable::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div><div class="line">       bigtable::ColumnFamilyModification::Update(</div><div class="line">           <span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::Union(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(5),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(24 * 7)))),</div><div class="line">       bigtable::ColumnFamilyModification::Create(</div><div class="line">           <span class="stringliteral">&quot;bar&quot;</span>, bigtable::GcRule::Intersection(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(3),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(72))))});</div><div class="line"></div><div class="line">  std::string formatted;</div><div class="line">  google::protobuf::TextFormat::PrintToString(schema, &amp;formatted);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Schema modified to: &quot;</span> &lt;&lt; formatted &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment -->
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> ModifyTable(bigtable::TableAdmin&amp; admin, std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.ModifyColumnFamilies(</div><div class="line">      table_id,</div><div class="line">      {bigtable::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div><div class="line">       bigtable::ColumnFamilyModification::Update(</div><div class="line">           <span class="stringliteral">&quot;fam&quot;</span>, bigtable::GcRule::Union(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(5),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(24 * 7)))),</div><div class="line">       bigtable::ColumnFamilyModification::Create(</div><div class="line">           <span class="stringliteral">&quot;bar&quot;</span>, bigtable::GcRule::Intersection(</div><div class="line">                      bigtable::GcRule::MaxNumVersions(3),</div><div class="line">                      bigtable::GcRule::MaxAge(std::chrono::hours(72))))});</div><div class="line"></div><div class="line">  std::string formatted;</div><div class="line">  google::protobuf::TextFormat::PrintToString(schema, &amp;formatted);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Schema modified to: &quot;</span> &lt;&lt; formatted &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
 <a id="ac7ebab02504e6d6ea9f5109adf1652d9"></a>
