@@ -17,9 +17,15 @@ set -eu
 
 readonly BINDIR=$(dirname $0)
 source ${BINDIR}/run_examples_utils.sh
+source ${BINDIR}/../tools/run_emulator_utils.sh
 
-# Run the integration tests assuming the CI scripts have setup the PROJECT_ID
-# and ZONE_ID environment variable.
+# Start the emulator, setup the environment variables and traps to cleanup.
+start_emulator
+
+# Use a (likely unique) project id for the emulator.
+readonly PROJECT_ID="project-$(date +%s)"
+readonly ZONE_ID="fake-zone"
+
 run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
 run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
 run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"
