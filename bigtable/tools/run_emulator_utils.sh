@@ -17,13 +17,14 @@ EMULATOR_PID=0
 INSTANCE_ADMIN_EMULATOR_PID=0
 
 function kill_emulators {
+  echo "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}]"
   kill "${EMULATOR_PID}"
-  wait >/dev/null 2>&1
-  cat emulator.log >&2
-
   kill "${INSTANCE_ADMIN_EMULATOR_PID}"
   wait >/dev/null 2>&1
+  echo ======== instance-admin-emulator.log ===================
   cat instance-admin-emulator.log >&2
+  echo ======== emulator.log ===================
+  cat emulator.log >&2
 }
 
 function start_emulators {
@@ -36,7 +37,6 @@ function start_emulators {
   "${CBT_EMULATOR_CMD}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 
-  trap kill_emulator EXIT
   readonly INSTANCE_ADMIN_PORT=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
   "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${INSTANCE_ADMIN_PORT}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
