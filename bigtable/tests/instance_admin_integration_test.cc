@@ -73,6 +73,19 @@ TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   }
 }
 
+/// @test Verify that InstanceAdmin::GetInstances works as expected.
+TEST_F(InstanceAdminIntegrationTest, GetInstancesTest) {
+  // The emulator does not support instance operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  // TODO(#418) - make the test functional as part of the CreateInstance()
+  // implementation.
+  auto instance = instance_admin_->GetInstance("t0");
+  auto const npos = std::string::npos;
+  EXPECT_NE(npos, instance.name().find(instance_admin_->project_name()));
+}
+
 /// @test Verify that InstanceAdmin::DeleteInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   // The emulator does not support instance operations.
