@@ -36,12 +36,27 @@ cc_library(
     ],
 )
 
+genrule(
+    name = "nlohmann_json_include_hierarchy",
+    srcs = [ "@com_github_nlohmann_json_single_header//file" ],
+    outs = [ "nlohmann/json.hpp", ],
+    cmd = "cp $< $@ && echo GENDIR=$(GENDIR) @=$(@) S=$<",
+)
+
+cc_library(
+    name = "nlohmann_json",
+    hdrs = [ ":nlohmann_json_include_hierarchy" ],
+    includes = [ "." ],
+    deps = [],
+)
+
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = "storage_client_" + test.replace('/', '_').replace('.cc', ''),
     srcs = [test],
     deps = [
       ":storage_client",
+      ":nlohmann_json",
       "//google/cloud:google_cloud_cpp_common",
       "@com_google_googletest//:gtest",
       "@com_google_googletest//:gtest_main",

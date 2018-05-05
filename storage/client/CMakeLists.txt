@@ -18,6 +18,7 @@ configure_file(version_info.h.in version_info.h)
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    internal/nljson.h
     version.h
     version.cc)
 target_link_libraries(storage_client PUBLIC google_cloud_cpp_common CURL::CURL Threads::Threads
