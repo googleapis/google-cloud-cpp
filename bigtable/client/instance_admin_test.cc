@@ -301,6 +301,49 @@ type: PRODUCTION
   EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
 }
 
+/// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
+TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  std::string expected_text = R"(
+name: 'projects/my-project/instances/test-instance'
+display_name: 'foo bar'
+state: READY
+type: PRODUCTION
+)";
+  btproto::Instance expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, CreateInstance(_, _, _))
+      .WillOnce(Invoke([&expected](
+          grpc::ClientContext*, btproto::CreateInstanceRequest const& request,
+          google::longrunning::Operation* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        response->set_done(true);
+        response->set_name("operation-name");
+        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        any->PackFrom(expected);
+        response->set_allocated_response(any.release());
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
+
+  auto future = tested.CreateInstance(bigtable::InstanceConfig(
+      bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
+      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
 TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
   using ::testing::_;

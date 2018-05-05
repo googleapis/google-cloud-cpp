@@ -70,22 +70,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   }
 
   google::bigtable::admin::v2::Instance result;
-  while (not response.done()) {
-    google::longrunning::GetOperationRequest op;
-    op.set_name(response.name());
-    grpc::ClientContext context;
-    status = impl_.client_->GetOperation(&context, op, &response);
-    if (not status.ok()) {
-      if (not rpc_policy->on_failure(status)) {
-        bigtable::internal::RaiseRpcError(
-            status,
-            "unrecoverable error polling longrunning Operation in "
-            "CreateInstance()");
-      }
-      auto delay = backoff_policy->on_completion(status);
-      std::this_thread::sleep_for(delay);
-      continue;
-    }
+  do {
     if (response.done()) {
       if (response.has_response()) {
         auto const& any = response.response();
@@ -102,9 +87,23 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
             "long running op failed");
       }
     }
+    // Wait before polling, and then poll the operation to get the new
+    // "response.
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
-  }
+    google::longrunning::GetOperationRequest op;
+    op.set_name(response.name());
+    grpc::ClientContext context;
+    status = impl_.client_->GetOperation(&context, op, &response);
+    if (not status.ok()) {
+      if (not rpc_policy->on_failure(status)) {
+        bigtable::internal::RaiseRpcError(
+            status,
+            "unrecoverable error polling longrunning Operation in "
+            "CreateInstance()");
+      }
+    }
+  } while (true);
   return result;
 }
 
