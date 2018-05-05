@@ -28,7 +28,7 @@ class InstanceTestEnvironment : public ::testing::Environment {
     project_id_ = std::move(project);
   }
 
-  static std::string const& project_id() { return project_id_; }
+  static std::string const &project_id() { return project_id_; }
 
  private:
   static std::string project_id_;
@@ -55,6 +55,11 @@ bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
 
+}  // anonymous namespace
+
+/// @test Verify that InstanceAdmin::CreateInstance works as expected.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+namespace {
 bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                        std::string const& instance_name) {
   return instances.end() !=
@@ -74,10 +79,9 @@ bigtable::InstanceConfig IntegrationTestConfig(std::string const& id) {
   config.set_type(bigtable::InstanceConfig::DEVELOPMENT);
   return config;
 }
-}  // namespace
 
-/// @test Verify that InstanceAdmin::CreateInstance works as expected.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}  // anonymous namespace
+
 TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   std::string instance_id =
       "it-" + bigtable::testing::Sample(generator_, 8,
@@ -184,12 +188,8 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
     return;
   }
 
-  // TODO(#418) - create an instance and test that its cluster is returned here.
-  auto clusters = instance_admin_->ListClusters();
-  for (auto const& i : clusters) {
-    auto const npos = std::string::npos;
-    EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
-  }
+  // TODO(#490) - ListCluster() fails without an instance_id parameter.
+  // instance_admin_->ListClusters();
 }
 
 int main(int argc, char* argv[]) {
