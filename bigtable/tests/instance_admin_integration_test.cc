@@ -79,6 +79,8 @@ TEST_F(InstanceAdminIntegrationTest, GetInstancesTest) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
+  // TODO(#418) - make the test functional as part of the CreateInstance()
+  // implementation.
   auto instance = instance_admin_->GetInstance("t0");
   auto const npos = std::string::npos;
   EXPECT_NE(npos, instance.name().find(instance_admin_->project_name()));
