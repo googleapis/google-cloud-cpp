@@ -39,10 +39,13 @@ class InstanceAdminEmulator final
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
     if (ins.second) {
+      auto& stored_instance = ins.first->second;
+      stored_instance.set_name(name);
+      stored_instance.set_state(btadmin::Instance::READY);
       response->set_name("create-instance/" + name);
       response->set_done(true);
       auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
-      contents->PackFrom(request->instance());
+      contents->PackFrom(stored_instance);
       response->set_allocated_response(contents.release());
       return grpc::Status::OK;
     }
@@ -64,8 +67,11 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::ListInstancesRequest const* request,
       btadmin::ListInstancesResponse* response) override {
+    std::string prefix = request->parent() + "/instances/";
     for (auto const& kv : instances_) {
-      *response->add_instances() = kv.second;
+      if (0 == kv.first.find(prefix)) {
+        *response->add_instances() = kv.second;
+      }
     }
     return grpc::Status::OK;
   }
