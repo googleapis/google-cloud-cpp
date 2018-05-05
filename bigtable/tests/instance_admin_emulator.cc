@@ -19,6 +19,13 @@
 
 namespace btadmin = google::bigtable::admin::v2;
 
+/**
+ * In-memory implementation of `google.bigtable.admin.v2.InstanceAdmin`.
+ *
+ * This implementation is intended to test the client library APIs to manipulate
+ * instances, clusters, app profiles, and IAM permissions. Applications should
+ * not use it for testing or development, please consider using mocks instead.
+ */
 class InstanceAdminEmulator final
     : public btadmin::BigtableInstanceAdmin::Service {
  public:
@@ -234,9 +241,11 @@ class DefaultEmbeddedServer {
 };
 
 int main(int argc, char* argv[]) try {
-  std::string server_address("[::]:0");
+  std::string server_address("[::]:");
   if (argc == 2) {
-    server_address = argv[1];
+    server_address += argv[1];
+  } else {
+    server_address += "9090";
   }
   DefaultEmbeddedServer server(server_address);
   std::cout << "Listening on " << server.address();
