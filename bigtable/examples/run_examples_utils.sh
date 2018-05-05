@@ -15,6 +15,9 @@
 
 set -eu
 
+readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
+readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+
 # Run all the instance admin examples against production.
 #
 # This function allows us to keep a single place where all the examples are
