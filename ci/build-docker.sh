@@ -93,13 +93,13 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   cmake --build . --target install
   echo
-  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
-  make -C /v/ci/test-install all
-  echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
   cd /v/ci/test-install
-  CMAKE_PREFIX_PATH=/usr/local/share cmake -H. -B.build
-  cmake --build .build
+  cmake -H/v/ci/test-install -B/v/build-output/test-install-cmake
+  cmake --build /v/build-output/test-install-cmake
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
+  make -C /v/build-output/test-install-make -f/v/ci/test-install/Makefile VPATH=/v/ci/test-install
 fi
 
 # If document generation is enabled, run it now.
