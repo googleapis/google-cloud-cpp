@@ -91,7 +91,8 @@ class GenericPollingPolicy : public PollingPolicy,
       : Retry(std::move(retry)), Backoff(std::move(backoff)) {}
 
   std::unique_ptr<PollingPolicy> clone() override {
-    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
+    return std::unique_ptr<GenericPollingPolicy>(
+        new GenericPollingPolicy(*this));
   }
 
   bool IsPermanentError(grpc::StatusCode const& status_code) override {
