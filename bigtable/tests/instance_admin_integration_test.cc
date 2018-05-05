@@ -83,12 +83,6 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(instance_id);
-
-  std::cout << "instance_id = " << instance_id << std::endl;
-  std::string config_text;
-  google::protobuf::TextFormat::PrintToString(config.as_proto(), &config_text);
-  std::cout << "config = " << config_text << std::endl;
-
   if (UsingCloudBigtableEmulator()) {
     // We cannot test the functionality against the emulator, but we can at
     // least test that the gRPC calls are made and the right error is returned.
@@ -103,24 +97,42 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
 
   auto instances_before = instance_admin_->ListInstances();
   auto instance = instance_admin_->CreateInstance(config).get();
+  auto instances_after = instance_admin_->ListInstances();
+  instance_admin_->DeleteInstance(instance_id);
+  EXPECT_FALSE(IsInstancePresent(instances_before, instance.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_after, instance.name()));
   EXPECT_NE(std::string::npos, instance.name().find(instance_id));
   EXPECT_NE(std::string::npos,
             instance.name().find(InstanceTestEnvironment::project_id()));
   EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
-  auto instances_after = instance_admin_->ListInstances();
-  EXPECT_FALSE(IsInstancePresent(instances_before, instance.name()));
-  EXPECT_TRUE(IsInstancePresent(instances_after, instance.name()));
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   // The emulator does not support instance operations.
   if (UsingCloudBigtableEmulator()) {
+    // We cannot test the functionality against the emulator, but we can at
+    // least test that the gRPC calls are made and the right error is returned.
+    try {
+      auto instances = instance_admin_->ListInstances();
+    } catch (bigtable::GRpcError const& ex) {
+      EXPECT_EQ(grpc::StatusCode::UNIMPLEMENTED, ex.error_code());
+    }
     return;
   }
-  auto instances = instance_admin_->ListInstances();
-  for (auto const& i : instances) {
+
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto config = IntegrationTestConfig(instance_id);
+  auto instances_before = instance_admin_->ListInstances();
+  auto instance = instance_admin_->CreateInstance(config).get();
+  auto instances_after = instance_admin_->ListInstances();
+  instance_admin_->DeleteInstance(instance_id);
+  EXPECT_FALSE(IsInstancePresent(instances_before, instance.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_after, instance.name()));
+
+  for (auto const& i : instances_after) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }
@@ -141,34 +153,29 @@ TEST_F(InstanceAdminIntegrationTest, GetInstancesTest) {
 
 /// @test Verify that InstanceAdmin::DeleteInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
-  // The emulator does not support instance operations.
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
   if (UsingCloudBigtableEmulator()) {
+    // We cannot test the functionality against the emulator, but we can at
+    // least test that the gRPC calls are made and the right error is returned.
+    try {
+      instance_admin_->DeleteInstance(instance_id);
+    } catch (bigtable::GRpcError const& ex) {
+      EXPECT_EQ(grpc::StatusCode::UNIMPLEMENTED, ex.error_code());
+    }
     return;
   }
-  std::string id = "delete-instance-test";
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name(id);
-  EXPECT_FALSE(
-      IsInstancePresent(instance_admin_->ListInstances(),
-                        instance_admin_->project_name() + "/instances/" + id));
 
-  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters;
-  clusters.push_back(std::make_pair(
-      id + "-c1", bigtable::ClusterConfig("us-central1-f", 0,
-                                          bigtable::ClusterConfig::HDD)));
-  auto instance_config =
-      bigtable::InstanceConfig(instance_id, display_name, clusters)
-          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
-  EXPECT_NE(std::string::npos, instance_details.name().find(id));
-  EXPECT_TRUE(IsInstancePresent(instance_admin_->ListInstances(),
-                                instance_details.name()));
-
-  instance_admin_->DeleteInstance(id);
-  EXPECT_FALSE(IsInstancePresent(instance_admin_->ListInstances(),
-                                 instance_details.name()));
+  auto config = IntegrationTestConfig(instance_id);
+  auto instance = instance_admin_->CreateInstance(config).get();
+  auto instances_before = instance_admin_->ListInstances();
+  instance_admin_->DeleteInstance(instance_id);
+  auto instances_after = instance_admin_->ListInstances();
+  EXPECT_TRUE(IsInstancePresent(instances_before, instance.name()));
+  EXPECT_FALSE(IsInstancePresent(instances_after, instance.name()));
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
