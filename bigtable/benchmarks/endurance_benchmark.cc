@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/benchmark.h"
+#include "bigtable/benchmarks/random_mutation.h"
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -113,7 +114,7 @@ int main(int argc, char* argv[]) try {
 
 namespace {
 OperationResult RunOneApply(bigtable::Table& table, Benchmark const& benchmark,
-                            DefaultPRNG& generator) {
+                            bigtable::testing::DefaultPRNG& generator) {
   auto row_key = benchmark.MakeRandomKey(generator);
   bigtable::SingleRowMutation mutation(std::move(row_key));
   for (int field = 0; field != kNumFields; ++field) {
@@ -125,7 +126,7 @@ OperationResult RunOneApply(bigtable::Table& table, Benchmark const& benchmark,
 
 OperationResult RunOneReadRow(bigtable::Table& table,
                               Benchmark const& benchmark,
-                              DefaultPRNG& generator) {
+                              bigtable::testing::DefaultPRNG& generator) {
   auto row_key = benchmark.MakeRandomKey(generator);
   auto op = [&table, &row_key]() {
     auto row = table.ReadRow(
@@ -145,7 +146,7 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto data_client = benchmark.MakeDataClient();
   bigtable::Table table(std::move(data_client), table_id);
 
-  auto generator = MakeDefaultPRNG();
+  auto generator = bigtable::testing::MakeDefaultPRNG();
 
   auto start = std::chrono::steady_clock::now();
   auto end = start + test_duration;

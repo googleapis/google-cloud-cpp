@@ -12,35 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/random.h"
+#include "bigtable/benchmarks/random_mutation.h"
 #include "bigtable/benchmarks/constants.h"
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;
 
-TEST(BenchmarksRandom, Basic) {
-  // This is not a statistical test for PRNG, basically we want to make
-  // sure that MakeDefaultPRNG uses different seeds, or at least creates
-  // different series:
-  auto gen_string = []() {
-    auto g = MakeDefaultPRNG();
-    return Sample(g, 32, "0123456789abcdefghijklm");
-  };
-  std::string s0 = gen_string();
-  std::string s1 = gen_string();
-  EXPECT_NE(s0, s1);
-}
-
-TEST(BenchmarksRandom, RandomValue) {
-  auto g = MakeDefaultPRNG();
+TEST(BenchmarksRandomMutation, RandomValue) {
+  auto g = bigtable::testing::MakeDefaultPRNG();
   std::string val = MakeRandomValue(g);
   EXPECT_EQ(static_cast<std::size_t>(kFieldSize), val.size());
   std::string val2 = MakeRandomValue(g);
   EXPECT_NE(val, val2);
 }
 
-TEST(BenchmarksRandom, RandomMutation) {
-  auto g = MakeDefaultPRNG();
+TEST(BenchmarksRandomMutation, RandomMutation) {
+  auto g = bigtable::testing::MakeDefaultPRNG();
   auto m = MakeRandomMutation(g, 0).op;
 
   ASSERT_TRUE(m.has_set_cell());
