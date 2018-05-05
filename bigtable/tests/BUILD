@@ -28,3 +28,11 @@ load(":bigtable_client_integration_tests.bzl",
       "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_client_integration_tests]
+
+cc_binary(
+    name = "instance_admin_emulator",
+    srcs = "instance_admin_emulator.cc",
+    deps = [
+      "//bigtable/client:bigtable_client",
+    ],
+)
