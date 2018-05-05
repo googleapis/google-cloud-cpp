@@ -177,9 +177,9 @@ void ReadRow(bigtable::Table& table) {
   std::cout << "key: " << tuple.second.row_key() << "\n";
   for (auto& cell : tuple.second.cells()) {
     std::cout << "    " << cell.family_name() << ":" << cell.column_qualifier()
-                                                     << " = <";
+              << " = <";
     if (cell.column_qualifier() == "counter") {
-      // This example uses "counter" to store 64-bit numbers in BigEndiant
+      // This example uses "counter" to store 64-bit numbers in BigEndian
       // format, extract them as such:
       std::cout << cell.value_as<bigtable::bigendian64_t>().get();
     } else {
