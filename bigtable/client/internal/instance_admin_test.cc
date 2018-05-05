@@ -274,6 +274,44 @@ TEST_F(InstanceAdminTest, GetInstance) {
   EXPECT_EQ("projects/the-project/instances/t0", actual.name());
 }
 
+/// @test Verify recoverable errors for GetInstance
+TEST_F(InstanceAdminTest, GetInstanceRecoverableFailures) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
+                                     btproto::GetInstanceRequest const& request,
+                                     btproto::Instance* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto mock_instances = create_instance("", "");
+  EXPECT_CALL(*client_, GetInstance(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_instances));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  std::string instance_id = "t0";
+  auto actual = tested.GetInstance(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ("projects/the-project/instances/t0", actual.name());
+}
+
+/// @test Verify unrecoverable error for GetInstance
+TEST_F(InstanceAdminTest, GetInstanceUnrecoverableFailures) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, GetInstance(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  std::string instance_id = "t0";
+  auto actual = tested.GetInstance(instance_id, status);
+  EXPECT_FALSE(status.ok());
+}
+
 /// @test Verify positive scenario for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstance) {
   using namespace ::testing;
