@@ -68,6 +68,8 @@ add_library(bigtable_client
         idempotent_mutation_policy.cc
         mutations.h
         mutations.cc
+	polling_policy.h
+	polling_policy.cc
         read_modify_write_rule.h
         read_modify_write_rule.cc
         row.h
