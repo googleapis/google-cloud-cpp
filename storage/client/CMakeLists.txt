@@ -44,6 +44,7 @@ endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
+    internal/nljson_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
@@ -52,7 +53,7 @@ foreach (fname ${storage_client_unit_tests})
     set(target "storage_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-        storage_client gmock CURL::CURL storage_common_options)
+        storage_client gmock CURL::CURL storage_common_options nlohmann_json)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
