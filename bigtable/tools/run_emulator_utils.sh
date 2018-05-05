@@ -13,14 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-function kill_emulator {
+EMULATOR_PID=0
+INSTANCE_ADMIN_EMULATOR_PID=0
+
+function kill_emulators {
   kill "${EMULATOR_PID}"
   wait >/dev/null 2>&1
   cat emulator.log >&2
+
+  kill "${INSTANCE_ADMIN_EMULATOR_PID}"
+  wait >/dev/null 2>&1
+  cat instance-admin-emulator.log >&2
 }
 
-function start_emulator {
-  echo "Launching Cloud Bigtable emulator in the background"
+function start_emulators {
+  echo "Launching Cloud Bigtable emulators in the background"
+  trap kill_emulators EXIT
+
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
   readonly PORT=${EMULATOR_PORT:-9000}
@@ -28,6 +37,9 @@ function start_emulator {
   EMULATOR_PID=$!
 
   trap kill_emulator EXIT
+  readonly INSTANCE_ADMIN_PORT=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
+  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${INSTANCE_ADMIN_PORT}" >instance-admin-emulator.log 2>&1 </dev/null &
+  INSTANCE_ADMIN_EMULATOR_PID=$!
 
   export BIGTABLE_EMULATOR_HOST="localhost:${PORT}"
   # Avoid repetition
@@ -51,4 +63,25 @@ function start_emulator {
   fi
 
   echo "Successfully connected to the Cloud Bigtable emulator."
+
+  export BIGTABLE_EMULATOR_HOST="localhost:${INSTANCE_ADMIN_PORT}"
+  delay=1
+  connected=no
+  for attempt in $ATTEMPTS; do
+    if "${CBT_CMD}" $CBT_ARGS listinstances >/dev/null 2>&1; then
+      connected=yes
+      break
+    fi
+    sleep $delay
+    delay=$((delay * 2))
+  done
+
+  if [ "${connected}" = "no" ]; then
+    echo "Cannot connect to Cloud Bigtable Instance Admin emulator; aborting test." >&2
+    exit 1
+  fi
+  echo "Successfully connected to the Cloud Bigtable Instance Admin emulator."
+
+  export BIGTABLE_EMULATOR_HOST="localhost:${PORT}"
+  export BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST="localhost:${INSTANCE_ADMIN_PORT}"
 }

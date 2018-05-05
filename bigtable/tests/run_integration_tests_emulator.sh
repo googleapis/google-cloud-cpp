@@ -21,7 +21,7 @@ source ${BINDIR}/integration_tests_utils.sh
 source ${BINDIR}/../tools/run_emulator_utils.sh
 
 # Start the emulator, setup the environment variables and traps to cleanup.
-start_emulator
+start_emulators
 
 # The project and instance do not matter for the Cloud Bigtable emulator.
 # Use a unique project name to allow multiple runs of the test with
