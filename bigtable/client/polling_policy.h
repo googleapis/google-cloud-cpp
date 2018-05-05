@@ -90,7 +90,7 @@ class GenericPollingPolicy : public PollingPolicy,
   GenericPollingPolicy(Retry retry, Backoff backoff)
       : Retry(std::move(retry)), Backoff(std::move(backoff)) {}
 
-  std::unique_ptr<PollingPolicy> clone() {
+  std::unique_ptr<PollingPolicy> clone() override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
 
