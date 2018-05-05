@@ -94,11 +94,11 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   cmake --build . --target install
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
-  cd /v/ci/test-install
   cmake -H/v/ci/test-install -B/v/build-output/test-install-cmake
   cmake --build /v/build-output/test-install-cmake
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
+  mkdir -p /v/build-output/test-install-make
   make -C /v/build-output/test-install-make -f/v/ci/test-install/Makefile VPATH=/v/ci/test-install
 fi
 
