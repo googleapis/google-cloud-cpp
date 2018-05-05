@@ -28,7 +28,7 @@ class InstanceTestEnvironment : public ::testing::Environment {
     project_id_ = std::move(project);
   }
 
-  static std::string const &project_id() { return project_id_; }
+  static std::string const& project_id() { return project_id_; }
 
  private:
   static std::string project_id_;
@@ -63,10 +63,10 @@ namespace {
 bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                        std::string const& instance_name) {
   return instances.end() !=
-      std::find_if(instances.begin(), instances.end(),
-                   [&instance_name](btadmin::Instance const &i) {
-                     return i.name() == instance_name;
-                   });
+         std::find_if(instances.begin(), instances.end(),
+                      [&instance_name](btadmin::Instance const& i) {
+                        return i.name() == instance_name;
+                      });
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(std::string const& id) {
