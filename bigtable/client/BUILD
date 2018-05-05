@@ -20,11 +20,11 @@ genrule(
     srcs = ["build_info.cc.in"],
     outs = ["build_info.cc"],
     cmd = """
-sed -e "s;@CMAKE_CXX_COMPILER_ID@;Clang;" \
-    -e "s;@CMAKE_CXX_COMPILER_VERSION@;4.0.1;" \
+sed -e "s;@CMAKE_CXX_COMPILER_ID@;$(C_COMPILER);" \
+    -e "s;@CMAKE_CXX_COMPILER_VERSION@;unknown-bazel;" \
     -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;@CMAKE_CXX_FLAGS_.*}@;$(CC_FLAGS);" \
-    -e "s;@GIT_HEAD@;piper;" < $< > $@
+    -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
+    -e "s;@GIT_HEAD@;unknown;" < $< > $@
   """,
 )
 
