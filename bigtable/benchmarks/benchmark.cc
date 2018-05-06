@@ -26,7 +26,9 @@ double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
 namespace bigtable {
 namespace benchmarks {
 Benchmark::Benchmark(BenchmarkSetup const& setup)
-    : setup_(setup), key_width_(KeyWidth()) {
+    : setup_(setup),
+      key_width_(KeyWidth()),
+      client_options_(grpc::InsecureChannelCredentials()) {
   if (setup_.use_embedded_server()) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
@@ -36,7 +38,8 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
 
     client_options_.set_admin_endpoint(address);
     client_options_.set_data_endpoint(address);
-    client_options_.SetCredentials(grpc::InsecureChannelCredentials());
+  } else {
+    client_options_ = bigtable::ClientOptions();
   }
   client_options_.set_connection_pool_size(
       static_cast<std::size_t>(setup_.thread_count()));
