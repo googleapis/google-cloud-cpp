@@ -35,6 +35,9 @@ std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
       new LimitedTimeRetryPolicy(maximum_retry_period));
 }
 
+LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()
+    : maximum_duration_(maximum_retry_period) {}
+
 std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
   return std::unique_ptr<RPCRetryPolicy>(
       new LimitedErrorCountRetryPolicy(*this));

@@ -15,11 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_POLLING_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_POLLING_POLICY_H_
 
-#include <grpc++/grpc++.h>
-
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 #include "bigtable/client/version.h"
+#include <grpc++/grpc++.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -45,7 +44,14 @@ class PollingPolicy {
    * Return true if `status` represents a permanent error that cannot be
    * retried.
    */
-  virtual bool IsPermanentError(grpc::StatusCode const& status_code) = 0;
+  virtual bool IsPermanentError(grpc::Status const& status) = 0;
+
+  /**
+   * Handle an RPC failure.
+   *
+   * @return true if the RPC operation should be retried.
+   */
+  virtual bool OnFailure(grpc::Status const& status) = 0;
 
   /**
    * Return true if we cannot try again.
@@ -58,48 +64,30 @@ class PollingPolicy {
   virtual std::chrono::milliseconds WaitPeriod() = 0;
 };
 
-// Define the defaults using a pre-processor macro, this allows the application
-// developers to change the defaults for their application by compiling with
-// different values.
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
-#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::minutes(6)
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
-
-const auto maximum_retry_period = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY std::chrono::milliseconds(10)
-#endif  // BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY std::chrono::minutes(5)
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-
-const auto default_initial_delay = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
-const auto default_maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
-
 template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
 class GenericPollingPolicy : public PollingPolicy,
                              private Retry,
                              private Backoff {
  public:
-  GenericPollingPolicy()
-      : Retry(maximum_retry_period),
-        Backoff(default_initial_delay, default_maximum_delay) {}
+  GenericPollingPolicy() : Retry(), Backoff() {}
   GenericPollingPolicy(Retry retry, Backoff backoff)
       : Retry(std::move(retry)), Backoff(std::move(backoff)) {}
 
-  std::unique_ptr<PollingPolicy> clone() override {
-    return std::unique_ptr<GenericPollingPolicy>(
-        new GenericPollingPolicy(*this));
+  using PollingPolicy::clone;
+  std::unique_ptr<PollingPolicy> clone() {
+    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
 
-  bool IsPermanentError(grpc::StatusCode const& status_code) override {
-    return not Retry::can_retry(status_code);
+  bool IsPermanentError(grpc::Status const& status) override {
+    return not Retry::can_retry(status.error_code());
   }
 
-  bool Exhausted() override { return not Retry::on_failure(grpc::Status::OK); }
+  bool OnFailure(grpc::Status const& status) override {
+    return Retry::on_failure(status);
+  }
+
+  bool Exhausted() override { return not OnFailure(grpc::Status::OK); }
 
   std::chrono::milliseconds WaitPeriod() override {
     return Backoff::on_completion(grpc::Status::OK);

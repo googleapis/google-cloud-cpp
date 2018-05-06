@@ -37,6 +37,10 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
       default_initial_delay, default_maximum_delay));
 }
 
+ExponentialBackoffPolicy::ExponentialBackoffPolicy()
+    : current_delay_range_(default_initial_delay),
+      maximum_delay_(default_maximum_delay) {}
+
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(*this));
 }

@@ -94,6 +94,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  */
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
+  LimitedTimeRetryPolicy();
   template <typename duration_t>
   explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
       : maximum_duration_(std::chrono::duration_cast<std::chrono::milliseconds>(

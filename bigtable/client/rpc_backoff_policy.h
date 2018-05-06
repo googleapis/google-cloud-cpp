@@ -74,6 +74,7 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy();
  */
 class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
+  ExponentialBackoffPolicy();
   template <typename duration_t1, typename duration_t2>
   ExponentialBackoffPolicy(duration_t1 initial_delay, duration_t2 maximum_delay)
       : current_delay_range_(
