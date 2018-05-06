@@ -17,19 +17,14 @@
 
 /// @test Verify that we can compile agains the nlohmann::json library.
 TEST(NlJsonTest, Simple) {
-  storage::internal::nl::json json2 = {
+  storage::internal::nl::json json = {
       {"pi", 3.141},
       {"happy", true},
-      {"name", "Niels"},
       {"nothing", nullptr},
-      {"answer", {
-          {"everything", 42}
-      }},
+      {"answer", {{"everything", 42}}},
       {"list", {1, 0, 2}},
-      {"object", {
-          {"currency", "USD"},
-          {"value", 42.99}
-      }}
-  };
-  EXPECT_NEAR(3.141, json2["pi"], 0.001);
+      {"object", {{"currency", "USD"}, {"value", 42.99}}}};
+  EXPECT_NEAR(3.141, json["pi"], 0.001);
+  EXPECT_EQ("USD", json["object"]["currency"]);
+  EXPECT_EQ(1, json["list"][0]);
 }
