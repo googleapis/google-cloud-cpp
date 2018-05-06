@@ -14,15 +14,14 @@
 
 include(ExternalProject)
 ExternalProject_Add(nlohmann_json_project
-        URL https://github.com/nlohmann/json/releases/download/v3.1.2/json.hpp
-        URL_HASH SHA256=fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733
-        DOWNLOAD_NO_EXTRACT 1
         PREFIX "${CMAKE_BINARY_DIR}/external/nlohmann_json"
+        DOWNLOAD_COMMAND
+            ${CMAKE_COMMAND} -DDEST=<INSTALL_DIR>/src -P ${PROJECT_SOURCE_DIR}/cmake/DownloadNlohmannJson.cmake
         CONFIGURE_COMMAND ""
         # This is not great, we abuse the `build` step to create the target directory.
         # Unfortunately there is no way to specify two commands in the install step.
         BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include/nlohmann
-        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/../json.hpp <INSTALL_DIR>/include/nlohmann/json.hpp
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <INSTALL_DIR>/src/json.hpp <INSTALL_DIR>/include/nlohmann/json.hpp
         LOG_DOWNLOAD ON
         LOG_INSTALL ON)
 add_library(nlohmann_json INTERFACE)
