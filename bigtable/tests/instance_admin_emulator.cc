@@ -246,7 +246,7 @@ class DefaultEmbeddedServer {
   std::string address_;
 };
 
-int main(int argc, char* argv[]) try {
+int run_server(int argc, char* argv[]) {
   std::string server_address("[::]:");
   if (argc == 2) {
     server_address += argv[1];
@@ -258,7 +258,15 @@ int main(int argc, char* argv[]) try {
   server.Wait();
 
   return 0;
+}
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+int main(int argc, char* argv[]) try {
+  return run_server(argc, argv);
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ Exception raised: " << ex.what() << std::endl;
   return 1;
 }
+#else
+int main(int argc, char* argv[]) { return run_server(argc, argv); }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
