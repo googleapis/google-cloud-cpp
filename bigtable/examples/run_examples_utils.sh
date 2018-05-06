@@ -24,6 +24,11 @@ readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
 function run_all_instance_admin_examples() {
+  if [ ! -x ../examples/bigtable_samples_instance_admin ]; then
+    echo "Will not run the examples as the examples were not built"
+    return
+  fi
+
   local project_id=$1
   shift
   local zone_id=$1
@@ -64,6 +69,11 @@ function run_all_instance_admin_examples() {
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
 function run_all_table_admin_examples() {
+  if [ ! -x ../examples/bigtable_samples ]; then
+    echo "Will not run the examples as the examples were not built"
+    return
+  fi
+
   local project_id=$1
   shift
   local zone_id=$1
