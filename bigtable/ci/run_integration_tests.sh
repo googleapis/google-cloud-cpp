@@ -31,6 +31,10 @@ source "${BINDIR}/../../ci/colors.sh"
 for benchmark in endurance apply_read_latency scan_throughput; do
   LOG=$(mktemp --tmpdir "bigtable_benchmarks_${benchmark}_XXXXXXXXXX.log")
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${benchmark}"
+  if [ ! -x ./bigtable/benchmarks/${benchmark}_benchmark ]; then
+    echo "${COLOR_YELLOW}[ SKIPPED  ]${COLOR_RESET} ${benchmark} benchmark"
+    continue
+  fi
   ./bigtable/benchmarks/${benchmark}_benchmark unused unused 1 5 1000 true >${LOG} 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${benchmark} benchmark"
