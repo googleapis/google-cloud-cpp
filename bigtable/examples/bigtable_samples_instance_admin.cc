@@ -91,7 +91,11 @@ void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
 //! [get instance]
 void GetInstance(bigtable::InstanceAdmin instance_admin, int argc,
                  char* argv[]) {
-  // TODO(#419) implement tests and examples for GetInstance
+  if (argc != 2) {
+    throw Usage{"get-instance: <project-id> <instance-id>"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
+  instance_admin.GetInstance(instance_id);
 }
 //! [get instance]
 
