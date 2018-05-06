@@ -30,9 +30,8 @@ function run_all_instance_admin_examples() {
   fi
 
   local project_id=$1
-  shift
-  local zone_id=$1
-  shift
+  local zone_id=$2
+  shift 2
 
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
@@ -45,6 +44,7 @@ function run_all_instance_admin_examples() {
   echo
   echo "Run create-instance example."
   ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
+  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run list-instances example."
@@ -54,12 +54,14 @@ function run_all_instance_admin_examples() {
   echo "Run get-instance example."
   ../examples/bigtable_samples_instance_admin get-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
 
+#  TODO(#490) - disabled until ListClusters works correctly.
 #  echo
 #  echo "Run list-clusters example."
 #  ../examples/bigtable_samples_instance_admin list-clusters "${project_id}" || ${ignore_unimplemented}
 
   echo
   echo "Run delete-instance example."
+  trap - EXIT
   ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
 }
 
@@ -75,9 +77,8 @@ function run_all_table_admin_examples() {
   fi
 
   local project_id=$1
-  shift
-  local zone_id=$1
-  shift
+  local zone_id=$2
+  shift 2
 
   local ignore_unimplemented="/bin/false"
   if [ ! -z "${BIGTABLE_EMULATOR_HOST:-}" ]; then
@@ -87,51 +88,59 @@ function run_all_table_admin_examples() {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
+  # Use the same table in all the tests.
+  local -r TABLE="sample-table"
+
   # Create an instance to run these examples.
   ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
+  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run create-table example."
-  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run list-tables example."
-  ../examples/bigtable_samples list-tables "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run get-table example."
-  ../examples/bigtable_samples get-table "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   # Populate some data on the table, so the next examples are meaningful.
-  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run modify-table example."
-  ../examples/bigtable_samples modify-table "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run drop-rows-by-prefix example."
-  ../examples/bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run drop-all-rows example."
-  ../examples/bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run delete-table example."
-  ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  # Delete the instance at the end examples.
+  trap - EXIT
   ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
 }
 
 function run_all_data_examples {
+  if [ ! -x ../examples/bigtable_samples ]; then
+    echo "Will not run the examples as the examples were not built"
+    return
+  fi
+
   local project_id=$1
-  shift
-  local zone_id=$1
-  shift
+  local zone_id=$2
+  shift 2
 
   local ignore_unimplemented="/bin/false"
   if [ ! -z "${BIGTABLE_EMULATOR_HOST:-}" ]; then
@@ -141,55 +150,59 @@ function run_all_data_examples {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
+  # Use the same table in all the tests.
+  local -r TABLE="sample-table"
+
   # Create an instance to run these examples.
   ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
+  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" "${zone_id}"' EXIT
 
   echo
   echo "Run create-table example."
-  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run apply example."
-  ../examples/bigtable_samples apply "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples apply "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run bulk-apply example."
-  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run read-row example."
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run read-rows-with-limit example."
-  ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run scan/read-rows example."
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run sample-rows example."
-  ../examples/bigtable_samples sample-rows "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples sample-rows "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run check-and-mutate example."
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo
   echo "Run read-modify-write example."
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" sample-table
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" sample-table
+  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  # Delete the instance at the end examples.
+  trap - EXIT
   ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
 }

@@ -15,8 +15,8 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
-source ${BINDIR}/run_examples_utils.sh
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/run_examples_utils.sh"
 
 # Run the integration tests assuming the CI scripts have setup the PROJECT_ID
 # and ZONE_ID environment variable.
