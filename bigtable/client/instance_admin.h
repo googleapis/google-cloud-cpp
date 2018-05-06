@@ -70,6 +70,9 @@ class InstanceAdmin {
    *   of the failure, or (c) the state of the operation is unknown after the
    *   time allocated by the retry policies has expired, in which case the
    *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create instance
    */
   std::future<google::bigtable::admin::v2::Instance> CreateInstance(
       InstanceConfig instance_config);

@@ -47,8 +47,6 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   auto rpc_policy = impl_.rpc_retry_policy_->clone();
   auto backoff_policy = impl_.rpc_backoff_policy_->clone();
 
-  std::string error = "InstanceAdmin::CreateInstance(" + project_id() + ")";
-
   // Build the RPC request, try to minimize copying.
   auto request = instance_config.as_proto_move();
   request.set_parent(project_name());
@@ -64,7 +62,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   auto response = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateInstance,
-      request, error.c_str(), status, false);
+      request, "InstanceAdmin::CreateInstance", status, false);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status,
                                       "unrecoverable error in MakeCall()");
