@@ -151,8 +151,7 @@ int main(int argc, char* argv[]) try {
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
   } else {
-    std::string msg("Unknown_command ");
-    msg += command;
+    std::string msg("Unknown_command: " + command);
     PrintUsage(argc, argv, msg);
   }
 
