@@ -92,7 +92,7 @@ matrix:
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
-      env: DISTRO=ubuntu DISTRO_VERSION=14.04 BUILD_TYPE=Coverage
+      env: DISTRO=ubuntu DISTRO_VERSION=18  .04 BUILD_TYPE=Coverage
     - # Compile with exceptions disabled.
       os: linux
       compiler: gcc

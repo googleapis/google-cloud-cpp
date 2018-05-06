@@ -33,8 +33,11 @@ fi
 
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
-bash <(curl -s https://codecov.io/bash) >codecov.log 2>&1 \
-  || echo "codecov.io script failed."
+readonly CI_ENV=`bash <(curl -s https://codecov.io/env)`
+readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+sudo docker run $CI_ENV \
+    --volume $PWD:/v --workdir /v \
+    "${IMAGE}:tip" /bin/bash -c "/bin/bash <(curl -s https://codecov.io/bash)"
 
 echo "================================================================"
 head -1000 codecov.log
