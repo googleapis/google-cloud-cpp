@@ -77,7 +77,7 @@ class GenericPollingPolicy : public PollingPolicy,
   using LimitedTimeRetryPolicy::clone;
   using ExponentialBackoffPolicy::clone;
 
-  std::unique_ptr<PollingPolicy> clone() {
+  std::unique_ptr<PollingPolicy> clone() override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
 
