@@ -21,6 +21,13 @@ set(STORAGE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # gcc-4.8 C++11 support has bugs preventing us from using it.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+        message(FATAL_ERROR "GCC version must be at least 4.9!")
+    endif()
+endif ()
+
 # Configure sub-project specific Doxygen parameters.
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
