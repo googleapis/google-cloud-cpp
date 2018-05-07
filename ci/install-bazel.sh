@@ -18,13 +18,22 @@ set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
-     g++ \
+     libcurl4-openssl-dev \
+     libssl-dev \
      pkg-config \
      python \
+     python-software-properties \
+     software-properties-common \
      unzip \
      wget \
      zip \
      zlib1g-dev
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update
+sudo apt-get install -y gcc-7 g++-7
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100
 
 readonly BAZEL_VERSION=0.12.0
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
