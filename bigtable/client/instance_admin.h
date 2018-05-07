@@ -85,7 +85,12 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
-  /// Get the details of @p instance_id.
+  /**
+   * Return the details of @p instance_id.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get instance
+   */
   google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id);
 
