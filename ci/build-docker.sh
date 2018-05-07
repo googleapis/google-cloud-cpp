@@ -94,12 +94,15 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   cmake --build . --target install
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
-  cmake -H/v/ci/test-install -B/v/build-output/test-install-cmake
-  cmake --build /v/build-output/test-install-cmake
+  readonly TEST_INSTALL_DIR=/v/ci/test-install
+  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR=/v/build-output/test-install-cmake
+  readonly TEST_INSTALL_MAKE_OUTPUT_DIR=/v/build-output/test-install-make
+  cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
+  cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
-  mkdir -p /v/build-output/test-install-make
-  make -C /v/build-output/test-install-make -f/v/ci/test-install/Makefile VPATH=/v/ci/test-install
+  mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
+  make -C "${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}"
 fi
 
 # If document generation is enabled, run it now.
