@@ -14,6 +14,7 @@
 
 #include "bigtable/client/instance_admin.h"
 #include "bigtable/client/instance_admin_client.h"
+#include <google/protobuf/text_format.h>
 
 namespace btproto = ::google::bigtable::admin::v2;
 
@@ -95,7 +96,10 @@ void GetInstance(bigtable::InstanceAdmin instance_admin, int argc,
     throw Usage{"get-instance: <project-id> <instance-id>"};
   }
   std::string instance_id = ConsumeArg(argc, argv);
-  instance_admin.GetInstance(instance_id);
+  auto instance = instance_admin.GetInstance(instance_id);
+  std::string instance_detail;
+  google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
+  std::cout << "GetInstance details : " << instance_detail << std::endl;
 }
 //! [get instance]
 
