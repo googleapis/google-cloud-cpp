@@ -16,19 +16,6 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 genrule(
-    name = "generate_build_info",
-    srcs = ["build_info.cc.in"],
-    outs = ["build_info.cc"],
-    cmd = """
-sed -e "s;@CMAKE_CXX_COMPILER_ID@;$(C_COMPILER);" \
-    -e "s;@CMAKE_CXX_COMPILER_VERSION@;unknown-bazel;" \
-    -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GIT_HEAD@;unknown;" < $< > $@
-  """,
-)
-
-genrule(
     name = "generate_version_info",
     srcs = ["version_info.h.in"],
     outs = ["version_info.h"],
@@ -42,9 +29,11 @@ sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/0/' \
 load(":storage_client.bzl", "storage_client_SRCS", "storage_client_HDRS")
 cc_library(
     name = "storage_client",
-    srcs = storage_client_SRCS + [ "build_info.cc" ],
+    srcs = storage_client_SRCS,
     hdrs = storage_client_HDRS + [ "version_info.h" ],
-    deps = [],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+    ],
 )
 
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
@@ -53,6 +42,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     srcs = [test],
     deps = [
       ":storage_client",
+      "//google/cloud:google_cloud_cpp_common",
       "@com_google_googletest//:gtest",
       "@com_google_googletest//:gtest_main",
     ],

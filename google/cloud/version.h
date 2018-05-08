@@ -12,54 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
+#ifndef GOOGLE_CLOUD_CPP_VERSION_H_
+#define GOOGLE_CLOUD_CPP_VERSION_H_
 
-#include "google/cloud/version.h"
-#include "storage/client/version_info.h"
+#include "google/cloud/internal/port_platform.h"
+#include "google/cloud/internal/version_info.h"
 #include <string>
 
-#define STORAGE_CLIENT_NS                              \
-  GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
-                         STORAGE_CLIENT_VERSION_MINOR)
+#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi) v##Ma
+#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi)
+#define GOOGLE_CLOUD_CPP_NS                              \
+  GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
+                         GOOGLE_CLOUD_CPP_VERSION_MINOR)
 
+namespace google {
 /**
- * Contains all the Google Cloud Storage C++ client APIs.
+ * Contains all the Google Cloud C++ Library APIs.
  */
-namespace storage {
+namespace cloud {
 /**
- * The Google Cloud Storage C++ client APIs inlined, versioned namespace.
+ * The Google Cloud C++ Library inlined, versioned namespace.
  *
- * Applications may need to link multiple versions of the Google Cloud Storage
- * C++ client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `storage::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `storage::v1::Foo`.
+ * Applications may need to link multiple versions of the Google Cloud C++
+ * Libraries, for example, if they link a library that uses an older version of
+ * the libraries than they do.  This namespace is inlined, so applications can
+ * use `google::cloud::Foo` in their source, but the symbols are versioned,
+ * i.e., the symbol becomes `google::cloud::v1::Foo`.
  *
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * The Google Cloud Storage C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_major() { return STORAGE_CLIENT_VERSION_MAJOR; }
+int constexpr version_major() { return GOOGLE_CLOUD_CPP_VERSION_MAJOR; }
 
 /**
  * The Google Cloud Storage C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_minor() { return STORAGE_CLIENT_VERSION_MINOR; }
+int constexpr version_minor() { return GOOGLE_CLOUD_CPP_VERSION_MINOR; }
 
 /**
  * The Google Cloud Storage C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
+int constexpr version_patch() { return GOOGLE_CLOUD_CPP_VERSION_PATCH; }
 
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr version() {
@@ -69,7 +72,8 @@ int constexpr version() {
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
+#endif  // GOOGLE_CLOUD_CPP_VERSION_H_

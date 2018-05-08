@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/setup.h"
-#include "bigtable/client/build_info.h"
 #include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/testing/random.h"
+#include "google/cloud/internal/build_info.h"
 #include <cctype>
 #include <iomanip>
 #include <sstream>
@@ -33,8 +33,9 @@ std::string FormattedStartTime() {
 }
 
 std::string FormattedAnnotations() {
-  std::string notes = bigtable::version_string() + ";" + bigtable::compiler +
-                      ";" + bigtable::compiler_flags;
+  std::string notes = bigtable::version_string() + ";" +
+                      google::cloud::internal::compiler + ";" +
+                      google::cloud::internal::compiler_flags;
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
   return notes;
