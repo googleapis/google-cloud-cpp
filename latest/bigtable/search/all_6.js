@@ -6,7 +6,6 @@ var searchData=
   ['getoperation',['GetOperation',['../classbigtable_1_1v0_1_1InstanceAdminClient.html#a4ca2540017d8a54344b4aa5f3cdb2da4',1,'bigtable::v0::InstanceAdminClient']]],
   ['getsnapshot',['GetSnapshot',['../classbigtable_1_1v0_1_1AdminClient.html#a7009035f71a19c149c865dfc6313da75',1,'bigtable::v0::AdminClient::GetSnapshot()'],['../classbigtable_1_1v0_1_1TableAdmin.html#af78b10d08e7326197167df77342f3eee',1,'bigtable::v0::TableAdmin::GetSnapshot()']]],
   ['gettable',['GetTable',['../classbigtable_1_1v0_1_1AdminClient.html#a3ca0a28a5a609800ca1018135a965e37',1,'bigtable::v0::AdminClient::GetTable()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a64cb787e730ee37187d05c9efca66aaf',1,'bigtable::v0::TableAdmin::GetTable()']]],
-  ['gitrev',['gitrev',['../namespacebigtable_1_1v0.html#ab1d1fa2d38a4a3487a19dd5a6bd21a28',1,'bigtable::v0']]],
   ['grpc_5ferror_2ecc',['grpc_error.cc',['../grpc__error_8cc.html',1,'']]],
   ['grpc_5ferror_2eh',['grpc_error.h',['../grpc__error_8h.html',1,'']]],
   ['grpcerror',['GRpcError',['../classbigtable_1_1v0_1_1GRpcError.html',1,'bigtable::v0::GRpcError'],['../classbigtable_1_1v0_1_1GRpcError.html#a9df3734be7b7087a53f60ff2dc53428b',1,'bigtable::v0::GRpcError::GRpcError()']]]

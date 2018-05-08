@@ -31,8 +31,6 @@ var searchData=
   ['columnrangeopen',['ColumnRangeOpen',['../classbigtable_1_1v0_1_1Filter.html#ab732d65f0fda80be67c1d62083d6e1ae',1,'bigtable::v0::Filter']]],
   ['columnrangerightopen',['ColumnRangeRightOpen',['../classbigtable_1_1v0_1_1Filter.html#a2a9c356f7cd4cedbeff9f26081e1331b',1,'bigtable::v0::Filter']]],
   ['columnregex',['ColumnRegex',['../classbigtable_1_1v0_1_1Filter.html#aa4f42934550674a6a73b97138fe9345b',1,'bigtable::v0::Filter']]],
-  ['compiler',['compiler',['../namespacebigtable_1_1v0.html#a9dfe3cfe9f5260e0e2a52aaa60709aa6',1,'bigtable::v0']]],
-  ['compiler_5fflags',['compiler_flags',['../namespacebigtable_1_1v0.html#a6a3ef447b0654c159b9d2580f432e502',1,'bigtable::v0']]],
   ['condition',['Condition',['../classbigtable_1_1v0_1_1Filter.html#a76642b5d2bf738fcc909b0e92bfaf321',1,'bigtable::v0::Filter']]],
   ['connection_5fpool_5fname',['connection_pool_name',['../classbigtable_1_1v0_1_1ClientOptions.html#abeaeee12e43028c40c0fda9d28383e1d',1,'bigtable::v0::ClientOptions']]],
   ['connection_5fpool_5fsize',['connection_pool_size',['../classbigtable_1_1v0_1_1ClientOptions.html#a94d35892dd6b56506cf959d19d3c3620',1,'bigtable::v0::ClientOptions']]],

@@ -1,11 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "bcglstv",
+  0: "lstv",
   1: "s",
-  2: "blv",
+  2: "lv",
   3: "tv",
-  4: "cg",
-  5: "s"
+  4: "s"
 };
 
 var indexSectionNames =
@@ -14,8 +13,7 @@ var indexSectionNames =
   1: "namespaces",
   2: "files",
   3: "functions",
-  4: "variables",
-  5: "defines"
+  4: "defines"
 };
 
 var indexSectionLabels =
@@ -24,7 +22,6 @@ var indexSectionLabels =
   1: "Namespaces",
   2: "Files",
   3: "Functions",
-  4: "Variables",
-  5: "Macros"
+  4: "Macros"
 };
 

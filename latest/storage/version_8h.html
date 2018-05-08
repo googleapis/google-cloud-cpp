@@ -72,7 +72,8 @@ $(function() {
 <div class="title">version.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;storage/client/version_info.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/version.h&quot;</code><br />
+<code>#include &quot;storage/client/version_info.h&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
 <p><a href="version_8h_source.html">Go to the source code of this file.</a></p>
@@ -88,10 +89,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:afbc48a2ae3e4385aff2e78d172fcbcda"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#afbc48a2ae3e4385aff2e78d172fcbcda">STORAGE_CLIENT_VCONCAT</a>(Ma,  Mi)&#160;&#160;&#160;v##Ma</td></tr>
-<tr class="separator:afbc48a2ae3e4385aff2e78d172fcbcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7ef2f55782dd09d66439ea673cf96cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#ad7ef2f55782dd09d66439ea673cf96cb">STORAGE_CLIENT_VEVAL</a>(Ma,  Mi)&#160;&#160;&#160;<a class="el" href="version_8h.html#afbc48a2ae3e4385aff2e78d172fcbcda">STORAGE_CLIENT_VCONCAT</a>(Ma, Mi)</td></tr>
-<tr class="separator:ad7ef2f55782dd09d66439ea673cf96cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dee12cbe749461e34aef0e0f9b3fe28"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28">STORAGE_CLIENT_NS</a></td></tr>
 <tr class="separator:a6dee12cbe749461e34aef0e0f9b3fe28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -125,64 +122,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="version_8h.html#ad7ef2f55782dd09d66439ea673cf96cb">STORAGE_CLIENT_VEVAL</a>(STORAGE_CLIENT_VERSION_MAJOR, \</div><div class="line">                       STORAGE_CLIENT_VERSION_MINOR)</div><div class="ttc" id="version_8h_html_ad7ef2f55782dd09d66439ea673cf96cb"><div class="ttname"><a href="version_8h.html#ad7ef2f55782dd09d66439ea673cf96cb">STORAGE_CLIENT_VEVAL</a></div><div class="ttdeci">#define STORAGE_CLIENT_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> version.h:22</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="afbc48a2ae3e4385aff2e78d172fcbcda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbc48a2ae3e4385aff2e78d172fcbcda">&#9670;&nbsp;</a></span>STORAGE_CLIENT_VCONCAT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STORAGE_CLIENT_VCONCAT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Ma, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Mi&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;v##Ma</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad7ef2f55782dd09d66439ea673cf96cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7ef2f55782dd09d66439ea673cf96cb">&#9670;&nbsp;</a></span>STORAGE_CLIENT_VEVAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STORAGE_CLIENT_VEVAL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Ma, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Mi&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="version_8h.html#afbc48a2ae3e4385aff2e78d172fcbcda">STORAGE_CLIENT_VCONCAT</a>(Ma, Mi)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \</div><div class="line">                         STORAGE_CLIENT_VERSION_MINOR)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
