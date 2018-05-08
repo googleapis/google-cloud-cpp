@@ -19,6 +19,7 @@
 #include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
+#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 
@@ -261,7 +262,7 @@ class TableAdmin {
     grpc::Status status;
     auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
     if (not status.ok()) {
-      internal::RaiseRpcError(status, status.error_message());
+      bigtable::internal::RaiseRpcError(status, status.error_message());
     }
     return result;
   }

@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "bigtable/benchmarks/setup.h"
-#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/testing/random.h"
+#include "bigtable/client/version.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 
 /// Supporting types and functions to implement `BenchmarkSetup`
@@ -69,7 +71,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
               << " [test-duration-seconds (" << kDefaultTestDuration << "min)]"
               << " [table-size (" << kDefaultTableSize << ")]"
               << " [use-embedded-server (false)]" << std::endl;
-    internal::RaiseRuntimeError(msg);
+    google::cloud::internal::RaiseRuntimeError(msg);
   };
 
   if (argc < 3) {

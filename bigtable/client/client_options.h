@@ -16,10 +16,8 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CLIENT_OPTIONS_H_
 
 #include "bigtable/client/version.h"
-
+#include "google/cloud/internal/throw_delegate.h"
 #include <grpc++/grpc++.h>
-
-#include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -95,7 +93,7 @@ class ClientOptions {
   /// Set the size of the connection pool.
   ClientOptions& set_connection_pool_size(std::size_t size) {
     if (size == 0) {
-      internal::RaiseRangeError(
+      google::cloud::internal::RaiseRangeError(
           "ClientOptions::set_connection_pool_size requires size > 0");
     }
     connection_pool_size_ = size;
@@ -182,7 +180,8 @@ class ClientOptions {
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
-      internal::RaiseRangeError("Duration Exceeds Range for int");
+      google::cloud::internal::RaiseRangeError(
+          "Duration Exceeds Range for int");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);

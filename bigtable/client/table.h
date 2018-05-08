@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
 #include "bigtable/client/internal/table.h"
+#include "bigtable/client/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -306,7 +307,7 @@ class Table {
     grpc::Status status;
     auto result = impl_.SampleRows<Collection>(status);
     if (not status.ok()) {
-      internal::RaiseRpcError(status, status.error_message());
+      bigtable::internal::RaiseRpcError(status, status.error_message());
     }
 
     return result;
