@@ -3,7 +3,7 @@ you a quicker answer.  Thank you!
 
 If one or more of these questions are not applicable, feel free to remove them.
 
-### Is this an issue affective the `google-cloud-cpp` project?
+### Does this issue affect the `google-cloud-cpp` project?
 
 If the problem is with the service exposed by the `google-cloud-cpp` APIs
 instead of the client libraries you may consider opening a support request
@@ -15,6 +15,7 @@ problems with the service itself.
 Remove the ones that do not apply.
 
 - Cloud Bigtable.
+- Cloud Firestore.
 
 ### What version of `google-cloud-cpp` are you using?
 
@@ -42,4 +43,4 @@ What was the behavior you expected from the library?
 
 What was the behavior you actually observed?
 
-### Anything else 
+### Anything else
