@@ -37,7 +37,7 @@ function run_all_instance_admin_examples() {
   local -r INSTANCE="in-$(date +%s)"
 
   local ignore_unimplemented="/bin/false"
-  if [ ! -z "${BIGTABLE_EMULATOR_HOST:-}" ]; then
+  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
     ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
   fi
 
@@ -81,7 +81,7 @@ function run_all_table_admin_examples() {
   shift 2
 
   local ignore_unimplemented="/bin/false"
-  if [ ! -z "${BIGTABLE_EMULATOR_HOST:-}" ]; then
+  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
     ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
   fi
 
@@ -143,7 +143,7 @@ function run_all_data_examples {
   shift 2
 
   local ignore_unimplemented="/bin/false"
-  if [ ! -z "${BIGTABLE_EMULATOR_HOST:-}" ]; then
+  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
     ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
   fi
 
