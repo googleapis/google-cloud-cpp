@@ -74,9 +74,6 @@ class GenericPollingPolicy : public PollingPolicy,
   GenericPollingPolicy(Retry retry, Backoff backoff)
       : Retry(std::move(retry)), Backoff(std::move(backoff)) {}
 
-  using LimitedTimeRetryPolicy::clone;
-  using ExponentialBackoffPolicy::clone;
-
   std::unique_ptr<PollingPolicy> clone() override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
