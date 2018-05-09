@@ -66,31 +66,35 @@ class PollingPolicy {
 
 template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
-class GenericPollingPolicy : public PollingPolicy,
-                             private Retry,
-                             private Backoff {
+class GenericPollingPolicy : public PollingPolicy {
  public:
-  GenericPollingPolicy() : Retry(), Backoff() {}
+  GenericPollingPolicy()
+      : rpc_retry_policy_(Retry()), rpc_backoff_policy_(Backoff()) {}
   GenericPollingPolicy(Retry retry, Backoff backoff)
-      : Retry(std::move(retry)), Backoff(std::move(backoff)) {}
+      : rpc_retry_policy_(std::move(retry)),
+        rpc_backoff_policy_(std::move(backoff)) {}
 
   std::unique_ptr<PollingPolicy> clone() override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
 
   bool IsPermanentError(grpc::Status const& status) override {
-    return not Retry::can_retry(status.error_code());
+    return not rpc_retry_policy_.can_retry(status.error_code());
   }
 
   bool OnFailure(grpc::Status const& status) override {
-    return Retry::on_failure(status);
+    return rpc_retry_policy_.on_failure(status);
   }
 
   bool Exhausted() override { return not OnFailure(grpc::Status::OK); }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return Backoff::on_completion(grpc::Status::OK);
+    return rpc_backoff_policy_.on_completion(grpc::Status::OK);
   }
+
+ private:
+  Retry rpc_retry_policy_;
+  Backoff rpc_backoff_policy_;
 };
 
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy();
