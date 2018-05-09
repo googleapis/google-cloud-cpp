@@ -70,6 +70,14 @@ class InstanceAdmin {
     return project_name() + "/instances/" + instance_id;
   }
 
+  /// Return the fully qualified name of the given cluster_id in give
+  /// instance_id.
+  std::string ClusterName(std::string const& instance_id,
+                          std::string const& cluster_id) const {
+    return project_name() + "/instances/" + instance_id + "/clusters/" +
+           cluster_id;
+  }
+
   //@{
   /**
    * @name No exception versions of InstanceAdmin::*
@@ -88,6 +96,9 @@ class InstanceAdmin {
 
   std::vector<::google::bigtable::admin::v2::Cluster> ListClusters(
       grpc::Status& status);
+
+  void DeleteCluster(std::string const& instance_id,
+                     std::string const& cluster_id, grpc::Status& status);
 
   //@}
 

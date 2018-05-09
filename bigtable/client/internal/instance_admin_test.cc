@@ -424,3 +424,45 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   tested.ListClusters(status);
   EXPECT_FALSE(status.ok());
 }
+
+/// @test Verify positive scenario for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteCluster) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+  bigtable::noex::InstanceAdmin tested(client_);
+  std::string expected_text = R"""(
+  name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
+      )""";
+  auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
+  grpc::Status status;
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster("the-instance", "the-cluster", status);
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify unrecoverable error for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  tested.DeleteCluster("other-instance", "other-cluster", status);
+  EXPECT_FALSE(status.ok());
+}
+
+/// @test Verify recoverable errors for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  tested.DeleteCluster("other-instance", "other-cluster", status);
+  EXPECT_FALSE(status.ok());
+}

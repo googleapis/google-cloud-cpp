@@ -97,6 +97,13 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return impl_.Stub()->ListClusters(context, request, response);
   }
 
+  grpc::Status DeleteCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      google::protobuf::Empty* response) override {
+    return impl_.Stub()->DeleteCluster(context, request, response);
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;

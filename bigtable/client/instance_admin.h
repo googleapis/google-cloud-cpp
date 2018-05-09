@@ -112,6 +112,18 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
 
+  /**
+   * Deletes the specified cluster of an instance in the project.
+   * @param instance_id the id of the instance in the project
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *   deleted
+   *
+   *  **Example**
+   *  @snippet bigtable_samples_instance_admin.cc delete cluster
+   */
+  void DeleteCluster(std::string const& instance_id,
+                     std::string const& cluster_id);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(

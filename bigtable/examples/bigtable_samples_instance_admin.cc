@@ -125,6 +125,18 @@ void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
 }
 //! [list clusters]
 
+//! [delete cluster]
+void DeleteCluster(bigtable::InstanceAdmin instance_admin, int argc,
+                   char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"delete-cluster: <project-id> <instance-id> <cluster-id>"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
+  std::string cluster_id = ConsumeArg(argc, argv);
+  instance_admin.DeleteCluster(instance_id, cluster_id);
+}
+//! [delete cluster]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -158,6 +170,8 @@ int main(int argc, char* argv[]) try {
     DeleteInstance(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
+  } else if (command == "delete-cluster") {
+    DeleteCluster(instance_admin, argc, argv);
   } else {
     std::string msg("Unknown_command: " + command);
     PrintUsage(argc, argv, msg);
