@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-#
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,15 +15,11 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
-source ${BINDIR}/integration_tests_utils.sh
-source ${BINDIR}/../tools/run_emulator_utils.sh
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/run_examples_utils.sh"
 
-# Start the emulator, setup the environment variables and traps to cleanup.
-start_emulator
-
-# The project and instance do not matter for the Cloud Bigtable emulator.
-# Use a unique project name to allow multiple runs of the test with
-# an externally launched emulator.
-readonly NONCE=$(date +%s)
-run_all_integration_tests "emulated-${NONCE}"
+# Run the integration tests assuming the CI scripts have setup the PROJECT_ID
+# and ZONE_ID environment variable.
+run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"

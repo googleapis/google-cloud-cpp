@@ -72,6 +72,7 @@ ctest --stop-on-failure
 
 # Run the integration tests.
 (cd bigtable/tests && /v/bigtable/tests/run_integration_tests_emulator.sh)
+(cd bigtable/tests && /v/bigtable/examples/run_examples_emulator.sh)
 
 # Some of the sanitizers only emit errors and do not change the error code
 # of the tests, find any such errors and report them as a build failure.

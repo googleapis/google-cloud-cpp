@@ -40,6 +40,7 @@ case ${BENCHMARK} in
         ;;
     integration)
         (cd bigtable/tests && ../../../bigtable/tests/run_integration_tests_production.sh);
+        (cd bigtable/examples && ../../../bigtable/examples/run_examples_production.sh);
         ;;
     # The following cases are used to test the script when making changes, they are not good
     # benchmarks.
