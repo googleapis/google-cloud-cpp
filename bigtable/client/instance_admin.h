@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/instance_config.h"
 #include "bigtable/client/internal/instance_admin.h"
@@ -111,6 +112,19 @@ class InstanceAdmin {
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
+
+  /**
+   * Deletes the specified cluster of an instance in the project.
+   *
+   * @param instance_id the id of the instance in the project
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *   deleted
+   *
+   *  @par Example
+   *  @snippet bigtable_samples_instance_admin.cc delete cluster
+   */
+  void DeleteCluster(bigtable::InstanceId const& instance_id,
+                     bigtable::ClusterId const& cluster_id);
 
  private:
   /// Implement CreateInstance() with a separate thread.

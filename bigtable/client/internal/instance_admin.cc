@@ -116,6 +116,22 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
   return result;
 }
 
+void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
+                                  bigtable::ClusterId const& cluster_id,
+                                  grpc::Status& status) {
+  btproto::DeleteClusterRequest request;
+  request.set_name(ClusterName(instance_id, cluster_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      ClusterName(instance_id, cluster_id), MetadataParamTypes::NAME);
+
+  // This API is not idempotent, lets call it without retry
+  ClientUtils::MakeNonIdemponentCall(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &InstanceAdminClient::DeleteCluster, request,
+      "InstanceAdmin::DeleteCluster", status);
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

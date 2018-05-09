@@ -560,3 +560,57 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   EXPECT_DEATH_IF_SUPPORTED(tested.ListClusters(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/// @test Verify that DeleteCluster works in the positive case.
+TEST_F(InstanceAdminTest, DeleteCluster) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+  bigtable::InstanceAdmin tested(client_);
+  std::string expected_text = R"""(
+  name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
+      )""";
+  auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id);
+}
+
+/// @test Verify unrecoverable error for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
+  using namespace ::testing;
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+// After all the setup, make the actual call we want to test.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that recoverable error for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
+  using namespace ::testing;
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+// After all the setup, make the actual call we want to test.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}

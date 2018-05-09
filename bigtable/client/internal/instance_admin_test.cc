@@ -424,3 +424,51 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   tested.ListClusters(status);
   EXPECT_FALSE(status.ok());
 }
+
+/// @test Verify positive scenario for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteCluster) {
+  using namespace ::testing;
+  using google::protobuf::Empty;
+  bigtable::noex::InstanceAdmin tested(client_);
+  std::string expected_text = R"""(
+  name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
+      )""";
+  auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
+      expected_text);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id, status);
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify unrecoverable error for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id, status);
+  EXPECT_FALSE(status.ok());
+}
+
+/// @test Verify recoverable errors for DeleteCluster
+TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
+  using namespace ::testing;
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id, status);
+  EXPECT_FALSE(status.ok());
+}

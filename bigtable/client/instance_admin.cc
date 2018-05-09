@@ -133,5 +133,14 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters() {
   return result;
 }
 
+void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
+                                  bigtable::ClusterId const& cluster_id) {
+  grpc::Status status;
+  impl_.DeleteCluster(instance_id, cluster_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

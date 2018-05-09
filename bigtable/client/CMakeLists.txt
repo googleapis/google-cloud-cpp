@@ -19,6 +19,7 @@ configure_file(version_info.h.in version_info.h)
 add_library(bigtable_client
         admin_client.h
         admin_client.cc
+        bigtable_strong_types.h
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
         cell.h
         client_options.h
@@ -86,7 +87,6 @@ add_library(bigtable_client
         table.cc
         table_admin.h
         table_admin.cc
-        table_admin_strong_types.h
         table_config.h
         table_config.cc
         version.h
