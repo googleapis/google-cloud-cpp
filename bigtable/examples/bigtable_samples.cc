@@ -180,7 +180,7 @@ void ReadRow(bigtable::Table& table) {
               << " = <";
     if (cell.column_qualifier() == "counter") {
       // This example uses "counter" to store 64-bit numbers in BigEndian
-      // format, extract them as such:
+      // format, extract them as follows:
       std::cout << cell.value_as<bigtable::bigendian64_t>().get();
     } else {
       std::cout << cell.value();
