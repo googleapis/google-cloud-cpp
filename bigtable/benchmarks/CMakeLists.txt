@@ -18,12 +18,12 @@ add_library(bigtable_benchmark_common
         constants.h
         embedded_server.h
         embedded_server.cc
-        random.h
-        random.cc
+        random_mutation.h
+        random_mutation.cc
         setup.h
         setup.cc)
 target_link_libraries(bigtable_benchmark_common
-        bigtable_client bigtable_protos
+        bigtable_client_testing bigtable_client bigtable_protos
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
 
 # List the unit tests, then setup the targets and dependencies.
@@ -31,7 +31,6 @@ set(bigtable_benchmarks_unit_tests
         benchmark_test.cc
         embedded_server_test.cc
         format_duration_test.cc
-        random_test.cc
         setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
     string(REPLACE "/" "_" target ${fname})

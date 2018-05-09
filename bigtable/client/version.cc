@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/version.h"
-#include "bigtable/client/build_info.h"
+#include "google/cloud/internal/build_info.h"
 #include <sstream>
 
 namespace bigtable {
@@ -22,7 +22,7 @@ std::string version_string() {
   auto create_version = []() -> std::string {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch() << "+" << gitrev;
+       << version_patch() << "+" << google::cloud::internal::gitrev;
     return os.str();
   };
   static std::string const version = create_version();

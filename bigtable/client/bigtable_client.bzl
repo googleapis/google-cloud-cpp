@@ -1,7 +1,6 @@
 # DO NOT EDIT -- GENERATED CODE
 bigtable_client_HDRS = [
     "admin_client.h",
-    "build_info.h",
     "cell.h",
     "client_options.h",
     "cluster_config.h",
@@ -19,7 +18,6 @@ bigtable_client_HDRS = [
     "internal/endian.h",
     "internal/instance_admin.h",
     "internal/make_unique.h",
-    "internal/port_platform.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
     "internal/rowreaderiterator.h",

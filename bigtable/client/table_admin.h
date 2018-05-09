@@ -77,7 +77,7 @@ class TableAdmin {
    *     only populates the table_name() field at this time.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc create table
    */
   ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
@@ -92,7 +92,7 @@ class TableAdmin {
    *   - `VIEW_SCHEMA`: return the name and the schema.
    *   - `FULL`: return all the information about the table.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc list tables
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
@@ -113,7 +113,7 @@ class TableAdmin {
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc get table
    */
   ::google::bigtable::admin::v2::Table GetTable(
@@ -130,7 +130,7 @@ class TableAdmin {
    * @throws std::exception if the table could not be deleted before the RPC
    *     policies in effect gave up.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc delete table
    */
   void DeleteTable(std::string const& table_id);
@@ -145,7 +145,7 @@ class TableAdmin {
    * @return the resulting table schema.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc modify table
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
@@ -161,37 +161,11 @@ class TableAdmin {
    * @param row_key_prefix drop any rows that start with this prefix.
    * @throws std::exception if the operation cannot be completed.
    *
-   * **Example**
+   * @par Example
    * @snippet bigtable_samples.cc drop rows by prefix
    */
   void DropRowsByPrefix(std::string const& table_id,
                         std::string row_key_prefix);
-
-  /**
-   * Delete all the rows in a table.
-   *
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   * @throws std::exception if the operation cannot be completed.
-   *
-   * **Example**
-   * @snippet bigtable_samples.cc drop all rows
-   */
-  void DropAllRows(std::string const& table_id);
-
-  /**
-   * Get information about a single snapshot.
-   *
-   * @param cluster_id the cluster id to which snapshot is associated.
-   * @param snapshot_id the id of the snapshot.
-   * @return the information about the snapshot.
-   * @throws std::exception if the information could not be obtained before the
-   *     RPC policies in effect gave up.
-   */
-  ::google::bigtable::admin::v2::Snapshot GetSnapshot(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id);
 
   /**
    * Generates consistency token for a table.
@@ -216,7 +190,55 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token);
 
   /**
+   * Delete all the rows in a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet bigtable_samples.cc drop all rows
+   */
+  void DropAllRows(std::string const& table_id);
+
+  //@{
+  /**
+   * @name Snapshot APIs.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
+   */
+  /**
+   * Get information about a single snapshot.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
+   *
+   * @param cluster_id the cluster id to which snapshot is associated.
+   * @param snapshot_id the id of the snapshot.
+   * @return the information about the snapshot.
+   * @throws std::exception if the information could not be obtained before the
+   *     RPC policies in effect gave up.
+   */
+  google::bigtable::admin::v2::Snapshot GetSnapshot(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id);
+
+  /**
    * Delete a snapshot.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
    *
    * @param cluster_id the id of the cluster to which snapshot belongs.
    * @param snapshot_id the id of the snapshot which needs to be deleted.
@@ -224,6 +246,7 @@ class TableAdmin {
    */
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
+  //@}
 
   /**
    * List snapshots in the given instance.

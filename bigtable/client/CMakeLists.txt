@@ -19,9 +19,7 @@ configure_file(version_info.h.in version_info.h)
 add_library(bigtable_client
         admin_client.h
         admin_client.cc
-        ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-        build_info.h
         cell.h
         client_options.h
         client_options.cc
@@ -51,7 +49,6 @@ add_library(bigtable_client
         internal/instance_admin.h
         internal/instance_admin.cc
         internal/make_unique.h
-        internal/port_platform.h
         internal/prefix_range_end.h
         internal/prefix_range_end.cc
         internal/readrowsparser.h
@@ -95,7 +92,7 @@ add_library(bigtable_client
         version.h
         version.cc)
 target_link_libraries(bigtable_client PUBLIC
-        bigtable_protos
+        bigtable_protos google_cloud_cpp_common
         gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
         PRIVATE bigtable_common_options)
 target_include_directories(bigtable_client PUBLIC
@@ -136,6 +133,8 @@ add_library(bigtable_client_testing
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
         testing/mock_sample_row_keys_reader.h
+        testing/random.h
+        testing/random.cc
         testing/table_integration_test.h
         testing/table_integration_test.cc
         testing/table_test_fixture.h
@@ -179,6 +178,7 @@ set(bigtable_client_unit_tests
         table_sample_row_keys_test.cc
         table_test.cc
         table_readmodifywriterow_test.cc
+        testing/random_test.cc
         read_modify_write_rule_test.cc
         row_reader_test.cc
         row_test.cc
@@ -233,14 +233,22 @@ install(DIRECTORY . DESTINATION include/bigtable/client
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     DESTINATION include/bigtable/client)
 
-# Install the pkg-config files.
-configure_file("config.pc.in" "bigtable_client.pc" @ONLY)
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${BIGTABLE_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${BIGTABLE_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${BIGTABLE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud Bigtable.")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client -lbigtable_protos")
+
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in" "bigtable_client.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-# Install the CMake configuration files.
+# Create and install the CMake configuration files.
 configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
-configure_file("config-version.cmake.in"
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
     "bigtable_client-config-version.cmake" @ONLY)
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"

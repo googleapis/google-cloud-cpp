@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(CMakeFindDependencyMacro)
-find_dependency(protobuf)
-find_dependency(gRPC)
-find_dependency(google_cloud_cpp_common 0.1.0)
+set -eu
 
-include("${CMAKE_CURRENT_LIST_DIR}/bigtable-targets.cmake")
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/run_examples_utils.sh"
 
-add_library(bigtable::protos IMPORTED INTERFACE)
-set_target_properties(bigtable::protos PROPERTIES
-    INTERFACE_LINK_LIBRARIES "bigtable_protos")
-
-add_library(bigtable::client IMPORTED INTERFACE)
-set_target_properties(bigtable::client PROPERTIES
-    INTERFACE_LINK_LIBRARIES "bigtable_client")
+# Run the integration tests assuming the CI scripts have setup the PROJECT_ID
+# and ZONE_ID environment variable.
+run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"

@@ -16,19 +16,6 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 genrule(
-    name = "generate_build_info",
-    srcs = ["build_info.cc.in"],
-    outs = ["build_info.cc"],
-    cmd = """
-sed -e "s;@CMAKE_CXX_COMPILER_ID@;Clang;" \
-    -e "s;@CMAKE_CXX_COMPILER_VERSION@;4.0.1;" \
-    -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;@CMAKE_CXX_FLAGS_.*}@;$(CC_FLAGS);" \
-    -e "s;@GIT_HEAD@;piper;" < $< > $@
-  """,
-)
-
-genrule(
     name = "generate_version_info",
     srcs = ["version_info.h.in"],
     outs = ["version_info.h"],
@@ -42,10 +29,11 @@ sed -e 's/@BIGTABLE_CLIENT_VERSION_MAJOR@/0/' \
 load(":bigtable_client.bzl", "bigtable_client_SRCS", "bigtable_client_HDRS")
 cc_library(
     name = "bigtable_client",
-    srcs = bigtable_client_SRCS + [ "build_info.cc" ],
+    srcs = bigtable_client_SRCS,
     hdrs = bigtable_client_HDRS + [ "version_info.h" ],
     deps = [
-         "@com_github_googleapis_googleapis//:bigtable_protos",
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_googleapis//:bigtable_protos",
     ],
 )
 
@@ -56,6 +44,7 @@ cc_library(
     hdrs = bigtable_client_testing_HDRS,
     deps = [
       ":bigtable_client",
+      "//google/cloud:google_cloud_cpp_common",
       "@com_github_googleapis_googleapis//:bigtable_protos",
       "@com_google_googletest//:gtest",
       "@com_google_googletest//:gtest_main",
@@ -83,6 +72,7 @@ cc_test(
     deps = [
         ":bigtable_client_testing",
         ":bigtable_client",
+        "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],

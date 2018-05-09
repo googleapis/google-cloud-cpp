@@ -15,15 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
-#include "bigtable/client/internal/port_platform.h"
 #include "bigtable/client/version_info.h"
+#include "google/cloud/version.h"
 #include <string>
 
-#define BIGTABLE_CLIENT_VCONCAT(Ma, Mi) v##Ma
-#define BIGTABLE_CLIENT_VEVAL(Ma, Mi) BIGTABLE_CLIENT_VCONCAT(Ma, Mi)
-#define BIGTABLE_CLIENT_NS                             \
-  BIGTABLE_CLIENT_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
-                        BIGTABLE_CLIENT_VERSION_MINOR)
+#define BIGTABLE_CLIENT_NS                              \
+  GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
+                         BIGTABLE_CLIENT_VERSION_MINOR)
 
 /**
  * Contains all the Cloud Bigtable C++ client APIs.

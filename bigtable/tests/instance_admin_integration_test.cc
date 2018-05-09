@@ -47,6 +47,17 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
+
+bool IsInstancePresent(
+    std::vector<::google::bigtable::admin::v2::Instance> instances,
+    std::string const& instance_name) {
+  for (auto const& i : instances) {
+    if (instance_name == i.name()) {
+      return true;
+    }
+  }
+  return false;
+}
 }  // namespace
 
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
@@ -57,6 +68,65 @@ TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   }
   auto instances = instance_admin_->ListInstances();
   for (auto const& i : instances) {
+    auto const npos = std::string::npos;
+    EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
+  }
+}
+
+/// @test Verify that InstanceAdmin::GetInstances works as expected.
+TEST_F(InstanceAdminIntegrationTest, GetInstancesTest) {
+  // The emulator does not support instance operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  // TODO(#418) - make the test functional as part of the CreateInstance()
+  // implementation.
+  auto instance = instance_admin_->GetInstance("t0");
+  auto const npos = std::string::npos;
+  EXPECT_NE(npos, instance.name().find(instance_admin_->project_name()));
+}
+
+/// @test Verify that InstanceAdmin::DeleteInstances works as expected.
+TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
+  // The emulator does not support instance operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+  std::string id = "delete-instance-test";
+  bigtable::InstanceId instance_id(id);
+  bigtable::DisplayName display_name(id);
+  EXPECT_FALSE(
+      IsInstancePresent(instance_admin_->ListInstances(),
+                        instance_admin_->project_name() + "/instances/" + id));
+
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters;
+  clusters.push_back(std::make_pair(
+      id + "-c1", bigtable::ClusterConfig("us-central1-f", 0,
+                                          bigtable::ClusterConfig::HDD)));
+  auto instance_config =
+      bigtable::InstanceConfig(instance_id, display_name, clusters)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+  EXPECT_NE(std::string::npos, instance_details.name().find(id));
+  EXPECT_TRUE(IsInstancePresent(instance_admin_->ListInstances(),
+                                instance_details.name()));
+
+  instance_admin_->DeleteInstance(id);
+  EXPECT_FALSE(IsInstancePresent(instance_admin_->ListInstances(),
+                                 instance_details.name()));
+}
+
+/// @test Verify that InstanceAdmin::ListClusters works as expected.
+TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
+  // The emulator does not support cluster operations.
+  if (UsingCloudBigtableEmulator()) {
+    return;
+  }
+
+  // TODO(#418) - create an instance and test that its cluster is returned here.
+  auto clusters = instance_admin_->ListClusters();
+  for (auto const& i : clusters) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }

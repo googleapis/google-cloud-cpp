@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
+#ifndef GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_
+#define GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_
 
-#include "bigtable/client/version.h"
+#include "google/cloud/version.h"
 
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 /// The git revision at compile time
 extern char const gitrev[];
 
@@ -28,7 +30,9 @@ extern char const compiler[];
 /// The compiler flags
 extern char const compiler_flags[];
 
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_CLIENT_NS
+}  // namespace cloud
+}  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BUILD_INFO_H_
+#endif  // GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_

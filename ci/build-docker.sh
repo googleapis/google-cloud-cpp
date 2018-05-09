@@ -72,6 +72,7 @@ ctest --stop-on-failure
 
 # Run the integration tests.
 (cd bigtable/tests && /v/bigtable/tests/run_integration_tests_emulator.sh)
+(cd bigtable/tests && /v/bigtable/examples/run_examples_emulator.sh)
 
 # Some of the sanitizers only emit errors and do not change the error code
 # of the tests, find any such errors and report them as a build failure.
@@ -93,13 +94,16 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   cmake --build . --target install
   echo
-  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
-  make -C /v/ci/test-install all
-  echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
-  cd /v/ci/test-install
-  CMAKE_PREFIX_PATH=/usr/local/share cmake -H. -B.build
-  cmake --build .build
+  readonly TEST_INSTALL_DIR=/v/ci/test-install
+  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR=/v/build-output/test-install-cmake
+  readonly TEST_INSTALL_MAKE_OUTPUT_DIR=/v/build-output/test-install-make
+  cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
+  cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
+  mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
+  make -C "${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}"
 fi
 
 # If document generation is enabled, run it now.

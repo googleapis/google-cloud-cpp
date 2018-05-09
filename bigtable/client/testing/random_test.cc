@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/version.h"
-#include "google/cloud/internal/build_info.h"
-#include <sstream>
+#include "bigtable/client/testing/random.h"
+#include <gmock/gmock.h>
 
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
-std::string version_string() {
-  auto create_version = []() -> std::string {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch() << "+" << google::cloud::internal::gitrev;
-    return os.str();
+using namespace bigtable::testing;
+
+TEST(BenchmarksRandom, Basic) {
+  // This is not a statistical test for PRNG, basically we want to make
+  // sure that MakeDefaultPRNG uses different seeds, or at least creates
+  // different series:
+  auto gen_string = []() {
+    auto g = MakeDefaultPRNG();
+    return Sample(g, 32, "0123456789abcdefghijklm");
   };
-  static std::string const version = create_version();
-  return version;
+  std::string s0 = gen_string();
+  std::string s1 = gen_string();
+  EXPECT_NE(s0, s1);
 }
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage

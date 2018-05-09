@@ -70,15 +70,47 @@ class InstanceAdmin {
    *   of the failure, or (c) the state of the operation is unknown after the
    *   time allocated by the retry policies has expired, in which case the
    *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create instance
    */
   std::future<google::bigtable::admin::v2::Instance> CreateInstance(
       InstanceConfig instance_config);
 
   /**
    * Return the list of instances in the project.
-   * @return
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list instances
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
+
+  /**
+   * Return the details of @p instance_id.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get instance
+   */
+  google::bigtable::admin::v2::Instance GetInstance(
+      std::string const& instance_id);
+
+  /**
+   * Deletes the instances in the project.
+   * @param instance_id the id of the instance in the project that needs to be
+   * deleted
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc delete instance
+   */
+  void DeleteInstance(std::string const& instance_id);
+
+  /**
+   * Return the list of clusters in the project.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list clusters
+   */
+  std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
 
  private:
   /// Implement CreateInstance() with a separate thread.

@@ -21,11 +21,21 @@ set(STORAGE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # gcc-4.8 C++11 support has bugs preventing us from using it.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+        message(FATAL_ERROR "GCC version must be at least 4.9. Older versions"
+                " either lack C++11 support or have bugs"
+                " (e.g. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55817)"
+                " that prevent us from using them.")
+    endif()
+endif ()
+
 # Configure sub-project specific Doxygen parameters.
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER
-    "${storage_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}")
+    "${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}")
 set(DOXYGEN_EXAMPLE_PATH examples)
 set(DOXYGEN_PREDEFINED "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*")
@@ -44,18 +54,6 @@ google_cloud_cpp_add_common_options(storage_common_options)
 
 # Enable unit tests
 enable_testing()
-
-# Capture the compiler version and the git revision into variables, then
-# generate a config file with the values.
-if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/../.git)
-    execute_process(COMMAND git rev-parse --short HEAD
-        OUTPUT_VARIABLE GIT_HEAD_LOG ERROR_VARIABLE GIT_HEAD_LOG)
-else ()
-    set(GIT_HEAD_LOG "(unknown-git-commit)")
-endif ()
-string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
-string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
-configure_file(client/build_info.cc.in client/build_info.cc)
 
 # Search for libcurl
 find_package(CURL REQUIRED)

@@ -19,6 +19,7 @@ readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
 readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
 
 # Remove all the tables from a Cloud Bigtable instance.
+# TODO(#356) - remove this code when the tests can share instances.
 function delete_all_tables() {
   local project_id=$1
   shift
@@ -44,8 +45,9 @@ function run_all_integration_tests() {
   local project_id=$1
   shift
 
-  # Normally this function rn
-  # Declare the variable, but do not set it at first.
+  # Declare the variable, but do not set it at first. For production the
+  # variable is set and we need to delete all the tables before each test, with
+  # the emulator we use a different instance on each test.
   local instance_id=
   if [ "$#" -gt 0 ]; then
     instance_id=$1

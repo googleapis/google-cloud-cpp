@@ -12,6 +12,7 @@ bigtable_client_testing_HDRS = [
     "testing/mock_read_rows_reader.h",
     "testing/mock_response_reader.h",
     "testing/mock_sample_row_keys_reader.h",
+    "testing/random.h",
     "testing/table_integration_test.h",
     "testing/table_test_fixture.h",
 ]
@@ -21,6 +22,7 @@ bigtable_client_testing_SRCS = [
     "testing/internal_table_test_fixture.cc",
     "testing/inprocess_data_client.cc",
     "testing/inprocess_admin_client.cc",
+    "testing/random.cc",
     "testing/table_integration_test.cc",
     "testing/table_test_fixture.cc",
 ]

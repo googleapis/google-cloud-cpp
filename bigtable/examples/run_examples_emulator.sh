@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-prefix=@CMAKE_INSTALL_PREFIX@
-exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+set -eu
 
-Name: The Google Cloud Stsorage C++ Client Library
-Description: Provides C++ APIs to access Google Cloud Storage.
-Version: @PROJECT_VERSION@
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/run_examples_utils.sh"
+source "${BINDIR}/../tools/run_emulator_utils.sh"
 
-Libs: -L${libdir} -lstorage_client
-Cflags: -I${includedir}
+# Start the emulator, setup the environment variables and traps to cleanup.
+start_emulator
+
+# Use a (likely unique) project id for the emulator.
+readonly PROJECT_ID="project-$(date +%s)"
+readonly ZONE_ID="fake-zone"
+
+run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"

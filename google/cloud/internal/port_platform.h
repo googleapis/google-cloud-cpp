@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_PORT_PLATFORM_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_PORT_PLATFORM_H_
+#ifndef GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_
+#define GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_
 
 /**
  * @file
@@ -38,15 +38,15 @@
 #ifndef _MSC_VER
 // Microsoft Visual Studio does not define __cplusplus correctly for C++11.
 #  if __cplusplus < 201103L
-#    error "Google Cloud Storage C++ Client requires C++11"
+#    error "Bigtable C++ Client requires C++11"
 #  endif  // __cplusplus < 201103L
 #elif _MSC_VER < 1900
-#  error "Google Cloud Storage C++ Client requires C++11, your version of MSVC is too old"
+#  error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
 #endif  // _MSC_VER
 
 // Discover if exceptions are enabled and define them as needed.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-#  error GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be directly set.
+#  error "GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be set directly."
 #elif defined(__clang__)
 #  if defined(__EXCEPTIONS) && __has_feature(cxx_exceptions)
 #    define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
@@ -68,4 +68,4 @@
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 // clang-format on
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_PORT_PLATFORM_H_
+#endif  // GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_

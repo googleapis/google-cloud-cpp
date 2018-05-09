@@ -195,6 +195,11 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (not UsingCloudBigtableEmulator()) {
     expected_text_create += "granularity: MILLIS\n";
+    expected_text_create += "cluster_states: {\n";
+    expected_text_create +=
+        "key: \"" + bigtable::testing::TableTestEnvironment::instance_id() +
+        "-cluster\"\n";
+    expected_text_create += "value { replication_state: READY }\n}\n";
   }
   auto table_detailed =
       table_admin_->GetTable(table_id, admin_proto::Table::FULL);

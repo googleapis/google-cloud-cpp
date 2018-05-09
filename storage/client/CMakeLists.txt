@@ -17,18 +17,19 @@ configure_file(version_info.h.in version_info.h)
 
 # the client library
 add_library(storage_client
-    build_info.h
-    ${CMAKE_CURRENT_BINARY_DIR}/build_info.cc
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     version.h
     version.cc)
-target_link_libraries(storage_client PUBLIC CURL::CURL Threads::Threads
+target_link_libraries(storage_client PUBLIC google_cloud_cpp_common CURL::CURL Threads::Threads
     PRIVATE storage_common_options)
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
     $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+include(CreateBazelConfig)
+create_bazel_config(storage_client)
 
 option(STORAGE_CLIENT_CLANG_TIDY
     "If set compiles the Google Cloud Storage client with clang-tidy."
@@ -55,6 +56,9 @@ foreach (fname ${storage_client_unit_tests})
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
+# Export the list of unit tests so the Bazel BUILD file can pick it up.
+export_list_to_bazel("storage_client_unit_tests.bzl" "storage_client_unit_tests")
+
 install(TARGETS storage_client
     EXPORT storage-targets
     RUNTIME DESTINATION bin
@@ -66,14 +70,22 @@ install(DIRECTORY . DESTINATION include/storage/client
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     DESTINATION include/storage/client)
 
-# Install the pkg-config files.
-configure_file("config.pc.in" "storage_client.pc" @ONLY)
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${STORAGE_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${STORAGE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud Storage.")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client")
+
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in" "storage_client.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-# Install the CMake configuration files.
+# Create and install the CMake configuration files.
 configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
-configure_file("config-version.cmake.in"
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
     "storage_client-config-version.cmake" @ONLY)
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
