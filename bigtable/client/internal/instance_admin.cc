@@ -116,8 +116,8 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
   return result;
 }
 
-void InstanceAdmin::DeleteCluster(std::string const& instance_id,
-                                  std::string const& cluster_id,
+void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
+                                  bigtable::ClusterId const& cluster_id,
                                   grpc::Status& status) {
   btproto::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));

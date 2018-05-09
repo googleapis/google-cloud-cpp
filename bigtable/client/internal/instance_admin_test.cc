@@ -437,8 +437,10 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  tested.DeleteCluster("the-instance", "the-cluster", status);
+  tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_TRUE(status.ok());
 }
 
@@ -449,9 +451,11 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  tested.DeleteCluster("other-instance", "other-cluster", status);
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
 }
 
@@ -461,8 +465,10 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
-  // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  tested.DeleteCluster("other-instance", "other-cluster", status);
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
 }

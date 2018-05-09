@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_
+#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BIGTABLE_STRONG_TYPES_H_
+#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BIGTABLE_STRONG_TYPES_H_
 
 #include "bigtable/client/internal/strong_type.h"
 
@@ -22,10 +22,11 @@ inline namespace BIGTABLE_CLIENT_NS {
 using ConsistencyToken =
     internal::StrongType<std::string, struct ConsistencyTokenParam>;
 using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
+using InstanceId = internal::StrongType<std::string, struct InstanceTag>;
 using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
 using TableId = internal::StrongType<std::string, struct TableParam>;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_STRONG_TYPES_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_BIGTABLE_STRONG_TYPES_H_

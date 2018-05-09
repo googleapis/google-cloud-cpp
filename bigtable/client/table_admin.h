@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 
 #include "bigtable/client/admin_client.h"
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
-#include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_METADATA_UPDATE_POLICY_H_
 
-#include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/version.h"
+#include "bigtable_strong_types.h"
 #include <grpc++/grpc++.h>
 #include <memory>
 

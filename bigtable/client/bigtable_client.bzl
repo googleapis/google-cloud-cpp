@@ -1,6 +1,7 @@
 # DO NOT EDIT -- GENERATED CODE
 bigtable_client_HDRS = [
     "admin_client.h",
+    "bigtable_strong_types.h",
     "cell.h",
     "client_options.h",
     "cluster_config.h",
@@ -38,7 +39,6 @@ bigtable_client_HDRS = [
     "metadata_update_policy.h",
     "table.h",
     "table_admin.h",
-    "table_admin_strong_types.h",
     "table_config.h",
     "version.h",
 ]

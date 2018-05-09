@@ -16,11 +16,11 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_ADMIN_H_
 
 #include "bigtable/client/admin_client.h"
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/metadata_update_policy.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/table_admin_strong_types.h"
 #include "bigtable/client/table_config.h"
 #include <memory>
 

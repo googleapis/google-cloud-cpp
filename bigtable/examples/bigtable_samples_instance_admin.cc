@@ -131,8 +131,8 @@ void DeleteCluster(bigtable::InstanceAdmin instance_admin, int argc,
   if (argc != 3) {
     throw Usage{"delete-cluster: <project-id> <instance-id> <cluster-id>"};
   }
-  std::string instance_id = ConsumeArg(argc, argv);
-  std::string cluster_id = ConsumeArg(argc, argv);
+  bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
   instance_admin.DeleteCluster(instance_id, cluster_id);
 }
 //! [delete cluster]

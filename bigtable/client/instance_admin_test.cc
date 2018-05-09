@@ -572,8 +572,10 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  tested.DeleteCluster("the-instance", "the-cluster");
+  tested.DeleteCluster(instance_id, cluster_id);
 }
 
 /// @test Verify unrecoverable error for DeleteCluster
@@ -583,14 +585,14 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
 // After all the setup, make the actual call we want to test.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteCluster("other-instance", "other-cluster"),
-               std::exception);
+  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.DeleteCluster("other-instance", "other-cluster"),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -602,13 +604,13 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
 // After all the setup, make the actual call we want to test.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteCluster("other-instance", "other-cluster"),
-               std::exception);
+  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.DeleteCluster("other-instance", "other-cluster"),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
