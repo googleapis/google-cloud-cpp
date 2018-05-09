@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,5 +18,5 @@ set -eu
 
 # Dump the emulator log file. Tests run in the bigtable/tests directory.
 echo "================================================================"
-cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/bigtable/tests/emulator.log >&2
+cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/bigtable/tests/emulator.log >&2 || true
 echo "================================================================"
