@@ -771,7 +771,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::SCHEMA_VIEW);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classbigtable_1_1v0_1_1TableAdmin.html#ad5a1b18d58345517ba1e7fd5ab8c6708">ListTables</a>(bigtable::TableAdmin&amp; admin) {</div><div class="line">  <span class="keyword">auto</span> tables =</div><div class="line">      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
