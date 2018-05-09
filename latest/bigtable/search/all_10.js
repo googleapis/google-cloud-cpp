@@ -5,7 +5,6 @@ var searchData=
   ['table_2eh',['table.h',['../table_8h.html',1,'']]],
   ['table_5fadmin_2ecc',['table_admin.cc',['../table__admin_8cc.html',1,'']]],
   ['table_5fadmin_2eh',['table_admin.h',['../table__admin_8h.html',1,'']]],
-  ['table_5fadmin_5fstrong_5ftypes_2eh',['table_admin_strong_types.h',['../table__admin__strong__types_8h.html',1,'']]],
   ['table_5fconfig_2ecc',['table_config.cc',['../table__config_8cc.html',1,'']]],
   ['table_5fconfig_2eh',['table_config.h',['../table__config_8h.html',1,'']]],
   ['table_5fname',['table_name',['../classbigtable_1_1v0_1_1Table.html#a132da5014a26e0e1741e7759979bea5f',1,'bigtable::v0::Table::table_name()'],['../classbigtable_1_1v0_1_1MetadataParamTypes.html#aaf5413bb213775257af76df0f4c6d7c8',1,'bigtable::v0::MetadataParamTypes::TABLE_NAME()']]],

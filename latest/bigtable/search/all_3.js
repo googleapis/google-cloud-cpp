@@ -8,6 +8,7 @@ var searchData=
   ['defaultidempotentmutationpolicy',['DefaultIdempotentMutationPolicy',['../namespacebigtable_1_1v0.html#afc37466672777e7e9babf2d393d81dbe',1,'bigtable::v0']]],
   ['defaultrpcbackoffpolicy',['DefaultRPCBackoffPolicy',['../namespacebigtable_1_1v0.html#ade9f89d5543645385ad5277416f458da',1,'bigtable::v0']]],
   ['defaultrpcretrypolicy',['DefaultRPCRetryPolicy',['../namespacebigtable_1_1v0.html#a315ce71b424f9a465d96a82e9a82d6b4',1,'bigtable::v0']]],
+  ['deletecluster',['DeleteCluster',['../classbigtable_1_1v0_1_1InstanceAdmin.html#a6b6184eacf5a9a87ef86a763a54ec447',1,'bigtable::v0::InstanceAdmin::DeleteCluster()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#ab3d2c972ef7a530a452ea5032407da2a',1,'bigtable::v0::InstanceAdminClient::DeleteCluster()']]],
   ['deletefromcolumn',['DeleteFromColumn',['../namespacebigtable_1_1v0.html#ab0f645cf2ff2f72e0b28e5a68ab5ebb1',1,'bigtable::v0::DeleteFromColumn(std::string family, std::string column)'],['../namespacebigtable_1_1v0.html#acc6eb72882f9fd138da3a455bc220b0b',1,'bigtable::v0::DeleteFromColumn(std::string family, std::string column, std::chrono::duration&lt; Rep1, Period1 &gt; timestamp_begin, std::chrono::duration&lt; Rep2, Period2 &gt; timestamp_end)']]],
   ['deletefromcolumnendingat',['DeleteFromColumnEndingAt',['../namespacebigtable_1_1v0.html#a7922dacbe94e8ceea2b93c53699c3bcc',1,'bigtable::v0']]],
   ['deletefromcolumnstartingfrom',['DeleteFromColumnStartingFrom',['../namespacebigtable_1_1v0.html#a635950a39b8d9350df35a907590977b7',1,'bigtable::v0']]],
