@@ -115,6 +115,7 @@ class InstanceAdmin {
 
   /**
    * Deletes the specified cluster of an instance in the project.
+   *
    * @param instance_id the id of the instance in the project
    * @param cluster_id the id of the cluster in the project that needs to be
    *   deleted
