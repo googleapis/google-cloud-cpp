@@ -18,5 +18,5 @@ set -eu
 
 # Dump the emulator log file. Tests run in the bigtable/tests directory.
 echo "================================================================"
-cat bigtable/tests/emulator.log >&2
+cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/bigtable/tests/emulator.log >&2
 echo "================================================================"
