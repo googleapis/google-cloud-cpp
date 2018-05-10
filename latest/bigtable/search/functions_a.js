@@ -2,6 +2,7 @@ var searchData=
 [
   ['on_5fcompletion',['on_completion',['../classbigtable_1_1v0_1_1RPCBackoffPolicy.html#a17beccfd30dda128085fa6536f95de0a',1,'bigtable::v0::RPCBackoffPolicy::on_completion()'],['../classbigtable_1_1v0_1_1ExponentialBackoffPolicy.html#a48e212f5e83c54fc19630afb63d7ef14',1,'bigtable::v0::ExponentialBackoffPolicy::on_completion()']]],
   ['on_5ffailure',['on_failure',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html#a9efd047aca4068d2303fa6bb6b3dd503',1,'bigtable::v0::RPCRetryPolicy::on_failure()'],['../classbigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html#afd52b1bb1521aaf4632a4997344ef3c2',1,'bigtable::v0::LimitedErrorCountRetryPolicy::on_failure()'],['../classbigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#a3f6c098bbef90619f9fd3c9f7647164b',1,'bigtable::v0::LimitedTimeRetryPolicy::on_failure()']]],
+  ['onfailure',['OnFailure',['../classbigtable_1_1v0_1_1PollingPolicy.html#acc06bfb88d3f50c82cfdc2199385c227',1,'bigtable::v0::PollingPolicy::OnFailure()'],['../classbigtable_1_1v0_1_1GenericPollingPolicy.html#a80e514fd519b00b38d819863a71701f4',1,'bigtable::v0::GenericPollingPolicy::OnFailure()']]],
   ['open',['Open',['../classbigtable_1_1v0_1_1RowRange.html#ad70d348e19b68220ab2af0f4aef60b7e',1,'bigtable::v0::RowRange']]],
   ['operator_21_3d',['operator!=',['../classbigtable_1_1v0_1_1RowRange.html#a16bf6e4a4b9eb8a1f582fb8b92b5fb11',1,'bigtable::v0::RowRange']]],
   ['operator_3c_3c',['operator&lt;&lt;',['../namespacebigtable_1_1v0.html#aa4cacc8fb86742166478441b5037fbdb',1,'bigtable::v0']]],

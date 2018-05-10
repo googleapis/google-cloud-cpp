@@ -117,6 +117,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GcRule.html">GcRule</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement a thin wrapper around google::bigtable::admin::v2::GcRule.  <a href="classbigtable_1_1v0_1_1GcRule.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GenericPollingPolicy.html">GenericPollingPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1GRpcError.html">GRpcError</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap gRPC errors is a C++ exception.  <a href="classbigtable_1_1v0_1_1GRpcError.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +151,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1PermanentMutationFailure.html">PermanentMutationFailure</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report unrecoverable errors in a partially completed mutation.  <a href="classbigtable_1_1v0_1_1PermanentMutationFailure.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the interface for providing asynchronous repetitive call rules.  <a href="classbigtable_1_1v0_1_1PollingPolicy.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1ReadModifyWriteRule.html">ReadModifyWriteRule</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the interfaces to create ReadWriteModifyRule operations.  <a href="classbigtable_1_1v0_1_1ReadModifyWriteRule.html#details">More...</a><br /></td></tr>
@@ -228,6 +233,8 @@ Functions</h2></td></tr>
 <tr class="memitem:afd8f1d9efa4b470295cba73b2c52172d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structbigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#afd8f1d9efa4b470295cba73b2c52172d">DeleteFromRow</a> ()</td></tr>
 <tr class="memdesc:afd8f1d9efa4b470295cba73b2c52172d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to delete all the cells in a row.  <a href="#afd8f1d9efa4b470295cba73b2c52172d">More...</a><br /></td></tr>
 <tr class="separator:afd8f1d9efa4b470295cba73b2c52172d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543cc51ff101ed6116679df71e6bbb9a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#a543cc51ff101ed6116679df71e6bbb9a">DefaultPollingPolicy</a> ()</td></tr>
+<tr class="separator:a543cc51ff101ed6116679df71e6bbb9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4cacc8fb86742166478441b5037fbdb"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigtable_1_1v0.html#aa4cacc8fb86742166478441b5037fbdb">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classbigtable_1_1v0_1_1RowRange.html">RowRange</a> const  &amp;x)</td></tr>
 <tr class="memdesc:aa4cacc8fb86742166478441b5037fbdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a human-readable representation of the range, mostly for testing.  <a href="#aa4cacc8fb86742166478441b5037fbdb">More...</a><br /></td></tr>
 <tr class="separator:aa4cacc8fb86742166478441b5037fbdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -501,6 +508,23 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return an instance of the default <a class="el" href="classbigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a>. </p>
+
+</div>
+</div>
+<a id="a543cc51ff101ed6116679df71e6bbb9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543cc51ff101ed6116679df71e6bbb9a">&#9670;&nbsp;</a></span>DefaultPollingPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classbigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a> &gt; bigtable::v0::DefaultPollingPolicy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

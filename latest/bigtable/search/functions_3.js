@@ -3,6 +3,7 @@ var searchData=
   ['data_5fendpoint',['data_endpoint',['../classbigtable_1_1v0_1_1ClientOptions.html#a5753fef1cb30d384f24905cefb497aee',1,'bigtable::v0::ClientOptions']]],
   ['defaultdataclient',['DefaultDataClient',['../classbigtable_1_1v0_1_1DefaultDataClient.html#a06282ef754f75ba17ce4cabfc1d85f60',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance, ClientOptions options)'],['../classbigtable_1_1v0_1_1DefaultDataClient.html#a9bd9f51ec2f1517ef9931b06a6c2a370',1,'bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance)']]],
   ['defaultidempotentmutationpolicy',['DefaultIdempotentMutationPolicy',['../namespacebigtable_1_1v0.html#afc37466672777e7e9babf2d393d81dbe',1,'bigtable::v0']]],
+  ['defaultpollingpolicy',['DefaultPollingPolicy',['../namespacebigtable_1_1v0.html#a543cc51ff101ed6116679df71e6bbb9a',1,'bigtable::v0']]],
   ['defaultrpcbackoffpolicy',['DefaultRPCBackoffPolicy',['../namespacebigtable_1_1v0.html#ade9f89d5543645385ad5277416f458da',1,'bigtable::v0']]],
   ['defaultrpcretrypolicy',['DefaultRPCRetryPolicy',['../namespacebigtable_1_1v0.html#a315ce71b424f9a465d96a82e9a82d6b4',1,'bigtable::v0']]],
   ['deletecluster',['DeleteCluster',['../classbigtable_1_1v0_1_1InstanceAdmin.html#a6b6184eacf5a9a87ef86a763a54ec447',1,'bigtable::v0::InstanceAdmin::DeleteCluster()'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#ab3d2c972ef7a530a452ea5032407da2a',1,'bigtable::v0::InstanceAdminClient::DeleteCluster()']]],
