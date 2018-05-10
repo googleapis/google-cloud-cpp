@@ -8,6 +8,8 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 
 IncludeCategories:
+- Regex: '^\"google/cloud/'
+  Priority: 1500
 - Regex: '^\"'
   Priority: 1000
 - Regex: '^<grpc/'

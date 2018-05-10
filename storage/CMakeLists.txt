@@ -66,6 +66,7 @@ endif ()
 
 # Add the library
 add_subdirectory(client)
+add_subdirectory(tests)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs

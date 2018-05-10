@@ -18,6 +18,10 @@ configure_file(version_info.h.in version_info.h)
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    internal/curl_request.h
+    internal/curl_request.cc
+    internal/curl_wrappers.h
+    internal/curl_wrappers.cc
     internal/nljson.h
     version.h
     version.cc)
@@ -27,6 +31,7 @@ target_link_libraries(storage_client
         CURL::CURL
         Threads::Threads
     PRIVATE
+        nlohmann_json
         storage_common_options)
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
