@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
-#define GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_FIRESTORE_FIELD_PATH_H_
+#ifndef GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_CLIENT_FIELD_PATH_H_
+#define GOOGLE_CLOUD_CPP_FIRESTORE_GOOGLE_CLIENT_FIELD_PATH_H_
 
 #include <iostream>
 #include <regex>
@@ -37,6 +37,8 @@ class FieldPath {
 
   /**
    * Construct an invalid FieldPath.
+   *
+   * @return An invalid FieldPath.
    */
   static FieldPath InvalidFieldPath();
 
@@ -44,13 +46,16 @@ class FieldPath {
    * Construct FieldPath from a field path string @p string.
    *
    * @param string A const field path string for creating a FieldPath.
+   * @return Either an invalid field path if a valid string cannot be created
+   *     or a field path created from the field path string.
    */
   static FieldPath FromString(std::string const& string);
 
   /**
    * Construct a new FieldPath by appending a field path string @p string.
    *
-   * @param string A const field path string to append to this FieldPath.
+   * @param string A const field path string to append to this FieldPath
+   * @return A new field path created from appending the field path string.
    */
 
   FieldPath Append(std::string const& string) const;
@@ -59,23 +64,33 @@ class FieldPath {
    * Construct a new FieldPath by appending a FieldPath @p field_path.
    *
    * @param field_path A const FieldPath to append to this FieldPath.
+   * @return A new field path created from appending the FieldPath
    */
   FieldPath Append(FieldPath const& field_path) const;
 
   /**
    * Convert the FieldPath into a unique representation for the server.
+   * @return The unique server API representation.
    */
   std::string ToApiRepr() const;
 
   /**
-   * Return the length of components for this FieldPath.
+   * Return the number of components for this FieldPath.
+   * @return The number of components for this FieldPath.
    */
   size_t size() const { return parts_.size(); }
+
+  /**
+   * Returns whether this FieldPath is valid or not.
+   * @return Whether this FieldPath is valid or not.
+   */
+  bool valid() const { return valid_; }
 
   /**
    * Compare the equality of this FieldPath with another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is equal to another FieldPath
    */
   bool operator==(FieldPath const& other) const;
 
@@ -83,6 +98,7 @@ class FieldPath {
    * Compare the non-equality of this FieldPath with another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is not equal to another FieldPath.
    */
   bool operator!=(FieldPath const& other) const;
 
@@ -90,6 +106,7 @@ class FieldPath {
    * Compare if this FieldPath is before another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is before another FieldPath.
    */
   bool operator<(FieldPath const& other) const;
 
@@ -97,6 +114,7 @@ class FieldPath {
    * Compare if this FieldPath is before or equal to another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is before or equal to another FieldPath.
    */
   bool operator<=(FieldPath const& other) const;
 
@@ -104,6 +122,7 @@ class FieldPath {
    * Compare if this FieldPath is after another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is after another FieldPath.
    */
   bool operator>(FieldPath const& other) const;
 
@@ -111,6 +130,7 @@ class FieldPath {
    * Compare if this FieldPath is after or equal to another FieldPath @p other.
    *
    * @param other The other const FieldPath to compare to.
+   * @return Whether this FieldPath is after or equal to another FieldPath.
    */
   bool operator>=(FieldPath const& other) const;
 
@@ -119,20 +139,17 @@ class FieldPath {
    *
    * @param os The ostream to write to.
    * @param field_path This const FieldPath.
+   * @return The ostream written to.
    */
   friend std::ostream& operator<<(std::ostream& os,
                                   const FieldPath& field_path);
-
-  /**
-   * Returns whether this FieldPath is valid or not.
-   */
-  bool valid() const { return valid_; }
 
  private:
   /**
    * Ensures @p string has no invalid characters.
    *
    * @param string A const string to write to.
+   * @return Whether the string contains invalid characters or not.
    */
   static bool InvalidCharacters(std::string const& string);
 
@@ -140,6 +157,7 @@ class FieldPath {
    * Splits @p string via field path delimiter '.'.
    *
    * @param string A const string to write to.
+   * @return The vector of string after splitting via delimiter
    */
   static std::vector<std::string> Split(std::string const string);
 

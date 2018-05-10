@@ -31,28 +31,6 @@ FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
   this->valid_ = true;
 }
 
-bool FieldPath::InvalidCharacters(std::string const& string) {
-  std::array<char, 6> const invalid_chars = {"~*/[]"};
-  for (auto const invalid_char : invalid_chars) {
-    if (string.find(invalid_char) != std::string::npos) {
-      return true;
-    }
-  }
-  return false;
-}
-
-std::vector<std::string> FieldPath::Split(std::string string) {
-  std::vector<std::string> parts;
-  auto index = string.find('.');
-  while (index != std::string::npos) {
-    parts.push_back(string.substr(0, index));
-    string = string.substr(index + 1);
-    index = string.find('.');
-  }
-  parts.push_back(string);
-  return parts;
-}
-
 FieldPath FieldPath::InvalidFieldPath() {
   std::vector<std::string> parts = {""};
   return FieldPath(parts);
@@ -81,16 +59,6 @@ FieldPath FieldPath::Append(FieldPath const& field_path) const {
     return FieldPath(parts);
   } else {
     return FieldPath::InvalidFieldPath();
-  }
-}
-
-void FieldPath::ReplaceAll(std::string& string, std::string const& find,
-                           std::string const& replace) {
-  auto found = string.find(find);
-  while (found != std::string::npos) {
-    string = string.replace(found, find.size(), replace);
-    found += replace.size();
-    found = string.find(find, found);
   }
 }
 
@@ -156,5 +124,37 @@ bool FieldPath::operator>=(FieldPath const& other) const {
 std::ostream& operator<<(std::ostream& os, FieldPath const& field_path) {
   os << field_path.ToApiRepr();
   return os;
+}
+
+bool FieldPath::InvalidCharacters(std::string const& string) {
+  std::array<char, 6> const invalid_chars = {"~*/[]"};
+  for (auto const invalid_char : invalid_chars) {
+    if (string.find(invalid_char) != std::string::npos) {
+      return true;
+    }
+  }
+  return false;
+}
+
+std::vector<std::string> FieldPath::Split(std::string string) {
+  std::vector<std::string> parts;
+  auto index = string.find('.');
+  while (index != std::string::npos) {
+    parts.push_back(string.substr(0, index));
+    string = string.substr(index + 1);
+    index = string.find('.');
+  }
+  parts.push_back(string);
+  return parts;
+}
+
+void FieldPath::ReplaceAll(std::string& string, std::string const& find,
+                           std::string const& replace) {
+  auto found = string.find(find);
+  while (found != std::string::npos) {
+    string = string.replace(found, find.size(), replace);
+    found += replace.size();
+    found = string.find(find, found);
+  }
 }
 }  // namespace firestore
