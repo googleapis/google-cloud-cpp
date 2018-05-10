@@ -24,8 +24,10 @@ ExternalProject_Add(nlohmann_json_project
         INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <INSTALL_DIR>/src/json.hpp <INSTALL_DIR>/include/nlohmann/json.hpp
         LOG_DOWNLOAD ON
         LOG_INSTALL ON)
+
 add_library(nlohmann_json INTERFACE)
 add_dependencies(nlohmann_json nlohmann_json_project)
-target_include_directories(nlohmann_json INTERFACE
+target_include_directories(nlohmann_json
+    INTERFACE
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/external/nlohmann_json/include>
         $<INSTALL_INTERFACE:include>)
