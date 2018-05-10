@@ -15,7 +15,10 @@
 #include "storage/client/internal/curl_request.h"
 #include "storage/client/internal/curl_wrappers.h"
 #include "google/cloud/internal/build_info.h"
+<<<<<<< HEAD
 #include "google/cloud/internal/throw_delegate.h"
+=======
+>>>>>>> Initial classes to make http requests.
 #include <iostream>
 #include <sstream>
 
