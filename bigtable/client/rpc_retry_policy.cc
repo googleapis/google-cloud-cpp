@@ -36,7 +36,8 @@ std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()
-    : maximum_duration_(maximum_retry_period) {}
+    : maximum_duration_(maximum_retry_period),
+      deadline_(std::chrono::system_clock::now() + maximum_duration_) {}
 
 std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
   return std::unique_ptr<RPCRetryPolicy>(
