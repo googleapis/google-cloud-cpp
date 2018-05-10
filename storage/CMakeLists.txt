@@ -41,6 +41,7 @@ set(DOXYGEN_PREDEFINED "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*")
 
 include(GoogleCloudCppCommon)
+include(IncludeNlohmannJson)
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
@@ -68,7 +69,7 @@ add_subdirectory(client)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS storage_common_options
+install(TARGETS storage_common_options nlohmann_json
     EXPORT storage-targets
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

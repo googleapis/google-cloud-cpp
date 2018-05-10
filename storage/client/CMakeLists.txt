@@ -18,10 +18,16 @@ configure_file(version_info.h.in version_info.h)
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    internal/nljson.h
     version.h
     version.cc)
-target_link_libraries(storage_client PUBLIC google_cloud_cpp_common CURL::CURL Threads::Threads
-    PRIVATE storage_common_options)
+target_link_libraries(storage_client
+    PUBLIC
+        google_cloud_cpp_common
+        CURL::CURL
+        Threads::Threads
+    PRIVATE
+        storage_common_options)
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -44,6 +50,7 @@ endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
+    internal/nljson_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
@@ -51,8 +58,13 @@ foreach (fname ${storage_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     set(target "storage_client_${target}")
     add_executable(${target} ${fname})
-    target_link_libraries(${target} PRIVATE
-        storage_client gmock CURL::CURL storage_common_options)
+    target_link_libraries(${target}
+        PRIVATE
+            storage_client
+            gmock
+            CURL::CURL
+            storage_common_options
+            nlohmann_json)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 

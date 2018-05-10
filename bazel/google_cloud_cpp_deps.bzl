@@ -58,6 +58,14 @@ def google_cloud_cpp_deps():
                     sha256 = "39a73de6fa2a03bdb9c43c89a4283e09880833b3c1976ef3ce3edf45c8cacf72"
         )
 
+    # We need the nlohmann_json library
+    if "com_github_nlohmann_json_single_header" not in native.existing_rules():
+        native.http_file(
+            name = "com_github_nlohmann_json_single_header",
+            url = "https://github.com/nlohmann/json/releases/download/v3.1.2/json.hpp",
+            sha256 = "fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733",
+        )
+
     # We use the cc_proto_library() rule from @com_google_protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
