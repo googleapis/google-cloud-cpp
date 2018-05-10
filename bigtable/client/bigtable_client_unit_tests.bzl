@@ -39,5 +39,6 @@ bigtable_client_unit_tests = [
     "rpc_backoff_policy_test.cc",
     "metadata_update_policy_test.cc",
     "rpc_retry_policy_test.cc",
+    "polling_policy_test.cc",
 ]
 

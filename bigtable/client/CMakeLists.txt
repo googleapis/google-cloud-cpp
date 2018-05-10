@@ -68,6 +68,8 @@ add_library(bigtable_client
         idempotent_mutation_policy.cc
         mutations.h
         mutations.cc
+        polling_policy.h
+        polling_policy.cc
         read_modify_write_rule.h
         read_modify_write_rule.cc
         row.h
@@ -186,7 +188,8 @@ set(bigtable_client_unit_tests
         row_set_test.cc
         rpc_backoff_policy_test.cc
         metadata_update_policy_test.cc
-        rpc_retry_policy_test.cc)
+        rpc_retry_policy_test.cc
+        polling_policy_test.cc)
 
 # Export the list of unit tests so the Bazel BUILD file can pick it up.
 export_list_to_bazel("bigtable_client_unit_tests.bzl" "bigtable_client_unit_tests")
