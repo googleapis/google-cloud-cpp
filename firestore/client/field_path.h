@@ -29,8 +29,9 @@ namespace firestore {
 class FieldPath {
  public:
   /**
-   * Construct FieldPath from a vector of field name *parts*.
-   * @param parts.  A const vector of strings which are field path components.
+   * Construct FieldPath from a vector of field name @p parts.
+   *
+   * @param parts A const vector of strings which are field path components.
    */
   FieldPath(std::vector<std::string> const parts);
 
@@ -40,21 +41,24 @@ class FieldPath {
   static FieldPath InvalidFieldPath();
 
   /**
-   * Construct FieldPath from a field path string *string*.
-   * @param string.  A const field path string for creating a FieldPath.
+   * Construct FieldPath from a field path string @p string.
+   *
+   * @param string A const field path string for creating a FieldPath.
    */
   static FieldPath FromString(std::string const& string);
 
   /**
-   * Construct a new FieldPath by appending a field path string *string*.
-   * @param string.  A const field path string to append to this FieldPath.
+   * Construct a new FieldPath by appending a field path string @p string.
+   *
+   * @param string A const field path string to append to this FieldPath.
    */
 
   FieldPath Append(std::string const& string) const;
 
   /**
-   * Construct a new FieldPath by appending a FieldPath *field_path*.
-   * @param field_path.  A const FieldPath to append to this FieldPath.
+   * Construct a new FieldPath by appending a FieldPath @p field_path.
+   *
+   * @param field_path A const FieldPath to append to this FieldPath.
    */
   FieldPath Append(FieldPath const& field_path) const;
 
@@ -69,45 +73,52 @@ class FieldPath {
   size_t size() const { return parts_.size(); }
 
   /**
-   * Compare the equality of this FieldPath with another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare the equality of this FieldPath with another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator==(FieldPath const& other) const;
 
   /**
-   * Compare the non-equality of this FieldPath with another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare the non-equality of this FieldPath with another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator!=(FieldPath const& other) const;
 
   /**
-   * Compare if this FieldPath is before another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare if this FieldPath is before another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator<(FieldPath const& other) const;
 
   /**
-   * Compare if this FieldPath is before or equal to another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare if this FieldPath is before or equal to another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator<=(FieldPath const& other) const;
 
   /**
-   * Compare if this FieldPath is after another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare if this FieldPath is after another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator>(FieldPath const& other) const;
 
   /**
-   * Compare if this FieldPath is after or equal to another FieldPath *other*.
-   * @param other.  The other const FieldPath to compare to.
+   * Compare if this FieldPath is after or equal to another FieldPath @p other.
+   *
+   * @param other The other const FieldPath to compare to.
    */
   bool operator>=(FieldPath const& other) const;
 
   /**
-   * The representation of this FieldPath *field_path* for ostream *os*.
-   * @param os.  ostream to write to.
-   * @param field_path.  This const FieldPath.
+   * The representation of this FieldPath @p field_path for ostream @p os.
+   *
+   * @param os The ostream to write to.
+   * @param field_path This const FieldPath.
    */
   friend std::ostream& operator<<(std::ostream& os,
                                   const FieldPath& field_path);
@@ -119,22 +130,25 @@ class FieldPath {
 
  private:
   /**
-   * Ensures *string* has no invalid characters.
-   * @param string.  A const string to write to.
+   * Ensures @p string has no invalid characters.
+   *
+   * @param string A const string to write to.
    */
   static bool InvalidCharacters(std::string const& string);
 
   /**
-   * Splits *string* via field path delimiter '.'.
-   * @param string.  A const string to write to.
+   * Splits @p string via field path delimiter '.'.
+   *
+   * @param string A const string to write to.
    */
   static std::vector<std::string> Split(std::string const string);
 
   /**
-   * Replace all occurences of *find* in *string* with *replace*.
-   * @param string.  A string to search and replace
-   * @param find.  A const String to find and replace with *replace*
-   * @param replace.  A const String to replace *find* with.
+   * Replace all occurences of @p find in @p string with @p replace.
+   *
+   * @param string A string to search and replace
+   * @param find A const String to find and replace with @p replace
+   * @param replace A const String to replace @p find with.
    */
   static void ReplaceAll(std::string& string, std::string const& find,
                          std::string const& replace);
