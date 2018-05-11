@@ -39,7 +39,7 @@ include(GoogleCloudCppCommon)
 # targets without having to painfully set special variables, it also allows
 # users to add more common options without having to touch the code.
 add_library(firestore_common_options INTERFACE)
-    google_cloud_cpp_add_common_options(firestore_common_options)
+google_cloud_cpp_add_common_options(firestore_common_options)
 
 # Enable unit tests
 enable_testing()

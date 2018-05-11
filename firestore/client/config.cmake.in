@@ -18,10 +18,6 @@ find_dependency(gRPC)
 
 include("${CMAKE_CURRENT_LIST_DIR}/firestore-targets.cmake")
 
-add_library(firestore::protos IMPORTED INTERFACE)
-set_target_properties(firestore::protos PROPERTIES
-    INTERFACE_LINK_LIBRARIES "firestore_protos")
-
 add_library(firestore::client IMPORTED INTERFACE)
 set_target_properties(firestore::client PROPERTIES
     INTERFACE_LINK_LIBRARIES "firestore_client")

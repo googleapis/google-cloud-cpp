@@ -21,7 +21,7 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.0.1 - 2018-04
+### v0.0.1 - 2018-05
 
 * This release implements FieldPath class for Google Cloud Firestore.
 
