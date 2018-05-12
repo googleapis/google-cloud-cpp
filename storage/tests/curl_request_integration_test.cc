@@ -37,7 +37,12 @@ TEST(CurlRequestTest, FailedGET) {
   // can't, but just documenting the assumptions in this test).
   storage::internal::CurlRequest request("https://localhost:0/");
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(request.MakeRequest(std::string{}), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(request.MakeRequest(std::string{}),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(CurlRequestTest, SimpleJSON) {
