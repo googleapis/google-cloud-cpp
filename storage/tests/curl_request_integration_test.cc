@@ -32,6 +32,14 @@ TEST(CurlRequestTest, SimpleGET) {
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
 
+TEST(CurlRequestTest, FailedGET) {
+  // This test fails if somebody manages to run a https server on port 0 (you
+  // can't, but just documenting the assumptions in this test).
+  storage::internal::CurlRequest request("https://localhost:0/");
+
+  EXPECT_THROW(request.MakeRequest(std::string{}), std::exception);
+}
+
 TEST(CurlRequestTest, SimpleJSON) {
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   request.AddQueryParameter("foo", "bar&baz");
