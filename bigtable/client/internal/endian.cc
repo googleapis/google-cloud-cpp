@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/endian.h"
-#include "bigtable/client/internal/throw_delegate.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include <cstring>
+#include <limits>
 
 #ifdef _MSC_VER
 #include <stdlib.h>
@@ -59,7 +61,8 @@ bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
     std::string const& value) {
   // Check if value is BigEndian 64-bit integer
   if (value.size() != sizeof(bigtable::bigendian64_t)) {
-    internal::RaiseRangeError("Value is not convertible to uint64");
+    google::cloud::internal::RaiseRangeError(
+        "Value is not convertible to uint64");
   }
   bigtable::bigendian64_t big_endian_value(0);
   std::memcpy(&big_endian_value, value.c_str(),

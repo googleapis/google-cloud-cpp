@@ -17,6 +17,7 @@
 #include "bigtable/client/table.h"
 #include "bigtable/client/testing/mock_read_rows_reader.h"
 #include "bigtable/client/testing/table_test_fixture.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <initializer_list>
@@ -100,7 +101,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
  public:
   RetryPolicyMock() {}
   std::unique_ptr<RPCRetryPolicy> clone() const override {
-    bigtable::internal::RaiseRuntimeError("Mocks cannot be copied.");
+    google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
 
   MOCK_CONST_METHOD1(setup_impl, void(grpc::ClientContext&));
@@ -120,7 +121,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
   BackoffPolicyMock() {}
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
-    bigtable::internal::RaiseRuntimeError("Mocks cannot be copied.");
+    google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
   void setup(grpc::ClientContext& context) const override {}
   MOCK_METHOD1(on_completion_impl,

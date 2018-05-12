@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_THROW_DELEGATE_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_THROW_DELEGATE_H_
+#ifndef GOOGLE_CLOUD_CPP_COMMON_INTERNAL_THROW_DELEGATE_H_
+#define GOOGLE_CLOUD_CPP_COMMON_INTERNAL_THROW_DELEGATE_H_
 
-#include "bigtable/client/version.h"
-#include <grpc++/grpc++.h>
+#include "google/cloud/version.h"
 
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 //@{
@@ -33,13 +33,22 @@ namespace internal {
  * We copied this technique from Abseil.  Unfortunately we cannot use it
  * directly because it is not a public interface for Abseil.
  */
-[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg);
-[[noreturn]] void RaiseRpcError(grpc::Status const& status,
-                                std::string const& msg);
+[[noreturn]] void RaiseInvalidArgument(char const* msg);
+[[noreturn]] void RaiseInvalidArgument(std::string const& msg);
+
+[[noreturn]] void RaiseRangeError(char const* msg);
+[[noreturn]] void RaiseRangeError(std::string const& msg);
+
+[[noreturn]] void RaiseRuntimeError(char const* msg);
+[[noreturn]] void RaiseRuntimeError(std::string const& msg);
+
+[[noreturn]] void RaiseLogicError(char const* msg);
+[[noreturn]] void RaiseLogicError(std::string const& msg);
 //@}
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_THROW_DELEGATE_H_
+#endif  // GOOGLE_CLOUD_CPP_COMMON_INTERNAL_THROW_DELEGATE_H_

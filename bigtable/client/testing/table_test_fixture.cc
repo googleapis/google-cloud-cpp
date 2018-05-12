@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/testing/table_test_fixture.h"
-#include "bigtable/client/internal/throw_delegate.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 
 namespace bigtable {
@@ -23,7 +23,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string repr) {
   google::bigtable::v2::ReadRowsResponse response;
   if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
-    bigtable::internal::RaiseRuntimeError("Failed to parse " + repr);
+    google::cloud::internal::RaiseRuntimeError("Failed to parse " + repr);
   }
   return response;
 }

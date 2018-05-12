@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/readrowsparser.h"
-#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/row.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 #include <gtest/gtest.h>
 #include <numeric>
@@ -222,18 +222,18 @@ class AcceptanceTest : public ::testing::Test {
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
       if (not status.ok()) {
-        bigtable::internal::RaiseRuntimeError(status.error_message());
+        google::cloud::internal::RaiseRuntimeError(status.error_message());
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
         if (not status.ok()) {
-          bigtable::internal::RaiseRuntimeError(status.error_message());
+          google::cloud::internal::RaiseRuntimeError(status.error_message());
         }
       }
     }
     parser_.HandleEndOfStream(status);
     if (not status.ok()) {
-      bigtable::internal::RaiseRuntimeError(status.error_message());
+      google::cloud::internal::RaiseRuntimeError(status.error_message());
     }
   }
 

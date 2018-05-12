@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ROWREADERITERATOR_H_
 
-#include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/row.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <iterator>
 
 namespace bigtable {
@@ -44,13 +44,13 @@ class OptionalRow {
 
   Row& value() {
     if (not has_row_) {
-      RaiseLogicError("access unset OptionalRow");
+      google::cloud::internal::RaiseLogicError("access unset OptionalRow");
     }
     return row_;
   }
   Row const& value() const {
     if (not has_row_) {
-      RaiseLogicError("access unset OptionalRow");
+      google::cloud::internal::RaiseLogicError("access unset OptionalRow");
     }
     return row_;
   }

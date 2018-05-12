@@ -15,6 +15,7 @@
 #include "bigtable/client/instance_admin.h"
 #include "bigtable/client/internal/throw_delegate.h"
 #include "bigtable/client/internal/unary_client_utils.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <type_traits>
@@ -89,7 +90,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
       if (response.has_response()) {
         auto const& any = response.response();
         if (not any.Is<google::bigtable::admin::v2::Instance>()) {
-          bigtable::internal::RaiseRuntimeError("invalid result type");
+          google::cloud::internal::RaiseRuntimeError("invalid result type");
         }
         any.UnpackTo(&result);
         return result;
@@ -111,7 +112,7 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);
   if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
+    bigtable::internal::RaiseRpcError(status, status.error_message());
   }
   return result;
 }
@@ -120,7 +121,7 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
   impl_.DeleteInstance(instance_id, status);
   if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
+    bigtable::internal::RaiseRpcError(status, status.error_message());
   }
 }
 
@@ -128,7 +129,7 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters() {
   grpc::Status status;
   auto result = impl_.ListClusters(status);
   if (not status.ok()) {
-    internal::RaiseRpcError(status, status.error_message());
+    bigtable::internal::RaiseRpcError(status, status.error_message());
   }
   return result;
 }
