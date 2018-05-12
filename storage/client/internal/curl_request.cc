@@ -15,6 +15,7 @@
 #include "storage/client/internal/curl_request.h"
 #include "storage/client/internal/curl_wrappers.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <iostream>
 #include <sstream>
 
@@ -28,7 +29,7 @@ CurlRequest::CurlRequest(std::string base_url)
       curl_(curl_easy_init()),
       headers_(nullptr) {
   if (curl_ == nullptr) {
-    throw std::runtime_error("Cannot initialize CURL handle");
+    google::cloud::internal::RaiseRuntimeError("Cannot initialize CURL handle");
   }
 }
 
@@ -86,7 +87,7 @@ std::string CurlRequest::MakeRequest(std::string const& payload) {
     std::ostringstream os;
     os << "Error while performing curl request, " << curl_easy_strerror(error)
        << "[" << error << "]: " << buffer << std::endl;
-    throw std::runtime_error(os.str());
+    google::cloud::internal::RaiseRuntimeError(os.str());
   }
 
   return buffer_.contents();
