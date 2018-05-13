@@ -64,6 +64,18 @@ if (NOT TARGET CURL::CURL)
     set_property(TARGET CURL::CURL APPEND PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
 endif ()
 
+find_package(OpenSSL REQUIRED)
+if (NOT TARGET OpenSSL::SSL)
+    add_library(OpenSSL::SSL UNKNOWN IMPORTED)
+    set_target_properties(OpenSSL::SSL PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${OPENSSL_INCLUDE_DIR}")
+    set_property(TARGET OpenSSL::SSL APPEND PROPERTY IMPORTED_LOCATION "${OPENSSL_SSL_LIBRARY}")
+endif ()
+if (NOT TARGET OpenSSL::Crypto)
+    add_library(OpenSSL::Crypto UNKNOWN IMPORTED)
+    set_target_properties(OpenSSL::Crypto PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${OPENSSL_INCLUDE_DIR}")
+    set_property(TARGET OpenSSL::Crypto APPEND PROPERTY IMPORTED_LOCATION "${OPENSSL_CRYPTO_LIBRARY}")
+endif ()
+
 # Add the library
 add_subdirectory(client)
 add_subdirectory(tests)

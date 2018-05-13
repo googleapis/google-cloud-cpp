@@ -29,6 +29,8 @@ target_link_libraries(storage_client
     PUBLIC
         google_cloud_cpp_common
         CURL::CURL
+        OpenSSL::SSL
+        OpenSSL::Crypto
         Threads::Threads
     PRIVATE
         nlohmann_json
