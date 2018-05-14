@@ -31,10 +31,16 @@ target_link_libraries(storage_client
         CURL::CURL
         OpenSSL::SSL
         OpenSSL::Crypto
+        ZLIB::ZLIB
         Threads::Threads
     PRIVATE
         nlohmann_json
         storage_common_options)
+if (WIN32)
+    target_link_libraries(storage_client
+        PUBLIC
+            wsock32 ws2_32)
+endif ()
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
