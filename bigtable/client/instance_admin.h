@@ -83,6 +83,12 @@ class InstanceAdmin {
   std::future<google::bigtable::admin::v2::Instance> CreateInstance(
       InstanceConfig instance_config);
 
+  /// Create Cluster.
+  /// TODO(#422) implement tests and examples for CreateCluster
+  std::future<google::bigtable::admin::v2::Cluster> CreateCluster(
+      ClusterConfig instance_config, std::string const& instance_id,
+      std::string const& cluster_id);
+
   /**
    * Return the list of instances in the project.
    *
@@ -144,6 +150,11 @@ class InstanceAdmin {
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
       InstanceConfig instance_config);
+
+  /// Implement CreateCluster() with a separate thread.
+  google::bigtable::admin::v2::Cluster CreateClusterImpl(
+      ClusterConfig instance_config, std::string const& instance_id,
+      std::string const& cluster_id);
 
  private:
   noex::InstanceAdmin impl_;

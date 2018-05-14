@@ -107,6 +107,80 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   return result;
 }
 
+std::future<google::bigtable::admin::v2::Cluster> InstanceAdmin::CreateCluster(
+    ClusterConfig instance_config, std::string const& instance_id,
+    std::string const& cluster_id) {
+  return std::async(std::launch::async, &InstanceAdmin::CreateClusterImpl, this,
+                    std::move(instance_config), instance_id, cluster_id);
+}
+
+google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
+    ClusterConfig cluster_config, std::string const& instance_id,
+    std::string const& cluster_id) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  // Build the RPC request, try to minimize copying.
+  auto cluster = cluster_config.as_proto_move();
+  btproto::CreateClusterRequest request;
+  request.set_allocated_cluster(&cluster);
+  request.set_parent(project_name() + "/instances/" + instance_id);
+  request.set_cluster_id(cluster_id);
+
+  using ClientUtils =
+      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
+
+  grpc::Status status;
+  auto response = ClientUtils::MakeCall(
+      *impl_.client_, *rpc_policy, *backoff_policy,
+      impl_.metadata_update_policy_, &InstanceAdminClient::CreateCluster,
+      request, "InstanceAdmin::CreateCluster", status, false);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status,
+                                      "unrecoverable error in MakeCall()");
+  }
+
+  google::bigtable::admin::v2::Cluster result;
+
+  while (not response.done()) {
+    google::longrunning::GetOperationRequest op;
+    op.set_name(response.name());
+    grpc::ClientContext context;
+    status = impl_.client_->GetOperation(&context, op, &response);
+    if (not status.ok()) {
+      if (not rpc_policy->on_failure(status)) {
+        bigtable::internal::RaiseRpcError(
+            status,
+            "unrecoverable error polling longrunning Operation in "
+            "CreateInstance()");
+      }
+      auto delay = backoff_policy->on_completion(status);
+      std::this_thread::sleep_for(delay);
+      continue;
+    }
+    if (response.done()) {
+      if (response.has_response()) {
+        auto const& any = response.response();
+        if (not any.Is<google::bigtable::admin::v2::Cluster>()) {
+          google::cloud::internal::RaiseRuntimeError("invalid result type");
+        }
+        any.UnpackTo(&result);
+        return result;
+      }
+      if (response.has_error()) {
+        bigtable::internal::RaiseRpcError(
+            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
+                         response.error().message()),
+            "long running op failed");
+      }
+    }
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  return result;
+}
+
 btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);
