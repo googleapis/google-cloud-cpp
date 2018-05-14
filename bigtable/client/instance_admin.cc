@@ -115,7 +115,7 @@ std::future<google::bigtable::admin::v2::Cluster> InstanceAdmin::CreateCluster(
 }
 
 google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
-    ClusterConfig cluster_config, std::string const& instance_id,
+    ClusterConfig const& cluster_config, std::string const& instance_id,
     std::string const& cluster_id) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = impl_.rpc_retry_policy_->clone();

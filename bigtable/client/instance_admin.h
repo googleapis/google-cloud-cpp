@@ -153,7 +153,7 @@ class InstanceAdmin {
 
   /// Implement CreateCluster() with a separate thread.
   google::bigtable::admin::v2::Cluster CreateClusterImpl(
-      ClusterConfig instance_config, std::string const& instance_id,
+      ClusterConfig const& instance_config, std::string const& instance_id,
       std::string const& cluster_id);
 
  private:
