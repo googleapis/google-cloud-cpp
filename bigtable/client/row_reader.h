@@ -24,7 +24,7 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/table_admin_strong_types.h"
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpc++/grpc++.h>

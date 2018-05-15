@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "bigtable/client/internal/bulk_mutator.h"
+#include "bigtable/client/internal/table.h"
 
 #include <numeric>
 
@@ -24,8 +25,8 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
-BulkMutator::BulkMutator(bigtable::TableId const& table_name,
-                         bigtable::AppProfileId const& app_profile_id,
+BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
+                         bigtable::TableId const& table_name,
                          IdempotentMutationPolicy& idempotent_policy,
                          BulkMutation&& mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
@@ -34,10 +35,9 @@ BulkMutator::BulkMutator(bigtable::TableId const& table_name,
   // Move the mutations to the "pending" request proto, this is a zero copy
   // optimization.
   mut.MoveTo(&pending_mutations_);
-  // Initialize the table name after that.
-  pending_mutations_.set_table_name(table_name.get());
-  // Initialize the app_profile_id after that.
-  pending_mutations_.set_app_profile_id(app_profile_id.get());
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::MutateRowsRequest>(pending_mutations_, table_name.get(),
+                                  app_profile_id.get());
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
   // in the original sequence provided by the user.  So this vector maps from
@@ -74,8 +74,9 @@ void BulkMutator::PrepareForRequest() {
     a.has_mutation_result = false;
   }
   pending_mutations_ = {};
-  pending_mutations_.set_table_name(mutations_.table_name());
-  pending_mutations_.set_app_profile_id(mutations_.app_profile_id());
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::MutateRowsRequest>(pending_mutations_, mutations_.table_name(),
+                                  mutations_.app_profile_id());
   pending_annotations_ = {};
 }
 

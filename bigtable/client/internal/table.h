@@ -25,7 +25,7 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/table_admin_strong_types.h"
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
@@ -45,6 +45,17 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
 
+namespace internal {
+template <typename Request>
+void SetCommonTableOperationRequest(Request& request,
+                                    std::string const& table_name,
+                                    std::string const& app_profile_id) {
+  request.set_table_name(table_name);
+  request.set_app_profile_id(app_profile_id);
+}
+
+}  // namespace internal
+
 /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
 struct RowKeySample {
   std::string row_key;
@@ -59,15 +70,6 @@ struct RowKeySample {
  * Provide APIs to access and modify data in a Cloud Bigtable table.
  */
 namespace noex {
-namespace internal {
-template <typename Request>
-void SetCommonTableOperationRequest(Request& request,
-                                    std::string const& table_name,
-                                    std::string const& app_profile_id) {
-  request.set_table_name(table_name);
-  request.set_app_profile_id(app_profile_id);
-}
-}  // namespace internal
 class Table {
  public:
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
@@ -152,7 +154,7 @@ class Table {
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
-    bigtable::noex::internal::SetCommonTableOperationRequest<
+    bigtable::internal::SetCommonTableOperationRequest<
         ::google::bigtable::v2::ReadModifyWriteRowRequest>(
         request, table_name_.get(), app_profile_id_.get());
 

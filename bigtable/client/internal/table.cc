@@ -41,7 +41,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
-  bigtable::noex::internal::SetCommonTableOperationRequest<
+  bigtable::internal::SetCommonTableOperationRequest<
       btproto::MutateRowRequest>(request, table_name_.get(),
                                  app_profile_id_.get());
   mut.MoveTo(request);
@@ -95,7 +95,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
-  bigtable::internal::BulkMutator mutator(table_name_, app_profile_id_,
+  bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
                                           *idemponent_policy,
                                           std::forward<BulkMutation>(mut));
   while (mutator.HasPendingMutations()) {
@@ -169,7 +169,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               grpc::Status& status) {
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
-  bigtable::noex::internal::SetCommonTableOperationRequest<
+  bigtable::internal::SetCommonTableOperationRequest<
       btproto::CheckAndMutateRowRequest>(request, table_name_.get(),
                                          app_profile_id_.get());
   *request.mutable_predicate_filter() = filter.as_proto_move();
@@ -232,7 +232,7 @@ void Table::SampleRowsImpl(
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
-  bigtable::noex::internal::SetCommonTableOperationRequest<
+  bigtable::internal::SetCommonTableOperationRequest<
       btproto::SampleRowKeysRequest>(request, table_name_.get(),
                                      app_profile_id_.get());
 

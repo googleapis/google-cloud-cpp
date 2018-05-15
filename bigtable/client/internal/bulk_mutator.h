@@ -17,7 +17,7 @@
 
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
-#include "bigtable/client/table_admin_strong_types.h"
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/table_strong_types.h"
 
 namespace bigtable {
@@ -26,8 +26,8 @@ namespace internal {
 /// Keep the state in the Table::BulkApply() member function.
 class BulkMutator {
  public:
-  BulkMutator(bigtable::TableId const& table_name,
-              bigtable::AppProfileId const& app_profile_id,
+  BulkMutator(bigtable::AppProfileId const& app_profile_id,
+              bigtable::TableId const& table_name,
               IdempotentMutationPolicy& idempotent_policy, BulkMutation&& mut);
 
   /// Return true if there are pending mutations in the mutator

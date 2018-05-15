@@ -64,24 +64,11 @@ RowReader::RowReader(
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
     bool raise_on_error)
-    : client_(std::move(client)),
-      app_profile_id_(""),
-      table_name_(std::move(table_name)),
-      row_set_(std::move(row_set)),
-      rows_limit_(rows_limit),
-      filter_(std::move(filter)),
-      retry_policy_(std::move(retry_policy)),
-      backoff_policy_(std::move(backoff_policy)),
-      metadata_update_policy_(std::move(metadata_update_policy)),
-      context_(),
-      parser_factory_(std::move(parser_factory)),
-      stream_is_open_(false),
-      operation_cancelled_(false),
-      processed_chunks_count_(0),
-      rows_count_(0),
-      status_(grpc::Status::OK),
-      raise_on_error_(raise_on_error),
-      error_retrieved_(raise_on_error) {}
+    : RowReader(std::move(client), bigtable::AppProfileId(""),
+      std::move(table_name), std::move(row_set), rows_limit, std::move(filter),
+      std::move(retry_policy), std::move(backoff_policy),
+      std::move(metadata_update_policy),
+      std::move(parser_factory), raise_on_error) {}
 
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
@@ -150,7 +137,7 @@ void RowReader::MakeRequest() {
 
   google::bigtable::v2::ReadRowsRequest request;
 
-  bigtable::noex::internal::SetCommonTableOperationRequest<
+  bigtable::internal::SetCommonTableOperationRequest<
       google::bigtable::v2::ReadRowsRequest>(request, table_name_.get(),
                                              app_profile_id_.get());
   auto row_set_proto = row_set_.as_proto();
