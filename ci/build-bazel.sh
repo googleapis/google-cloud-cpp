@@ -30,8 +30,8 @@ fi
 
 export PATH=$PATH:$HOME/bin
 
-bazel --batch build //...:all
-bazel --batch test  //...:all
+bazel --batch build //bigtable/...:all //storage/...:all //google/...:all
+bazel --batch test  //bigtable/...:all //storage/...:all //google/...:all
 
 if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
   echo
