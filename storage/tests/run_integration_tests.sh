@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Copyright 2017 Google Inc.
 #
@@ -16,13 +16,28 @@
 
 set -eu
 
-if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
-  echo "Not a Mac OS X build, exit successfully"
+delay=1
+connected=no
+readonly ATTEMPTS=$(seq 1 8)
+for attempt in $ATTEMPTS; do
+  if curl "https://nghttp2.org/httpbin/get" >/dev/null 2>&1; then
+    connected=yes
+    break
+  fi
+  sleep $delay
+  delay=$((delay * 2))
+done
+
+if [ "${connected}" = "no" ]; then
+  # TODO(..) - use a local server for the integration tests.
+  echo "Cannot connect to nghttp2.org; exit test with success." >&2
   exit 0
+else
+  echo "Successfully connected to nghttp2.org."
 fi
 
-cmake -H. -B.build \
-  -DCMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}" \
-  -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl
-cmake --build .build -- -j "${NCPU:-2}"
-(cd .build && ctest --output-on-failure)
+echo
+echo "Running storage::internal::CurlRequest integration test."
+./curl_request_integration_test
+
+exit 0

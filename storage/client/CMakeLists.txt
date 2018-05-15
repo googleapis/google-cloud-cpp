@@ -18,6 +18,10 @@ configure_file(version_info.h.in version_info.h)
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    internal/curl_request.h
+    internal/curl_request.cc
+    internal/curl_wrappers.h
+    internal/curl_wrappers.cc
     internal/nljson.h
     version.h
     version.cc)
@@ -25,9 +29,18 @@ target_link_libraries(storage_client
     PUBLIC
         google_cloud_cpp_common
         CURL::CURL
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
         Threads::Threads
     PRIVATE
+        nlohmann_json
         storage_common_options)
+if (WIN32)
+    target_link_libraries(storage_client
+        PUBLIC
+            wsock32 ws2_32)
+endif ()
 target_include_directories(storage_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>

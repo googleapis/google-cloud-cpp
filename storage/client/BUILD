@@ -26,13 +26,13 @@ sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/0/' \
 """,
 )
 
-load(":storage_client.bzl", "storage_client_SRCS", "storage_client_HDRS")
 cc_library(
-    name = "storage_client",
-    srcs = storage_client_SRCS,
-    hdrs = storage_client_HDRS + [ "version_info.h" ],
-    deps = [
-        "//google/cloud:google_cloud_cpp_common",
+    name = "libcurl",
+    hdrs = [],
+    srcs = [],
+    linkopts = [
+        # TODO() - will not work with MSVC.
+        "-lcurl",
     ],
 )
 
@@ -50,16 +50,29 @@ cc_library(
     deps = [],
 )
 
+load(":storage_client.bzl", "storage_client_SRCS", "storage_client_HDRS")
+cc_library(
+    name = "storage_client",
+    srcs = storage_client_SRCS,
+    hdrs = storage_client_HDRS + [ "version_info.h" ],
+    deps = [
+        ":nlohmann_json",
+        ":libcurl",
+        "//google/cloud:google_cloud_cpp_common",
+    ],
+)
+
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = "storage_client_" + test.replace('/', '_').replace('.cc', ''),
     srcs = [test],
     deps = [
-      ":storage_client",
-      ":nlohmann_json",
-      "//google/cloud:google_cloud_cpp_common",
-      "@com_google_googletest//:gtest",
-      "@com_google_googletest//:gtest_main",
+        ":storage_client",
+        ":nlohmann_json",
+        ":libcurl",
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
     linkopts = [ "-lpthread" ],
 ) for test in storage_client_unit_tests]

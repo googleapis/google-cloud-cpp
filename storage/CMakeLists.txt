@@ -56,7 +56,9 @@ google_cloud_cpp_add_common_options(storage_common_options)
 # Enable unit tests
 enable_testing()
 
-# Search for libcurl
+# Search for libcurl, in CMake 3.5 this does not define a target, but it will
+# in 3.12 (see https://cmake.org/cmake/help/git-stage/module/FindCURL.html for
+# details).  Until then, define the target ourselves if it is missing.
 find_package(CURL REQUIRED)
 if (NOT TARGET CURL::CURL)
     add_library(CURL::CURL UNKNOWN IMPORTED)
@@ -64,8 +66,16 @@ if (NOT TARGET CURL::CURL)
     set_property(TARGET CURL::CURL APPEND PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
 endif ()
 
+# Find OpenSSL and ZLIB, these define targets as-of CMake 3.5 and higher. The
+# targets are not needed when linking CURL::CURL as a shared library, only when
+# linked statically. Since we only test static linking on Windows you may not
+# notice in other platforms.
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
+
 # Add the library
 add_subdirectory(client)
+add_subdirectory(tests)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
