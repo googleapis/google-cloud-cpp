@@ -21,10 +21,6 @@ function kill_emulators {
   kill "${EMULATOR_PID}"
   kill "${INSTANCE_ADMIN_EMULATOR_PID}"
   wait >/dev/null 2>&1
-  echo ======== instance-admin-emulator.log ===================
-  cat instance-admin-emulator.log >&2
-  echo ======== emulator.log ===================
-  cat emulator.log >&2
 }
 
 function start_emulators {
