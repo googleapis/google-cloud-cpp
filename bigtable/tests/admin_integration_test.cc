@@ -183,18 +183,18 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
   std::string expected_text_create = "name: '" + table->table_name() + "'\n";
   // The rest is very deterministic, we control it by the previous operations:
   expected_text_create += R"""(
-                          column_families {
-                                             key: 'fam'
-                                             value { gc_rule { max_num_versions: 5 } }
-                                          }
-                          column_families {
-                                             key: 'foo'
-                                             value { gc_rule { max_age { seconds: 86400 } } }
-                                          }
-                               )""";
+column_families {
+                   key: 'fam'
+                   value { gc_rule { max_num_versions: 5 } }
+                }
+column_families {
+                   key: 'foo'
+                   value { gc_rule { max_age { seconds: 86400 } } }
+                }
+)""";
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (not UsingCloudBigtableEmulator()) {
-    expected_text_create += "granularity: MILLIS\n";
+    expected_text_create += "granularity: MILLIS";
     expected_text_create += "cluster_states: {\n";
     expected_text_create +=
         "key: \"" + bigtable::testing::TableTestEnvironment::instance_id() +
@@ -209,18 +209,19 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
   ASSERT_TRUE(valid_schema);
 
   std::string expected_text = R"""(
-                          column_families {
-                                             key: 'fam'
-                                             value { gc_rule { max_num_versions: 2 } }
-                                          }
-                          column_families {
-                                             key: 'newfam'
-                                             value { gc_rule { intersection {
-                                                     rules { max_age { seconds: 604800 } }
-                                                     rules { max_num_versions: 1 }
-                                                   } } }
-                                          }
-                        )""";
+column_families {
+                   key: 'fam'
+                   value { gc_rule { max_num_versions: 2 } }
+                }
+column_families {
+                   key: 'newfam'
+                   value { gc_rule { intersection {
+                           rules { max_age { seconds: 604800 } }
+                           rules { max_num_versions: 1 }
+                         } } }
+                }
+granularity: MILLIS
+)""";
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (not UsingCloudBigtableEmulator()) {
     expected_text += "granularity: MILLIS\n";
