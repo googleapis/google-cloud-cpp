@@ -41,9 +41,8 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
-  bigtable::internal::SetCommonTableOperationRequest<
-      btproto::MutateRowRequest>(request, table_name_.get(),
-                                 app_profile_id_.get());
+  bigtable::internal::SetCommonTableOperationRequest<btproto::MutateRowRequest>(
+      request, table_name_.get(), app_profile_id_.get());
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -124,22 +123,22 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter, bool raise_on_error) {
   return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
-                     RowReader::NO_ROWS_LIMIT, std::move(filter),
-                     rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-                     metadata_update_policy_,
-                     bigtable::internal::make_unique<
-                         bigtable::internal::ReadRowsParserFactory>(),
-                     raise_on_error);
+                   RowReader::NO_ROWS_LIMIT, std::move(filter),
+                   rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+                   metadata_update_policy_,
+                   bigtable::internal::make_unique<
+                       bigtable::internal::ReadRowsParserFactory>(),
+                   raise_on_error);
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter, bool raise_on_error) {
   return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
-                     rows_limit, std::move(filter), rpc_retry_policy_->clone(),
-                     rpc_backoff_policy_->clone(), metadata_update_policy_,
-                     bigtable::internal::make_unique<
-                         bigtable::internal::ReadRowsParserFactory>(),
-                     raise_on_error);
+                   rows_limit, std::move(filter), rpc_retry_policy_->clone(),
+                   rpc_backoff_policy_->clone(), metadata_update_policy_,
+                   bigtable::internal::make_unique<
+                       bigtable::internal::ReadRowsParserFactory>(),
+                   raise_on_error);
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,

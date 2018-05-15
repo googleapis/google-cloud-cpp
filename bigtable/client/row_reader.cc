@@ -14,8 +14,8 @@
 
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/internal/make_unique.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "bigtable/client/internal/table.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <thread>
 
 namespace bigtable {
@@ -65,10 +65,10 @@ RowReader::RowReader(
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
     bool raise_on_error)
     : RowReader(std::move(client), bigtable::AppProfileId(""),
-      std::move(table_name), std::move(row_set), rows_limit, std::move(filter),
-      std::move(retry_policy), std::move(backoff_policy),
-      std::move(metadata_update_policy),
-      std::move(parser_factory), raise_on_error) {}
+                std::move(table_name), std::move(row_set), rows_limit,
+                std::move(filter), std::move(retry_policy),
+                std::move(backoff_policy), std::move(metadata_update_policy),
+                std::move(parser_factory), raise_on_error) {}
 
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,

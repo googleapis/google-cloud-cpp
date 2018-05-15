@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_H_
 
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
@@ -25,7 +26,6 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
