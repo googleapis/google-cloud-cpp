@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "storage/client/credentials.h"
-#include "storage/client/internal/jwt_credentials.h"
+#include "storage/client/internal/service_account_credentials.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -45,7 +45,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   std::string const root = std::getenv(CREDENTIALS_ENV_VAR);
   std::ifstream is(root + GoogleCredentialsSuffix());
   std::string jwt(std::istreambuf_iterator<char>{is}, {});
-  return std::make_shared<storage::internal::JwtCredentials<>>(jwt);
+  return std::make_shared<storage::internal::ServiceAccountCredentials<>>(jwt);
 }
 
 }  // namespace STORAGE_CLIENT_NS

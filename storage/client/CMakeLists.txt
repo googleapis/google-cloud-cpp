@@ -24,7 +24,7 @@ add_library(storage_client
     internal/curl_request.cc
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
-    internal/jwt_credentials.h
+    internal/service_account_credentials.h
     internal/nljson.h
     version.h
     version.cc)
@@ -66,7 +66,7 @@ endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
-    internal/jwt_credentials_test.cc
+    internal/service_account_credentials_test.cc
     internal/nljson_test.cc
     link_test.cc)
 

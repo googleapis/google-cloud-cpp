@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/jwt_credentials.h"
+#include "storage/client/internal/service_account_credentials.h"
 #include <gmock/gmock.h>
 
 // The mocking code is a bit strange.  The class under test creates a concrete
@@ -33,7 +33,7 @@ class MockHttpRequestHandle {
 
 class MockHttpRequest {
  public:
-  MockHttpRequest(std::string url) : url_(std::move(url)) {
+  explicit MockHttpRequest(std::string url) : url_(std::move(url)) {
     (void)Handle(url_);
   }
 
@@ -76,14 +76,14 @@ class MockHttpRequest {
 std::map<std::string, std::shared_ptr<MockHttpRequestHandle>>
     MockHttpRequest::handles_;
 
-class JwtCredentialsTest : public ::testing::Test {
+class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() { MockHttpRequest::Clear(); }
   void TearDown() { MockHttpRequest::Clear(); }
 };
 
 /// @test Verify that we can create credentials from a JWT string.
-TEST_F(JwtCredentialsTest, Simple) {
+TEST_F(ServiceAccountCredentialsTest, Simple) {
   std::string jwt = R"""({
       "client_id": "a-client-id.example.com",
       "client_secret": "a-123456ABCDEF",
@@ -92,10 +92,10 @@ TEST_F(JwtCredentialsTest, Simple) {
 })""";
 
   using namespace ::testing;
-  using storage::internal::JwtCredentials;
+  using storage::internal::ServiceAccountCredentials;
 
   auto handle =
-      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_URL);
+      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
   EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
       .WillOnce(Invoke([](std::string const& payload) {
         auto npos = std::string::npos;
@@ -121,6 +121,6 @@ TEST_F(JwtCredentialsTest, Simple) {
 })""";
   EXPECT_CALL(*handle, MakeRequest()).WillOnce(Return(response));
 
-  JwtCredentials<MockHttpRequest> credentials(jwt);
+  ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-value", credentials.AuthorizationHeader());
 }

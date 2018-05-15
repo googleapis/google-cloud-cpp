@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_JWT_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_JWT_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
 
 #include "storage/client/credentials.h"
 #include "storage/client/internal/curl_request.h"
@@ -25,21 +25,32 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-constexpr static char GOOGLE_OAUTH_REFRESH_URL[] =
+constexpr static char GOOGLE_OAUTH_REFRESH_ENDPOINT[] =
     "https://accounts.google.com/o/oauth2/token";
 
 /**
- * A Credential object based on a refresh token as a JWT string.
+ * A C++ wrapper for Google Service Account Credentials.
+ *
+ * This class parses the contents of a Google Service Account credentials file,
+ * and creates a credentials object from those contents. It automatically
+ * handles refreshing the credentials when needed, as well as creating the
+ * appropriate header for authorization.
+ *
+ * @see
+ *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ *   https://tools.ietf.org/html/rfc7523
  *
  * @tparam HttpRequestType a dependency injection point to make HTTP requests.
  */
 template <typename HttpRequestType = CurlRequest>
-class JwtCredentials : public storage::Credentials {
+class ServiceAccountCredentials : public storage::Credentials {
  public:
-  explicit JwtCredentials(std::string token)
-      : JwtCredentials(std::move(token), GOOGLE_OAUTH_REFRESH_URL) {}
+  explicit ServiceAccountCredentials(std::string token)
+      : ServiceAccountCredentials(std::move(token),
+                                  GOOGLE_OAUTH_REFRESH_ENDPOINT) {}
 
-  explicit JwtCredentials(std::string token, std::string oauth_server)
+  explicit ServiceAccountCredentials(std::string token,
+                                     std::string oauth_server)
       : refresh_token_(std::move(token)),
         requestor_(std::move(oauth_server)),
         expiration_time_() {
@@ -93,4 +104,4 @@ class JwtCredentials : public storage::Credentials {
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_SERVICE_ACCOUNT_CREDENTIALS_H_
