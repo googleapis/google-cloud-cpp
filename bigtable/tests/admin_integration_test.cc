@@ -14,8 +14,6 @@
 
 #include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/table_integration_test.h"
-#include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -72,38 +70,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 
     return diff_table_list.empty();
   }
-
-  bool CheckTableSchema(admin_proto::Table const& actual_table,
-                        std::string const& expected_text,
-                        std::string const& message) {
-    admin_proto::Table expected_table;
-
-    if (not google::protobuf::TextFormat::ParseFromString(expected_text,
-                                                          &expected_table)) {
-      std::cout << message << ": could not parse protobuf string <\n"
-                << expected_text << ">\n"
-                << std::endl;
-
-      return false;
-    }
-
-    std::string delta;
-    google::protobuf::util::MessageDifferencer message_differencer;
-    message_differencer.ReportDifferencesToString(&delta);
-    bool message_compare_equal =
-        message_differencer.Compare(expected_table, actual_table);
-    if (not message_compare_equal) {
-      std::cout << message << ": mismatch expected vs actual:\n"
-                << delta << std::endl;
-    }
-
-    return message_compare_equal;
-  }
 };
-
-bool UsingCloudBigtableEmulator() {
-  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
-}
 }  // namespace
 
 /**
@@ -180,51 +147,21 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
   auto table = CreateTable(table_id, table_config);
-  std::string expected_text_create = "name: '" + table->table_name() + "'\n";
-  // The rest is very deterministic, we control it by the previous operations:
-  expected_text_create += R"""(
-                          column_families {
-                                             key: 'fam'
-                                             value { gc_rule { max_num_versions: 5 } }
-                                          }
-                          column_families {
-                                             key: 'foo'
-                                             value { gc_rule { max_age { seconds: 86400 } } }
-                                          }
-                               )""";
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (not UsingCloudBigtableEmulator()) {
-    expected_text_create += "granularity: MILLIS\n";
-    expected_text_create += "cluster_states: {\n";
-    expected_text_create +=
-        "key: \"" + bigtable::testing::TableTestEnvironment::instance_id() +
-        "-cluster\"\n";
-    expected_text_create += "value { replication_state: READY }\n}\n";
-  }
   auto table_detailed =
       table_admin_->GetTable(table_id, admin_proto::Table::FULL);
-  bool valid_schema = CheckTableSchema(table_detailed, expected_text_create,
-                                       "CheckModifyTable/Create");
+  auto count_matching_families = [](admin_proto::Table const& table,
+                                    std::string const& name) {
+    int count = 0;
+    for (auto const& kv : table.column_families()) {
+      if (kv.first == name) {
+        ++count;
+      }
+    }
+    return count;
+  };
+  EXPECT_EQ(1, count_matching_families(table_detailed, "fam"));
+  EXPECT_EQ(1, count_matching_families(table_detailed, "foo"));
 
-  ASSERT_TRUE(valid_schema);
-
-  std::string expected_text = R"""(
-                          column_families {
-                                             key: 'fam'
-                                             value { gc_rule { max_num_versions: 2 } }
-                                          }
-                          column_families {
-                                             key: 'newfam'
-                                             value { gc_rule { intersection {
-                                                     rules { max_age { seconds: 604800 } }
-                                                     rules { max_num_versions: 1 }
-                                                   } } }
-                                          }
-                        )""";
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (not UsingCloudBigtableEmulator()) {
-    expected_text += "granularity: MILLIS\n";
-  }
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
       bigtable::ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
@@ -234,14 +171,15 @@ TEST_F(AdminIntegrationTest, ModifyTableTest) {
 
   auto table_modified =
       table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
-  table_modified.set_name("");
-  valid_schema = CheckTableSchema(table_modified, expected_text,
-                                  "CheckModifyTable/Modify");
+  EXPECT_EQ(1, count_matching_families(table_modified, "fam"));
+  EXPECT_EQ(0, count_matching_families(table_modified, "foo"));
+  EXPECT_EQ(1, count_matching_families(table_modified, "newfam"));
+  auto const& gc = table_modified.column_families().at("newfam").gc_rule();
+  EXPECT_TRUE(gc.has_intersection());
+  EXPECT_EQ(2, gc.intersection().rules_size());
   // Delete table so that is should not interfere with the test again on same
   // instance.
   DeleteTable(table_id);
-
-  ASSERT_TRUE(valid_schema);
 }
 
 TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
