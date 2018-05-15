@@ -49,7 +49,7 @@ class CurlRequest {
    *
    * @param payload The contents of the request.
    */
-  void PrepareRequest(std::string const& payload);
+  void PrepareRequest(std::string payload);
 
   /**
    * Make a request with the given payload.
@@ -72,6 +72,7 @@ class CurlRequest {
   CURL* curl_;
   curl_slist* headers_;
   CurlBuffer buffer_;
+  std::string payload_;
 };
 
 }  // namespace internal
