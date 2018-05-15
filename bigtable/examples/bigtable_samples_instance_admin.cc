@@ -117,7 +117,11 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [list clusters]
 void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
                   char* argv[]) {
-  auto cluster_list = instance_admin.ListClusters();
+  if (argc != 3) {
+    throw Usage{"list-clusters <project-id> <instance-id> <cluster-id>"};
+  }
+
+  auto cluster_list = instance_admin.ListClusters(ConsumeArg(argc, argv));
   std::cout << "Cluster Name List" << std::endl;
   for (auto const& cluster : cluster_list) {
     std::cout << "Cluster Name:" << cluster.name() << std::endl;
