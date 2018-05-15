@@ -56,13 +56,7 @@ void CurlRequest::AddQueryParameter(std::string const& key,
   url_.append(parameter);
 }
 
-/**
- * Make a request with the given payload.
- *
- * @param payload The contents of the request.
- * @return The response payload as a string.
- */
-std::string CurlRequest::MakeRequest(std::string const& payload) {
+void CurlRequest::PrepareRequest(std::string const& payload) {
   // Pre-compute and cache the user agent string:
   static std::string const user_agent = [] {
     std::string agent = "gcs-c++/";
@@ -79,6 +73,14 @@ std::string CurlRequest::MakeRequest(std::string const& payload) {
     curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, payload.length());
     curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, payload.c_str());
   }
+}
+
+void CurlRequest::PrepareRequest(nl::json data) {
+  std::string payload = data.dump();
+  PrepareRequest(payload);
+}
+
+std::string CurlRequest::MakeRequest() {
   buffer_.CaptureOutputOf(curl_);
 
   auto error = curl_easy_perform(curl_);
@@ -91,11 +93,6 @@ std::string CurlRequest::MakeRequest(std::string const& payload) {
   }
 
   return buffer_.contents();
-}
-
-std::string CurlRequest::MakeRequest(nl::json data) {
-  std::string payload = data.dump();
-  return MakeRequest(payload);
 }
 
 }  // namespace internal
