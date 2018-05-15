@@ -36,5 +36,5 @@ bazel --batch test  //...:all
 if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Testing Bazel files as dependency${COLOR_RESET}"
-  (cd /v/ci/test-install && bazel --batch build //...:all)
+  (cd ci/test-install && bazel --batch build //...:all)
 fi
