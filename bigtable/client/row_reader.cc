@@ -14,6 +14,7 @@
 
 #include "bigtable/client/row_reader.h"
 #include "bigtable/client/internal/make_unique.h"
+#include "bigtable/client/internal/table.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <thread>
 
@@ -44,8 +45,8 @@ static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
               "RowReader::iterator &>");
 
 RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
-    std::int64_t rows_limit, Filter filter,
+    std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+    RowSet row_set, std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
@@ -56,14 +57,42 @@ RowReader::RowReader(
                 std::move(parser_factory), true) {}
 
 RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
-    std::int64_t rows_limit, Filter filter,
+    std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+    RowSet row_set, std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
     bool raise_on_error)
+    : RowReader(std::move(client), bigtable::AppProfileId(""),
+                std::move(table_name), std::move(row_set), rows_limit,
+                std::move(filter), std::move(retry_policy),
+                std::move(backoff_policy), std::move(metadata_update_policy),
+                std::move(parser_factory), raise_on_error) {}
+
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
+    bigtable::TableId table_name, RowSet row_set, std::int64_t rows_limit,
+    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    : RowReader(std::move(client), std::move(app_profile_id),
+                std::move(table_name), std::move(row_set), rows_limit,
+                std::move(filter), std::move(retry_policy),
+                std::move(backoff_policy), std::move(metadata_update_policy),
+                std::move(parser_factory), true) {}
+
+RowReader::RowReader(
+    std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
+    bigtable::TableId table_name, RowSet row_set, std::int64_t rows_limit,
+    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+    MetadataUpdatePolicy metadata_update_policy,
+    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+    bool raise_on_error)
     : client_(std::move(client)),
+      app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
       row_set_(std::move(row_set)),
       rows_limit_(rows_limit),
@@ -107,8 +136,10 @@ void RowReader::MakeRequest() {
   processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
-  request.set_table_name(std::string(table_name_));
 
+  bigtable::internal::SetCommonTableOperationRequest<
+      google::bigtable::v2::ReadRowsRequest>(request, app_profile_id_.get(),
+                                             table_name_.get());
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_READER_H_
 
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/internal/readrowsparser.h"
@@ -24,6 +25,7 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
+#include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpc++/grpc++.h>
 #include <cinttypes>
@@ -46,14 +48,31 @@ class RowReader {
    */
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
-  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
+  RowReader(std::shared_ptr<DataClient> client, bigtable::TableId table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
+  RowReader(std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+            RowSet row_set, std::int64_t rows_limit, Filter filter,
+            std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            MetadataUpdatePolicy metadata_update_policy,
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
+            bool raise_on_error);
+
+  RowReader(std::shared_ptr<DataClient> client,
+            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
+            RowSet row_set, std::int64_t rows_limit, Filter filter,
+            std::unique_ptr<RPCRetryPolicy> retry_policy,
+            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+            MetadataUpdatePolicy metadata_update_policy,
+            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+
+  RowReader(std::shared_ptr<DataClient> client,
+            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -131,7 +150,8 @@ class RowReader {
   void MakeRequest();
 
   std::shared_ptr<DataClient> client_;
-  std::string table_name_;
+  bigtable::AppProfileId app_profile_id_;
+  bigtable::TableId table_name_;
   RowSet row_set_;
   std::int64_t rows_limit_;
   Filter filter_;

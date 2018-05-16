@@ -41,7 +41,8 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
-  request.set_table_name(table_name_);
+  bigtable::internal::SetCommonTableOperationRequest<btproto::MutateRowRequest>(
+      request, app_profile_id_.get(), table_name_.get());
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -93,8 +94,9 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   auto retry_policy = rpc_retry_policy_->clone();
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
-  internal::BulkMutator mutator(table_name_, *idemponent_policy,
-                                std::forward<BulkMutation>(mut));
+  bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
+                                          *idemponent_policy,
+                                          std::forward<BulkMutation>(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->setup(client_context);
@@ -120,7 +122,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter, bool raise_on_error) {
-  return RowReader(client_, table_name(), std::move(row_set),
+  return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
                    rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
                    metadata_update_policy_,
@@ -131,8 +133,8 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter, bool raise_on_error) {
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter, bool raise_on_error) {
-  return RowReader(client_, table_name(), std::move(row_set), rows_limit,
-                   std::move(filter), rpc_retry_policy_->clone(),
+  return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
+                   rows_limit, std::move(filter), rpc_retry_policy_->clone(),
                    rpc_backoff_policy_->clone(), metadata_update_policy_,
                    bigtable::internal::make_unique<
                        bigtable::internal::ReadRowsParserFactory>(),
@@ -165,8 +167,10 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               std::vector<Mutation> false_mutations,
                               grpc::Status& status) {
   btproto::CheckAndMutateRowRequest request;
-  request.set_table_name(table_name());
   request.set_row_key(std::move(row_key));
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::CheckAndMutateRowRequest>(request, app_profile_id_.get(),
+                                         table_name_.get());
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -227,7 +231,9 @@ void Table::SampleRowsImpl(
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
-  request.set_table_name(table_name_);
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::SampleRowKeysRequest>(request, app_profile_id_.get(),
+                                     table_name_.get());
 
   while (true) {
     grpc::ClientContext client_context;

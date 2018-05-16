@@ -91,6 +91,7 @@ add_library(bigtable_client
         table_admin.cc
         table_config.h
         table_config.cc
+        table_strong_types.h
         version.h
         version.cc)
 target_link_libraries(bigtable_client PUBLIC

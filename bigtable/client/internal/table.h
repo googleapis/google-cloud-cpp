@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_H_
 
+#include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/filters.h"
 #include "bigtable/client/idempotent_mutation_policy.h"
@@ -25,6 +26,7 @@
 #include "bigtable/client/row_set.h"
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
+#include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {
@@ -42,6 +44,17 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
                              std::string const& table_id) {
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
+
+namespace internal {
+template <typename Request>
+void SetCommonTableOperationRequest(Request& request,
+                                    std::string const& app_profile_id,
+                                    std::string const& table_name) {
+  request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
+}
+
+}  // namespace internal
 
 /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
 struct RowKeySample {
@@ -61,7 +74,8 @@ class Table {
  public:
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
       : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
+        app_profile_id_(bigtable::AppProfileId("")),
+        table_name_(bigtable::TableId(TableName(client_, table_id))),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
@@ -74,17 +88,18 @@ class Table {
         RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(std::move(client)),
-        table_name_(TableName(client_, table_id)),
+        app_profile_id_(bigtable::AppProfileId("")),
+        table_name_(bigtable::TableId(TableName(client_, table_id))),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
-  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
-        std::string const& table_id)
+  Table(std::shared_ptr<DataClient> client,
+        bigtable::AppProfileId app_profile_id, std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(TableName(client_, table_id)),
+        table_name_(bigtable::TableId(TableName(client_, table_id))),
         rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
@@ -93,19 +108,19 @@ class Table {
 
   template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
             typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
-        std::string const& table_id, RPCRetryPolicy retry_policy,
-        RPCBackoffPolicy backoff_policy,
+  Table(std::shared_ptr<DataClient> client,
+        bigtable::AppProfileId app_profile_id, std::string const& table_id,
+        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
         IdempotentMutationPolicy idempotent_mutation_policy)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(TableName(client_, table_id)),
+        table_name_(bigtable::TableId(TableName(client_, table_id))),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
 
-  std::string const& table_name() const { return table_name_; }
+  std::string const& table_name() const { return table_name_.get(); }
 
   //@{
   /**
@@ -138,16 +153,15 @@ class Table {
   Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
-    request.set_table_name(table_name_);
     request.set_row_key(std::move(row_key));
-    if (!app_profile_id_.empty()) {
-      request.set_app_profile_id(app_profile_id_);
-    }
+    bigtable::internal::SetCommonTableOperationRequest<
+        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+        request, app_profile_id_.get(), table_name_.get());
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        internal::conjunction<
+        bigtable::internal::conjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
@@ -200,8 +214,8 @@ class Table {
       std::function<void()> const& clearer, grpc::Status& status);
 
   std::shared_ptr<DataClient> client_;
-  std::string app_profile_id_;
-  std::string table_name_;
+  bigtable::AppProfileId app_profile_id_;
+  bigtable::TableId table_name_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
