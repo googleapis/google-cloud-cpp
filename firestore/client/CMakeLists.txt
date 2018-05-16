@@ -19,7 +19,10 @@ configure_file(version_info.h.in version_info.h)
 add_library(firestore_client
     field_path.h
     field_path.cc)
-target_link_libraries(firestore_client)
+target_link_libraries(firestore_client
+    PUBLIC
+        google_cloud_cpp_common
+    )
 target_include_directories(firestore_client PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -41,14 +44,6 @@ if (CLANG_TIDY_EXE AND FIRESTORE_CLIENT_CLANG_TIDY)
     )
 endif ()
 
-add_library(firestore_client_testing
-    field_path.h
-    field_path_test.cc
-    )
-target_link_libraries(firestore_client_testing
-    PUBLIC firestore_client gmock
-    PRIVATE firestore_common_options protobuf::libprotobuf)
-
 # List the unit tests, then setup the targets and dependencies.
 set(firestore_client_unit_tests
     field_path_test.cc)
@@ -62,27 +57,9 @@ foreach (fname ${firestore_client_unit_tests})
     set(target "firestore_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-        firestore_client_testing firestore_client gmock firestore_common_options)
+        firestore_client gmock firestore_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
-
-create_bazel_config(firestore_client_testing)
-
-option(FORCE_SANITIZER_ERRORS
-        "If set, enable tests that force errors detected by the sanitizers."
-        "")
-if (FORCE_SANITIZER_ERRORS)
-    target_compile_definitions(firestore_client_force_sanitizer_failures_test
-            PRIVATE -DFIRESTORE_CLIENT_FORCE_SANITIZER_ERRORS)
-endif (FORCE_SANITIZER_ERRORS)
-
-option(FORCE_STATIC_ANALYZER_ERRORS
-        "If set, enable tests that force errors detected by the static analyzer."
-        "")
-if (FORCE_STATIC_ANALYZER_ERRORS)
-    target_compile_definitions(firestore_client_force_sanitizer_failures_test
-            PRIVATE -DFIRESTORE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
-endif (FORCE_STATIC_ANALYZER_ERRORS)
 
 install(TARGETS firestore_client
     EXPORT firestore-targets
