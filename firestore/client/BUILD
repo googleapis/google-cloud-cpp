@@ -32,8 +32,6 @@ cc_library(
     srcs = firestore_client_SRCS,
     hdrs = firestore_client_HDRS + [ "version_info.h" ],
     deps = [
-        ":nlohmann_json",
-        ":libcurl",
         "//google/cloud:google_cloud_cpp_common",
     ],
 )
