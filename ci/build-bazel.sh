@@ -33,7 +33,7 @@ export PATH=$PATH:$HOME/bin
 # We cannot simply use //...:all because when submodules are checked out that
 # includes the BUILD files for gRPC, protobuf, etc.
 # TODO(#496) - just use //google/...:all when it becomes available.
-for subdir in bigtable firestore google storage; do
+for subdir in bigtable firestore storage; do
   bazel --batch build "//${subdir}/...:all"
   bazel --batch test  "//${subdir}/...:all"
 done
