@@ -89,7 +89,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     nl::json access_token = nl::json::parse(response);
     std::string header = access_token["token_type"];
     header += ' ';
-    header += access_token["access_token"];
+    header += access_token["access_token"].get_ref<std::string const&>();
     std::string new_id = access_token["id_token"];
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
     auto slack = expires_in * REFRESH_TIME_SLACK_PERCENT / 100;
