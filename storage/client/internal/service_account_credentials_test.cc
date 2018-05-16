@@ -82,6 +82,9 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
   void TearDown() { MockHttpRequest::Clear(); }
 };
 
+using namespace ::testing;
+using storage::internal::ServiceAccountCredentials;
+
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(ServiceAccountCredentialsTest, Simple) {
   std::string jwt = R"""({
@@ -90,9 +93,6 @@ TEST_F(ServiceAccountCredentialsTest, Simple) {
       "refresh_token": "1/THETOKEN",
       "type": "magic_type"
 })""";
-
-  using namespace ::testing;
-  using storage::internal::ServiceAccountCredentials;
 
   auto handle =
       MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
@@ -123,4 +123,47 @@ TEST_F(ServiceAccountCredentialsTest, Simple) {
 
   ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-value", credentials.AuthorizationHeader());
+}
+
+/// @test Verify that we can refresh service account credentials.
+TEST_F(ServiceAccountCredentialsTest, Refresh) {
+  std::string jwt = R"""({
+      "client_id": "a-client-id.example.com",
+      "client_secret": "a-123456ABCDEF",
+      "refresh_token": "1/THETOKEN",
+      "type": "magic_type"
+})""";
+
+  auto handle =
+      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>())).Times(1);
+  EXPECT_CALL(*handle, MakeEscapedString(_))
+      .WillRepeatedly(Invoke([](std::string const& x) {
+        auto const size = x.size();
+        auto copy = new char[size + 1];
+        std::memcpy(copy, x.data(), x.size());
+        copy[size] = '\0';
+        return std::unique_ptr<char[]>(copy);
+      }));
+
+  // Prepare two responses, the first one is used but becomes immediately
+  // expired.
+  std::string r1 = R"""({
+    "token_type": "Type",
+    "access_token": "access-token-r1",
+    "id_token": "id-token-value",
+    "expires_in": 0
+})""";
+  std::string r2 = R"""({
+    "token_type": "Type",
+    "access_token": "access-token-r2",
+    "id_token": "id-token-value",
+    "expires_in": 1000
+})""";
+  EXPECT_CALL(*handle, MakeRequest()).WillOnce(Return(r1)).WillOnce(Return(r2));
+
+  ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
+  EXPECT_EQ("Type access-token-r1", credentials.AuthorizationHeader());
+  EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
+  EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
 }

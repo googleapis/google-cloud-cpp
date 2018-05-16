@@ -28,11 +28,9 @@ class Credentials {
   virtual ~Credentials() = default;
 
   /**
-   * Return the header used in the HTTP requests.
-   *
-   * TODO() - consider a Visitor that modifies the HTTP request.
+   * Return the value for the Authorization header in HTTP requests.
    */
-  virtual std::string const& AuthorizationHeader() const = 0;
+  virtual std::string AuthorizationHeader() = 0;
 };
 
 std::shared_ptr<Credentials> GoogleDefaultCredentials();

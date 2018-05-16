@@ -18,7 +18,9 @@
 #include "storage/client/credentials.h"
 #include "storage/client/internal/curl_request.h"
 #include <chrono>
+#include <condition_variable>
 #include <iostream>
+#include <mutex>
 #include <string>
 
 namespace storage {
@@ -27,6 +29,11 @@ namespace internal {
 
 constexpr static char GOOGLE_OAUTH_REFRESH_ENDPOINT[] =
     "https://accounts.google.com/o/oauth2/token";
+
+/// Start refreshing tokens as soon as only this percent of their TTL is left.
+constexpr static auto REFRESH_TIME_SLACK_PERCENT = 5;
+/// Minimum time before the token expiration to start refreshing tokens.
+constexpr static auto REFRESH_TIME_SLACK_MIN = std::chrono::seconds(10);
 
 /**
  * A C++ wrapper for Google Service Account Credentials.
@@ -63,41 +70,46 @@ class ServiceAccountCredentials : public storage::Credentials {
     payload += "&refresh_token=";
     payload += requestor_.MakeEscapedString(refresh["refresh_token"]).get();
     requestor_.PrepareRequest(std::move(payload));
-    Refresh();
   }
 
-  std::string const& AuthorizationHeader() const override {
-    Refresh();
+  std::string AuthorizationHeader() override {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [this]() { return Refresh(); });
     return authorization_header_;
   }
 
  private:
-  void Refresh() const {
-    auto slack = std::chrono::minutes(5);
-    if (std::chrono::system_clock::now() + slack < expiration_time_) {
-      return;
+  bool Refresh() {
+    if (std::chrono::system_clock::now() < expiration_time_) {
+      return true;
     }
 
+    // TODO(#516) - use retry policies to refresh the credentials.
     auto response = requestor_.MakeRequest();
     nl::json access_token = nl::json::parse(response);
     std::string header = access_token["token_type"];
     header += ' ';
     header += access_token["access_token"];
     std::string new_id = access_token["id_token"];
-    auto new_expiration = std::chrono::system_clock::now() +
-                          std::chrono::seconds(access_token["expires_in"]);
-
+    auto expires_in = std::chrono::seconds(access_token["expires_in"]);
+    auto slack = expires_in * REFRESH_TIME_SLACK_PERCENT / 100;
+    if (slack < REFRESH_TIME_SLACK_MIN) {
+      slack = REFRESH_TIME_SLACK_MIN;
+    }
+    auto new_expiration = std::chrono::system_clock::now() + expires_in - slack;
+    // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
-    id_token_ = std::move(new_id);
     expiration_time_ = new_expiration;
+    return true;
   }
 
  private:
   std::string refresh_token_;
-  mutable HttpRequestType requestor_;
-  mutable std::string authorization_header_;
-  mutable std::string id_token_;
-  mutable std::chrono::system_clock::time_point expiration_time_;
+  HttpRequestType requestor_;
+  std::mutex mu_;
+  std::condition_variable cv_;
+  std::string authorization_header_;
+  std::chrono::system_clock::time_point expiration_time_;
 };
 
 }  // namespace internal
