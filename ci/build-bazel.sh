@@ -16,7 +16,25 @@
 
 set -eu
 
+if [ "${TERM:-}" = "dumb" ]; then
+  readonly COLOR_RED=""
+  readonly COLOR_GREEN=""
+  readonly COLOR_YELLOW=""
+  readonly COLOR_RESET=""
+else
+  readonly COLOR_RED=$(tput setaf 1)
+  readonly COLOR_GREEN=$(tput setaf 2)
+  readonly COLOR_YELLOW=$(tput setaf 3)
+  readonly COLOR_RESET=$(tput sgr0)
+fi
+
 export PATH=$PATH:$HOME/bin
 
-bazel --batch build //...:all
-bazel --batch test  //...:all
+bazel --batch build //bigtable/...:all //storage/...:all //google/...:all
+bazel --batch test  //bigtable/...:all //storage/...:all //google/...:all
+
+if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Testing Bazel files as dependency${COLOR_RESET}"
+  (cd ci/test-install && bazel --batch build //...:all)
+fi

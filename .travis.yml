@@ -62,6 +62,14 @@ matrix:
         packages:
       install: ci/install-bazel.sh
       script: ci/build-bazel.sh
+    - # Compile on Travis' native environment with Bazel
+      os: linux
+      compiler: gcc
+      env: TEST_BAZEL_AS_DEPENDENCY=yes
+      git:
+        submodules: false
+      install: ci/install-bazel.sh
+      script: ci/build-bazel.sh
     - # Compile against an installed version of gRPC.
       os: linux
       compiler: clang
