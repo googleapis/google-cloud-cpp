@@ -66,6 +66,7 @@ Generator MakePRNG() {
   return Generator(seq);
 }
 
+/// Create a new PRNG.
 inline DefaultPRNG MakeDefaultPRNG() { return MakePRNG<DefaultPRNG>(); }
 
 /**

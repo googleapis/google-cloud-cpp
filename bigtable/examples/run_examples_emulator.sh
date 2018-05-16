@@ -20,7 +20,7 @@ source "${BINDIR}/run_examples_utils.sh"
 source "${BINDIR}/../tools/run_emulator_utils.sh"
 
 # Start the emulator, setup the environment variables and traps to cleanup.
-start_emulator
+start_emulators
 
 # Use a (likely unique) project id for the emulator.
 readonly PROJECT_ID="project-$(date +%s)"

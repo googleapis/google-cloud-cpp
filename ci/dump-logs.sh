@@ -17,6 +17,7 @@
 set -eu
 
 # Dump the emulator log file. Tests run in the bigtable/tests directory.
-echo "================================================================"
+echo "================ emulator.log ================"
 cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/bigtable/tests/emulator.log >&2 || true
-echo "================================================================"
+echo "================ instance-admin-emulator.log ================"
+cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/bigtable/tests/instance-admin-emulator.log >&2 || true

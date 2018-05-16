@@ -34,3 +34,9 @@ foreach (fname ${bigtable_client_integration_tests})
         gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
         bigtable_common_options)
 endforeach ()
+
+add_executable(instance_admin_emulator instance_admin_emulator.cc)
+target_link_libraries(instance_admin_emulator PRIVATE
+    bigtable_client bigtable_protos
+    gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+    bigtable_common_options)

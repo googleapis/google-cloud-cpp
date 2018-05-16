@@ -17,6 +17,7 @@
 
 readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
 readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="./instance_admin_emulator"
 
 # Remove all the tables from a Cloud Bigtable instance.
 # TODO(#356) - remove this code when the tests can share instances.
@@ -55,7 +56,12 @@ function run_all_integration_tests() {
 
   echo
   echo "Running bigtable::InstanceAdmin integration test."
-  ./instance_admin_integration_test "${project_id}"
+  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" ]; then
+    ./instance_admin_integration_test "${project_id}";
+  else
+    env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST} \
+       ./instance_admin_integration_test "${project_id}";
+  fi
 
   echo
   echo "Running bigtable::TableAdmin integration test."

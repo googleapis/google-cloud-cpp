@@ -17,13 +17,14 @@ set -eu
 
 readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
 readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
 
-# Run all the instance admin examples against production.
+# Run all the instance admin examples.
 #
 # This function allows us to keep a single place where all the examples are
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
-function run_all_instance_admin_examples() {
+function run_all_instance_admin_examples {
   if [ ! -x ../examples/bigtable_samples_instance_admin ]; then
     echo "Will not run the examples as the examples were not built"
     return
@@ -33,36 +34,36 @@ function run_all_instance_admin_examples() {
   local zone_id=$2
   shift 2
 
+  local admin="env"
+  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+    admin="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
+  fi
+
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
-  local ignore_unimplemented="/bin/false"
-  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
-    ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
-  fi
-
   echo
   echo "Run create-instance example."
-  ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
-  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
+  $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run list-instances example."
-  ../examples/bigtable_samples_instance_admin list-instances "${project_id}" || ${ignore_unimplemented}
+  $admin ../examples/bigtable_samples_instance_admin list-instances "${project_id}"
 
   echo
   echo "Run get-instance example."
-  ../examples/bigtable_samples_instance_admin get-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
+  $admin ../examples/bigtable_samples_instance_admin get-instance "${project_id}" "${INSTANCE}"
 
 #  TODO(#490) - disabled until ListClusters works correctly.
 #  echo
 #  echo "Run list-clusters example."
-#  ../examples/bigtable_samples_instance_admin list-clusters "${project_id}" || ${ignore_unimplemented}
+#  $admin ../examples/bigtable_samples_instance_admin list-clusters "${project_id}"
 
   echo
   echo "Run delete-instance example."
   trap - EXIT
-  ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
+  $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
 # Run all the instance admin examples against production.
@@ -70,7 +71,7 @@ function run_all_instance_admin_examples() {
 # This function allows us to keep a single place where all the examples are
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
-function run_all_table_admin_examples() {
+function run_all_table_admin_examples {
   if [ ! -x ../examples/bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"
     return
@@ -80,9 +81,9 @@ function run_all_table_admin_examples() {
   local zone_id=$2
   shift 2
 
-  local ignore_unimplemented="/bin/false"
-  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
-    ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
+  local admin="env"
+  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+    admin="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
   fi
 
   # Create a (very likely unique) instance name.
@@ -92,8 +93,8 @@ function run_all_table_admin_examples() {
   local -r TABLE="sample-table"
 
   # Create an instance to run these examples.
-  ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
-  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
+  $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -129,7 +130,7 @@ function run_all_table_admin_examples() {
   ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   trap - EXIT
-  ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
+  $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
 function run_all_data_examples {
@@ -142,9 +143,9 @@ function run_all_data_examples {
   local zone_id=$2
   shift 2
 
-  local ignore_unimplemented="/bin/false"
-  if [ -n "${BIGTABLE_EMULATOR_HOST:-}" ]; then
-    ignore_unimplemented="echo Ignoring error as the emulator does not implement this function"
+  local admin="env"
+  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+    admin="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
   fi
 
   # Create a (very likely unique) instance name.
@@ -154,8 +155,8 @@ function run_all_data_examples {
   local -r TABLE="sample-table"
 
   # Create an instance to run these examples.
-  ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}" || ${ignore_unimplemented}
-  trap '../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" "${zone_id}"' EXIT
+  $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" "${zone_id}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -204,5 +205,5 @@ function run_all_data_examples {
   ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
   trap - EXIT
-  ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" || ${ignore_unimplemented}
+  $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
