@@ -36,8 +36,8 @@ BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
   // optimization.
   mut.MoveTo(&pending_mutations_);
   bigtable::internal::SetCommonTableOperationRequest<
-      btproto::MutateRowsRequest>(pending_mutations_, table_name.get(),
-                                  app_profile_id.get());
+      btproto::MutateRowsRequest>(pending_mutations_, app_profile_id.get(),
+                                  table_name.get());
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
   // in the original sequence provided by the user.  So this vector maps from
@@ -75,8 +75,8 @@ void BulkMutator::PrepareForRequest() {
   }
   pending_mutations_ = {};
   bigtable::internal::SetCommonTableOperationRequest<
-      btproto::MutateRowsRequest>(pending_mutations_, mutations_.table_name(),
-                                  mutations_.app_profile_id());
+      btproto::MutateRowsRequest>(
+      pending_mutations_, mutations_.app_profile_id(), mutations_.table_name());
   pending_annotations_ = {};
 }
 

@@ -48,10 +48,10 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
 namespace internal {
 template <typename Request>
 void SetCommonTableOperationRequest(Request& request,
-                                    std::string const& table_name,
-                                    std::string const& app_profile_id) {
-  request.set_table_name(table_name);
+                                    std::string const& app_profile_id,
+                                    std::string const& table_name) {
   request.set_app_profile_id(app_profile_id);
+  request.set_table_name(table_name);
 }
 
 }  // namespace internal
@@ -156,7 +156,7 @@ class Table {
     request.set_row_key(std::move(row_key));
     bigtable::internal::SetCommonTableOperationRequest<
         ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-        request, table_name_.get(), app_profile_id_.get());
+        request, app_profile_id_.get(), table_name_.get());
 
     // Generate a better compile time error message than the default one
     // if the types do not match

@@ -138,8 +138,8 @@ void RowReader::MakeRequest() {
   google::bigtable::v2::ReadRowsRequest request;
 
   bigtable::internal::SetCommonTableOperationRequest<
-      google::bigtable::v2::ReadRowsRequest>(request, table_name_.get(),
-                                             app_profile_id_.get());
+      google::bigtable::v2::ReadRowsRequest>(request, app_profile_id_.get(),
+                                             table_name_.get());
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 

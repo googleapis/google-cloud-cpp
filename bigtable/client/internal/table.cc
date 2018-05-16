@@ -42,7 +42,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
   bigtable::internal::SetCommonTableOperationRequest<btproto::MutateRowRequest>(
-      request, table_name_.get(), app_profile_id_.get());
+      request, app_profile_id_.get(), table_name_.get());
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -169,8 +169,8 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   bigtable::internal::SetCommonTableOperationRequest<
-      btproto::CheckAndMutateRowRequest>(request, table_name_.get(),
-                                         app_profile_id_.get());
+      btproto::CheckAndMutateRowRequest>(request, app_profile_id_.get(),
+                                         table_name_.get());
   *request.mutable_predicate_filter() = filter.as_proto_move();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -232,8 +232,8 @@ void Table::SampleRowsImpl(
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
   bigtable::internal::SetCommonTableOperationRequest<
-      btproto::SampleRowKeysRequest>(request, table_name_.get(),
-                                     app_profile_id_.get());
+      btproto::SampleRowKeysRequest>(request, app_profile_id_.get(),
+                                     table_name_.get());
 
   while (true) {
     grpc::ClientContext client_context;
