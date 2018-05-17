@@ -43,6 +43,12 @@ constexpr static auto REFRESH_TIME_SLACK_MIN = std::chrono::seconds(10);
  * handles refreshing the credentials when needed, as well as creating the
  * appropriate header for authorization.
  *
+ * @par Warning
+ * The current implementation is a placeholder to unblock development of the
+ * Google Cloud Storage client libraries.  There is substantial work needed
+ * before this class is complete, in fact, we do not even have a complete set of
+ * requirements for this class.
+ *
  * @see
  *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *   https://tools.ietf.org/html/rfc7523
