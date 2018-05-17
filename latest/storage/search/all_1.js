@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['storage',['storage',['../namespacestorage.html',1,'']]],
-  ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]],
-  ['v0',['v0',['../namespacestorage_1_1v0.html',1,'storage']]]
+  ['credentials',['Credentials',['../classstorage_1_1v0_1_1Credentials.html',1,'storage::v0']]],
+  ['credentials_2ecc',['credentials.cc',['../credentials_8cc.html',1,'']]],
+  ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]]
 ];

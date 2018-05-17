@@ -1,27 +1,30 @@
 var indexSectionsWithContent =
 {
-  0: "lstv",
-  1: "s",
-  2: "lv",
-  3: "tv",
-  4: "s"
+  0: "acglstv~",
+  1: "c",
+  2: "s",
+  3: "clv",
+  4: "agtv~",
+  5: "s"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "namespaces",
-  2: "files",
-  3: "functions",
-  4: "defines"
+  1: "classes",
+  2: "namespaces",
+  3: "files",
+  4: "functions",
+  5: "defines"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Namespaces",
-  2: "Files",
-  3: "Functions",
-  4: "Macros"
+  1: "Classes",
+  2: "Namespaces",
+  3: "Files",
+  4: "Functions",
+  5: "Macros"
 };
 

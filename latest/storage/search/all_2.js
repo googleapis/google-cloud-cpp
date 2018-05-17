@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['test',['TEST',['../link__test_8cc.html#a2550e7d180c6608dc4c3775403d4aab6',1,'link_test.cc']]]
+  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacestorage_1_1v0.html#ac1d2953a5b9d5bbb10700b3df1f41c4e',1,'storage::v0']]]
 ];
