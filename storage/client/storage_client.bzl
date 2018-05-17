@@ -12,6 +12,7 @@ storage_client_SRCS = [
     "credentials.cc",
     "internal/curl_request.cc",
     "internal/curl_wrappers.cc",
+    "internal/service_account_credentials.cc",
     "version.cc",
 ]
 

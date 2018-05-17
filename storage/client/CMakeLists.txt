@@ -25,6 +25,7 @@ add_library(storage_client
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
     internal/service_account_credentials.h
+    internal/service_account_credentials.cc
     internal/nljson.h
     version.h
     version.cc)

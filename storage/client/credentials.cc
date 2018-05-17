@@ -18,35 +18,14 @@
 #include <iostream>
 #include <iterator>
 
-namespace {
-#ifdef _WIN32
-char const CREDENTIALS_ENV_VAR[] = "APPDATA";
-#else
-char const CREDENTIALS_ENV_VAR[] = "HOME";
-#endif
-
-std::string const& GoogleCredentialsSuffix() {
-#ifdef _WIN32
-  static std::string const suffix =
-      "/gcloud/application_default_credentials.json";
-#else
-  static std::string const suffix =
-      "/.config/gcloud/application_default_credentials.json";
-#endif
-  return suffix;
-}
-}  // anonymous namespace
-
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  // There are probably more efficient ways to do this, but meh, the strings
-  // are typically short, and this does not happen that often.
-  std::string const root = std::getenv(CREDENTIALS_ENV_VAR);
-  std::ifstream is(root + GoogleCredentialsSuffix());
+  auto path = storage::internal::DefaultServiceAccountCredentialsFile();
+  std::ifstream is(path);
   std::string jwt(std::istreambuf_iterator<char>{is}, {});
   return std::make_shared<storage::internal::ServiceAccountCredentials<>>(jwt);
 }
 
 }  // namespace STORAGE_CLIENT_NS
-}  // storage
+}  // namespace storage

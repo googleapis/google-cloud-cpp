@@ -2,11 +2,13 @@
 google_cloud_cpp_common_HDRS = [
     "internal/build_info.h",
     "internal/port_platform.h",
+    "internal/setenv.h",
     "internal/throw_delegate.h",
     "version.h",
 ]
 
 google_cloud_cpp_common_SRCS = [
+    "internal/setenv.cc",
     "internal/throw_delegate.cc",
 ]
 

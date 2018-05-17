@@ -59,6 +59,8 @@ add_library(google_cloud_cpp_common
     internal/build_info.h
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     internal/port_platform.h
+    internal/setenv.h
+    internal/setenv.cc
     internal/throw_delegate.h
     internal/throw_delegate.cc
     version.h)
