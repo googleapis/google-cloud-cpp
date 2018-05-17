@@ -19,8 +19,8 @@ if [ "${TERM:-}" = "dumb" ]; then
   readonly COLOR_YELLOW=""
   readonly COLOR_RESET=""
 else
-  readonly COLOR_RED=$(tput setaf 1)
-  readonly COLOR_GREEN=$(tput setaf 2)
-  readonly COLOR_YELLOW=$(tput setaf 3)
-  readonly COLOR_RESET=$(tput sgr0)
+  readonly COLOR_RED="$(tput setaf 1)"
+  readonly COLOR_GREEN="$(tput setaf 2)"
+  readonly COLOR_YELLOW="$(tput setaf 3)"
+  readonly COLOR_RESET="$(tput sgr0)"
 fi
