@@ -25,7 +25,8 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  auto response_text = request.MakeRequest(std::string{});
+  request.PrepareRequest(std::string{});
+  auto response_text = request.MakeRequest();
   nl::json response = nl::json::parse(response_text);
   nl::json args = response["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
@@ -37,12 +38,34 @@ TEST(CurlRequestTest, FailedGET) {
   // can't, but just documenting the assumptions in this test).
   storage::internal::CurlRequest request("https://localhost:0/");
 
+  request.PrepareRequest(std::string{});
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(request.MakeRequest(std::string{}), std::exception);
+  EXPECT_THROW(request.MakeRequest(), std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(request.MakeRequest(std::string{}),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(request.MakeRequest(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(CurlRequestTest, RepeatedGET) {
+  storage::internal::CurlRequest request("https://nghttp2.org/httpbin/get");
+  request.AddQueryParameter("foo", "foo1&&&foo2");
+  request.AddQueryParameter("bar", "bar1==bar2=");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  request.PrepareRequest(std::string{});
+
+  auto response_text = request.MakeRequest();
+  nl::json response = nl::json::parse(response_text);
+  nl::json args = response["args"];
+  EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
+  EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
+
+  response_text = request.MakeRequest();
+  response = nl::json::parse(response_text);
+  args = response["args"];
+  EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
+  EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
 
 TEST(CurlRequestTest, SimpleJSON) {
@@ -53,8 +76,8 @@ TEST(CurlRequestTest, SimpleJSON) {
   request.AddHeader("Content-Type: application/json");
   request.AddHeader("charsets: utf-8");
 
-  auto response_text =
-      request.MakeRequest(nl::json{{"int", 42}, {"string", "value"}});
+  request.PrepareRequest(nl::json{{"int", 42}, {"string", "value"}});
+  auto response_text = request.MakeRequest();
   nl::json response = nl::json::parse(response_text);
   nl::json args = response["args"];
   EXPECT_EQ("bar&baz", args["foo"].get<std::string>());
@@ -84,7 +107,8 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("Content-Type: application/x-www-form-urlencoded");
   request.AddHeader("charsets: utf-8");
 
-  auto response_text = request.MakeRequest(data);
+  request.PrepareRequest(data);
+  auto response_text = request.MakeRequest();
   nl::json response = nl::json::parse(response_text);
   nl::json form = response["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());

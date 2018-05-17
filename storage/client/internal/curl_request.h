@@ -48,20 +48,23 @@ class CurlRequest {
    * Make a request with the given payload.
    *
    * @param payload The contents of the request.
-   * @return The response payload as a string.
    */
-  std::string MakeRequest(std::string const& payload);
+  void PrepareRequest(std::string payload);
 
   /**
    * Make a request with the given payload.
    *
    * @param payload The JSON object to send as part of the request.
-   * @return The response payload as a string.
    */
-  std::string MakeRequest(nl::json payload);
+  void PrepareRequest(nl::json payload);
+
+  /// Make the prepared request and return the responsee.
+  std::string MakeRequest();
 
   CurlRequest(CurlRequest const&) = delete;
   CurlRequest& operator=(CurlRequest const&) = delete;
+  CurlRequest(CurlRequest&&) = default;
+  CurlRequest& operator=(CurlRequest&&) = default;
 
  private:
   std::string url_;
@@ -69,6 +72,7 @@ class CurlRequest {
   CURL* curl_;
   curl_slist* headers_;
   CurlBuffer buffer_;
+  std::string payload_;
 };
 
 }  // namespace internal
