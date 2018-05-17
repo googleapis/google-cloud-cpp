@@ -18,6 +18,6 @@ set -eu
 
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
-readonly BINDIR=$(dirname $0)
+readonly BINDIR="$(dirname $0)"
 (cd bigtable/tests && "${BINDIR}/../tests/run_integration_tests_emulator.sh")
 (cd bigtable/tests && "${BINDIR}/../examples/run_examples_emulator.sh")

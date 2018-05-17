@@ -73,7 +73,7 @@ ctest --stop-on-failure
 # Run the integration tests.
 for subdir in bigtable storage; do
   echo
-  echo "${COLOR_RESET}Running integration tests for ${subdir}"
+  echo "Running integration tests for ${subdir}"
   /v/${subdir}/ci/run_integration_tests.sh
 done
 
