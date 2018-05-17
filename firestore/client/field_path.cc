@@ -22,7 +22,7 @@ std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
 namespace firestore {
 
 FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
-  for (auto const part : parts) {
+  for (auto const& part : parts) {
     if (part.empty()) {
       this->valid_ = false;
       return;
@@ -39,10 +39,9 @@ FieldPath FieldPath::InvalidFieldPath() {
 FieldPath FieldPath::FromString(std::string const& string) {
   if (InvalidCharacters(string)) {
     return FieldPath::InvalidFieldPath();
-  } else {
-    return FieldPath(Split(string));
   }
-};
+  return FieldPath(Split(string));
+}
 
 FieldPath FieldPath::Append(std::string const& string) const {
   std::vector<std::string> parts(this->parts_);
@@ -53,13 +52,12 @@ FieldPath FieldPath::Append(std::string const& string) const {
 FieldPath FieldPath::Append(FieldPath const& field_path) const {
   if (valid_ && field_path.valid_) {
     std::vector<std::string> parts(this->parts_);
-    for (auto const part : field_path.parts_) {
+    for (auto const& part : field_path.parts_) {
       parts.push_back(part);
     }
     return FieldPath(parts);
-  } else {
-    return FieldPath::InvalidFieldPath();
   }
+  return FieldPath::InvalidFieldPath();
 }
 
 std::string FieldPath::ToApiRepr() const {
@@ -89,9 +87,9 @@ bool FieldPath::operator!=(const FieldPath& other) const {
 }
 
 bool FieldPath::operator<(FieldPath const& other) const {
-  size_t const this_size = this->parts_.size();
-  size_t const other_size = other.size();
-  size_t const min_length = this_size < other_size ? this_size : other_size;
+  auto const this_size = this->parts_.size();
+  auto const other_size = other.size();
+  auto const min_length = std::min(this_size, other_size);
   for (auto i = 0; i < min_length; i++) {
     if (this->parts_[i] < other.parts_[i]) {
       return true;

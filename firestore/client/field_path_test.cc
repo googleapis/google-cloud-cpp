@@ -186,3 +186,29 @@ TEST(FieldPath, Append) {
   ASSERT_EQ(string.ToApiRepr(), "a321.b456.c789.d");
   ASSERT_EQ(klass.ToApiRepr(), string.ToApiRepr());
 }
+
+TEST(FieldPath, AppendInvalid) {
+  auto valid_path = firestore::FieldPath::FromString("a.b.c.d");
+  auto invalid_path = firestore::FieldPath::FromString("a..b");
+  EXPECT_TRUE(valid_path.valid());
+  EXPECT_FALSE(invalid_path.valid());
+  EXPECT_FALSE(valid_path.Append(invalid_path).valid());
+  EXPECT_FALSE(invalid_path.Append(valid_path).valid());
+}
+
+TEST(FieldPath, Compare) {
+  auto a = firestore::FieldPath::FromString("a.b.c.d");
+  auto b = firestore::FieldPath::FromString("b.c.d.e");
+  EXPECT_EQ(a, a);
+  EXPECT_NE(a, b);
+  EXPECT_LT(a, b);
+  EXPECT_LE(a, b);
+  EXPECT_GT(b, a);
+  EXPECT_GE(b, a);
+}
+
+TEST(FieldPath, Size) {
+  auto const field_path = firestore::FieldPath::FromString("a.b.c");
+  ASSERT_TRUE(field_path.valid());
+  EXPECT_LT(0U, field_path.size());
+}
