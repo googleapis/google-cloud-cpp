@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "storage/client/internal/service_account_credentials.h"
+#include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
 // The mocking code is a bit strange.  The class under test creates a concrete
@@ -166,4 +167,42 @@ TEST_F(ServiceAccountCredentialsTest, Refresh) {
   EXPECT_EQ("Type access-token-r1", credentials.AuthorizationHeader());
   EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
   EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
+}
+
+class DefaultServiceAccountFileTest : public ::testing::Test {
+ protected:
+  void SetUp() override { previous_ = std::getenv(variable_.c_str()); }
+  void TearDown() override {
+    google::cloud::internal::SetEnv(variable_.c_str(), previous_);
+  }
+
+ protected:
+  std::string variable_ =
+      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
+  char const* previous_ = nullptr;
+};
+
+/// @test Verify that the file path works as expected.
+TEST_F(DefaultServiceAccountFileTest, HomeSet) {
+  char const* home =
+      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
+  google::cloud::internal::SetEnv(home, "/foo/bar/baz");
+  auto actual = storage::internal::DefaultServiceAccountCredentialsFile();
+  EXPECT_NE(std::string::npos, actual.find("/foo/bar/baz"));
+  EXPECT_NE(std::string::npos, actual.find(".json"));
+}
+
+/// @test Verify that the service account file path fails when HOME is not set.
+TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
+  char const* home =
+      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
+  google::cloud::internal::UnsetEnv(home);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(storage::internal::DefaultServiceAccountCredentialsFile(),
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::DefaultServiceAccountCredentialsFile(),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

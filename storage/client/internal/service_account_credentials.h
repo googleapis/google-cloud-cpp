@@ -35,6 +35,12 @@ constexpr static auto REFRESH_TIME_SLACK_PERCENT = 5;
 /// Minimum time before the token expiration to start refreshing tokens.
 constexpr static auto REFRESH_TIME_SLACK_MIN = std::chrono::seconds(10);
 
+/// Return the path for the default service account credentials file.
+std::string DefaultServiceAccountCredentialsFile();
+
+/// The name of the environment variable to configure `HOME`.
+char const* DefaultServiceAccountCredentialsHomeVariable();
+
 /**
  * A C++ wrapper for Google Service Account Credentials.
  *
