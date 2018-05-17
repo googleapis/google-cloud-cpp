@@ -45,7 +45,6 @@ function run_all_instance_admin_examples {
   echo
   echo "Run create-instance example."
   $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run list-instances example."
@@ -62,11 +61,10 @@ function run_all_instance_admin_examples {
 
   echo
   echo "Run delete-instance example."
-  trap - EXIT
   $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
-# Run all the instance admin examples against production.
+# Run all the table admin examples.
 #
 # This function allows us to keep a single place where all the examples are
 # listed. We want to run these examples in the continuous integration builds
@@ -94,7 +92,6 @@ function run_all_table_admin_examples {
 
   # Create an instance to run these examples.
   $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -129,10 +126,14 @@ function run_all_table_admin_examples {
   echo "Run delete-table example."
   ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  trap - EXIT
   $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
+# Run the Bigtable data manipulation examples.
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
 function run_all_data_examples {
   if [ ! -x ../examples/bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"
@@ -156,7 +157,6 @@ function run_all_data_examples {
 
   # Create an instance to run these examples.
   $admin ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap '$admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}" "${zone_id}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -204,6 +204,5 @@ function run_all_data_examples {
   ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
   ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  trap - EXIT
   $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
