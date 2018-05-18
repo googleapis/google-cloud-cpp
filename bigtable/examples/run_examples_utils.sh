@@ -66,7 +66,7 @@ function run_all_instance_admin_examples {
   $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
-# Run all the instance admin examples against production.
+# Run all the table admin examples.
 #
 # This function allows us to keep a single place where all the examples are
 # listed. We want to run these examples in the continuous integration builds
@@ -133,6 +133,11 @@ function run_all_table_admin_examples {
   $admin ../examples/bigtable_samples_instance_admin delete-instance "${project_id}" "${INSTANCE}"
 }
 
+# Run the Bigtable data manipulation examples.
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
 function run_all_data_examples {
   if [ ! -x ../examples/bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"

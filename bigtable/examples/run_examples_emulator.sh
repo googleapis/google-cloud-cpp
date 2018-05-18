@@ -18,14 +18,29 @@ set -eu
 readonly BINDIR="$(dirname $0)"
 source "${BINDIR}/run_examples_utils.sh"
 source "${BINDIR}/../tools/run_emulator_utils.sh"
+source "${BINDIR}/../../ci/colors.sh"
 
 # Start the emulator, setup the environment variables and traps to cleanup.
+echo
+echo "Running Bigtable Example programs"
 start_emulators
 
 # Use a (likely unique) project id for the emulator.
 readonly PROJECT_ID="project-$(date +%s)"
 readonly ZONE_ID="fake-zone"
 
-run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"
+# The examples are noisy,
+for example in instance_admin table_admin data; do
+  LOG=$(mktemp --tmpdir "bigtable_examples_${example}_XXXXXXXXXX.log")
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${example}"
+  run_all_${example}_examples "${PROJECT_ID}" "${ZONE_ID}" >${LOG} 2>&1 </dev/null
+  if [ $? = 0 ]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example} examples"
+  else
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example} examples"
+    echo
+    echo "================ ${LOG} ================"
+    cat ${LOG}
+    echo "================ ${LOG} ================"
+  fi
+done

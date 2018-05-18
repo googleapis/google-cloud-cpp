@@ -16,17 +16,8 @@
 
 set -eu
 
-if [ "${TERM:-}" = "dumb" ]; then
-  readonly COLOR_RED=""
-  readonly COLOR_GREEN=""
-  readonly COLOR_YELLOW=""
-  readonly COLOR_RESET=""
-else
-  readonly COLOR_RED=$(tput setaf 1)
-  readonly COLOR_GREEN=$(tput setaf 2)
-  readonly COLOR_YELLOW=$(tput setaf 3)
-  readonly COLOR_RESET=$(tput sgr0)
-fi
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/colors.sh"
 
 export PATH=$PATH:$HOME/bin
 
