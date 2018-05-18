@@ -33,8 +33,11 @@ matrix:
       # as possible.  We also disable the build on pull-requests.
       os: linux
       compiler: clang
-      env: SCAN_BUILD=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
-           DISTRO=ubuntu-with-dependencies DISTRO_VERSION=16.04
+      env:
+        SCAN_BUILD=yes
+        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+        DISTRO=ubuntu-with-dependencies
+        DISTRO_VERSION=16.04
       install:
         - # First build the usual Ubuntu image, then use that to build an image
           # with gRPC already compiled and installed.
@@ -65,7 +68,8 @@ matrix:
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
-      env: TEST_BAZEL_AS_DEPENDENCY=yes
+      env:
+        TEST_BAZEL_AS_DEPENDENCY=yes
       git:
         submodules: false
       install: ci/install-bazel.sh
@@ -74,8 +78,11 @@ matrix:
       # installed versions.
       os: linux
       compiler: clang
-      env: TEST_INSTALL=yes CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
-           DISTRO=ubuntu-with-dependencies DISTRO_VERSION=17.10
+      env:
+        TEST_INSTALL=yes
+        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+        DISTRO=ubuntu-with-dependencies
+        DISTRO_VERSION=17.10
       install:
         - # First build the usual Ubuntu image, then use that to build an image
           # with gRPC already compiled and installed.
@@ -85,39 +92,60 @@ matrix:
       # documentation.
       os: linux
       compiler: gcc
-      env: CHECK_STYLE=yes GENERATE_DOCS=yes DISTRO=ubuntu DISTRO_VERSION=17.10
+      env:
+        CHECK_STYLE=yes
+        GENERATE_DOCS=yes
+        DISTRO=ubuntu
+        DISTRO_VERSION=17.10
     - # Build with the AddressSanitizer.
       os: linux
       compiler: clang
-      env: CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes BUILD_TYPE=Debug
-           DISTRO=ubuntu DISTRO_VERSION=18.04
+      env:
+        CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
+        BUILD_TYPE=Debug
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux
       compiler: clang
-      env: CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes BUILD_TYPE=Debug
-           DISTRO=ubuntu DISTRO_VERSION=16.04
+      env:
+        CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
+        BUILD_TYPE=Debug
+        DISTRO=ubuntu
+        DISTRO_VERSION=16.04
     - # Compile with clang-tidy enabled.
       os: linux
       compiler: clang
-      env: CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes BUILD_TYPE=Debug
-           DISTRO=ubuntu DISTRO_VERSION=18.04
+      env:
+        CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
+        BUILD_TYPE=Debug
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
-      env: BUILD_TYPE=Coverage DISTRO=ubuntu DISTRO_VERSION=18.04
+      env:
+        BUILD_TYPE=Coverage
+        DISTRO=ubuntu DISTRO_VERSION=18.04
     - # Compile with exceptions disabled.
       os: linux
       compiler: gcc
-      env: CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
-           DISTRO=ubuntu DISTRO_VERSION=16.04
+      env:
+        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
+        DISTRO=ubuntu
+        DISTRO_VERSION=16.04
     - # Compile on Fedora.
       os: linux
       compiler: gcc
-      env: DISTRO=fedora DISTRO_VERSION=27
+      env:
+        DISTRO=fedora
+        DISTRO_VERSION=27
     - # Compile on CentOS.
       os: linux
       compiler: gcc
-      env: DISTRO=centos DISTRO_VERSION=7
+      env:
+        DISTRO=centos
+        DISTRO_VERSION=7
 
 script:
   - ci/build-linux.sh
