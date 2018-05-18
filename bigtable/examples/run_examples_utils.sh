@@ -24,10 +24,6 @@ function cleanup_instance {
   local instance=$2
   shift 2
 
-  if [ -z "${project}" -o -z "${instance}" ]; then
-    return
-  fi
-
   echo
   echo "Cleaning up test instance projects/${project}/instances/${instance}"
   local setenv="env"
@@ -42,14 +38,18 @@ function exit_handler {
   local instance=$2
   shift 2
 
-  cleanup_instance "${project}" "${instance}"
   if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    # If the test is running against the emulator there is no need to cleanup
-    # the instance, just kill the emulators.
     kill_emulators
+  else
+    cleanup_instance "${project}" "${instance}"
   fi
 }
 
+# When we finish running a series of examples we want to explicitly cleanup the
+# instance.  We cannot just let the exit handler do it because when running
+# on the emulator the exit handler would kill the emulator.  And when running
+# in production we create a different instance in each group of examples, and
+# there is only one trap at a time.
 function reset_trap {
   if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
     # If the test is running against the emulator there is no need to cleanup
@@ -86,7 +86,7 @@ function run_all_instance_admin_examples {
   echo
   echo "Run create-instance example."
   ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap 'exit_handler ${project_id} ${INSTANCE}' EXIT
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run list-instances example."
@@ -99,12 +99,12 @@ function run_all_instance_admin_examples {
 #  TODO(#490) - disabled until ListClusters works correctly.
 #  echo
 #  echo "Run list-clusters example."
-#  ${admin} ../examples/bigtable_samples_instance_admin list-clusters "${project_id}"
+#  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters "${project_id}"
 
   reset_trap
   echo
   echo "Run delete-instance example."
-  cleanup_instance ${project_id} ${INSTANCE}
+  cleanup_instance "${project_id}" "${INSTANCE}"
 }
 
 # Run all the table admin examples.
@@ -134,8 +134,8 @@ function run_all_table_admin_examples {
   local -r TABLE="sample-table"
 
   # Create an instance to run these examples.
-  $setenv ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap 'exit_handler ${project_id} ${INSTANCE}' EXIT
+  ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -171,7 +171,7 @@ function run_all_table_admin_examples {
   ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   reset_trap
-  cleanup_instance ${project_id} ${INSTANCE}
+  cleanup_instance "${project_id}" "${INSTANCE}"
 }
 
 # Run the Bigtable data manipulation examples.
@@ -201,8 +201,8 @@ function run_all_data_examples {
   local -r TABLE="sample-table"
 
   # Create an instance to run these examples.
-  $setenv ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap 'exit_handler ${project_id} ${INSTANCE}' EXIT
+  ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run create-table example."
@@ -251,5 +251,5 @@ function run_all_data_examples {
   ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
   reset_trap
-  cleanup_instance ${project_id} ${INSTANCE}
+  cleanup_instance "${project_id}" "${INSTANCE}"
 }
