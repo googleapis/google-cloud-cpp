@@ -23,7 +23,14 @@ TEST(ParseRfc3339Test, ParseEpoch) {
   // support actually have that property, and C++ 20 fixes things. If this test
   // breaks because somebody is unlucky enough to have a C++ compiler + library
   // with a different Epoch then at least we know what the problem is.
-  EXPECT_EQ(0, timestamp.time_since_epoch().count());
+  EXPECT_EQ(0, timestamp.time_since_epoch().count())
+      << "Your C++ compiler, library, and/or your operating system does\n"
+      << "not use the Unix epoch (1970-01-01T00:00:00Z) as its epoch.\n"
+      << "The Google Cloud C++ Libraries have not been ported to\n"
+      << "environments where this is the case.  Please contact us at\n"
+      << "   https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues\n"
+      << "and provide as many details as possible about your build\n"
+      << "environment.";
 }
 
 TEST(ParseRfc3339Test, ParseSimpleZulu) {
@@ -50,19 +57,18 @@ TEST(ParseRfc3339Test, ParseFractional) {
   auto actual_seconds = duration_cast<seconds>(timestamp.time_since_epoch());
   EXPECT_EQ(1526654523L, actual_seconds.count());
 
-  bool system_clock_has_nanos =
-      std::ratio_greater_equal<std::nano,
-                      std::chrono::system_clock::duration::period>::value;
+  bool system_clock_has_nanos = std::ratio_greater_equal<
+      std::nano, std::chrono::system_clock::duration::period>::value;
   if (system_clock_has_nanos) {
-    auto actual_nanoseconds =
-        duration_cast<nanoseconds>(timestamp.time_since_epoch() - actual_seconds);
+    auto actual_nanoseconds = duration_cast<nanoseconds>(
+        timestamp.time_since_epoch() - actual_seconds);
     EXPECT_EQ(123456789L, actual_nanoseconds.count());
   } else {
     // On platforms where the system clock has less than nanosecond precision
     // just check for milliseconds, we could check at the highest possible
     // precision but that is overkill.
-    auto actual_milliseconds =
-        duration_cast<milliseconds>(timestamp.time_since_epoch() - actual_seconds);
+    auto actual_milliseconds = duration_cast<milliseconds>(
+        timestamp.time_since_epoch() - actual_seconds);
     EXPECT_EQ(123L, actual_milliseconds.count());
   }
 }
@@ -206,6 +212,36 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDay) {
                std::invalid_argument);
 #else
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-55T14:42:03Z"),
+               "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(ParseRfc3339Test, DetectOutOfRangeMDay30) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(storage::internal::ParseRfc3339("2018-06-31T14:42:03Z"),
+               std::invalid_argument);
+#else
+  EXPECT_THROW(storage::internal::ParseRfc3339("2018-06-31T14:42:03Z"),
+               "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebLeap) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(storage::internal::ParseRfc3339("2016-02-30T14:42:03Z"),
+               std::invalid_argument);
+#else
+  EXPECT_THROW(storage::internal::ParseRfc3339("2016-02-30T14:42:03Z"),
+               "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebNonLeap) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(storage::internal::ParseRfc3339("2017-02-29T14:42:03Z"),
+               std::invalid_argument);
+#else
+  EXPECT_THROW(storage::internal::ParseRfc3339("2017-02-29T14:42:03Z"),
                "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

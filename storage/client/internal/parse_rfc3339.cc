@@ -28,18 +28,23 @@ namespace {
   google::cloud::internal::RaiseInvalidArgument(os.str());
 }
 
-std::chrono::system_clock::time_point
-    ParseDateTime(char const*& buffer, std::string const& timestamp) {
+bool IsLeapYear(int year) {
+  return (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0));
+}
+
+std::chrono::system_clock::time_point ParseDateTime(
+    char const*& buffer, std::string const& timestamp) {
   // Use std::mktime to compute the number of seconds because RFC 3339 requires
   // working with civil time, including the annoying leap seconds, and mktime
   // does.
-  int year, mon, mday;
+  int year, month, day;
   char date_time_separator;
-  int hh, mm, ss;
+  int hours, minutes, seconds;
 
   int pos;
-  auto count = std::sscanf(buffer, "%4d-%2d-%2d%c%2d:%2d:%2d%n", &year, &mon,
-                           &mday, &date_time_separator, &hh, &mm, &ss, &pos);
+  auto count =
+      std::sscanf(buffer, "%4d-%2d-%2d%c%2d:%2d:%2d%n", &year, &month, &day,
+                  &date_time_separator, &hours, &minutes, &seconds, &pos);
   // All the fields up to this point have fixed width, so total width must be:
   constexpr int EXPECTED_WIDTH = 19;
   constexpr int EXPECTED_FIELDS = 7;
@@ -51,19 +56,36 @@ std::chrono::system_clock::time_point
   if (date_time_separator != 'T' and date_time_separator != 't') {
     ReportError(timestamp, "Invalid date-time separator, expected 'T' or 't'.");
   }
-  if (mon <= 0 or mon > 12) {
+  if (month <= 0 or month > 12) {
     ReportError(timestamp, "Out of range month.");
   }
-  if (mday <= 0 or mday > 31) {
+  constexpr int MAX_DAYS_IN_MONTH[] = {
+      31,  // January
+      29,  // February (non-leap years checked below)
+      31,  // March
+      30,  // April
+      31,  // May
+      30,  // June
+      31,  // July
+      31,  // August
+      30,  // September
+      31,  // October
+      30,  // November
+      31,  // December
+  };
+  if (day <= 0 or day > MAX_DAYS_IN_MONTH[month - 1]) {
     ReportError(timestamp, "Out of range month day.");
   }
-  if (hh < 0 or hh > 23) {
+  if (2 == month and day > 28 and not IsLeapYear(year)) {
+    ReportError(timestamp, "Out of range month day.");
+  }
+  if (hours < 0 or hours > 23) {
     ReportError(timestamp, "Out of range hour.");
   }
-  if (mm < 0 or mm > 59) {
+  if (minutes < 0 or minutes > 59) {
     ReportError(timestamp, "Out of range minute.");
   }
-  if (ss < 0 or ss > 60) {
+  if (seconds < 0 or seconds > 60) {
     ReportError(timestamp, "Out of range second.");
   }
   // Advance the pointer for all the characters read.
@@ -71,11 +93,11 @@ std::chrono::system_clock::time_point
 
   std::tm tm{0};
   tm.tm_year = year - 1900;
-  tm.tm_mon = mon - 1;
-  tm.tm_mday = mday;
-  tm.tm_hour = hh;
-  tm.tm_min = mm;
-  tm.tm_sec = ss;
+  tm.tm_mon = month - 1;
+  tm.tm_mday = day;
+  tm.tm_hour = hours;
+  tm.tm_min = minutes;
+  tm.tm_sec = seconds;
   return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 }
 
@@ -111,25 +133,27 @@ std::chrono::seconds ParseOffset(char const*& buffer,
     bool positive = buffer[0] == '+';
     ++buffer;
     // Parse the HH:MM offset.
-    int hh, mm, pos;
-    auto count = std::sscanf(buffer, "%2d:%2d%n", &hh, &mm, &pos);
+    int hours, minutes, pos;
+    auto count = std::sscanf(buffer, "%2d:%2d%n", &hours, &minutes, &pos);
     constexpr int EXPECTED_OFFSET_WIDTH = 5;
     constexpr int EXPECTED_OFFSET_FIELDS = 2;
     if (count != EXPECTED_OFFSET_FIELDS or pos != EXPECTED_OFFSET_WIDTH) {
       ReportError(timestamp, "Invalid timezone offset, expected [+/-]HH:SS.");
     }
-    if (hh < 0 or hh > 23) {
+    if (hours < 0 or hours > 23) {
       ReportError(timestamp, "Out of range offset hour.");
     }
-    if (mm < 0 or mm > 59) {
+    if (minutes < 0 or minutes > 59) {
       ReportError(timestamp, "Out of range offset minute.");
     }
     buffer += pos;
-    using namespace std::chrono;
+    using std::chrono::duration_cast;
     if (positive) {
-      return duration_cast<seconds>(hours(hh) + minutes(mm));
+      return duration_cast<std::chrono::seconds>(std::chrono::hours(hours) +
+                                                 std::chrono::minutes(minutes));
     }
-    return duration_cast<seconds>(-hours(hh) - minutes(mm));
+    return duration_cast<std::chrono::seconds>(-std::chrono::hours(hours) -
+                                               std::chrono::minutes(minutes));
   }
   if (buffer[0] != 'Z' and buffer[0] != 'z') {
     ReportError(timestamp, "Invalid timezone offset, expected 'Z' or 'z'.");
