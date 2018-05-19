@@ -8,7 +8,7 @@ var searchData=
   ['instance_5fname',['instance_name',['../classbigtable_1_1v0_1_1TableAdmin.html#ad8291bbcf6c9603123adfabe01133267',1,'bigtable::v0::TableAdmin']]],
   ['instanceadmin',['InstanceAdmin',['../classbigtable_1_1v0_1_1InstanceAdmin.html#af87d10b9ff6479d4920d3c0c53234ecf',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client)'],['../classbigtable_1_1v0_1_1InstanceAdmin.html#a6b2adfa019142affefaa9cdf532fa66b',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client, RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)']]],
   ['instanceconfig',['InstanceConfig',['../classbigtable_1_1v0_1_1InstanceConfig.html#a5daa933407d23652d8cd8bd950e6d8fd',1,'bigtable::v0::InstanceConfig']]],
-  ['instancename',['InstanceName',['../namespacebigtable_1_1v0.html#a36b5c0eb551f34dc3f1b1b720e1a0607',1,'bigtable::v0']]],
+  ['instancename',['InstanceName',['../classbigtable_1_1v0_1_1InstanceAdmin.html#a444987d3e915906578f01f5095c3e5f1',1,'bigtable::v0::InstanceAdmin::InstanceName()'],['../namespacebigtable_1_1v0.html#a36b5c0eb551f34dc3f1b1b720e1a0607',1,'bigtable::v0::InstanceName()']]],
   ['interleave',['Interleave',['../classbigtable_1_1v0_1_1Filter.html#af0f02d97b4f3c55d8bd9cc04f41c09ff',1,'bigtable::v0::Filter']]],
   ['intersect',['Intersect',['../classbigtable_1_1v0_1_1RowRange.html#a1ca42a4fd06ecc7018482246c95d9048',1,'bigtable::v0::RowRange::Intersect()'],['../classbigtable_1_1v0_1_1RowSet.html#aaf7ca8e97e7d12f33018a36a0188079a',1,'bigtable::v0::RowSet::Intersect()']]],
   ['intersection',['Intersection',['../classbigtable_1_1v0_1_1GcRule.html#abd3b1c6974fa8c6d41b7cc9e3585b7b8',1,'bigtable::v0::GcRule']]],

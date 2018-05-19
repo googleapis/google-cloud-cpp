@@ -19,7 +19,7 @@ var searchData=
   ['instanceadminclient',['InstanceAdminClient',['../classbigtable_1_1v0_1_1InstanceAdminClient.html',1,'bigtable::v0']]],
   ['instanceconfig',['InstanceConfig',['../classbigtable_1_1v0_1_1InstanceConfig.html',1,'bigtable::v0::InstanceConfig'],['../classbigtable_1_1v0_1_1InstanceConfig.html#a5daa933407d23652d8cd8bd950e6d8fd',1,'bigtable::v0::InstanceConfig::InstanceConfig()']]],
   ['instanceid',['InstanceId',['../namespacebigtable_1_1v0.html#a9831bbc807f03d0023b907f59e83a78a',1,'bigtable::v0']]],
-  ['instancename',['InstanceName',['../namespacebigtable_1_1v0.html#a36b5c0eb551f34dc3f1b1b720e1a0607',1,'bigtable::v0']]],
+  ['instancename',['InstanceName',['../classbigtable_1_1v0_1_1InstanceAdmin.html#a444987d3e915906578f01f5095c3e5f1',1,'bigtable::v0::InstanceAdmin::InstanceName()'],['../namespacebigtable_1_1v0.html#a36b5c0eb551f34dc3f1b1b720e1a0607',1,'bigtable::v0::InstanceName()']]],
   ['instancetype',['InstanceType',['../classbigtable_1_1v0_1_1InstanceConfig.html#af02a35053e81342dc659a4e16fbeaa66',1,'bigtable::v0::InstanceConfig']]],
   ['interleave',['Interleave',['../classbigtable_1_1v0_1_1Filter.html#af0f02d97b4f3c55d8bd9cc04f41c09ff',1,'bigtable::v0::Filter']]],
   ['intersect',['Intersect',['../classbigtable_1_1v0_1_1RowRange.html#a1ca42a4fd06ecc7018482246c95d9048',1,'bigtable::v0::RowRange::Intersect()'],['../classbigtable_1_1v0_1_1RowSet.html#aaf7ca8e97e7d12f33018a36a0188079a',1,'bigtable::v0::RowSet::Intersect()']]],
