@@ -124,6 +124,10 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   }
 }
 
+std::vector<btproto::Cluster> InstanceAdmin::ListClusters() {
+  return ListClusters("-");
+}
+
 std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
     std::string const& instance_id) {
   grpc::Status status;

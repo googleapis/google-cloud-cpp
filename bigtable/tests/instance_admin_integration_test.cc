@@ -176,15 +176,13 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   // Create clusters in an instance
   // TODO(#422) - Implement InstanceAdmin::CreateCluster
 
-  // TODO(#490) - ListCluster() fails without an instance_id parameter.
-  // instance_admin_->ListClusters();
-
   // TODO(#418) - create an instance and test that its cluster is returned here.
   auto clusters = instance_admin_->ListClusters(id);
   for (auto const& i : clusters) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }
+  EXPECT_FALSE(clusters.empty());
 
   instance_admin_->DeleteInstance(id);
 }

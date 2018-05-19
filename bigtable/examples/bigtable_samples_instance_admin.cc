@@ -117,8 +117,8 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [list clusters]
 void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
                   char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"list-clusters <project-id> <instance-id> <cluster-id>"};
+  if (argc != 2) {
+    throw Usage{"list-clusters <project-id> <instance-id>"};
   }
 
   auto cluster_list = instance_admin.ListClusters(ConsumeArg(argc, argv));
