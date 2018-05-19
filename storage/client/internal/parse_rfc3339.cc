@@ -14,6 +14,7 @@
 
 #include "storage/client/internal/parse_rfc3339.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include <cctype>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
