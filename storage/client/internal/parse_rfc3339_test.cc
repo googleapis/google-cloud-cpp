@@ -124,15 +124,17 @@ TEST(ParseRfc3339Test, DetectInvalidSeparator) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18x14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18x14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18x14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03x"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03x"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03x"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -141,8 +143,9 @@ TEST(ParseRfc3339Test, DetectLongYear) {
   EXPECT_THROW(storage::internal::ParseRfc3339("52018-05-18T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("52018-05-18T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("52018-05-18T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -151,8 +154,9 @@ TEST(ParseRfc3339Test, DetectShortYear) {
   EXPECT_THROW(storage::internal::ParseRfc3339("218-05-18T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("218-05-18T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("218-05-18T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -161,8 +165,9 @@ TEST(ParseRfc3339Test, DetectLongMonth) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-123-18T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-123-18T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-123-18T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -171,8 +176,9 @@ TEST(ParseRfc3339Test, DetectShortMonth) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-1-18T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-1-18T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-1-18T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -181,8 +187,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMonth) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-33-18T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-33-18T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-33-18T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -191,8 +198,9 @@ TEST(ParseRfc3339Test, DetectLongMDay) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-181T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-181T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-181T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -201,8 +209,9 @@ TEST(ParseRfc3339Test, DetectShortMDay) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-1T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-1T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-1T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -211,8 +220,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDay) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-55T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-55T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-55T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -221,8 +231,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDay30) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-06-31T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-06-31T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-06-31T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -231,8 +242,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebLeap) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2016-02-30T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2016-02-30T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2016-02-30T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -241,8 +253,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebNonLeap) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2017-02-29T14:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2017-02-29T14:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2017-02-29T14:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -251,8 +264,9 @@ TEST(ParseRfc3339Test, DetectLongHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T144:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T144:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T144:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -261,8 +275,9 @@ TEST(ParseRfc3339Test, DetectShortHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T1:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T1:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T1:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -271,8 +286,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T24:42:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T24:42:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T24:42:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -281,8 +297,9 @@ TEST(ParseRfc3339Test, DetectLongMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:442:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:442:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:442:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -291,8 +308,9 @@ TEST(ParseRfc3339Test, DetectShortMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:2:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:2:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:2:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -301,8 +319,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T22:60:03Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T22:60:03Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T22:60:03Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -311,8 +330,9 @@ TEST(ParseRfc3339Test, DetectLongSecond) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:003Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:003Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:003Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -321,8 +341,9 @@ TEST(ParseRfc3339Test, DetectShortSecond) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:3Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:3Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:3Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -331,8 +352,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeSecond) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T22:42:61Z"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T22:42:61Z"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T22:42:61Z"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -341,8 +363,9 @@ TEST(ParseRfc3339Test, DetectLongOffsetHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+008:00"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+008:00"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+008:00"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -351,8 +374,9 @@ TEST(ParseRfc3339Test, DetectShortOffsetHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+8:00"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+8:00"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+8:00"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -361,8 +385,9 @@ TEST(ParseRfc3339Test, DetectOutOfRangeOffsetHour) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+24:00"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+24:00"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+24:00"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -371,8 +396,9 @@ TEST(ParseRfc3339Test, DetectLongOffsetMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:001"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:001"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:001"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -381,8 +407,9 @@ TEST(ParseRfc3339Test, DetectShortOffsetMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:1"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:1"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:1"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -391,7 +418,8 @@ TEST(ParseRfc3339Test, DetectOutOfRangeOffsetMinute) {
   EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:60"),
                std::invalid_argument);
 #else
-  EXPECT_THROW(storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:60"),
-               "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::ParseRfc3339("2018-05-18T14:42:03+08:60"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
