@@ -180,7 +180,7 @@ std::chrono::system_clock::time_point ParseRfc3339(
 // The standard C++ function to convert time_t to a struct tm is not thread
 // safe (it holds global storage), use some OS specific stuff here:
 #if WIN32
-    gmtime_s(&now, &lcl);
+    gmtime_s(&lcl, &now);
 #else
     gmtime_r(&now, &lcl);
 #endif  // WIN32
