@@ -104,7 +104,7 @@ std::chrono::system_clock::time_point ParseDateTime(
 std::chrono::system_clock::duration ParseFractionalSeconds(
     char const*& buffer, std::string const& timestamp) {
   if (buffer[0] != '.') {
-    return std::chrono::nanoseconds(0);
+    return std::chrono::system_clock::duration(0);
   }
   ++buffer;
 
