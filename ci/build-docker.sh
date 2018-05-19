@@ -59,7 +59,7 @@ echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # Run the tests and output any failures.
 cd "${BUILD_DIR}"
-ctest --stop-on-failure
+ctest --output-on-failure
 
 # Run the integration tests.
 for subdir in bigtable storage; do
