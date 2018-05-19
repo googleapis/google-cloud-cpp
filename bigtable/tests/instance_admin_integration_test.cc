@@ -160,9 +160,31 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   if (UsingCloudBigtableEmulator()) {
     return;
   }
+  std::string id = "list-clusters-test";
+  bigtable::InstanceId instance_id(id);
+  bigtable::DisplayName display_name(id);
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
+  clusters_config.push_back(std::make_pair(
+      id + "-cluster1", bigtable::ClusterConfig("us-central1-f", 0,
+                                                bigtable::ClusterConfig::HDD)));
+  auto instance_config =
+      bigtable::InstanceConfig(instance_id, display_name, clusters_config)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
 
-  // TODO(#490) - ListCluster() fails without an instance_id parameter.
-  // instance_admin_->ListClusters();
+  // Create clusters in an instance
+  // TODO(#422) - Implement InstanceAdmin::CreateCluster
+
+  // TODO(#418) - create an instance and test that its cluster is returned here.
+  auto clusters = instance_admin_->ListClusters(id);
+  for (auto const& i : clusters) {
+    auto const npos = std::string::npos;
+    EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
+  }
+  EXPECT_FALSE(clusters.empty());
+
+  instance_admin_->DeleteInstance(id);
 }
 
 int main(int argc, char* argv[]) {

@@ -56,6 +56,11 @@ class InstanceAdmin {
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
   std::string const& project_id() const { return impl_.project_id(); }
 
+  /// Return the fully qualified name of the given instance_id.
+  std::string InstanceName(std::string const& instance_id) const {
+    return impl_.InstanceName(instance_id);
+  }
+
   /**
    * Create a new instance of Cloud Bigtable.
    *
@@ -106,12 +111,21 @@ class InstanceAdmin {
   void DeleteInstance(std::string const& instance_id);
 
   /**
-   * Return the list of clusters in the project.
+   * Return the list of clusters in an instance.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
+
+  /**
+   * Return the list of clusters in an instance.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list clusters
+   */
+  std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
+      std::string const& instance_id);
 
   /**
    * Deletes the specified cluster of an instance in the project.

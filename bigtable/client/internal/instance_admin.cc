@@ -87,7 +87,7 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id,
 }
 
 std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
-    grpc::Status& status) {
+    std::string const& instance_id, grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
@@ -98,7 +98,7 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
   do {
     btproto::ListClustersRequest request;
     request.set_page_token(std::move(page_token));
-    request.set_parent(project_name_);
+    request.set_parent(InstanceName(instance_id));
 
     auto response = ClientUtils::MakeCall(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,

@@ -65,20 +65,21 @@ auto create_list_instances_lambda = [](std::string expected_token,
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_clusters_lambda = [](std::string expected_token,
-                                      std::string returned_token,
-                                      std::vector<std::string> cluster_ids) {
-  return [expected_token, returned_token, cluster_ids](
+auto create_list_clusters_lambda = [](
+    std::string expected_token, std::string returned_token,
+    std::string instance_id, std::vector<std::string> cluster_ids) {
+  return [expected_token, returned_token, instance_id, cluster_ids](
       grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
       btproto::ListClustersResponse* response) {
-    auto const project_name = "projects/" + kProjectId;
-    EXPECT_EQ(project_name, request.parent());
+    auto const instance_name =
+        "projects/" + kProjectId + "/instances/" + instance_id;
+    EXPECT_EQ(instance_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
 
     EXPECT_NE(nullptr, response);
     for (auto const& cluster_id : cluster_ids) {
       auto& cluster = *response->add_clusters();
-      cluster.set_name(project_name + "/clusters/" + cluster_id);
+      cluster.set_name(instance_name + "/clusters/" + cluster_id);
     }
     // Return the right token.
     response->set_next_page_token(returned_token);
@@ -543,16 +544,18 @@ TEST_F(InstanceAdminTest, ListClusters) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_list_clusters = create_list_clusters_lambda("", "", {"t0", "t1"});
+  std::string const& instance_id = "the-instance";
+  auto mock_list_clusters =
+      create_list_clusters_lambda("", "", instance_id, {"t0", "t1"});
   EXPECT_CALL(*client_, ListClusters(_, _, _))
       .WillOnce(Invoke(mock_list_clusters));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListClusters();
-  std::string cluster_name = tested.project_name();
+  auto actual = tested.ListClusters(instance_id);
+  std::string instance_name = tested.InstanceName(instance_id);
   ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(cluster_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(cluster_name + "/clusters/t1", actual[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
@@ -565,8 +568,11 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
       btproto::ListClustersResponse* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto batch0 = create_list_clusters_lambda("", "token-001", {"t0", "t1"});
-  auto batch1 = create_list_clusters_lambda("token-001", "", {"t2", "t3"});
+  std::string const& instance_id = "the-instance";
+  auto batch0 =
+      create_list_clusters_lambda("", "token-001", instance_id, {"t0", "t1"});
+  auto batch1 =
+      create_list_clusters_lambda("token-001", "", instance_id, {"t2", "t3"});
   EXPECT_CALL(*client_, ListClusters(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(batch0))
@@ -575,13 +581,13 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
       .WillOnce(Invoke(batch1));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListClusters();
-  std::string project_name = tested.project_name();
+  auto actual = tested.ListClusters(instance_id);
+  std::string instance_name = tested.InstanceName(instance_id);
   ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(project_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(project_name + "/clusters/t1", actual[1].name());
-  EXPECT_EQ(project_name + "/clusters/t2", actual[2].name());
-  EXPECT_EQ(project_name + "/clusters/t3", actual[3].name());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t2", actual[2].name());
+  EXPECT_EQ(instance_name + "/clusters/t3", actual[3].name());
 }
 
 /**
@@ -596,11 +602,13 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
+  std::string const& instance_id = "the-instance";
 // After all the setup, make the actual call we want to test.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.ListClusters(), std::exception);
+  EXPECT_THROW(tested.ListClusters(instance_id), std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(tested.ListClusters(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(tested.ListClusters(instance_id),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

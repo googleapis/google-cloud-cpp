@@ -95,7 +95,7 @@ class InstanceAdmin {
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
 
   std::vector<::google::bigtable::admin::v2::Cluster> ListClusters(
-      grpc::Status& status);
+      std::string const& instance_id, grpc::Status& status);
 
   void DeleteCluster(bigtable::InstanceId const& instance_id,
                      bigtable::ClusterId const& cluster_id,
