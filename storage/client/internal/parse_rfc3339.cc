@@ -28,8 +28,8 @@ namespace {
   google::cloud::internal::RaiseInvalidArgument(os.str());
 }
 
-std::chrono::system_clock::time_point ParseDateTime(
-    char const*& buffer, std::string const& timestamp) {
+std::chrono::system_clock::time_point
+    ParseDateTime(char const*& buffer, std::string const& timestamp) {
   // Use std::mktime to compute the number of seconds because RFC 3339 requires
   // working with civil time, including the annoying leap seconds, and mktime
   // does.
@@ -79,8 +79,8 @@ std::chrono::system_clock::time_point ParseDateTime(
   return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 }
 
-std::chrono::nanoseconds ParseFractionalSeconds(char const*& buffer,
-                                                std::string const& timestamp) {
+std::chrono::system_clock::duration ParseFractionalSeconds(
+    char const*& buffer, std::string const& timestamp) {
   if (buffer[0] != '.') {
     return std::chrono::nanoseconds(0);
   }
@@ -101,7 +101,8 @@ std::chrono::nanoseconds ParseFractionalSeconds(char const*& buffer,
   while (std::isdigit(buffer[0])) {
     ++buffer;
   }
-  return std::chrono::nanoseconds(fractional_seconds);
+  return std::chrono::duration_cast<std::chrono::system_clock::duration>(
+      std::chrono::nanoseconds(fractional_seconds));
 }
 
 std::chrono::seconds ParseOffset(char const*& buffer,
@@ -163,14 +164,14 @@ std::chrono::system_clock::time_point ParseRfc3339(
 
   char const* buffer = timestamp.c_str();
   auto time_point = ParseDateTime(buffer, timestamp);
-  std::chrono::nanoseconds nsec = ParseFractionalSeconds(buffer, timestamp);
+  auto fractional_seconds = ParseFractionalSeconds(buffer, timestamp);
   std::chrono::seconds offset = ParseOffset(buffer, timestamp);
 
   if (buffer[0] != '\0') {
     ReportError(timestamp, "Additional text after RFC 3339 date.");
   }
 
-  time_point += nsec;
+  time_point += fractional_seconds;
   time_point -= offset;
   time_point -= LOCALTIME_OFFSET;
   return time_point;

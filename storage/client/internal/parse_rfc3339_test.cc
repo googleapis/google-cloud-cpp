@@ -49,9 +49,22 @@ TEST(ParseRfc3339Test, ParseFractional) {
   using namespace std::chrono;
   auto actual_seconds = duration_cast<seconds>(timestamp.time_since_epoch());
   EXPECT_EQ(1526654523L, actual_seconds.count());
-  auto actual_nanoseconds =
-      duration_cast<nanoseconds>(timestamp.time_since_epoch() - actual_seconds);
-  EXPECT_EQ(123456789L, actual_nanoseconds.count());
+
+  bool system_clock_has_nanos =
+      std::ratio_greater_equal<std::nano,
+                      std::chrono::system_clock::duration::period>::value;
+  if (system_clock_has_nanos) {
+    auto actual_nanoseconds =
+        duration_cast<nanoseconds>(timestamp.time_since_epoch() - actual_seconds);
+    EXPECT_EQ(123456789L, actual_nanoseconds.count());
+  } else {
+    // On platforms where the system clock has less than nanosecond precision
+    // just check for milliseconds, we could check at the highest possible
+    // precision but that is overkill.
+    auto actual_milliseconds =
+        duration_cast<milliseconds>(timestamp.time_since_epoch() - actual_seconds);
+    EXPECT_EQ(123L, actual_milliseconds.count());
+  }
 }
 
 TEST(ParseRfc3339Test, ParseFractionalMoreThanNanos) {
