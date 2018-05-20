@@ -193,11 +193,12 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token);
 
   /**
-   * Checks consistency of a table with multiple calls using std::async.
+   * Using a separate thread
    *
-   * @param table_id  the id of the table for which we want to check
+   * @param table_id the id of the table for which we want to check
    *     consistency.
    * @param consistency_token the consistency token of the table.
+   * @param polling_policy the policy applicable for asynchronous call.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
    */
@@ -209,15 +210,6 @@ class TableAdmin {
                       &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
                       consistency_token, std::move(polling_policy));
   }
-
-  /**
-   * Helper function for 'WaitForConsistencyCheck'. It execute one task
-   * in one thread.
-   */
-  bool WaitForConsistencyCheckImpl(
-      bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token,
-      std::unique_ptr<bigtable::PollingPolicy> polling_policy);
 
   /**
    * Delete all the rows in a table.
@@ -295,6 +287,16 @@ class TableAdmin {
     }
     return result;
   }
+
+ private:
+  /**
+   * Helper function for 'WaitForConsistencyCheck'. It execute one task
+   * in one thread.
+   */
+  bool WaitForConsistencyCheckImpl(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy);
 
  private:
   noex::TableAdmin impl_;

@@ -207,12 +207,11 @@ bool TableAdmin::WaitForConsistencyCheckImpl(
         metadata_update_policy, &AdminClient::CheckConsistency, request,
         "CheckConsistency", status, true);
 
-    if (status.ok()) {
+    if (response.consistent()) {
       return true;
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-  } while (not polling_policy->exhausted());
+  } while (not polling_policy->Exhausted());
 
   return false;
 }

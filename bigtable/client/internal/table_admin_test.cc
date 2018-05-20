@@ -673,7 +673,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 
 /**
  * @test Verify that `bigtable::TableAdmin::CheckConsistency` works in the easy
- * case. Try multiple calls for consistency check using async call.
+ * case. Try multiple calls for consistency check using asynchronus api.
  */
 TEST_F(TableAdminTest, AsyncCheckConsistencyTest) {
   using namespace ::testing;
@@ -690,10 +690,14 @@ consistency_token: 'test-async-token'
   EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Invoke(mock));
+      .WillRepeatedly(Invoke(mock));
+
+  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
+  bigtable::ExponentialBackoffPolicy backoff_policy;
 
   std::unique_ptr<bigtable::PollingPolicy> polling_policy =
-      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
+          retry_policy, backoff_policy);
 
   grpc::Status status;
   bigtable::TableId table_id("the-async-table");
@@ -716,8 +720,12 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailureTest) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
+  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
+  bigtable::ExponentialBackoffPolicy backoff_policy;
+
   std::unique_ptr<bigtable::PollingPolicy> polling_policy =
-      bigtable::internal::make_unique<bigtable::PollingPolicy>(100_ms);
+      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
+          retry_policy, backoff_policy);
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
