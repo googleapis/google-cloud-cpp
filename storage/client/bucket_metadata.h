@@ -60,7 +60,7 @@ class BucketMetadata {
   }
 
   bool operator==(BucketMetadata const& rhs) const;
-  bool operator!=(BucketMetadata const& rhs) { return not (*this == rhs); }
+  bool operator!=(BucketMetadata const& rhs) { return not(*this == rhs); }
 
   constexpr static char STORAGE_CLASS_STANDARD[] = "STANDARD";
   constexpr static char STORAGE_CLASS_MULTI_REGIONAL[] = "MULTI_REGIONAL";
