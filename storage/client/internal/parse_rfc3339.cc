@@ -24,7 +24,7 @@ namespace {
 [[noreturn]] void ReportError(std::string const& timestamp, char const* msg) {
   std::ostringstream os;
   os << "Error parsing RFC 3339 timestamp: " << msg
-     << " Valid format is YYYY-MM-DD[Tt]HH:MM:SS[.s+](Z|+HH:MM), got="
+     << " Valid format is YYYY-MM-DD[Tt]HH:MM:SS[.s+](Z|[+-]HH:MM), got="
      << timestamp;
   google::cloud::internal::RaiseInvalidArgument(os.str());
 }
@@ -139,7 +139,7 @@ std::chrono::seconds ParseOffset(char const*& buffer,
     constexpr int EXPECTED_OFFSET_WIDTH = 5;
     constexpr int EXPECTED_OFFSET_FIELDS = 2;
     if (count != EXPECTED_OFFSET_FIELDS or pos != EXPECTED_OFFSET_WIDTH) {
-      ReportError(timestamp, "Invalid timezone offset, expected [+/-]HH:SS.");
+      ReportError(timestamp, "Invalid timezone offset, expected [+-]HH:MM.");
     }
     if (hours < 0 or hours > 23) {
       ReportError(timestamp, "Out of range offset hour.");
