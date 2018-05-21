@@ -87,7 +87,7 @@ std::chrono::system_clock::time_point ParseDateTime(
     ReportError(timestamp, "Out of range minute.");
   }
   // RFC-3339 points out that the seconds field can only assume value '60' for
-  // leap seconds, so theoretically we should validate that (furthermore we
+  // leap seconds, so theoretically, we should validate that (furthermore, we
   // should valid that `seconds` is smaller than 59 for negative leap seconds).
   // This would require loading a table, and adds too much complexity for little
   // value.
@@ -125,7 +125,7 @@ std::chrono::system_clock::duration ParseFractionalSeconds(
     fractional_seconds *= 10;
   }
   // Skip any other digits. This loses precision for sub-nanosecond timestamps,
-  // we do not consider this a problem for Internet timestamps.
+  // but we do not consider this a problem for Internet timestamps.
   buffer += pos;
   while (std::isdigit(buffer[0])) {
     ++buffer;
