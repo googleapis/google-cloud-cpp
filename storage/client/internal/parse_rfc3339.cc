@@ -75,10 +75,10 @@ std::chrono::system_clock::time_point ParseDateTime(
       31,  // December
   };
   if (day <= 0 or day > MAX_DAYS_IN_MONTH[month - 1]) {
-    ReportError(timestamp, "Out of range month day.");
+    ReportError(timestamp, "Out of range day for given month.");
   }
   if (2 == month and day > 28 and not IsLeapYear(year)) {
-    ReportError(timestamp, "Out of range month day.");
+    ReportError(timestamp, "Out of range day for given month.");
   }
   if (hours < 0 or hours > 23) {
     ReportError(timestamp, "Out of range hour.");
