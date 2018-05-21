@@ -57,7 +57,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   if (date_time_separator != 'T' and date_time_separator != 't') {
     ReportError(timestamp, "Invalid date-time separator, expected 'T' or 't'.");
   }
-  if (month <= 0 or month > 12) {
+  if (month < 1 or month > 12) {
     ReportError(timestamp, "Out of range month.");
   }
   constexpr int MAX_DAYS_IN_MONTH[] = {
@@ -74,7 +74,7 @@ std::chrono::system_clock::time_point ParseDateTime(
       30,  // November
       31,  // December
   };
-  if (day <= 0 or day > MAX_DAYS_IN_MONTH[month - 1]) {
+  if (day < 1 or day > MAX_DAYS_IN_MONTH[month - 1]) {
     ReportError(timestamp, "Out of range day for given month.");
   }
   if (2 == month and day > 28 and not IsLeapYear(year)) {
@@ -86,6 +86,11 @@ std::chrono::system_clock::time_point ParseDateTime(
   if (minutes < 0 or minutes > 59) {
     ReportError(timestamp, "Out of range minute.");
   }
+  // RFC-3339 points out that the seconds field can only assume value '60' for
+  // leap seconds, so theoretically we should validate that (furthermore we
+  // should valid that `seconds` is smaller than 59 for negative leap seconds).
+  // This would require loading a table, and adds too much complexity for little
+  // value.
   if (seconds < 0 or seconds > 60) {
     ReportError(timestamp, "Out of range second.");
   }
@@ -119,7 +124,8 @@ std::chrono::system_clock::duration ParseFractionalSeconds(
   for (int digits = pos; digits < 9; ++digits) {
     fractional_seconds *= 10;
   }
-  // Now skip any other digits ...
+  // Skip any other digits. This loses precision for sub-nanosecond timestamps,
+  // we do not consider this a problem for Internet timestamps.
   buffer += pos;
   while (std::isdigit(buffer[0])) {
     ++buffer;
@@ -131,7 +137,7 @@ std::chrono::system_clock::duration ParseFractionalSeconds(
 std::chrono::seconds ParseOffset(char const*& buffer,
                                  std::string const& timestamp) {
   if (buffer[0] == '+' or buffer[0] == '-') {
-    bool positive = buffer[0] == '+';
+    bool positive = (buffer[0] == '+');
     ++buffer;
     // Parse the HH:MM offset.
     int hours, minutes, pos;
