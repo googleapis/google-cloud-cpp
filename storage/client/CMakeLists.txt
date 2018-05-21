@@ -24,9 +24,11 @@ add_library(storage_client
     internal/curl_request.cc
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
+    internal/nljson.h
+    internal/parse_rfc3339.h
+    internal/parse_rfc3339.cc
     internal/service_account_credentials.h
     internal/service_account_credentials.cc
-    internal/nljson.h
     version.h
     version.cc)
 target_link_libraries(storage_client
@@ -67,8 +69,9 @@ endif ()
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
-    internal/service_account_credentials_test.cc
     internal/nljson_test.cc
+    internal/parse_rfc3339_test.cc
+    internal/service_account_credentials_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
