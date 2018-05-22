@@ -190,7 +190,8 @@ class EnvironmentVariableRestore {
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_(storage::internal::DefaultServiceAccountCredentialsHomeVariable()),
+      : home_(
+            storage::internal::DefaultServiceAccountCredentialsHomeVariable()),
         override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
 
  protected:
@@ -204,7 +205,7 @@ class DefaultServiceAccountFileTest : public ::testing::Test {
   }
 
  protected:
-  EnvironmentVariableRestore home_ ;
+  EnvironmentVariableRestore home_;
   EnvironmentVariableRestore override_variable_;
 };
 
