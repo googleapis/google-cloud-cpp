@@ -24,8 +24,9 @@ export GOPATH=${KOKORO_ROOT}/golang
 go get -u cloud.google.com/go/bigtable/cmd/cbt
 
 echo "Running build and tests"
-cd $(dirname $0)/../../..
-export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$PWD/third_party/grpc/etc/roots.pem
+cd "$(dirname $0)/../../.."
+readonly PROJECT_ROOT="${PWD}"
+
 git submodule update --init --recursive
 cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild-output
 cmake --build build-output -- -j $(nproc)
@@ -33,6 +34,14 @@ cmake --build build-output -- -j $(nproc)
 cd build-output
 ctest --output-on-failure
 
-echo "Running integration tests"
-cd bigtable/tests
-../../../bigtable/tests/run_integration_tests_production.sh
+# The integration tests
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${PROJECT_ROOT}/third_party/grpc/etc/roots.pem"
+
+echo "Running Google Cloud Bigtable Integration Tests"
+(cd bigtable/tests && ${PROJECT_ROOT}/bigtable/tests/run_integration_tests_production.sh)
+
+echo "Running Google Cloud Storage Integration Tests"
+(cd storage/tests && ${PROJECT_ROOT}/storage/tests/run_integration_tests.sh)
+
+
+
