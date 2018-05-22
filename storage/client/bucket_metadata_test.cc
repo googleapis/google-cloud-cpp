@@ -18,17 +18,17 @@
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataTest, Parse) {
   std::string text = R"""({
- "kind": "storage#bucket",
- "id": "foo-bar-baz",
- "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
- "projectNumber": "123456789",
- "name": "foo-bar-baz",
- "timeCreated": "2018-05-19T19:31:14Z",
- "updated": "2018-05-19T19:31:24Z",
- "metageneration": "4",
- "location": "US",
- "storageClass": "STANDARD",
- "etag": "XYZ="
+      "kind": "storage#bucket",
+      "id": "foo-bar-baz",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
+      "projectNumber": "123456789",
+      "name": "foo-bar-baz",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": "4",
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
 })""";
   auto actual = storage::BucketMetadata::ParseFromJson(text);
 
@@ -59,21 +59,21 @@ TEST(BucketMetadataTest, Parse) {
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataTest, ParseWithLabels) {
   std::string text = R"""({
- "kind": "storage#bucket",
- "id": "foo-bar-baz",
- "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
- "projectNumber": "123456789",
- "name": "foo-bar-baz",
- "timeCreated": "2018-05-19T19:31:14Z",
- "updated": "2018-05-19T19:31:24Z",
- "metageneration": "4",
- "location": "US",
- "storageClass": "STANDARD",
- "etag": "XYZ=",
- "labels": {
-    "foo": "bar",
-    "baz": "qux"
- }
+      "kind": "storage#bucket",
+      "id": "foo-bar-baz",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
+      "projectNumber": "123456789",
+      "name": "foo-bar-baz",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": "4",
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ=",
+      "labels": {
+        "foo": "bar",
+        "baz": "qux"
+      }
 })""";
   auto actual = storage::BucketMetadata::ParseFromJson(text);
 

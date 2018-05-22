@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
  * @warning This is an incomplete implementation to validate the design. It does
  * not support changes to the metadata. It also lacks support for ACLs, CORS,
  * encryption keys, lifecycle rules, and other features.
- * TODO() - complete the implementation.
+ * TODO(#537) - complete the implementation.
  */
 class BucketMetadata {
  public:
