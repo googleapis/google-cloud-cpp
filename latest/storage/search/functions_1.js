@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacestorage_1_1v0.html#ac1d2953a5b9d5bbb10700b3df1f41c4e',1,'storage::v0']]]
+  ['bucketmetadata',['BucketMetadata',['../classstorage_1_1v0_1_1BucketMetadata.html#ac5312782943ba09787d6480871d5c212',1,'storage::v0::BucketMetadata']]]
 ];
