@@ -56,10 +56,10 @@ function run_all_integration_tests() {
 
   echo
   echo "Running bigtable::InstanceAdmin integration test."
-  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" ]; then
+  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
     ./instance_admin_integration_test "${project_id}";
   else
-    env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST} \
+    env "BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" \
        ./instance_admin_integration_test "${project_id}";
   fi
 
