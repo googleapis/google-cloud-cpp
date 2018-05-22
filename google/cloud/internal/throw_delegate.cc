@@ -15,6 +15,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/internal/port_platform.h"
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 
 namespace {
