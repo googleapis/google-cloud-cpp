@@ -48,11 +48,11 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   // to short-circuit this comparison.  The check the name, project number, and
   // metadata generation, which have the next best chance to short-circuit.  The
   // The rest just put in alphabetical order.
-  return etag_ == rhs.etag_ and name_ == rhs.name_ and
-         project_number_ == rhs.project_number_ and
+  return name_ == rhs.name_ and project_number_ == rhs.project_number_ and
          metadata_generation_ == rhs.metadata_generation_ and id_ == rhs.id_ and
-         kind_ == rhs.kind_ and labels_ == rhs.labels_ and
-         location_ == rhs.location_ and self_link_ == rhs.self_link_ and
+         etag_ == rhs.etag_ and kind_ == rhs.kind_ and
+         labels_ == rhs.labels_ and location_ == rhs.location_ and
+         self_link_ == rhs.self_link_ and
          storage_class_ == rhs.storage_class_ and
          time_created_ == rhs.time_created_ and
          time_updated_ == rhs.time_updated_;
