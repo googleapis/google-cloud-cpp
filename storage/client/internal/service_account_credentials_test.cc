@@ -169,21 +169,57 @@ TEST_F(ServiceAccountCredentialsTest, Refresh) {
   EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
 }
 
+class EnvironmentVariableRestore {
+ public:
+  explicit EnvironmentVariableRestore(char const* variable_name)
+      : EnvironmentVariableRestore(std::string(variable_name)) {}
+
+  explicit EnvironmentVariableRestore(std::string variable_name)
+      : variable_name_(std::move(variable_name)) {}
+
+  void SetUp() { previous_ = std::getenv(variable_name_.c_str()); }
+  void TearDown() {
+    google::cloud::internal::SetEnv(variable_name_.c_str(), previous_);
+  }
+
+ private:
+  std::string variable_name_;
+  char const* previous_;
+};
+
 class DefaultServiceAccountFileTest : public ::testing::Test {
+ public:
+  DefaultServiceAccountFileTest()
+      : home_(
+            storage::internal::DefaultServiceAccountCredentialsHomeVariable()),
+        override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
+
  protected:
-  void SetUp() override { previous_ = std::getenv(variable_.c_str()); }
+  void SetUp() override {
+    home_.SetUp();
+    override_variable_.SetUp();
+  }
   void TearDown() override {
-    google::cloud::internal::SetEnv(variable_.c_str(), previous_);
+    override_variable_.TearDown();
+    home_.TearDown();
   }
 
  protected:
-  std::string variable_ =
-      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
-  char const* previous_ = nullptr;
+  EnvironmentVariableRestore home_;
+  EnvironmentVariableRestore override_variable_;
 };
 
-/// @test Verify that the file path works as expected.
+/// @test Verify that the application can override the default credentials.
+TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
+  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS",
+                                  "/foo/bar/baz");
+  auto actual = storage::internal::DefaultServiceAccountCredentialsFile();
+  EXPECT_EQ("/foo/bar/baz", actual);
+}
+
+/// @test Verify that the file path works as expected when using HOME.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
+  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
   char const* home =
       storage::internal::DefaultServiceAccountCredentialsHomeVariable();
   google::cloud::internal::SetEnv(home, "/foo/bar/baz");
@@ -194,6 +230,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
 /// @test Verify that the service account file path fails when HOME is not set.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
+  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
   char const* home =
       storage::internal::DefaultServiceAccountCredentialsHomeVariable();
   google::cloud::internal::UnsetEnv(home);

@@ -43,6 +43,10 @@ char const* DefaultServiceAccountCredentialsHomeVariable() {
 }
 
 std::string DefaultServiceAccountCredentialsFile() {
+  auto override_value = std::getenv("GOOGLE_APPLICATION_CREDENTIALS");
+  if (override_value != nullptr) {
+    return override_value;
+  }
   // There are probably more efficient ways to do this, but meh, the strings
   // are typically short, and this does not happen that often.
   auto root = std::getenv(CREDENTIALS_HOME_VAR);
