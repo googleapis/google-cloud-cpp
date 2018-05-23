@@ -59,11 +59,20 @@ void CurlHeaders::Attach(CURL* curl) {
 }
 
 void CurlHeaders::Append(char* data, std::size_t size) {
+  if (size <= 2) {
+    // Empty header (including the \r\n, ignore.
+    return;
+  }
+  if (data[size - 1] != '\n' or data[size - 2] != '\r') {
+    // Invalid header (should end in \r\n, ignore.
+    return;
+  }
   auto separator = std::find(data, data + size, ':');
   std::string header_name = std::string(data, separator);
   std::string header_value{};
-  if (static_cast<std::size_t>(separator - data) < size) {
-    header_value = std::string(separator + 1, data + size);
+  // If there is a value, capture it, but ignore the final \r\n.
+  if (static_cast<std::size_t>(separator - data) < size - 2) {
+    header_value = std::string(separator + 2, data + size - 2);
   }
   contents_.emplace(std::move(header_name), std::move(header_value));
 }

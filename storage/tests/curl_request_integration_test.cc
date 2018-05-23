@@ -96,7 +96,9 @@ TEST(CurlRequestTest, SimpleJSON) {
 TEST(CurlRequestTest, SimplePOST) {
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   std::vector<std::pair<std::string, std::string>> form_parameters = {
-      {"foo", "foo1&foo2 foo3"}, {"bar", "bar1-bar2"}, {"baz", "baz=baz2"},
+      {"foo", "foo1&foo2 foo3"},
+      {"bar", "bar1-bar2"},
+      {"baz", "baz=baz2"},
   };
   std::string data;
   char const* sep = "";
@@ -144,4 +146,23 @@ TEST(CurlRequestTest, HandleTeapot) {
   EXPECT_EQ(418, response.status_code);
   auto pos = response.payload.find("[ teapot ]");
   EXPECT_NE(std::string::npos, pos);
+}
+
+/// @test Verify the response includes the header values.
+TEST(CurlRequestTest, CheckResponseHeaders) {
+  storage::internal::CurlRequest request(
+      "https://nghttp2.org/httpbin/response-headers"
+      "?x-test-foo=bar"
+      "&x-test-foo=baz"
+      "&X-Test-Empty");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  EXPECT_EQ(2U, response.headers.count("X-Test-Foo"));
+  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
+  EXPECT_EQ(1U, response.headers.count("X-Test-Empty"));
+  EXPECT_EQ("", response.headers.find("X-Test-Empty")->second);
 }
