@@ -81,13 +81,13 @@ void CurlRequest::PrepareRequest(nl::json data) {
   PrepareRequest(std::move(payload));
 }
 
-std::pair<long,std::string> CurlRequest::MakeRequest() {
-  buffer_.CaptureOutputOf(curl_);
-  // TODO(#533) - capture the headers, even they are mostly unused.
+HttpResponse CurlRequest::MakeRequest() {
+  response_payload_.Attach(curl_);
+  response_headers_.Attach(curl_);
 
   auto error = curl_easy_perform(curl_);
   if (error != CURLE_OK) {
-    auto buffer = buffer_.contents();
+    auto buffer = response_payload_.contents();
     std::ostringstream os;
     os << "Error while performing curl request, " << curl_easy_strerror(error)
        << "[" << error << "]: " << buffer << std::endl;
@@ -96,7 +96,8 @@ std::pair<long,std::string> CurlRequest::MakeRequest() {
 
   long code;
   curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &code);
-  return std::make_pair(code, buffer_.contents());
+  return HttpResponse{code, response_payload_.contents(),
+                      response_headers_.contents()};
 }
 
 }  // namespace internal

@@ -17,29 +17,48 @@
 
 #include "storage/client/version.h"
 #include <curl/curl.h>
-#include <memory>
+#include <map>
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- *
+ * Receive the output from a libcurl request.
  */
 class CurlBuffer {
  public:
-  CurlBuffer() {}
+  CurlBuffer() = default;
 
-  /// Use this buffer to capture the response in the given handle.
-  void CaptureOutputOf(CURL* curl);
-
-  /// Add data to the buffer.
-  void Append(char* data, std::size_t size);
+  /// Use this object to capture the payload of the @p curl handle.
+  void Attach(CURL* curl);
 
   /// Return the contents and reset the contents.
   std::string contents() { return std::move(buffer_); }
 
+  /// Add data to the buffer.
+  void Append(char* data, std::size_t size);
+
  private:
   std::string buffer_;
+};
+
+class CurlHeaders {
+ public:
+  CurlHeaders() = default;
+
+  /// Use this object to capture the headers of the @p curl handle.
+  void Attach(CURL* curl);
+
+  /// Return the contents and reset them.
+  std::multimap<std::string, std::string> contents() {
+    return std::move(contents_);
+  }
+
+  /// Add a new header line to the contents.
+  void Append(char* header, std::size_t size);
+
+ private:
+  std::multimap<std::string, std::string> contents_;
 };
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

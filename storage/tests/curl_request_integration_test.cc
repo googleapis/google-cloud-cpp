@@ -27,8 +27,8 @@ TEST(CurlRequestTest, SimpleGET) {
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
-  EXPECT_EQ(200, response.first);
-  nl::json parsed = nl::json::parse(response.second);
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
@@ -57,15 +57,15 @@ TEST(CurlRequestTest, RepeatedGET) {
   request.PrepareRequest(std::string{});
 
   auto response = request.MakeRequest();
-  EXPECT_EQ(200, response.first);
-  nl::json parsed = nl::json::parse(response.second);
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 
   response = request.MakeRequest();
-  EXPECT_EQ(200, response.first);
-  parsed = nl::json::parse(response.second);
+  EXPECT_EQ(200, response.status_code);
+  parsed = nl::json::parse(response.payload);
   args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
@@ -81,8 +81,8 @@ TEST(CurlRequestTest, SimpleJSON) {
 
   request.PrepareRequest(nl::json{{"int", 42}, {"string", "value"}});
   auto response = request.MakeRequest();
-  EXPECT_EQ(200, response.first);
-  nl::json parsed = nl::json::parse(response.second);
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("bar&baz", args["foo"].get<std::string>());
   EXPECT_EQ("quux-123", args["qux"].get<std::string>());
@@ -96,9 +96,7 @@ TEST(CurlRequestTest, SimpleJSON) {
 TEST(CurlRequestTest, SimplePOST) {
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   std::vector<std::pair<std::string, std::string>> form_parameters = {
-      {"foo", "foo1&foo2 foo3"},
-      {"bar", "bar1-bar2"},
-      {"baz", "baz=baz2"},
+      {"foo", "foo1&foo2 foo3"}, {"bar", "bar1-bar2"}, {"baz", "baz=baz2"},
   };
   std::string data;
   char const* sep = "";
@@ -115,8 +113,8 @@ TEST(CurlRequestTest, SimplePOST) {
 
   request.PrepareRequest(data);
   auto response = request.MakeRequest();
-  EXPECT_EQ(200, response.first);
-  nl::json parsed = nl::json::parse(response.second);
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
   nl::json form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
   EXPECT_EQ("bar1-bar2", form["bar"].get<std::string>());
@@ -131,7 +129,7 @@ TEST(CurlRequestTest, Handle404) {
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
-  EXPECT_EQ(404, response.first);
+  EXPECT_EQ(404, response.status_code);
 }
 
 /// @test Verify the payload for error status is included in the return value.
@@ -143,7 +141,7 @@ TEST(CurlRequestTest, HandleTeapot) {
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
-  EXPECT_EQ(418, response.first);
-  auto pos = response.second.find("[ teapot ]");
+  EXPECT_EQ(418, response.status_code);
+  auto pos = response.payload.find("[ teapot ]");
   EXPECT_NE(std::string::npos, pos);
 }

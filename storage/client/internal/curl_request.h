@@ -18,6 +18,7 @@
 #include "storage/client/internal/curl_wrappers.h"
 #include "storage/client/internal/nljson.h"
 #include <curl/curl.h>
+#include <map>
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
@@ -25,6 +26,23 @@ namespace internal {
 /// Hold a character string created by CURL use correct deleter.
 using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
 
+/**
+ * Contains the results of a HTTP request.
+ */
+struct HttpResponse {
+  long status_code;
+  std::string payload;
+  std::multimap<std::string, std::string> headers;
+};
+
+/**
+ * Automatically manage the resources associated with a libcurl HTTP request.
+ *
+ * The Google Cloud Storage Client library using libcurl to make http requests.
+ * However, libcurl is a fairly low-level C library, where the application is
+ * expected to manage all resources manually.  This is a wrapper to prepare and
+ * make synchronous HTTP requests.
+ */
 class CurlRequest {
  public:
   explicit CurlRequest(std::string base_url);
@@ -65,7 +83,7 @@ class CurlRequest {
    *
    * @throw std::runtime_error if the request cannot be made at all.
    */
-  std::pair<long, std::string> MakeRequest();
+  HttpResponse MakeRequest();
 
   CurlRequest(CurlRequest const&) = delete;
   CurlRequest& operator=(CurlRequest const&) = delete;
@@ -77,8 +95,10 @@ class CurlRequest {
   char const* query_parameter_separator_;
   CURL* curl_;
   curl_slist* headers_;
-  CurlBuffer buffer_;
   std::string payload_;
+
+  CurlBuffer response_payload_;
+  CurlHeaders response_headers_;
 };
 
 }  // namespace internal
