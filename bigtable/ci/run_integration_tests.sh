@@ -29,20 +29,20 @@ source "${BINDIR}/../../ci/colors.sh"
 # consistent enough to use the results, but we want to detect crashes and ensure
 # the code at least is able to run as soon as possible.
 for benchmark in endurance apply_read_latency scan_throughput; do
-  LOG=$(mktemp --tmpdir "bigtable_benchmarks_${benchmark}_XXXXXXXXXX.log")
+  log="$(mktemp --tmpdir "bigtable_benchmarks_${benchmark}.XXXXXXXXXX.log")"
   if [ ! -x ./bigtable/benchmarks/${benchmark}_benchmark ]; then
     echo "${COLOR_YELLOW}[ SKIPPED  ]${COLOR_RESET} ${benchmark} benchmark"
     continue
   fi
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${benchmark}"
-  ./bigtable/benchmarks/${benchmark}_benchmark unused unused 1 5 1000 true >${LOG} 2>&1 </dev/null
+  "./bigtable/benchmarks/${benchmark}_benchmark" unused unused 1 5 1000 true >"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${benchmark} benchmark"
   else
     echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${benchmark} benchmark"
     echo
     echo "================ ${LOG} ================"
-    cat ${LOG}
+    cat "${log}"
     echo "================ ${LOG} ================"
   fi
 done
