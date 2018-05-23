@@ -99,7 +99,10 @@ class ServiceAccountCredentials : public storage::Credentials {
 
     // TODO(#516) - use retry policies to refresh the credentials.
     auto response = requestor_.MakeRequest();
-    nl::json access_token = nl::json::parse(response);
+    if (response.first != 200) {
+      return false;
+    }
+    nl::json access_token = nl::json::parse(response.second);
     std::string header = access_token["token_type"];
     header += ' ';
     header += access_token["access_token"].get_ref<std::string const&>();

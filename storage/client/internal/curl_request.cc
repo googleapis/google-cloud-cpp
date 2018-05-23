@@ -81,8 +81,9 @@ void CurlRequest::PrepareRequest(nl::json data) {
   PrepareRequest(std::move(payload));
 }
 
-std::string CurlRequest::MakeRequest() {
+std::pair<long,std::string> CurlRequest::MakeRequest() {
   buffer_.CaptureOutputOf(curl_);
+  // TODO(#533) - capture the headers, even they are mostly unused.
 
   auto error = curl_easy_perform(curl_);
   if (error != CURLE_OK) {
@@ -93,7 +94,9 @@ std::string CurlRequest::MakeRequest() {
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
 
-  return buffer_.contents();
+  long code;
+  curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &code);
+  return std::make_pair(code, buffer_.contents());
 }
 
 }  // namespace internal

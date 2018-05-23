@@ -29,7 +29,7 @@ class MockHttpRequestHandle {
   MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(storage::internal::nl::json));
-  MOCK_METHOD0(MakeRequest, std::string());
+  MOCK_METHOD0(MakeRequest, std::pair<long, std::string>());
 };
 
 class MockHttpRequest {
@@ -67,7 +67,9 @@ class MockHttpRequest {
   void PrepareRequest(storage::internal::nl::json json) {
     handles_[url_]->PrepareRequest(std::move(json));
   }
-  std::string MakeRequest() { return handles_[url_]->MakeRequest(); }
+  std::pair<long, std::string> MakeRequest() {
+    return handles_[url_]->MakeRequest();
+  }
 
  private:
   std::string url_;
@@ -120,7 +122,8 @@ TEST_F(ServiceAccountCredentialsTest, Simple) {
     "id_token": "id-token-value",
     "expires_in": 1234
 })""";
-  EXPECT_CALL(*handle, MakeRequest()).WillOnce(Return(response));
+  EXPECT_CALL(*handle, MakeRequest())
+      .WillOnce(Return(std::make_pair(200, response)));
 
   ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-value", credentials.AuthorizationHeader());
@@ -161,7 +164,9 @@ TEST_F(ServiceAccountCredentialsTest, Refresh) {
     "id_token": "id-token-value",
     "expires_in": 1000
 })""";
-  EXPECT_CALL(*handle, MakeRequest()).WillOnce(Return(r1)).WillOnce(Return(r2));
+  EXPECT_CALL(*handle, MakeRequest())
+      .WillOnce(Return(std::make_pair(200, r1)))
+      .WillOnce(Return(std::make_pair(200, r2)));
 
   ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-r1", credentials.AuthorizationHeader());

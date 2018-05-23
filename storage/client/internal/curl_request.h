@@ -58,8 +58,14 @@ class CurlRequest {
    */
   void PrepareRequest(nl::json payload);
 
-  /// Make the prepared request and return the responsee.
-  std::string MakeRequest();
+  /**
+   * Make the prepared request.
+   *
+   * @return The response HTTP error code and the response payload.
+   *
+   * @throw std::runtime_error if the request cannot be made at all.
+   */
+  std::pair<long, std::string> MakeRequest();
 
   CurlRequest(CurlRequest const&) = delete;
   CurlRequest& operator=(CurlRequest const&) = delete;
