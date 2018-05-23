@@ -68,20 +68,6 @@ for subdir in bigtable storage; do
   /v/${subdir}/ci/run_integration_tests.sh
 done
 
-# Some of the sanitizers only emit errors and do not change the error code
-# of the tests, find any such errors and report them as a build failure.
-echo
-echo "Searching for sanitizer errors in the test log:"
-echo
-if grep -e '/v/.*\.cc:[0-9][0-9]*' \
-       Testing/Temporary/LastTest.log; then
-  echo
-  echo "some sanitizer errors found."
-  exit 1
-else
-  echo "no sanitizer errors found."
-fi
-
 # Test the install rule and that the installation works.
 if [ "${TEST_INSTALL}" = "yes" ]; then
   echo
@@ -103,6 +89,21 @@ fi
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
   make doxygen-docs
+fi
+
+# Some of the sanitizers only emit errors and do not change the error code
+# of the tests, find any such errors and report them as a build failure.
+echo
+echo -n "Searching for sanitizer errors in the test log: "
+if grep -qe '/v/.*\.cc:[0-9][0-9]*' \
+       Testing/Temporary/LastTest.log; then
+  echo "${COLOR_RED}some sanitizer errors found."
+  echo
+  grep -e '/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log
+  echo "${COLOR_RESET}"
+  exit 1
+else
+  echo "${COLOR_GREEN}no sanitizer errors found.${COLOR_RESET}"
 fi
 
 # Collect the output from the Clang static analyzer and provide instructions to
