@@ -55,8 +55,25 @@ target_include_directories(storage_client PUBLIC
     $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+add_library(storage_client_testing
+    testing/mock_http_request.h
+    testing/mock_http_request.cc)
+target_link_libraries(storage_client_testing
+    PUBLIC
+        storage_client
+        gmock
+    PRIVATE
+        nlohmann_json
+        storage_common_options)
+target_include_directories(storage_client_testing PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:include>)
+target_compile_options(storage_client_testing PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
 include(CreateBazelConfig)
 create_bazel_config(storage_client)
+create_bazel_config(storage_client_testing)
 
 option(STORAGE_CLIENT_CLANG_TIDY
     "If set compiles the Google Cloud Storage client with clang-tidy."
@@ -84,6 +101,7 @@ foreach (fname ${storage_client_unit_tests})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
         PRIVATE
+            storage_client_testing
             storage_client
             gmock
             CURL::CURL

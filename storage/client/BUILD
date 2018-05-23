@@ -62,11 +62,25 @@ cc_library(
     ],
 )
 
+load(":storage_client_testing.bzl", "storage_client_testing_SRCS", "storage_client_testing_HDRS")
+cc_library(
+    name = "storage_client_testing",
+    srcs = storage_client_testing_SRCS,
+    hdrs = storage_client_testing_HDRS,
+    deps = [
+        ":storage_client",
+        ":nlohmann_json",
+        ":libcurl",
+        "//google/cloud:google_cloud_cpp_common",
+    ],
+)
+
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = "storage_client_" + test.replace('/', '_').replace('.cc', ''),
     srcs = [test],
     deps = [
+        ":storage_client_testing",
         ":storage_client",
         ":nlohmann_json",
         ":libcurl",

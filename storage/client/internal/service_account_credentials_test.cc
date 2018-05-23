@@ -13,71 +13,11 @@
 // limitations under the License.
 
 #include "storage/client/internal/service_account_credentials.h"
+#include "storage/client/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
-// The mocking code is a bit strange.  The class under test creates a concrete
-// object, mostly because it seemed overly complex to have a factory and/or
-// pass the object as a pointer.  But mock classes do not play well with
-// copy or move constructors.  Sigh.  The "solution" is to create a concrete
-// class that delegate all calls to a dynamically created mock.
-class MockHttpRequestHandle {
- public:
-  MOCK_METHOD2(AddHeader, void(std::string const&, std::string const&));
-  MOCK_METHOD1(AddHeader, void(std::string const&));
-  MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
-  MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
-  MOCK_METHOD1(PrepareRequest, void(std::string const&));
-  MOCK_METHOD1(PrepareRequest, void(storage::internal::nl::json));
-  MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
-};
-
-class MockHttpRequest {
- public:
-  explicit MockHttpRequest(std::string url) : url_(std::move(url)) {
-    (void)Handle(url_);
-  }
-
-  static void Clear() { handles_.clear(); }
-
-  static std::shared_ptr<MockHttpRequestHandle> Handle(std::string const& url) {
-    auto ins = handles_.emplace(url, std::shared_ptr<MockHttpRequestHandle>());
-    if (ins.second) {
-      // If successfully inserted then create the object, cheaper this way.
-      ins.first->second = std::make_shared<MockHttpRequestHandle>();
-    }
-    return ins.first->second;
-  }
-
-  void AddHeader(std::string const& key, std::string const& value) {
-    handles_[url_]->AddHeader(key, value);
-  }
-  void AddHeader(std::string const& header) {
-    handles_[url_]->AddHeader(header);
-  }
-  void AddQueryParameter(std::string const& name, std::string const& value) {
-    handles_[url_]->AddQueryParameter(name, value);
-  }
-  std::unique_ptr<char[]> MakeEscapedString(std::string const& x) {
-    return handles_[url_]->MakeEscapedString(x);
-  }
-  void PrepareRequest(std::string const& payload) {
-    handles_[url_]->PrepareRequest(payload);
-  }
-  void PrepareRequest(storage::internal::nl::json json) {
-    handles_[url_]->PrepareRequest(std::move(json));
-  }
-  storage::internal::HttpResponse MakeRequest() {
-    return handles_[url_]->MakeRequest();
-  }
-
- private:
-  std::string url_;
-  static std::map<std::string, std::shared_ptr<MockHttpRequestHandle>> handles_;
-};
-
-std::map<std::string, std::shared_ptr<MockHttpRequestHandle>>
-    MockHttpRequest::handles_;
+using storage::testing::MockHttpRequest;
 
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
