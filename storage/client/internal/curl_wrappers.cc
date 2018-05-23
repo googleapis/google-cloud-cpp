@@ -63,7 +63,7 @@ void CurlHeaders::Append(char* data, std::size_t size) {
     // Empty header (including the \r\n), ignore.
     return;
   }
-  if (data[size - 1] != '\n' or data[size - 2] != '\r') {
+  if ('\r' != data[size - 2] or '\n' != data[size - 1]) {
     // Invalid header (should end in \r\n), ignore.
     return;
   }
