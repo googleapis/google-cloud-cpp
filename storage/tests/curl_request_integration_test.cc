@@ -96,9 +96,7 @@ TEST(CurlRequestTest, SimpleJSON) {
 TEST(CurlRequestTest, SimplePOST) {
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   std::vector<std::pair<std::string, std::string>> form_parameters = {
-      {"foo", "foo1&foo2 foo3"},
-      {"bar", "bar1-bar2"},
-      {"baz", "baz=baz2"},
+      {"foo", "foo1&foo2 foo3"}, {"bar", "bar1-bar2"}, {"baz", "baz=baz2"},
   };
   std::string data;
   char const* sep = "";
