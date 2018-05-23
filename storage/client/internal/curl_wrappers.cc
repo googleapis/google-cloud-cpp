@@ -62,7 +62,7 @@ void CurlHeaders::Append(char* data, std::size_t size) {
   auto separator = std::find(data, data + size, ':');
   std::string header_name = std::string(data, separator);
   std::string header_value{};
-  if (separator - data < size) {
+  if (static_cast<std::size_t>(separator - data) < size) {
     header_value = std::string(separator + 1, data + size);
   }
   contents_.emplace(std::move(header_name), std::move(header_value));
