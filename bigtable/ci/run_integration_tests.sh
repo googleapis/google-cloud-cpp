@@ -41,8 +41,8 @@ for benchmark in endurance apply_read_latency scan_throughput; do
   else
     echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${benchmark} benchmark"
     echo
-    echo "================ ${LOG} ================"
+    echo "================ [begin ${log}] ================"
     cat "${log}"
-    echo "================ ${LOG} ================"
+    echo "================ [end ${log}] ================"
   fi
 done
