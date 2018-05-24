@@ -72,6 +72,8 @@ cc_library(
         ":nlohmann_json",
         ":libcurl",
         "//google/cloud:google_cloud_cpp_common",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
