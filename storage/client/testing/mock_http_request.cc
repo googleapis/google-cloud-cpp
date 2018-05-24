@@ -16,6 +16,18 @@
 
 namespace storage {
 namespace testing {
+void MockHttpRequestHandle::SetupMakeEscapedString() {
+  using namespace ::testing;
+  EXPECT_CALL(*this, MakeEscapedString(_))
+      .WillRepeatedly(Invoke([](std::string const& x) {
+        auto const size = x.size();
+        auto copy = new char[size + 1];
+        std::memcpy(copy, x.data(), x.size());
+        copy[size] = '\0';
+        return std::unique_ptr<char[]>(copy);
+      }));
+}
+
 std::map<std::string, std::shared_ptr<MockHttpRequestHandle>>
     MockHttpRequest::handles_;
 

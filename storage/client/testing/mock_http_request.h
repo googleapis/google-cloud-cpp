@@ -39,6 +39,15 @@ class MockHttpRequestHandle {
   MOCK_METHOD1(PrepareRequest, void(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(storage::internal::nl::json));
   MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
+
+  /**
+   * Setup the most common expectation for MakeEscapedString.
+   *
+   * In most tests, MakeEscapedString() is easier to mock with some minimal
+   * behavior rather explicit results for each input.  This function provides a
+   * simple way to setup that behavior.
+   */
+  void SetupMakeEscapedString();
 };
 
 /**
