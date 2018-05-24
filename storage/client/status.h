@@ -30,8 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
  */
 class Status {
  public:
-  Status()
-      : status_code_(200) {}
+  Status() : status_code_(200) {}
 
   explicit Status(long status_code, std::string error_message)
       : status_code_(status_code),
