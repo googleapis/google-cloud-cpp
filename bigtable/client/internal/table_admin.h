@@ -48,7 +48,8 @@ class TableAdmin {
         instance_name_(InstanceName()),
         rpc_retry_policy_(DefaultRPCRetryPolicy()),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        polling_policy_(DefaultPollingPolicy()) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -71,7 +72,37 @@ class TableAdmin {
         instance_name_(InstanceName()),
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        polling_policy_(DefaultPollingPolicy()) {}
+
+  /**
+   * Create a new TableAdmin using explicit policies to handle RPC errors.
+   *
+   * @tparam RPCRetryPolicy control which operations to retry and for how long.
+   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
+   *     error.
+   * @tparam PollingPolicy provides parameters for asynchronous calls.
+   * @param client the interface to create grpc stubs, report errors, etc.
+   * @param instance_id the id of the instance, e.g., "my-instance", the full
+   *   name (e.g. '/projects/my-project/instances/my-instance') is built using
+   *   the project id in the @p client parameter.
+   * @param retry_policy the policy to handle RPC errors.
+   * @param backoff_policy the policy to control backoff after an error.
+   * @param polling_policy the policy to control the asynchronous call
+   * parameters
+   */
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+            typename PollingPolicy>
+  TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
+             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
+             PollingPolicy polling_policy)
+      : client_(std::move(client)),
+        instance_id_(std::move(instance_id)),
+        instance_name_(InstanceName()),
+        rpc_retry_policy_(retry_policy.clone()),
+        rpc_backoff_policy_(backoff_policy.clone()),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        polling_policy_(std::move(polling_policy)) {}
 
   std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
@@ -120,19 +151,9 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
 
-  std::future<bool> WaitForConsistencyCheck(
-      bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token,
-      std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
-    return std::async(std::launch::async,
-                      &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
-                      consistency_token, std::move(polling_policy));
-  }
-
-  bool WaitForConsistencyCheckImpl(
-      bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token,
-      std::unique_ptr<bigtable::PollingPolicy> polling_policy);
+  friend bool WaitForConsistencyCheckHelper(
+      TableAdmin const& table_admin, bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
 
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id,
@@ -200,6 +221,7 @@ class TableAdmin {
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<bigtable::PollingPolicy> polling_policy_;
 };
 
 }  // namespace noex

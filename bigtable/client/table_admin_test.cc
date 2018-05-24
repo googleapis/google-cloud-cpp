@@ -702,7 +702,15 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
 
-  bigtable::TableAdmin tested(client_, "the-async-instance");
+  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
+  bigtable::ExponentialBackoffPolicy backoff_policy;
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
+      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
+          retry_policy, backoff_policy);
+
+  bigtable::TableAdmin tested(
+      client_, "the-async-instance", std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
   std::string expected_text = R"""(
 name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
 consistency_token: 'test-async-token'
@@ -712,18 +720,11 @@ consistency_token: 'test-async-token'
                      btproto::CheckConsistencyResponse>::Create(expected_text);
   EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillRepeatedly(Invoke(mock));
 
-  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
-  bigtable::ExponentialBackoffPolicy backoff_policy;
-
-  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
-      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
-          retry_policy, backoff_policy);
-
   bigtable::TableId table_id("the-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
   // After all the setup, make the actual call we want to test.
-  std::future<bool> result = tested.WaitForConsistencyCheck(
-      table_id, consistency_token, std::move(polling_policy));
+  std::future<bool> result =
+      tested.WaitForConsistencyCheck(table_id, consistency_token);
   EXPECT_TRUE(result.get());
 }
 
@@ -735,11 +736,6 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
 
-  bigtable::TableAdmin tested(client_, "the-async-instance");
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-
   bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
   bigtable::ExponentialBackoffPolicy backoff_policy;
 
@@ -747,11 +743,18 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
       bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
           retry_policy, backoff_policy);
 
+  bigtable::TableAdmin tested(
+      client_, "the-async-instance", std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
   bigtable::TableId table_id("other-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
 
-  std::future<bool> result = tested.WaitForConsistencyCheck(
-      table_id, consistency_token, std::move(polling_policy));
+  std::future<bool> result =
+      tested.WaitForConsistencyCheck(table_id, consistency_token);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(result.get(), bigtable::GRpcError);

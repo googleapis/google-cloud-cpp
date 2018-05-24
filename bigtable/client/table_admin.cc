@@ -127,11 +127,10 @@ bool TableAdmin::CheckConsistency(
 
 bool TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token,
-    std::unique_ptr<bigtable::PollingPolicy> polling_policy) {
+    bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
-  bool consistent = impl_.WaitForConsistencyCheckImpl(
-      table_id, consistency_token, std::move(polling_policy));
+  bool consistent = WaitForConsistencyCheckHelper(std::move(impl_), table_id,
+                                                  consistency_token);
   if (not consistent) {
     internal::RaiseRpcError(status, status.error_message());
   }
