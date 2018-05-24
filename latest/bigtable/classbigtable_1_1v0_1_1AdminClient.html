@@ -66,6 +66,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classbigtable_1_1v0_1_1AdminClient-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">bigtable::v0::AdminClient Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -90,7 +91,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a638c50fc43a4ec6c34eca80b9f42a123"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a638c50fc43a4ec6c34eca80b9f42a123">reset</a> ()=0</td></tr>
 <tr class="memdesc:a638c50fc43a4ec6c34eca80b9f42a123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset and create new Channels.  <a href="#a638c50fc43a4ec6c34eca80b9f42a123">More...</a><br /></td></tr>
 <tr class="separator:a638c50fc43a4ec6c34eca80b9f42a123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">the google.bigtable.admin.v2.TableAdmin operations.</div></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">The `google.bigtable.admin.v2.TableAdmin` operations.</div></td></tr>
 <tr class="memitem:a6f9a1f5dbb7373b252a996a352291363"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a6f9a1f5dbb7373b252a996a352291363">CreateTable</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateTableRequest const &amp;request, google::bigtable::admin::v2::Table *response)=0</td></tr>
 <tr class="separator:a6f9a1f5dbb7373b252a996a352291363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac346a05a40052e342f1dc7dd29fdd405"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#ac346a05a40052e342f1dc7dd29fdd405">CreateTableFromSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateTableFromSnapshotRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
@@ -117,6 +121,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a431f09b6445d04cb39bb0c4b2f796d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad923c352624255c9e47a7285a5e75538"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#ad923c352624255c9e47a7285a5e75538">DeleteSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteSnapshotRequest const &amp;request, google::protobuf::Empty *response)=0</td></tr>
 <tr class="separator:ad923c352624255c9e47a7285a5e75538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a735a5ececee75a0d13fc0bdaee79e073"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a735a5ececee75a0d13fc0bdaee79e073">TableAdmin</a></td></tr>
+<tr class="separator:a735a5ececee75a0d13fc0bdaee79e073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98a69b2bfba8377fb844426895844e53"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1AdminClient.html#a98a69b2bfba8377fb844426895844e53">noex::TableAdmin</a></td></tr>
+<tr class="separator:a98a69b2bfba8377fb844426895844e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's table administration APIs. </p>
@@ -211,7 +222,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -253,7 +264,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -295,7 +306,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -337,7 +348,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -379,7 +390,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -421,7 +432,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -463,7 +474,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -505,7 +516,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -547,7 +558,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -589,7 +600,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -631,7 +642,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -673,7 +684,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -770,7 +781,52 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a98a69b2bfba8377fb844426895844e53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98a69b2bfba8377fb844426895844e53">&#9670;&nbsp;</a></span>noex::TableAdmin</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class noex::TableAdmin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a735a5ececee75a0d13fc0bdaee79e073"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a735a5ececee75a0d13fc0bdaee79e073">&#9670;&nbsp;</a></span>TableAdmin</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classbigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

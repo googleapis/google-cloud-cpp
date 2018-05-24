@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['bulkmutator',['BulkMutator',['../classbigtable_1_1v0_1_1DataClient.html#a11832689f7ea53c6447c901e8a442139',1,'bigtable::v0::DataClient']]],
   ['idempotent_5fmutation_5fpolicy_2ecc',['idempotent_mutation_policy.cc',['../idempotent__mutation__policy_8cc.html',1,'']]],
   ['idempotent_5fmutation_5fpolicy_2eh',['idempotent_mutation_policy.h',['../idempotent__mutation__policy_8h.html',1,'']]],
   ['idempotentmutationpolicy',['IdempotentMutationPolicy',['../classbigtable_1_1v0_1_1IdempotentMutationPolicy.html',1,'bigtable::v0']]],
@@ -15,7 +16,7 @@ var searchData=
   ['instance_5fconfig_2eh',['instance_config.h',['../instance__config_8h.html',1,'']]],
   ['instance_5fid',['instance_id',['../classbigtable_1_1v0_1_1DefaultDataClient.html#acc504cf64769dd92a25839271b44b4f5',1,'bigtable::v0::DefaultDataClient::instance_id()'],['../classbigtable_1_1v0_1_1DataClient.html#ae649cd2d69becd394edc41c531612882',1,'bigtable::v0::DataClient::instance_id()'],['../classbigtable_1_1v0_1_1TableAdmin.html#a6a0c66bf3946d07856647dce645ff009',1,'bigtable::v0::TableAdmin::instance_id()']]],
   ['instance_5fname',['instance_name',['../classbigtable_1_1v0_1_1TableAdmin.html#ad8291bbcf6c9603123adfabe01133267',1,'bigtable::v0::TableAdmin']]],
-  ['instanceadmin',['InstanceAdmin',['../classbigtable_1_1v0_1_1InstanceAdmin.html',1,'bigtable::v0::InstanceAdmin'],['../classbigtable_1_1v0_1_1InstanceAdmin.html#af87d10b9ff6479d4920d3c0c53234ecf',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client)'],['../classbigtable_1_1v0_1_1InstanceAdmin.html#a6b2adfa019142affefaa9cdf532fa66b',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client, RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)']]],
+  ['instanceadmin',['InstanceAdmin',['../classbigtable_1_1v0_1_1InstanceAdmin.html',1,'bigtable::v0::InstanceAdmin'],['../classbigtable_1_1v0_1_1InstanceAdminClient.html#ae3f77558669caa629f5357dd5a727481',1,'bigtable::v0::InstanceAdminClient::InstanceAdmin()'],['../classbigtable_1_1v0_1_1InstanceAdmin.html#af87d10b9ff6479d4920d3c0c53234ecf',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client)'],['../classbigtable_1_1v0_1_1InstanceAdmin.html#a6b2adfa019142affefaa9cdf532fa66b',1,'bigtable::v0::InstanceAdmin::InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client, RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)']]],
   ['instanceadminclient',['InstanceAdminClient',['../classbigtable_1_1v0_1_1InstanceAdminClient.html',1,'bigtable::v0']]],
   ['instanceconfig',['InstanceConfig',['../classbigtable_1_1v0_1_1InstanceConfig.html',1,'bigtable::v0::InstanceConfig'],['../classbigtable_1_1v0_1_1InstanceConfig.html#a5daa933407d23652d8cd8bd950e6d8fd',1,'bigtable::v0::InstanceConfig::InstanceConfig()']]],
   ['instanceid',['InstanceId',['../namespacebigtable_1_1v0.html#a9831bbc807f03d0023b907f59e83a78a',1,'bigtable::v0']]],
