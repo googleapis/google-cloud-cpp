@@ -79,6 +79,36 @@ void CreateInstance(bigtable::InstanceAdmin instance_admin, int argc,
 }
 //! [create instance]
 
+//! [update instance]
+void UpdateInstance(bigtable::InstanceAdmin instance_admin, int argc,
+                    char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"update-instance: <project-id> <instance-id>"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
+  auto instance = instance_admin.GetInstance(instance_id);
+  // Modify the instance and prepare the mask with modified field
+  instance.set_display_name("Modified Display Name");
+  std::string mask_text = R"(
+  paths: 'display_name'
+  )";
+  google::protobuf::FieldMask mask;
+  google::protobuf::TextFormat::ParseFromString(mask_text, &mask);
+  auto future = instance_admin.UpdateInstance(&instance, &mask);
+  // Most applications would simply call future.get(), here we show how to
+  // perform additional work while the long running operation completes.
+  std::cout << "Waiting for instance creation to complete ";
+  for (int i = 0; i != 100; ++i) {
+    if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
+      std::cout << "DONE: " << future.get().name() << std::endl;
+      return;
+    }
+    std::cout << '.' << std::flush;
+  }
+  std::cout << "TIMEOUT" << std::endl;
+}
+//! [update instance]
+
 //! [list instances]
 void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
                    char* argv[]) {
@@ -166,6 +196,8 @@ int main(int argc, char* argv[]) try {
 
   if (command == "create-instance") {
     CreateInstance(instance_admin, argc, argv);
+  } else if (command == "update-instance") {
+    UpdateInstance(instance_admin, argc, argv);
   } else if (command == "list-instances") {
     ListInstances(instance_admin, argc, argv);
   } else if (command == "get-instance") {

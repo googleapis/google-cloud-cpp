@@ -96,6 +96,39 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
 }
 
+/// @test Verify that InstanceAdmin::CreateInstance works as expected.
+TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto config = IntegrationTestConfig(instance_id);
+
+  auto instances_before = instance_admin_->ListInstances();
+  auto instance = instance_admin_->CreateInstance(config).get();
+  btadmin::Instance instance_modified;
+  instance_modified.CopyFrom(instance);
+  instance_modified.set_display_name("foo");
+
+  std::string update_mask_text = R"(
+paths: 'display_name'
+)";
+  google::protobuf::FieldMask update_mask;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(update_mask_text,
+                                                            &update_mask));
+
+  auto instance_after =
+      instance_admin_->UpdateInstance(&instance_modified, &update_mask).get();
+
+  auto instances_after = instance_admin_->ListInstances();
+  instance_admin_->DeleteInstance(instance_id);
+  EXPECT_FALSE(IsInstancePresent(instances_before, instance.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_after, instance.name()));
+  EXPECT_NE(std::string::npos, instance.name().find(instance_id));
+  EXPECT_NE(std::string::npos,
+            instance.name().find(InstanceTestEnvironment::project_id()));
+  EXPECT_EQ("foo", instance_after.display_name());
+  EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
+}
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   std::string instance_id =

@@ -107,6 +107,77 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   return result;
 }
 
+std::future<google::bigtable::admin::v2::Instance>
+InstanceAdmin::UpdateInstance(google::bigtable::admin::v2::Instance* instance,
+                              google::protobuf::FieldMask* update_mask) {
+  return std::async(std::launch::async, &InstanceAdmin::UpdateInstanceImpl,
+                    this, instance, update_mask);
+}
+
+google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
+    google::bigtable::admin::v2::Instance* instance,
+    google::protobuf::FieldMask* update_mask) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  MetadataUpdatePolicy metadata_update_policy(instance->name(),
+                                              MetadataParamTypes::NAME);
+
+  google::bigtable::admin::v2::PartialUpdateInstanceRequest request;
+  request.mutable_instance()->Swap(instance);
+  request.mutable_update_mask()->Swap(update_mask);
+
+  using ClientUtils =
+      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
+
+  grpc::Status status;
+  auto response = ClientUtils::MakeCall(
+      *impl_.client_, *rpc_policy, *backoff_policy,
+      impl_.metadata_update_policy_, &InstanceAdminClient::UpdateInstance,
+      std::move(request), "InstanceAdmin::UpdateInstance", status, false);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status,
+                                      "unrecoverable error in MakeCall()");
+  }
+
+  google::bigtable::admin::v2::Instance result;
+  do {
+    if (response.done()) {
+      if (response.has_response()) {
+        auto const& any = response.response();
+        if (not any.Is<google::bigtable::admin::v2::Instance>()) {
+          google::cloud::internal::RaiseRuntimeError("invalid result type");
+        }
+        any.UnpackTo(&result);
+        return result;
+      }
+      if (response.has_error()) {
+        bigtable::internal::RaiseRpcError(
+            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
+                         response.error().message()),
+            "long running op failed");
+      }
+    }
+    // Wait before polling, and then poll the operation to get the new
+    // "response.
+    auto delay = backoff_policy->on_completion(status);
+    std::this_thread::sleep_for(delay);
+    google::longrunning::GetOperationRequest op;
+    op.set_name(response.name());
+    grpc::ClientContext context;
+    status = impl_.client_->GetOperation(&context, op, &response);
+    if (not status.ok()) {
+      if (not rpc_policy->on_failure(status)) {
+        bigtable::internal::RaiseRpcError(
+            status,
+            "unrecoverable error polling longrunning Operation in "
+            "UpdateInstance()");
+      }
+    }
+  } while (true);
+  return result;
+}
+
 btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);

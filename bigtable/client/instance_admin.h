@@ -84,6 +84,30 @@ class InstanceAdmin {
       InstanceConfig instance_config);
 
   /**
+   * Update an existing instance of Cloud Bigtable.
+   *
+   * @warning Note that this is operation can take seconds or minutes to
+   * complete. The application may prefer to perform other work while waiting
+   * for this operation.
+   *
+   * @param instance an existing instance with some modification.
+   * @param update_mask parameter that specify fields to be modified
+   * @return a future that becomes satisfied when (a) the operation has
+   *   completed successfully, in which case it returns a proto with the
+   *   Instance details, (b) the operation has failed, in which case the future
+   *   contains an exception (typically `bigtable::GrpcError`) with the details
+   *   of the failure, or (c) the state of the operation is unknown after the
+   *   time allocated by the retry policies has expired, in which case the
+   *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update instance
+   */
+  std::future<google::bigtable::admin::v2::Instance> UpdateInstance(
+      google::bigtable::admin::v2::Instance* instance,
+      google::protobuf::FieldMask* update_mask);
+
+  /**
    * Return the list of instances in the project.
    *
    * @par Example
@@ -144,6 +168,11 @@ class InstanceAdmin {
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
       InstanceConfig instance_config);
+
+  // Implement UpdateInstance() with a separate thread.
+  google::bigtable::admin::v2::Instance UpdateInstanceImpl(
+      google::bigtable::admin::v2::Instance* instance,
+      google::protobuf::FieldMask* update_mask);
 
  private:
   noex::InstanceAdmin impl_;
