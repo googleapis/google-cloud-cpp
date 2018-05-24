@@ -19,6 +19,7 @@
 namespace nl = storage::internal::nl;
 
 TEST(CurlRequestTest, SimpleGET) {
+  // TODO(#542) - use a local server to make tests more hermetic.
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/get");
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
@@ -26,9 +27,10 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("charsets: utf-8");
 
   request.PrepareRequest(std::string{});
-  auto response_text = request.MakeRequest();
-  nl::json response = nl::json::parse(response_text);
-  nl::json args = response["args"];
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
@@ -47,6 +49,7 @@ TEST(CurlRequestTest, FailedGET) {
 }
 
 TEST(CurlRequestTest, RepeatedGET) {
+  // TODO(#542) - use a local server to make tests more hermetic.
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/get");
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
@@ -55,20 +58,23 @@ TEST(CurlRequestTest, RepeatedGET) {
 
   request.PrepareRequest(std::string{});
 
-  auto response_text = request.MakeRequest();
-  nl::json response = nl::json::parse(response_text);
-  nl::json args = response["args"];
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 
-  response_text = request.MakeRequest();
-  response = nl::json::parse(response_text);
-  args = response["args"];
+  response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  parsed = nl::json::parse(response.payload);
+  args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
 
 TEST(CurlRequestTest, SimpleJSON) {
+  // TODO(#542) - use a local server to make tests more hermetic.
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   request.AddQueryParameter("foo", "bar&baz");
   request.AddQueryParameter("qux", "quux-123");
@@ -77,19 +83,21 @@ TEST(CurlRequestTest, SimpleJSON) {
   request.AddHeader("charsets: utf-8");
 
   request.PrepareRequest(nl::json{{"int", 42}, {"string", "value"}});
-  auto response_text = request.MakeRequest();
-  nl::json response = nl::json::parse(response_text);
-  nl::json args = response["args"];
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
   EXPECT_EQ("bar&baz", args["foo"].get<std::string>());
   EXPECT_EQ("quux-123", args["qux"].get<std::string>());
 
-  std::string data_text = response["data"].get<std::string>();
+  std::string data_text = parsed["data"].get<std::string>();
   nl::json data = nl::json::parse(data_text);
   EXPECT_EQ(42, data["int"].get<int>());
   EXPECT_EQ("value", data["string"].get<std::string>());
 }
 
 TEST(CurlRequestTest, SimplePOST) {
+  // TODO(#542) - use a local server to make tests more hermetic.
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
   std::vector<std::pair<std::string, std::string>> form_parameters = {
       {"foo", "foo1&foo2 foo3"}, {"bar", "bar1-bar2"}, {"baz", "baz=baz2"},
@@ -108,10 +116,58 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("charsets: utf-8");
 
   request.PrepareRequest(data);
-  auto response_text = request.MakeRequest();
-  nl::json response = nl::json::parse(response_text);
-  nl::json form = response["form"];
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
   EXPECT_EQ("bar1-bar2", form["bar"].get<std::string>());
   EXPECT_EQ("baz=baz2", form["baz"].get<std::string>());
+}
+
+TEST(CurlRequestTest, Handle404) {
+  // TODO(#542) - use a local server to make tests more hermetic.
+  storage::internal::CurlRequest request(
+      "https://nghttp2.org/httpbin/status/404");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(404, response.status_code);
+}
+
+/// @test Verify the payload for error status is included in the return value.
+TEST(CurlRequestTest, HandleTeapot) {
+  // TODO(#542) - use a local server to make tests more hermetic.
+  storage::internal::CurlRequest request(
+      "https://nghttp2.org/httpbin/status/418");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(418, response.status_code);
+  auto pos = response.payload.find("[ teapot ]");
+  EXPECT_NE(std::string::npos, pos);
+}
+
+/// @test Verify the response includes the header values.
+TEST(CurlRequestTest, CheckResponseHeaders) {
+  // TODO(#542) - use a local server to make tests more hermetic.
+  storage::internal::CurlRequest request(
+      "https://nghttp2.org/httpbin/response-headers"
+      "?x-test-foo=bar"
+      "&x-test-foo=baz"
+      "&X-Test-Empty");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  EXPECT_EQ(2U, response.headers.count("X-Test-Foo"));
+  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
+  EXPECT_EQ(1U, response.headers.count("X-Test-Empty"));
+  EXPECT_EQ("", response.headers.find("X-Test-Empty")->second);
 }

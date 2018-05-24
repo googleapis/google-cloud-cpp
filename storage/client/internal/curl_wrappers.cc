@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "storage/client/internal/curl_wrappers.h"
+#include <algorithm>
 #include <iostream>
 
 namespace {
@@ -31,18 +32,49 @@ extern "C" std::size_t WriteCallback(void* contents, std::size_t size,
   return size * nmemb;
 }
 
+extern "C" std::size_t HeaderCallback(char* contents, std::size_t size,
+                                      std::size_t nmemb, void* dest) {
+  auto* headers = reinterpret_cast<storage::internal::CurlHeaders*>(dest);
+  headers->Append(contents, size * nmemb);
+  return size * nmemb;
+}
+
 }  // anonymous namespace
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-void CurlBuffer::CaptureOutputOf(CURL* curl) {
+void CurlBuffer::Attach(CURL* curl) {
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, this);
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
 }
 
 void CurlBuffer::Append(char* data, std::size_t size) {
   buffer_.append(data, size);
+}
+
+void CurlHeaders::Attach(CURL* curl) {
+  curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
+  curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, HeaderCallback);
+}
+
+void CurlHeaders::Append(char* data, std::size_t size) {
+  if (size <= 2) {
+    // Empty header (including the \r\n), ignore.
+    return;
+  }
+  if ('\r' != data[size - 2] or '\n' != data[size - 1]) {
+    // Invalid header (should end in \r\n), ignore.
+    return;
+  }
+  auto separator = std::find(data, data + size, ':');
+  std::string header_name = std::string(data, separator);
+  std::string header_value;
+  // If there is a value, capture it, but ignore the final \r\n.
+  if (static_cast<std::size_t>(separator - data) < size - 2) {
+    header_value = std::string(separator + 2, data + size - 2);
+  }
+  contents_.emplace(std::move(header_name), std::move(header_value));
 }
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
