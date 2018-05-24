@@ -16,6 +16,7 @@
 #include "google/cloud/internal/port_platform.h"
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 namespace {
 template <typename Exception>
