@@ -20,6 +20,15 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+// Forward declare some classes so we can be friends.
+class Table;
+namespace noex {
+class Table;
+}  // namespace noex
+namespace internal {
+class BulkMutator;
+}  // namespace internal
+
 /**
  * Connects to Cloud Bigtable's data manipulation APIs.
  *
@@ -54,8 +63,17 @@ class DataClient {
    */
   virtual void reset() = 0;
 
+  // The member functions of this class are not intended for general use by
+  // application developers (they are simply a dependency injection point). Make
+  // them protected, so the mock classes can override them, and then make the
+  // classes that do use them friends.
+ protected:
+  friend class Table;
+  friend class noex::Table;
+  friend class internal::BulkMutator;
+  friend class RowReader;
   //@{
-  /// @name the google.bigtable.v2.Bigtable operations.
+  /// @name the `google.bigtable.v2.Bigtable` wrappers.
   virtual grpc::Status MutateRow(
       grpc::ClientContext* context,
       google::bigtable::v2::MutateRowRequest const& request,

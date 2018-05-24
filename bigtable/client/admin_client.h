@@ -24,6 +24,12 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+// Forward declare some classes so we can be friends.
+class TableAdmin;
+namespace noex {
+class TableAdmin;
+}  // namespace noex
+
 /**
  * Connects to Cloud Bigtable's table administration APIs.
  *
@@ -59,8 +65,15 @@ class AdminClient {
    */
   virtual void reset() = 0;
 
+  // The member functions of this class are not intended for general use by
+  // application developers (they are simply a dependency injection point). Make
+  // them protected, so the mock classes can override them, and then make the
+  // classes that do use them friends.
+protected:
+  friend class TableAdmin;
+  friend class noex::TableAdmin;
   //@{
-  /// @name the google.bigtable.admin.v2.TableAdmin operations.
+  /// @name The `google.bigtable.admin.v2.TableAdmin` operations.
   virtual grpc::Status CreateTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,

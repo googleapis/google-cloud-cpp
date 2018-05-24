@@ -22,6 +22,12 @@
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+// Forward declare some classes so we can be friends.
+class InstanceAdmin;
+namespace noex {
+class InstanceAdmin;
+}  // namespace noex
+
 /**
  * Connects to Cloud Bigtable's instance administration APIs.
  *
@@ -57,6 +63,15 @@ class InstanceAdminClient {
    */
   virtual void reset() = 0;
 
+  // The member functions of this class are not intended for general use by
+  // application developers (they are simply a dependency injection point). Make
+  // them protected, so the mock classes can override them, and then make the
+  // classes that do use them friends.
+ protected:
+  friend class InstanceAdmin;
+  friend class noex::InstanceAdmin;
+  //@{
+  /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
   virtual grpc::Status ListInstances(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListInstancesRequest const& request,
@@ -66,14 +81,6 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       google::longrunning::Operation* response) = 0;
-
-  //@{
-  /// @name Implement the google.longrunning.Operations wrappers.
-  virtual grpc::Status GetOperation(
-      grpc::ClientContext* context,
-      google::longrunning::GetOperationRequest const& request,
-      google::longrunning::Operation* response) = 0;
-  //@}
 
   virtual grpc::Status GetInstance(
       grpc::ClientContext* context,
@@ -94,6 +101,15 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
       google::protobuf::Empty* response) = 0;
+  //@}
+
+  //@{
+  /// @name The `google.longrunning.Operations` wrappers.
+  virtual grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.
