@@ -69,7 +69,7 @@ class AdminClient {
   // application developers (they are simply a dependency injection point). Make
   // them protected, so the mock classes can override them, and then make the
   // classes that do use them friends.
-protected:
+ protected:
   friend class TableAdmin;
   friend class noex::TableAdmin;
   //@{
