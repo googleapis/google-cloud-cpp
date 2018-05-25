@@ -17,11 +17,11 @@ EMULATOR_PID=0
 INSTANCE_ADMIN_EMULATOR_PID=0
 
 function kill_emulators {
-  echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}]"
+  echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}] ... "
   kill "${EMULATOR_PID}"
   kill "${INSTANCE_ADMIN_EMULATOR_PID}"
   wait >/dev/null 2>&1
-  echo " DONE"
+  echo "done."
 }
 
 function start_emulators {
