@@ -78,7 +78,7 @@ class FieldPath {
    * Return the number of components for this FieldPath.
    * @return The number of components for this FieldPath.
    */
-  size_t size() const { return parts_.size(); }
+  std::size_t size() const { return parts_.size(); }
 
   /**
    * Returns whether this FieldPath is valid or not.
