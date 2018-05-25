@@ -37,8 +37,8 @@ class Client {
   // classes that do use them friends.
  protected:
   friend class Bucket;
-  virtual std::pair<Status, BucketMetadata> BucketGet(
-      std::string const& bucket_name) = 0;
+  virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
+      std::string const &bucket_name) = 0;
 };
 
 /**

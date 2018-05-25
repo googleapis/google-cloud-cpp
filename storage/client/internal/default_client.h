@@ -28,8 +28,8 @@ class DefaultClient : public Client {
   explicit DefaultClient(std::shared_ptr<storage::Credentials> credentials)
       : credentials_(std::move(credentials)) {}
 
-  std::pair<Status, BucketMetadata> BucketGet(
-      std::string const& bucket_name) override {
+  std::pair<Status, BucketMetadata> GetBucketMetadata(
+      std::string const &bucket_name) override {
     // Assume the bucket name is validated by the caller.
     HttpRequestor request("https://www.googleapis.com/storage/v1/b/" +
                           bucket_name);

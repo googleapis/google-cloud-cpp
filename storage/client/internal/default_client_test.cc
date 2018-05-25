@@ -75,7 +75,7 @@ TEST_F(DefaultClientTest, Simple) {
   auto expected = storage::BucketMetadata::ParseFromJson(response_payload);
 
   DefaultClient client(credentials_);
-  auto actual = client.BucketGet("my-bucket");
+  auto actual = client.GetBucketMetadata("my-bucket");
   EXPECT_TRUE(actual.first.ok());
   EXPECT_EQ(expected, actual.second);
 }
@@ -93,7 +93,7 @@ TEST_F(DefaultClientTest, HandleError) {
           storage::internal::HttpResponse{404, "cannot find my-bucket", {}}));
 
   DefaultClient client(credentials_);
-  auto actual = client.BucketGet("my-bucket");
+  auto actual = client.GetBucketMetadata("my-bucket");
   EXPECT_FALSE(actual.first.ok());
   EXPECT_EQ(404, actual.first.status_code());
   EXPECT_EQ("cannot find my-bucket", actual.first.error_message());
