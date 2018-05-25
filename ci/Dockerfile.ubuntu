@@ -19,7 +19,6 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 RUN apt-get update && apt-get install -y \
   automake \
   build-essential \
-  clang \
   cmake \
   curl \
   dia \
@@ -43,9 +42,12 @@ RUN apt-get update && apt-get install -y \
 # Install packages that are required for 14.04, but do not exist in later
 # versions.
 RUN if grep -q 14.04 /etc/lsb-release; then \
-      apt-get install -y cmake3; \
+      apt-get install -y clang-3.8 cmake3; \
+      update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-3.8 100; \
+      update-alternatives --install /usr/bin/clang clang /usr/bin/clang-3.8 100; \
+     else \
     else \
-      apt-get install -y clang-format; \
+      apt-get install -y clang clang-format; \
     fi
 
 RUN if grep -q 18.04 /etc/lsb-release; then \

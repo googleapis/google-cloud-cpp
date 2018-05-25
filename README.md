@@ -44,6 +44,26 @@ make all
 make test
 ```
 
+## Build Dependencies
+
+The Google Cloud C++ libraries are tested with the following tools:
+
+| Tool    | Minimum Version |
+| ------- | --------------- |
+| GCC     | 4.9 |
+| Clang   | 3.8 |
+| CMake   | 3.5 |
+| MSVC++  | 14.1 |
+| AppleClang | 8.1 |
+
+The library also depends on gRPC and other libraries. They are tested with the
+following versions:
+
+| Library | Minimum version |
+| ------- | --------------- |
+| gRPC    | v1.10.x |
+| libcurl | 7.47.0  |
+
 ## Versioning
 
 This library follows [Semantic Versioning](http://semver.org/). Please note it
