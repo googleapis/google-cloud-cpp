@@ -38,7 +38,7 @@ class Client {
  protected:
   friend class Bucket;
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
-      std::string const &bucket_name) = 0;
+      std::string const& bucket_name) = 0;
 };
 
 /**

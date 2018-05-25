@@ -29,7 +29,7 @@ class DefaultClient : public Client {
       : credentials_(std::move(credentials)) {}
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
-      std::string const &bucket_name) override {
+      std::string const& bucket_name) override {
     // Assume the bucket name is validated by the caller.
     HttpRequestor request("https://www.googleapis.com/storage/v1/b/" +
                           bucket_name);
