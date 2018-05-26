@@ -223,7 +223,6 @@ class TableAdmin {
    * @param table_id the id of the table for which we want to check
    *     consistency.
    * @param consistency_token the consistency token of the table.
-   * @param polling_policy the policy applicable for asynchronous call.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
    */
