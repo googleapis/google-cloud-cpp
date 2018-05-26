@@ -20,17 +20,21 @@ add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     bucket_metadata.h
     bucket_metadata.cc
+    client.h
+    client.cc
     credentials.h
     credentials.cc
     internal/curl_request.h
     internal/curl_request.cc
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
+    internal/default_client.h
     internal/nljson.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/service_account_credentials.h
     internal/service_account_credentials.cc
+    status.h
     version.h
     version.cc)
 target_link_libraries(storage_client
@@ -89,6 +93,7 @@ endif ()
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
     bucket_metadata_test.cc
+    internal/default_client_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
     internal/service_account_credentials_test.cc
