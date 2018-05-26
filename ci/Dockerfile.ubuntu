@@ -24,6 +24,7 @@ RUN apt update && \
         automake \
         build-essential \
         clang \
+        clang-format \
         cmake \
         curl \
         doxygen \
