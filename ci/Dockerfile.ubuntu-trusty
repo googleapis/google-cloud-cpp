@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,26 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=18.04
+ARG DISTRO_VERSION=14.04
 FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 # The default compilers in Ubuntu 14.04 are fairly old, we need to install
 # from the ubuntu-toolchain-r/test PPA.  That changes the installation steps
 # to the point where it is easier to just refactor like so:
-RUN apt update && \
+RUN apt update && apt install -y software-properties-common && \
+    add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
+    apt update && \
     apt install -y \
         automake \
         build-essential \
-        clang \
-        cmake \
+        clang-3.8 \
+        cmake3 \
         curl \
         doxygen \
+        gcc-4.9 \
+        g++-4.9 \
         git \
-        gcc \
-        g++ \
         golang \
-        cmake \
         libcurl4-openssl-dev \
         libssl-dev \
         libtool \
@@ -39,15 +40,12 @@ RUN apt update && \
         make \
         tar \
         wget \
-        zlib1g-dev
-
-# By default, Ubuntu 18.04 does not install the alternatives for clang-format
-# and clang-tidy, so we need to manually install those:
-RUN if grep -q 18.04 /etc/lsb-release; then \
-      apt update && apt install -y clang-tidy clang-format; \
-      update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100; \
-      update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100; \
-    fi
+        zlib1g-dev \
+        && \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-3.8 100 && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-3.8 100 && \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100 && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
