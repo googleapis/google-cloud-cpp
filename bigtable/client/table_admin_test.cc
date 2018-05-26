@@ -164,8 +164,8 @@ struct MockRpcMultiCallFactory {
           if (response != nullptr) {
             // Generate random number and set value of response.set_consistent()
             // on random value
-            if (((std::chrono::system_clock::now().time_since_epoch()) % 125)
-                    .count() == 0) {
+            if (((std::chrono::system_clock::now().time_since_epoch()) %
+                 5).count() == 0) {
               response->set_consistent(true);
             } else {
               response->set_consistent(false);
