@@ -165,7 +165,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
   // Build the RPC request, try to minimize copying.
   auto cluster = cluster_config.as_proto_move();
   btproto::CreateClusterRequest request;
-  request.set_allocated_cluster(&cluster);
+  request.mutable_cluster()->Swap(&cluster);
   request.set_parent(project_name() + "/instances/" + instance_id.get());
   request.set_cluster_id(cluster_id.get());
 
@@ -203,6 +203,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
     }
     // Wait before polling, and then poll the operation to get the new
     // "response.
+    // TODO we should use the PollingPolicy here once #461 is merged.
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
@@ -214,7 +215,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
         bigtable::internal::RaiseRpcError(
             status,
             "unrecoverable error polling longrunning Operation in "
-            "CreateInstance()");
+            "CreateCluster()");
       }
     }
   } while (true);

@@ -84,16 +84,16 @@ class InstanceAdmin {
       InstanceConfig instance_config);
 
   /**
-     * Create a new Cluster of Cloud Bigtable..
-     *
-     * @param cluster_config a description of the new cluster to be created.
-     * @param instance_id the id of the instance in the project
-     * @param cluster_id the id of the cluster in the project that needs to be
-     *   created
-     *
-     *  @par Example
-     *  TODO(#422) implement tests and examples for CreateCluster
-     */
+   * Create a new Cluster of Cloud Bigtable.
+   *
+   * @param cluster_config a description of the new cluster to be created.
+   * @param instance_id the id of the instance in the project
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *   created
+   *
+   *  @par Example
+   *  TODO(#422) implement tests and examples for CreateCluster
+   */
   std::future<google::bigtable::admin::v2::Cluster> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
