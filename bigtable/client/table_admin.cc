@@ -129,8 +129,8 @@ bool TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
-  bool consistent = WaitForConsistencyCheckHelper(std::move(impl_), table_id,
-                                                  consistency_token);
+  bool consistent =
+      impl_.WaitForConsistencyCheckHelper(table_id, consistency_token);
   if (not consistent) {
     internal::RaiseRpcError(status, status.error_message());
   }

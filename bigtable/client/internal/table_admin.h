@@ -36,6 +36,9 @@ namespace noex {
  */
 class TableAdmin {
  public:
+  // Make the class bigtable::TableAdmin friend of this class, So private
+  // functions of this class can be accessed
+  friend class bigtable::TableAdmin;
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    * @param instance_id the id of the instance, e.g., "my-instance", the full
@@ -151,10 +154,6 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
 
-  friend bool WaitForConsistencyCheckHelper(
-      TableAdmin const& table_admin, bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
-
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id,
                       grpc::Status& status);
@@ -213,6 +212,10 @@ class TableAdmin {
       std::function<void(google::bigtable::admin::v2::Snapshot)> const&
           inserter,
       std::function<void()> const& clearer, grpc::Status& status);
+
+  bool WaitForConsistencyCheckHelper(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
 
  private:
   std::shared_ptr<AdminClient> client_;

@@ -130,6 +130,54 @@ struct MockRpcFactory {
   }
 };
 
+/**
+ * Helper class to create the expectations and check consistency over
+ * multiple calls for a simple RPC call.
+ *
+ * Given the type of the request and responses, this struct provides a function
+ * to create a mock implementation with the right signature and checks.
+ *
+ * @tparam RequestType the protobuf type for the request.
+ * @tparam ResponseType the protobuf type for the response.
+ */
+template <typename RequestType, typename ResponseType>
+struct MockRpcMultiCallFactory {
+  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
+                                     RequestType const& request,
+                                     ResponseType* response);
+
+  /// Refactor the boilerplate common to most tests.
+  static std::function<SignatureType> Create(std::string expected_request) {
+    return std::function<SignatureType>(
+        [expected_request](grpc::ClientContext* ctx, RequestType const& request,
+                           ResponseType* response) {
+          RequestType expected;
+          response->clear_consistent();
+          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
+          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+              expected_request, &expected));
+          std::string delta;
+          google::protobuf::util::MessageDifferencer differencer;
+          differencer.ReportDifferencesToString(&delta);
+          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+          if (response != nullptr) {
+            // Generate random number and set value of response.set_consistent()
+            // on random value
+            if (((std::chrono::system_clock::now().time_since_epoch()) % 127)
+                    .count() == 0) {
+              response->set_consistent(true);
+            } else {
+              response->set_consistent(false);
+            }
+          }
+
+          EXPECT_NE(nullptr, response);
+          return grpc::Status::OK;
+        });
+  }
+};
+
 }  // anonymous namespace
 
 /// @test Verify basic functionality in the `bigtable::TableAdmin` class.
@@ -715,9 +763,9 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
 name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
 consistency_token: 'test-async-token'
     )""";
-  auto mock =
-      MockRpcFactory<btproto::CheckConsistencyRequest,
-                     btproto::CheckConsistencyResponse>::Create(expected_text);
+  auto mock = MockRpcMultiCallFactory<
+      btproto::CheckConsistencyRequest,
+      btproto::CheckConsistencyResponse>::Create(expected_text);
   EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillRepeatedly(Invoke(mock));
 
   bigtable::TableId table_id("the-async-table");
