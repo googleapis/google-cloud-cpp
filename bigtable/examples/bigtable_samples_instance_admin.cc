@@ -88,24 +88,14 @@ void UpdateInstance(bigtable::InstanceAdmin instance_admin, int argc,
   std::string instance_id = ConsumeArg(argc, argv);
   auto instance = instance_admin.GetInstance(instance_id);
   // Modify the instance and prepare the mask with modified field
-  instance.set_display_name("Modified Display Name");
-  std::string mask_text = R"(
-  paths: 'display_name'
-  )";
-  google::protobuf::FieldMask mask;
-  google::protobuf::TextFormat::ParseFromString(mask_text, &mask);
-  auto future = instance_admin.UpdateInstance(&instance, &mask);
-  // Most applications would simply call future.get(), here we show how to
-  // perform additional work while the long running operation completes.
-  std::cout << "Waiting for instance creation to complete ";
-  for (int i = 0; i != 100; ++i) {
-    if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get().name() << std::endl;
-      return;
-    }
-    std::cout << '.' << std::flush;
-  }
-  std::cout << "TIMEOUT" << std::endl;
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  instance_update_config.set_display_name("Modified Display Name");
+
+  auto future =
+      instance_admin.UpdateInstance(std::move(instance_update_config));
+  std::string instance_detail;
+  google::protobuf::TextFormat::PrintToString(future.get(), &instance_detail);
+  std::cout << "GetInstance details : " << instance_detail << std::endl;
 }
 //! [update instance]
 

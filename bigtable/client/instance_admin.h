@@ -18,6 +18,7 @@
 #include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/instance_config.h"
+#include "bigtable/client/instance_update_config.h"
 #include "bigtable/client/internal/instance_admin.h"
 #include <future>
 #include <memory>
@@ -90,8 +91,7 @@ class InstanceAdmin {
    * complete. The application may prefer to perform other work while waiting
    * for this operation.
    *
-   * @param instance an existing instance with some modification.
-   * @param update_mask parameter that specify fields to be modified
+   * @param instance_update_config config with modified instance.
    * @return a future that becomes satisfied when (a) the operation has
    *   completed successfully, in which case it returns a proto with the
    *   Instance details, (b) the operation has failed, in which case the future
@@ -104,8 +104,7 @@ class InstanceAdmin {
    * @snippet bigtable_samples_instance_admin.cc update instance
    */
   std::future<google::bigtable::admin::v2::Instance> UpdateInstance(
-      google::bigtable::admin::v2::Instance* instance,
-      google::protobuf::FieldMask* update_mask);
+      InstanceUpdateConfig instance_update_config);
 
   /**
    * Return the list of instances in the project.
@@ -171,8 +170,7 @@ class InstanceAdmin {
 
   // Implement UpdateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance UpdateInstanceImpl(
-      google::bigtable::admin::v2::Instance* instance,
-      google::protobuf::FieldMask* update_mask);
+      InstanceUpdateConfig instance_update_config);
 
  private:
   noex::InstanceAdmin impl_;

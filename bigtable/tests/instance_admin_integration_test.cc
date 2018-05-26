@@ -106,18 +106,11 @@ TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   auto instances_before = instance_admin_->ListInstances();
   auto instance = instance_admin_->CreateInstance(config).get();
   btadmin::Instance instance_modified;
-  instance_modified.CopyFrom(instance);
-  instance_modified.set_display_name("foo");
-
-  std::string update_mask_text = R"(
-paths: 'display_name'
-)";
-  google::protobuf::FieldMask update_mask;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(update_mask_text,
-                                                            &update_mask));
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  instance_update_config.set_display_name("foo");
 
   auto instance_after =
-      instance_admin_->UpdateInstance(&instance_modified, &update_mask).get();
+      instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
 
   auto instances_after = instance_admin_->ListInstances();
   instance_admin_->DeleteInstance(instance_id);

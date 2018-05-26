@@ -259,11 +259,11 @@ TEST_F(InstanceAdminTest, CreateInstance) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+  )";
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
@@ -310,11 +310,11 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+  )";
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
@@ -361,11 +361,11 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+  )";
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
@@ -499,8 +499,8 @@ TEST_F(InstanceAdminTest, UpdateInstanceRequestFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   btproto::Instance instance;
-  google::protobuf::FieldMask update_mask;
-  auto future = tested.UpdateInstance(&instance, &update_mask);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -521,8 +521,8 @@ TEST_F(InstanceAdminTest, UpdateInstancePollUnrecoverableFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   btproto::Instance instance;
-  google::protobuf::FieldMask update_mask;
-  auto future = tested.UpdateInstance(&instance, &update_mask);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -565,8 +565,8 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
           }));
 
   btproto::Instance instance;
-  google::protobuf::FieldMask update_mask;
-  auto future = tested.UpdateInstance(&instance, &update_mask);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -588,30 +588,28 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-labels: {
-  key: 'foo1'
-  value: 'bar1'
-}
-labels: {
-  key: 'foo2'
-  value: 'bar2'
-}
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+      labels: {
+        key: 'foo1'
+        value: 'bar1'
+      }
+      labels: {
+        key: 'foo2'
+        value: 'bar2'
+      }
+  )";
+
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  std::string update_mask_text = R"(
-  paths: 'display_name'
-  paths: 'labels'
-  )";
-  google::protobuf::FieldMask update_mask;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(update_mask_text,
-                                                            &update_mask));
+  btproto::Instance expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
 
   EXPECT_CALL(*client_, GetOperation(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
@@ -626,24 +624,24 @@ labels: {
         operation->set_done(false);
         return grpc::Status::OK;
       }))
-      .WillOnce(Invoke(
-          [&expected](grpc::ClientContext*,
-                      google::longrunning::GetOperationRequest const& request,
-                      google::longrunning::Operation* operation) {
-            operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-            any->PackFrom(expected);
-            operation->set_allocated_response(any.release());
-            return grpc::Status::OK;
-          }));
+      .WillOnce(Invoke([&expected_copy](
+          grpc::ClientContext*,
+          google::longrunning::GetOperationRequest const& request,
+          google::longrunning::Operation* operation) {
+        operation->set_done(true);
+        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        any->PackFrom(expected_copy);
+        operation->set_allocated_response(any.release());
+        return grpc::Status::OK;
+      }));
 
-  auto future = tested.UpdateInstance(&expected, &update_mask);
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
@@ -654,46 +652,45 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+  )";
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
-  std::string update_mask_text = R"(
-paths: 'display_name'
-)";
-  google::protobuf::FieldMask update_mask;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(update_mask_text,
-                                                            &update_mask));
+
+  btproto::Instance expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
 
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke(
-          [&expected](grpc::ClientContext*,
-                      btproto::PartialUpdateInstanceRequest const& request,
-                      google::longrunning::Operation* response) {
+          [&expected_copy](grpc::ClientContext*,
+                           btproto::PartialUpdateInstanceRequest const& request,
+                           google::longrunning::Operation* response) {
             auto const instance_name =
                 "projects/my-project/instances/test-instance";
             EXPECT_EQ(instance_name, request.instance().name());
             response->set_done(true);
             response->set_name("operation-name");
             auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-            any->PackFrom(expected);
+            any->PackFrom(expected_copy);
             response->set_allocated_response(any.release());
             return grpc::Status::OK;
           }));
 
   EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
 
-  auto future = tested.UpdateInstance(&expected, &update_mask);
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateInstance`.
@@ -713,21 +710,19 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-display_name: 'foo bar'
-state: READY
-type: PRODUCTION
-)";
+      name: 'projects/my-project/instances/test-instance'
+      display_name: 'foo bar'
+      state: READY
+      type: PRODUCTION
+  )";
   btproto::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  std::string update_mask_text = R"(
-paths: 'display_name'
-)";
-  google::protobuf::FieldMask update_mask;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(update_mask_text,
-                                                            &update_mask));
+  btproto::Instance expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
 
   EXPECT_CALL(*client_, GetOperation(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
@@ -740,24 +735,24 @@ paths: 'display_name'
                           google::longrunning::Operation*) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       }))
-      .WillOnce(Invoke(
-          [&expected](grpc::ClientContext*,
-                      google::longrunning::GetOperationRequest const& request,
-                      google::longrunning::Operation* operation) {
-            operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-            any->PackFrom(expected);
-            operation->set_allocated_response(any.release());
-            return grpc::Status::OK;
-          }));
+      .WillOnce(Invoke([&expected_copy](
+          grpc::ClientContext*,
+          google::longrunning::GetOperationRequest const& request,
+          google::longrunning::Operation* operation) {
+        operation->set_done(true);
+        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        any->PackFrom(expected_copy);
+        operation->set_allocated_response(any.release());
+        return grpc::Status::OK;
+      }));
 
-  auto future = tested.UpdateInstance(&expected, &update_mask);
+  auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
 }
 
 /// @test Verify that DeleteInstance works in the positive case.

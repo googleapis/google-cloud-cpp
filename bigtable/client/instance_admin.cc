@@ -108,24 +108,21 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
 }
 
 std::future<google::bigtable::admin::v2::Instance>
-InstanceAdmin::UpdateInstance(google::bigtable::admin::v2::Instance* instance,
-                              google::protobuf::FieldMask* update_mask) {
+InstanceAdmin::UpdateInstance(InstanceUpdateConfig instance_update_config) {
   return std::async(std::launch::async, &InstanceAdmin::UpdateInstanceImpl,
-                    this, instance, update_mask);
+                    this, std::move(instance_update_config));
 }
 
 google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
-    google::bigtable::admin::v2::Instance* instance,
-    google::protobuf::FieldMask* update_mask) {
+    InstanceUpdateConfig instance_update_config) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = impl_.rpc_retry_policy_->clone();
   auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-  MetadataUpdatePolicy metadata_update_policy(instance->name(),
+
+  MetadataUpdatePolicy metadata_update_policy(instance_update_config.GetName(),
                                               MetadataParamTypes::NAME);
 
-  google::bigtable::admin::v2::PartialUpdateInstanceRequest request;
-  request.mutable_instance()->Swap(instance);
-  request.mutable_update_mask()->Swap(update_mask);
+  auto request = instance_update_config.as_proto_move();
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
@@ -160,6 +157,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
     }
     // Wait before polling, and then poll the operation to get the new
     // "response.
+    // TODO(#578) here to use the PollingPolicy once #461 is merged.
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
