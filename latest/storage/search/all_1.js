@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['bucket',['Bucket',['../classstorage_1_1v0_1_1Client.html#ab6ddc0711869de2bba9e3316713048b8',1,'storage::v0::Client']]],
   ['bucket_5fmetadata_2ecc',['bucket_metadata.cc',['../bucket__metadata_8cc.html',1,'']]],
   ['bucket_5fmetadata_2eh',['bucket_metadata.h',['../bucket__metadata_8h.html',1,'']]],
   ['bucket_5fmetadata_5ftest_2ecc',['bucket_metadata_test.cc',['../bucket__metadata__test_8cc.html',1,'']]],
