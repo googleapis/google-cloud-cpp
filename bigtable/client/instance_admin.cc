@@ -131,7 +131,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
   auto response = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::UpdateInstance,
-      std::move(request), "InstanceAdmin::UpdateInstance", status, false);
+      request, "InstanceAdmin::UpdateInstance", status, false);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status,
                                       "unrecoverable error in MakeCall()");
