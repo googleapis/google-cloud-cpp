@@ -20,6 +20,7 @@
 #include "bigtable/client/data_client.h"
 #include "bigtable/client/table.h"
 #include "bigtable/client/table_admin.h"
+#include "bigtable/client/testing/random.h"
 #include <gmock/gmock.h>
 
 namespace bigtable {
@@ -85,6 +86,19 @@ class TableIntegrationTest : public ::testing::Test {
    */
   void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
                            std::vector<bigtable::Cell> actual);
+
+  /**
+   * Generate a random table id.
+   *
+   * We want to run multiple copies of the integration tests on the same Cloud
+   * Bigtable instance.  To avoid conflicts and minimize coordination between
+   * the tests, we run each test with a randomly selected table name.
+   */
+  std::string RandomTableId();
+
+ protected:
+  bigtable::testing::DefaultPRNG generator_ =
+      bigtable::testing::MakeDefaultPRNG();
 
   std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;

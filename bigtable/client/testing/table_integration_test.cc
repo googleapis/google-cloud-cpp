@@ -125,6 +125,12 @@ void TableIntegrationTest::CheckEqualUnordered(
   EXPECT_THAT(actual, ::testing::ContainerEq(expected));
 }
 
+std::string TableIntegrationTest::RandomTableId() {
+  constexpr int RANDOM_CHARACTERS = 8;
+  return std::string("table-") +
+         bigtable::testing::Sample(generator_, RANDOM_CHARACTERS,
+                                   "abcdefghijklmnopqrstuvwxyz0123456789");
+}
 }  // namespace testing
 
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {

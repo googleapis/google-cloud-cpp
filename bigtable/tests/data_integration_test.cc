@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
   // Make sure the arguments are valid.
   if (argc != 3) {
     std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of("/");
+    auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
               << " <project> <instance>" << std::endl;
     return 1;
@@ -61,15 +61,6 @@ int main(int argc, char* argv[]) {
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
-  auto admin_client =
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
-  bigtable::TableAdmin admin(admin_client, instance_id);
-  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
-  if (not table_list.empty()) {
-    std::cerr << "Expected empty instance at the beginning of integration "
-              << "test" << std::endl;
-    return 1;
-  }
 
   (void)::testing::AddGlobalTestEnvironment(
       new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
@@ -115,8 +106,8 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
 using namespace bigtable::chrono_literals;
 
 TEST_F(DataIntegrationTest, TableApply) {
-  std::string const table_name = "table-apply-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
 
   std::string const row_key = "row-key-1";
   std::vector<bigtable::Cell> created{
@@ -128,13 +119,13 @@ TEST_F(DataIntegrationTest, TableApply) {
       {row_key, family, "c1", 2000, "v2000", {}}};
 
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableBulkApply) {
-  std::string const table_name = "table-bulk-apply-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
 
   std::vector<bigtable::Cell> created{
       {"row-key-1", family, "c0", 1000, "v1000", {}},
@@ -157,14 +148,14 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
       {"row-key-4", family, "c1", 2000, "v2000", {}}};
 
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableSingleRow) {
-  std::string const table_name = "table-single-row-variadic-list-test";
+  std::string const table_id = RandomTableId();
   std::string const row_key = "row-key-1";
-  auto table = CreateTable(table_name, table_config);
+  auto table = CreateTable(table_id, table_config);
 
   auto mutation = bigtable::SingleRowMutation(
       row_key, bigtable::SetCell(family, "c1", 1_ms, "V1000"),
@@ -177,13 +168,13 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
       {row_key, family, "c3", 3000, "V3000", {}}};
 
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowTest) {
-  std::string const table_name = "table-read-row-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -197,13 +188,13 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
   auto row_cell = table->ReadRow(row_key1, bigtable::Filter::PassAllFilter());
   std::vector<bigtable::Cell> actual;
   actual.emplace_back(row_cell.second.cells().at(0));
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
-  std::string const table_name = "table-read-row-not-exist-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -212,13 +203,13 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
 
   CreateCells(*table, created);
   auto row_cell = table->ReadRow(row_key2, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   EXPECT_FALSE(row_cell.first);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
-  std::string const table_name = "table-read-rows-all-rows";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3(1024, '3');    // a long key
@@ -254,12 +245,12 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
         table->ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
     CheckEqualUnordered(created, MoveCellsFromReader(read4));
   }
-  DeleteTable(table_name);
+  DeleteTable(table_id);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
-  std::string const table_name = "table-read-rows-partial-rows";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
@@ -295,12 +286,12 @@ TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
       table->ReadRows(std::move(rs3), bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, MoveCellsFromReader(read3));
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
-  std::string const table_name = "table-read-rows-no-rows";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
@@ -327,16 +318,16 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
                                bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, MoveCellsFromReader(read3));
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
-  std::string const table_name = "table-read-rows-wrong-table";
+  std::string const table_id = RandomTableId();
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  bigtable::Table table(data_client_, table_name);
+  bigtable::Table table(data_client_, table_id);
 #else
-  bigtable::noex::Table table(data_client_, table_name);
+  bigtable::noex::Table table(data_client_, table_id);
 #endif
 
   auto read1 =
@@ -353,8 +344,8 @@ TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
 }
 
 TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
-  std::string const table_name = "table-check-and-mutate-row-pass";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const key = "row-key";
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
@@ -367,13 +358,13 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c2", 0, "v2000", {}}};
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
-  std::string const table_name = "table-check-and-mutate-row-fail";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const key = "row-key";
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
@@ -386,13 +377,13 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c3", 0, "v3000", {}}};
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
-  std::string const table_name = "table-read-modify-write-append-row-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const add_suffix1 = "-suffix";
@@ -426,14 +417,14 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
   auto actual_cells_ignore_timestamp =
       GetCellsIgnoringTimestamp(result_row.cells());
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected_cells_ignore_timestamp,
                       actual_cells_ignore_timestamp);
 }
 
 TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
-  std::string const table_name = "table-read-modify-write-row-increment-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const key = "row-key";
 
   // An initial; BigEndian int64 number with value 0.
@@ -456,13 +447,13 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
 TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
-  std::string const table_name = "table-read-modify-write-row-multiple-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const key = "row-key";
 
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
@@ -503,13 +494,13 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
 TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
-  std::string const table_name = "table-check-cell-value-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
   std::string const key = "row-key";
 
   std::vector<bigtable::Cell> created{
@@ -542,13 +533,13 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
 
-  DeleteTable(table_name);
+  DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
 TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
-  std::string const table_name = "table-sample-row-keys-test";
-  auto table = CreateTable(table_name, table_config);
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
 
   // Create BATCH_SIZE * BATCH_COUNT rows.
   constexpr int BATCH_COUNT = 10;
@@ -575,7 +566,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
     table->BulkApply(std::move(bulk));
   }
   auto samples = table->SampleRows<std::vector>();
-  DeleteTable(table_name);
+  DeleteTable(table_id);
 
   // It is somewhat hard to verify that the values returned here are correct.
   // We cannot check the specific values, not even the format, of the row keys

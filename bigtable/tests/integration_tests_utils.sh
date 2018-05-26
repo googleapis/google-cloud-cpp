@@ -19,23 +19,6 @@ readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
 readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
 readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="./instance_admin_emulator"
 
-# Remove all the tables from a Cloud Bigtable instance.
-# TODO(#356) - remove this code when the tests can share instances.
-function delete_all_tables() {
-  local project_id=$1
-  shift
-  local instance_id=$1
-  shift
-
-  # If the instance is not set, just return immediately.
-  if [ -z "${instance_id}" ]; then
-    return 0
-  fi
-  local args=("-project" "${project_id}" "-instance" "${instance_id}")
-  # TODO(#356) - change the tests so we do not clear the instance.
-  ${CBT_CMD} ${args[*]} ls | xargs -i ${CBT_CMD} ${args[*]} deletetable {}
-}
-
 # Run all the integration tests against the emulator or production.
 #
 # This function allows us to keep a single place where all the integration tests
@@ -65,21 +48,17 @@ function run_all_integration_tests() {
 
   echo
   echo "Running bigtable::TableAdmin integration test."
-  delete_all_tables "${project_id}" "${instance_id:-}"
   ./admin_integration_test "${project_id}" "${instance_id:-admin-test}"
 
   echo
   echo "Running bigtable::Table integration test."
-  delete_all_tables "${project_id}" "${instance_id:-}"
   ./data_integration_test "${project_id}" "${instance_id:-data-test}"
 
   echo
   echo "Running bigtable::Filters integration tests."
-  delete_all_tables "${project_id}" "${instance_id:-}"
   ./filters_integration_test "${project_id}" "${instance_id:-filters-test}"
 
   echo
   echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
-  delete_all_tables "${project_id}" "${instance_id:-}"
   ./mutations_integration_test "${project_id}" "${instance_id:-mutations-test}"
 }
