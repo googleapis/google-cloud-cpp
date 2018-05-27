@@ -25,6 +25,7 @@ RUN apt update && \
         cmake \
         curl \
         doxygen \
+        gawk \
         git \
         gcc \
         g++ \

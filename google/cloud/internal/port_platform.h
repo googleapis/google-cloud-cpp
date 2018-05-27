@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_
-#define GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H_
 
 /**
  * @file
@@ -68,4 +68,4 @@
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 // clang-format on
 
-#endif  // GOOGLE_CLOUD_CPP_INTERNAL_PORT_PLATFORM_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H_

@@ -132,4 +132,4 @@ class ServiceAccountCredentials : public storage::Credentials {
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_SERVICE_ACCOUNT_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
