@@ -70,8 +70,7 @@ TEST(BucketTest, GetMetadataTooManyFailures) {
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillRepeatedly(
-          Return(std::make_pair(UNAVAILABLE(), BucketMetadata{})));
+      .WillRepeatedly(Return(std::make_pair(UNAVAILABLE(), BucketMetadata{})));
   EXPECT_DEATH_IF_SUPPORTED(bucket.GetMetadata(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -88,8 +87,7 @@ TEST(BucketTest, GetMetadataPermanentFailure) {
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillRepeatedly(
-          Return(std::make_pair(NOT_FOUND(), BucketMetadata{})));
+      .WillRepeatedly(Return(std::make_pair(NOT_FOUND(), BucketMetadata{})));
   EXPECT_DEATH_IF_SUPPORTED(bucket.GetMetadata(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
