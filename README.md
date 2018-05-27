@@ -34,15 +34,80 @@ for the full list of APIs callable using gRPC.
 To build the available libraries and run the tests, run the following commands
 after cloning this repo:
 
-```sh
+```bash
 git submodule init
 git submodule update --init --recursive
-mkdir build-output
-cd build-output
-cmake ..
-make all
-make test
+cmake -H. -Bbuild-output
+cmake --build build-output
+(cd build-output && ctest --output-on-failure)
 ```
+
+On Linux and macOS you can speed up the build by replacing the
+`cmake --build build-output` step with:
+
+```bash
+cmake --build build-output -- -j $(nproc)
+```
+
+On Windows with MSVC use:
+
+```bash
+cmake --build build-output -- /m
+```
+
+Consult the `README.md` file for each library for links to the examples and
+tutorials.
+
+## Build Dependencies
+
+#### Compiler
+
+The Google Cloud C++ libraries are tested with the following compilers:
+
+| Compiler    | Minimum Version |
+| ----------- | --------------- |
+| GCC         | 4.9 |
+| Clang       | 3.8 |
+| MSVC++      | 14.1 |
+| Apple Clang | 8.1 |
+
+#### Build Tools
+
+The Google Cloud C++ Client Libraries can be built with
+[CMake](https://cmake.org) or [Bazel](https://bazel.io).  The minimal versions
+of these tools we test with are:
+
+| Tool       | Minimum Version |
+| ---------- | --------------- |
+| CMake      | 3.5 |
+| Bazel      | 0.12.0 |
+
+#### Other Libraries
+
+The libraries also depends on gRPC, libcurl, and the dependencies of those
+libraries. The Google Cloud C++ Client libraries are tested with the following
+versions of these dependencies:
+
+| Library | Minimum version |
+| ------- | --------------- |
+| gRPC    | v1.10.x |
+| libcurl | 7.47.0  |
+
+For Linux, the `ci/Dockerfile.*` files are a good reference on how to install
+all the necessary dependencies on each distribution. For Windows,
+consult [ci/install-windows.ps1](ci/install-windows.ps1).
+
+On macOS, the following commands should install all the dependencies you need:
+
+```bash
+brew install curl cmake
+```
+
+#### Other Dependencies
+
+Some of the integration tests use the
+[Google Cloud SDK](https://cloud.google.com/sdk/). The integration tests run
+against the latest version of the SDK on each commit and PR.
 
 ## Versioning
 
