@@ -106,6 +106,11 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
       google::protobuf::Empty* response) = 0;
+
+  virtual grpc::Status CreateCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
+      google::longrunning::Operation* response) = 0;
   //@}
 
   //@{
