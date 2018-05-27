@@ -15,7 +15,7 @@
 #include "storage/client/internal/nljson.h"
 #include <gtest/gtest.h>
 
-/// @test Verify that we can compile agains the nlohmann::json library.
+/// @test Verify that we can compile against the nlohmann::json library.
 TEST(NlJsonTest, Simple) {
   storage::internal::nl::json json = {
       {"pi", 3.141},
