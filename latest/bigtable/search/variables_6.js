@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ssd',['SSD',['../classbigtable_1_1v0_1_1ClusterConfig.html#a92f1e4e1650334ca905bf70166f5619d',1,'bigtable::v0::ClusterConfig']]],
-  ['storage_5ftype_5funspecified',['STORAGE_TYPE_UNSPECIFIED',['../classbigtable_1_1v0_1_1ClusterConfig.html#a2cb63d295bde9f7fec41d1d274cdf8e3',1,'bigtable::v0::ClusterConfig']]]
+  ['parent',['PARENT',['../classbigtable_1_1v0_1_1MetadataParamTypes.html#ad4bd752ab79d9f67554c9c6e4250d7e3',1,'bigtable::v0::MetadataParamTypes']]],
+  ['production',['PRODUCTION',['../classbigtable_1_1v0_1_1InstanceConfig.html#a9d880cdbb1f0998e0299a79827f1a266',1,'bigtable::v0::InstanceConfig::PRODUCTION()'],['../classbigtable_1_1v0_1_1InstanceUpdateConfig.html#ac6b16030e5d028e9f7ad6ba273d79e4b',1,'bigtable::v0::InstanceUpdateConfig::PRODUCTION()']]]
 ];

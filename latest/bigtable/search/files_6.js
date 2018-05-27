@@ -7,5 +7,7 @@ var searchData=
   ['instance_5fadmin_5fclient_2ecc',['instance_admin_client.cc',['../instance__admin__client_8cc.html',1,'']]],
   ['instance_5fadmin_5fclient_2eh',['instance_admin_client.h',['../instance__admin__client_8h.html',1,'']]],
   ['instance_5fconfig_2ecc',['instance_config.cc',['../instance__config_8cc.html',1,'']]],
-  ['instance_5fconfig_2eh',['instance_config.h',['../instance__config_8h.html',1,'']]]
+  ['instance_5fconfig_2eh',['instance_config.h',['../instance__config_8h.html',1,'']]],
+  ['instance_5fupdate_5fconfig_2ecc',['instance_update_config.cc',['../instance__update__config_8cc.html',1,'']]],
+  ['instance_5fupdate_5fconfig_2eh',['instance_update_config.h',['../instance__update__config_8h.html',1,'']]]
 ];

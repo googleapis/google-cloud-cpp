@@ -19,5 +19,5 @@ var searchData=
   ['timestamprange',['TimestampRange',['../classbigtable_1_1v0_1_1Filter.html#a5cfa00afa88c902a119755c6f606607e',1,'bigtable::v0::Filter']]],
   ['timestamprangemicros',['TimestampRangeMicros',['../classbigtable_1_1v0_1_1Filter.html#a8bca740ff4f4d71ac42e8126c3ae5dba',1,'bigtable::v0::Filter']]],
   ['type',['type',['../classbigtable_1_1v0_1_1MetadataParamTypes.html#a491691e98acc42cca9e2b9e24285da29',1,'bigtable::v0::MetadataParamTypes']]],
-  ['type_5funspecified',['TYPE_UNSPECIFIED',['../classbigtable_1_1v0_1_1InstanceConfig.html#aecd0cdff6e1e24921518c7a00a80f58a',1,'bigtable::v0::InstanceConfig']]]
+  ['type_5funspecified',['TYPE_UNSPECIFIED',['../classbigtable_1_1v0_1_1InstanceConfig.html#aecd0cdff6e1e24921518c7a00a80f58a',1,'bigtable::v0::InstanceConfig::TYPE_UNSPECIFIED()'],['../classbigtable_1_1v0_1_1InstanceUpdateConfig.html#af4664ab840dee0c35a684be254b7ac83',1,'bigtable::v0::InstanceUpdateConfig::TYPE_UNSPECIFIED()']]]
 ];
