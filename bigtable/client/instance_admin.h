@@ -18,6 +18,7 @@
 #include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/instance_admin_client.h"
 #include "bigtable/client/instance_config.h"
+#include "bigtable/client/instance_update_config.h"
 #include "bigtable/client/internal/instance_admin.h"
 #include <future>
 #include <memory>
@@ -99,6 +100,28 @@ class InstanceAdmin {
       bigtable::ClusterId const& cluster_id);
 
   /**
+   * Update an existing instance of Cloud Bigtable.
+   *
+   * @warning Note that this is operation can take seconds or minutes to
+   * complete. The application may prefer to perform other work while waiting
+   * for this operation.
+   *
+   * @param instance_update_config config with modified instance.
+   * @return a future that becomes satisfied when (a) the operation has
+   *   completed successfully, in which case it returns a proto with the
+   *   Instance details, (b) the operation has failed, in which case the future
+   *   contains an exception (typically `bigtable::GrpcError`) with the details
+   *   of the failure, or (c) the state of the operation is unknown after the
+   *   time allocated by the retry policies has expired, in which case the
+   *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update instance
+   */
+  std::future<google::bigtable::admin::v2::Instance> UpdateInstance(
+      InstanceUpdateConfig instance_update_config);
+
+  /**
    * Return the list of instances in the project.
    *
    * @par Example
@@ -165,6 +188,10 @@ class InstanceAdmin {
       ClusterConfig const& cluster_config,
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
+
+  // Implement UpdateInstance() with a separate thread.
+  google::bigtable::admin::v2::Instance UpdateInstanceImpl(
+      InstanceUpdateConfig instance_update_config);
 
  private:
   noex::InstanceAdmin impl_;

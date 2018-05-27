@@ -18,6 +18,23 @@ cmake_minimum_required(VERSION 3.5)
 set(PACKAGE_BUGREPORT "https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # gcc-4.8 C++11 support has bugs preventing us from using it.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+        message(FATAL_ERROR "GCC version must be at least 4.9. Older versions"
+            " either lack C++11 support or have bugs"
+            " (e.g. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55817)"
+            " that prevent us from using them.")
+    endif ()
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    # Before Clang-3.8 we ran into bugs with std::async() and exceptions.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
+        message(FATAL_ERROR "Clang version must be at least 3.8. Older versions"
+            " either lack C++11 support or have bugs that prevent us from"
+            " using them.")
+    endif ()
+endif ()
+
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 

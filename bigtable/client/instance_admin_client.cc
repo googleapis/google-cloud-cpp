@@ -68,6 +68,13 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return impl_.Stub()->CreateInstance(context, request, response);
   }
 
+  grpc::Status UpdateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      google::longrunning::Operation* response) override {
+    return impl_.Stub()->PartialUpdateInstance(context, request, response);
+  }
+
   grpc::Status GetOperation(
       grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,

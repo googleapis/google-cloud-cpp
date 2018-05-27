@@ -82,6 +82,11 @@ class InstanceAdminClient {
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       google::longrunning::Operation* response) = 0;
 
+  virtual grpc::Status UpdateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      google::longrunning::Operation* response) = 0;
+
   virtual grpc::Status GetInstance(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetInstanceRequest const& request,

@@ -79,6 +79,26 @@ void CreateInstance(bigtable::InstanceAdmin instance_admin, int argc,
 }
 //! [create instance]
 
+//! [update instance]
+void UpdateInstance(bigtable::InstanceAdmin instance_admin, int argc,
+                    char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"update-instance: <project-id> <instance-id>"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
+  auto instance = instance_admin.GetInstance(instance_id);
+  // Modify the instance and prepare the mask with modified field
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  instance_update_config.set_display_name("Modified Display Name");
+
+  auto future =
+      instance_admin.UpdateInstance(std::move(instance_update_config));
+  std::string instance_detail;
+  google::protobuf::TextFormat::PrintToString(future.get(), &instance_detail);
+  std::cout << "GetInstance details : " << instance_detail << std::endl;
+}
+//! [update instance]
+
 //! [list instances]
 void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
                    char* argv[]) {
@@ -166,6 +186,8 @@ int main(int argc, char* argv[]) try {
 
   if (command == "create-instance") {
     CreateInstance(instance_admin, argc, argv);
+  } else if (command == "update-instance") {
+    UpdateInstance(instance_admin, argc, argv);
   } else if (command == "list-instances") {
     ListInstances(instance_admin, argc, argv);
   } else if (command == "get-instance") {

@@ -96,6 +96,34 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
 }
 
+/// @test Verify that InstanceAdmin::UpdateInstance works as expected.
+TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto config = IntegrationTestConfig(instance_id);
+
+  auto instances_before = instance_admin_->ListInstances();
+  auto instance = instance_admin_->CreateInstance(config).get();
+  btadmin::Instance instance_copy;
+  instance_copy.CopyFrom(instance);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  auto const updated_display_name = instance_id + " updated";
+  instance_update_config.set_display_name(updated_display_name);
+
+  auto instance_after =
+      instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
+
+  auto instances_after = instance_admin_->ListInstances();
+  instance_admin_->DeleteInstance(instance_id);
+  EXPECT_FALSE(IsInstancePresent(instances_before, instance_copy.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_after, instance_copy.name()));
+  EXPECT_NE(std::string::npos, instance_copy.name().find(instance_id));
+  EXPECT_NE(std::string::npos,
+            instance_copy.name().find(InstanceTestEnvironment::project_id()));
+  EXPECT_EQ(updated_display_name, instance_after.display_name());
+  EXPECT_NE(std::string::npos, instance_copy.display_name().find(instance_id));
+}
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   std::string instance_id =
