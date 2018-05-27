@@ -203,7 +203,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
     }
     // Wait before polling, and then poll the operation to get the new
     // "response.
-    // TODO(#461) we should use the PollingPolicy here once #461 is merged.
+    // TODO(#422) we should use the PollingPolicy here once #461 is merged.
     auto delay = backoff_policy->on_completion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;

@@ -683,26 +683,23 @@ TEST_F(InstanceAdminTest, CreateCluster) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-location: 'Location1'
-default_storage_type: SSD
-)";
+      name: 'projects/my-project/instances/test-instance'
+      location: 'Location1'
+      default_storage_type: SSD
+  )";
+
+  auto mock_successs = [](grpc::ClientContext* ctx,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+    operation->set_done(false);
+    return grpc::Status::OK;
+  };
   btproto::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*,
-                          google::longrunning::GetOperationRequest const&,
-                          google::longrunning::Operation* operation) {
-        operation->set_done(false);
-        return grpc::Status::OK;
-      }))
-      .WillOnce(Invoke([](grpc::ClientContext*,
-                          google::longrunning::GetOperationRequest const&,
-                          google::longrunning::Operation* operation) {
-        operation->set_done(false);
-        return grpc::Status::OK;
-      }))
+      .WillOnce(Invoke(mock_successs))
+      .WillOnce(Invoke(mock_successs))
       .WillOnce(Invoke(
           [&expected](grpc::ClientContext*,
                       google::longrunning::GetOperationRequest const& request,
@@ -734,10 +731,10 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-location: 'Location1'
-default_storage_type: SSD
-)";
+      name: 'projects/my-project/instances/test-instance'
+      location: 'Location1'
+      default_storage_type: SSD
+  )";
   btproto::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
@@ -787,19 +784,22 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
       }));
 
   std::string expected_text = R"(
-name: 'projects/my-project/instances/test-instance'
-location: 'Location1'
-default_storage_type: SSD
-)";
+      name: 'projects/my-project/instances/test-instance'
+      location: 'Location1'
+      default_storage_type: SSD
+  )";
+
+  auto mock_recoverable_failure = [](
+      grpc::ClientContext* ctx, google::longrunning::GetOperationRequest const&,
+      google::longrunning::Operation*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   btproto::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*,
-                          google::longrunning::GetOperationRequest const&,
-                          google::longrunning::Operation*) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      }))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke([](grpc::ClientContext*,
                           google::longrunning::GetOperationRequest const&,
                           google::longrunning::Operation*) {
