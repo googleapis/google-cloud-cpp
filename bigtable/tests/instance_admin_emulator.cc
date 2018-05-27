@@ -86,7 +86,41 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::PartialUpdateInstanceRequest const* request,
       google::longrunning::Operation* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string name = request->instance().name();
+    auto it = instances_.find(name);
+    if (it == instances_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance not found");
+    }
+
+    auto& stored_instance = it->second;
+
+    for (int index = 0; index != request->update_mask().paths_size(); ++index) {
+      if ("display_name" == request->update_mask().paths(index)) {
+        stored_instance.set_display_name(request->instance().display_name());
+      }
+      if ("name" == request->update_mask().paths(index)) {
+        stored_instance.set_display_name(request->instance().name());
+      }
+      if ("state" == request->update_mask().paths(index)) {
+        stored_instance.set_state(request->instance().state());
+      }
+      if ("type" == request->update_mask().paths(index)) {
+        stored_instance.set_type(request->instance().type());
+      }
+      if ("labels" == request->update_mask().paths(index)) {
+        stored_instance.set_type(request->instance().type());
+        stored_instance.mutable_labels()->clear();
+        stored_instance.mutable_labels()->insert(
+            request->instance().labels().begin(),
+            request->instance().labels().end());
+      }
+    }
+    response->set_name("update-instance/" + name);
+    response->set_done(true);
+    auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
+    contents->PackFrom(stored_instance);
+    response->set_allocated_response(contents.release());
+    return grpc::Status::OK;
   }
 
   grpc::Status DeleteInstance(grpc::ServerContext* context,

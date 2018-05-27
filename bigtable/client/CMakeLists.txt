@@ -39,6 +39,8 @@ add_library(bigtable_client
         instance_admin.cc
         instance_config.h
         instance_config.cc
+        instance_update_config.h
+        instance_update_config.cc
         internal/bulk_mutator.h
         internal/bulk_mutator.cc
         internal/common_client.h
@@ -164,6 +166,7 @@ set(bigtable_client_unit_tests
         instance_admin_client_test.cc
         instance_admin_test.cc
         instance_config_test.cc
+        instance_update_config_test.cc
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
         internal/prefix_range_end_test.cc
