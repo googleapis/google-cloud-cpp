@@ -147,34 +147,28 @@ struct MockRpcMultiCallFactory {
                                      ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(std::string expected_request) {
-    return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext* ctx, RequestType const& request,
-                           ResponseType* response) {
-          RequestType expected;
-          response->clear_consistent();
-          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
-          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-              expected_request, &expected));
-          std::string delta;
-          google::protobuf::util::MessageDifferencer differencer;
-          differencer.ReportDifferencesToString(&delta);
-          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+  static std::function<SignatureType> Create(std::string expected_request,
+                                             bool expected_result) {
+    return std::function<SignatureType>([expected_request, expected_result](
+        grpc::ClientContext* ctx, RequestType const& request,
+        ResponseType* response) {
+      RequestType expected;
+      response->clear_consistent();
+      // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
+      EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+          expected_request, &expected));
+      std::string delta;
+      google::protobuf::util::MessageDifferencer differencer;
+      differencer.ReportDifferencesToString(&delta);
+      EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-          if (response != nullptr) {
-            // Generate random number and set value of response.set_consistent()
-            // on random value
-            if (((std::chrono::system_clock::now().time_since_epoch()) %
-                 5).count() == 0) {
-              response->set_consistent(true);
-            } else {
-              response->set_consistent(false);
-            }
-          }
+      if (response != nullptr) {
+        response->set_consistent(expected_result);
+      }
 
-          EXPECT_NE(nullptr, response);
-          return grpc::Status::OK;
-        });
+      EXPECT_NE(nullptr, response);
+      return grpc::Status::OK;
+    });
   }
 };
 
@@ -763,10 +757,20 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
 name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
 consistency_token: 'test-async-token'
     )""";
-  auto mock = MockRpcMultiCallFactory<
+
+  auto mock_for_false = MockRpcMultiCallFactory<
       btproto::CheckConsistencyRequest,
-      btproto::CheckConsistencyResponse>::Create(expected_text);
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillRepeatedly(Invoke(mock));
+      btproto::CheckConsistencyResponse>::Create(expected_text, false);
+  auto mock_for_true = MockRpcMultiCallFactory<
+      btproto::CheckConsistencyRequest,
+      btproto::CheckConsistencyResponse>::Create(expected_text, true);
+
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_true));
 
   bigtable::TableId table_id("the-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
