@@ -16,9 +16,6 @@ ARG DISTRO_VERSION=18.04
 FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
-# The default compilers in Ubuntu 14.04 are fairly old, we need to install
-# from the ubuntu-toolchain-r/test PPA.  That changes the installation steps
-# to the point where it is easier to just refactor like so:
 RUN apt update && \
     apt install -y \
         automake \

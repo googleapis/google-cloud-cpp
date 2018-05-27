@@ -64,12 +64,12 @@ tutorials.
 
 The Google Cloud C++ libraries are tested with the following compilers:
 
-| Compiler   | Minimum Version |
-| ---------- | --------------- |
-| GCC        | 4.9 |
-| Clang      | 3.8 |
-| MSVC++     | 14.1 |
-| AppleClang | 8.1 |
+| Compiler    | Minimum Version |
+| ----------- | --------------- |
+| GCC         | 4.9 |
+| Clang       | 3.8 |
+| MSVC++      | 14.1 |
+| Apple Clang | 8.1 |
 
 #### Build Tools
 
