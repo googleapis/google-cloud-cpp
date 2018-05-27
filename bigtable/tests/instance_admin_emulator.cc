@@ -92,7 +92,7 @@ class InstanceAdminEmulator final
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance not found");
     }
 
-    auto stored_instance = it->second;
+    auto& stored_instance = it->second;
 
     for (int index = 0; index != request->update_mask().paths_size(); ++index) {
       if ("display_name" == request->update_mask().paths(index)) {

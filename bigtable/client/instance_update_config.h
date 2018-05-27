@@ -108,13 +108,10 @@ class InstanceUpdateConfig {
 
  private:
   void AddPathIfNotPresent(std::string const& field_name) {
-    auto isPresent = proto_.update_mask().paths().end() !=
-                     std::find_if(proto_.update_mask().paths().begin(),
-                                  proto_.update_mask().paths().end(),
-                                  [&field_name](std::string const& i) {
-                                    return i == field_name;
-                                  });
-    if (!isPresent) {
+    auto is_present = proto_.update_mask().paths().end() !=
+                      std::find(proto_.update_mask().paths().begin(),
+                                proto_.update_mask().paths().end(), field_name);
+    if (not is_present) {
       proto_.mutable_update_mask()->add_paths(field_name);
     }
   }

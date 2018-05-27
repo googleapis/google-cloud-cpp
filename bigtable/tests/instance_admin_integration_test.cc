@@ -96,7 +96,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
 }
 
-/// @test Verify that InstanceAdmin::CreateInstance works as expected.
+/// @test Verify that InstanceAdmin::UpdateInstance works as expected.
 TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   std::string instance_id =
       "it-" + bigtable::testing::Sample(generator_, 8,
