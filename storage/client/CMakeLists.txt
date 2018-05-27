@@ -18,6 +18,8 @@ configure_file(version_info.h.in version_info.h)
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+    bucket.h
+    bucket.cc
     bucket_metadata.h
     bucket_metadata.cc
     client.h
@@ -83,6 +85,7 @@ create_bazel_config(storage_client_testing)
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
     bucket_metadata_test.cc
+    bucket_test.cc
     internal/default_client_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc

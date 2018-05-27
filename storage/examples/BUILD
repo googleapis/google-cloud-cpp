@@ -12,22 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set(storage_client_integration_tests
-    bucket_integration_test.cc
-    curl_request_integration_test.cc)
+package(default_visibility=["//visibility:public"])
+licenses(["notice"])  # Apache 2.0
 
-foreach (fname ${storage_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-        PRIVATE
-            storage_client
-            gmock
-            CURL::CURL
-            OpenSSL::SSL
-            OpenSSL::Crypto
-            Threads::Threads
-            nlohmann_json
-            storage_common_options)
-endforeach ()
+cc_binary(
+    name="storage_bucket_samples",
+    srcs=["storage_bucket_samples.cc"],
+    deps=["//storage/client:storage_client"],
+)

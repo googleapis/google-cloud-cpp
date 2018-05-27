@@ -67,6 +67,10 @@ find_package(ZLIB REQUIRED)
 add_subdirectory(client)
 add_subdirectory(tests)
 
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(examples)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(TARGETS storage_common_options nlohmann_json
