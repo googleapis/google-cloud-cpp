@@ -82,7 +82,8 @@ TEST(CurlRequestTest, SimpleJSON) {
   request.AddHeader("Content-Type: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(nl::json{{"int", 42}, {"string", "value"}});
+  std::string payload = nl::json{{"int", 42}, {"string", "value"}}.dump();
+  request.PrepareRequest(std::move(payload));
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
