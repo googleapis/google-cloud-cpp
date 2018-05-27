@@ -108,7 +108,8 @@ TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   btadmin::Instance instance_copy;
   instance_copy.CopyFrom(instance);
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
-  instance_update_config.set_display_name("foo");
+  auto const updated_display_name = instance_id + " updated";
+  instance_update_config.set_display_name(updated_display_name);
 
   auto instance_after =
       instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
@@ -120,7 +121,7 @@ TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   EXPECT_NE(std::string::npos, instance_copy.name().find(instance_id));
   EXPECT_NE(std::string::npos,
             instance_copy.name().find(InstanceTestEnvironment::project_id()));
-  EXPECT_EQ("foo", instance_after.display_name());
+  EXPECT_EQ(updated_display_name, instance_after.display_name());
   EXPECT_NE(std::string::npos, instance_copy.display_name().find(instance_id));
 }
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
