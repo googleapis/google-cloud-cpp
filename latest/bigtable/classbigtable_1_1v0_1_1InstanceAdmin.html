@@ -97,6 +97,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aed16545b8be97b6df46b956c67e36ec5"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Instance &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#aed16545b8be97b6df46b956c67e36ec5">CreateInstance</a> (<a class="el" href="classbigtable_1_1v0_1_1InstanceConfig.html">InstanceConfig</a> instance_config)</td></tr>
 <tr class="memdesc:aed16545b8be97b6df46b956c67e36ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new instance of Cloud Bigtable.  <a href="#aed16545b8be97b6df46b956c67e36ec5">More...</a><br /></td></tr>
 <tr class="separator:aed16545b8be97b6df46b956c67e36ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af68ff2f857d9d0f6a62914ed39150b35"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Cluster &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#af68ff2f857d9d0f6a62914ed39150b35">CreateCluster</a> (<a class="el" href="classbigtable_1_1v0_1_1ClusterConfig.html">ClusterConfig</a> cluster_config, bigtable::InstanceId const &amp;instance_id, bigtable::ClusterId const &amp;cluster_id)</td></tr>
+<tr class="memdesc:af68ff2f857d9d0f6a62914ed39150b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Cluster of Cloud Bigtable.  <a href="#af68ff2f857d9d0f6a62914ed39150b35">More...</a><br /></td></tr>
+<tr class="separator:af68ff2f857d9d0f6a62914ed39150b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae522a3c1a957e76cb2d6256f53b1e9dc"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Instance &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbigtable_1_1v0_1_1InstanceAdmin.html#ae522a3c1a957e76cb2d6256f53b1e9dc">UpdateInstance</a> (<a class="el" href="classbigtable_1_1v0_1_1InstanceUpdateConfig.html">InstanceUpdateConfig</a> instance_update_config)</td></tr>
 <tr class="memdesc:ae522a3c1a957e76cb2d6256f53b1e9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update an existing instance of Cloud Bigtable.  <a href="#ae522a3c1a957e76cb2d6256f53b1e9dc">More...</a><br /></td></tr>
 <tr class="separator:ae522a3c1a957e76cb2d6256f53b1e9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,6 +219,51 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="af68ff2f857d9d0f6a62914ed39150b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af68ff2f857d9d0f6a62914ed39150b35">&#9670;&nbsp;</a></span>CreateCluster()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; google::bigtable::admin::v2::Cluster &gt; bigtable::v0::InstanceAdmin::CreateCluster </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbigtable_1_1v0_1_1ClusterConfig.html">ClusterConfig</a>&#160;</td>
+          <td class="paramname"><em>cluster_config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::InstanceId const &amp;&#160;</td>
+          <td class="paramname"><em>instance_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new Cluster of Cloud Bigtable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_config</td><td>a description of the new cluster to be created. </td></tr>
+    <tr><td class="paramname">instance_id</td><td>the id of the instance in the project </td></tr>
+    <tr><td class="paramname">cluster_id</td><td>the id of the cluster in the project that needs to be created</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd>TODO(#422) implement tests and examples for CreateCluster </dd></dl>
+
+</div>
+</div>
 <a id="aed16545b8be97b6df46b956c67e36ec5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed16545b8be97b6df46b956c67e36ec5">&#9670;&nbsp;</a></span>CreateInstance()</h2>
 
