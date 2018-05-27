@@ -53,10 +53,6 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
       bigtable::testing::MakeDefaultPRNG();
 };
 
-bool UsingCloudBigtableEmulator() {
-  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
-}
-
 bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                        std::string const& instance_name) {
   return instances.end() !=
@@ -195,35 +191,31 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
 
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
-  // The emulator does not support cluster operations.
-  if (UsingCloudBigtableEmulator()) {
-    return;
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto config = IntegrationTestConfig(instance_id);
+  auto instances_list = instance_admin_->ListInstances();
+
+  for (auto const& instance : instances_list) {
+    auto clusters = instance_admin_->ListClusters(instance.name());
+    for (auto const& i : clusters) {
+      auto const npos = std::string::npos;
+      EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
+      EXPECT_NE(npos, i.name().find(instance.name()));
+    }
+    EXPECT_FALSE(clusters.empty());
   }
-  std::string id = "list-clusters-test";
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name(id);
-  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
-  clusters_config.push_back(std::make_pair(
-      id + "-cluster1", bigtable::ClusterConfig("us-central1-f", 0,
-                                                bigtable::ClusterConfig::HDD)));
-  auto instance_config =
-      bigtable::InstanceConfig(instance_id, display_name, clusters_config)
-          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
+}
 
-  // Create clusters in an instance
-  // TODO(#422) - Implement InstanceAdmin::CreateCluster
-
-  // TODO(#418) - create an instance and test that its cluster is returned here.
-  auto clusters = instance_admin_->ListClusters(id);
+/// @test Verify that default InstanceAdmin::ListClusters works as expected.
+TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
+  auto clusters = instance_admin_->ListClusters();
   for (auto const& i : clusters) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }
   EXPECT_FALSE(clusters.empty());
-
-  instance_admin_->DeleteInstance(id);
 }
 
 /// @test Verify that InstanceAdmin::UpdateCluster works as expected.
