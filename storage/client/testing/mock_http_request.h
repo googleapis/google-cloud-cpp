@@ -37,7 +37,6 @@ class MockHttpRequestHandle {
   MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
   MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(std::string const&));
-  MOCK_METHOD1(PrepareRequest, void(storage::internal::nl::json));
   MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
 
   /**
@@ -68,7 +67,6 @@ class MockHttpRequest {
   void AddQueryParameter(std::string const& name, std::string const& value);
   std::unique_ptr<char[]> MakeEscapedString(std::string const& x);
   void PrepareRequest(std::string const& payload);
-  void PrepareRequest(storage::internal::nl::json json);
   storage::internal::HttpResponse MakeRequest();
 
  private:
