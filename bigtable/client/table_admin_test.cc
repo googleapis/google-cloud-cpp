@@ -746,17 +746,15 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
 
   bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
   bigtable::ExponentialBackoffPolicy backoff_policy;
-  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
-      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
-          retry_policy, backoff_policy);
+  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
 
   bigtable::TableAdmin tested(
       client_, "the-async-instance", std::move(retry_policy),
       std::move(backoff_policy), std::move(polling_policy));
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
-consistency_token: 'test-async-token'
-    )""";
+      name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
+      consistency_token: 'test-async-token'
+)""";
 
   auto mock_for_false = MockRpcMultiCallFactory<
       btproto::CheckConsistencyRequest,
@@ -790,10 +788,7 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
 
   bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
   bigtable::ExponentialBackoffPolicy backoff_policy;
-
-  std::unique_ptr<bigtable::PollingPolicy> polling_policy =
-      bigtable::internal::make_unique<bigtable::GenericPollingPolicy<>>(
-          retry_policy, backoff_policy);
+  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
 
   bigtable::TableAdmin tested(
       client_, "the-async-instance", std::move(retry_policy),

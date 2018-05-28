@@ -105,7 +105,7 @@ class TableAdmin {
         rpc_retry_policy_(retry_policy.clone()),
         rpc_backoff_policy_(backoff_policy.clone()),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(std::move(polling_policy)) {}
+        polling_policy_(polling_policy.clone()) {}
 
   std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
@@ -224,7 +224,7 @@ class TableAdmin {
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<bigtable::PollingPolicy> polling_policy_;
+  std::shared_ptr<PollingPolicy> polling_policy_;
 };
 
 }  // namespace noex
