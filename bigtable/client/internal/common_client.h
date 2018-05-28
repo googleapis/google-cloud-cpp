@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_COMMON_CLIENT_H_
 
 #include "bigtable/client/client_options.h"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

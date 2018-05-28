@@ -27,7 +27,7 @@
 #include "bigtable/client/rpc_retry_policy.h"
 #include "bigtable/client/table_strong_types.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 #include <cinttypes>
 #include <iterator>
 
