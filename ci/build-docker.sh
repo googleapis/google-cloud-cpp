@@ -35,8 +35,19 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
   CMAKE_COMMAND="scan-build cmake"
 fi
 
+# Tweak configuration for TEST_INSTALL=yes builds.
+cmake_install_flags=""
+if [ "${TEST_INSTALL}" = "yes" ]; then
+  cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+fi
+
 echo "travis_fold:start:configure-cmake"
-${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" ${CMAKE_FLAGS:-} -H. -B"${BUILD_DIR}"
+${CMAKE_COMMAND} \
+    -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+    ${cmake_install_flags} \
+    ${CMAKE_FLAGS:-} \
+    -H. \
+    -B"${BUILD_DIR}"
 echo "travis_fold:end:configure-cmake"
 
 # If scan-build is enabled, we need to manually compile the dependencies;
@@ -83,7 +94,7 @@ if [ "${TEST_INSTALL}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
-  make -C "${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}"
+  make -C "${TEST_INSTALL_MAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}"
 fi
 
 # If document generation is enabled, run it now.
