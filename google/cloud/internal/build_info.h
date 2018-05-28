@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_
-#define GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BUILD_INFO_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BUILD_INFO_H_
 
 #include "google/cloud/version.h"
 
@@ -31,8 +31,8 @@ extern char const compiler[];
 extern char const compiler_flags[];
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_INTERNAL_BUILD_INFO_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BUILD_INFO_H_

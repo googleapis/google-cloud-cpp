@@ -108,4 +108,4 @@ class Cell {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_

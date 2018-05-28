@@ -31,4 +31,4 @@ std::string MakeRandomValue(bigtable::testing::DefaultPRNG& gen);
 }  // namespace benchmarks
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_H_
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_

@@ -36,6 +36,6 @@ class Credentials {
 std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
 }  // namespace STORAGE_CLIENT_NS
-}  // storage
+}  // namespace storage
 
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CREDENTIALS_H_
