@@ -26,20 +26,20 @@ namespace {
 #define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY std::chrono::minutes(5)
 #endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
 
-const auto default_initial_delay = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
-const auto default_maximum_delay = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
+auto const DEFAULT_INITIAL_DELAY = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
+auto const DEFAULT_MAXIMUM_DELAY = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
 }  // anonymous namespace
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(
-      default_initial_delay, default_maximum_delay));
+      DEFAULT_INITIAL_DELAY, DEFAULT_MAXIMUM_DELAY));
 }
 
 ExponentialBackoffPolicy::ExponentialBackoffPolicy()
-    : current_delay_range_(default_initial_delay),
-      maximum_delay_(default_maximum_delay) {}
+    : current_delay_range_(DEFAULT_INITIAL_DELAY),
+      maximum_delay_(DEFAULT_MAXIMUM_DELAY) {}
 
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(*this));

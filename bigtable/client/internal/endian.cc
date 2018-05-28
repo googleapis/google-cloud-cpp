@@ -29,9 +29,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-constexpr char c[sizeof(int)] = {1};
+constexpr char ENDIAN_DETECTOR[sizeof(int)] = {1};
 constexpr bool IsBigEndian() {
-  return c[0] != 1;  // ignore different type comparison
+  return ENDIAN_DETECTOR[0] != 1;  // ignore different type comparison
 }
 
 /**

@@ -32,17 +32,7 @@ add_library(firestore::client ALIAS firestore_client)
 
 include(CreateBazelConfig)
 create_bazel_config(firestore_client)
-
-option(FIRESTORE_CLIENT_CLANG_TIDY
-    "If set compiles the Cloud Firestore client with clang-tidy."
-    "")
-if (CLANG_TIDY_EXE AND FIRESTORE_CLIENT_CLANG_TIDY)
-    message(STATUS "clang-tidy build enabled.")
-    set_target_properties(
-        firestore_client PROPERTIES
-        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-endif ()
+google_cloud_cpp_add_clang_tidy(firestore_client)
 
 # List the unit tests, then setup the targets and dependencies.
 set(firestore_client_unit_tests

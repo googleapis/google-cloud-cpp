@@ -67,6 +67,10 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value_ = std::move(value);
 }
 
+// This should be Setup(), because it is "more than an accessor or modifier",
+// but barely so.  More importantly, the other policies use setup() (lowercase),
+// and we like the consistency.
+// NOLINTNEXTLINE(readability-identifier-naming)
 void MetadataUpdatePolicy::setup(grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-request-params"), value());
 }

@@ -55,7 +55,7 @@ class CurlHeaders {
   }
 
   /// Add a new header line to the contents.
-  void Append(char* header, std::size_t size);
+  void Append(char* data, std::size_t size);
 
  private:
   std::multimap<std::string, std::string> contents_;

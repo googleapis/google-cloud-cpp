@@ -76,11 +76,6 @@ void CurlRequest::PrepareRequest(std::string payload) {
   }
 }
 
-void CurlRequest::PrepareRequest(nl::json data) {
-  std::string payload = data.dump();
-  PrepareRequest(std::move(payload));
-}
-
 HttpResponse CurlRequest::MakeRequest() {
   response_payload_.Attach(curl_);
   response_headers_.Attach(curl_);

@@ -20,7 +20,7 @@ namespace bigtable {
 namespace testing {
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
-    std::string repr) {
+    std::string const& repr) {
   google::bigtable::v2::ReadRowsResponse response;
   if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
     google::cloud::internal::RaiseRuntimeError("Failed to parse " + repr);

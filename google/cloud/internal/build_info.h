@@ -21,14 +21,14 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-/// The git revision at compile time
-extern char const gitrev[];
-
 /// The compiler version
-extern char const compiler[];
+extern char const COMPILER[];
 
 /// The compiler flags
-extern char const compiler_flags[];
+extern char const COMPILER_FLAGS[];
+
+/// The git revision at compile time
+extern char const GITREV[];
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

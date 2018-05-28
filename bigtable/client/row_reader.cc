@@ -110,6 +110,8 @@ RowReader::RowReader(
       raise_on_error_(raise_on_error),
       error_retrieved_(raise_on_error) {}
 
+// The name must be all lowercase to work with range-for loops.
+// NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
     if (raise_on_error_) {
@@ -127,6 +129,8 @@ RowReader::iterator RowReader::begin() {
   return ++internal::RowReaderIterator(this, false);
 }
 
+// The name must be all lowercase to work with range-for loops.
+// NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::end() {
   return internal::RowReaderIterator(this, true);
 }

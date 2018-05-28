@@ -117,7 +117,7 @@ matrix:
       os: linux
       compiler: clang
       env:
-        CMAKE_FLAGS=-DBIGTABLE_CLIENT_CLANG_TIDY=yes
+        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04

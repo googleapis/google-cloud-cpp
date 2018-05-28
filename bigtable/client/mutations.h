@@ -305,7 +305,7 @@ class FailedMutation {
       : FailedMutation(std::move(mut), std::move(status), -1) {}
   FailedMutation(SingleRowMutation mut, google::rpc::Status status, int index)
       : mutation_(std::move(mut)),
-        status_(to_grpc_status(status)),
+        status_(ToGrpcStatus(status)),
         original_index_(index) {}
 
   FailedMutation(FailedMutation&&) = default;
@@ -323,7 +323,7 @@ class FailedMutation {
   friend class BulkMutation;
 
  private:
-  static grpc::Status to_grpc_status(google::rpc::Status const& status);
+  static grpc::Status ToGrpcStatus(google::rpc::Status const& status);
 
  private:
   SingleRowMutation mutation_;

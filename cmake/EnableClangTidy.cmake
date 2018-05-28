@@ -12,6 +12,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+option(GOOGLE_CLOUD_CPP_CLANG_TIDY
+        "If set compiles the Cloud Cloud C++ Libraries with clang-tidy."
+        "")
+
 if (${CMAKE_VERSION} VERSION_LESS "3.6")
     message(STATUS "clang-tidy is not enabled because cmake version is too old")
 else ()

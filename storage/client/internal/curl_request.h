@@ -70,13 +70,6 @@ class CurlRequest {
   void PrepareRequest(std::string payload);
 
   /**
-   * Make a request with the given payload.
-   *
-   * @param payload The JSON object to send as part of the request.
-   */
-  void PrepareRequest(nl::json payload);
-
-  /**
    * Make the prepared request.
    *
    * @return The response HTTP error code and the response payload.
