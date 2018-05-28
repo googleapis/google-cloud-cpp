@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "firestore/client/field_path.h"
+#include "google/cloud/firestore/field_path.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char* argv[]) {

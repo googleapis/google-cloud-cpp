@@ -59,7 +59,6 @@ add_custom_target(skip-scanbuild-targets)
 # Add subprojects here.
 add_subdirectory(google/cloud)
 add_subdirectory(bigtable)
-add_subdirectory(firestore)
 add_subdirectory(storage)
 
 # These are tests to reproduce problems in gRPC and other dependencies.

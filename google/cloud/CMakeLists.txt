@@ -131,3 +131,5 @@ install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
+
+add_subdirectory(firestore)

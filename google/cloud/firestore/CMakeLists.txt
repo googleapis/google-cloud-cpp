@@ -12,6 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This should be included from the top level CMakeLists file
+set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
+set(FIRESTORE_CLIENT_VERSION_MINOR 0)
+set(FIRESTORE_CLIENT_VERSION_PATCH 1)
+
+# Configure the Compiler options, we will be using C++11 features.
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
+set(DOXYGEN_PROJECT_NUMBER
+        "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}")
+set(DOXYGEN_EXAMPLE_PATH examples)
+set(DOXYGEN_PREDEFINED "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
+
+include(GoogleCloudCppCommon)
+
+# Define an interface library, i.e., a library that really has no sources, and
+# add public target options to it.  The targets then use the library via
+# target_link_libraries(target PRIVATE firestore_common_options), which
+# implicitly adds the options to those targets, but does *not* add the options
+# to any targets that depend on them.  This is a CMake idiom to add options to
+# targets without having to painfully set special variables, it also allows
+# users to add more common options without having to touch the code.
+add_library(firestore_common_options INTERFACE)
+google_cloud_cpp_add_common_options(firestore_common_options)
+
+# Enable unit tests
+enable_testing()
+
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
 
@@ -51,16 +83,28 @@ foreach (fname ${firestore_client_unit_tests})
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS
+        EXPORT firestore-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# The exports can only be installed if all the dependencies are installed.
+# CMake needs to know where the submodules will be installed from,
+install(EXPORT firestore-targets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+
 install(TARGETS firestore_client
     EXPORT firestore-targets
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/firestore/client
+install(DIRECTORY . DESTINATION include/google/cloud/firestore
         FILES_MATCHING PATTERN "*.h"
         PATTERN "testing/*" EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-    DESTINATION include/firestore/client)
+    DESTINATION include/google/cloud/firestore)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${FIRESTORE_CLIENT_VERSION_MAJOR})

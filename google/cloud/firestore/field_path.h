@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_FIRESTORE_CLIENT_FIELD_PATH_H_
-#define GOOGLE_CLOUD_CPP_FIRESTORE_CLIENT_FIELD_PATH_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FIRESTORE_FIELD_PATH_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FIRESTORE_FIELD_PATH_H_
 
 #include <iostream>
 #include <regex>
@@ -183,4 +183,4 @@ class FieldPath {
 };
 }  // namespace firestore
 
-#endif  // GOOGLE_CLOUD_CPP_FIRESTORE_CLIENT_FIELD_PATH_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FIRESTORE_FIELD_PATH_H_
