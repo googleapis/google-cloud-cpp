@@ -323,7 +323,7 @@ class FailedMutation {
   friend class BulkMutation;
 
  private:
-  static grpc::Status ToGrpcStatus(google::rpc::Status const &status);
+  static grpc::Status ToGrpcStatus(google::rpc::Status const& status);
 
  private:
   SingleRowMutation mutation_;
