@@ -36,8 +36,8 @@ using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
-using bigtable::testing::MockReadRowsReader;
 using bigtable::Row;
+using bigtable::testing::MockReadRowsReader;
 
 namespace {
 class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {

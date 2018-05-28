@@ -46,14 +46,12 @@ TEST(BucketMetadataTest, Parse) {
             actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
-  EXPECT_EQ(1526758274L,
-            duration_cast<std::chrono::seconds>(
-                actual.time_created().time_since_epoch())
-                .count());
-  EXPECT_EQ(1526758284L,
-            duration_cast<std::chrono::seconds>(
-                actual.time_updated().time_since_epoch())
-                .count());
+  EXPECT_EQ(1526758274L, duration_cast<std::chrono::seconds>(
+                             actual.time_created().time_since_epoch())
+                             .count());
+  EXPECT_EQ(1526758284L, duration_cast<std::chrono::seconds>(
+                             actual.time_updated().time_since_epoch())
+                             .count());
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.

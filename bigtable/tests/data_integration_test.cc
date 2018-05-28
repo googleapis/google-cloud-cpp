@@ -402,13 +402,14 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
       {row_key1, family3, "column-id3", 2000, add_suffix3, {}}};
 
   CreateCells(*table, created);
-  auto result_row = table->ReadModifyWriteRow(
-      row_key1, bigtable::ReadModifyWriteRule::AppendValue(
-                    family1, "column-id1", add_suffix1),
-      bigtable::ReadModifyWriteRule::AppendValue(family2, "column-id2",
-                                                 add_suffix2),
-      bigtable::ReadModifyWriteRule::AppendValue(family3, "column-id3",
-                                                 add_suffix3));
+  auto result_row =
+      table->ReadModifyWriteRow(row_key1,
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family1, "column-id1", add_suffix1),
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family2, "column-id2", add_suffix2),
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family3, "column-id3", add_suffix3));
 
   // Returned cells contains timestamp in microseconds which is
   // not matching with the timestamp in expected cells, So creating

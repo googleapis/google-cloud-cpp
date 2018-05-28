@@ -29,42 +29,38 @@ template <typename Exception>
   std::abort();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
-}
+}  // namespace
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-[[noreturn]] void RaiseInvalidArgument(char const* msg) {
+void RaiseInvalidArgument(char const* msg) {
   RaiseException<std::invalid_argument>(msg);
 }
 
-[[noreturn]] void RaiseInvalidArgument(std::string const& msg) {
+void RaiseInvalidArgument(std::string const& msg) {
   RaiseException<std::invalid_argument>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRangeError(char const* msg) {
-  RaiseException<std::range_error>(msg);
-}
+void RaiseRangeError(char const* msg) { RaiseException<std::range_error>(msg); }
 
-[[noreturn]] void RaiseRangeError(std::string const& msg) {
+void RaiseRangeError(std::string const& msg) {
   RaiseException<std::range_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseRuntimeError(char const* msg) {
+void RaiseRuntimeError(char const* msg) {
   RaiseException<std::runtime_error>(msg);
 }
 
-[[noreturn]] void RaiseRuntimeError(std::string const& msg) {
+void RaiseRuntimeError(std::string const& msg) {
   RaiseException<std::runtime_error>(msg.c_str());
 }
 
-[[noreturn]] void RaiseLogicError(char const* msg) {
-  RaiseException<std::logic_error>(msg);
-}
+void RaiseLogicError(char const* msg) { RaiseException<std::logic_error>(msg); }
 
-[[noreturn]] void RaiseLogicError(std::string const& msg) {
+void RaiseLogicError(std::string const& msg) {
   RaiseException<std::logic_error>(msg.c_str());
 }
 

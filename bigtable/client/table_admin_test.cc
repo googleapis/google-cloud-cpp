@@ -47,49 +47,52 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
-  return [expected_token, returned_token, table_names](
-      grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-      btproto::ListTablesResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(btproto::Table::FULL, request.view());
-    EXPECT_EQ(expected_token, request.page_token());
+  return
+      [expected_token, returned_token, table_names](
+          grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
+          btproto::ListTablesResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(btproto::Table::FULL, request.view());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& table_name : table_names) {
-      auto& table = *response->add_tables();
-      table.set_name(instance_name + "/tables/" + table_name);
-      table.set_granularity(btproto::Table::MILLIS);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
+        EXPECT_NE(nullptr, response);
+        for (auto const& table_name : table_names) {
+          auto& table = *response->add_tables();
+          table.set_name(instance_name + "/tables/" + table_name);
+          table.set_granularity(btproto::Table::MILLIS);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
 };
 
 // A lambda to generate snapshot list.
-auto create_list_snapshots_lambda = [](
-    std::string expected_token, std::string returned_token,
-    std::vector<std::string> snapshot_names) {
-  return [expected_token, returned_token, snapshot_names](
-      grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
-      btproto::ListSnapshotsResponse* response) {
-    auto cluster_name = "projects/" + kProjectId + "/instances/" + kInstanceId;
-    cluster_name += "/clusters/" + kClusterId;
-    EXPECT_EQ(cluster_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_snapshots_lambda =
+    [](std::string expected_token, std::string returned_token,
+       std::vector<std::string> snapshot_names) {
+      return [expected_token, returned_token, snapshot_names](
+                 grpc::ClientContext* ctx,
+                 btproto::ListSnapshotsRequest const& request,
+                 btproto::ListSnapshotsResponse* response) {
+        auto cluster_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        cluster_name += "/clusters/" + kClusterId;
+        EXPECT_EQ(cluster_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& snapshot_name : snapshot_names) {
-      auto& snapshot = *response->add_snapshots();
-      snapshot.set_name(cluster_name + "/snapshots/" + snapshot_name);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& snapshot_name : snapshot_names) {
+          auto& snapshot = *response->add_snapshots();
+          snapshot.set_name(cluster_name + "/snapshots/" + snapshot_name);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -860,11 +863,11 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
   using namespace bigtable::chrono_literals;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
-      btproto::ListSnapshotsResponse* response) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
+         btproto::ListSnapshotsResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
 
   auto list0 = create_list_snapshots_lambda("", "token-001", {"s0", "s1"});
   auto list1 = create_list_snapshots_lambda("token-001", "", {"s2", "s3"});

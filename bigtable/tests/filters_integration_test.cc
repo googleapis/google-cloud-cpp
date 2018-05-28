@@ -65,7 +65,7 @@ class FilterIntegrationTest : public bigtable::testing::TableIntegrationTest {
 /// Return true if connected to the Cloud Bigtable Emulator.
 bool UsingCloudBigtableEmulator();
 
-}  // namespace anonymous
+}  // namespace
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
@@ -607,22 +607,19 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
       prefix + "/one-cell", {bt::SetCell("fam0", "c", 3_ms, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/two-cells",
-                            {bt::SetCell("fam0", "c", 3_ms, "foo"),
-                             bt::SetCell("fam0", "c2", 3_ms, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many",
-                            {bt::SetCell("fam0", "c", 0_ms, "foo"),
-                             bt::SetCell("fam0", "c", 1_ms, "foo"),
-                             bt::SetCell("fam0", "c", 2_ms, "foo"),
-                             bt::SetCell("fam0", "c", 3_ms, "foo")}));
-  mutation.emplace_back(
-      bt::SingleRowMutation(prefix + "/many-columns",
-                            {bt::SetCell("fam0", "c0", 3_ms, "foo"),
-                             bt::SetCell("fam0", "c1", 3_ms, "foo"),
-                             bt::SetCell("fam0", "c2", 3_ms, "foo"),
-                             bt::SetCell("fam0", "c3", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/two-cells", {bt::SetCell("fam0", "c", 3_ms, "foo"),
+                              bt::SetCell("fam0", "c2", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many", {bt::SetCell("fam0", "c", 0_ms, "foo"),
+                         bt::SetCell("fam0", "c", 1_ms, "foo"),
+                         bt::SetCell("fam0", "c", 2_ms, "foo"),
+                         bt::SetCell("fam0", "c", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many-columns", {bt::SetCell("fam0", "c0", 3_ms, "foo"),
+                                 bt::SetCell("fam0", "c1", 3_ms, "foo"),
+                                 bt::SetCell("fam0", "c2", 3_ms, "foo"),
+                                 bt::SetCell("fam0", "c3", 3_ms, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
@@ -641,4 +638,4 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
 bool UsingCloudBigtableEmulator() {
   return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
 }
-}  // namespace anonymous
+}  // namespace

@@ -86,9 +86,9 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
   Row const* operator->() const { return row_.get(); }
   Row* operator->() { return row_.get(); }
 
-  Row const& operator*() const & { return row_.value(); }
+  Row const& operator*() const& { return row_.value(); }
   Row& operator*() & { return row_.value(); }
-  Row const&& operator*() const && { return std::move(row_.value()); }
+  Row const&& operator*() const&& { return std::move(row_.value()); }
   Row&& operator*() && { return std::move(row_.value()); }
 
   bool operator==(RowReaderIterator const& that) const {
