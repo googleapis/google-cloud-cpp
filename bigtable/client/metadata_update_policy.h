@@ -17,7 +17,7 @@
 
 #include "bigtable/client/bigtable_strong_types.h"
 #include "bigtable/client/version.h"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 #include <memory>
 
 namespace bigtable {

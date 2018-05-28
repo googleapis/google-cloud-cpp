@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_GRPC_ERROR_H_
 
 #include "bigtable/client/version.h"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 #include <stdexcept>
 
 namespace bigtable {

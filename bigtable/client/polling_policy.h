@@ -18,7 +18,7 @@
 #include "bigtable/client/rpc_backoff_policy.h"
 #include "bigtable/client/rpc_retry_policy.h"
 #include "bigtable/client/version.h"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

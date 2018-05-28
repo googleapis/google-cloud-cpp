@@ -71,11 +71,29 @@ find google/cloud bigtable firestore storage -name '*.h' -print0 \
   }'
 
 # This script assumes it is running the top-level google-cloud-cpp directory.
+
+# Apply clang-format(1) to fix whitespace and other formatting rules.
+# The version of clang-format is important, different versions have slightly
+# different formatting output (sigh).
 find . \( -path ./.git -prune -o -path ./third_party -prune \
           -o -path './cmake-build-*' -o -path ./build-output -prune \
           -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
      -o \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
+
+# Replace any #include for grpc++/grpc++.h with grpcpp/grpcpp.h, and in general,
+# any include of grpc++/ files with grpcpp/.  The paths with grpc++ are
+# obsoleted by the gRPC team, so we should not use them in our code.
+find . \( -path ./.git -prune -o -path ./third_party -prune \
+          -o -path './cmake-build-*' -o -path ./build-output -prune \
+          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
+     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
+     |  xargs -0 sed -i 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;'
+find . \( -path ./.git -prune -o -path ./third_party -prune \
+          -o -path './cmake-build-*' -o -path ./build-output -prune \
+          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
+     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
+     |  xargs -0 sed -i 's;#include <grpc\\+\\+/;#include <grpcpp/;'
 
 # Report any differences created by running clang-format.
 git diff --ignore-submodules=all --color --exit-code .

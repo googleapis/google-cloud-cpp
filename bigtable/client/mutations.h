@@ -20,7 +20,7 @@
 
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <type_traits>
 

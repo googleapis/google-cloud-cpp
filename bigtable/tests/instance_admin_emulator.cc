@@ -15,7 +15,7 @@
 #include "bigtable/client/internal/make_unique.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 
 namespace btadmin = google::bigtable::admin::v2;
 

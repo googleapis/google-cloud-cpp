@@ -17,7 +17,7 @@
 
 #include "bigtable/client/version.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
