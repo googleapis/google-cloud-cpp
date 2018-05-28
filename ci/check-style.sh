@@ -81,8 +81,14 @@ find . \( -path ./.git -prune -o -path ./third_party -prune \
      -o \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
 
-# Replace any #include for grpc++/ files with grpcpp/.  The former are obsoleted
-# so we should not use them in our code.
+# Replace any #include for grpc++/grpc++.h with grpcpp/grpcpp.h, and in general,
+# any include of grpc++/ files with grpcpp/.  The paths with grpc++ are
+# obsoleted by the gRPC team, so we should not use them in our code.
+find . \( -path ./.git -prune -o -path ./third_party -prune \
+          -o -path './cmake-build-*' -o -path ./build-output -prune \
+          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
+     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
+     |  xargs -0 sed -i 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;'
 find . \( -path ./.git -prune -o -path ./third_party -prune \
           -o -path './cmake-build-*' -o -path ./build-output -prune \
           -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
