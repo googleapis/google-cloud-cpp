@@ -92,9 +92,11 @@ TEST_F(AdminIntegrationTest, TableListWithSingleTableTest) {
   auto table = CreateTable(table_id, table_config);
   auto current_table_list =
       table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
-  DeleteTable(table_id);
-
   EXPECT_EQ(1, CountMatchingTables(table_id, current_table_list));
+
+  DeleteTable(table_id);
+  current_table_list = table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  EXPECT_EQ(0, CountMatchingTables(table_id, current_table_list));
 }
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
@@ -122,8 +124,15 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
       table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
-    DeleteTable(table_id);
     EXPECT_EQ(1, CountMatchingTables(table_id, current_table_list));
+  }
+  for (auto const& table_id : expected_table_list) {
+    DeleteTable(table_id);
+  }
+  current_table_list = table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  // Delete the tables so future tests have a clean slate.
+  for (auto const& table_id : expected_table_list) {
+    EXPECT_EQ(0, CountMatchingTables(table_id, current_table_list));
   }
 }
 
