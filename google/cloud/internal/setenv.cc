@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #else
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
-#include <stdlib.h>
+#include <cstdlib>
 #endif  // WIN32
 
 namespace google {

@@ -16,7 +16,7 @@
 #include <sstream>
 
 namespace {
-constexpr char const* kKnownCodes[] = {
+constexpr char const* KNOWN_STATUS_CODES[] = {
     "OK",
     "CANCELLED",
     "UNKNOWN",
@@ -35,7 +35,8 @@ constexpr char const* kKnownCodes[] = {
     "DATA_LOSS",
     "UNAUTHENTICATED",
 };
-constexpr int kKnownCodesSize = sizeof(kKnownCodes) / sizeof(kKnownCodes[0]);
+constexpr int KNOWN_STATUS_CODES_SIZE =
+    sizeof(KNOWN_STATUS_CODES) / sizeof(KNOWN_STATUS_CODES[0]);
 }  // anonymous namespace
 
 namespace bigtable {
@@ -52,8 +53,8 @@ std::string GRpcError::CreateWhatString(char const* what,
   os << what << ": " << status.error_message() << " [" << status.error_code()
      << "=";
   int const index = status.error_code();
-  if (0 <= index and index < kKnownCodesSize) {
-    os << kKnownCodes[status.error_code()];
+  if (0 <= index and index < KNOWN_STATUS_CODES_SIZE) {
+    os << KNOWN_STATUS_CODES[status.error_code()];
   } else {
     os << "(UNKNOWN CODE)";
   }

@@ -109,17 +109,7 @@ add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)
 create_bazel_config(bigtable_client)
-
-option(BIGTABLE_CLIENT_CLANG_TIDY
-    "If set compiles the Cloud Bigtable client with clang-tidy."
-    "")
-if (CLANG_TIDY_EXE AND BIGTABLE_CLIENT_CLANG_TIDY)
-    message(STATUS "clang-tidy build enabled.")
-    set_target_properties(
-        bigtable_client PROPERTIES
-        CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-    )
-endif ()
+google_cloud_cpp_add_clang_tidy(bigtable_client)
 
 add_library(bigtable_client_testing
         testing/chrono_literals.h

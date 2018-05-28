@@ -193,7 +193,7 @@ which combinations are tested regularly.
      same options to avoid false positives.
    * All the sanitizers require Clang, remember to select the compiler as
      described above.
- * `-DBIGTABLE_CLIENT_CLANG_TIDY=yes`: configure the build to run `clang-tidy`
-   for the code in the `bigtable/` subdirectory.  Check the
+ * `-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes`: configure the build to run `clang-tidy`
+   for the Google Cloud C++ Libraries.  Check the
    [configuration file](.clang-tidy) for details on what `clang-tidy` options
    we use.

@@ -127,7 +127,7 @@ std::chrono::system_clock::duration ParseFractionalSeconds(
   // Skip any other digits. This loses precision for sub-nanosecond timestamps,
   // but we do not consider this a problem for Internet timestamps.
   buffer += pos;
-  while (std::isdigit(buffer[0])) {
+  while (std::isdigit(buffer[0]) != 0) {
     ++buffer;
   }
   return std::chrono::duration_cast<std::chrono::system_clock::duration>(
@@ -180,7 +180,7 @@ std::chrono::system_clock::time_point ParseRfc3339(
   // does not change during the lifetime of the program.  This function takes
   // the current time, converts to UTC and then convert back to a time_t.  The
   // difference is the offset.
-  static std::chrono::seconds const LOCALTIME_OFFSET = []() {
+  static std::chrono::seconds const localtime_offset = []() {
     auto now = std::time(nullptr);
     std::tm lcl;
 // The standard C++ function to convert time_t to a struct tm is not thread
@@ -204,7 +204,7 @@ std::chrono::system_clock::time_point ParseRfc3339(
 
   time_point += fractional_seconds;
   time_point -= offset;
-  time_point -= LOCALTIME_OFFSET;
+  time_point -= localtime_offset;
   return time_point;
 }
 

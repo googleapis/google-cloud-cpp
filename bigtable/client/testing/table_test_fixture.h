@@ -46,7 +46,7 @@ class TableTestFixture : public ::testing::Test {
 };
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
-    std::string repr);
+    std::string const& repr);
 
 }  // namespace testing
 }  // namespace bigtable

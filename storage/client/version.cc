@@ -18,14 +18,14 @@
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+// NOLINTNEXTLINE(readability-identifier-naming)
 std::string version_string() {
-  auto create_version = []() -> std::string {
+  static std::string const version = [] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch() << "+" << google::cloud::internal::gitrev;
+       << version_patch() << "+" << google::cloud::internal::GITREV;
     return os.str();
-  };
-  static std::string const version = create_version();
+  }();
   return version;
 }
 }  // namespace STORAGE_CLIENT_NS

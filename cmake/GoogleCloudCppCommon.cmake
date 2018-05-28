@@ -96,3 +96,12 @@ function(google_cloud_cpp_add_common_options target)
         target_compile_options(${target} INTERFACE "-Werror")
     endif ()
 endfunction()
+
+function (google_cloud_cpp_add_clang_tidy target)
+    if (CLANG_TIDY_EXE AND GOOGLE_CLOUD_CPP_CLANG_TIDY)
+        set_target_properties(
+                ${target} PROPERTIES
+                CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+        )
+    endif ()
+endfunction ()

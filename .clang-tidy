@@ -7,7 +7,7 @@
 Checks: google-readability-*,modernize-*,readability-*,performance-*,-google-readability-namespace-comments
 
 # Enable most warnings as errors.
-WarningsAsErrors: clang-*,google-*,modernize-*,readability-*,performance-*,-readability-identifier-naming
+WarningsAsErrors: clang-*,google-*,modernize-*,readability-*,performance-*
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
@@ -21,4 +21,5 @@ CheckOptions:
   - { key: readability-identifier-naming.MacroDefinitionCase,    value: UPPER_CASE }
   - { key: readability-identifier-naming.EnumConstantCase,       value: UPPER_CASE }
   - { key: readability-identifier-naming.ConstexprVariableCase,  value: UPPER_CASE }
-  - { key: readability-identifier-naming.ConstantCase,           value: UPPER_CASE }
+  - { key: readability-identifier-naming.GlobalConstantCase,     value: UPPER_CASE }
+  - { key: readability-identifier-naming.MemberConstantCase,     value: UPPER_CASE }

@@ -23,7 +23,7 @@ class CurlInitializer {
   ~CurlInitializer() { curl_global_cleanup(); }
 };
 
-CurlInitializer CURL_INITIALIZER;
+CurlInitializer const CURL_INITIALIZER;
 
 extern "C" std::size_t WriteCallback(void* contents, std::size_t size,
                                      std::size_t nmemb, void* dest) {

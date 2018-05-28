@@ -24,7 +24,7 @@ namespace {
 #define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::hours(1)
 #endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
 
-const auto maximum_retry_period = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
+auto const MAXIMUM_RETRY_PERIOD = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
 
 }  // anonymous namespace
 
@@ -32,11 +32,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
   return std::unique_ptr<RPCRetryPolicy>(
-      new LimitedTimeRetryPolicy(maximum_retry_period));
+      new LimitedTimeRetryPolicy(MAXIMUM_RETRY_PERIOD));
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()
-    : maximum_duration_(maximum_retry_period),
+    : maximum_duration_(MAXIMUM_RETRY_PERIOD),
       deadline_(std::chrono::system_clock::now() + maximum_duration_) {}
 
 std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {

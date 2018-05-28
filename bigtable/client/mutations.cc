@@ -60,7 +60,7 @@ Mutation DeleteFromRow() {
   return m;
 }
 
-grpc::Status FailedMutation::to_grpc_status(google::rpc::Status const& status) {
+grpc::Status FailedMutation::ToGrpcStatus(google::rpc::Status const &status) {
   std::string details;
   if (not google::protobuf::TextFormat::PrintToString(status, &details)) {
     details = "error [could not print details as string]";

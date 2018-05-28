@@ -73,29 +73,6 @@ TEST(CurlRequestTest, RepeatedGET) {
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
 
-TEST(CurlRequestTest, SimpleJSON) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
-  request.AddQueryParameter("foo", "bar&baz");
-  request.AddQueryParameter("qux", "quux-123");
-  request.AddHeader("Accept: application/json");
-  request.AddHeader("Content-Type: application/json");
-  request.AddHeader("charsets: utf-8");
-
-  request.PrepareRequest(nl::json{{"int", 42}, {"string", "value"}});
-  auto response = request.MakeRequest();
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
-  nl::json args = parsed["args"];
-  EXPECT_EQ("bar&baz", args["foo"].get<std::string>());
-  EXPECT_EQ("quux-123", args["qux"].get<std::string>());
-
-  std::string data_text = parsed["data"].get<std::string>();
-  nl::json data = nl::json::parse(data_text);
-  EXPECT_EQ(42, data["int"].get<int>());
-  EXPECT_EQ("value", data["string"].get<std::string>());
-}
-
 TEST(CurlRequestTest, SimplePOST) {
   // TODO(#542) - use a local server to make tests more hermetic.
   storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");

@@ -178,9 +178,9 @@ TEST(BenchmarkTest, PrintCsv) {
 
   // The output includes the version and compiler info.
   EXPECT_NE(std::string::npos, output.find(bigtable::version_string()));
-  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::compiler));
+  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::COMPILER));
   EXPECT_NE(std::string::npos,
-            output.find(google::cloud::internal::compiler_flags));
+            output.find(google::cloud::internal::COMPILER_FLAGS));
 
   // The output includes the latency results.
   EXPECT_NE(std::string::npos, output.find(",100,"));    // p0

@@ -75,6 +75,7 @@ target_compile_options(google_cloud_cpp_common PUBLIC
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
+google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 set(google_cloud_cpp_common_unit_tests
     internal/throw_delegate_test.cc)
