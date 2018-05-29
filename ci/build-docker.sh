@@ -37,7 +37,7 @@ fi
 
 # Tweak configuration for TEST_INSTALL=yes builds.
 cmake_install_flags=""
-if [ "${TEST_INSTALL}" = "yes" ]; then
+if [ "${TEST_INSTALL:-}" = "yes" ]; then
   cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
 fi
 
@@ -80,7 +80,7 @@ for subdir in bigtable storage; do
 done
 
 # Test the install rule and that the installation works.
-if [ "${TEST_INSTALL}" = "yes" ]; then
+if [ "${TEST_INSTALL:-}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   cmake --build . --target install

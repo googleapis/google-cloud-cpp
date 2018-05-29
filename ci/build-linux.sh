@@ -32,7 +32,7 @@ fi
 # creating root-owned files in the build directory.
 docker_uid=0
 if [ "${TEST_INSTALL:-}" != "yes" ]; then
-  docker_uid=${UID:-0}
+  docker_uid="${UID:-0}"
 fi
 
 sudo docker run \
