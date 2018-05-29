@@ -77,8 +77,12 @@
  */
 
 #include "google/cloud/version.h"
+#include <atomic>
+#include <chrono>
 #include <iostream>
+#include <map>
 #include <memory>
+#include <mutex>
 #include <sstream>
 
 namespace google {
@@ -115,21 +119,26 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * and the variables are scoped correctly. The for-loop also affords us an
  * opportunity to check that the log level is enabled before entering the body
  * of the loop, and if disabled we can minimize the cost of the log. For
- * example, disable logs do not create an iostream at all.  Finally, the type
- * of the GOOGLE_CLOUD_CPP_LOG_RECORD_IDENTIFIER changes if the log level is
- * disabled at compile-time. For compile-time disabled log levels the compiler
- * should be able to determine that the loop will not execute at all, and
- * completely eliminate it.
+ * example, disabled logs do not create an iostream at all.
+ *
+ * Finally, the type of the GOOGLE_CLOUD_CPP_LOG_RECORD_IDENTIFIER changes if
+ * the log level is disabled at compile-time. For compile-time disabled log
+ * levels the compiler should be able to determine that the loop will not
+ * execute at all, and completely eliminate the code (we verified this using
+ * godbolt.org with modern GCC and Clang versions).
+ *
+ * Note the use of fully-qualified class names, including the initial `::`, this
+ * is to prevent problems if anybody uses this macro in a context where `Logger`
+ * is defined by the enclosing namespaces.
  */
 #define GOOGLE_CLOUD_CPP_LOG_I(level, sink)                                    \
-  for (auto GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER =                           \
-           ::google::cloud::LogRecord<                                         \
-               ::google::cloud::Log::CompileTimeEnabled(                       \
-                   ::google::cloud::Severity::level)>(                         \
+  for (auto GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER =                               \
+           ::google::cloud::Logger<::google::cloud::Log::CompileTimeEnabled(   \
+               ::google::cloud::Severity::level)>(                             \
                ::google::cloud::Severity::level, __func__, __FILE__, __LINE__, \
                sink);                                                          \
-       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.Enabled();                       \
-       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.Dump(sink))                      \
+       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.enabled();                           \
+       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.LogTo(sink))                         \
   GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.Stream()
 
 /**
@@ -137,7 +146,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  *
  *
  */
-#define GCP_LOG(level) NullStream()
+#define GCP_LOG(level) GOOGLE_CLOUD_CPP_LOG_I(level, LogSink::Instance())
 
 #ifndef GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
 #define GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED NOTICE
@@ -182,20 +191,91 @@ enum class Severity {
 /// Streaming operator, writes a human readable representation.
 std::ostream& operator<<(std::ostream& os, Severity x);
 
-class Log {
+/**
+ * Represents a single log message.
+ */
+struct LogRecord {
+  Severity severity;
+  std::string function;
+  std::string filename;
+  int lineno;
+  std::chrono::system_clock::time_point timestamp;
+  std::string message;
+};
+
+/**
+ * A sink to receive log records.
+ */
+class LogBackend {
  public:
-  Log() : minimum_severity_(Severity::LOWEST_ENABLED) {}
+  virtual ~LogBackend() = default;
 
-  bool has_sinks() { return false; }
-  void set_minimum_severity(Severity minimum) { minimum_severity_ = minimum; }
-  Severity minimum_severity() const { return minimum_severity_; }
+  virtual void Process(LogRecord const& log_record) = 0;
+};
 
+/**
+ *
+ */
+class LogSink {
+ public:
+  LogSink();
+
+  /// Return true if the severity is enabled at compile time.
   constexpr static bool CompileTimeEnabled(Severity level) {
     return level >= Severity::LOWEST_ENABLED;
   }
 
+  /**
+   * Return the singleton instance for this application.
+   */
+  static LogSink& Instance();
+
+  /**
+   * Return true if this object has no backends.
+   *
+   * We want to avoid synchronization overhead when checking if a log message is
+   * enabled. Most of the time, most messages will be disabled, so incurring the
+   * locking overhead on each message would be too expensive and would
+   * discourage developers from creating logs. Furthermore, missing a few
+   * messages while the change of state "propagates" to other threads does not
+   * affect the correctness of the program.
+   */
+  bool empty() const { return empty_.load(std::memory_order_relaxed); }
+
+  /**
+   * Return true if @p severity is enabled.
+   *
+   * We want to avoid synchronization overhead when checking if a log message is
+   * enabled. Most of the time, most messages will be disabled, so incurring the
+   * locking overhead on each message would be too expensive and would
+   * discourage developers from creating logs. Furthermore, missing a few
+   * messages while the change of state "propagates" to other threads does not
+   * affect the correctness of the program.
+   */
+  bool is_enabled(Severity severity) const {
+    auto minimum = minimum_severity_.load(std::memory_order_relaxed);
+    return static_cast<int>(severity) >= minimum;
+  }
+
+  void set_minimum_severity(Severity minimum) {
+    minimum_severity_.store(static_cast<int>(minimum));
+  }
+  Severity minimum_severity() const {
+    return static_cast<Severity>(minimum_severity_.load());
+  }
+
+  long AddBackend(std::shared_ptr<LogBackend> backend);
+  void RemoveBackend(long id);
+  void ClearBackends();
+
+  void Log(LogRecord const& log_record);
+
  private:
-  Severity minimum_severity_;
+  std::atomic<bool> empty_;
+  std::atomic<int> minimum_severity_;
+  std::mutex mu_;
+  long next_id_;
+  std::map<long, std::shared_ptr<LogBackend>> backends_;
 };
 
 /**
@@ -216,17 +296,42 @@ struct NullStream {
 
 /**
  * Define the class to capture a log message.
+ *
+ * @tparam compile_time_enabled this represents whether the severity has been
+ *   disabled at compile-time. The class is specialized for `false` to minimize
+ *   the run-time impact of (and in practice completely elide) disabled logs.
  */
-template <bool enabled>
+template <bool compile_time_enabled>
 class Logger {
  public:
-  Logger(Severity severity, char const* function, char const* filename, int lineno, Log& sink)
-  : severity_(severity), function_(function), filename_(filename), lineno_(lineno) {
-    enabled_ = true;
+  Logger(Severity severity, char const* function, char const* filename,
+         int lineno, LogSink& sink)
+      : severity_(severity),
+        function_(function),
+        filename_(filename),
+        lineno_(lineno) {
+    enabled_ = not sink.empty() and sink.is_enabled(severity);
   }
 
-  bool Enabled() const { return enabled_; }
-  void Dump(Log&) {}
+  bool enabled() const { return enabled_; }
+
+  /// Send the log record captured by this object to @p sink.
+  void LogTo(LogSink& sink) {
+    if (not stream_ or not enabled_) {
+      return;
+    }
+    enabled_ = false;
+    LogRecord record;
+    record.severity = severity_;
+    record.function = function_;
+    record.filename = filename_;
+    record.lineno = lineno_;
+    record.timestamp = std::chrono::system_clock::now();
+    record.message = stream_->str();
+    sink.Log(record);
+  }
+
+  /// Return the iostream that captures the log message.
   std::ostream& Stream() {
     if (not stream_) {
       stream_.reset(new std::ostringstream);
@@ -235,11 +340,11 @@ class Logger {
   }
 
  private:
+  bool enabled_;
   Severity severity_;
   char const* function_;
   char const* filename_;
   int lineno_;
-  bool enabled_;
   std::unique_ptr<std::ostringstream> stream_;
 };
 
@@ -249,11 +354,17 @@ class Logger {
 template <>
 class Logger<false> {
  public:
-  Logger<false>(Severity, char const*, char const*, int, Log&) {}
+  Logger<false>(Severity, char const*, char const*, int, LogSink&) {}
 
-  constexpr bool Enabled() const { return false; }
-  void Dump(Log&) {}
+  //@{
+  /**
+   * @name Provide trivial implementations that meet the generic `Logger<bool>`
+   * interface.
+   */
+  constexpr bool enabled() const { return false; }
+  void LogTo(LogSink&) {}
   NullStream Stream() { return NullStream(); }
+  //@}
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

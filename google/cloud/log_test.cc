@@ -13,19 +13,51 @@
 // limitations under the License.
 
 #include "google/cloud/log.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 using namespace google::cloud;
 
-TEST(LogTest, Streaming) {
+TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
   os << Severity::TRACE;
   EXPECT_EQ("TRACE", os.str());
 }
 
-TEST(LogTest, CompileTimeEnabled) {
-  EXPECT_TRUE(Log::CompileTimeEnabled(Severity::CRITICAL));
+TEST(LogSinkTest, CompileTimeEnabled) {
+  EXPECT_TRUE(LogSink::CompileTimeEnabled(Severity::CRITICAL));
   if (Severity::LOWEST_ENABLED >= Severity::TRACE) {
-    EXPECT_FALSE(Log::CompileTimeEnabled(Severity::TRACE));
+    EXPECT_FALSE(LogSink::CompileTimeEnabled(Severity::TRACE));
   }
+}
+
+TEST(LogSinkTest, RuntimeSeverity) {
+  LogSink sink;
+  EXPECT_EQ(Severity::LOWEST_ENABLED, sink.minimum_severity());
+  sink.set_minimum_severity(Severity::ERROR);
+  EXPECT_EQ(Severity::ERROR, sink.minimum_severity());
+}
+
+namespace {
+class MockLogBackend : public LogBackend {
+ public:
+  MOCK_METHOD1(Process, void(LogRecord const&));
+};
+} // namespace
+
+TEST(LogSinkTest, BackendAddRemove) {
+  LogSink sink;
+  EXPECT_TRUE(sink.empty());
+  long id = sink.AddBackend(std::make_shared<MockLogBackend>());
+  EXPECT_FALSE(sink.empty());
+  sink.RemoveBackend(id);
+  EXPECT_TRUE(sink.empty());
+}
+
+TEST(LogSinkTest, ClearBackend) {
+  LogSink sink;  
+  (void)sink.AddBackend(std::make_shared<MockLogBackend>());
+  (void)sink.AddBackend(std::make_shared<MockLogBackend>());
+  EXPECT_FALSE(sink.empty());
+  sink.ClearBackends();
+  EXPECT_TRUE(sink.empty());
 }

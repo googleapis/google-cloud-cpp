@@ -17,6 +17,40 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+LogSink::LogSink()
+    : empty_(true),
+      minimum_severity_(static_cast<int>(Severity::LOWEST_ENABLED)),
+      next_id_(0) {}
+      
+LogSink& LogSink::Instance() {
+  static LogSink instance;
+  return instance;
+}
+
+long LogSink::AddBackend(std::shared_ptr<LogBackend> backend) {
+  std::unique_lock<std::mutex> lk(mu_);
+  long id = ++next_id_;
+  backends_.emplace(id, std::move(backend));
+  empty_.store(backends_.empty());
+  return id;
+}
+
+void LogSink::RemoveBackend(long id) {
+  std::unique_lock<std::mutex> lk(mu_);
+  auto it = backends_.find(id);
+  if (backends_.end() == it) {
+    return;
+  }
+  backends_.erase(it);
+  empty_.store(backends_.empty());
+}
+
+void LogSink::ClearBackends() {
+  std::unique_lock<std::mutex> lk(mu_);
+  backends_.clear();
+  empty_.store(backends_.empty());
+}
+
 std::ostream& operator<<(std::ostream& os, Severity x) {
   char const* names[] = {
       "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
