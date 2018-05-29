@@ -93,7 +93,7 @@ class InstanceAdmin {
    *   created
    *
    *  @par Example
-   *  TODO(#422) implement tests and examples for CreateCluster
+   *  @snippet bigtable_samples_instance_admin.cc create cluster
    */
   std::future<google::bigtable::admin::v2::Cluster> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
