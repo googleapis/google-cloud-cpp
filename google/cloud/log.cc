@@ -17,11 +17,18 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+static_assert(sizeof(Severity) <= sizeof(int),
+              "Expected Severity to fit in an integer");
+
+static_assert(static_cast<int>(Severity::LOWEST) <
+                  static_cast<int>(Severity::HIGHEST),
+              "Expect LOWEST severity to be smaller than HIGHEST severity");
+
 LogSink::LogSink()
     : empty_(true),
       minimum_severity_(static_cast<int>(Severity::LOWEST_ENABLED)),
       next_id_(0) {}
-      
+
 LogSink& LogSink::Instance() {
   static LogSink instance;
   return instance;
@@ -49,6 +56,20 @@ void LogSink::ClearBackends() {
   std::unique_lock<std::mutex> lk(mu_);
   backends_.clear();
   empty_.store(backends_.empty());
+}
+
+void LogSink::Log(LogRecord log_record) {
+  // Make a copy of the backends because calling user-defined functions while
+  // holding a lock is a bad idea: the application may change the backends while
+  // we are holding this lock, and soon deadlock occurs.
+  auto copy = [this]() {
+    std::unique_lock<std::mutex> lk(mu_);
+    return backends_;
+  }();
+  // TODO() - optimize the case of a single backend, pass by value.
+  for (auto& kv : copy) {
+    kv.second->Process(log_record);
+  }
 }
 
 std::ostream& operator<<(std::ostream& os, Severity x) {

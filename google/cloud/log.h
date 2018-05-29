@@ -131,14 +131,14 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * is to prevent problems if anybody uses this macro in a context where `Logger`
  * is defined by the enclosing namespaces.
  */
-#define GOOGLE_CLOUD_CPP_LOG_I(level, sink)                                    \
-  for (auto GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER =                               \
-           ::google::cloud::Logger<::google::cloud::Log::CompileTimeEnabled(   \
-               ::google::cloud::Severity::level)>(                             \
-               ::google::cloud::Severity::level, __func__, __FILE__, __LINE__, \
-               sink);                                                          \
-       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.enabled();                           \
-       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.LogTo(sink))                         \
+#define GOOGLE_CLOUD_CPP_LOG_I(level, sink)                                \
+  for (auto GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER = ::google::cloud::Logger<  \
+           ::google::cloud::LogSink::CompileTimeEnabled(                   \
+               ::google::cloud::Severity::level)>(                         \
+           ::google::cloud::Severity::level, __func__, __FILE__, __LINE__, \
+           sink);                                                          \
+       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.enabled();                       \
+       GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.LogTo(sink))                     \
   GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.Stream()
 
 /**
@@ -268,7 +268,7 @@ class LogSink {
   void RemoveBackend(long id);
   void ClearBackends();
 
-  void Log(LogRecord const& log_record);
+  void Log(LogRecord log_record);
 
  private:
   std::atomic<bool> empty_;
@@ -328,7 +328,7 @@ class Logger {
     record.lineno = lineno_;
     record.timestamp = std::chrono::system_clock::now();
     record.message = stream_->str();
-    sink.Log(record);
+    sink.Log(std::move(record));
   }
 
   /// Return the iostream that captures the log message.

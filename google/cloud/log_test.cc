@@ -16,6 +16,7 @@
 #include <gmock/gmock.h>
 
 using namespace google::cloud;
+using namespace ::testing;
 
 TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
@@ -42,7 +43,7 @@ class MockLogBackend : public LogBackend {
  public:
   MOCK_METHOD1(Process, void(LogRecord const&));
 };
-} // namespace
+}  // namespace
 
 TEST(LogSinkTest, BackendAddRemove) {
   LogSink sink;
@@ -54,10 +55,75 @@ TEST(LogSinkTest, BackendAddRemove) {
 }
 
 TEST(LogSinkTest, ClearBackend) {
-  LogSink sink;  
+  LogSink sink;
   (void)sink.AddBackend(std::make_shared<MockLogBackend>());
   (void)sink.AddBackend(std::make_shared<MockLogBackend>());
   EXPECT_FALSE(sink.empty());
   sink.ClearBackends();
   EXPECT_TRUE(sink.empty());
+}
+
+TEST(LogSinkTest, LogEnabled) {
+  LogSink sink;
+  auto backend = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*backend, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
+    EXPECT_EQ(Severity::WARNING, lr.severity);
+    EXPECT_EQ("test message", lr.message);
+  }));
+  sink.AddBackend(backend);
+
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "test message";
+}
+
+namespace {
+/// A class to count calls to IOStream operator.
+struct IOStreamCounter {
+  int count;
+};
+std::ostream& operator<<(std::ostream& os, IOStreamCounter& rhs) {
+  ++rhs.count;
+  return os;
+}
+}  // namespace
+
+TEST(LogSinkTest, LogCheckCounter) {
+  LogSink sink;
+  IOStreamCounter counter{0};
+  // The following tests could pass if the << operator was a no-op, so for
+  // extra paranoia check that this is not the case.
+  auto backend = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*backend, Process(_)).Times(2);
+  sink.AddBackend(backend);
+  GOOGLE_CLOUD_CPP_LOG_I(ALERT, sink) << "count is " << counter;
+  GOOGLE_CLOUD_CPP_LOG_I(FATAL, sink) << "count is " << counter;
+  EXPECT_EQ(2, counter.count);
+}
+
+TEST(LogSinkTest, LogNoSinks) {
+  LogSink sink;
+  IOStreamCounter counter{0};
+  EXPECT_EQ(0, counter.count);
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "count is " << counter;
+  // With no backends, we expect no calls to the iostream operators.
+  EXPECT_EQ(0, counter.count);
+}
+
+TEST(LogSinkTest, LogDisabledLevels) {
+  LogSink sink;
+  IOStreamCounter counter{0};
+  auto backend = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*backend, Process(_)).Times(2);
+  sink.AddBackend(backend);
+
+  sink.set_minimum_severity(Severity::INFO);
+  GOOGLE_CLOUD_CPP_LOG_I(DEBUG, sink) << "count is " << counter;
+  // With the DEBUG level disabled we expect no calls.
+  EXPECT_EQ(0, counter.count);
+
+  sink.set_minimum_severity(Severity::ALERT);
+  GOOGLE_CLOUD_CPP_LOG_I(ALERT, sink) << "count is " << counter;
+  EXPECT_EQ(1, counter.count);
+  sink.set_minimum_severity(Severity::DEBUG);
+  GOOGLE_CLOUD_CPP_LOG_I(DEBUG, sink) << "count is " << counter;
+  EXPECT_EQ(2, counter.count);
 }
