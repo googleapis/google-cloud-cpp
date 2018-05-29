@@ -24,6 +24,20 @@ static_assert(static_cast<int>(Severity::LOWEST) <
                   static_cast<int>(Severity::HIGHEST),
               "Expect LOWEST severity to be smaller than HIGHEST severity");
 
+std::ostream& operator<<(std::ostream& os, Severity x) {
+  char const* names[] = {
+      "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
+      "ERROR", "CRITICAL", "ALERT", "FATAL",
+  };
+  auto index = static_cast<int>(x);
+  return os << names[index];
+}
+
+std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
+  return os << '[' << rhs.severity << "] " << rhs.message << " ("
+            << rhs.filename << ':' << rhs.lineno << ')';
+}
+
 LogSink::LogSink()
     : empty_(true),
       minimum_severity_(static_cast<int>(Severity::LOWEST_ENABLED)),
@@ -66,20 +80,22 @@ void LogSink::Log(LogRecord log_record) {
     std::unique_lock<std::mutex> lk(mu_);
     return backends_;
   }();
-  // TODO() - optimize the case of a single backend, pass by value.
+  if (copy.empty()) {
+    return;
+  }
+  // In general, we just give each backend a const-reference and the backends
+  // must make a copy if needed.  But if there is only one backend we can give
+  // the backend an opportunity to optimize things by transferring ownership of
+  // the LogRecord to it.
+  if (1U == copy.size()) {
+    copy.begin()->second->ProcessWithOwnership(std::move(log_record));
+    return;
+  }
   for (auto& kv : copy) {
     kv.second->Process(log_record);
   }
 }
 
-std::ostream& operator<<(std::ostream& os, Severity x) {
-  char const* names[] = {
-      "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
-      "ERROR", "CRITICAL", "ALERT", "FATAL",
-  };
-  auto index = static_cast<int>(x);
-  return os << names[index];
-}
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

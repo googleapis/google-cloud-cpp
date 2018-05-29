@@ -42,6 +42,7 @@ namespace {
 class MockLogBackend : public LogBackend {
  public:
   MOCK_METHOD1(Process, void(LogRecord const&));
+  MOCK_METHOD1(ProcessWithOwnership, void(LogRecord));
 };
 }  // namespace
 
@@ -66,11 +67,30 @@ TEST(LogSinkTest, ClearBackend) {
 TEST(LogSinkTest, LogEnabled) {
   LogSink sink;
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
+  EXPECT_CALL(*backend, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord lr) {
+        EXPECT_EQ(Severity::WARNING, lr.severity);
+        EXPECT_EQ("test message", lr.message);
+      }));
+  sink.AddBackend(backend);
+
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "test message";
+}
+
+TEST(LogSinkTest, LogEnabledMultipleBackends) {
+  LogSink sink;
+  auto be1 = std::make_shared<MockLogBackend>();
+  auto be2 = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*be1, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
     EXPECT_EQ(Severity::WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
   }));
-  sink.AddBackend(backend);
+  sink.AddBackend(be1);
+  EXPECT_CALL(*be2, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
+    EXPECT_EQ(Severity::WARNING, lr.severity);
+    EXPECT_EQ("test message", lr.message);
+  }));
+  sink.AddBackend(be2);
 
   GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "test message";
 }
@@ -92,7 +112,7 @@ TEST(LogSinkTest, LogCheckCounter) {
   // The following tests could pass if the << operator was a no-op, so for
   // extra paranoia check that this is not the case.
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, Process(_)).Times(2);
+  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(2);
   sink.AddBackend(backend);
   GOOGLE_CLOUD_CPP_LOG_I(ALERT, sink) << "count is " << counter;
   GOOGLE_CLOUD_CPP_LOG_I(FATAL, sink) << "count is " << counter;
@@ -112,7 +132,7 @@ TEST(LogSinkTest, LogDisabledLevels) {
   LogSink sink;
   IOStreamCounter counter{0};
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, Process(_)).Times(2);
+  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(1);
   sink.AddBackend(backend);
 
   sink.set_minimum_severity(Severity::INFO);
@@ -123,7 +143,37 @@ TEST(LogSinkTest, LogDisabledLevels) {
   sink.set_minimum_severity(Severity::ALERT);
   GOOGLE_CLOUD_CPP_LOG_I(ALERT, sink) << "count is " << counter;
   EXPECT_EQ(1, counter.count);
-  sink.set_minimum_severity(Severity::DEBUG);
-  GOOGLE_CLOUD_CPP_LOG_I(DEBUG, sink) << "count is " << counter;
-  EXPECT_EQ(2, counter.count);
+}
+
+TEST(LogSinkTest, CompileTimeDisabledCannotBeEnabled) {
+  LogSink sink;
+  IOStreamCounter counter{0};
+  auto backend = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(1);
+  sink.AddBackend(backend);
+
+  // Compile-time disabled logs cannot be enabled at r
+  if (Severity::LOWEST_ENABLED >= Severity::TRACE) {
+    sink.set_minimum_severity(Severity::DEBUG);
+    GOOGLE_CLOUD_CPP_LOG_I(DEBUG, sink) << "count is " << counter;
+    EXPECT_EQ(0, counter.count);
+  }
+  sink.set_minimum_severity(Severity::CRITICAL);
+  GOOGLE_CLOUD_CPP_LOG_I(CRITICAL, sink) << "count is " << counter;
+  EXPECT_EQ(1, counter.count);
+}
+
+TEST(LogSinkTest, DisabledLogsMakeNoCalls) {
+  LogSink sink;
+
+  int counter = 0;
+  auto caller = [&counter] { return ++counter; };
+
+  EXPECT_EQ(0, counter);
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "count is " << caller();
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "count is " << caller();
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "count is " << caller();
+  GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "count is " << caller();
+  // With no backends, we expect no calls to the expressions in the log line.
+  EXPECT_EQ(0, counter);
 }

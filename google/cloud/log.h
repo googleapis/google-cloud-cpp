@@ -153,12 +153,16 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 #endif  // GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
 
 /**
- * Define the severity levels for Gee-H logging.
+ * Define the severity levels for Google Cloud Platform C++ Libraries logging.
  *
  * These are modelled after the severity level in syslog(1) and many derived
  * tools.
+ *
+ * We force the enum to be represented as an `int` because we will store the
+ * values in an `std::atomic<>` and the implementations usually optimize
+ * `std::atomic<int>` but not `std::atomic<Foo>`
  */
-enum class Severity {
+enum class Severity : int {
   /// Use this level for messages that indicate the code is entering and leaving
   /// functions.
   TRACE,
@@ -203,6 +207,9 @@ struct LogRecord {
   std::string message;
 };
 
+/// Default formatting of a LogRecord.
+std::ostream& operator<<(std::ostream& os, LogRecord const& rhs);
+
 /**
  * A sink to receive log records.
  */
@@ -211,6 +218,7 @@ class LogBackend {
   virtual ~LogBackend() = default;
 
   virtual void Process(LogRecord const& log_record) = 0;
+  virtual void ProcessWithOwnership(LogRecord log_record) = 0;
 };
 
 /**
