@@ -46,8 +46,9 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
-      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-      btproto::ListInstancesResponse* response) {
+             grpc::ClientContext* ctx,
+             btproto::ListInstancesRequest const& request,
+             btproto::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -65,27 +66,28 @@ auto create_list_instances_lambda = [](std::string expected_token,
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_clusters_lambda = [](
-    std::string expected_token, std::string returned_token,
-    std::string instance_id, std::vector<std::string> cluster_ids) {
-  return [expected_token, returned_token, instance_id, cluster_ids](
-      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-      btproto::ListClustersResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + instance_id;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_clusters_lambda =
+    [](std::string expected_token, std::string returned_token,
+       std::string instance_id, std::vector<std::string> cluster_ids) {
+      return [expected_token, returned_token, instance_id, cluster_ids](
+                 grpc::ClientContext* ctx,
+                 btproto::ListClustersRequest const& request,
+                 btproto::ListClustersResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + instance_id;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& cluster_id : cluster_ids) {
-      auto& cluster = *response->add_clusters();
-      cluster.set_name(instance_name + "/clusters/" + cluster_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& cluster_id : cluster_ids) {
+          auto& cluster = *response->add_clusters();
+          cluster.set_name(instance_name + "/clusters/" + cluster_id);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -199,11 +201,11 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-      btproto::ListInstancesResponse* response) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
+         btproto::ListInstancesResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
@@ -319,18 +321,19 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
-      .WillOnce(Invoke([&expected](
-          grpc::ClientContext*, btproto::CreateInstanceRequest const& request,
-          google::longrunning::Operation* response) {
-        auto const project_name = "projects/" + kProjectId;
-        EXPECT_EQ(project_name, request.parent());
-        response->set_done(true);
-        response->set_name("operation-name");
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-        any->PackFrom(expected);
-        response->set_allocated_response(any.release());
-        return grpc::Status::OK;
-      }));
+      .WillOnce(
+          Invoke([&expected](grpc::ClientContext*,
+                             btproto::CreateInstanceRequest const& request,
+                             google::longrunning::Operation* response) {
+            auto const project_name = "projects/" + kProjectId;
+            EXPECT_EQ(project_name, request.parent());
+            response->set_done(true);
+            response->set_name("operation-name");
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected);
+            response->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
 
   EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
 
@@ -624,16 +627,17 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
         operation->set_done(false);
         return grpc::Status::OK;
       }))
-      .WillOnce(Invoke([&expected_copy](
-          grpc::ClientContext*,
-          google::longrunning::GetOperationRequest const& request,
-          google::longrunning::Operation* operation) {
-        operation->set_done(true);
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-        any->PackFrom(expected_copy);
-        operation->set_allocated_response(any.release());
-        return grpc::Status::OK;
-      }));
+      .WillOnce(
+          Invoke([&expected_copy](
+                     grpc::ClientContext*,
+                     google::longrunning::GetOperationRequest const& request,
+                     google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
 
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
@@ -735,16 +739,17 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
                           google::longrunning::Operation*) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       }))
-      .WillOnce(Invoke([&expected_copy](
-          grpc::ClientContext*,
-          google::longrunning::GetOperationRequest const& request,
-          google::longrunning::Operation* operation) {
-        operation->set_done(true);
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-        any->PackFrom(expected_copy);
-        operation->set_allocated_response(any.release());
-        return grpc::Status::OK;
-      }));
+      .WillOnce(
+          Invoke([&expected_copy](
+                     grpc::ClientContext*,
+                     google::longrunning::GetOperationRequest const& request,
+                     google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
 
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
@@ -828,11 +833,11 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-      btproto::ListClustersResponse* response) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
+         btproto::ListClustersResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
   std::string const& instance_id = "the-instance";
   auto batch0 =
       create_list_clusters_lambda("", "token-001", instance_id, {"t0", "t1"});
@@ -1054,11 +1059,12 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
       default_storage_type: SSD
   )";
 
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, google::longrunning::GetOperationRequest const&,
-      google::longrunning::Operation*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx,
+         google::longrunning::GetOperationRequest const&,
+         google::longrunning::Operation*) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
   btproto::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));

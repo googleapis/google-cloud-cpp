@@ -44,8 +44,9 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
-      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-      btproto::ListInstancesResponse* response) {
+             grpc::ClientContext* ctx,
+             btproto::ListInstancesRequest const& request,
+             btproto::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -65,38 +66,40 @@ auto create_list_instances_lambda = [](std::string expected_token,
 // lambda twice without this thing.
 auto create_instance = [](std::string expected_token,
                           std::string returned_token) {
-  return [expected_token, returned_token](
-      grpc::ClientContext* ctx, btproto::GetInstanceRequest const& request,
-      btproto::Instance* response) {
-    EXPECT_NE(nullptr, response);
-    response->set_name(request.name());
-    return grpc::Status::OK;
-  };
+  return
+      [expected_token, returned_token](
+          grpc::ClientContext* ctx, btproto::GetInstanceRequest const& request,
+          btproto::Instance* response) {
+        EXPECT_NE(nullptr, response);
+        response->set_name(request.name());
+        return grpc::Status::OK;
+      };
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_clusters_lambda = [](
-    std::string expected_token, std::string returned_token,
-    std::string instance_id, std::vector<std::string> cluster_ids) {
-  return [expected_token, returned_token, instance_id, cluster_ids](
-      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-      btproto::ListClustersResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + instance_id;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_clusters_lambda =
+    [](std::string expected_token, std::string returned_token,
+       std::string instance_id, std::vector<std::string> cluster_ids) {
+      return [expected_token, returned_token, instance_id, cluster_ids](
+                 grpc::ClientContext* ctx,
+                 btproto::ListClustersRequest const& request,
+                 btproto::ListClustersResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + instance_id;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& cluster_id : cluster_ids) {
-      auto& cluster = *response->add_clusters();
-      cluster.set_name(instance_name + "/clusters/" + cluster_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& cluster_id : cluster_ids) {
+          auto& cluster = *response->add_clusters();
+          cluster.set_name(instance_name + "/clusters/" + cluster_id);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -212,11 +215,11 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::noex::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-      btproto::ListInstancesResponse* response) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
+         btproto::ListInstancesResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
@@ -383,11 +386,11 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   auto const instance_id = "the-instance";
 
   bigtable::noex::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](
-      grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-      btproto::ListClustersResponse* response) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
+         btproto::ListClustersResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
   auto batch0 =
       create_list_clusters_lambda("", "token-001", instance_id, {"t0", "t1"});
   auto batch1 =

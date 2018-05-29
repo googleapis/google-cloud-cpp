@@ -19,7 +19,7 @@
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg) {
+void RaiseRpcError(grpc::Status const& status, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw bigtable::GRpcError(msg, status);
 #else
@@ -31,8 +31,7 @@ namespace internal {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-[[noreturn]] void RaiseRpcError(grpc::Status const& status,
-                                std::string const& msg) {
+void RaiseRpcError(grpc::Status const& status, std::string const& msg) {
   RaiseRpcError(status, msg.c_str());
 }
 

@@ -88,15 +88,15 @@ matrix:
           # with gRPC already compiled and installed.
         - DISTRO=ubuntu ./ci/install-linux.sh
         - ./ci/install-linux.sh
-    - # Check the code formatting using clang-format, and generate the Doxygen
-      # documentation.
+    - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
-      compiler: gcc
+      compiler: clang
       env:
         CHECK_STYLE=yes
         GENERATE_DOCS=yes
+        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
         DISTRO=ubuntu
-        DISTRO_VERSION=17.10
+        DISTRO_VERSION=18.04
     - # Build with the AddressSanitizer.
       os: linux
       compiler: clang
@@ -112,21 +112,14 @@ matrix:
         CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
         BUILD_TYPE=Debug
         DISTRO=ubuntu
-        DISTRO_VERSION=16.04
-    - # Compile with clang-tidy enabled.
-      os: linux
-      compiler: clang
-      env:
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu
         DISTRO_VERSION=18.04
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
       env:
         BUILD_TYPE=Coverage
-        DISTRO=ubuntu DISTRO_VERSION=18.04
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
     - # Compile with exceptions disabled.
       os: linux
       compiler: gcc

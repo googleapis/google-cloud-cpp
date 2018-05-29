@@ -69,9 +69,8 @@ TEST(EmbeddedServer, TableApply) {
                         "fake-table");
 
   bigtable::SingleRowMutation mutation(
-      "row1",
-      {bigtable::SetCell("fam", "col", milliseconds(0), "val"),
-       bigtable::SetCell("fam", "col", milliseconds(0), "val")});
+      "row1", {bigtable::SetCell("fam", "col", milliseconds(0), "val"),
+               bigtable::SetCell("fam", "col", milliseconds(0), "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
   table.Apply(std::move(mutation));

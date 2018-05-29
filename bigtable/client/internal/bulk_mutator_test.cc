@@ -113,11 +113,12 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   std::string expected_id = "test-id";
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
-      .WillOnce(Invoke([expected_id, &reader](
-          grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
-        EXPECT_EQ(expected_id, req.app_profile_id());
-        return reader.release()->AsUniqueMocked();
-      }));
+      .WillOnce(
+          Invoke([expected_id, &reader](grpc::ClientContext* ctx,
+                                        btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return reader.release()->AsUniqueMocked();
+          }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId("test-id"),

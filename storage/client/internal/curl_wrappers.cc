@@ -78,4 +78,4 @@ void CurlHeaders::Append(char* data, std::size_t size) {
 }
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
-}  // storage
+}  // namespace storage

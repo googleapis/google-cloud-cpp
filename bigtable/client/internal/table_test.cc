@@ -19,9 +19,9 @@
 #include "bigtable/client/testing/mock_sample_row_keys_reader.h"
 
 using testing::_;
+using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
-using testing::Invoke;
 using namespace bigtable::chrono_literals;
 namespace btproto = google::bigtable::v2;
 
@@ -199,15 +199,16 @@ commit_row: true
 
   std::string expected_id = "test-id";
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, expected_id, this](
-          grpc::ClientContext*, btproto::ReadRowsRequest const& req) {
-        EXPECT_EQ(1, req.rows().row_keys_size());
-        EXPECT_EQ("r1", req.rows().row_keys(0));
-        EXPECT_EQ(1, req.rows_limit());
-        EXPECT_EQ(table_.table_name(), req.table_name());
-        EXPECT_EQ(expected_id, req.app_profile_id());
-        return stream.release()->AsUniqueMocked();
-      }));
+      .WillOnce(Invoke(
+          [&stream, expected_id, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+            EXPECT_EQ(1, req.rows().row_keys_size());
+            EXPECT_EQ("r1", req.rows().row_keys(0));
+            EXPECT_EQ(1, req.rows_limit());
+            EXPECT_EQ(table_.table_name(), req.table_name());
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return stream.release()->AsUniqueMocked();
+          }));
 
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
@@ -531,11 +532,12 @@ TEST_F(NoexTableTest, BulkApply_AppProfileId) {
 
   std::string expected_id = "test-id";
   EXPECT_CALL(*client_, MutateRows(_, _))
-      .WillOnce(Invoke([&reader, expected_id](
-          grpc::ClientContext* ctx, btproto::MutateRowsRequest const& req) {
-        EXPECT_EQ(expected_id, req.app_profile_id());
-        return reader.release()->AsUniqueMocked();
-      }));
+      .WillOnce(
+          Invoke([&reader, expected_id](grpc::ClientContext* ctx,
+                                        btproto::MutateRowsRequest const& req) {
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return reader.release()->AsUniqueMocked();
+          }));
   grpc::Status status;
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
@@ -906,11 +908,12 @@ TEST_F(NoexTableTest, SampleRowKeys_AppProfileId) {
   std::string expected_id = "test-id";
   auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke([expected_id, &reader](
-          grpc::ClientContext* ctx, btproto::SampleRowKeysRequest request) {
-        EXPECT_EQ(expected_id, request.app_profile_id());
-        return reader.release()->AsUniqueMocked();
-      }));
+      .WillOnce(
+          Invoke([expected_id, &reader](grpc::ClientContext* ctx,
+                                        btproto::SampleRowKeysRequest request) {
+            EXPECT_EQ(expected_id, request.app_profile_id());
+            return reader.release()->AsUniqueMocked();
+          }));
 
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));

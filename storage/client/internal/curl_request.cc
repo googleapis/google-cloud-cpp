@@ -97,4 +97,4 @@ HttpResponse CurlRequest::MakeRequest() {
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
-}  // storage
+}  // namespace storage

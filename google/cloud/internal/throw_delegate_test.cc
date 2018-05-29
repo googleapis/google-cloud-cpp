@@ -20,7 +20,7 @@ using namespace google::cloud::internal;
 namespace {
 std::string const cmsg("testing with std::string const&");
 char const* msg = "testing with char const*";
-}
+}  // namespace
 
 TEST(ThrowDelegateTest, InvalidArgument) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

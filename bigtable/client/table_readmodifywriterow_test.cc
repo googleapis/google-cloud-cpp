@@ -29,10 +29,9 @@ using namespace testing;
 auto create_rules_lambda = [](std::string expected_request_string,
                               std::string generated_response_string) {
   return [expected_request_string, generated_response_string](
-      grpc::ClientContext* ctx,
-      btproto::ReadModifyWriteRowRequest const& request,
-      btproto::ReadModifyWriteRowResponse* response) {
-
+             grpc::ClientContext* ctx,
+             btproto::ReadModifyWriteRowRequest const& request,
+             btproto::ReadModifyWriteRowResponse* response) {
     btproto::ReadModifyWriteRowRequest expected_request;
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         expected_request_string, &expected_request));
