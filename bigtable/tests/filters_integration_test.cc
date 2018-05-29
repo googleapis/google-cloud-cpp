@@ -81,16 +81,6 @@ int main(int argc, char* argv[]) {
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
 
-  auto admin_client =
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
-  bigtable::TableAdmin admin(admin_client, instance_id);
-  auto table_list = admin.ListTables(admin_proto::Table::NAME_ONLY);
-  if (not table_list.empty()) {
-    std::cerr << "Expected empty instance at the beginning of integration test."
-              << std::endl;
-    return 1;
-  }
-
   (void)::testing::AddGlobalTestEnvironment(
       new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
 
