@@ -101,7 +101,7 @@ class StdClogBackend : public LogBackend {
  public:
   StdClogBackend() = default;
 
-  void Process(LogRecord const &lr) override {
+  void Process(LogRecord const& lr) override {
     std::clog << lr << "\n";
     if (lr.severity >= Severity::WARNING) {
       std::clog << std::flush;
@@ -111,7 +111,6 @@ class StdClogBackend : public LogBackend {
 };
 }  // namespace
 
-/// Enable `std::clog` on the default LogSink.
 long LogSink::EnableStdClog() {
   return Instance().AddBackend(std::make_shared<StdClogBackend>());
 }
