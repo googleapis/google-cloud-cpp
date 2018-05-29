@@ -378,6 +378,7 @@ class Logger {
 template <>
 class Logger<false> {
  public:
+  Logger<false>() = default;
   Logger<false>(Severity, char const*, char const*, int, LogSink&) {}
 
   //@{
