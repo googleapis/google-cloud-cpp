@@ -64,6 +64,15 @@ bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                       });
 }
 
+bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
+                      std::string const& cluster_name) {
+  return clusters.end() !=
+         std::find_if(clusters.begin(), clusters.end(),
+                      [&cluster_name](btadmin::Cluster const& i) {
+                        return i.name() == cluster_name;
+                      });
+}
+
 bigtable::InstanceConfig IntegrationTestConfig(std::string const& id) {
   bigtable::InstanceId instance_id(id);
   bigtable::DisplayName display_name("Integration Tests " + id);
@@ -213,6 +222,41 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   EXPECT_FALSE(clusters.empty());
 
   instance_admin_->DeleteInstance(id);
+}
+
+/// @test Verify that InstanceAdmin::UpdateCluster works as expected.
+TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
+  std::string id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  bigtable::InstanceId instance_id(id);
+  bigtable::ClusterId cluster_id(id + "-cl");
+
+  auto config =
+      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+
+  auto clusters_before = instance_admin_->ListClusters(instance_id.get());
+  auto cluster =
+      instance_admin_->CreateCluster(config, instance_id, cluster_id).get();
+  btadmin::Cluster cluster_copy;
+  cluster_copy.CopyFrom(cluster);
+
+  // update the storage type
+  cluster.set_default_storage_type(bigtable::ClusterConfig::SSD);
+  bigtable::ClusterConfig cluster_config(std::move(cluster));
+
+  auto cluster_after =
+      instance_admin_->UpdateCluster(std::move(cluster_config)).get();
+
+  auto clusters_after = instance_admin_->ListClusters(instance_id.get());
+  instance_admin_->DeleteCluster(instance_id, cluster_id);
+
+  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster_copy.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster_copy.name()));
+  EXPECT_NE(std::string::npos, cluster_copy.name().find(id));
+  EXPECT_NE(std::string::npos,
+            cluster_copy.name().find(InstanceTestEnvironment::project_id()));
+  EXPECT_EQ(bigtable::ClusterConfig::SSD, cluster_after.default_storage_type());
 }
 
 int main(int argc, char* argv[]) {

@@ -149,6 +149,34 @@ void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
 }
 //! [list clusters]
 
+//! [update cluster]
+void UpdateCluster(bigtable::InstanceAdmin instance_admin, int argc,
+                   char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
+  }
+  // CreateCluster or GetCluster first and then modify it
+  bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto cluster_config =
+      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+  auto cluster =
+      instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)
+          .get();
+
+  // Modify the cluster
+  cluster.set_default_storage_type(bigtable::ClusterConfig::SSD);
+  auto modified_config = bigtable::ClusterConfig(std::move(cluster));
+
+  auto modified_cluster = instance_admin.UpdateCluster(cluster_config).get();
+
+  std::string cluster_detail;
+  google::protobuf::TextFormat::PrintToString(modified_cluster,
+                                              &cluster_detail);
+  std::cout << "cluster details : " << cluster_detail << std::endl;
+}
+//! [update cluster]
+
 //! [delete cluster]
 void DeleteCluster(bigtable::InstanceAdmin instance_admin, int argc,
                    char* argv[]) {
@@ -196,6 +224,8 @@ int main(int argc, char* argv[]) try {
     DeleteInstance(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
+  } else if (command == "update-cluster") {
+    UpdateCluster(instance_admin, argc, argv);
   } else if (command == "delete-cluster") {
     DeleteCluster(instance_admin, argc, argv);
   } else {

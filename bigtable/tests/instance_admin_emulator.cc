@@ -143,31 +143,72 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::CreateClusterRequest const* request,
       google::longrunning::Operation* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string name = request->parent() + "/clusters/" + request->cluster_id();
+    auto ins = clusters_.emplace(name, request->cluster());
+    if (ins.second) {
+      auto& stored_cluster = ins.first->second;
+      stored_cluster.set_name(name);
+      stored_cluster.set_state(btadmin::Cluster::READY);
+      response->set_name("create-cluster/" + name);
+      response->set_done(true);
+      auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
+      contents->PackFrom(stored_cluster);
+      response->set_allocated_response(contents.release());
+      return grpc::Status::OK;
+    }
+    return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "duplicate cluster");
   }
 
   grpc::Status GetCluster(grpc::ServerContext* context,
                           btadmin::GetClusterRequest const* request,
                           btadmin::Cluster* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto i = clusters_.find(request->name());
+    if (i == clusters_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "cluster missing");
+    }
+    *response = i->second;
+    return grpc::Status::OK;
   }
 
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string prefix = request->parent() + "/clusters/";
+    for (auto const& kv : clusters_) {
+      if (0 == kv.first.find(prefix)) {
+        *response->add_clusters() = kv.second;
+      }
+    }
+    return grpc::Status::OK;
   }
 
   grpc::Status UpdateCluster(
       grpc::ServerContext* context, btadmin::Cluster const* request,
       google::longrunning::Operation* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string name = request->name();
+    auto it = clusters_.find(name);
+    if (it == clusters_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "cluster not found");
+    }
+    auto& stored_cluster = it->second;
+    stored_cluster.CopyFrom(*request);
+    response->set_name("update-cluster/" + name);
+    response->set_done(true);
+    auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
+    contents->PackFrom(stored_cluster);
+    response->set_allocated_response(contents.release());
+    return grpc::Status::OK;
   }
 
   grpc::Status DeleteCluster(grpc::ServerContext* context,
                              btadmin::DeleteClusterRequest const* request,
                              google::protobuf::Empty* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto i = clusters_.find(request->name());
+    if (i == clusters_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
+    }
+    clusters_.erase(i);
+    return grpc::Status::OK;
   }
 
   grpc::Status CreateAppProfile(grpc::ServerContext* context,
@@ -223,6 +264,7 @@ class InstanceAdminEmulator final
 
  private:
   std::map<std::string, btadmin::Instance> instances_;
+  std::map<std::string, btadmin::Cluster> clusters_;
   std::map<std::string, google::longrunning::Operation> pending_operations_;
 };
 

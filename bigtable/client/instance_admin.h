@@ -166,6 +166,28 @@ class InstanceAdmin {
       std::string const& instance_id);
 
   /**
+   * Update an existing cluster of Cloud Bigtable.
+   *
+   * @warning Note that this is operation can take seconds or minutes to
+   * complete. The application may prefer to perform other work while waiting
+   * for this operation.
+   *
+   * @param cluster_config cluster with updated values.
+   * @return a future that becomes satisfied when (a) the operation has
+   *   completed successfully, in which case it returns a proto with the
+   *   Instance details, (b) the operation has failed, in which case the future
+   *   contains an exception (typically `bigtable::GrpcError`) with the details
+   *   of the failure, or (c) the state of the operation is unknown after the
+   *   time allocated by the retry policies has expired, in which case the
+   *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update cluster
+   */
+  std::future<google::bigtable::admin::v2::Cluster> UpdateCluster(
+      ClusterConfig cluster_config);
+
+  /**
    * Deletes the specified cluster of an instance in the project.
    *
    * @param instance_id the id of the instance in the project
@@ -192,6 +214,10 @@ class InstanceAdmin {
   // Implement UpdateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance UpdateInstanceImpl(
       InstanceUpdateConfig instance_update_config);
+
+  // Implement UpdateCluster() with a separate thread.
+  google::bigtable::admin::v2::Cluster UpdateClusterImpl(
+      ClusterConfig cluster_config);
 
  private:
   noex::InstanceAdmin impl_;

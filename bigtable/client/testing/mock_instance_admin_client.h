@@ -78,6 +78,11 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
       grpc::Status(grpc::ClientContext*,
                    google::bigtable::admin::v2::CreateClusterRequest const&,
                    google::longrunning::Operation*));
+
+  MOCK_METHOD3(UpdateCluster,
+               grpc::Status(grpc::ClientContext*,
+                            google::bigtable::admin::v2::Cluster const&,
+                            google::longrunning::Operation*));
 };
 
 }  // namespace testing
