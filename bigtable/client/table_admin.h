@@ -313,8 +313,8 @@ class TableAdmin {
 
  private:
   /**
-   * Helper function for 'WaitForConsistencyCheck'. It execute one task
-   * in one thread.
+   * Implements the polling loop for `WaitForConsistencyCheck` on a
+   * separate thread
    */
   bool WaitForConsistencyCheckImpl(
       bigtable::TableId const& table_id,

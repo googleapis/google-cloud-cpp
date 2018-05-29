@@ -130,8 +130,8 @@ bool TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
   bool consistent =
-      impl_.WaitForConsistencyCheckHelper(table_id, consistency_token);
-  if (not consistent) {
+      impl_.WaitForConsistencyCheckHelper(table_id, consistency_token, status);
+  if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
   return consistent;

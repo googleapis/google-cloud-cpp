@@ -286,7 +286,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   std::string expected_text = R"""(
-parent: 'projects/the-project/instances/the-instance'
+      parent: 'projects/the-project/instances/the-instance'
 table_id: 'new-table'
 table {
   column_families {
@@ -406,8 +406,8 @@ TEST_F(TableAdminTest, GetTableSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-view: SCHEMA_VIEW
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      view: SCHEMA_VIEW
 )""";
   auto mock = MockRpcFactory<btproto::GetTableRequest, btproto::Table>::Create(
       expected_text);
@@ -473,7 +473,7 @@ TEST_F(TableAdminTest, DeleteTable) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
   auto mock =
       MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
@@ -515,7 +515,7 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 modifications {
   id: 'foo'
   create { gc_rule { max_age { seconds: 172800 }}}
@@ -573,8 +573,8 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-row_key_prefix: 'foobar'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      row_key_prefix: 'foobar'
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
@@ -613,8 +613,8 @@ TEST_F(TableAdminTest, DropAllRows) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-delete_all_data_from_table: true
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      delete_all_data_from_table: true
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
@@ -654,7 +654,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
   auto mock = MockRpcFactory<
       btproto::GenerateConsistencyTokenRequest,
@@ -697,9 +697,9 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-consistency_token: 'test-token'
-    )""";
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      consistency_token: 'test-token'
+)""";
   auto mock =
       MockRpcFactory<btproto::CheckConsistencyRequest,
                      btproto::CheckConsistencyResponse>::Create(expected_text);
@@ -819,8 +819,8 @@ TEST_F(TableAdminTest, GetSnapshotSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
-    )""";
+      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+)""";
   auto mock =
       MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
           expected_text);
@@ -890,7 +890,7 @@ TEST_F(TableAdminTest, DeleteSnapshotSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
 )""";
   auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
       expected_text);

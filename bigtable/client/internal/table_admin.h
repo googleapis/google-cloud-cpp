@@ -215,7 +215,8 @@ class TableAdmin {
 
   bool WaitForConsistencyCheckHelper(
       bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+      bigtable::ConsistencyToken const& consistency_token,
+      grpc::Status& status);
 
  private:
   std::shared_ptr<AdminClient> client_;
