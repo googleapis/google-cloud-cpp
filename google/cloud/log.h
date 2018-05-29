@@ -53,7 +53,7 @@
  *
  * @code
  * void AppCode() {
- *   google::cloud::Log::EnableStdClog();
+ *   google::cloud::LogSink::EnableStdClog();
  * }
  * @endcode
  *
@@ -61,12 +61,12 @@
  * message at severity `WARNING` or higher.
  *
  * @par Example: Capture Logs
- * The application can capture logs by providing a functor:
+ * The application can implement simple backends by wrapping a functor:
  *
  * @code
  * void AppCode() {
- *   auto id = google::cloud::Log::CaptureLogs(
- *       [](google::cloud::LogRecord const& record) {
+ *   auto id = google::cloud::LogSink::AttachFunctor(
+ *       [](google::cloud::LogRecord record) {
  *           if (record.severity >= google::cloud::Severity::CRITICAL) {
  *             std::cerr << record << std::endl;
  *           }
@@ -79,6 +79,7 @@
 #include "google/cloud/version.h"
 #include <atomic>
 #include <chrono>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -247,6 +248,12 @@ class LogSink {
    * discourage developers from creating logs. Furthermore, missing a few
    * messages while the change of state "propagates" to other threads does not
    * affect the correctness of the program.
+   *
+   * Note that `memory_order_relaxed` does not provide a compiler barrier
+   * either, so in theory stores into the atomic could be reordered by the
+   * optimizer. We have no reason to worry about that because all the writes
+   * are done inside a critical section protected by a mutex. The compiler
+   * cannot (or should not) reorder operations around those.
    */
   bool empty() const { return empty_.load(std::memory_order_relaxed); }
 
@@ -259,6 +266,12 @@ class LogSink {
    * discourage developers from creating logs. Furthermore, missing a few
    * messages while the change of state "propagates" to other threads does not
    * affect the correctness of the program.
+   *
+   * Note that `memory_order_relaxed` does not provide a compiler barrier
+   * either, so in theory stores into the atomic could be reordered by the
+   * optimizer. We have no reason to worry about that because all the writes
+   * are done inside a critical section protected by a mutex. The compiler
+   * cannot (or should not) reorder operations around those.
    */
   bool is_enabled(Severity severity) const {
     auto minimum = minimum_severity_.load(std::memory_order_relaxed);
@@ -277,6 +290,9 @@ class LogSink {
   void ClearBackends();
 
   void Log(LogRecord log_record);
+
+  /// Enable `std::clog` on `LogSink::Instance()`.
+  static long EnableStdClog();
 
  private:
   std::atomic<bool> empty_;

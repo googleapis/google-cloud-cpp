@@ -95,6 +95,27 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
   GOOGLE_CLOUD_CPP_LOG_I(WARNING, sink) << "test message";
 }
 
+TEST(LogSinkTest, LogDefaultInstance) {
+  auto backend = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*backend, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord lr) {
+        EXPECT_EQ(Severity::WARNING, lr.severity);
+        EXPECT_EQ("test message", lr.message);
+      }));
+  LogSink::Instance().AddBackend(backend);
+
+  GCP_LOG(WARNING) << "test message";
+  LogSink::Instance().ClearBackends();
+}
+
+TEST(LogSinkTest, LogToClog) {
+  LogSink::EnableStdClog();
+  EXPECT_FALSE(LogSink::Instance().empty());
+  LogSink::Instance().set_minimum_severity(Severity::NOTICE);
+  GCP_LOG(NOTICE) << "test message";
+  LogSink::Instance().ClearBackends();
+}
+
 namespace {
 /// A class to count calls to IOStream operator.
 struct IOStreamCounter {

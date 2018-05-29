@@ -96,6 +96,26 @@ void LogSink::Log(LogRecord log_record) {
   }
 }
 
+namespace {
+class StdClogBackend : public LogBackend {
+ public:
+  StdClogBackend() = default;
+
+  void Process(LogRecord const &lr) override {
+    std::clog << lr << "\n";
+    if (lr.severity >= Severity::WARNING) {
+      std::clog << std::flush;
+    }
+  }
+  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
+};
+}  // namespace
+
+/// Enable `std::clog` on the default LogSink.
+long LogSink::EnableStdClog() {
+  return Instance().AddBackend(std::make_shared<StdClogBackend>());
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
