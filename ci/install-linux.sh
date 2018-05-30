@@ -33,6 +33,8 @@ readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 # budget to complete a build, and we should be as nice as possible to the
 # servers that provide the packages.
 min_wait=180
+# Do not exit on failures for this loop.
+set +e
 for i in 1 2 3; do
   sudo docker build -t "${IMAGE}:tip" \
        --build-arg NCPU="${NCPU:-2}" \
