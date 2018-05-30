@@ -149,26 +149,27 @@ struct MockRpcMultiCallFactory {
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request,
                                              bool expected_result) {
-    return std::function<SignatureType>([expected_request, expected_result](
-        grpc::ClientContext* ctx, RequestType const& request,
-        ResponseType* response) {
-      RequestType expected;
-      response->clear_consistent();
-      // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
-      EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-          expected_request, &expected));
-      std::string delta;
-      google::protobuf::util::MessageDifferencer differencer;
-      differencer.ReportDifferencesToString(&delta);
-      EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+    return std::function<SignatureType>(
+        [expected_request, expected_result](grpc::ClientContext* ctx,
+                                            RequestType const& request,
+                                            ResponseType* response) {
+          RequestType expected;
+          response->clear_consistent();
+          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
+          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+              expected_request, &expected));
+          std::string delta;
+          google::protobuf::util::MessageDifferencer differencer;
+          differencer.ReportDifferencesToString(&delta);
+          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-      if (response != nullptr) {
-        response->set_consistent(expected_result);
-      }
+          if (response != nullptr) {
+            response->set_consistent(expected_result);
+          }
 
-      EXPECT_NE(nullptr, response);
-      return grpc::Status::OK;
-    });
+          EXPECT_NE(nullptr, response);
+          return grpc::Status::OK;
+        });
   }
 };
 
