@@ -139,9 +139,10 @@ struct MockRpcFactory {
 }  // anonymous namespace
 
 /// @test Verify basic functionality in the `bigtable::InstanceAdmin` class.
-TEST_F(InstanceAdminTest, Default) {
-  using namespace ::testing;
 
+using namespace ::testing;
+
+TEST_F(InstanceAdminTest, Default) {
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_EQ("the-project", tested.project_id());
 }
@@ -193,8 +194,6 @@ TEST_F(InstanceAdminTest, MoveAssignment) {
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListInstances) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
@@ -212,8 +211,6 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
 TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
       [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
@@ -246,8 +243,6 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
  * unrecoverable failures.
  */
 TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillOnce(
@@ -259,14 +254,12 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   grpc::Status status;
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the simple
 /// case.
 TEST_F(InstanceAdminTest, GetInstance) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_instances = create_instance("", "");
   EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(Invoke(mock_instances));
@@ -281,7 +274,6 @@ TEST_F(InstanceAdminTest, GetInstance) {
 
 /// @test Verify recoverable errors for GetInstance
 TEST_F(InstanceAdminTest, GetInstanceRecoverableFailures) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
                                      btproto::GetInstanceRequest const& request,
@@ -304,7 +296,6 @@ TEST_F(InstanceAdminTest, GetInstanceRecoverableFailures) {
 
 /// @test Verify unrecoverable error for GetInstance
 TEST_F(InstanceAdminTest, GetInstanceUnrecoverableFailures) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetInstance(_, _, _))
       .WillOnce(
@@ -315,12 +306,11 @@ TEST_F(InstanceAdminTest, GetInstanceUnrecoverableFailures) {
   std::string instance_id = "t0";
   auto actual = tested.GetInstance(instance_id, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify positive scenario for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstance) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::noex::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -337,7 +327,6 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
 
 /// @test Verify unrecoverable error for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillOnce(
@@ -346,12 +335,11 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
   grpc::Status status;
   tested.DeleteInstance("the-instance", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify recoverable errors for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
@@ -359,14 +347,12 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   grpc::Status status;
   tested.DeleteInstance("the-instance", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListClusters) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   std::string const& instance_id = "the-instance";
   auto mock_list_clusters =
@@ -386,7 +372,6 @@ TEST_F(InstanceAdminTest, ListClusters) {
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
 TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
-  using namespace ::testing;
   auto const instance_id = "the-instance";
 
   bigtable::noex::InstanceAdmin tested(client_);
@@ -423,8 +408,6 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
  * unrecoverable failures.
  */
 TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListClusters(_, _, _))
       .WillOnce(
@@ -436,12 +419,11 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   grpc::Status status;
   tested.ListClusters("the-instance", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify positive scenario for DeleteCluster
 TEST_F(InstanceAdminTest, DeleteCluster) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::noex::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -460,7 +442,6 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
 
 /// @test Verify unrecoverable error for DeleteCluster
 TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillOnce(
@@ -471,12 +452,11 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   // After all the setup, make the actual call we want to test.
   tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify recoverable errors for DeleteCluster
 TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
-  using namespace ::testing;
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillOnce(Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "uh oh")));
@@ -486,5 +466,5 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
   // After all the setup, make the actual call we want to test.
   tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }

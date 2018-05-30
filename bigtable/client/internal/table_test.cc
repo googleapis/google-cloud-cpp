@@ -22,7 +22,7 @@ using testing::_;
 using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
-using namespace bigtable::chrono_literals;
+ut-using namespace bigtable::chrono_literals;
 namespace btproto = google::bigtable::v2;
 
 /// Define types and functions used in the tests.
@@ -745,7 +745,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
                            "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("yikes"));
+  EXPECT_THAT(status.error_message(), HasSubstr("yikes"));
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
@@ -870,7 +870,7 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailure) {
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("try-again"));
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.

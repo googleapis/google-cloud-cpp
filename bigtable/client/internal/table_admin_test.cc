@@ -206,7 +206,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   grpc::Status status;
   tested.ListTables(btproto::Table::FULL, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -232,7 +232,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   tested.ListTables(btproto::Table::FULL, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("try-again"));
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
@@ -291,7 +291,7 @@ TEST_F(TableAdminTest, CreateTableFailure) {
   // After all the setup, make the actual call we want to test.
   tested.CreateTable("other-table", bigtable::TableConfig(), status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -336,7 +336,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
   // After all the setup, make the actual call we want to test.
   table_admin.GetTable("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("try-again"));
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 
   bigtable::noex::TableAdmin table_admin_assign(client_, "the-assign-instance");
   table_admin_assign = tested;
@@ -348,7 +348,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
   // After all the setup, make the actual call we want to test.
   table_admin_assign.GetTable("other-table", status_assign);
   EXPECT_FALSE(status_assign.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("try-again"));
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
@@ -390,7 +390,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   // After all the setup, make the actual call we want to test.
   tested.GetTable("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -412,7 +412,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
   // After all the setup, make the actual call we want to test.
   tested.GetTable("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("try-again"));
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.
@@ -450,7 +450,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   grpc::Status status;
   tested.DeleteTable("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -511,7 +511,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   grpc::Status status;
   tested.ModifyColumnFamilies("other-table", std::move(changes), status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
@@ -549,7 +549,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   grpc::Status status;
   tested.DropRowsByPrefix("other-table", "prefix", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
@@ -589,7 +589,7 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
   // After all the setup, make the actual call we want to test.
   tested.DropAllRows("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -632,7 +632,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
   grpc::Status status;
   tested.GenerateConsistencyToken("other-table", status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -680,7 +680,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   bigtable::ConsistencyToken consistency_token("other-token");
   tested.CheckConsistency(table_id, consistency_token, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -726,7 +726,7 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
   bigtable::SnapshotId snapshot_id("other-snapshot");
   tested.GetSnapshot(cluster_id, snapshot_id, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("No snapshot."));
+  EXPECT_THAT(status.error_message(), HasSubstr("No snapshot."));
 }
 
 /**
@@ -790,7 +790,7 @@ TEST_F(TableAdminTest, DeleteSnapshotFailure) {
   bigtable::SnapshotId snapshot_id("other-snapshot");
   tested.DeleteSnapshot(cluster_id, snapshot_id, status);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
 
 /**
@@ -901,5 +901,5 @@ TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
   bigtable::ClusterId cluster_id("other-cluster");
   tested.ListSnapshots(status, cluster_id);
   EXPECT_FALSE(status.ok());
-  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
