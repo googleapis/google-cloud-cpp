@@ -153,5 +153,17 @@ after_success:
 after_failure:
   - ci/dump-logs.sh
 
+cache:
+  directories:
+    # Cache the Bazel directories, in builds that do not use Bazel this is
+    # empty and trivial to cache.
+    - $HOME/.cache/bazel
+  timeout: 900
+
+before_cache:
+  # Do not save the Bazel installation, reinstall each time, it fails to install
+  # if the installation is in the cache.
+  - rm -fr ${HOME}/.cache/bazel/_bazel_${USER}/install
+
 notifications:
   email: false
