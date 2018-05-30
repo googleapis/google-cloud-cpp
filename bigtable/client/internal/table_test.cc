@@ -722,14 +722,14 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "yikes")));
 
   auto create_cancelled_stream = [&](grpc::ClientContext*,
                                      btproto::MutateRowsRequest const&) {
     auto stream = bigtable::internal::make_unique<MockMutateRowsReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+        .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "yikes")));
     return stream.release()->AsUniqueMocked();
   };
 
@@ -745,6 +745,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
                            "bar", {bt::SetCell("fam", "col", 0_ms, "qux")})),
       status);
   EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("yikes"));
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
@@ -869,6 +870,7 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailure) {
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
   EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
