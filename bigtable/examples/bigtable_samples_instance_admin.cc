@@ -165,7 +165,7 @@ void UpdateCluster(bigtable::InstanceAdmin instance_admin, int argc,
           .get();
 
   // Modify the cluster
-  cluster.set_default_storage_type(bigtable::ClusterConfig::SSD);
+  cluster.set_serve_nodes(2);
   auto modified_config = bigtable::ClusterConfig(std::move(cluster));
 
   auto modified_cluster = instance_admin.UpdateCluster(cluster_config).get();

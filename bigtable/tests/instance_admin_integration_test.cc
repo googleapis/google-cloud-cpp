@@ -230,33 +230,46 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
-  bigtable::ClusterId cluster_id(id + "-cl");
+  bigtable::ClusterId cluster_id(id + "-cl1");
+  bigtable::DisplayName display_name(id);
 
-  auto config =
-      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
+  clusters_config.push_back(std::make_pair(
+      cluster_id.get(), bigtable::ClusterConfig("us-central1-f", 0,
+                                                bigtable::ClusterConfig::HDD)));
+  auto instance_config =
+      bigtable::InstanceConfig(instance_id, display_name, clusters_config)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
 
   auto clusters_before = instance_admin_->ListClusters(instance_id.get());
-  auto cluster =
-      instance_admin_->CreateCluster(config, instance_id, cluster_id).get();
+
+  bigtable::ClusterId another_cluster_id(id + "-cl2");
+  auto cluster_config =
+      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+  auto cluster_before =
+      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+          .get();
+
   btadmin::Cluster cluster_copy;
-  cluster_copy.CopyFrom(cluster);
+  cluster_copy.CopyFrom(cluster_before);
 
   // update the storage type
-  cluster.set_default_storage_type(bigtable::ClusterConfig::SSD);
-  bigtable::ClusterConfig cluster_config(std::move(cluster));
-
+  cluster_before.set_serve_nodes(1);
+  bigtable::ClusterConfig updated_cluster_config(std::move(cluster_before));
   auto cluster_after =
-      instance_admin_->UpdateCluster(std::move(cluster_config)).get();
+      instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
 
   auto clusters_after = instance_admin_->ListClusters(instance_id.get());
-  instance_admin_->DeleteCluster(instance_id, cluster_id);
-
+  instance_admin_->DeleteInstance(id);
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster_copy.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster_copy.name()));
   EXPECT_NE(std::string::npos, cluster_copy.name().find(id));
   EXPECT_NE(std::string::npos,
             cluster_copy.name().find(InstanceTestEnvironment::project_id()));
-  EXPECT_EQ(bigtable::ClusterConfig::SSD, cluster_after.default_storage_type());
+  EXPECT_EQ(0, cluster_copy.serve_nodes());
+  EXPECT_EQ(1, cluster_after.serve_nodes());
 }
 
 int main(int argc, char* argv[]) {
