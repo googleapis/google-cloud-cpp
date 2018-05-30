@@ -80,7 +80,6 @@ matrix:
       compiler: clang
       env:
         TEST_INSTALL=yes
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
         DISTRO=ubuntu-with-dependencies
         DISTRO_VERSION=17.10
       install:

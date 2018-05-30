@@ -28,7 +28,16 @@ else
   build_script="/v/ci/build-docker.sh";
 fi
 
-sudo docker run --cap-add SYS_PTRACE -it \
+# TEST_INSTALL=yes builds work better as root, but other builds should avoid
+# creating root-owned files in the build directory.
+docker_uid=0
+if [ "${TEST_INSTALL:-}" != "yes" ]; then
+  docker_uid="${UID:-0}"
+fi
+
+sudo docker run \
+     --cap-add SYS_PTRACE \
+     -it \
      --env DISTRO="${DISTRO}" \
      --env DISTRO_VERSION="${DISTRO_VERSION}" \
      --env CXX="${CXX}" \
@@ -42,5 +51,9 @@ sudo docker run --cap-add SYS_PTRACE -it \
      --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-     --env TERM=${TERM:-dumb} \
-     --volume $PWD:/v --workdir /v "${IMAGE}:tip" ${build_script}
+     --env TERM="${TERM:-dumb}" \
+     --user "${docker_uid}" \
+     --volume "${PWD}":/v \
+     --workdir /v \
+     "${IMAGE}:tip" \
+     ${build_script}
