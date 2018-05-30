@@ -22,7 +22,7 @@ using testing::_;
 using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
-ut-using namespace bigtable::chrono_literals;
+using namespace bigtable::chrono_literals;
 namespace btproto = google::bigtable::v2;
 
 /// Define types and functions used in the tests.
