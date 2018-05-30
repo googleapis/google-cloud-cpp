@@ -138,10 +138,9 @@ struct MockRpcFactory {
 
 }  // anonymous namespace
 
-/// @test Verify basic functionality in the `bigtable::InstanceAdmin` class.
-
 using namespace ::testing;
 
+/// @test Verify basic functionality in the `bigtable::InstanceAdmin` class.
 TEST_F(InstanceAdminTest, Default) {
   bigtable::noex::InstanceAdmin tested(client_);
   EXPECT_EQ("the-project", tested.project_id());
