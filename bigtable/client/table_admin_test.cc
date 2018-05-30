@@ -14,6 +14,7 @@
 
 #include "bigtable/client/table_admin.h"
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/mock_admin_client.h"
 #include <google/protobuf/text_format.h>
@@ -122,6 +123,49 @@ struct MockRpcFactory {
           google::protobuf::util::MessageDifferencer differencer;
           differencer.ReportDifferencesToString(&delta);
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+          EXPECT_NE(nullptr, response);
+          return grpc::Status::OK;
+        });
+  }
+};
+
+/**
+ * Helper class to create the expectations and check consistency over
+ * multiple calls for a simple RPC call.
+ *
+ * Given the type of the request and responses, this struct provides a function
+ * to create a mock implementation with the right signature and checks.
+ *
+ * @tparam RequestType the protobuf type for the request.
+ * @tparam ResponseType the protobuf type for the response.
+ */
+template <typename RequestType, typename ResponseType>
+struct MockRpcMultiCallFactory {
+  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
+                                     RequestType const& request,
+                                     ResponseType* response);
+
+  /// Refactor the boilerplate common to most tests.
+  static std::function<SignatureType> Create(std::string expected_request,
+                                             bool expected_result) {
+    return std::function<SignatureType>(
+        [expected_request, expected_result](grpc::ClientContext* ctx,
+                                            RequestType const& request,
+                                            ResponseType* response) {
+          RequestType expected;
+          response->clear_consistent();
+          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
+          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+              expected_request, &expected));
+          std::string delta;
+          google::protobuf::util::MessageDifferencer differencer;
+          differencer.ReportDifferencesToString(&delta);
+          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+
+          if (response != nullptr) {
+            response->set_consistent(expected_result);
+          }
 
           EXPECT_NE(nullptr, response);
           return grpc::Status::OK;
@@ -243,7 +287,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   std::string expected_text = R"""(
-parent: 'projects/the-project/instances/the-instance'
+      parent: 'projects/the-project/instances/the-instance'
 table_id: 'new-table'
 table {
   column_families {
@@ -363,8 +407,8 @@ TEST_F(TableAdminTest, GetTableSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-view: SCHEMA_VIEW
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      view: SCHEMA_VIEW
 )""";
   auto mock = MockRpcFactory<btproto::GetTableRequest, btproto::Table>::Create(
       expected_text);
@@ -430,7 +474,7 @@ TEST_F(TableAdminTest, DeleteTable) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
   auto mock =
       MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
@@ -472,7 +516,7 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 modifications {
   id: 'foo'
   create { gc_rule { max_age { seconds: 172800 }}}
@@ -530,8 +574,8 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-row_key_prefix: 'foobar'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      row_key_prefix: 'foobar'
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
@@ -570,8 +614,8 @@ TEST_F(TableAdminTest, DropAllRows) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-delete_all_data_from_table: true
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      delete_all_data_from_table: true
 )""";
   auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
       expected_text);
@@ -611,7 +655,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
   auto mock = MockRpcFactory<
       btproto::GenerateConsistencyTokenRequest,
@@ -654,9 +698,9 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/tables/the-table'
-consistency_token: 'test-token'
-    )""";
+      name: 'projects/the-project/instances/the-instance/tables/the-table'
+      consistency_token: 'test-token'
+)""";
   auto mock =
       MockRpcFactory<btproto::CheckConsistencyRequest,
                      btproto::CheckConsistencyResponse>::Create(expected_text);
@@ -669,7 +713,7 @@ consistency_token: 'test-token'
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::GenerateConsistencyToken` makes only
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` makes only
  * one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, CheckConsistencyFailure) {
@@ -694,6 +738,82 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 }
 
 /**
+ * @test Verify that `bigtagble::TableAdmin::CheckConsistency` works as
+ * expected, with multiple asynchronous calls.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
+  bigtable::ExponentialBackoffPolicy backoff_policy;
+  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
+
+  bigtable::TableAdmin tested(
+      client_, "the-async-instance", std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
+  std::string expected_text = R"""(
+      name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
+      consistency_token: 'test-async-token'
+)""";
+
+  auto mock_for_false = MockRpcMultiCallFactory<
+      btproto::CheckConsistencyRequest,
+      btproto::CheckConsistencyResponse>::Create(expected_text, false);
+  auto mock_for_true = MockRpcMultiCallFactory<
+      btproto::CheckConsistencyRequest,
+      btproto::CheckConsistencyResponse>::Create(expected_text, true);
+
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_false))
+      .WillOnce(Invoke(mock_for_true));
+
+  bigtable::TableId table_id("the-async-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+  // After all the setup, make the actual call we want to test.
+  std::future<bool> result =
+      tested.WaitForConsistencyCheck(table_id, consistency_token);
+  EXPECT_TRUE(result.get());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CheckConsistency` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
+  using namespace ::testing;
+  using namespace bigtable::chrono_literals;
+
+  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
+  bigtable::ExponentialBackoffPolicy backoff_policy;
+  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
+
+  bigtable::TableAdmin tested(
+      client_, "the-async-instance", std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  bigtable::TableId table_id("other-async-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  std::future<bool> result =
+      tested.WaitForConsistencyCheck(table_id, consistency_token);
+  EXPECT_THROW(result.get(), bigtable::GRpcError);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.WaitForConsistencyCheck(table_id, consistency_token),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
  * @test Verify that `bigtable::TableAdmin::GetSnapshot` works in the easy case.
  */
 TEST_F(TableAdminTest, GetSnapshotSimple) {
@@ -702,8 +822,8 @@ TEST_F(TableAdminTest, GetSnapshotSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
-    )""";
+      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+)""";
   auto mock =
       MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
           expected_text);
@@ -773,7 +893,7 @@ TEST_F(TableAdminTest, DeleteSnapshotSimple) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
-name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
 )""";
   auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
       expected_text);

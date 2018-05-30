@@ -125,6 +125,18 @@ bool TableAdmin::CheckConsistency(
   return consistent;
 }
 
+bool TableAdmin::WaitForConsistencyCheckImpl(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  grpc::Status status;
+  bool consistent =
+      impl_.WaitForConsistencyCheckHelper(table_id, consistency_token, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return consistent;
+}
+
 void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;

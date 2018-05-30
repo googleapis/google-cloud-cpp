@@ -190,6 +190,31 @@ bool TableAdmin::CheckConsistency(
   return response.consistent();
 }
 
+bool TableAdmin::WaitForConsistencyCheckHelper(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token, grpc::Status& status) {
+  btproto::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+
+  auto polling_policy = polling_policy_->clone();
+  do {
+    auto response = ClientUtils::MakeCall(
+        *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy, &AdminClient::CheckConsistency, request,
+        "CheckConsistency", status, true);
+
+    if (response.consistent()) {
+      return true;
+    }
+
+  } while (not polling_policy->Exhausted());
+
+  return false;
+}
+
 void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id,
                                 grpc::Status& status) {

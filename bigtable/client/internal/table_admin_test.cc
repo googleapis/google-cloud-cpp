@@ -14,6 +14,7 @@
 
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/grpc_error.h"
+#include "bigtable/client/internal/make_unique.h"
 #include "bigtable/client/testing/chrono_literals.h"
 #include "bigtable/client/testing/mock_admin_client.h"
 #include <google/protobuf/text_format.h>

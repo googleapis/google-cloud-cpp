@@ -20,7 +20,9 @@
 #include "bigtable/client/column_family.h"
 #include "bigtable/client/internal/table_admin.h"
 #include "bigtable/client/internal/throw_delegate.h"
+#include "bigtable/client/polling_policy.h"
 #include "bigtable/client/table_config.h"
+#include <future>
 #include <memory>
 
 namespace bigtable {
@@ -57,6 +59,31 @@ class TableAdmin {
              RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
       : impl_(std::move(client), std::move(instance_id),
               std::move(retry_policy), std::move(backoff_policy)) {}
+
+  /**
+   * Create a new TableAdmin using explicit policies to handle RPC errors.
+   *
+   * @tparam RPCRetryPolicy control which operations to retry and for how long.
+   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
+   *     error.
+   * @tparam PollingPolicy provides parameters for asynchronous calls.
+   * @param client the interface to create grpc stubs, report errors, etc.
+   * @param instance_id the id of the instance, e.g., "my-instance", the full
+   *   name (e.g. '/projects/my-project/instances/my-instance') is built using
+   *   the project id in the @p client parameter.
+   * @param retry_policy the policy to handle RPC errors.
+   * @param backoff_policy the policy to control backoff after an error.
+   * @param polling_policy the policy to control the asynchronous call
+   * parameters
+   */
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+            typename PollingPolicy>
+  TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
+             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
+             PollingPolicy polling_policy)
+      : impl_(std::move(client), std::move(instance_id),
+              std::move(retry_policy), std::move(backoff_policy),
+              std::move(polling_policy)) {}
 
   TableAdmin(TableAdmin const& table_admin) = default;
   TableAdmin& operator=(TableAdmin const& table_admin) = default;
@@ -191,6 +218,23 @@ class TableAdmin {
                         bigtable::ConsistencyToken const& consistency_token);
 
   /**
+   * Checks consistency of a table with multiple calls using a separate thread
+   *
+   * @param table_id the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::future<bool> WaitForConsistencyCheck(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token) {
+    return std::async(std::launch::async,
+                      &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
+                      consistency_token);
+  }
+
+  /**
    * Delete all the rows in a table.
    *
    * @param table_id the id of the table within the instance associated with
@@ -266,6 +310,15 @@ class TableAdmin {
     }
     return result;
   }
+
+ private:
+  /**
+   * Implements the polling loop for `WaitForConsistencyCheck` on a
+   * separate thread
+   */
+  bool WaitForConsistencyCheckImpl(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
 
  private:
   noex::TableAdmin impl_;
