@@ -180,8 +180,10 @@ struct UnaryClientUtils {
       }
       if (not rpc_policy.on_failure(status)) {
         std::string full_message = error_message;
-        full_message += "(" + metadata_update_policy.value() + ")";
-        status = grpc::Status(status.error_code(), full_message);
+        full_message += "(" + metadata_update_policy.value() + ") ";
+        full_message += status.error_message();
+        status = grpc::Status(status.error_code(), full_message,
+                              status.error_details());
         break;
       }
       auto delay = backoff_policy.on_completion(status);
@@ -233,6 +235,13 @@ struct UnaryClientUtils {
     // Call the pointer to member function.
     status = (client.*function)(&client_context, request, &response);
 
+    if (not status.ok()) {
+      std::string full_message = error_message;
+      full_message += "(" + metadata_update_policy.value() + ") ";
+      full_message += status.error_message();
+      status = grpc::Status(status.error_code(), full_message,
+                            status.error_details());
+    }
     return response;
   }
 };

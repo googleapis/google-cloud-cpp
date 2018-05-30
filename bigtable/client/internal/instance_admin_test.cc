@@ -259,6 +259,7 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   grpc::Status status;
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the simple
@@ -314,6 +315,7 @@ TEST_F(InstanceAdminTest, GetInstanceUnrecoverableFailures) {
   std::string instance_id = "t0";
   auto actual = tested.GetInstance(instance_id, status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify positive scenario for DeleteInstance
@@ -344,6 +346,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
   grpc::Status status;
   tested.DeleteInstance("the-instance", status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify recoverable errors for DeleteInstance
@@ -356,6 +359,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   grpc::Status status;
   tested.DeleteInstance("the-instance", status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
@@ -432,6 +436,7 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   grpc::Status status;
   tested.ListClusters("the-instance", status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify positive scenario for DeleteCluster
@@ -466,6 +471,7 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   // After all the setup, make the actual call we want to test.
   tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
 
 /// @test Verify recoverable errors for DeleteCluster
@@ -480,4 +486,5 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
   // After all the setup, make the actual call we want to test.
   tested.DeleteCluster(instance_id, cluster_id, status);
   EXPECT_FALSE(status.ok());
+  EXPECT_NE(std::string::npos, status.error_message().find("uh oh"));
 }
