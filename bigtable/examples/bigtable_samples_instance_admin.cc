@@ -137,16 +137,22 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [create cluster]
 void CreateCluster(bigtable::InstanceAdmin instance_admin, int argc,
                    char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-instance: <instance-id> <cluster-id>"};
+  if (argc != 2) {
+    throw Usage{"create-cluster: <instance-id> <cluster-id>"};
   }
   std::string const instance_id = ConsumeArg(argc, argv);
-  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const new_cluster_id = ConsumeArg(argc, argv);
   auto cluster_config =
       bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+  bigtable::DisplayName display_name("Put description here");
+  std::string cluster_id = instance_id + "-c1";
+  bigtable::InstanceConfig config(bigtable::InstanceId(instance_id),
+                                  display_name, {{cluster_id, cluster_config}});
+  config.set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance = instance_admin.CreateInstance(config);
   auto future = instance_admin.CreateCluster(
       bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD),
-      bigtable::InstanceId(instance_id), bigtable::ClusterId(cluster_id));
+      bigtable::InstanceId(instance_id), bigtable::ClusterId(new_cluster_id));
   // Most applications would simply call future.get(), here we show how to
   // perform additional work while the long running operation completes.
   std::cout << "Waiting for cluster creation to complete ";
