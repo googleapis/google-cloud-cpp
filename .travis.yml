@@ -48,10 +48,7 @@ matrix:
       # requests because Travis often has long backlogs for macOS.
       os: osx
       compiler: clang
-      before_install:
-        - brew update
-      install:
-        - brew install curl openssl c-ares
+      install: ci/install-macosx.sh
       script: ci/build-macosx.sh
       if: type != pull_request
     - # Compile on Travis' native environment with Bazel
