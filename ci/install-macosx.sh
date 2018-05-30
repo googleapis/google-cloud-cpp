@@ -21,4 +21,5 @@ if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   exit 0
 fi
 
-brew update && brew install curl openssl c-ares
+brew update
+brew install curl openssl c-ares
