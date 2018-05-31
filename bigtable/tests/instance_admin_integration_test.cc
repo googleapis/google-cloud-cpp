@@ -196,10 +196,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
   std::string instance_id =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id =
-      "Cluster-" + bigtable::testing::Sample(
-                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-
+  std::string cluster_id = instance_id + "-c1";
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
 
