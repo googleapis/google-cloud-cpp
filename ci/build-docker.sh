@@ -106,11 +106,10 @@ fi
 # of the tests, find any such errors and report them as a build failure.
 echo
 echo -n "Searching for sanitizer errors in the test log: "
-if grep -qe '/v/.*\.cc:[0-9][0-9]*' \
-       Testing/Temporary/LastTest.log; then
+if grep -qe '^/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log; then
   echo "${COLOR_RED}some sanitizer errors found."
   echo
-  grep -e '/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log
+  grep -e '^/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log
   echo "${COLOR_RESET}"
   exit 1
 else
