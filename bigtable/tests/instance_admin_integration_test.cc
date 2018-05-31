@@ -203,10 +203,12 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
   auto clusters_before = instance_admin_->ListClusters(instance_id);
   auto cluster =
       instance_admin_
-          ->CreateCluster(bigtable::ClusterConfig("us-central1-f", 0,
-                                                  bigtable::ClusterConfig::HDD),
-                          bigtable::InstanceId(instance_id),
-                          bigtable::ClusterId(cluster_id))
+          ->CreateCluster(
+              bigtable::ClusterConfig(
+                  "projects/cloud-cpp-testing-resources/us-central1-f/0", 0,
+                  bigtable::ClusterConfig::HDD),
+              bigtable::InstanceId(instance_id),
+              bigtable::ClusterId(cluster_id))
           .get();
   auto clusters_after = instance_admin_->ListClusters(instance_id);
   instance_admin_->DeleteCluster(bigtable::InstanceId(instance_id),
