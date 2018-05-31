@@ -254,7 +254,7 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
   std::string const column_id1 = "colid1";
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

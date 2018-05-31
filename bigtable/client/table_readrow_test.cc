@@ -90,16 +90,16 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
   namespace btproto = ::google::bigtable::v2;
 
   auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
-  EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
   EXPECT_CALL(*stream, Finish())
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
-                                       btproto::ReadRowsRequest const& req) {
-        return stream.release()->AsUniqueMocked();
-      }));
+      .WillRepeatedly(Invoke(
+          [&stream](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
+            return stream.release()->AsUniqueMocked();
+          }));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(table_.ReadRow("r1", bigtable::Filter::PassAllFilter()),
