@@ -197,18 +197,18 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   std::string cluster_id = instance_id + "-c1";
+  std::string location_id =
+      InstanceTestEnvironment::project_id() + "/us-central1-f/0";
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
 
   auto clusters_before = instance_admin_->ListClusters(instance_id);
   auto cluster =
       instance_admin_
-          ->CreateCluster(
-              bigtable::ClusterConfig(
-                  "projects/cloud-cpp-testing-resources/us-central1-f/0", 0,
-                  bigtable::ClusterConfig::HDD),
-              bigtable::InstanceId(instance_id),
-              bigtable::ClusterId(cluster_id))
+          ->CreateCluster(bigtable::ClusterConfig(location_id, 0,
+                                                  bigtable::ClusterConfig::HDD),
+                          bigtable::InstanceId(instance_id),
+                          bigtable::ClusterId(cluster_id))
           .get();
   auto clusters_after = instance_admin_->ListClusters(instance_id);
   instance_admin_->DeleteCluster(bigtable::InstanceId(instance_id),
