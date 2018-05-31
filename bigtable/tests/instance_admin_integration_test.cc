@@ -235,28 +235,32 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
 
   std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
   clusters_config.push_back(std::make_pair(
-      cluster_id.get(), bigtable::ClusterConfig("us-central1-f", 0,
+      cluster_id.get(), bigtable::ClusterConfig("us-central1-f", 3,
                                                 bigtable::ClusterConfig::HDD)));
   auto instance_config =
       bigtable::InstanceConfig(instance_id, display_name, clusters_config)
-          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+          .set_type(bigtable::InstanceConfig::PRODUCTION);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
 
   auto clusters_before = instance_admin_->ListClusters(instance_id.get());
 
   bigtable::ClusterId another_cluster_id(id + "-cl2");
+  auto location =
+      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
   auto cluster_config =
-      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
   auto cluster_before =
-      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+      instance_admin_
+          ->CreateCluster(cluster_config, instance_id, another_cluster_id)
           .get();
 
   btadmin::Cluster cluster_copy;
   cluster_copy.CopyFrom(cluster_before);
 
   // update the storage type
-  cluster_before.set_serve_nodes(1);
+  cluster_before.set_serve_nodes(4);
+  cluster_before.clear_state();
   bigtable::ClusterConfig updated_cluster_config(std::move(cluster_before));
   auto cluster_after =
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
@@ -268,8 +272,8 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   EXPECT_NE(std::string::npos, cluster_copy.name().find(id));
   EXPECT_NE(std::string::npos,
             cluster_copy.name().find(InstanceTestEnvironment::project_id()));
-  EXPECT_EQ(0, cluster_copy.serve_nodes());
-  EXPECT_EQ(1, cluster_after.serve_nodes());
+  EXPECT_EQ(3, cluster_copy.serve_nodes());
+  EXPECT_EQ(4, cluster_after.serve_nodes());
 }
 
 int main(int argc, char* argv[]) {
