@@ -194,7 +194,7 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   std::string instance_id =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
-  auto config = IntegrationTestConfig(instance_id);
+
   auto instances_list = instance_admin_->ListInstances();
 
   for (auto const& instance : instances_list) {
@@ -210,12 +210,28 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
 
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
+  std::string instance_id1 =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string instance_id2 =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto config1 = IntegrationTestConfig(instance_id1);
+  auto config2 = IntegrationTestConfig(instance_id2);
+
+  auto instance1 = instance_admin_->CreateInstance(config1).get();
+  auto instance2 = instance_admin_->CreateInstance(config2).get();
+
   auto clusters = instance_admin_->ListClusters();
   for (auto const& i : clusters) {
     auto const npos = std::string::npos;
     EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
   }
   EXPECT_FALSE(clusters.empty());
+
+  instance_admin_->DeleteInstance(instance_id1);
+  instance_admin_->DeleteInstance(instance_id2);
 }
 
 /// @test Verify that InstanceAdmin::UpdateCluster works as expected.
