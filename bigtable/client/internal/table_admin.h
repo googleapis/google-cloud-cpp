@@ -167,7 +167,8 @@ class TableAdmin {
         cluster_id,
         [&result](::google::bigtable::admin::v2::Snapshot snapshot) {
           result.emplace_back(std::move(snapshot));
-        }, status);
+        },
+        status);
     return result;
   }
 
