@@ -87,3 +87,34 @@ TEST(BucketMetadataTest, ParseWithLabels) {
   EXPECT_DEATH_IF_SUPPORTED(actual.label("qux"), "");
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 }
+
+/// @test Verify that the IOStream operator works as expected.
+TEST(BucketMetadataTest, IOStream) {
+  // The iostream operator is mostly there to support EXPECT_EQ() so it is
+  // rarely called, and that breaks our code coverage metrics.
+  std::string text = R"""({
+      "kind": "storage#bucket",
+      "id": "foo-bar-baz",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
+      "projectNumber": "123456789",
+      "name": "foo-bar-baz",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": "4",
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ=",
+      "labels": {
+        "foo": "bar",
+        "baz": "qux"
+      }
+})""";
+
+  auto meta = storage::BucketMetadata::ParseFromJson(text);
+  std::ostringstream os;
+  os << meta;
+  auto actual = os.str();
+  using ::testing::HasSubstr;
+  EXPECT_THAT(actual, HasSubstr("name=foo-bar-baz"));
+  EXPECT_THAT(actual, HasSubstr("foo : bar"));
+}
