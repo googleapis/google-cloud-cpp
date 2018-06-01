@@ -187,12 +187,16 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    std::string prefix = request->parent();
-
-    // magical instance name "-" must return all clusters in the project
-    if (request->parent().back() == '-') {
+    std::string instance_prefix = "/instances/";
+    for (auto const& kv : instances_) {
+      if (0 != kv.first.find(instance_prefix)) {
+        continue;
+      }
+      std::string prefix = request->parent() + "/clusters/";
       for (auto const& kv : clusters_) {
-        *response->add_clusters() = kv.second;
+        if (0 == kv.first.find(prefix)) {
+          *response->add_clusters() = kv.second;
+        }
       }
     } else {
       for (auto const& kv : clusters_) {
