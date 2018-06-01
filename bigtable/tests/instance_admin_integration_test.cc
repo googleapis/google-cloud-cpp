@@ -197,15 +197,15 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   std::string cluster_id = instance_id + "-c1";
-  std::string location_id =
-      InstanceTestEnvironment::project_id() + "/us-central1-f/0";
+  auto location_id =
+      "projects/" + instance_admin_->project_id() + "/locations/us-central1-c";
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
 
   auto clusters_before = instance_admin_->ListClusters(instance_id);
   auto cluster =
       instance_admin_
-          ->CreateCluster(bigtable::ClusterConfig(location_id, 0,
+          ->CreateCluster(bigtable::ClusterConfig(location_id, 1,
                                                   bigtable::ClusterConfig::HDD),
                           bigtable::InstanceId(instance_id),
                           bigtable::ClusterId(cluster_id))
@@ -213,6 +213,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
   auto clusters_after = instance_admin_->ListClusters(instance_id);
   instance_admin_->DeleteCluster(bigtable::InstanceId(instance_id),
                                  bigtable::ClusterId(cluster_id));
+  instance_admin_->DeleteInstance(instance_id);
 
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
