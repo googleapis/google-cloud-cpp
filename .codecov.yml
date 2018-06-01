@@ -1,6 +1,3 @@
-# Don't post a comment on pull requests.
-comment: off
-
 # Disable commit statuses
 coverage:
   status:
