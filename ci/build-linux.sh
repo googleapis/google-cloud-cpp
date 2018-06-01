@@ -35,8 +35,8 @@ if [ "${TEST_INSTALL:-}" != "yes" ]; then
   docker_uid="${UID:-0}"
 fi
 
-# Use a volume to store the any cache files, so we save the cache for future
-# Travis builds.
+# Use a volume to store the cache files. This exports the cache files from the
+# Docker container, and then we can save them for future Travis builds.
 test -d "${PWD}/build-output/cache" || mkdir -p "${PWD}/build-output/cache"
 test -d "${PWD}/build-output/ccache" || mkdir -p "${PWD}/build-output/ccache"
 
