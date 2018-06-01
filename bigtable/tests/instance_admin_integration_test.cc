@@ -196,7 +196,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
   std::string instance_id =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id = instance_id + "-c1";
+  std::string cluster_id = instance_id + "-c2";
   auto location_id =
       "projects/" + instance_admin_->project_id() + "/locations/us-central1-c";
   auto config = IntegrationTestConfig(instance_id);
