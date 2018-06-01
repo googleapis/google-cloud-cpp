@@ -45,9 +45,9 @@ function install_protobuf {
   tar -xf v3.5.2.tar.gz
   cd protobuf-3.5.2/cmake
   env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
-    -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    -Dprotobuf_BUILD_TESTS=OFF \
-    -H. -B.build
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -Dprotobuf_BUILD_TESTS=OFF \
+      -H. -B.build
   cmake --build .build --target install -- -j ${NCPU}
   ldconfig
 }
@@ -62,9 +62,9 @@ function install_c_ares {
   wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
   tar -xf cares-1_14_0.tar.gz
   cd c-ares-cares-1_14_0
-  env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
-    -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    -H. -B.build; \
+  env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -H. -B.build; \
   cmake --build .build --target install -- -j ${NCPU}
   ./buildconf
   ./configure
@@ -80,13 +80,13 @@ function install_grpc {
   tar -xf v1.10.0.tar.gz
   cd grpc-1.10.0
   env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
-    -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    -DgRPC_BUILD_TESTS=OFF \
-    -DgRPC_ZLIB_PROVIDER=package \
-    -DgRPC_SSL_PROVIDER=package \
-    -DgRPC_CARES_PROVIDER=package \
-    -DgRPC_PROTOBUF_PROVIDER=package \
-    -H. -B.build/grpc
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -H. -B.build/grpc
   cmake --build .build/grpc --target install -- -j ${NCPU}
   make install-pkg-config_c install-pkg-config_cxx install-certs
   ldconfig
@@ -120,7 +120,6 @@ fi
 
 echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:configure-cmake"
-echo
 # Tweak configuration for TEST_INSTALL=yes and SCAN_BUILD=yes builds.
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
