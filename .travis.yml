@@ -37,12 +37,16 @@ matrix:
         SCAN_BUILD=yes
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
-      # Because this builds installs gRPC we can skip that submodule.
+      # Because this builds installs gRPC we can skip that submodule, that
+      # saves substantial time in the build, but requires some tweaking of the
+      # installation step.
       git:
-        submodules:
-          git submodules update --init
-              third_party/googleapis
-              third_party/googletest
+        submodules: false
+      install:
+        - git submodule update --init
+                    third_party/googleapis
+                    third_party/googletest
+        - ci/install-linux.sh
       if: type != pull_request
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
@@ -75,12 +79,16 @@ matrix:
         TEST_INSTALL=yes
         DISTRO=ubuntu
         DISTRO_VERSION=17.10
-      # Because this builds installs gRPC we can skip that submodule.
+      # Because this builds installs gRPC we can skip that submodule, that
+      # saves substantial time in the build, but requires some tweaking of the
+      # installation step.
       git:
-        submodules:
-          git submodules update --init
-              third_party/googleapis
-              third_party/googletest
+        submodules: false
+      install:
+        - git submodule update --init
+                    third_party/googleapis
+                    third_party/googletest
+        - ci/install-linux.sh
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
       compiler: clang
