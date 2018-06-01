@@ -118,6 +118,9 @@ if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
   echo
 fi
 
+echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
+echo "travis_fold:start:configure-cmake"
+echo
 # Tweak configuration for TEST_INSTALL=yes and SCAN_BUILD=yes builds.
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
@@ -129,14 +132,15 @@ if [ "${SCAN_BUILD:-}" = "yes" ]; then
   cmake_install_flags="${cmake_install_flags} -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
 fi
 
-echo "travis_fold:start:configure-cmake"
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
     ${cmake_install_flags} \
     ${CMAKE_FLAGS:-} \
     -H. \
     -B"${BUILD_DIR}"
+echo
 echo "travis_fold:end:configure-cmake"
+echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 
 # If scan-build is enabled, we need to manually compile the dependencies;
 # otherwise, the static analyzer finds issues in them, and there is no way to
@@ -162,6 +166,8 @@ echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 # Travis needs to rebuild the cache each time, and that slows down the build
 # unnecessarily.
 if [ -n "${ccache_command}" ]; then
+  echo
+  echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
   ${ccache_command} --show-stats
   ${ccache_command} --zero-stats
 fi
@@ -200,6 +206,8 @@ fi
 
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
   cmake --build . --target doxygen-docs
 fi
 
