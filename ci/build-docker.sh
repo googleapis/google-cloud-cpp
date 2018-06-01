@@ -35,6 +35,77 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
   CMAKE_COMMAND="scan-build cmake"
 fi
 
+function install_protobuf {
+  # Install protobuf using CMake.  Some distributions include protobuf, gRPC
+  # requires 3.4.x or newer, and many of those distribution use older versions.
+  wget -q https://github.com/google/protobuf/archive/v3.5.2.tar.gz
+  tar -xf v3.5.2.tar.gz
+  cd protobuf-3.5.2/cmake
+  env CXX="ccache ${CXX}" CC="ccache ${CC}" cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    -H. -B.build
+  cmake --build .build --target install -- -j ${NCPU}
+  ldconfig
+}
+
+function install_c_ares {
+  # Many distributions include c-ares, but they do not include the CMake support
+  # files for the library, so manually install it.  c-ares requires two install
+  # steps because (1) the CMake-based build does not install pkg-config files,
+  # and (2) the Makefile-based build does not install CMake config files.
+  apt-get remove -y libc-ares-dev libc-ares2
+  wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+  tar -xf cares-1_14_0.tar.gz
+  cd c-ares-cares-1_14_0
+  env CXX="ccache ${CXX}" CC="ccache ${CC}" cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -H. -B.build; \
+  cmake --build .build --target install -- -j ${NCPU}
+  ./buildconf
+  ./configure
+  install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
+  ldconfig
+}
+
+function install_grpc {
+  # Install gRPC. Note that we use the system's zlib and ssl libraries.
+  # For similar reasons to c-ares (see above), we need two install steps.
+  wget -q https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
+  tar -xf v1.10.0.tar.gz
+  cd grpc-1.10.0
+  env CXX="ccache ${CXX}" CC="ccache ${CC}" cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DgRPC_BUILD_TESTS=OFF \
+    -DgRPC_ZLIB_PROVIDER=package \
+    -DgRPC_SSL_PROVIDER=package \
+    -DgRPC_CARES_PROVIDER=package \
+    -DgRPC_PROTOBUF_PROVIDER=package \
+    -H. -B.build/grpc
+  cmake --build .build/grpc --target install -- -j ${NCPU}
+  make install-pkg-config_c install-pkg-config_cxx install-certs
+  ldconfig
+}
+
+if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Started dependency install at: $(date)${COLOR_RESET}"
+  echo
+  echo "travis_fold:start:install-dependencies"
+  echo
+  mkdir -p /var/tmp/build-dependencies
+  ccache -s
+  (cd /var/tmp/build-dependencies; install_protobuf)
+  (cd /var/tmp/build-dependencies; install_c_ares)
+  (cd /var/tmp/build-dependencies; install_grpc)
+  ccache -s
+  echo
+  echo "${COLOR_YELLOW}Finished dependency install at: $(date)${COLOR_RESET}"
+  echo
+  echo "travis_fold:end:install-dependencies"
+  echo
+fi
+
 # Tweak configuration for TEST_INSTALL=yes builds.
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
@@ -56,7 +127,9 @@ echo "travis_fold:end:configure-cmake"
 # we can fold the output in Travis and make the log more interesting.
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
+echo
 cmake --build "${BUILD_DIR}" --target skip-scanbuild-targets -- -j ${NCPU}
+echo
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 

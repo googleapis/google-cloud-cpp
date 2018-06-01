@@ -36,7 +36,7 @@ matrix:
       env:
         SCAN_BUILD=yes
         CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
-        DISTRO=ubuntu-with-dependencies
+        DISTRO=ubuntu
         DISTRO_VERSION=16.04
       install:
         - # First build the usual Ubuntu image, then use that to build an image
@@ -73,7 +73,7 @@ matrix:
       compiler: clang
       env:
         TEST_INSTALL=yes
-        DISTRO=ubuntu-with-dependencies
+        DISTRO=ubuntu
         DISTRO_VERSION=17.10
       install:
         - # First build the usual Ubuntu image, then use that to build an image
