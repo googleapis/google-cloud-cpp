@@ -35,7 +35,6 @@ matrix:
       compiler: clang
       env:
         SCAN_BUILD=yes
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
       install:
