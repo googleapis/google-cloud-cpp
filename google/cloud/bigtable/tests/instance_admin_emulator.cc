@@ -188,7 +188,7 @@ class InstanceAdminEmulator final
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
     for (auto const& kv : instances_) {
-      if (0 != kv.first.find(request-parent())) {
+      if (0 != kv.first.find(request->parent())) {
         continue;
       }
       std::string prefix = request->parent() + "/clusters/";
