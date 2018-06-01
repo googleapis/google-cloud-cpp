@@ -35,6 +35,19 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif ()
 endif ()
 
+# If ccache is installed use it for the build. This makes the Travis
+# configuration agnostic as to wether ccache is installed or not.
+option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available" ON)
+
+if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
+    find_program(CCACHE_FOUND ccache NAMES /usr/bin/ccache)
+    if (CCACHE_FOUND)
+        message(STATUS "ccache found: ${CCACHE_FOUND}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+    endif ()
+endif ()
+
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 

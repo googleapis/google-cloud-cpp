@@ -99,7 +99,7 @@ fi
 
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
-  make doxygen-docs
+  cmake --build . --target doxygen-docs
 fi
 
 # Some of the sanitizers only emit errors and do not change the error code
@@ -140,4 +140,12 @@ _EOF_
     echo
     echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
   fi
+fi
+
+# If ccache is enabled we want to zero out the statistics because otherwise
+# Travis needs to rebuild the cache each time, and that slows down the build
+# unnecessarily.
+if ccache -s >/dev/null 2>&1; then
+  ccache --show-stats
+  ccache --zero-stats
 fi
