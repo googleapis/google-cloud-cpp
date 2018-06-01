@@ -111,6 +111,11 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       google::longrunning::Operation* response) = 0;
+
+  virtual grpc::Status UpdateCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::Cluster const& request,
+      google::longrunning::Operation* response) = 0;
   //@}
 
   //@{

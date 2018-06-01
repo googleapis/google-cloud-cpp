@@ -29,12 +29,17 @@ class ClusterConfig {
   constexpr static StorageType SSD = google::bigtable::admin::v2::SSD;
   constexpr static StorageType HDD = google::bigtable::admin::v2::HDD;
 
+  ClusterConfig(google::bigtable::admin::v2::Cluster cluster)
+      : proto_(std::move(cluster)) {}
+
   ClusterConfig(std::string location, std::int32_t serve_nodes,
                 StorageType storage) {
     proto_.set_location(std::move(location));
     proto_.set_serve_nodes(serve_nodes);
     proto_.set_default_storage_type(storage);
   }
+
+  std::string const& GetName() { return proto_.name(); }
 
   // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::Cluster const& as_proto() const {

@@ -572,6 +572,85 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
+
+/// @test Failures in `bigtable::InstanceAdmin::UpdateCluster`.
+TEST_F(InstanceAdminTest, UpdateClusterRequestFailure) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  btproto::Cluster cluster;
+  bigtable::ClusterConfig cluster_config(std::move(cluster));
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Failures while polling in `bigtable::InstanceAdmin::UpdateCluster`.
+TEST_F(InstanceAdminTest, UpdateClusterPollUnrecoverableFailure) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+                          google::longrunning::Operation* response) {
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  btproto::Cluster cluster;
+  bigtable::ClusterConfig cluster_config(std::move(cluster));
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Polling in `bigtable::InstanceAdmin::UpdateCluster` returns failure.
+TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+                          google::longrunning::Operation* response) {
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto error = bigtable::internal::make_unique<google::rpc::Status>();
+            error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
+            error->set_message("something is broken");
+            operation->set_allocated_error(error.release());
+            return grpc::Status::OK;
+          }));
+
+  btproto::Cluster cluster;
+  bigtable::ClusterConfig cluster_config(std::move(cluster));
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
@@ -1097,4 +1176,182 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
+TEST_F(InstanceAdminTest, UpdateCluster) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+                          google::longrunning::Operation* response) {
+        auto const cluster_name =
+            "projects/my-project/instances/test-instance/clusters/test-cluster";
+        EXPECT_EQ(cluster_name, request.name());
+        return grpc::Status::OK;
+      }));
+
+  std::string expected_text = R"(
+      name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
+      location: 'Location1'
+      state: READY
+      serve_nodes: 0
+      default_storage_type: SSD
+  )";
+
+  btproto::Cluster expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+
+  btproto::Cluster expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  bigtable::ClusterConfig cluster_config(std::move(expected));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([&expected_copy](
+                     grpc::ClientContext*,
+                     google::longrunning::GetOperationRequest const& request,
+                     google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
+TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  std::string expected_text = R"(
+      name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
+      location: 'Location1'
+      state: READY
+      serve_nodes: 0
+      default_storage_type: SSD
+  )";
+  btproto::Cluster expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+
+  btproto::Cluster expected_copy;
+  expected_copy.CopyFrom(expected);
+  bigtable::ClusterConfig cluster_config(std::move(expected));
+
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillOnce(Invoke([&expected_copy](
+                           grpc::ClientContext*,
+                           btproto::Cluster const& request,
+                           google::longrunning::Operation* response) {
+        auto const cluster_name =
+            "projects/my-project/instances/test-instance/clusters/test-cluster";
+        EXPECT_EQ(cluster_name, request.name());
+        response->set_done(true);
+        response->set_name("operation-name");
+        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        any->PackFrom(expected_copy);
+        response->set_allocated_response(any.release());
+        return grpc::Status::OK;
+      }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
+
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+}
+
+/// @test Failures while polling in `bigtable::InstanceAdmin::UpdateCluster`.
+TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+                          google::longrunning::Operation* response) {
+        auto const cluster_name =
+            "projects/my-project/instances/test-instance/clusters/test-cluster";
+        EXPECT_EQ(cluster_name, request.name());
+        return grpc::Status::OK;
+      }));
+
+  std::string expected_text = R"(
+      name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
+      location: 'Location1'
+      state: READY
+      serve_nodes: 0
+      default_storage_type: SSD
+  )";
+  btproto::Cluster expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+
+  btproto::Cluster expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  bigtable::ClusterConfig cluster_config(std::move(expected));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation*) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation*) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      }))
+      .WillOnce(
+          Invoke([&expected_copy](
+                     grpc::ClientContext*,
+                     google::longrunning::GetOperationRequest const& request,
+                     google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.UpdateCluster(std::move(cluster_config));
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
 }
