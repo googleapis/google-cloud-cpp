@@ -25,6 +25,7 @@ RUN apt update && apt install -y software-properties-common && \
     apt install -y \
         automake \
         build-essential \
+        ccache \
         clang-3.8 \
         cmake3 \
         curl \

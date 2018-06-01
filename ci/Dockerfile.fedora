@@ -20,6 +20,7 @@ RUN dnf makecache && dnf install -y \
     autoconf \
     automake \
     c-ares-devel \
+    ccache \
     clang \
     clang-tools-extra \
     cmake \

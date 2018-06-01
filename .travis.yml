@@ -56,10 +56,6 @@ matrix:
       compiler: gcc
       git:
         submodules: false
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
       install: ci/install-bazel.sh
       script: ci/build-bazel.sh
     - # Compile on Travis' native environment with Bazel
@@ -155,6 +151,8 @@ cache:
     # Cache the Bazel directories, in builds that do not use Bazel this is
     # empty and trivial to cache.
     - $HOME/.cache/bazel
+    - build-output/cache
+    - build-output/ccache
   timeout: 900
 
 before_cache:

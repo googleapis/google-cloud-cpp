@@ -26,6 +26,7 @@ RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && yum install -y \
     devtoolset-7 \
     c-ares-devel \
+    ccache \
     cmake3 \
     curl \
     curl-devel \

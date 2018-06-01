@@ -35,6 +35,11 @@ if [ "${TEST_INSTALL:-}" != "yes" ]; then
   docker_uid="${UID:-0}"
 fi
 
+# Use a volume to store the cache files. This exports the cache files from the
+# Docker container, and then we can save them for future Travis builds.
+test -d "${PWD}/build-output/cache" || mkdir -p "${PWD}/build-output/cache"
+test -d "${PWD}/build-output/ccache" || mkdir -p "${PWD}/build-output/ccache"
+
 sudo docker run \
      --cap-add SYS_PTRACE \
      -it \
@@ -54,6 +59,8 @@ sudo docker run \
      --env TERM="${TERM:-dumb}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
+     --volume "${PWD}/build-output/cache":/.cache \
+     --volume "${PWD}/build-output/ccache":/.ccache \
      --workdir /v \
      "${IMAGE}:tip" \
      ${build_script}
