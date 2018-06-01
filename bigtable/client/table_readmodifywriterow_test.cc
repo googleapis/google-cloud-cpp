@@ -247,3 +247,31 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
   EXPECT_EQ("response-colid2", row.cells().at(1).column_qualifier());
   EXPECT_EQ("value_string", row.cells().at(1).value());
 }
+
+TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
+  std::string const row_key = "row-key";
+  std::string const family1 = "family1";
+  std::string const column_id1 = "colid1";
+
+  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      table_.ReadModifyWriteRow(row_key,
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family1, column_id1, "value1"),
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family1, column_id1, "-value2")),
+      std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table_.ReadModifyWriteRow(row_key,
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family1, column_id1, "value1"),
+                                bigtable::ReadModifyWriteRule::AppendValue(
+                                    family1, column_id1, "-value2")),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}

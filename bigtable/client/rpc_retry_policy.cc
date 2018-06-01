@@ -31,8 +31,7 @@ auto const MAXIMUM_RETRY_PERIOD = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
-  return std::unique_ptr<RPCRetryPolicy>(
-      new LimitedTimeRetryPolicy(MAXIMUM_RETRY_PERIOD));
+  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy);
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()

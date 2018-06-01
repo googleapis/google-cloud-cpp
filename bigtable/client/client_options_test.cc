@@ -107,6 +107,17 @@ TEST(ClientOptionsTest, EditConnectionPoolSize) {
   EXPECT_EQ(42UL, returned.connection_pool_size());
 }
 
+TEST(ClientOptionsTest, InvalidConnectionPoolSize) {
+  bigtable::ClientOptions client_options_object;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(client_options_object.set_connection_pool_size(0),
+               std::range_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(client_options_object.set_connection_pool_size(0),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();

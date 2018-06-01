@@ -232,7 +232,7 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
 void TableAdmin::ListSnapshotsImpl(
     bigtable::ClusterId const& cluster_id,
     std::function<void(google::bigtable::admin::v2::Snapshot)> const& inserter,
-    std::function<void()> const& clearer, grpc::Status& status) {
+    grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();

@@ -84,3 +84,29 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
   EXPECT_FALSE(std::get<0>(result));
 }
+
+TEST_F(TableReadRowTest, UnrecoverableFailure) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+
+  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*stream, Finish())
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillRepeatedly(Invoke(
+          [&stream](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
+            return stream.release()->AsUniqueMocked();
+          }));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(table_.ReadRow("r1", bigtable::Filter::PassAllFilter()),
+               std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table_.ReadRow("r1", bigtable::Filter::PassAllFilter()),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}

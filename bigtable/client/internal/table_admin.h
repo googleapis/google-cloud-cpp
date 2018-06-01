@@ -168,7 +168,7 @@ class TableAdmin {
         [&result](::google::bigtable::admin::v2::Snapshot snapshot) {
           result.emplace_back(std::move(snapshot));
         },
-        [&result]() { result.clear(); }, status);
+        status);
     return result;
   }
 
@@ -211,7 +211,7 @@ class TableAdmin {
       bigtable::ClusterId const& cluster_id,
       std::function<void(google::bigtable::admin::v2::Snapshot)> const&
           inserter,
-      std::function<void()> const& clearer, grpc::Status& status);
+      grpc::Status& status);
 
   bool WaitForConsistencyCheckHelper(
       bigtable::TableId const& table_id,

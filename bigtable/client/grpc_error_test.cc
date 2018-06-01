@@ -54,3 +54,10 @@ TEST(GRpcErrorTest, KnownCode_NOT_FOUND) {
   EXPECT_EQ(grpc::StatusCode::NOT_FOUND, ex.error_code());
   EXPECT_NE(std::string::npos, std::string(ex.what()).find("NOT_FOUND"));
 }
+
+TEST(GRpcErrorTest, UnknownCode) {
+  using ::testing::HasSubstr;
+  bigtable::GRpcError ex(
+      "T()", grpc::Status(static_cast<grpc::StatusCode>(-1), "", ""));
+  EXPECT_THAT(std::string(ex.what()), HasSubstr("(UNKNOWN CODE)"));
+}

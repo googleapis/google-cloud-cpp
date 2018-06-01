@@ -30,7 +30,6 @@ add_library(bigtable_client
         data_client.h
         data_client.cc
         filters.h
-        filters.cc
         grpc_error.h
         grpc_error.cc
         instance_admin_client.h
@@ -73,7 +72,6 @@ add_library(bigtable_client
         polling_policy.h
         polling_policy.cc
         read_modify_write_rule.h
-        read_modify_write_rule.cc
         row.h
         row_range.h
         row_range.cc
