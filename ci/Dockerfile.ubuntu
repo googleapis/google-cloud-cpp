@@ -37,6 +37,8 @@ RUN apt update && \
         libtool \
         lsb-release \
         make \
+        python-gunicorn \
+        python-httpbin \
         tar \
         wget \
         zlib1g-dev

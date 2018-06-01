@@ -36,11 +36,15 @@ RUN yum makecache && yum install -y \
     openssl-devel \
     pkgconfig \
     python \
+    python-pip \
+    python-gunicorn \
     shtool \
     unzip \
     wget \
     which \
     zlib-devel
+
+RUN pip install httpbin
 
 # Install cmake3 + ctest3 as cmake + ctest.
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \

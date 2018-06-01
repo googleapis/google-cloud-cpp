@@ -39,6 +39,8 @@ RUN dnf makecache && dnf install -y \
     openssl-devel \
     pkgconfig \
     python \
+    python-gunicorn \
+    python-httpbin \
     shtool \
     unzip \
     wget \
