@@ -23,38 +23,40 @@ cmake --build build-output -- -j $(nproc)
 cd build-output
 ctest --output-on-failure
 
+readonly BTDIR="google/cloud/bigtable"
+
 case ${BENCHMARK} in
     endurance)
-        bigtable/benchmarks/endurance_benchmark ${PROJECT_ID} ${INSTANCE_ID} 4 82800;
+        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 4 82800;
         ;;
     latency)
-        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID};
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}";
         ;;
     throughput)
         # The magic number 64 here is the number of threads necessary to saturate the CPU
         # on a n1-standard-4 GCE instance (that is 4 vCPUs).
-        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 64 1800;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 64 1800;
         ;;
     scan)
-        bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 1800;
+        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 1800;
         ;;
     integration)
-        (cd bigtable/tests && ../../../bigtable/tests/run_integration_tests_production.sh);
-        (cd bigtable/examples && ../../../bigtable/examples/run_examples_production.sh);
+        (cd "${BTDIR}/tests" && "../../../${BTDIR}/tests/run_integration_tests_production.sh");
+        (cd "${BTDIR}/examples" && "../../../${BTDIR}/examples/run_examples_production.sh");
         ;;
     # The following cases are used to test the script when making changes, they are not good
     # benchmarks.
     endurance-quick)
-        bigtable/benchmarks/endurance_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     latency-quick)
-        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     throughput-quick)
-        bigtable/benchmarks/apply_read_latency_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     scan-quick)
-        bigtable/benchmarks/scan_throughput_benchmark ${PROJECT_ID} ${INSTANCE_ID} 1 5 1000 true;
+        "${BTDIR}/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     *)
         echo "Unknown benchmark type"

@@ -38,7 +38,8 @@ ctest --output-on-failure
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${PROJECT_ROOT}/third_party/grpc/etc/roots.pem"
 
 echo "Running Google Cloud Bigtable Integration Tests"
-(cd bigtable/tests && "${PROJECT_ROOT}/bigtable/tests/run_integration_tests_production.sh")
+(cd google/cloud/bigtable/tests && \
+    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
 
 echo "Running Google Cloud Storage Integration Tests"
 (cd storage/tests && "${PROJECT_ROOT}/storage/tests/run_integration_tests.sh")

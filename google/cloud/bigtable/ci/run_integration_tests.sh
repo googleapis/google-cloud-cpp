@@ -19,7 +19,7 @@ set -eu
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/../../ci/colors.sh"
+source "${BINDIR}/../../../../ci/colors.sh"
 
 # TODO(#441) - fix the workaround below and use just this time:
 # (cd bigtable/tests && "${BINDIR}/../tests/run_integration_tests_emulator.sh")

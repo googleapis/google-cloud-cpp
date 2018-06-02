@@ -59,15 +59,15 @@ fi
 # Remove any previous content in the subdirectory used for this release. We will
 # recover any unmodified files in a second.
 cd github-io-staging
-git rm -qfr --ignore-unmatch ${subdir}/bigtable
-git rm -qfr --ignore-unmatch ${subdir}/firestore
+git rm -qfr --ignore-unmatch ${subdir}/google/cloud/bigtable
+git rm -qfr --ignore-unmatch ${subdir}/google/cloud/firestore
 git rm -qfr --ignore-unmatch ${subdir}/storage
 
 # Copy the build results into the gh-pages clone.
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 mkdir -p "${subdir}" || echo "${subdir} already exists"
-cp -r ../build-output/${IMAGE}/bigtable/html/. "${subdir}/bigtable"
-cp -r ../build-output/${IMAGE}/firestore/html/. "${subdir}/firestore"
+cp -r ../build-output/${IMAGE}/google/cloud/bigtable/html/. "${subdir}/bigtable"
+cp -r ../build-output/${IMAGE}/google/cloud/firestore/html/. "${subdir}/firestore"
 cp -r ../build-output/${IMAGE}/storage/html/. "${subdir}/storage"
 if [ "${subdir}" != "latest" ]; then
   cp -r latest/css "${subdir}"

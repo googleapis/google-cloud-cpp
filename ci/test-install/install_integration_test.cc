@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/admin_client.h"
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
+#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include <google/protobuf/text_format.h>
 #include <sstream>
 
