@@ -317,8 +317,9 @@ install(TARGETS bigtable_protos bigtable_common_options
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-# Install proto generated files into bigtable/google.
-install(DIRECTORY ${CMAKE_BINARY_DIR}/bigtable/google/ DESTINATION include/google FILES_MATCHING PATTERN "*.h")
+# Install proto generated files into include/google.
+install(DIRECTORY ${CMAKE_BINARY_DIR}/google/cloud/bigtable/google/
+    DESTINATION include/google FILES_MATCHING PATTERN "*.h")
 
 # The exports can only be installed if all the dependencies are installed.
 # CMake needs to know where the submodules will be installed from,
