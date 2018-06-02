@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include <google/cloud/bigtable/table_strong_types.h>
+#include "google/cloud/bigtable/table_strong_types.h"
 #include <numeric>
 
 namespace bigtable {
