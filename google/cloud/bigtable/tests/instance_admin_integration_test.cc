@@ -191,47 +191,89 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
 
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
-  std::string instance_id =
+  std::string id =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instances_list = instance_admin_->ListInstances();
+  bigtable::InstanceId instance_id(id);
+  bigtable::ClusterId cluster_id(id);
+  bigtable::DisplayName display_name(id);
 
-  for (auto const& instance : instances_list) {
-    auto clusters = instance_admin_->ListClusters(instance.name());
-    for (auto const& i : clusters) {
-      auto const npos = std::string::npos;
-      EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
-      EXPECT_NE(npos, i.name().find(instance.name()));
-    }
-    EXPECT_FALSE(clusters.empty());
+  bigtable::ClusterConfig cluster_config =
+      bigtable::ClusterConfig("us-central1-f", 3, bigtable::ClusterConfig::HDD);
+  auto cluster =
+      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id);
+
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>>
+      clusters_config_list;
+  clusters_config_list.push_back(
+      std::make_pair(cluster_id.get(), cluster_config));
+  auto instance_config =
+      bigtable::InstanceConfig(instance_id, display_name, clusters_config_list)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance = instance_admin_->CreateInstance(instance_config).get();
+
+  auto clusters = instance_admin_->ListClusters(instance_id.get());
+  for (auto const& cluster : clusters) {
+    auto const npos = std::string::npos;
+    EXPECT_NE(npos, cluster.name().find(instance_admin_->project_name()));
+    EXPECT_NE(npos, cluster.name().find(instance_id.get()));
   }
+  EXPECT_FALSE(clusters.empty());
+
+  instance_admin_->DeleteInstance(id);
 }
 
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
-  std::string instance_id1 =
+  std::string id1 =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string instance_id2 =
+  std::string id2 =
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto config1 = IntegrationTestConfig(instance_id1);
-  auto config2 = IntegrationTestConfig(instance_id2);
+  bigtable::InstanceId instance_id1(id1);
+  bigtable::InstanceId instance_id2(id2);
 
-  auto instance1 = instance_admin_->CreateInstance(config1).get();
-  auto instance2 = instance_admin_->CreateInstance(config2).get();
+  bigtable::ClusterId cluster_id1(id1);
+  bigtable::ClusterId cluster_id2(id2);
+  bigtable::DisplayName display_name(id1);
+
+  bigtable::ClusterConfig cluster_config =
+      bigtable::ClusterConfig("us-central1-f", 3, bigtable::ClusterConfig::HDD);
+  auto cluster1 =
+      instance_admin_->CreateCluster(cluster_config, instance_id1, cluster_id1);
+  auto cluster2 =
+      instance_admin_->CreateCluster(cluster_config, instance_id2, cluster_id2);
+
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>>
+      clusters_config_list;
+  clusters_config_list.push_back(
+      std::make_pair(cluster_id1.get(), cluster_config));
+  clusters_config_list.push_back(
+      std::make_pair(cluster_id2.get(), cluster_config));
+
+  auto instance_config1 =
+      bigtable::InstanceConfig(instance_id1, display_name, clusters_config_list)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto instance_config2 =
+      bigtable::InstanceConfig(instance_id2, display_name, clusters_config_list)
+          .set_type(bigtable::InstanceConfig::DEVELOPMENT);
+
+  auto instance1 = instance_admin_->CreateInstance(instance_config1).get();
+  auto instance2 = instance_admin_->CreateInstance(instance_config2).get();
 
   auto clusters = instance_admin_->ListClusters();
-  for (auto const& i : clusters) {
+  for (auto const& cluster : clusters) {
     auto const npos = std::string::npos;
-    EXPECT_NE(npos, i.name().find(instance_admin_->project_name()));
+    EXPECT_NE(npos, cluster.name().find(instance_admin_->project_name()));
+    EXPECT_NE(npos, cluster.name().find(instance_id1.get()));
   }
   EXPECT_FALSE(clusters.empty());
 
-  instance_admin_->DeleteInstance(instance_id1);
-  instance_admin_->DeleteInstance(instance_id2);
+  instance_admin_->DeleteInstance(instance_id1.get());
+  instance_admin_->DeleteInstance(instance_id2.get());
 }
 
 /// @test Verify that InstanceAdmin::UpdateCluster works as expected.
