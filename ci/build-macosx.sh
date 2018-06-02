@@ -21,6 +21,8 @@ if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   exit 0
 fi
 
+export PATH="/usr/local/opt/ccache/libexec:$PATH"
+
 cmake -H. -B.build \
   -DCMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}" \
   -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl

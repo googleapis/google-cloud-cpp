@@ -21,6 +21,7 @@ if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
   exit 0
 fi
 
+<<<<<<< HEAD
 
 # Make three attempts to install the dependencies. It is rare, but from time to
 # time the downloading the packages fails. To make the CI build more robust, try
@@ -34,7 +35,7 @@ min_wait=180
 # Do not exit on failures for this loop.
 set +e
 for i in 1 2 3; do
-  brew update && brew install curl openssl c-ares
+  brew update && brew install curl openssl c-ares ccache
   if [ $? -eq 0 ]; then
     exit 0
   fi
