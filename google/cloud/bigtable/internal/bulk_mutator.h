@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_BULK_MUTATOR_H_
 
-#include "bigtable/client/bigtable_strong_types.h"
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/idempotent_mutation_policy.h"
-#include "bigtable/client/table_strong_types.h"
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/table_strong_types.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

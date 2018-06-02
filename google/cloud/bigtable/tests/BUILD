@@ -22,8 +22,8 @@ load(":bigtable_client_integration_tests.bzl",
     name=test.replace('/', '_').replace('.cc', ''),
     srcs=[test],
     deps=[
-      "//bigtable/client:bigtable_client_testing",
-      "//bigtable/client:bigtable_client",
+      "//google/cloud/bigtable:bigtable_client_testing",
+      "//google/cloud/bigtable:bigtable_client",
       "@com_google_googletest//:gtest",
       "@com_google_googletest//:gtest_main",
     ],
@@ -33,6 +33,6 @@ cc_binary(
     name = "instance_admin_emulator",
     srcs = [ "instance_admin_emulator.cc" ],
     deps = [
-      "//bigtable/client:bigtable_client",
+      "//google/cloud/bigtable:bigtable_client",
     ],
 )

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/embedded_server.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
+#include "google/cloud/bigtable/benchmarks/embedded_server.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include <gmock/gmock.h>
 #include <thread>
 

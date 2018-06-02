@@ -18,17 +18,17 @@ licenses(["notice"])  # Apache 2.0
 cc_binary(
     name="bigtable_hello_world",
     srcs=["bigtable_hello_world.cc"],
-    deps=["//bigtable/client:bigtable_client"],
+    deps=["//google/cloud/bigtable:bigtable_client"],
 )
 
 cc_binary(
     name="bigtable_samples",
     srcs=["bigtable_samples.cc"],
-    deps=["//bigtable/client:bigtable_client"],
+    deps=["//google/cloud/bigtable:bigtable_client"],
 )
 
 cc_binary(
     name="bigtable_samples_instance_admin",
     srcs=["bigtable_samples_instance_admin.cc"],
-    deps=["//bigtable/client:bigtable_client"],
+    deps=["//google/cloud/bigtable:bigtable_client"],
 )

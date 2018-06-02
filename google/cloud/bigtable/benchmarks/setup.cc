@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/setup.h"
-#include "bigtable/client/testing/random.h"
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
+#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cctype>

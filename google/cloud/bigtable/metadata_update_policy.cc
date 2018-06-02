@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/metadata_update_policy.h"
-#include "bigtable/client/internal/make_unique.h"
+#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
 
 #include <sstream>
 

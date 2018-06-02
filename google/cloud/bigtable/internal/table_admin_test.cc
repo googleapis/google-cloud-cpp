@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/table_admin.h"
-#include "bigtable/client/grpc_error.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/testing/chrono_literals.h"
-#include "bigtable/client/testing/mock_admin_client.h"
+#include "google/cloud/bigtable/internal/table_admin.h"
+#include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>

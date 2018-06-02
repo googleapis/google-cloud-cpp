@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_ADMIN_H_
 
-#include "bigtable/client/bigtable_strong_types.h"
-#include "bigtable/client/instance_admin_client.h"
-#include "bigtable/client/instance_config.h"
-#include "bigtable/client/instance_update_config.h"
-#include "bigtable/client/internal/instance_admin.h"
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/instance_config.h"
+#include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/instance_admin.h"
 #include <future>
 #include <memory>
 

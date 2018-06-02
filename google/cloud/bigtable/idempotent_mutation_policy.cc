@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/idempotent_mutation_policy.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

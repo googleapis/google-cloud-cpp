@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/embedded_server.h"
-#include "bigtable/benchmarks/random_mutation.h"
-#include "bigtable/benchmarks/setup.h"
+#include "google/cloud/bigtable/benchmarks/embedded_server.h"
+#include "google/cloud/bigtable/benchmarks/random_mutation.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <atomic>

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/embedded_server_test_fixture.h"
-#include "bigtable/client/internal/throw_delegate.h"
+#include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
+#include "google/cloud/bigtable/internal/throw_delegate.h"
 #include <thread>
 
 namespace bigtable {

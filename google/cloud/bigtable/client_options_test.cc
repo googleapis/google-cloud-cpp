@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/client_options.h"
+#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 #include <cstdlib>

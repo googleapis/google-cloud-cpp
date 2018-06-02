@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/instance_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include "bigtable/client/internal/unary_client_utils.h"
+#include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>

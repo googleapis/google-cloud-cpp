@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/read_modify_write_rule.h"
+#include "google/cloud/bigtable/read_modify_write_rule.h"
 #include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::v2;

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/inprocess_data_client.h"
+#include "google/cloud/bigtable/testing/inprocess_data_client.h"
 
 namespace bigtable {
 namespace testing {

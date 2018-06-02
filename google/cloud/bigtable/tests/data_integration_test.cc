@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/endian.h"
-#include "bigtable/client/testing/chrono_literals.h"
-#include "bigtable/client/testing/table_integration_test.h"
+#include "google/cloud/bigtable/internal/endian.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/bigtable/testing/table_integration_test.h"
 
 namespace {
 namespace admin_proto = ::google::bigtable::admin::v2;

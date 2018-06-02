@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/grpc_error.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/testing/random.h"
-#include "bigtable/client/testing/table_integration_test.h"
+#include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/bigtable/testing/table_integration_test.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>

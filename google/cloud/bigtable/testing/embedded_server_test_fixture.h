@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
 
-#include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
-#include "bigtable/client/testing/inprocess_admin_client.h"
-#include "bigtable/client/testing/inprocess_data_client.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/testing/inprocess_admin_client.h"
+#include "google/cloud/bigtable/testing/inprocess_data_client.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gtest/gtest.h>
 #include <thread>

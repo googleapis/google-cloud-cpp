@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/admin_client.h"
+#include "google/cloud/bigtable/admin_client.h"
 #include <gmock/gmock.h>
 
 TEST(AdminClientTest, Default) {

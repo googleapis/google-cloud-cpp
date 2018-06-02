@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_VERSION_H_
 
-#include "bigtable/client/version_info.h"
+#include "google/cloud/bigtable/version_info.h"
 #include "google/cloud/version.h"
 #include <string>
 

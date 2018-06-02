@@ -15,8 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_CONJUNCTION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_CONJUNCTION_H_
 
-#include "bigtable/client/version.h"
-
+#include "google/cloud/bigtable/version.h"
 #include <type_traits>
 
 namespace bigtable {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 

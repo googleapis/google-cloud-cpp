@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/rowreaderiterator.h"
-#include "bigtable/client/row_reader.h"
+#include "google/cloud/bigtable/internal/rowreaderiterator.h"
+#include "google/cloud/bigtable/row_reader.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

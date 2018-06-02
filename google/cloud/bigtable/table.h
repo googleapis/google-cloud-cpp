@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_H_
 
-#include "bigtable/client/internal/table.h"
-#include "bigtable/client/internal/throw_delegate.h"
+#include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/bigtable/internal/throw_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

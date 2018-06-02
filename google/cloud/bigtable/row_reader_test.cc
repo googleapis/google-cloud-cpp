@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/row_reader.h"
-#include "bigtable/client/bigtable_strong_types.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/testing/mock_read_rows_reader.h"
-#include "bigtable/client/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
+#include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <gmock/gmock.h>
 #include <deque>

@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/testing/chrono_literals.h"
-
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <vector>

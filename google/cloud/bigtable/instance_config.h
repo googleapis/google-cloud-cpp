@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_CONFIG_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INSTANCE_CONFIG_H_
 
-#include "bigtable/client/cluster_config.h"
-#include "bigtable/client/internal/strong_type.h"
+#include "google/cloud/bigtable/cluster_config.h"
+#include "google/cloud/bigtable/internal/strong_type.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>
 #include <map>

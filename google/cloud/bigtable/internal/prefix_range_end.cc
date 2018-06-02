@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/prefix_range_end.h"
+#include "google/cloud/bigtable/internal/prefix_range_end.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ADMIN_CLIENT_H_
 
-#include "bigtable/client/client_options.h"
+#include "google/cloud/bigtable/client_options.h"
 
 #include <memory>
 #include <string>

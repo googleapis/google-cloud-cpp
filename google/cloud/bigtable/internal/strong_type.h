@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_STRONG_TYPE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_STRONG_TYPE_H_
 
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/version.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_CONFIG_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_CONFIG_H_
 
-#include "bigtable/client/column_family.h"
+#include "google/cloud/bigtable/column_family.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <map>
 #include <vector>

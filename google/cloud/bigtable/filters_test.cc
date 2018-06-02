@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/filters.h"
-
+#include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include <gmock/gmock.h>
-
 #include <google/protobuf/util/message_differencer.h>
-
-#include "bigtable/client/testing/chrono_literals.h"
 
 namespace btproto = ::google::bigtable::v2;
 

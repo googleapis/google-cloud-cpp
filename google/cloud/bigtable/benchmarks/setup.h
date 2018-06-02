@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_SETUP_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_SETUP_H_
 
-#include "bigtable/benchmarks/constants.h"
+#include "google/cloud/bigtable/benchmarks/constants.h"
 #include <chrono>
 #include <string>
 #include <vector>

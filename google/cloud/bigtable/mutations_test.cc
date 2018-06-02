@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/mutations.h"
-#include "bigtable/client/testing/chrono_literals.h"
+#include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
 

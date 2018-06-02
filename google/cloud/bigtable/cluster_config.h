@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CLUSTER_CONFIG_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CLUSTER_CONFIG_H_
 
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 
 namespace bigtable {

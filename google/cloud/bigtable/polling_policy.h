@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_POLLING_POLICY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_POLLING_POLICY_H_
 
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
 
 namespace bigtable {

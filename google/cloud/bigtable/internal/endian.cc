@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/endian.h"
+#include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cstring>
 #include <limits>

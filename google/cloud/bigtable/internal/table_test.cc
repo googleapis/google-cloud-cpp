@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/chrono_literals.h"
-#include "bigtable/client/testing/internal_table_test_fixture.h"
-#include "bigtable/client/testing/mock_mutate_rows_reader.h"
-#include "bigtable/client/testing/mock_read_rows_reader.h"
-#include "bigtable/client/testing/mock_sample_row_keys_reader.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/bigtable/testing/internal_table_test_fixture.h"
+#include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
+#include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 
 using testing::_;
 using testing::Invoke;

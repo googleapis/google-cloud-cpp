@@ -324,11 +324,11 @@ install(TARGETS bigtable_client
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/bigtable/client
+install(DIRECTORY . DESTINATION include/google/cloud/bigtable
         FILES_MATCHING PATTERN "*.h"
         PATTERN "testing/*" EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-    DESTINATION include/bigtable/client)
+    DESTINATION include/google/cloud/bigtable)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${BIGTABLE_CLIENT_VERSION_MAJOR})

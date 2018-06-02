@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ENDIAN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_ENDIAN_H_
 
-#include "bigtable/client/internal/encoder.h"
-#include "bigtable/client/internal/strong_type.h"
+#include "google/cloud/bigtable/internal/encoder.h"
+#include "google/cloud/bigtable/internal/strong_type.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

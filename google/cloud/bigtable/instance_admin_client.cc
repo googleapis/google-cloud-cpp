@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/instance_admin_client.h"
-#include "bigtable/client/internal/common_client.h"
+#include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/internal/common_client.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace {

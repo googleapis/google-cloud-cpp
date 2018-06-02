@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_SET_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_SET_H_
 
-#include "bigtable/client/internal/conjunction.h"
-#include "bigtable/client/row_range.h"
+#include "google/cloud/bigtable/internal/conjunction.h"
+#include "google/cloud/bigtable/row_range.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

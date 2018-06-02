@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/rpc_retry_policy.h"
-
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include <sstream>
 
 namespace {

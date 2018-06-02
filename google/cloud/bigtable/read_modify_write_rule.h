@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READ_MODIFY_WRITE_RULE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READ_MODIFY_WRITE_RULE_H_
 
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
 

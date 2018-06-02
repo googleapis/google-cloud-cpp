@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_DATA_CLIENT_H_
 
-#include "bigtable/client/table.h"
+#include "google/cloud/bigtable/table.h"
 #include <gmock/gmock.h>
 
 namespace bigtable {

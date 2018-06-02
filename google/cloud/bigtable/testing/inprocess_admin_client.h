@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_INPROCESS_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_INPROCESS_ADMIN_CLIENT_H_
 
-#include "bigtable/client/admin_client.h"
-#include "bigtable/client/client_options.h"
+#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 
 namespace bigtable {

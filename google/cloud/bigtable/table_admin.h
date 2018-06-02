@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_ADMIN_H_
 
-#include "bigtable/client/admin_client.h"
-#include "bigtable/client/bigtable_strong_types.h"
-#include "bigtable/client/column_family.h"
-#include "bigtable/client/internal/table_admin.h"
-#include "bigtable/client/internal/throw_delegate.h"
-#include "bigtable/client/polling_policy.h"
-#include "bigtable/client/table_config.h"
+#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/internal/table_admin.h"
+#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/table_config.h"
 #include <future>
 #include <memory>
 

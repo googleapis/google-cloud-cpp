@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 
-#include "bigtable/client/cluster_config.h"
+#include "google/cloud/bigtable/cluster_config.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_CELL_H_
 
-#include "bigtable/client/internal/endian.h"
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/internal/endian.h"
+#include "google/cloud/bigtable/version.h"
 
 #include <chrono>
 #include <vector>

@@ -15,8 +15,8 @@
 //! [all code]
 
 //! [bigtable includes]
-#include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
 
 int main(int argc, char* argv[]) try {

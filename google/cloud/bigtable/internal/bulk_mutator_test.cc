@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/bulk_mutator.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/testing/chrono_literals.h"
-#include "bigtable/client/testing/mock_data_client.h"
-#include "bigtable/client/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/bigtable/testing/mock_data_client.h"
+#include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 
 /// Define types and functions used in the tests.
 namespace {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/setup.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;

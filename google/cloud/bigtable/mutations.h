@@ -15,16 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
 
-#include "bigtable/client/internal/endian.h"
-#include "bigtable/client/version.h"
-
+#include "google/cloud/bigtable/internal/endian.h"
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/bigtable/internal/conjunction.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <type_traits>
 
-#include "bigtable/client/internal/conjunction.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_COLUMN_FAMILY_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_COLUMN_FAMILY_H_
 
-#include "bigtable/client/version.h"
+#include "google/cloud/bigtable/version.h"
 
 #include <chrono>
 #include <memory>
@@ -23,7 +23,7 @@
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 
-#include "bigtable/client/internal/conjunction.h"
+#include "google/cloud/bigtable/internal/conjunction.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

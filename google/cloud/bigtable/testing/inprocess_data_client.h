@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_INPROCESS_DATA_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_INPROCESS_DATA_CLIENT_H_
 
-#include "bigtable/client/client_options.h"
-#include "bigtable/client/data_client.h"
+#include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace bigtable {

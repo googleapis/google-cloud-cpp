@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/grpc_error.h"
-#include "bigtable/client/instance_admin.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/testing/random.h"
+#include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/testing/random.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 

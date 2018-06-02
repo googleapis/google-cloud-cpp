@@ -15,15 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_TABLE_ADMIN_H_
 
-#include "bigtable/client/admin_client.h"
-#include "bigtable/client/bigtable_strong_types.h"
-#include "bigtable/client/column_family.h"
-#include "bigtable/client/metadata_update_policy.h"
-#include "bigtable/client/polling_policy.h"
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
-#include "bigtable/client/table_config.h"
-
+#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/table_config.h"
 #include <future>
 #include <memory>
 

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/bulk_mutator.h"
-#include "bigtable/client/internal/table.h"
-
+#include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include <google/cloud/bigtable/table_strong_types.h>
 #include <numeric>
-
-#include "bigtable/client/rpc_retry_policy.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

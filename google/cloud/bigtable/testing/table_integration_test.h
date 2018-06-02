@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_INTEGRATION_TEST_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_TABLE_INTEGRATION_TEST_H_
 
-#include "bigtable/client/admin_client.h"
-#include "bigtable/client/cell.h"
-#include "bigtable/client/data_client.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/table_admin.h"
-#include "bigtable/client/testing/random.h"
+#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/testing/random.h"
 #include <gmock/gmock.h>
 
 namespace bigtable {

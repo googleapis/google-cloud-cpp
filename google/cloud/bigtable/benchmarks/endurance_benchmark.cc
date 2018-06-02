@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/benchmark.h"
-#include "bigtable/benchmarks/random_mutation.h"
+#include "google/cloud/bigtable/benchmarks/benchmark.h"
+#include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include <future>
 #include <iomanip>
 #include <sstream>

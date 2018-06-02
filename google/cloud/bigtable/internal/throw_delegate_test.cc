@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/throw_delegate.h"
-#include "bigtable/client/grpc_error.h"
+#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/grpc_error.h"
 #include <gtest/gtest.h>
 
 using namespace bigtable::internal;

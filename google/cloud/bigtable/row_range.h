@@ -15,13 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_RANGE_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_RANGE_H_
 
-#include "bigtable/client/version.h"
-
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <google/bigtable/v2/data.pb.h>
-
 #include <chrono>
-
-#include "bigtable/client/internal/prefix_range_end.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

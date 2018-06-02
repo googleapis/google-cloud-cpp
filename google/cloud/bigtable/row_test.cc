@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/row.h"
-
+#include "google/cloud/bigtable/row.h"
 #include <gtest/gtest.h>
 
 /// @test Verify Row instantiation and trivial accessors.

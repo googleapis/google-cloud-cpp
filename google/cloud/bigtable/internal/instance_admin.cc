@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/instance_admin.h"
-#include "bigtable/client/internal/unary_client_utils.h"
+#include "google/cloud/bigtable/internal/instance_admin.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <type_traits>
 
 namespace btproto = ::google::bigtable::admin::v2;

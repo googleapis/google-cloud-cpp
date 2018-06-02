@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_INSTANCE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_INSTANCE_ADMIN_H_
 
-#include "bigtable/client/instance_admin_client.h"
-#include "bigtable/client/metadata_update_policy.h"
-#include "bigtable/client/rpc_backoff_policy.h"
-#include "bigtable/client/rpc_retry_policy.h"
+#include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include <memory>
 
 namespace bigtable {

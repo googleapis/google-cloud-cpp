@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 
-#include "bigtable/client/table.h"
-#include "bigtable/client/testing/random.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/testing/random.h"
 
 namespace bigtable {
 namespace benchmarks {

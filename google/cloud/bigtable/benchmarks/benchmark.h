@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_BENCHMARK_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_BENCHMARK_H_
 
-#include "bigtable/benchmarks/embedded_server.h"
-#include "bigtable/benchmarks/setup.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/testing/random.h"
+#include "google/cloud/bigtable/benchmarks/embedded_server.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/testing/random.h"
 #include <chrono>
 #include <deque>
 #include <thread>

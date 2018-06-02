@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 
-#include "bigtable/client/client_options.h"
+#include "google/cloud/bigtable/client_options.h"
 
 // Make the default pool size 4 because that is consistent with what Go does.
 #ifndef BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/table.h"
-#include "bigtable/client/internal/bulk_mutator.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/internal/unary_client_utils.h"
+#include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <thread>
 #include <type_traits>
 

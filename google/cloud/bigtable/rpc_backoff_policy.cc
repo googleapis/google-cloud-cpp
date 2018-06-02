@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
 
 namespace {
 // Define the defaults using a pre-processor macro, this allows the application

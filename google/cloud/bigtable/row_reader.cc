@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/row_reader.h"
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/internal/table.h"
+#include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <thread>
 

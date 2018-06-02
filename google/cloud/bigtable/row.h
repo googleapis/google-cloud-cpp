@@ -15,10 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_H_
 
-#include "bigtable/client/version.h"
-
-#include "bigtable/client/cell.h"
-
+#include "google/cloud/bigtable/cell.h"
 #include <vector>
 
 namespace bigtable {

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/make_unique.h"
-#include "bigtable/client/table.h"
-#include "bigtable/client/testing/mock_read_rows_reader.h"
-#include "bigtable/client/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
+#include "google/cloud/bigtable/testing/table_test_fixture.h"
 
 /// Define helper types and functions for this test.
 namespace {

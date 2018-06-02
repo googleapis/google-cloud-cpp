@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/testing/table_integration_test.h"
-#include "bigtable/client/internal/make_unique.h"
+#include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/bigtable/internal/make_unique.h"
 #include <google/protobuf/text_format.h>
 #include <algorithm>
 #include <cctype>

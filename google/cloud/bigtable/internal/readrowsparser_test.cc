@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/client/internal/readrowsparser.h"
-#include "bigtable/client/row.h"
+#include "google/cloud/bigtable/internal/readrowsparser.h"
+#include "google/cloud/bigtable/row.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 #include <gtest/gtest.h>
@@ -243,4 +243,4 @@ class AcceptanceTest : public ::testing::Test {
 };
 
 // Auto-generated acceptance tests
-#include "bigtable/client/internal/readrowsparser_acceptance_tests.inc"
+#include "google/cloud/bigtable/internal/readrowsparser_acceptance_tests.inc"

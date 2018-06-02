@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bigtable/benchmarks/random_mutation.h"
-#include "bigtable/benchmarks/constants.h"
+#include "google/cloud/bigtable/benchmarks/random_mutation.h"
+#include "google/cloud/bigtable/benchmarks/constants.h"
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;

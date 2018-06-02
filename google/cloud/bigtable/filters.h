@@ -15,13 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
 #define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
 
-#include "bigtable/client/version.h"
-
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/bigtable/internal/conjunction.h"
 #include <google/bigtable/v2/data.pb.h>
-
 #include <chrono>
-
-#include "bigtable/client/internal/conjunction.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
