@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -120,4 +120,4 @@ inline std::string InstanceName(std::shared_ptr<DataClient> client) {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_DATA_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_

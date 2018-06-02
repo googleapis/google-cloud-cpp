@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
-#include "grpc_error.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>

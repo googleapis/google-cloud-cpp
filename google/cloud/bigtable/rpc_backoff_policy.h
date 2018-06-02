@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_BACKOFF_POLICY_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_BACKOFF_POLICY_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_
 
 #include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
@@ -107,4 +107,4 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_RPC_BACKOFF_POLICY_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_

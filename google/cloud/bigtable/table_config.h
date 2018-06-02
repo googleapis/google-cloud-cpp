@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_CONFIG_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_CONFIG_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_CONFIG_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_CONFIG_H_
 
 #include "google/cloud/bigtable/column_family.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
@@ -90,4 +90,4 @@ class TableConfig {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TABLE_CONFIG_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_CONFIG_H_

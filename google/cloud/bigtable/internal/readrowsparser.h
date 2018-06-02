@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_READROWSPARSER_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_READROWSPARSER_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_READROWSPARSER_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_READROWSPARSER_H_
 
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
@@ -151,4 +151,4 @@ class ReadRowsParserFactory {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_READROWSPARSER_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_READROWSPARSER_H_

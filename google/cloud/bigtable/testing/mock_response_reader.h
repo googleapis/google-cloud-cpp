@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_READER_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_READER_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_
 
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -65,4 +65,4 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
 }  // namespace testing
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_MOCK_RESPONSE_READER_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_

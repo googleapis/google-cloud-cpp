@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READ_MODIFY_WRITE_RULE_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READ_MODIFY_WRITE_RULE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_READ_MODIFY_WRITE_RULE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_READ_MODIFY_WRITE_RULE_H_
 
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
@@ -82,4 +82,4 @@ class ReadModifyWriteRule {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_READ_MODIFY_WRITE_RULE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_READ_MODIFY_WRITE_RULE_H_

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_CLIENT_UTILS_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_CLIENT_UTILS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_UNARY_CLIENT_UTILS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_UNARY_CLIENT_UTILS_H_
 
 #include "google/cloud/bigtable/internal/throw_delegate.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
@@ -251,4 +251,4 @@ struct UnaryClientUtils {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_UNARY_CLIENT_UTILS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_UNARY_CLIENT_UTILS_H_

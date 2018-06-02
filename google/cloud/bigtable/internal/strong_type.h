@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_STRONG_TYPE_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_STRONG_TYPE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_STRONG_TYPE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_STRONG_TYPE_H_
 
 #include "google/cloud/bigtable/version.h"
 
@@ -67,4 +67,4 @@ class StrongType {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_INTERNAL_STRONG_TYPE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_STRONG_TYPE_H_

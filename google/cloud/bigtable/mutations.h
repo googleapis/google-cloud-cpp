@@ -12,18 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
-#include "google/cloud/bigtable/internal/endian.h"
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/bigtable/internal/conjunction.h"
+#include "google/cloud/bigtable/internal/endian.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <type_traits>
-
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
@@ -467,4 +465,4 @@ class BulkMutation {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_MUTATIONS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_

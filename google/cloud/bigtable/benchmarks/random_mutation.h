@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/random.h"
@@ -31,4 +31,4 @@ std::string MakeRandomValue(bigtable::testing::DefaultPRNG& gen);
 }  // namespace benchmarks
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_

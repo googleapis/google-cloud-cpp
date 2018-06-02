@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_RANGE_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_RANGE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_RANGE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_RANGE_H_
 
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
@@ -175,4 +174,4 @@ std::ostream& operator<<(std::ostream& os, RowRange const& x);
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_ROW_RANGE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_RANGE_H_

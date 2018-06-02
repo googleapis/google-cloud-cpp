@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/inprocess_admin_client.h"
 #include "google/cloud/bigtable/testing/inprocess_data_client.h"
-#include "google/bigtable/v2/bigtable.grpc.pb.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gtest/gtest.h>
 #include <thread>
 
@@ -124,4 +124,4 @@ class EmbeddedServerTestFixture : public ::testing::Test {
 }  // namespace testing
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_

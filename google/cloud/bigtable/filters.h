@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
-#define GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H_
 
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
@@ -608,4 +607,4 @@ class Filter {
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_CLIENT_FILTERS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H_
