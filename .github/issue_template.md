@@ -15,12 +15,13 @@ problems with the service itself.
 Remove the ones that do not apply.
 
 - Cloud Bigtable.
-- Cloud Firestore.
+- Cloud Storage (under development).
+- Cloud Firestore (commnunity supported).
 
 ### What version of `google-cloud-cpp` are you using?
 
 Please include the output from `git rev-parse HEAD` if you are compiling from
-source, or the version number from correct `*/version.h` file.
+source, or the version number from the applicable `*/version.h` file.
 
 ### What compiler and version are you using?
 
@@ -43,4 +44,7 @@ What was the behavior you expected from the library?
 
 What was the behavior you actually observed?
 
-### Anything else
+### Anything else you would like us to know?
+
+Include here information about your environment that is not captured above.
+Or any other information you think might be relevant.
