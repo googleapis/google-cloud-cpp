@@ -745,13 +745,7 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
 
-  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
-  bigtable::ExponentialBackoffPolicy backoff_policy;
-  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
-
-  bigtable::TableAdmin tested(
-      client_, "the-async-instance", std::move(retry_policy),
-      std::move(backoff_policy), std::move(polling_policy));
+  bigtable::TableAdmin tested(client_, "the-async-instance");
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
       consistency_token: 'test-async-token'
@@ -787,13 +781,7 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
   using namespace ::testing;
   using namespace bigtable::chrono_literals;
 
-  bigtable::LimitedTimeRetryPolicy retry_policy(std::chrono::milliseconds(10));
-  bigtable::ExponentialBackoffPolicy backoff_policy;
-  bigtable::GenericPollingPolicy<> polling_policy(retry_policy, backoff_policy);
-
-  bigtable::TableAdmin tested(
-      client_, "the-async-instance", std::move(retry_policy),
-      std::move(backoff_policy), std::move(polling_policy));
+  bigtable::TableAdmin tested(client_, "the-async-instance");
   EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
