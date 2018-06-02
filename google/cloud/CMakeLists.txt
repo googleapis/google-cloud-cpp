@@ -28,7 +28,11 @@ set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER
     "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS "internal/*;*_test.cc;*/*_test.cc")
+set(DOXYGEN_EXCLUDE_PATTERNS
+        "*/google/cloud/internal/*"
+        "*/google/cloud/bigtable/*"
+        "*/google/cloud/firestore/*"
+        "*/google/cloud/*_test.cc")
 
 include(GoogleCloudCppCommon)
 

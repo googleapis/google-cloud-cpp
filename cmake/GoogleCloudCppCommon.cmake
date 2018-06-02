@@ -64,7 +64,12 @@ else ()
         set(DOXYGEN_GENERATE_BUGLIST NO)
         set(DOXYGEN_GENERATE_TESTLIST NO)
         set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
-        set(DOXYGEN_CLANG_OPTIONS "-std=c++11 -I.. -I${PROJECT_SOURCE_DIR}/googletest/googletest/include -I${PROJECT_SOURCE_DIR}/googletest/googlemock/include")
+        set(DOXYGEN_CLANG_OPTIONS "\
+-std=c++11 \
+-I${PROJECT_SOURCE_DIR} \
+-I${PROJECT_BINARY_DIR} \
+-I${PROJECT_SOURCE_DIR}/googletest/include \
+-I${PROJECT_SOURCE_DIR}/googletest/googlemock/include")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)
@@ -78,7 +83,7 @@ else ()
         set(DOXYGEN_HTML_TIMESTAMP )
         set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
 
-        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs doc client
+        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs ${CMAKE_CURRENT_SOURCE_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 COMMENT "Generate HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)

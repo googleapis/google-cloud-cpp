@@ -25,9 +25,11 @@ set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
 set(DOXYGEN_PROJECT_NUMBER
         "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}")
-set(DOXYGEN_EXAMPLE_PATH examples)
 set(DOXYGEN_PREDEFINED "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*;*/client/testing/*;*/*_test.cc")
+set(DOXYGEN_EXCLUDE_PATTERNS
+        "*/google/cloud/firestore/README.md"
+        "*/google/cloud/firestore/internal/*"
+        "*/google/cloud/firestore/*_test.cc")
 
 include(GoogleCloudCppCommon)
 
