@@ -44,7 +44,8 @@ echo "Running Google Cloud Bigtable Integration Tests"
 (cd google/cloud/bigtable/tests && \
     "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
 
-echo "Running Google Cloud Storage Integration Tests"
-(cd storage/tests && "${PROJECT_ROOT}/storage/tests/run_integration_tests_production.sh")
-echo "Running Google Cloud Storage Examples"
-(cd storage/examples && "${PROJECT_ROOT}/storage/examples/run_examples_production.sh")
+# TODO(#640) - disabled until we can get the credentials to work with key files.
+# echo "Running Google Cloud Storage Integration Tests"
+# (cd storage/tests && "${PROJECT_ROOT}/storage/tests/run_integration_tests_production.sh")
+# echo "Running Google Cloud Storage Examples"
+# (cd storage/examples && "${PROJECT_ROOT}/storage/examples/run_examples_production.sh")
