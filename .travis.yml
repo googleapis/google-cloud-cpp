@@ -37,9 +37,9 @@ matrix:
         SCAN_BUILD=yes
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
-      # Because this build installs gRPC we can skip that submodule, that
-      # saves substantial time in the build, but requires some tweaking of the
-      # installation step.
+      # Because this build installs gRPC, we can skip that submodule, which
+      # saves us substantial time in the build, but requires some tweaking of
+      # the installation step.
       git:
         submodules: false
       install:
@@ -79,9 +79,9 @@ matrix:
         TEST_INSTALL=yes
         DISTRO=ubuntu
         DISTRO_VERSION=17.10
-      # Because this build installs gRPC we can skip that submodule, that
-      # saves substantial time in the build, but requires some tweaking of the
-      # installation step.
+      # Because this build installs gRPC, we can skip that submodule, which
+      # saves us substantial time in the build, but requires some tweaking of
+      # the installation step.
       git:
         submodules: false
       install:
