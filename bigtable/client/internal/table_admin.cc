@@ -206,10 +206,13 @@ bool TableAdmin::WaitForConsistencyCheckHelper(
         metadata_update_policy, &AdminClient::CheckConsistency, request,
         "CheckConsistency", status, true);
 
-    if (response.consistent()) {
-      return true;
+    if (status.ok()) {
+      if (response.consistent()) {
+        return true;
+      }
+    } else if (polling_policy->IsPermanentError(status)) {
+      return false;
     }
-
   } while (not polling_policy->Exhausted());
 
   return false;
