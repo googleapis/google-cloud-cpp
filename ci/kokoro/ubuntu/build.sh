@@ -23,6 +23,9 @@ echo "Getting cbt tool"
 export GOPATH="${KOKORO_ROOT}/golang"
 go get -u cloud.google.com/go/bigtable/cmd/cbt
 
+echo "Getting python dependencies"
+pip install gunicorn httpbin
+
 echo "Running build and tests"
 cd "$(dirname $0)/../../.."
 readonly PROJECT_ROOT="${PWD}"
