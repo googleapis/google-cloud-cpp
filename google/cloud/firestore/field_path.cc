@@ -19,6 +19,8 @@ namespace {
 std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
 }
 
+namespace google {
+namespace cloud {
 namespace firestore {
 
 FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
@@ -155,4 +157,7 @@ void FieldPath::ReplaceAll(std::string& string, std::string const& find,
     found = string.find(find, found);
   }
 }
+
 }  // namespace firestore
+}  // namespace cloud
+}  // namespace google

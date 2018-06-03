@@ -20,6 +20,8 @@
 #include <string>
 #include <vector>
 
+namespace google {
+namespace cloud {
 namespace firestore {
 /**
  * A FieldPath refers to a field in a document. The path may consist of
@@ -182,5 +184,7 @@ class FieldPath {
   bool valid_;
 };
 }  // namespace firestore
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FIRESTORE_FIELD_PATH_H_

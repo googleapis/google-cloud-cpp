@@ -15,6 +15,8 @@
 #include "google/cloud/firestore/field_path.h"
 #include <gtest/gtest.h>
 
+namespace firestore = google::cloud::firestore;
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
