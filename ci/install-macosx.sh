@@ -39,8 +39,8 @@ for i in 1 2 3; do
     exit 0
   fi
   # Sleep for a few minutes before trying again.
-  readonly PERIOD=$[ (${RANDOM} % 60) + min_wait ]
-  echo "Fetch failed; trying again in ${PERIOD} seconds."
-  sleep ${PERIOD}s
+  period=$[ (${RANDOM} % 60) + min_wait ]
+  echo "Fetch failed; trying again in ${period} seconds."
+  sleep ${period}s
   min_wait=$[ min_wait * 2 ]
 done
