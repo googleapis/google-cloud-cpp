@@ -26,7 +26,10 @@ export PATH=$PATH:$HOME/bin
 # TODO(#496) - just use //google/...:all when it becomes available.
 for subdir in google/cloud bigtable storage; do
   bazel --batch build "//${subdir}/...:all"
-  bazel --batch test  "//${subdir}/...:all"
+  bazel --batch test \
+      --test_output=errors \
+      --action_env="GTEST_COLOR=1" \
+      "//${subdir}/...:all"
 done
 
 if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
