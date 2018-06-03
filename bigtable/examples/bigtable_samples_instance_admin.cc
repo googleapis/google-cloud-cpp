@@ -134,6 +134,24 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
 }
 //! [delete instance]
 
+//! [create cluster]
+// Before creating cluster, need to create instance first, then create cluster
+// on it.
+void CreateCluster(bigtable::InstanceAdmin instance_admin, int argc,
+                   char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"create-cluster: <instance-id> <cluster-id>"};
+  }
+  std::string const instance_id = ConsumeArg(argc, argv);
+  std::string const cluster_id = ConsumeArg(argc, argv);
+
+  auto future = instance_admin.CreateCluster(
+      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD),
+      bigtable::InstanceId(instance_id), bigtable::ClusterId(cluster_id));
+  std::cout << "Cluster Created " << future.get().name() << std::endl;
+}
+//! [create cluster]
+
 //! [list clusters]
 void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
                   char* argv[]) {
@@ -222,6 +240,8 @@ int main(int argc, char* argv[]) try {
     GetInstance(instance_admin, argc, argv);
   } else if (command == "delete-instance") {
     DeleteInstance(instance_admin, argc, argv);
+  } else if (command == "create-cluster") {
+    CreateCluster(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
   } else if (command == "update-cluster") {

@@ -191,6 +191,35 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   EXPECT_FALSE(IsInstancePresent(instances_after, instance.name()));
 }
 
+/// @test Verify that InstanceAdmin::CreateCluster works as expected.
+TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
+  std::string instance_id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string cluster_id = instance_id + "-c2";
+  auto location_id =
+      "projects/" + instance_admin_->project_id() + "/locations/us-central1-c";
+  auto config = IntegrationTestConfig(instance_id);
+  auto instance = instance_admin_->CreateInstance(config).get();
+
+  auto clusters_before = instance_admin_->ListClusters(instance_id);
+  auto cluster =
+      instance_admin_
+          ->CreateCluster(bigtable::ClusterConfig(location_id, 1,
+                                                  bigtable::ClusterConfig::HDD),
+                          bigtable::InstanceId(instance_id),
+                          bigtable::ClusterId(cluster_id))
+          .get();
+  auto clusters_after = instance_admin_->ListClusters(instance_id);
+  instance_admin_->DeleteCluster(bigtable::InstanceId(instance_id),
+                                 bigtable::ClusterId(cluster_id));
+  instance_admin_->DeleteInstance(instance_id);
+
+  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
+  EXPECT_NE(std::string::npos, cluster.name().find(cluster_id));
+}
+
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   // The emulator does not support cluster operations.
