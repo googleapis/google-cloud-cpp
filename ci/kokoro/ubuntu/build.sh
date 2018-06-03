@@ -24,7 +24,7 @@ export GOPATH="${KOKORO_ROOT}/golang"
 go get -u cloud.google.com/go/bigtable/cmd/cbt
 
 echo "Getting python dependencies"
-pip install gunicorn httpbin
+sudo python2 -m pip install gunicorn httpbin
 
 echo "Running build and tests"
 cd "$(dirname $0)/../../.."
