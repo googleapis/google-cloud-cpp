@@ -30,9 +30,11 @@ fi
 
 # TEST_INSTALL=yes builds work better as root, but other builds should avoid
 # creating root-owned files in the build directory.
-docker_uid=0
-if [ "${TEST_INSTALL:-}" != "yes" ]; then
-  docker_uid="${UID:-0}"
+docker_uid="${UID:-0}"
+docker_home=""
+if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
+  docker_uid=0
+  docker_home=/root
 fi
 
 # Use a volume to store the cache files. This exports the cache files from the
@@ -59,8 +61,8 @@ sudo docker run \
      --env TERM="${TERM:-dumb}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
-     --volume "${PWD}/build-output/cache":/.cache \
-     --volume "${PWD}/build-output/ccache":/.ccache \
+     --volume "${PWD}/build-output/cache":${docker_home}/.cache \
+     --volume "${PWD}/build-output/ccache":${docker_home}/.ccache \
      --workdir /v \
      "${IMAGE}:tip" \
      ${build_script}

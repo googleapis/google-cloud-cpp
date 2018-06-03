@@ -69,7 +69,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package"
         OR "${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "vcpkg")
-    find_package(protobuf REQUIRED protobuf>=3.5)
+    find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
 
     if (VCPKG_TARGET_TRIPLET MATCHES "-static$")

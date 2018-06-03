@@ -32,23 +32,114 @@ readonly BUILD_DIR="build-output/${IMAGE}"
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
-  CMAKE_COMMAND="scan-build cmake"
+  CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
 fi
 
-# Tweak configuration for TEST_INSTALL=yes builds.
+ccache_command="$(which ccache)"
+
+function install_protobuf {
+  # Install protobuf using CMake.  Some distributions include protobuf, gRPC
+  # requires 3.4.x or newer, and many of those distribution use older versions.
+  echo "${COLOR_YELLOW}Installing protobuf $(date)${COLOR_RESET}"
+  wget -q https://github.com/google/protobuf/archive/v3.5.2.tar.gz
+  tar -xf v3.5.2.tar.gz
+  cd protobuf-3.5.2/cmake
+  env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -Dprotobuf_BUILD_TESTS=OFF \
+      -H. -B.build
+  cmake --build .build --target install -- -j ${NCPU}
+  ldconfig
+}
+
+function install_c_ares {
+  # Many distributions include c-ares, but they do not include the CMake support
+  # files for the library, so manually install it.  c-ares requires two install
+  # steps because (1) the CMake-based build does not install pkg-config files,
+  # and (2) the Makefile-based build does not install CMake config files.
+  echo "${COLOR_YELLOW}Installing c-ares $(date)${COLOR_RESET}"
+  apt-get remove -y libc-ares-dev libc-ares2
+  wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+  tar -xf cares-1_14_0.tar.gz
+  cd c-ares-cares-1_14_0
+  env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -H. -B.build; \
+  cmake --build .build --target install -- -j ${NCPU}
+  ./buildconf
+  ./configure
+  install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
+  ldconfig
+}
+
+function install_grpc {
+  # Install gRPC. Note that we use the system's zlib and ssl libraries.
+  # For similar reasons to c-ares (see above), we need two install steps.
+  echo "${COLOR_YELLOW}Installing gRPC $(date)${COLOR_RESET}"
+  wget -q https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
+  tar -xf v1.10.0.tar.gz
+  cd grpc-1.10.0
+  env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -H. -B.build/grpc
+  cmake --build .build/grpc --target install -- -j ${NCPU}
+  make install-pkg-config_c install-pkg-config_cxx install-certs
+  ldconfig
+}
+
+if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Started dependency install at: $(date)${COLOR_RESET}"
+  echo
+  echo "travis_fold:start:install-dependencies"
+  echo
+  mkdir -p /var/tmp/build-dependencies
+  cached_cxx="${CXX}"
+  cached_cc="${CC}"
+  if [ -n "${ccache_command}" ]; then
+    cached_cxx="${ccache_command} ${CXX}"
+    cached_cc="${ccache_command} ${CC}"
+  fi
+  (cd /var/tmp/build-dependencies; install_protobuf)
+  (cd /var/tmp/build-dependencies; install_c_ares)
+  (cd /var/tmp/build-dependencies; install_grpc)
+  # DEBUG REMOVE BEFORE MERGE
+  ${ccache_command} --show-stats
+  # END DEBUG REMOVE BEFORE MERGE
+  echo
+  echo "${COLOR_YELLOW}Finished dependency install at: $(date)${COLOR_RESET}"
+  echo
+  echo "travis_fold:end:install-dependencies"
+  echo
+fi
+
+echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
+echo "travis_fold:start:configure-cmake"
+# Tweak configuration for TEST_INSTALL=yes and SCAN_BUILD=yes builds.
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
   cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
 fi
 
-echo "travis_fold:start:configure-cmake"
+if [ "${SCAN_BUILD:-}" = "yes" ]; then
+  cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+  cmake_install_flags="${cmake_install_flags} -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
+fi
+
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
     ${cmake_install_flags} \
     ${CMAKE_FLAGS:-} \
     -H. \
     -B"${BUILD_DIR}"
+echo
 echo "travis_fold:end:configure-cmake"
+echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 
 # If scan-build is enabled, we need to manually compile the dependencies;
 # otherwise, the static analyzer finds issues in them, and there is no way to
@@ -56,7 +147,9 @@ echo "travis_fold:end:configure-cmake"
 # we can fold the output in Travis and make the log more interesting.
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
+echo
 cmake --build "${BUILD_DIR}" --target skip-scanbuild-targets -- -j ${NCPU}
+echo
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 
@@ -68,7 +161,20 @@ echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
 ${CMAKE_COMMAND} --build "${BUILD_DIR}" -- -j ${NCPU}
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
+# If ccache is enabled we want to zero out the statistics because otherwise
+# Travis needs to rebuild the cache each time, and that slows down the build
+# unnecessarily.
+if [ -n "${ccache_command}" ]; then
+  echo
+  echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
+  ${ccache_command} --show-stats
+  ${ccache_command} --zero-stats
+fi
+
 # Run the tests and output any failures.
+echo
+echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
+echo
 cd "${BUILD_DIR}"
 ctest --output-on-failure
 
@@ -99,6 +205,8 @@ fi
 
 # If document generation is enabled, run it now.
 if [ "${GENERATE_DOCS}" = "yes" ]; then
+  echo
+  echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
   cmake --build . --target doxygen-docs
 fi
 
@@ -140,12 +248,4 @@ _EOF_
     echo
     echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
   fi
-fi
-
-# If ccache is enabled we want to zero out the statistics because otherwise
-# Travis needs to rebuild the cache each time, and that slows down the build
-# unnecessarily.
-if ccache -s >/dev/null 2>&1; then
-  ccache --show-stats
-  ccache --zero-stats
 fi
