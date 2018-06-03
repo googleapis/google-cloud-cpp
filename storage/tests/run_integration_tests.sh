@@ -41,7 +41,7 @@ function start_httpbin {
   gunicorn -b "0.0.0.0:${PORT}" httpbin:app >emulator.log 2>&1 </dev/null &
   HTTPBIN_PID=$!
 
-  export HTTPBIN_ENDPOINT="http://localhost:${PORT}/"
+  export HTTPBIN_ENDPOINT="http://localhost:${PORT}"
 
   delay=1
   connected=no
