@@ -40,15 +40,23 @@ ccache_command="$(which ccache)"
 function install_protobuf {
   # Install protobuf using CMake.  Some distributions include protobuf, gRPC
   # requires 3.4.x or newer, and many of those distribution use older versions.
+  # We need to install both the debug and Release version because:
+  # - When using pkg-config, only the release version works, the pkg-config
+  #   file is hard-coded to search for `libprotobuf.so` (or `.a`)
+  # - When using CMake, only the version compiled with the same CMAKE_BUILD_TYPE
+  #   as the dependent (gRPC or google-cloud-cpp) works.
   echo "${COLOR_YELLOW}Installing protobuf $(date)${COLOR_RESET}"
   wget -q https://github.com/google/protobuf/archive/v3.5.2.tar.gz
   tar -xf v3.5.2.tar.gz
   cd protobuf-3.5.2/cmake
-  env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
-      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-      -Dprotobuf_BUILD_TESTS=OFF \
-      -H. -B.build
-  cmake --build .build --target install -- -j ${NCPU}
+  for build_type in "Debug" "Release"; do
+    env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
+        -DCMAKE_BUILD_TYPE="${build_type}" \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        ${CMAKE_FLAGS} \
+        -H. -B.build-${build_type}
+    cmake --build .build-${build_type} --target install -- -j ${NCPU}
+  done
   ldconfig
 }
 
@@ -64,6 +72,7 @@ function install_c_ares {
   cd c-ares-cares-1_14_0
   env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
       -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      ${CMAKE_FLAGS} \
       -H. -B.build; \
   cmake --build .build --target install -- -j ${NCPU}
   ./buildconf
@@ -86,6 +95,7 @@ function install_grpc {
       -DgRPC_SSL_PROVIDER=package \
       -DgRPC_CARES_PROVIDER=package \
       -DgRPC_PROTOBUF_PROVIDER=package \
+      ${CMAKE_FLAGS} \
       -H. -B.build/grpc
   cmake --build .build/grpc --target install -- -j ${NCPU}
   make install-pkg-config_c install-pkg-config_cxx install-certs
@@ -202,6 +212,10 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
   make -C "${TEST_INSTALL_MAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}"
+
+  # Checking the ABI requires installation, so this is the first opportunity to
+  # run the check.
+  (cd /v ; ./ci/check-abi.sh)
 fi
 
 # If document generation is enabled, run it now.

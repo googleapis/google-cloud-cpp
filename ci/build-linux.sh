@@ -51,6 +51,7 @@ sudo docker run \
      --env CC="${CC}" \
      --env NCPU="${NCPU:-2}" \
      --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
+     --env CHECK_ABI="${CHECK_ABI:-}" \
      --env CHECK_STYLE="${CHECK_STYLE:-}" \
      --env SCAN_BUILD="${SCAN_BUILD:-}" \
      --env GENERATE_DOCS="${GENERATE_DOCS:-}" \

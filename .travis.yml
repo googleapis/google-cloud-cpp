@@ -92,6 +92,29 @@ matrix:
               third_party/googletest
         - ci/install-retry.sh ci/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+    - # Verify that we can compile shared libraries, and verify that the ABI is
+      # not changing, or rather, that if there are changes the changes are
+      # intentional.
+      os: linux
+      compiler: g++
+      env:
+        CHECK_ABI=yes
+        TEST_INSTALL=yes
+        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
+        BUILD_TYPE=Debug
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
+      # Because this build installs gRPC, we can skip that submodule, which
+      # saves us substantial time in the build, but requires some tweaking of
+      # the installation step.
+      git:
+        submodules: false
+      install:
+        - git submodule update --init
+              third_party/googleapis
+              third_party/googletest
+        - ci/install-linux.sh
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
       compiler: clang
