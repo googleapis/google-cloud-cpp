@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['value',['value',['../classbigtable_1_1v0_1_1Cell.html#ae278a7e84cd7b09a38633ec6b62c5348',1,'bigtable::v0::Cell::value()'],['../classbigtable_1_1v0_1_1MetadataUpdatePolicy.html#a09a05b045df1f7c604b695045ff15041',1,'bigtable::v0::MetadataUpdatePolicy::value()']]],
+  ['value',['value',['../classbigtable_1_1v0_1_1MetadataUpdatePolicy.html#a09a05b045df1f7c604b695045ff15041',1,'bigtable::v0::MetadataUpdatePolicy::value()'],['../classbigtable_1_1v0_1_1Cell.html#ae278a7e84cd7b09a38633ec6b62c5348',1,'bigtable::v0::Cell::value()']]],
   ['value_5fas',['value_as',['../classbigtable_1_1v0_1_1Cell.html#a6b1527cc8c857e46a38444393faa0714',1,'bigtable::v0::Cell']]],
   ['valuerange',['ValueRange',['../classbigtable_1_1v0_1_1Filter.html#a902120a7d42e55003f825c3292444804',1,'bigtable::v0::Filter']]],
   ['valuerangeclosed',['ValueRangeClosed',['../classbigtable_1_1v0_1_1Filter.html#a99cde7ae9573b8942dff3ebe63aa8db1',1,'bigtable::v0::Filter']]],

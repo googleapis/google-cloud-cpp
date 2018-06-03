@@ -7,5 +7,6 @@ var searchData=
   ['createdefaultclient',['CreateDefaultClient',['../namespacestorage_1_1v0.html#ab9323a80ae20f7ef328ada688c19eafe',1,'storage::v0']]],
   ['credentials',['Credentials',['../classstorage_1_1v0_1_1Credentials.html',1,'storage::v0']]],
   ['credentials_2ecc',['credentials.cc',['../credentials_8cc.html',1,'']]],
-  ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]]
+  ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]],
+  ['curl_5frequest_5fintegration_5ftest_2ecc',['curl_request_integration_test.cc',['../curl__request__integration__test_8cc.html',1,'']]]
 ];

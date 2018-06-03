@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['firestore',['firestore',['../namespacefirestore.html',1,'']]]
+  ['cloud',['cloud',['../namespacegoogle_1_1cloud.html',1,'google']]],
+  ['firestore',['firestore',['../namespacegoogle_1_1cloud_1_1firestore.html',1,'google::cloud']]],
+  ['google',['google',['../namespacegoogle.html',1,'']]]
 ];

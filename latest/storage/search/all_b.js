@@ -7,5 +7,6 @@ var searchData=
   ['operator_3c_3d',['operator&lt;=',['../classstorage_1_1v0_1_1Status.html#a32e06a1e02e4ea5af5d7369018c806ad',1,'storage::v0::Status']]],
   ['operator_3d_3d',['operator==',['../classstorage_1_1v0_1_1BucketMetadata.html#abb653cfa657347aeea419228137e6518',1,'storage::v0::BucketMetadata::operator==()'],['../classstorage_1_1v0_1_1Status.html#a9aea11538f6fee57a948554fdb7cd7c3',1,'storage::v0::Status::operator==()']]],
   ['operator_3e',['operator&gt;',['../classstorage_1_1v0_1_1Status.html#a5269ebf8c64cde845b927a0bb6a401e0',1,'storage::v0::Status']]],
-  ['operator_3e_3d',['operator&gt;=',['../classstorage_1_1v0_1_1Status.html#ad15417e3630fd1411767369613cba794',1,'storage::v0::Status']]]
+  ['operator_3e_3d',['operator&gt;=',['../classstorage_1_1v0_1_1Status.html#ad15417e3630fd1411767369613cba794',1,'storage::v0::Status']]],
+  ['os',['os',['../bucket__metadata__test_8cc.html#aafc16dadda77040887758a04319dcd23',1,'bucket_metadata_test.cc']]]
 ];

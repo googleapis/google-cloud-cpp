@@ -114,11 +114,17 @@ Functions</h2></td></tr>
 <tr class="separator:a2bd10c248213a7fef6585092537340d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc01cc707b99486118f9ca3fc9426d0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bucket__metadata__test_8cc.html#abc01cc707b99486118f9ca3fc9426d0d">EXPECT_DEATH_IF_SUPPORTED</a> (actual.label(&quot;qux&quot;), &quot;&quot;)</td></tr>
 <tr class="separator:abc01cc707b99486118f9ca3fc9426d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afac37b53bc0747a4bf1987c8da5a06ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bucket__metadata__test_8cc.html#afac37b53bc0747a4bf1987c8da5a06ec">TEST</a> (BucketMetadataTest, IOStream)</td></tr>
+<tr class="separator:afac37b53bc0747a4bf1987c8da5a06ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a9473b1d96def2c9510b4e8da5d33ba1d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bucket__metadata__test_8cc.html#a9473b1d96def2c9510b4e8da5d33ba1d">actual</a> = storage::BucketMetadata::ParseFromJson(text)</td></tr>
 <tr class="separator:a9473b1d96def2c9510b4e8da5d33ba1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f044f270f8302978450c4a32d50b0ad"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bucket__metadata__test_8cc.html#a9f044f270f8302978450c4a32d50b0ad">meta</a> = storage::BucketMetadata::ParseFromJson(text)</td></tr>
+<tr class="separator:a9f044f270f8302978450c4a32d50b0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc16dadda77040887758a04319dcd23"><td class="memItemLeft" align="right" valign="top">std::ostringstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bucket__metadata__test_8cc.html#aafc16dadda77040887758a04319dcd23">os</a></td></tr>
+<tr class="separator:aafc16dadda77040887758a04319dcd23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="abc01cc707b99486118f9ca3fc9426d0d"></a>
@@ -567,7 +573,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0bceefc127a4c395d118bc3d341f5414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bceefc127a4c395d118bc3d341f5414">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bceefc127a4c395d118bc3d341f5414">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -595,7 +601,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a732992d3105e0c5cb56b05ec7722416d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a732992d3105e0c5cb56b05ec7722416d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a732992d3105e0c5cb56b05ec7722416d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,6 +628,34 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afac37b53bc0747a4bf1987c8da5a06ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afac37b53bc0747a4bf1987c8da5a06ec">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">BucketMetadataTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IOStream&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a9473b1d96def2c9510b4e8da5d33ba1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9473b1d96def2c9510b4e8da5d33ba1d">&#9670;&nbsp;</a></span>actual</h2>
@@ -631,6 +665,34 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">auto actual = storage::BucketMetadata::ParseFromJson(text)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f044f270f8302978450c4a32d50b0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f044f270f8302978450c4a32d50b0ad">&#9670;&nbsp;</a></span>meta</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto meta = storage::BucketMetadata::ParseFromJson(text)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aafc16dadda77040887758a04319dcd23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafc16dadda77040887758a04319dcd23">&#9670;&nbsp;</a></span>os</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostringstream os</td>
         </tr>
       </table>
 </div><div class="memdoc">

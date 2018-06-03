@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['append',['Append',['../classfirestore_1_1FieldPath.html#a105cf07bfaf2527505f85fd3a7cf6aa1',1,'firestore::FieldPath::Append(std::string const &amp;string) const'],['../classfirestore_1_1FieldPath.html#ad9674a828c4d346ae17bc31985474680',1,'firestore::FieldPath::Append(FieldPath const &amp;field_path) const']]]
+  ['append',['Append',['../classgoogle_1_1cloud_1_1firestore_1_1FieldPath.html#a99395b9160a0aaa5f84ad51be9005b5e',1,'google::cloud::firestore::FieldPath::Append(std::string const &amp;string) const'],['../classgoogle_1_1cloud_1_1firestore_1_1FieldPath.html#a4bcb0e1cd1571aab9ade9a8368355df2',1,'google::cloud::firestore::FieldPath::Append(FieldPath const &amp;field_path) const']]]
 ];

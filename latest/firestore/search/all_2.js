@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['invalidfieldpath',['InvalidFieldPath',['../classfirestore_1_1FieldPath.html#affb7551dbf975b1c4a1949e924e10025',1,'firestore::FieldPath']]]
+  ['cloud',['cloud',['../namespacegoogle_1_1cloud.html',1,'google']]],
+  ['firestore',['firestore',['../namespacegoogle_1_1cloud_1_1firestore.html',1,'google::cloud']]],
+  ['google',['google',['../namespacegoogle.html',1,'']]]
 ];
