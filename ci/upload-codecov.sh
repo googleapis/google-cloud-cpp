@@ -16,19 +16,9 @@
 
 set -eu
 
-if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
-    echo "Skipping code coverage as it is disabled for pull requests."
-    exit 0
-fi
-
 if [ "${BUILD_TYPE:-Release}" != "Coverage" ]; then
     echo "Skipping code coverage as it is disabled for this build."
     exit 0
-fi
-
-if [ -z "${CODECOV_TOKEN:-}" ]; then
-    echo "CODECOV_TOKEN not configured in Coverage build, exit with error."
-    exit 1
 fi
 
 # Upload the results using the script from codecov.io
