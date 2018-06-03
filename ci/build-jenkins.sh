@@ -20,6 +20,8 @@ git submodule update --init --recursive
 cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild-output
 cmake --build build-output -- -j $(nproc)
 
+readonly PROJECT_ROOT=$(pwd)
+echo PROJECT_ROOT=${PROJECT_ROOT}
 cd build-output
 ctest --output-on-failure
 
@@ -41,8 +43,8 @@ case ${BENCHMARK} in
         "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 1800;
         ;;
     integration)
-        (cd "${BTDIR}/tests" && "../../../${BTDIR}/tests/run_integration_tests_production.sh");
-        (cd "${BTDIR}/examples" && "../../../${BTDIR}/examples/run_examples_production.sh");
+        (cd "${BTDIR}/tests" && "${PROJECT_ROOT}/${BTDIR}/tests/run_integration_tests_production.sh");
+        (cd "${BTDIR}/examples" && "${PROJECT_ROOT}/${BTDIR}/examples/run_examples_production.sh");
         ;;
     # The following cases are used to test the script when making changes, they are not good
     # benchmarks.
@@ -56,7 +58,7 @@ case ${BENCHMARK} in
         "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     scan-quick)
-        "${BTDIR}/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
+        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
         ;;
     *)
         echo "Unknown benchmark type"
