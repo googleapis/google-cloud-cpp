@@ -27,7 +27,7 @@
  *   instructed, the libraries produce no output to the console.
  * - Logging should have very low cost:
  *   - It should be possible to disable logs at compile time, they should
- *     disappear as-if there were `#ifdef/#endif` directives around them.
+ *     disappear as-if there were `#%ifdef`/`#%endif` directives around them.
  *   - A log line at a disabled log level should be about as expensive as an
  *     extra if() statement. At the very least it should not incur additional
  *     memory allocations or locks.
