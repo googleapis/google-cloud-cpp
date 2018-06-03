@@ -21,7 +21,7 @@ if [ "${CHECK_STYLE}" != "yes" ]; then
   exit 0
 fi
 
-find google/cloud bigtable storage -name '*.h' -print0 \
+find google/cloud storage -name '*.h' -print0 \
   | xargs -0 awk 'BEGINFILE {
     # The guard must begin with the name of the project.
     guard_prefix="GOOGLE_CLOUD_CPP_"

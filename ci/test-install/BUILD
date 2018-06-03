@@ -22,6 +22,6 @@ cc_binary(
         "install_integration_test.cc",
     ],
     deps=[
-        "@com_github_googlecloudplatform_google_cloud_cpp//bigtable/client:bigtable_client",
+        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
     ],
 )
