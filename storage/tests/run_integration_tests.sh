@@ -16,27 +16,59 @@
 
 set -eu
 
-delay=1
-connected=no
-readonly ATTEMPTS=$(seq 1 8)
-for attempt in $ATTEMPTS; do
-  if curl "https://nghttp2.org/httpbin/get" >/dev/null 2>&1; then
-    connected=yes
-    break
-  fi
-  sleep $delay
-  delay=$((delay * 2))
-done
+readonly BINDIR="$(dirname $0)"
+source "${BINDIR}/../../ci/colors.sh"
 
-if [ "${connected}" = "no" ]; then
-  # TODO(..) - use a local server for the integration tests.
-  echo "Cannot connect to nghttp2.org; exit test with success." >&2
-  exit 0
-else
-  echo "Successfully connected to nghttp2.org."
-fi
+HTTPBIN_PID=0
+
+function kill_httpbin {
+  echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
+  echo -n "Killing httpbin server [${HTTPBIN_PID}] ... "
+  kill "${HTTPBIN_PID}"
+  wait >/dev/null 2>&1
+  echo "done."
+  echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."
+}
+
+function start_httpbin {
+  echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment set-up"
+  echo "Launching httpbin emulator in the background"
+  trap kill_httpbin EXIT
+
+  # The tests typically run in a Docker container, where the ports are largely
+  # free; when using in manual tests, you can set EMULATOR_PORT.
+  readonly PORT=${HTTPBIN_PORT:-8000}
+  gunicorn -b "0.0.0.0:${PORT}" httpbin:app >emulator.log 2>&1 </dev/null &
+  HTTPBIN_PID=$!
+
+  export HTTPBIN_ENDPOINT="http://localhost:${PORT}"
+
+  delay=1
+  connected=no
+  readonly ATTEMPTS=$(seq 1 8)
+  for attempt in $ATTEMPTS; do
+    if curl "${HTTPBIN_ENDPOINT}/get" >/dev/null 2>&1; then
+      connected=yes
+      break
+    fi
+    sleep $delay
+    delay=$((delay * 2))
+  done
+
+  if [ "${connected}" = "no" ]; then
+    echo "Cannot connect to httpbin; aborting test." >&2
+    exit 1
+  else
+    echo "Successfully connected to httpbin"
+  fi
+
+  echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment set-up."
+}
 
 echo
+echo "Running Storage integration tests against local servers."
+start_httpbin
+
 echo "Running storage::internal::CurlRequest integration test."
 ./curl_request_integration_test
 

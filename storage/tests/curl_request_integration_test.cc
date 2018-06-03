@@ -14,13 +14,23 @@
 
 #include "storage/client/internal/curl_request.h"
 #include <gtest/gtest.h>
+#include <cstdlib>
 #include <vector>
 
 namespace nl = storage::internal::nl;
 
+namespace {
+std::string HttpBinEndpoint() {
+  auto env = std::getenv("HTTPBIN_ENDPOINT");
+  if (env != nullptr) {
+    return env;
+  }
+  return "https://nghttp2.org/httpbin";
+}
+}  // namespace
+
 TEST(CurlRequestTest, SimpleGET) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request("https://nghttp2.org/httpbin/get");
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
   request.AddHeader("Accept: application/json");
@@ -49,8 +59,7 @@ TEST(CurlRequestTest, FailedGET) {
 }
 
 TEST(CurlRequestTest, RepeatedGET) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request("https://nghttp2.org/httpbin/get");
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
   request.AddHeader("Accept: application/json");
@@ -74,8 +83,7 @@ TEST(CurlRequestTest, RepeatedGET) {
 }
 
 TEST(CurlRequestTest, SimplePOST) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request("https://nghttp2.org/httpbin/post");
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/post");
   std::vector<std::pair<std::string, std::string>> form_parameters = {
       {"foo", "foo1&foo2 foo3"},
       {"bar", "bar1-bar2"},
@@ -105,9 +113,7 @@ TEST(CurlRequestTest, SimplePOST) {
 }
 
 TEST(CurlRequestTest, Handle404) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request(
-      "https://nghttp2.org/httpbin/status/404");
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/status/404");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
@@ -118,9 +124,7 @@ TEST(CurlRequestTest, Handle404) {
 
 /// @test Verify the payload for error status is included in the return value.
 TEST(CurlRequestTest, HandleTeapot) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request(
-      "https://nghttp2.org/httpbin/status/418");
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/status/418");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
@@ -133,20 +137,22 @@ TEST(CurlRequestTest, HandleTeapot) {
 
 /// @test Verify the response includes the header values.
 TEST(CurlRequestTest, CheckResponseHeaders) {
-  // TODO(#542) - use a local server to make tests more hermetic.
-  storage::internal::CurlRequest request(
-      "https://nghttp2.org/httpbin/response-headers"
-      "?x-test-foo=bar"
-      "&x-test-foo=baz"
-      "&X-Test-Empty");
+  // Test that headers are parsed correctly. We send capitalized headers
+  // because some versions of httpbin capitalize and others do not, in real
+  // code (as opposed to a test), we should search for headers in a
+  // case-insensitive manner, but that is not the purpose of this test.
+  storage::internal::CurlRequest request(HttpBinEndpoint() +
+                                         "/response-headers"
+                                         "?X-Test-Foo=bar"
+                                         "&X-Test-Empty");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
-  EXPECT_EQ(2U, response.headers.count("X-Test-Foo"));
-  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
   EXPECT_EQ(1U, response.headers.count("X-Test-Empty"));
   EXPECT_EQ("", response.headers.find("X-Test-Empty")->second);
+  EXPECT_LE(1U, response.headers.count("X-Test-Foo"));
+  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
 }
