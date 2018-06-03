@@ -46,5 +46,5 @@ What was the behavior you actually observed?
 
 ### Anything else you would like us to know?
 
-Include here information about your environment that is not captured above.
-Or any other information you think might be relevant.
+Include here information about your environment that is not captured above, or
+any other information you think might be relevant.
