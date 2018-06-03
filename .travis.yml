@@ -54,6 +54,7 @@ matrix:
       compiler: clang
       install: ci/install-macosx.sh
       script: ci/build-macosx.sh
+      cache: ccache
       if: type != pull_request
     - # Compile on Travis' native environment with Bazel
       os: linux
