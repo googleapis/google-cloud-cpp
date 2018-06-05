@@ -481,12 +481,12 @@ TEST_F(NoexTableTest, BulkApplySimple) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -518,12 +518,12 @@ TEST_F(NoexTableTest, BulkApply_AppProfileId) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -564,10 +564,10 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
         // Simulate a partial (recoverable) failure.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::UNAVAILABLE);
+        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::OK);
+        e1.mutable_status()->set_code(grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
@@ -579,7 +579,7 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -614,12 +614,12 @@ TEST_F(NoexTableTest, BulkApplyPermanentFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::OUT_OF_RANGE);
+          e.mutable_status()->set_code(grpc::StatusCode::OUT_OF_RANGE);
         }
         return true;
       }))
@@ -654,7 +654,7 @@ TEST_F(NoexTableTest, BulkApplyCanceledStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -668,7 +668,7 @@ TEST_F(NoexTableTest, BulkApplyCanceledStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -716,7 +716,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -767,7 +767,7 @@ TEST_F(NoexTableTest, BulkApplyRetryOnlyIdempotent) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
