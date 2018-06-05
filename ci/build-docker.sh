@@ -179,7 +179,7 @@ cd "${BUILD_DIR}"
 ctest --output-on-failure
 
 # Run the integration tests.
-for subdir in google/cloud/bigtable storage; do
+for subdir in google/cloud/bigtable google/cloud/storage; do
   echo
   echo "Running integration tests for ${subdir}"
   /v/${subdir}/ci/run_integration_tests.sh

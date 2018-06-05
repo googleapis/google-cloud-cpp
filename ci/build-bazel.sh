@@ -23,14 +23,11 @@ export PATH=$PATH:$HOME/bin
 
 # We cannot simply use //...:all because when submodules are checked out that
 # includes the BUILD files for gRPC, protobuf, etc.
-# TODO(#496) - just use //google/...:all when it becomes available.
-for subdir in google/cloud storage; do
-  bazel --batch build "//${subdir}/...:all"
-  bazel --batch test \
-      --test_output=errors \
-      --action_env="GTEST_COLOR=1" \
-      "//${subdir}/...:all"
-done
+bazel --batch build "//google/cloud/...:all"
+bazel --batch test \
+    --test_output=errors \
+    --action_env="GTEST_COLOR=1" \
+    "//google/cloud/...:all"
 
 if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
   echo
