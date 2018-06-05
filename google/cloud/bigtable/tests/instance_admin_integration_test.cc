@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 
 namespace btadmin = google::bigtable::admin::v2;
+using testing::HasSubstr;
 
 namespace {
 class InstanceTestEnvironment : public ::testing::Environment {
@@ -99,10 +100,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   instance_admin_->DeleteInstance(instance_id);
   EXPECT_FALSE(IsInstancePresent(instances_before, instance.name()));
   EXPECT_TRUE(IsInstancePresent(instances_after, instance.name()));
-  EXPECT_NE(std::string::npos, instance.name().find(instance_id));
-  EXPECT_NE(std::string::npos,
-            instance.name().find(InstanceTestEnvironment::project_id()));
-  EXPECT_NE(std::string::npos, instance.display_name().find(instance_id));
+  EXPECT_THAT(instance.name(), HasSubstr(instance_id));
+  EXPECT_THAT(instance.name(),
+              HasSubstr(InstanceTestEnvironment::project_id()));
+  EXPECT_THAT(instance.display_name(), HasSubstr(instance_id));
 }
 
 /// @test Verify that InstanceAdmin::UpdateInstance works as expected.
@@ -127,11 +128,11 @@ TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   instance_admin_->DeleteInstance(instance_id);
   EXPECT_FALSE(IsInstancePresent(instances_before, instance_copy.name()));
   EXPECT_TRUE(IsInstancePresent(instances_after, instance_copy.name()));
-  EXPECT_NE(std::string::npos, instance_copy.name().find(instance_id));
-  EXPECT_NE(std::string::npos,
-            instance_copy.name().find(InstanceTestEnvironment::project_id()));
+  EXPECT_THAT(instance_copy.name(), HasSubstr(instance_id));
+  EXPECT_THAT(instance_copy.name(),
+              HasSubstr(InstanceTestEnvironment::project_id()));
   EXPECT_EQ(updated_display_name, instance_after.display_name());
-  EXPECT_NE(std::string::npos, instance_copy.display_name().find(instance_id));
+  EXPECT_THAT(instance_copy.display_name(), HasSubstr(instance_id));
 }
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
@@ -269,9 +270,9 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   instance_admin_->DeleteInstance(id);
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster_copy.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster_copy.name()));
-  EXPECT_NE(std::string::npos, cluster_copy.name().find(id));
-  EXPECT_NE(std::string::npos,
-            cluster_copy.name().find(InstanceTestEnvironment::project_id()));
+  EXPECT_THAT(cluster_copy.name(), HasSubstr(id));
+  EXPECT_THAT(cluster_copy.name(),
+              HasSubstr(InstanceTestEnvironment::project_id()));
   EXPECT_EQ(3, cluster_copy.serve_nodes());
   EXPECT_EQ(4, cluster_after.serve_nodes());
 }
