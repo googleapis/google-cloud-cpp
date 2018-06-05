@@ -17,6 +17,12 @@
 #include <sstream>
 #include <thread>
 
+namespace {
+bool IsRetryableStatusCode(long status_code) {
+  return status_code == 429 or status_code >= 500;
+}
+}  // namespace
+
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 static_assert(std::is_copy_constructible<storage::Bucket>::value,
@@ -27,14 +33,15 @@ static_assert(std::is_copy_assignable<storage::Bucket>::value,
 BucketMetadata Bucket::GetMetadata() {
   // TODO(#555) - use policies to implement retry loop.
   Status last_status;
-  for (int i = 0; i != 3; ++i) {
+  constexpr int max_num_retries = 3;
+  for (int i = 0; i != max_num_retries; ++i) {
     auto result = client_->GetBucketMetadata(bucket_name_);
     last_status = std::move(result.first);
     if (last_status.ok()) {
       return std::move(result.second);
     }
     // TODO(#581) - use policies to determine what error codes are permanent.
-    if (503 != last_status.status_code()) {
+    if (not IsRetryableStatusCode(last_status.status_code())) {
       // For the moment, only SERVICE UNAVAILABLE (503) is retried.
       std::ostringstream os;
       os << "Permanent error in Bucket::GetMetadata: " << last_status;
@@ -48,7 +55,10 @@ BucketMetadata Bucket::GetMetadata() {
 }
 
 void Bucket::ValidateBucketName(std::string const& bucket_name) {
-  // Before creating the bucket URL let's make sure it is valid.
+  // Before creating the bucket URL let's make sure the name does not require
+  // url encoding.  If it does, it is an invalid bucket according to:
+  //     https://cloud.google.com/storage/docs/naming#requirements
+  // anyway, and the server would reject it.
   auto pos =
       bucket_name.find_first_not_of(".-_0123456789abcdefghijklmnopqrstuvwxyz");
   if (std::string::npos != pos) {
