@@ -32,7 +32,8 @@ else ()
                 "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}"
                 "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
         set(DOXYGEN_EXAMPLE_PATH
-                "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/examples")
+            "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/examples"
+            "${PROJECT_SOURCE_DIR}/storage/examples")
         set(DOXYGEN_EXCLUDE_PATTERNS "*/README.md" "*_test.cc")
 
         # Do not recurse. Recursively going through the code picks up the
