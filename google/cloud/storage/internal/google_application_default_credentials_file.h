@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
 
-#include "storage/client/credentials.h"
+#include "google/cloud/storage/credentials.h"
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {

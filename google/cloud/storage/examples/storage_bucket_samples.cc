@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/bucket.h"
+#include "google/cloud/storage/bucket.h"
 #include <functional>
 #include <iostream>
 #include <map>

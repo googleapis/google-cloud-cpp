@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
 
-#include "storage/client/credentials.h"
-#include "storage/client/internal/curl_request.h"
+#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/curl_request.h"
 #include <chrono>
 #include <condition_variable>
 #include <iostream>

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_TESTING_MOCK_HTTP_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_TESTING_MOCK_HTTP_REQUEST_H_
 
-#include "storage/client/internal/curl_request.h"
-#include "storage/client/internal/nljson.h"
+#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <gmock/gmock.h>
 
 namespace storage {

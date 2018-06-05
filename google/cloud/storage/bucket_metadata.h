@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_BUCKET_METADATA_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_BUCKET_METADATA_H_
 
-#include "storage/client/version.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <map>
 #include <vector>

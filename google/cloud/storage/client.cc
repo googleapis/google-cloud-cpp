@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/client.h"
-#include "storage/client/internal/default_client.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/default_client.h"
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {

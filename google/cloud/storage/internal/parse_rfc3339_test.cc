@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/parse_rfc3339.h"
+#include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gtest/gtest.h>
 #include <ctime>
 

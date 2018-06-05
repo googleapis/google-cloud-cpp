@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/testing/mock_http_request.h"
+#include "google/cloud/storage/testing/mock_http_request.h"
 
 namespace storage {
 namespace testing {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/nljson.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <gtest/gtest.h>
 
 /// @test Verify that we can compile agains the nlohmann::json library.

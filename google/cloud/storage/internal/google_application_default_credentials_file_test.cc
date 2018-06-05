@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/google_application_default_credentials_file.h"
+#include "google/cloud/storage/internal/google_application_default_credentials_file.h"
 #include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 

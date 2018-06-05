@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/curl_request.h"
-#include "storage/client/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <iostream>

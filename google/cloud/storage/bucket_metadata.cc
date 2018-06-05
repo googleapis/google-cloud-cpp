@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/bucket_metadata.h"
-#include "storage/client/internal/nljson.h"
-#include "storage/client/internal/parse_rfc3339.h"
+#include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/parse_rfc3339.h"
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {

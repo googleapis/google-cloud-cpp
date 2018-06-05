@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/bucket_metadata.h"
+#include "google/cloud/storage/bucket_metadata.h"
 #include <gmock/gmock.h>
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_CURL_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_CURL_REQUEST_H_
 
-#include "storage/client/internal/curl_wrappers.h"
-#include "storage/client/internal/nljson.h"
+#include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <curl/curl.h>
 #include <map>
 

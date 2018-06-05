@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_PARSE_RFC3339_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_PARSE_RFC3339_H_
 
-#include "storage/client/version.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <string>
 

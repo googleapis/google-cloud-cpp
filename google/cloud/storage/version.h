@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
 
-#include "storage/client/version_info.h"
+#include "google/cloud/storage/version_info.h"
 #include "google/cloud/version.h"
 #include <string>
 

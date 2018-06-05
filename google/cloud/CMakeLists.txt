@@ -141,3 +141,4 @@ install(FILES
 
 add_subdirectory(bigtable)
 add_subdirectory(firestore)
+add_subdirectory(storage)

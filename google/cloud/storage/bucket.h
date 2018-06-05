@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_BUCKET_H_
 #define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_BUCKET_H_
 
-#include "storage/client/bucket_metadata.h"
-#include "storage/client/client.h"
+#include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/client.h"
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
