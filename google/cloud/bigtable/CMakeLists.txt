@@ -13,21 +13,16 @@
 # limitations under the License.
 
 # This should be included from the top level CMakeLists file
-set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
-set(BIGTABLE_CLIENT_VERSION_MINOR 2)
-set(BIGTABLE_CLIENT_VERSION_PATCH 0)
+set(BIGTABLE_CLIENT_VERSION_MAJOR 0 CACHE STRING
+        "Google Cloud Bigtable C++ Client major version")
+set(BIGTABLE_CLIENT_VERSION_MINOR 2 CACHE STRING
+        "Google Cloud Bigtable C++ Client major version")
+set(BIGTABLE_CLIENT_VERSION_PATCH 0 CACHE STRING
+        "Google Cloud Bigtable C++ Client major version")
 
 # Configure the Compiler options, we will be using C++11 features.
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}/doc")
-list(APPEND DOXYGEN_PREDEFINED
-        "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
-list(APPEND DOXYGEN_EXAMPLE_PATH
-        "${CMAKE_CURRENT_SOURCE_DIR}/examples")
 
 include(GoogleCloudCppCommon)
 

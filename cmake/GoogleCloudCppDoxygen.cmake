@@ -19,8 +19,22 @@ if (${CMAKE_VERSION} VERSION_LESS "3.9")
 else ()
     find_package(Doxygen)
     if (Doxygen_FOUND)
-        # Define the general exclusion.
-        list(APPEND DOXYGEN_EXCLUDE_PATTERNS "*/README.md" "*_test.cc")
+        set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS
+                "${PROJECT_SOURCE_DIR}/doc"
+                "${PROJECT_SOURCE_DIR}/google/cloud"
+                "${PROJECT_SOURCE_DIR}/google/cloud/bigtable"
+                "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/doc"
+                "${PROJECT_SOURCE_DIR}/google/cloud/firestore"
+                "${PROJECT_SOURCE_DIR}/storage/client")
+        set(DOXYGEN_PREDEFINED
+                "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
+                "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}"
+                "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}"
+                "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
+        set(DOXYGEN_EXAMPLE_PATH
+                "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/examples")
+        set(DOXYGEN_EXCLUDE_PATTERNS "*/README.md" "*_test.cc")
+
         # Do not recurse. Recursively going through the code picks up the
         # tests, examples, internal namespaces, and many other artifacts that
         # should not be included in the Doxygen documentation.
@@ -65,8 +79,6 @@ else ()
         set(DOXYGEN_PROJECT_NUMBER
                 "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
-
-        message(STATUS "IN=" ${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS})
         # The external documentation does not include these lists.
         set(DOXYGEN_GENERATE_TODOLIST NO)
         set(DOXYGEN_GENERATE_BUGLIST NO)

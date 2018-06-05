@@ -66,12 +66,6 @@ enable_testing()
 # compiled with, obviously, scan-build disabled.
 add_custom_target(skip-scanbuild-targets)
 
-# Define variables to collect Doxygen configuration
-set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "")
-set(DOXYGEN_PREDEFINED)
-set(DOXYGEN_EXAMPLE_PATH)
-set(DOXYGEN_EXCLUDE_PATTERNS)
-
 # Add subprojects here.
 add_subdirectory(google/cloud)
 

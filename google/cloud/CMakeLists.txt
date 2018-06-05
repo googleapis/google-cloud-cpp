@@ -13,9 +13,12 @@
 # limitations under the License.
 
 # This should be included from the top level CMakeLists file
-set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
-set(GOOGLE_CLOUD_CPP_VERSION_MINOR 1)
-set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
+set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0 CACHE STRING
+        "Google Cloud C++ Client Libraries major version")
+set(GOOGLE_CLOUD_CPP_VERSION_MINOR 1 CACHE STRING
+        "Google Cloud C++ Client Libraries minor version")
+set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0 CACHE STRING
+        "Google Cloud C++ Client Libraries patch version")
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in internal/version_info.h)
 

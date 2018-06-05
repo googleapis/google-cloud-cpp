@@ -13,19 +13,16 @@
 # limitations under the License.
 
 # This should be included from the top level CMakeLists file
-set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
-set(FIRESTORE_CLIENT_VERSION_MINOR 0)
-set(FIRESTORE_CLIENT_VERSION_PATCH 1)
+set(FIRESTORE_CLIENT_VERSION_MAJOR 0 CACHE STRING
+        "Google Cloud Firestore C++ Client major version")
+set(FIRESTORE_CLIENT_VERSION_MINOR 0 CACHE STRING
+        "Google Cloud Firestore C++ Client minor version")
+set(FIRESTORE_CLIENT_VERSION_PATCH 1 CACHE STRING
+        "Google Cloud Firestore C++ Client patch version")
 
 # Configure the Compiler options, we will be using C++11 features.
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Append the version number macro to the Doxygen set of pre-defined macros.
-list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${CMAKE_CURRENT_SOURCE_DIR}")
-list(APPEND DOXYGEN_PREDEFINED
-        "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
-message(STATUS "IN=" ${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS})
 
 include(GoogleCloudCppCommon)
 

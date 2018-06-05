@@ -1,0 +1,11 @@
+/*!
+@mainpage Google Cloud Platform C++ Client Libraries
+
+This page contains the reference guide to the Google Cloud Platform C++ Client
+Libraries.
+
+## Alpha Libraries
+
+- @ref bigtable-main "Google Cloud Bigtable"
+
+*/
