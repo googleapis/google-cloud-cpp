@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['validatebucketname',['ValidateBucketName',['../classstorage_1_1v0_1_1Bucket.html#a2ec0e4361f76d9e1158ac04f580cdba3',1,'storage::v0::Bucket']]],
   ['version',['version',['../namespacestorage_1_1v0.html#a04858bab08e8524577d5252665216902',1,'storage::v0']]],
   ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
   ['version_2eh',['version.h',['../version_8h.html',1,'']]],

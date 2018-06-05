@@ -6,6 +6,7 @@ var searchData=
   ['status_2eh',['status.h',['../status_8h.html',1,'']]],
   ['status_5fcode',['status_code',['../classstorage_1_1v0_1_1Status.html#aa56e53b576db5a52ce08c35f90d0e9af',1,'storage::v0::Status']]],
   ['storage',['storage',['../namespacestorage.html',1,'']]],
+  ['storage_5fbucket_5fsamples_2ecc',['storage_bucket_samples.cc',['../storage__bucket__samples_8cc.html',1,'']]],
   ['storage_5fclass',['storage_class',['../classstorage_1_1v0_1_1BucketMetadata.html#a5b892761c13054bb099d345f065e2646',1,'storage::v0::BucketMetadata']]],
   ['storage_5fclass_5fcoldline',['STORAGE_CLASS_COLDLINE',['../classstorage_1_1v0_1_1BucketMetadata.html#a0dc7cfe6942b19cd5354340408dc9d18',1,'storage::v0::BucketMetadata']]],
   ['storage_5fclass_5fdurable_5freduced_5favailability',['STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY',['../classstorage_1_1v0_1_1BucketMetadata.html#a196f4b0f43c49e9468b1789872f26c62',1,'storage::v0::BucketMetadata']]],
