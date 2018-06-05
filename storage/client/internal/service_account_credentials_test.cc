@@ -169,8 +169,8 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
       storage::internal::DefaultServiceAccountCredentialsHomeVariable();
   google::cloud::internal::SetEnv(home, "/foo/bar/baz");
   auto actual = storage::internal::DefaultServiceAccountCredentialsFile();
-  EXPECT_NE(std::string::npos, actual.find("/foo/bar/baz"));
-  EXPECT_NE(std::string::npos, actual.find(".json"));
+  EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
+  EXPECT_THAT(actual, HasSubstr(".json"));
 }
 
 /// @test Verify that the service account file path fails when HOME is not set.

@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include <gmock/gmock.h>
 
+using testing::HasSubstr;
+
 TEST(GRpcErrorTest, Simple) {
   bigtable::GRpcError cancelled("Test()", grpc::Status::CANCELLED);
   EXPECT_EQ(grpc::Status::CANCELLED.error_code(), cancelled.error_code());
@@ -28,35 +30,34 @@ TEST(GRpcErrorTest, Simple) {
   EXPECT_EQ("too-busy", test.error_details());
 
   std::string what(test.what());
-  EXPECT_NE(std::string::npos, what.find("Test()"));
-  EXPECT_NE(std::string::npos, what.find("try-again"));
-  EXPECT_NE(std::string::npos, what.find("too-busy"));
-  EXPECT_NE(std::string::npos, what.find("UNAVAILABLE"));
+  EXPECT_THAT(what, HasSubstr("Test()"));
+  EXPECT_THAT(what, HasSubstr("try-again"));
+  EXPECT_THAT(what, HasSubstr("too-busy"));
+  EXPECT_THAT(what, HasSubstr("UNAVAILABLE"));
 }
 
 TEST(GRpcErrorTest, KnownCode_UNAUTHENTICATED) {
   bigtable::GRpcError ex(
       "T()", grpc::Status(grpc::StatusCode::UNAUTHENTICATED, "", ""));
   EXPECT_EQ(grpc::StatusCode::UNAUTHENTICATED, ex.error_code());
-  EXPECT_NE(std::string::npos, std::string(ex.what()).find("UNAUTHENTICATED"));
+  EXPECT_THAT(std::string(ex.what()), HasSubstr("UNAUTHENTICATED"));
 }
 
 TEST(GRpcErrorTest, KnownCode_DATA_LOSS) {
   bigtable::GRpcError ex("T()",
                          grpc::Status(grpc::StatusCode::DATA_LOSS, "", ""));
   EXPECT_EQ(grpc::StatusCode::DATA_LOSS, ex.error_code());
-  EXPECT_NE(std::string::npos, std::string(ex.what()).find("DATA_LOSS"));
+  EXPECT_THAT(std::string(ex.what()), HasSubstr("DATA_LOSS"));
 }
 
 TEST(GRpcErrorTest, KnownCode_NOT_FOUND) {
   bigtable::GRpcError ex("T()",
                          grpc::Status(grpc::StatusCode::NOT_FOUND, "", ""));
   EXPECT_EQ(grpc::StatusCode::NOT_FOUND, ex.error_code());
-  EXPECT_NE(std::string::npos, std::string(ex.what()).find("NOT_FOUND"));
+  EXPECT_THAT(std::string(ex.what()), HasSubstr("NOT_FOUND"));
 }
 
 TEST(GRpcErrorTest, UnknownCode) {
-  using ::testing::HasSubstr;
   bigtable::GRpcError ex(
       "T()", grpc::Status(static_cast<grpc::StatusCode>(-1), "", ""));
   EXPECT_THAT(std::string(ex.what()), HasSubstr("(UNKNOWN CODE)"));

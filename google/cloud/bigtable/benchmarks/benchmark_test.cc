@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 
 using namespace bigtable::benchmarks;
+using testing::HasSubstr;
 
 namespace {
 char arg0[] = "program";
@@ -109,10 +110,10 @@ TEST(BenchmarkTest, PrintThroughputResult) {
   // fairly minimal.
 
   // The output includes "XX ops/s" where XX is the operations count.
-  EXPECT_NE(std::string::npos, output.find("345 ops/s"));
+  EXPECT_THAT(output, HasSubstr("345 ops/s"));
 
   // The output includes "YY rows/s" where YY is the row count.
-  EXPECT_NE(std::string::npos, output.find("123 rows/s"));
+  EXPECT_THAT(output, HasSubstr("123 rows/s"));
 }
 
 TEST(BenchmarkTest, PrintLatencyResult) {
@@ -138,14 +139,14 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   // fairly minimal.
 
   // The output includes "XX ops/s" where XX is the operations count.
-  EXPECT_NE(std::string::npos, output.find("100 ops/s"));
+  EXPECT_THAT(output, HasSubstr("100 ops/s"));
 
   // And the percentiles are easy to estimate for the generated data. Note that
   // this test depends on the duration formatting as specified by the absl::time
   // library.
-  EXPECT_NE(std::string::npos, output.find("p0=100.000us"));
-  EXPECT_NE(std::string::npos, output.find("p95=9.500ms"));
-  EXPECT_NE(std::string::npos, output.find("p100=10.000ms"));
+  EXPECT_THAT(output, HasSubstr("p0=100.000us"));
+  EXPECT_THAT(output, HasSubstr("p95=9.500ms"));
+  EXPECT_THAT(output, HasSubstr("p100=10.000ms"));
 }
 
 TEST(BenchmarkTest, PrintCsv) {
@@ -177,16 +178,15 @@ TEST(BenchmarkTest, PrintCsv) {
   // fairly minimal.
 
   // The output includes the version and compiler info.
-  EXPECT_NE(std::string::npos, output.find(bigtable::version_string()));
-  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::COMPILER));
-  EXPECT_NE(std::string::npos,
-            output.find(google::cloud::internal::COMPILER_FLAGS));
+  EXPECT_THAT(output, HasSubstr(bigtable::version_string()));
+  EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER));
+  EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER_FLAGS));
 
   // The output includes the latency results.
-  EXPECT_NE(std::string::npos, output.find(",100,"));    // p0
-  EXPECT_NE(std::string::npos, output.find(",9500,"));   // p95
-  EXPECT_NE(std::string::npos, output.find(",10000,"));  // p100
+  EXPECT_THAT(output, HasSubstr(",100,"));    // p0
+  EXPECT_THAT(output, HasSubstr(",9500,"));   // p95
+  EXPECT_THAT(output, HasSubstr(",10000,"));  // p100
 
   // The output includes the throughput.
-  EXPECT_NE(std::string::npos, output.find(",123,"));
+  EXPECT_THAT(output, HasSubstr(",123,"));
 }

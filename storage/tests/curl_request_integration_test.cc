@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #include "storage/client/internal/curl_request.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
 
 namespace nl = storage::internal::nl;
+using testing::HasSubstr;
 
 namespace {
 std::string HttpBinEndpoint() {
@@ -131,8 +132,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
   EXPECT_EQ(418, response.status_code);
-  auto pos = response.payload.find("[ teapot ]");
-  EXPECT_NE(std::string::npos, pos);
+  EXPECT_THAT(response.payload, HasSubstr("[ teapot ]"));
 }
 
 /// @test Verify the response includes the header values.
