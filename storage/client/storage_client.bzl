@@ -4,12 +4,13 @@ storage_client_HDRS = [
     "bucket_metadata.h",
     "client.h",
     "credentials.h",
+    "internal/authorized_user_credentials.h",
     "internal/curl_request.h",
     "internal/curl_wrappers.h",
     "internal/default_client.h",
+    "internal/google_application_default_credentials_file.h",
     "internal/nljson.h",
     "internal/parse_rfc3339.h",
-    "internal/service_account_credentials.h",
     "status.h",
     "version.h",
 ]
@@ -21,8 +22,8 @@ storage_client_SRCS = [
     "credentials.cc",
     "internal/curl_request.cc",
     "internal/curl_wrappers.cc",
+    "internal/google_application_default_credentials_file.cc",
     "internal/parse_rfc3339.cc",
-    "internal/service_account_credentials.cc",
     "version.cc",
 ]
 

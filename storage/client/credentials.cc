@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "storage/client/credentials.h"
-#include "storage/client/internal/service_account_credentials.h"
+#include "storage/client/internal/authorized_user_credentials.h"
+#include "storage/client/internal/google_application_default_credentials_file.h"
+#include "storage/client/internal/nljson.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -21,10 +24,19 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  auto path = storage::internal::DefaultServiceAccountCredentialsFile();
+  auto path = storage::internal::GoogleApplicationDefaultCredentialsFile();
   std::ifstream is(path);
-  std::string jwt(std::istreambuf_iterator<char>{is}, {});
-  return std::make_shared<storage::internal::ServiceAccountCredentials<>>(jwt);
+  std::string contents(std::istreambuf_iterator<char>{is}, {});
+
+  auto object = storage::internal::nl::json::parse(contents);
+  std::string type = object["type"];
+  if (type == "authorized_user") {
+    return std::make_shared<storage::internal::AuthorizedUserCredentials<>>(
+        contents);
+  }
+  // TODO(#656) - support "service_account" credentials type.
+  google::cloud::internal::RaiseRuntimeError("Unsupported credential type (" +
+                                             type + ")");
 }
 
 }  // namespace STORAGE_CLIENT_NS

@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/service_account_credentials.h"
+#include "storage/client/internal/authorized_user_credentials.h"
+#include "storage/client/internal/nljson.h"
 #include "storage/client/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
 using storage::testing::MockHttpRequest;
 
-class ServiceAccountCredentialsTest : public ::testing::Test {
+class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() { MockHttpRequest::Clear(); }
   void TearDown() { MockHttpRequest::Clear(); }
 };
 
 using namespace ::testing;
-using storage::internal::ServiceAccountCredentials;
+using storage::internal::AuthorizedUserCredentials;
 
 /// @test Verify that we can create credentials from a JWT string.
-TEST_F(ServiceAccountCredentialsTest, Simple) {
+TEST_F(AuthorizedUserCredentialsTest, Simple) {
   std::string jwt = R"""({
       "client_id": "a-client-id.example.com",
       "client_secret": "a-123456ABCDEF",
@@ -65,12 +66,12 @@ TEST_F(ServiceAccountCredentialsTest, Simple) {
   EXPECT_CALL(*handle, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
+  AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-value", credentials.AuthorizationHeader());
 }
 
 /// @test Verify that we can refresh service account credentials.
-TEST_F(ServiceAccountCredentialsTest, Refresh) {
+TEST_F(AuthorizedUserCredentialsTest, Refresh) {
   std::string jwt = R"""({
       "client_id": "a-client-id.example.com",
       "client_secret": "a-123456ABCDEF",
@@ -108,83 +109,8 @@ TEST_F(ServiceAccountCredentialsTest, Refresh) {
       .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
       .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest> credentials(jwt);
+  AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
   EXPECT_EQ("Type access-token-r1", credentials.AuthorizationHeader());
   EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
   EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
-}
-
-class EnvironmentVariableRestore {
- public:
-  explicit EnvironmentVariableRestore(char const* variable_name)
-      : EnvironmentVariableRestore(std::string(variable_name)) {}
-
-  explicit EnvironmentVariableRestore(std::string variable_name)
-      : variable_name_(std::move(variable_name)) {}
-
-  void SetUp() { previous_ = std::getenv(variable_name_.c_str()); }
-  void TearDown() {
-    google::cloud::internal::SetEnv(variable_name_.c_str(), previous_);
-  }
-
- private:
-  std::string variable_name_;
-  char const* previous_;
-};
-
-class DefaultServiceAccountFileTest : public ::testing::Test {
- public:
-  DefaultServiceAccountFileTest()
-      : home_(
-            storage::internal::DefaultServiceAccountCredentialsHomeVariable()),
-        override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
-
- protected:
-  void SetUp() override {
-    home_.SetUp();
-    override_variable_.SetUp();
-  }
-  void TearDown() override {
-    override_variable_.TearDown();
-    home_.TearDown();
-  }
-
- protected:
-  EnvironmentVariableRestore home_;
-  EnvironmentVariableRestore override_variable_;
-};
-
-/// @test Verify that the application can override the default credentials.
-TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS",
-                                  "/foo/bar/baz");
-  auto actual = storage::internal::DefaultServiceAccountCredentialsFile();
-  EXPECT_EQ("/foo/bar/baz", actual);
-}
-
-/// @test Verify that the file path works as expected when using HOME.
-TEST_F(DefaultServiceAccountFileTest, HomeSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
-  char const* home =
-      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
-  google::cloud::internal::SetEnv(home, "/foo/bar/baz");
-  auto actual = storage::internal::DefaultServiceAccountCredentialsFile();
-  EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
-  EXPECT_THAT(actual, HasSubstr(".json"));
-}
-
-/// @test Verify that the service account file path fails when HOME is not set.
-TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
-  char const* home =
-      storage::internal::DefaultServiceAccountCredentialsHomeVariable();
-  google::cloud::internal::UnsetEnv(home);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(storage::internal::DefaultServiceAccountCredentialsFile(),
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      storage::internal::DefaultServiceAccountCredentialsFile(),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

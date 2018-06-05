@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "storage/client/internal/service_account_credentials.h"
+#include "storage/client/internal/google_application_default_credentials_file.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <sstream>
 
@@ -38,11 +38,11 @@ std::string const& GoogleCredentialsSuffix() {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-char const* DefaultServiceAccountCredentialsHomeVariable() {
+char const* GoogleApplicationDefaultCredentialsHomeVariable() {
   return CREDENTIALS_HOME_VAR;
 }
 
-std::string DefaultServiceAccountCredentialsFile() {
+std::string GoogleApplicationDefaultCredentialsFile() {
   auto override_value = std::getenv("GOOGLE_APPLICATION_CREDENTIALS");
   if (override_value != nullptr) {
     return override_value;
