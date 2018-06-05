@@ -23,18 +23,6 @@ configure_file(internal/version_info.h.in internal/version_info.h)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS
-        "*/google/cloud/internal/*"
-        "*/google/cloud/bigtable/*"
-        "*/google/cloud/firestore/*"
-        "*/google/cloud/storage/*"
-        "*/google/cloud/*_test.cc")
-
 include(GoogleCloudCppCommon)
 
 # Define an interface library, i.e., a library that really has no sources, and

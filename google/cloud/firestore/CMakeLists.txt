@@ -21,15 +21,11 @@ set(FIRESTORE_CLIENT_VERSION_PATCH 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
-set(DOXYGEN_PROJECT_NUMBER
-        "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}")
-set(DOXYGEN_PREDEFINED "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS
-        "*/google/cloud/firestore/README.md"
-        "*/google/cloud/firestore/internal/*"
-        "*/google/cloud/firestore/*_test.cc")
+# Append the version number macro to the Doxygen set of pre-defined macros.
+list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${CMAKE_CURRENT_SOURCE_DIR}")
+list(APPEND DOXYGEN_PREDEFINED
+        "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
+message(STATUS "IN=" ${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS})
 
 include(GoogleCloudCppCommon)
 

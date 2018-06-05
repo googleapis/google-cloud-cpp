@@ -21,22 +21,13 @@ set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
-set(DOXYGEN_PROJECT_NUMBER
-        "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS
-        "*/google/cloud/bigtable/README.md"
-        "*/google/cloud/bigtable/benchmarks/*"
-        "*/google/cloud/bigtable/ci/*"
-        "*/google/cloud/bigtable/examples/*.md"
-        "*/google/cloud/bigtable/internal/*"
-        "*/google/cloud/bigtable/testing/*"
-        "*/google/cloud/bigtable/tests/*"
-        "*/google/cloud/bigtable/tools/*"
-        "*/google/cloud/bigtable/*_test.cc")
+list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/doc")
+list(APPEND DOXYGEN_PREDEFINED
+        "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+list(APPEND DOXYGEN_EXAMPLE_PATH
+        "${CMAKE_CURRENT_SOURCE_DIR}/examples")
 
 include(GoogleCloudCppCommon)
 
