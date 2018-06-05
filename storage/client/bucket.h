@@ -56,4 +56,4 @@ class Bucket {
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_BUCKET_H_
