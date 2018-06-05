@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_VERSION_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_VERSION_H_
 
 #include "google/cloud/storage/version_info.h"
 #include "google/cloud/version.h"
@@ -72,4 +72,4 @@ std::string version_string();
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_VERSION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_VERSION_H_

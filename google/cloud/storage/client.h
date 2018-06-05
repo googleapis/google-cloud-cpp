@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/credentials.h"
@@ -52,4 +52,4 @@ std::shared_ptr<Client> CreateDefaultClient(
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_

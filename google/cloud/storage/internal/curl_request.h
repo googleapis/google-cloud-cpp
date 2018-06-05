@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_CURL_REQUEST_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_CURL_REQUEST_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -98,4 +98,4 @@ class CurlRequest {
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_CURL_REQUEST_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_

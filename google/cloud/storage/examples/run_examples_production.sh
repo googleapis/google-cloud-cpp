@@ -19,7 +19,7 @@ set -eu
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/../../ci/colors.sh"
+source "${BINDIR}/../../../../ci/colors.sh"
 
 function run_all_bucket_examples {
   local bucket_name = $1

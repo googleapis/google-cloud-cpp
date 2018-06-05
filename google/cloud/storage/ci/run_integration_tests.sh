@@ -19,4 +19,5 @@ set -eu
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
-(cd storage/tests && "${BINDIR}/../tests/run_integration_tests.sh")
+(cd google/cloud/storage/tests && \
+    "${BINDIR}/../../../tests/run_integration_tests.sh")
