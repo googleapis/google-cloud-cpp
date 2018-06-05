@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/authorized_user_credentials.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
-#include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
 using storage::testing::MockHttpRequest;
