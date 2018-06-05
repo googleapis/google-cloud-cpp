@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set(storage_client_integration_tests
-    bucket_integration_test.cc
-    curl_request_integration_test.cc)
+set -eu
 
-foreach (fname ${storage_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-        PRIVATE
-            storage_client
-            gmock
-            CURL::CURL
-            OpenSSL::SSL
-            OpenSSL::Crypto
-            Threads::Threads
-            nlohmann_json
-            storage_common_options)
-endforeach ()
+# The CI environment must provide PROJECT_ID and BUCKET_NAME.
+
+echo
+echo "Running storage::Bucket integration tests."
+./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
+echo "Running storage::internal::CurlRequest integration test."
+./curl_request_integration_test

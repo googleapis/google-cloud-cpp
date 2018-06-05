@@ -28,7 +28,9 @@ set(DOXYGEN_PROJECT_NUMBER
     "${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}")
 set(DOXYGEN_EXAMPLE_PATH examples)
 set(DOXYGEN_PREDEFINED "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS "*/client/internal/*")
+set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/client/internal/*"
+    "*/README.md")
 
 include(GoogleCloudCppCommon)
 include(IncludeNlohmannJson)
@@ -66,6 +68,10 @@ find_package(ZLIB REQUIRED)
 # Add the library
 add_subdirectory(client)
 add_subdirectory(tests)
+
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(examples)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs

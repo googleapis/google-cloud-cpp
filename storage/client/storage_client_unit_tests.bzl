@@ -1,6 +1,7 @@
 # DO NOT EDIT -- GENERATED CODE
 storage_client_unit_tests = [
     "bucket_metadata_test.cc",
+    "bucket_test.cc",
     "internal/default_client_test.cc",
     "internal/nljson_test.cc",
     "internal/parse_rfc3339_test.cc",
