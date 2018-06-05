@@ -18,8 +18,8 @@
 #include <gmock/gmock.h>
 #include <thread>
 
-using namespace google::cloud::bigtable::benchmarks;
 namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::benchmarks;
 using std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {

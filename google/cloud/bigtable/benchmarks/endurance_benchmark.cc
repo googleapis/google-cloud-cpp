@@ -55,16 +55,18 @@
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
-using namespace google::cloud::bigtable::benchmarks;
+namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::benchmarks;
 
 /// Run an iteration of the test, returns the number of operations.
-long RunBenchmark(Benchmark& benchmark, std::string const& table_id,
+long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
+                  std::string const& table_id,
                   std::chrono::seconds test_duration);
 
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  BenchmarkSetup setup("long", argc, argv);
+  bigtable::benchmarks::BenchmarkSetup setup("long", argc, argv);
   Benchmark benchmark(setup);
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -112,8 +114,6 @@ int main(int argc, char* argv[]) try {
 }
 
 namespace {
-namespace bigtable = google::cloud::bigtable;
-
 OperationResult RunOneApply(bigtable::Table& table, Benchmark const& benchmark,
                             bigtable::testing::DefaultPRNG& generator) {
   auto row_key = benchmark.MakeRandomKey(generator);

@@ -73,7 +73,8 @@
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
-using namespace google::cloud::bigtable::benchmarks;
+namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::benchmarks;
 
 struct LatencyBenchmarkResult {
   BenchmarkResult apply_results;
@@ -81,7 +82,7 @@ struct LatencyBenchmarkResult {
 };
 
 /// Run an iteration of the test.
-LatencyBenchmarkResult RunBenchmark(Benchmark& benchmark,
+LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
                                     std::string const& table_id,
                                     std::chrono::seconds test_duration);
 
@@ -94,7 +95,7 @@ constexpr int kBenchmarkProgressMarks = 4;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  BenchmarkSetup setup("perf", argc, argv);
+  bigtable::benchmarks::BenchmarkSetup setup("perf", argc, argv);
 
   Benchmark benchmark(setup);
 
@@ -158,7 +159,7 @@ int main(int argc, char* argv[]) try {
   benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()",
                                combined.read_results);
 
-  std::cout << Benchmark::ResultsCsvHeader() << std::endl;
+  std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << std::endl;
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
                            populate_results);
   benchmark.PrintResultCsv(std::cout, "perf", "Apply()", "Latency",
@@ -175,8 +176,6 @@ int main(int argc, char* argv[]) try {
 }
 
 namespace {
-namespace bigtable = google::cloud::bigtable;
-
 OperationResult RunOneApply(bigtable::Table& table, std::string row_key,
                             std::mt19937_64& generator) {
   bigtable::SingleRowMutation mutation(std::move(row_key));
@@ -196,7 +195,7 @@ OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
   return Benchmark::TimeOperation(std::move(op));
 }
 
-LatencyBenchmarkResult RunBenchmark(Benchmark& benchmark,
+LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
                                     std::string const& table_id,
                                     std::chrono::seconds test_duration) {
   LatencyBenchmarkResult result = {};

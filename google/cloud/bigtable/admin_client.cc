@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
 
-class CommonClient;
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 
