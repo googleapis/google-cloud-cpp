@@ -16,7 +16,7 @@
 #include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
 
-using namespace bigtable::benchmarks;
+using namespace google::cloud::bigtable::benchmarks;
 using testing::HasSubstr;
 
 namespace {
@@ -69,7 +69,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
   BenchmarkSetup setup("key", argc, argv);
 
   Benchmark bm(setup);
-  auto gen = bigtable::testing::MakeDefaultPRNG();
+  auto gen = google::cloud::bigtable::testing::MakeDefaultPRNG();
 
   // First make sure that the keys are not always the same.
   auto make_some_keys = [&bm, &gen]() {
@@ -178,9 +178,17 @@ TEST(BenchmarkTest, PrintCsv) {
   // fairly minimal.
 
   // The output includes the version and compiler info.
+<<<<<<< HEAD
   EXPECT_THAT(output, HasSubstr(bigtable::version_string()));
   EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER));
   EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER_FLAGS));
+=======
+  EXPECT_NE(std::string::npos,
+            output.find(google::cloud::bigtable::version_string()));
+  EXPECT_NE(std::string::npos, output.find(google::cloud::internal::COMPILER));
+  EXPECT_NE(std::string::npos,
+            output.find(google::cloud::internal::COMPILER_FLAGS));
+>>>>>>> Move bigtable namespace to google::cloud::
 
   // The output includes the latency results.
   EXPECT_THAT(output, HasSubstr(",100,"));    // p0

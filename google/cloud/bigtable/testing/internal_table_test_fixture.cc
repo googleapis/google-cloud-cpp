@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <google/protobuf/text_format.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 namespace internal {
@@ -41,3 +43,5 @@ std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
 }  // namespace internal
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -17,6 +17,8 @@
 
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 MetadataParamTypes const MetadataParamTypes::PARENT("parent");
@@ -77,3 +79,5 @@ void MetadataUpdatePolicy::setup(grpc::ClientContext& context) const {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

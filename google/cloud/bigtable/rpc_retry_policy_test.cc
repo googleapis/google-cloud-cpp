@@ -29,6 +29,7 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::chrono_literals;
 auto const kLimitedTimeTestPeriod = 50_ms;
 auto const kLimitedTimeTolerance = 10_ms;

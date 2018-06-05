@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/instance_update_config.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 constexpr InstanceUpdateConfig::InstanceType
@@ -26,3 +28,5 @@ constexpr InstanceUpdateConfig::StateType InstanceUpdateConfig::READY;
 constexpr InstanceUpdateConfig::StateType InstanceUpdateConfig::CREATING;
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

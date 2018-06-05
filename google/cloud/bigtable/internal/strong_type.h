@@ -17,6 +17,8 @@
 
 #include "google/cloud/bigtable/version.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -66,5 +68,7 @@ class StrongType {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_STRONG_TYPE_H_

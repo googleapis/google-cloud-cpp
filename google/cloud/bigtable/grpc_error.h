@@ -19,6 +19,8 @@
 #include <grpcpp/grpcpp.h>
 #include <stdexcept>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -63,5 +65,7 @@ class GRpcError : public std::runtime_error {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_GRPC_ERROR_H_

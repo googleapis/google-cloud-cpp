@@ -17,6 +17,8 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 
+namespace bigtable = google::cloud::bigtable;
+
 /// Define helper types and functions for this test.
 namespace {
 class TableReadRowTest : public bigtable::testing::TableTestFixture {};

@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(AdminClientTest, Default) {
   auto admin_client = bigtable::CreateDefaultAdminClient(
       "test-project", bigtable::ClientOptions().set_connection_pool_size(1));

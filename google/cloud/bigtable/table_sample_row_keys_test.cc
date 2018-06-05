@@ -19,6 +19,8 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include <typeinfo>
 
+namespace bigtable = google::cloud::bigtable;
+
 /// Define types and functions used for this tests.
 namespace {
 class TableSampleRowKeysTest : public bigtable::testing::TableTestFixture {};

@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/testing/chrono_literals.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 /// @test Verify that the default policy works as expected.
 TEST(IdempotentMutationPolicyTest, Simple) {
   using namespace bigtable::chrono_literals;

@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/row_range.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace btproto = ::google::bigtable::v2;
@@ -248,3 +250,5 @@ std::ostream& operator<<(std::ostream& os, RowRange const& x) {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

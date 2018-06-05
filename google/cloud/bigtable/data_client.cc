@@ -17,6 +17,8 @@
 
 namespace btproto = google::bigtable::v2;
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -111,3 +113,5 @@ std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

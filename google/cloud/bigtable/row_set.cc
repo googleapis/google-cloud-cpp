@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/row_set.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace btproto = ::google::bigtable::v2;
@@ -61,3 +63,5 @@ bool RowSet::IsEmpty() const {
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

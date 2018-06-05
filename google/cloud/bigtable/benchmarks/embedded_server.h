@@ -18,6 +18,8 @@
 #include <memory>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 /**
@@ -49,5 +51,7 @@ std::unique_ptr<EmbeddedServer> CreateEmbeddedServer();
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_EMBEDDED_SERVER_H_

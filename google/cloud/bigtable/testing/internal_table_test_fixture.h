@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 namespace internal {
@@ -52,5 +54,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
 }  // namespace internal
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INTERNAL_TABLE_TEST_FIXTURE_H_

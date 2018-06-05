@@ -21,6 +21,8 @@
 #include <chrono>
 #include <vector>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -50,12 +52,12 @@ class Cell {
   /// Create a Cell and fill it with bigendian 64 bit value.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp,
-       bigtable::bigendian64_t value, std::vector<std::string> labels)
+       bigendian64_t value, std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
         timestamp_(timestamp),
-        value_(bigtable::internal::AsBigEndian64(value)),
+        value_(google::cloud::bigtable::internal::AsBigEndian64(value)),
         labels_(std::move(labels)) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
@@ -90,7 +92,7 @@ class Cell {
    */
   template <typename T>
   T value_as() const {
-    return bigtable::internal::Encoder<T>::Decode(value_);
+    return google::cloud::bigtable::internal::Encoder<T>::Decode(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.
@@ -107,5 +109,7 @@ class Cell {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_

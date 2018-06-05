@@ -19,6 +19,8 @@
 #include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -111,5 +113,7 @@ class InProcessAdminClient : public bigtable::AdminClient {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_ADMIN_CLIENT_H_

@@ -23,6 +23,8 @@
 #include <gtest/gtest.h>
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -123,5 +125,7 @@ class EmbeddedServerTestFixture : public ::testing::Test {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_EMBEDDED_SERVER_TEST_FIXTURE_H_

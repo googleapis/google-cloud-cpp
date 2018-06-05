@@ -24,9 +24,10 @@ namespace btproto = ::google::bigtable::v2;
 namespace {
 [[noreturn]] void ReportPermanentFailures(
     char const* msg, grpc::Status const& status,
-    std::vector<bigtable::FailedMutation> failures) {
+    std::vector<google::cloud::bigtable::FailedMutation> failures) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  throw bigtable::PermanentMutationFailure(msg, status, std::move(failures));
+  throw google::cloud::bigtable::PermanentMutationFailure(msg, status,
+                                                          std::move(failures));
 #else
   std::cerr << msg << "\n"
             << "Status: " << status.error_message() << " ["
@@ -43,6 +44,8 @@ namespace {
 }
 }  // namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
@@ -99,3 +102,5 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

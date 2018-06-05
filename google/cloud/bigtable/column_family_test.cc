@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/chrono_literals.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::chrono_literals;
 
 TEST(GcRule, MaxNumVersions) {

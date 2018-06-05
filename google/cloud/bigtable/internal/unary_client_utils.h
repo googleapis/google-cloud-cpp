@@ -21,6 +21,8 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -250,5 +252,7 @@ struct UnaryClientUtils {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_UNARY_CLIENT_UTILS_H_

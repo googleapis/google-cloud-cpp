@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/internal/rowreaderiterator.h"
 #include "google/cloud/bigtable/row_reader.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -27,3 +29,5 @@ RowReaderIterator& RowReaderIterator::operator++() {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

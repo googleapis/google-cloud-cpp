@@ -13,6 +13,8 @@
 
 #include "google/cloud/bigtable/internal/common_client.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -36,3 +38,5 @@ std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

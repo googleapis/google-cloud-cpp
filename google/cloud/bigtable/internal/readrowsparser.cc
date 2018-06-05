@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -170,3 +172,5 @@ Cell ReadRowsParser::MovePartialToCell() {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

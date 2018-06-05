@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(InstanceConfigTest, Constructor) {
   bigtable::InstanceConfig config(
       bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),

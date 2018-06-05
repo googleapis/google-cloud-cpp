@@ -21,7 +21,8 @@
 #include <vector>
 
 namespace {
-namespace admin_proto = ::google::bigtable::admin::v2;
+namespace admin_proto = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:

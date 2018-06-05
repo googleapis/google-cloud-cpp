@@ -35,7 +35,7 @@ std::string FormattedStartTime() {
 }
 
 std::string FormattedAnnotations() {
-  std::string notes = bigtable::version_string() + ";" +
+  std::string notes = google::cloud::bigtable::version_string() + ";" +
                       google::cloud::internal::COMPILER + ";" +
                       google::cloud::internal::COMPILER_FLAGS;
   std::transform(notes.begin(), notes.end(), notes.begin(),
@@ -44,15 +44,18 @@ std::string FormattedAnnotations() {
 }
 
 std::string MakeRandomTableId(std::string const& prefix) {
+  namespace cbt = google::cloud::bigtable;
   static std::string const table_id_chars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
-  auto gen = bigtable::testing::MakeDefaultPRNG();
+  auto gen = cbt::testing::MakeDefaultPRNG();
   return prefix + "-" +
-         bigtable::testing::Sample(
-             gen, bigtable::benchmarks::kTableIdRandomLetters, table_id_chars);
+         cbt::testing::Sample(gen, cbt::benchmarks::kTableIdRandomLetters,
+                              table_id_chars);
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
@@ -123,3 +126,5 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

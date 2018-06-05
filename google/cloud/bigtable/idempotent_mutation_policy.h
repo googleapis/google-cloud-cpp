@@ -19,6 +19,8 @@
 #include "google/cloud/bigtable/version.h"
 #include <memory>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -73,5 +75,7 @@ class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IDEMPOTENT_MUTATION_POLICY_H_

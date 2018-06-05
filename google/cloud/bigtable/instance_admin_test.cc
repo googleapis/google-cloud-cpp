@@ -21,7 +21,8 @@
 #include <gmock/gmock.h>
 
 namespace {
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btproto = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 

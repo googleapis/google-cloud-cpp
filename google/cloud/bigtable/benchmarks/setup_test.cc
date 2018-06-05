@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/benchmarks/setup.h"
 #include <gmock/gmock.h>
 
-using namespace bigtable::benchmarks;
+using namespace google::cloud::bigtable::benchmarks;
 
 namespace {
 char arg0[] = "program";
@@ -35,7 +35,7 @@ TEST(BenchmarksSetup, Basic) {
   EXPECT_EQ("foo", setup.project_id());
   EXPECT_EQ("bar", setup.instance_id());
   EXPECT_EQ(0U, setup.table_id().find("pre"));
-  std::size_t expected = 4 + bigtable::benchmarks::kTableIdRandomLetters;
+  std::size_t expected = 4 + kTableIdRandomLetters;
   EXPECT_EQ(expected, setup.table_id().size());
 
   EXPECT_EQ(kDefaultTableSize, setup.table_size());

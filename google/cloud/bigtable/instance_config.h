@@ -22,6 +22,8 @@
 #include <map>
 #include <vector>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using InstanceId = internal::StrongType<std::string, struct InstanceTag>;
@@ -82,5 +84,7 @@ class InstanceConfig {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_CONFIG_H_

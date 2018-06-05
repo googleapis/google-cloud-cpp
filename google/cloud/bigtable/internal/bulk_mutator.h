@@ -20,6 +20,8 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -91,5 +93,7 @@ class BulkMutator {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BULK_MUTATOR_H_

@@ -20,6 +20,8 @@
 #include <grpcpp/grpcpp.h>
 #include <memory>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -119,5 +121,7 @@ class MetadataUpdatePolicy {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_METADATA_UPDATE_POLICY_H_

@@ -16,6 +16,8 @@
 #include "google/cloud/internal/build_info.h"
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -30,3 +32,5 @@ std::string version_string() {
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

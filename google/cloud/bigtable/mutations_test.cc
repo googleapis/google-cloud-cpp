@@ -17,6 +17,7 @@
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::chrono_literals;
 
 /// @test Verify that SetCell() works as expected.

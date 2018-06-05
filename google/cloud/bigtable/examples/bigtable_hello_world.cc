@@ -34,15 +34,16 @@ int main(int argc, char* argv[]) try {
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin]
-  bigtable::TableAdmin table_admin(
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions()),
+  google::cloud::bigtable::TableAdmin table_admin(
+      google::cloud::bigtable::CreateDefaultAdminClient(
+          project_id, google::cloud::bigtable::ClientOptions()),
       instance_id);
   //! [connect admin]
 
   //! [create table]
   // Define the desired schema for the Table.
-  auto gc_rule = bigtable::GcRule::MaxNumVersions(1);
-  bigtable::TableConfig schema({{"family", gc_rule}}, {});
+  auto gc_rule = google::cloud::bigtable::GcRule::MaxNumVersions(1);
+  google::cloud::bigtable::TableConfig schema({{"family", gc_rule}}, {});
 
   // Create a table.
   auto returned_schema = table_admin.CreateTable(table_id, schema);
@@ -50,9 +51,10 @@ int main(int argc, char* argv[]) try {
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            project_id, instance_id, bigtable::ClientOptions()),
-                        table_id);
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
   //! [connect data]
 
   // Modify (and create if necessary) a row.
@@ -73,8 +75,9 @@ int main(int argc, char* argv[]) try {
     //
     //     https://cloud.google.com/bigtable/docs/schema-design
     std::string row_key = "key-" + std::to_string(i);
-    table.Apply(bigtable::SingleRowMutation(
-        std::move(row_key), bigtable::SetCell("family", "c0", greeting)));
+    table.Apply(google::cloud::bigtable::SingleRowMutation(
+        std::move(row_key),
+        google::cloud::bigtable::SetCell("family", "c0", greeting)));
     ++i;
   }
   //! [write rows]
@@ -82,7 +85,8 @@ int main(int argc, char* argv[]) try {
   // Read a single row.
   //! [read row]
   auto result = table.ReadRow(
-      "key-0", bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
+      "key-0",
+      google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
   if (not result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << std::endl;
@@ -96,8 +100,9 @@ int main(int argc, char* argv[]) try {
 
   // Read a single row.
   //! [scan all]
-  for (auto& row : table.ReadRows(bigtable::RowRange::InfiniteRange(),
-                                  bigtable::Filter::PassAllFilter())) {
+  for (auto& row :
+       table.ReadRows(google::cloud::bigtable::RowRange::InfiniteRange(),
+                      google::cloud::bigtable::Filter::PassAllFilter())) {
     std::cout << row.row_key() << ":\n";
     for (auto& cell : row.cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()

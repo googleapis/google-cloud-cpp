@@ -19,7 +19,8 @@
 
 namespace {
 
-namespace admin_proto = ::google::bigtable::admin::v2;
+namespace admin_proto = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::chrono_literals;
 
 class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {

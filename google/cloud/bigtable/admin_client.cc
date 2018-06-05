@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
 
+class CommonClient;
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 
@@ -31,23 +32,25 @@ namespace btadmin = google::bigtable::admin::v2;
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class DefaultAdminClient : public bigtable::AdminClient {
+class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct AdminTraits {
-    static std::string const& Endpoint(bigtable::ClientOptions& options) {
+    static std::string const& Endpoint(
+        google::cloud::bigtable::ClientOptions& options) {
       return options.admin_endpoint();
     }
   };
 
-  using Impl = bigtable::internal::CommonClient<AdminTraits,
-                                                btadmin::BigtableTableAdmin>;
+  using Impl = google::cloud::bigtable::internal::CommonClient<
+      AdminTraits, btadmin::BigtableTableAdmin>;
 
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  DefaultAdminClient(std::string project, bigtable::ClientOptions options)
+  DefaultAdminClient(std::string project,
+                     google::cloud::bigtable::ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -144,13 +147,17 @@ class DefaultAdminClient : public bigtable::AdminClient {
 };
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(
-    std::string project, bigtable::ClientOptions options) {
+    std::string project, google::cloud::bigtable::ClientOptions options) {
   return std::make_shared<DefaultAdminClient>(std::move(project),
                                               std::move(options));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -48,21 +48,22 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 }
 
 //! [create instance]
-void CreateInstance(bigtable::InstanceAdmin instance_admin, int argc,
-                    char* argv[]) {
+void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
+                    int argc, char* argv[]) {
   if (argc != 3) {
     throw Usage{"create-instance: <instance-id> <zone>"};
   }
   std::string const instance_id = ConsumeArg(argc, argv);
   std::string const zone = ConsumeArg(argc, argv);
 
-  bigtable::DisplayName display_name("Put description here");
+  google::cloud::bigtable::DisplayName display_name("Put description here");
   std::string cluster_id = instance_id + "-c1";
-  auto cluster_config =
-      bigtable::ClusterConfig(zone, 0, bigtable::ClusterConfig::HDD);
-  bigtable::InstanceConfig config(bigtable::InstanceId(instance_id),
-                                  display_name, {{cluster_id, cluster_config}});
-  config.set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  auto cluster_config = google::cloud::bigtable::ClusterConfig(
+      zone, 0, google::cloud::bigtable::ClusterConfig::HDD);
+  google::cloud::bigtable::InstanceConfig config(
+      google::cloud::bigtable::InstanceId(instance_id), display_name,
+      {{cluster_id, cluster_config}});
+  config.set_type(google::cloud::bigtable::InstanceConfig::DEVELOPMENT);
 
   auto future = instance_admin.CreateInstance(config);
   // Most applications would simply call future.get(), here we show how to
@@ -80,15 +81,16 @@ void CreateInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [create instance]
 
 //! [update instance]
-void UpdateInstance(bigtable::InstanceAdmin instance_admin, int argc,
-                    char* argv[]) {
+void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
+                    int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{"update-instance: <project-id> <instance-id>"};
   }
   std::string instance_id = ConsumeArg(argc, argv);
   auto instance = instance_admin.GetInstance(instance_id);
   // Modify the instance and prepare the mask with modified field
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  google::cloud::bigtable::InstanceUpdateConfig instance_update_config(
+      std::move(instance));
   instance_update_config.set_display_name("Modified Display Name");
 
   auto future =
@@ -100,8 +102,8 @@ void UpdateInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [update instance]
 
 //! [list instances]
-void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
-                   char* argv[]) {
+void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances) {
     std::cout << instance.name() << std::endl;
@@ -110,8 +112,8 @@ void ListInstances(bigtable::InstanceAdmin instance_admin, int argc,
 //! [list instances]
 
 //! [get instance]
-void GetInstance(bigtable::InstanceAdmin instance_admin, int argc,
-                 char* argv[]) {
+void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
+                 int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{"get-instance: <project-id> <instance-id>"};
   }
@@ -124,8 +126,8 @@ void GetInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [get instance]
 
 //! [delete instance]
-void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
-                    char* argv[]) {
+void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
+                    int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{"delete-instance: <project-id> <instance-id>"};
   }
@@ -135,8 +137,8 @@ void DeleteInstance(bigtable::InstanceAdmin instance_admin, int argc,
 //! [delete instance]
 
 //! [list clusters]
-void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
-                  char* argv[]) {
+void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
+                  int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{"list-clusters <project-id> <instance-id>"};
   }
@@ -150,23 +152,24 @@ void ListClusters(bigtable::InstanceAdmin instance_admin, int argc,
 //! [list clusters]
 
 //! [update cluster]
-void UpdateCluster(bigtable::InstanceAdmin instance_admin, int argc,
-                   char* argv[]) {
+void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
   }
   // CreateCluster or GetCluster first and then modify it
-  bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
-  bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  auto cluster_config =
-      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto cluster_config = google::cloud::bigtable::ClusterConfig(
+      "us-central1-f", 0, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
 
   // Modify the cluster
   cluster.set_serve_nodes(2);
-  auto modified_config = bigtable::ClusterConfig(std::move(cluster));
+  auto modified_config =
+      google::cloud::bigtable::ClusterConfig(std::move(cluster));
 
   auto modified_cluster = instance_admin.UpdateCluster(cluster_config).get();
 
@@ -178,13 +181,13 @@ void UpdateCluster(bigtable::InstanceAdmin instance_admin, int argc,
 //! [update cluster]
 
 //! [delete cluster]
-void DeleteCluster(bigtable::InstanceAdmin instance_admin, int argc,
-                   char* argv[]) {
+void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
   if (argc != 3) {
     throw Usage{"delete-cluster: <project-id> <instance-id> <cluster-id>"};
   }
-  bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
-  bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
   instance_admin.DeleteCluster(instance_id, cluster_id);
 }
 //! [delete cluster]
@@ -202,14 +205,14 @@ int main(int argc, char* argv[]) try {
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect instance admin client]
-  std::shared_ptr<bigtable::InstanceAdminClient> instance_admin_client(
-      bigtable::CreateDefaultInstanceAdminClient(project_id,
-                                                 bigtable::ClientOptions()));
+  auto instance_admin_client(
+      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
+          project_id, google::cloud::bigtable::ClientOptions()));
   //! [connect instance admin client]
 
   // Connect to the Cloud Bigtable endpoint.
   //! [connect instance admin]
-  bigtable::InstanceAdmin instance_admin(instance_admin_client);
+  google::cloud::bigtable::InstanceAdmin instance_admin(instance_admin_client);
   //! [connect instance admin]
 
   if (command == "create-instance") {

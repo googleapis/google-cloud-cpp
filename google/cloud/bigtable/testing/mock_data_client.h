@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/table.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -65,5 +67,7 @@ class MockDataClient : public bigtable::DataClient {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_DATA_CLIENT_H_

@@ -28,6 +28,8 @@ std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
@@ -49,3 +51,5 @@ ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

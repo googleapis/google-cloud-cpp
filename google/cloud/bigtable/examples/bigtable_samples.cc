@@ -30,17 +30,20 @@ namespace {
 const std::string MAGIC_ROW_KEY = "key-000009";
 
 //! [create table]
-void CreateTable(bigtable::TableAdmin& admin, std::string const& table_id) {
+void CreateTable(google::cloud::bigtable::TableAdmin& admin,
+                 std::string const& table_id) {
   auto schema = admin.CreateTable(
-      table_id, bigtable::TableConfig(
-                    {{"fam", bigtable::GcRule::MaxNumVersions(10)},
-                     {"foo", bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-                    {}));
+      table_id,
+      google::cloud::bigtable::TableConfig(
+          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
+           {"foo",
+            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
+          {}));
 }
 //! [create table]
 
 //! [list tables]
-void ListTables(bigtable::TableAdmin& admin) {
+void ListTables(google::cloud::bigtable::TableAdmin& admin) {
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
   for (auto const& table : tables) {
@@ -50,7 +53,8 @@ void ListTables(bigtable::TableAdmin& admin) {
 //! [list tables]
 
 //! [get table]
-void GetTable(bigtable::TableAdmin& admin, std::string const& table_id) {
+void GetTable(google::cloud::bigtable::TableAdmin& admin,
+              std::string const& table_id) {
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   std::cout << table.name() << "\n";
@@ -65,24 +69,28 @@ void GetTable(bigtable::TableAdmin& admin, std::string const& table_id) {
 //! [get table]
 
 //! [delete table]
-void DeleteTable(bigtable::TableAdmin& admin, std::string const& table_id) {
+void DeleteTable(google::cloud::bigtable::TableAdmin& admin,
+                 std::string const& table_id) {
   admin.DeleteTable(table_id);
 }
 //! [delete table]
 
 //! [modify table]
-void ModifyTable(bigtable::TableAdmin& admin, std::string const& table_id) {
+void ModifyTable(google::cloud::bigtable::TableAdmin& admin,
+                 std::string const& table_id) {
   auto schema = admin.ModifyColumnFamilies(
       table_id,
-      {bigtable::ColumnFamilyModification::Drop("foo"),
-       bigtable::ColumnFamilyModification::Update(
-           "fam", bigtable::GcRule::Union(
-                      bigtable::GcRule::MaxNumVersions(5),
-                      bigtable::GcRule::MaxAge(std::chrono::hours(24 * 7)))),
-       bigtable::ColumnFamilyModification::Create(
-           "bar", bigtable::GcRule::Intersection(
-                      bigtable::GcRule::MaxNumVersions(3),
-                      bigtable::GcRule::MaxAge(std::chrono::hours(72))))});
+      {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
+       google::cloud::bigtable::ColumnFamilyModification::Update(
+           "fam", google::cloud::bigtable::GcRule::Union(
+                      google::cloud::bigtable::GcRule::MaxNumVersions(5),
+                      google::cloud::bigtable::GcRule::MaxAge(
+                          std::chrono::hours(24 * 7)))),
+       google::cloud::bigtable::ColumnFamilyModification::Create(
+           "bar", google::cloud::bigtable::GcRule::Intersection(
+                      google::cloud::bigtable::GcRule::MaxNumVersions(3),
+                      google::cloud::bigtable::GcRule::MaxAge(
+                          std::chrono::hours(72))))});
 
   std::string formatted;
   google::protobuf::TextFormat::PrintToString(schema, &formatted);
@@ -91,20 +99,21 @@ void ModifyTable(bigtable::TableAdmin& admin, std::string const& table_id) {
 //! [modify table]
 
 //! [drop all rows]
-void DropAllRows(bigtable::TableAdmin& admin, std::string const& table_id) {
+void DropAllRows(google::cloud::bigtable::TableAdmin& admin,
+                 std::string const& table_id) {
   admin.DropAllRows(table_id);
 }
 //! [drop all rows]
 
 //! [drop rows by prefix]
-void DropRowsByPrefix(bigtable::TableAdmin& admin,
+void DropRowsByPrefix(google::cloud::bigtable::TableAdmin& admin,
                       std::string const& table_id) {
   admin.DropRowsByPrefix(table_id, "key-00004");
 }
 //! [drop rows by prefix]
 
 //! [apply]
-void Apply(bigtable::Table& table) {
+void Apply(google::cloud::bigtable::Table& table) {
   // Write several rows with some trivial data.
   for (int i = 0; i != 20; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
@@ -118,24 +127,24 @@ void Apply(bigtable::Table& table) {
     //     https://cloud.google.com/bigtable/docs/schema-design
     char buf[32];
     snprintf(buf, sizeof(buf), "key-%06d", i);
-    bigtable::SingleRowMutation mutation(buf);
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col0", "value0-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col1", "value2-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col2", "value3-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col3", "value4-" + std::to_string(i)));
+    google::cloud::bigtable::SingleRowMutation mutation(buf);
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col0", "value0-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col1", "value2-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col2", "value3-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col3", "value4-" + std::to_string(i)));
     table.Apply(std::move(mutation));
   }
 }
 //! [apply]
 
 //! [bulk apply]
-void BulkApply(bigtable::Table& table) {
+void BulkApply(google::cloud::bigtable::Table& table) {
   // Write several rows in a single operation, each row has some trivial data.
-  bigtable::BulkMutation bulk;
+  google::cloud::bigtable::BulkMutation bulk;
   for (int i = 0; i != 5000; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
     // this can result in poor performance in a production application.
@@ -148,15 +157,15 @@ void BulkApply(bigtable::Table& table) {
     //     https://cloud.google.com/bigtable/docs/schema-design
     char buf[32];
     snprintf(buf, sizeof(buf), "key-%06d", i);
-    bigtable::SingleRowMutation mutation(buf);
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col0", "value0-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col1", "value2-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col2", "value3-" + std::to_string(i)));
-    mutation.emplace_back(
-        bigtable::SetCell("fam", "col3", "value4-" + std::to_string(i)));
+    google::cloud::bigtable::SingleRowMutation mutation(buf);
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col0", "value0-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col1", "value2-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col2", "value3-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col3", "value4-" + std::to_string(i)));
     bulk.emplace_back(std::move(mutation));
   }
   table.BulkApply(std::move(bulk));
@@ -164,11 +173,11 @@ void BulkApply(bigtable::Table& table) {
 //! [bulk apply]
 
 //! [read row]
-void ReadRow(bigtable::Table& table) {
+void ReadRow(google::cloud::bigtable::Table& table) {
   // Filter the results, only include the latest value on each cell.
-  auto filter = bigtable::Filter::Latest(1);
+  auto filter = google::cloud::bigtable::Filter::Latest(1);
   // Read a row, this returns a tuple (bool, row)
-  std::pair<bool, bigtable::Row> tuple =
+  std::pair<bool, google::cloud::bigtable::Row> tuple =
       table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
   if (not tuple.first) {
     std::cout << "Row " << MAGIC_ROW_KEY << " not found" << std::endl;
@@ -181,7 +190,8 @@ void ReadRow(bigtable::Table& table) {
     if (cell.column_qualifier() == "counter") {
       // This example uses "counter" to store 64-bit numbers in BigEndian
       // format, extract them as follows:
-      std::cout << cell.value_as<bigtable::bigendian64_t>().get();
+      std::cout
+          << cell.value_as<google::cloud::bigtable::bigendian64_t>().get();
     } else {
       std::cout << cell.value();
     }
@@ -192,14 +202,15 @@ void ReadRow(bigtable::Table& table) {
 //! [read row]
 
 //! [read rows]
-void ReadRows(bigtable::Table& table) {
+void ReadRows(google::cloud::bigtable::Table& table) {
   // Create the range of rows to read.
-  auto range = bigtable::RowRange::Range("key-000010", "key-000020");
+  auto range =
+      google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
   // Filter the results, only include values from the "col0" column in the
   // "fam" column family, and only get the latest value.
-  auto filter = bigtable::Filter::Chain(
-      bigtable::Filter::ColumnRangeClosed("fam", "col0", "col0"),
-      bigtable::Filter::Latest(1));
+  auto filter = google::cloud::bigtable::Filter::Chain(
+      google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+      google::cloud::bigtable::Filter::Latest(1));
   // Read and print the rows.
   for (auto const& row : table.ReadRows(range, filter)) {
     if (row.cells().size() != 1) {
@@ -215,14 +226,15 @@ void ReadRows(bigtable::Table& table) {
 //! [read rows]
 
 //! [read rows with limit]
-void ReadRowsWithLimit(bigtable::Table& table) {
+void ReadRowsWithLimit(google::cloud::bigtable::Table& table) {
   // Create the range of rows to read.
-  auto range = bigtable::RowRange::Range("key-000010", "key-000020");
+  auto range =
+      google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
   // Filter the results, only include values from the "col0" column in the
   // "fam" column family, and only get the latest value.
-  auto filter = bigtable::Filter::Chain(
-      bigtable::Filter::ColumnRangeClosed("fam", "col0", "col0"),
-      bigtable::Filter::Latest(1));
+  auto filter = google::cloud::bigtable::Filter::Chain(
+      google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+      google::cloud::bigtable::Filter::Latest(1));
   // Read and print the first 5 rows in the range.
   for (auto const& row : table.ReadRows(range, 5, filter)) {
     if (row.cells().size() != 1) {
@@ -238,28 +250,33 @@ void ReadRowsWithLimit(bigtable::Table& table) {
 //! [read rows with limit]
 
 //! [check and mutate]
-void CheckAndMutate(bigtable::Table& table) {
+void CheckAndMutate(google::cloud::bigtable::Table& table) {
   // Check if the latest value of the flip-flop column is "on".
-  auto predicate = bigtable::Filter::Chain(
-      bigtable::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
-      bigtable::Filter::Latest(1), bigtable::Filter::ValueRegex("on"));
+  auto predicate = google::cloud::bigtable::Filter::Chain(
+      google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "flip-flop",
+                                                         "flip-flop"),
+      google::cloud::bigtable::Filter::Latest(1),
+      google::cloud::bigtable::Filter::ValueRegex("on"));
   // If the predicate matches, change the latest value to "off", otherwise,
   // change the latest value to "on".  Modify the "flop-flip" column at the
   // same time.
-  table.CheckAndMutateRow(MAGIC_ROW_KEY, std::move(predicate),
-                          {bigtable::SetCell("fam", "flip-flop", "off"),
-                           bigtable::SetCell("fam", "flop-flip", "on")},
-                          {bigtable::SetCell("fam", "flip-flop", "on"),
-                           bigtable::SetCell("fam", "flop-flip", "off")});
+  table.CheckAndMutateRow(
+      MAGIC_ROW_KEY, std::move(predicate),
+      {google::cloud::bigtable::SetCell("fam", "flip-flop", "off"),
+       google::cloud::bigtable::SetCell("fam", "flop-flip", "on")},
+      {google::cloud::bigtable::SetCell("fam", "flip-flop", "on"),
+       google::cloud::bigtable::SetCell("fam", "flop-flip", "off")});
 }
 //! [check and mutate]
 
 //! [read modify write]
-void ReadModifyWrite(bigtable::Table& table) {
+void ReadModifyWrite(google::cloud::bigtable::Table& table) {
   auto row = table.ReadModifyWriteRow(
       MAGIC_ROW_KEY,
-      bigtable::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
-      bigtable::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
+      google::cloud::bigtable::ReadModifyWriteRule::IncrementAmount(
+          "fam", "counter", 1),
+      google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
+                                                                ";element"));
   std::cout << row.row_key() << "\n";
   for (auto const& cell : row.cells()) {
   }
@@ -267,7 +284,7 @@ void ReadModifyWrite(bigtable::Table& table) {
 //! [read modify write]
 
 //! [sample row keys]
-void SampleRows(bigtable::Table& table) {
+void SampleRows(google::cloud::bigtable::Table& table) {
   auto samples = table.SampleRows<>();
   for (auto const& sample : samples) {
     std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
@@ -278,7 +295,7 @@ void SampleRows(bigtable::Table& table) {
 //! [sample row keys]
 
 //! [sample row keys collections]
-void SampleRowsCollections(bigtable::Table& table) {
+void SampleRowsCollections(google::cloud::bigtable::Table& table) {
   auto list_samples = table.SampleRows<std::list>();
   for (auto const& sample : list_samples) {
     std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
@@ -322,16 +339,18 @@ int main(int argc, char* argv[]) try {
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect admin]
-  bigtable::TableAdmin admin(
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions()),
+  google::cloud::bigtable::TableAdmin admin(
+      google::cloud::bigtable::CreateDefaultAdminClient(
+          project_id, google::cloud::bigtable::ClientOptions()),
       instance_id);
   //! [connect admin]
 
   // Connect to the Cloud Bigtable endpoint.
   //! [connect data]
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            project_id, instance_id, bigtable::ClientOptions()),
-                        table_id);
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
   //! [connect data]
 
   if (command == "create-table") {

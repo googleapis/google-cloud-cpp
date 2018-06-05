@@ -25,6 +25,8 @@
 
 #include "google/cloud/bigtable/internal/conjunction.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -223,5 +225,7 @@ class ColumnFamilyModification {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H_

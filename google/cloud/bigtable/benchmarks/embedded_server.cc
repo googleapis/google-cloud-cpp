@@ -24,6 +24,8 @@
 namespace btproto = google::bigtable::v2;
 namespace adminproto = google::bigtable::admin::v2;
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 /**
@@ -208,3 +210,5 @@ std::unique_ptr<EmbeddedServer> CreateEmbeddedServer() {
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

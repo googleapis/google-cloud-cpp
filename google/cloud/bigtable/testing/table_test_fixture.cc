@@ -16,6 +16,8 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -39,3 +41,5 @@ std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

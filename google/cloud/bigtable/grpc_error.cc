@@ -39,6 +39,8 @@ constexpr int KNOWN_STATUS_CODES_SIZE =
     sizeof(KNOWN_STATUS_CODES) / sizeof(KNOWN_STATUS_CODES[0]);
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 GRpcError::GRpcError(char const* what, grpc::Status const& status)
@@ -64,3 +66,5 @@ std::string GRpcError::CreateWhatString(char const* what,
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

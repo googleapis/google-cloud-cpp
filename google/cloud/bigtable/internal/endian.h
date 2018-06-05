@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/internal/encoder.h"
 #include "google/cloud/bigtable/internal/strong_type.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using bigendian64_t = internal::StrongType<std::int64_t, struct BigEndianType>;
@@ -37,5 +39,7 @@ std::string AsBigEndian64(bigtable::bigendian64_t value);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ENDIAN_H_

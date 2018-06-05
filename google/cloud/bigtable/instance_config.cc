@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/instance_config.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 constexpr InstanceConfig::InstanceType InstanceConfig::TYPE_UNSPECIFIED;
@@ -21,3 +23,5 @@ constexpr InstanceConfig::InstanceType InstanceConfig::PRODUCTION;
 constexpr InstanceConfig::InstanceType InstanceConfig::DEVELOPMENT;
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

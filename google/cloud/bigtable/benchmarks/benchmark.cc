@@ -23,6 +23,8 @@ namespace {
 double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 Benchmark::Benchmark(BenchmarkSetup const& setup)
@@ -342,3 +344,5 @@ std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

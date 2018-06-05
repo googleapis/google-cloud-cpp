@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include <gtest/gtest.h>
 
-using namespace bigtable::internal;
+using namespace google::cloud::bigtable::internal;
 
 namespace {
 std::string const cmsg("testing with std::string const&");
@@ -26,8 +26,8 @@ char const* msg = "testing with char const*";
 TEST(ThrowDelegateTest, RpcError) {
   grpc::Status status(grpc::StatusCode::UNAVAILABLE, "try-again");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseRpcError(status, msg), bigtable::GRpcError);
-  EXPECT_THROW(RaiseRpcError(status, cmsg), bigtable::GRpcError);
+  EXPECT_THROW(RaiseRpcError(status, msg), google::cloud::bigtable::GRpcError);
+  EXPECT_THROW(RaiseRpcError(status, cmsg), google::cloud::bigtable::GRpcError);
 #else
   EXPECT_DEATH_IF_SUPPORTED(RaiseRpcError(status, msg), msg);
   EXPECT_DEATH_IF_SUPPORTED(RaiseRpcError(status, cmsg), cmsg);

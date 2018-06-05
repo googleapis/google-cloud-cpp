@@ -17,7 +17,8 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 
 namespace {
-namespace admin_proto = ::google::bigtable::admin::v2;
+namespace admin_proto = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:

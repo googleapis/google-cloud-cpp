@@ -21,6 +21,8 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include <memory>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class InstanceAdmin;
@@ -115,5 +117,7 @@ class InstanceAdmin {
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_INSTANCE_ADMIN_H_

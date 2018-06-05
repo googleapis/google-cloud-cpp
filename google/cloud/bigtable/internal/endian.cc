@@ -25,6 +25,8 @@
 #include <byteswap.h>
 #endif
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -104,3 +106,5 @@ std::string AsBigEndian64(bigtable::bigendian64_t value) {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

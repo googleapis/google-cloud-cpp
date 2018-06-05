@@ -16,6 +16,7 @@
 #include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::v2;
+namespace bigtable = google::cloud::bigtable;
 
 TEST(RowRangeTest, InfiniteRange) {
   auto proto = bigtable::RowRange::InfiniteRange().as_proto();

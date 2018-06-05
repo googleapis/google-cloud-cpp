@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 
+namespace bigtable = google::cloud::bigtable;
 using testing::_;
 using testing::DoAll;
 using testing::Invoke;

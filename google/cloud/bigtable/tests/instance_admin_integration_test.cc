@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 
 namespace btadmin = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 namespace {

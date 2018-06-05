@@ -30,6 +30,8 @@ auto const DEFAULT_INITIAL_DELAY = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
 auto const DEFAULT_MAXIMUM_DELAY = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
@@ -64,3 +66,5 @@ std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

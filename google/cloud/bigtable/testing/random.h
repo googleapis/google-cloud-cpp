@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <random>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 // While std::mt19937_64 is not the best PRNG ever, it is fairly good for
@@ -79,5 +81,7 @@ std::string Sample(DefaultPRNG& gen, int n, std::string const& population);
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_RANDOM_H_
