@@ -45,12 +45,12 @@ TEST(MultipleRowsMutatorTest, Simple) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -97,12 +97,12 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -149,10 +149,10 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
         // Simulate a partial (and recoverable) failure.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::UNAVAILABLE);
+        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::OK);
+        e1.mutable_status()->set_code(grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
@@ -166,7 +166,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -220,11 +220,11 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
         // element.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::UNAVAILABLE);
+        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
         // Simulate an unrecoverable failure for the second element.
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::OUT_OF_RANGE);
+        e1.mutable_status()->set_code(grpc::StatusCode::OUT_OF_RANGE);
         return true;
       }))
       .WillOnce(Return(false));
@@ -238,7 +238,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -285,7 +285,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::OK);
+        e0.mutable_status()->set_code(grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
@@ -300,7 +300,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))
@@ -345,10 +345,10 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
         // Simulate recoverable failures for both elements.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::UNAVAILABLE);
+        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::UNAVAILABLE);
+        e1.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
         return true;
       }))
       .WillOnce(Return(false));
@@ -362,7 +362,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::OK);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
         }
         return true;
       }))

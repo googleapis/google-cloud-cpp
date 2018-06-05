@@ -94,7 +94,7 @@ void BulkMutator::ProcessResponse(
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (grpc::OK == code) {
+    if (grpc::StatusCode::OK == code) {
       continue;
     }
     auto& original = *mutations_.mutable_entries(index);

@@ -21,6 +21,8 @@ if [ "${CHECK_STYLE}" != "yes" ]; then
   exit 0
 fi
 
+# This script assumes it is running the top-level google-cloud-cpp directory.
+
 find google/cloud storage -name '*.h' -print0 \
   | xargs -0 awk 'BEGINFILE {
     # The guard must begin with the name of the project.
@@ -70,7 +72,8 @@ find google/cloud storage -name '*.h' -print0 \
     }
   }'
 
-# This script assumes it is running the top-level google-cloud-cpp directory.
+find google/cloud storage -name '*.h' -o -name '*.cc' -print0 \
+    | xargs -0 sed -i 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g'
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
