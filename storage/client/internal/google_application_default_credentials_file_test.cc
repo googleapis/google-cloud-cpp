@@ -87,7 +87,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
                std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      storage::internal::DefaultServiceAccountCredentialsFile(),
+      storage::internal::GoogleApplicationDefaultCredentialsFile(),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
