@@ -16,9 +16,9 @@
 set(BIGTABLE_CLIENT_VERSION_MAJOR 0 CACHE STRING
         "Google Cloud Bigtable C++ Client major version")
 set(BIGTABLE_CLIENT_VERSION_MINOR 2 CACHE STRING
-        "Google Cloud Bigtable C++ Client major version")
+        "Google Cloud Bigtable C++ Client minor version")
 set(BIGTABLE_CLIENT_VERSION_PATCH 0 CACHE STRING
-        "Google Cloud Bigtable C++ Client major version")
+        "Google Cloud Bigtable C++ Client patch version")
 
 # Configure the Compiler options, we will be using C++11 features.
 set(CMAKE_CXX_STANDARD 11)

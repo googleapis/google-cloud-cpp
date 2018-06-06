@@ -8,4 +8,12 @@ Libraries.
 
 - @ref bigtable-main "Google Cloud Bigtable"
 
+## Under Development
+
+- @ref storage-main "Google Cloud Storage"
+
+## Community Contributions
+
+- @ref firestore-main "Google Cloud Firestore"
+
 */
