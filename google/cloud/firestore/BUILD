@@ -46,5 +46,6 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
-    STORAGE_s = [ "-lpthread" ],
+    # TODO(#664 / #666) - use the right condition when porting Bazel builds
+    linkopts = [ "-lpthread" ],
 ) for test in firestore_client_unit_tests]
