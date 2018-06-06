@@ -26,7 +26,7 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/// The endpoint to create an access token from the
+/// The endpoint to create an access token from.
 constexpr static char GOOGLE_OAUTH_REFRESH_ENDPOINT[] =
     "https://accounts.google.com/o/oauth2/token";
 
