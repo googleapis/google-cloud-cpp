@@ -47,7 +47,7 @@ matrix:
               third_party/googleapis
               third_party/googletest
         - ci/install-linux.sh
-      if: type != pull_request
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
       os: osx
@@ -72,6 +72,7 @@ matrix:
         submodules: false
       install: ci/install-bazel.sh
       script: ci/build-bazel.sh
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Install the google-cloud-cpp libraries and test that one can use the
       # installed versions.
       os: linux
@@ -90,6 +91,7 @@ matrix:
               third_party/googleapis
               third_party/googletest
         - ci/install-linux.sh
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
       compiler: clang
@@ -107,6 +109,7 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux
       compiler: clang
@@ -115,6 +118,7 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -136,12 +140,14 @@ matrix:
       env:
         DISTRO=fedora
         DISTRO_VERSION=27
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Compile on CentOS.
       os: linux
       compiler: gcc
       env:
         DISTRO=centos
         DISTRO_VERSION=7
+      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
 
 script:
   - ci/build-linux.sh
