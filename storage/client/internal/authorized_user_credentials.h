@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
 
 #include "storage/client/credentials.h"
 #include "storage/client/internal/curl_request.h"
@@ -26,7 +26,7 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
+/// The endpoint to create an access token from.
 constexpr static char GOOGLE_OAUTH_REFRESH_ENDPOINT[] =
     "https://accounts.google.com/o/oauth2/token";
 
@@ -35,24 +35,15 @@ constexpr static auto REFRESH_TIME_SLACK_PERCENT = 5;
 /// Minimum time before the token expiration to start refreshing tokens.
 constexpr static auto REFRESH_TIME_SLACK_MIN = std::chrono::seconds(10);
 
-/// Return the path for the default service account credentials file.
-std::string DefaultServiceAccountCredentialsFile();
-
-/// The name of the environment variable to configure `HOME`.
-char const* DefaultServiceAccountCredentialsHomeVariable();
-
 /**
- * A C++ wrapper for Google Service Account Credentials.
+ * A C++ wrapper for Google's Authorized User Credentials.
  *
- * This class parses the contents of a Google Service Account credentials file,
- * and creates a credentials object from those contents. It automatically
- * handles refreshing the credentials when needed, as well as creating the
- * appropriate header for authorization.
+ * Takes a JSON object with the authorized user client id, secret, and access
+ * token and uses Google's OAuth2 service to obtain an access token.
  *
  * @par Warning
  * The current implementation is a placeholder to unblock development of the
- * Google Cloud Storage client libraries.  Currently it can only use Google's
- * Application Default Credentials file.  There is substantial work needed
+ * Google Cloud Storage client libraries. There is substantial work needed
  * before this class is complete, in fact, we do not even have a complete set of
  * requirements for it.
  *
@@ -63,25 +54,22 @@ char const* DefaultServiceAccountCredentialsHomeVariable();
  * @tparam HttpRequestType a dependency injection point to make HTTP requests.
  */
 template <typename HttpRequestType = CurlRequest>
-class ServiceAccountCredentials : public storage::Credentials {
+class AuthorizedUserCredentials : public storage::Credentials {
  public:
-  explicit ServiceAccountCredentials(std::string token)
-      : ServiceAccountCredentials(std::move(token),
-                                  GOOGLE_OAUTH_REFRESH_ENDPOINT) {}
+  explicit AuthorizedUserCredentials(std::string const& contents)
+      : AuthorizedUserCredentials(contents, GOOGLE_OAUTH_REFRESH_ENDPOINT) {}
 
-  explicit ServiceAccountCredentials(std::string token,
+  explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string oauth_server)
-      : refresh_token_(std::move(token)),
-        requestor_(std::move(oauth_server)),
-        expiration_time_() {
-    auto refresh = nl::json::parse(refresh_token_);
+      : requestor_(std::move(oauth_server)), expiration_time_() {
+    auto credentials = nl::json::parse(content);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
-    payload += requestor_.MakeEscapedString(refresh["client_id"]).get();
+    payload += requestor_.MakeEscapedString(credentials["client_id"]).get();
     payload += "&client_secret=";
-    payload += requestor_.MakeEscapedString(refresh["client_secret"]).get();
+    payload += requestor_.MakeEscapedString(credentials["client_secret"]).get();
     payload += "&refresh_token=";
-    payload += requestor_.MakeEscapedString(refresh["refresh_token"]).get();
+    payload += requestor_.MakeEscapedString(credentials["refresh_token"]).get();
     requestor_.PrepareRequest(std::move(payload));
   }
 
@@ -120,7 +108,6 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
  private:
-  std::string refresh_token_;
   HttpRequestType requestor_;
   std::mutex mu_;
   std::condition_variable cv_;
@@ -132,4 +119,4 @@ class ServiceAccountCredentials : public storage::Credentials {
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_CLIENT_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_

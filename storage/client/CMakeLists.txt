@@ -26,16 +26,17 @@ add_library(storage_client
     client.cc
     credentials.h
     credentials.cc
+    internal/authorized_user_credentials.h
     internal/curl_request.h
     internal/curl_request.cc
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
     internal/default_client.h
+    internal/google_application_default_credentials_file.h
+    internal/google_application_default_credentials_file.cc
     internal/nljson.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
-    internal/service_account_credentials.h
-    internal/service_account_credentials.cc
     status.h
     version.h
     version.cc)
@@ -86,10 +87,11 @@ create_bazel_config(storage_client_testing)
 set(storage_client_unit_tests
     bucket_metadata_test.cc
     bucket_test.cc
+    internal/authorized_user_credentials_test.cc
     internal/default_client_test.cc
+    internal/google_application_default_credentials_file_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
-    internal/service_account_credentials_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
