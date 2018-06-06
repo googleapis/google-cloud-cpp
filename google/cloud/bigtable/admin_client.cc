@@ -150,8 +150,8 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(
-    std::string project, ClientOptions options) {
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
+                                                      ClientOptions options) {
   return std::make_shared<DefaultAdminClient>(std::move(project),
                                               std::move(options));
 }
