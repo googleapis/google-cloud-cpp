@@ -1,0 +1,19 @@
+/*!
+@mainpage Google Cloud Platform C++ Client Libraries
+
+This page contains the reference guide to the Google Cloud Platform C++ Client
+Libraries.
+
+## Alpha Libraries
+
+- @ref bigtable-main "Google Cloud Bigtable"
+
+## Under Development
+
+- @ref storage-main "Google Cloud Storage"
+
+## Community Contributions
+
+- @ref firestore-main "Google Cloud Firestore"
+
+*/

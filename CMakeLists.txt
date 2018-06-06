@@ -59,9 +59,6 @@ include(IncludeGrpc)
 # Enable testing in this directory so we can do a top-level `make test`.
 enable_testing()
 
-# Each subproject adds dependencies to this target to have their docs generated.
-add_custom_target(doxygen-docs)
-
 # There are a number of targets we cannot, or do not care to compile with the
 # static analyzer enabled. Either because the build times are too long, or
 # or because the code is an external dependency, or generated code, or all of
@@ -75,3 +72,7 @@ add_subdirectory(google/cloud)
 # These are tests to reproduce problems in gRPC and other dependencies.
 add_subdirectory(tests/grpc-crash)
 add_subdirectory(tests/grpc-round-robin-freeze)
+
+# Include the rules to generate Doxygen documentation. This goes at the end so
+# the subdirectories can append items to the Doxygen configuration.
+include(GoogleCloudCppDoxygen)
