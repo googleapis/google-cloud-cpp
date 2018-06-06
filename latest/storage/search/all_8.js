@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['label',['label',['../classstorage_1_1v0_1_1BucketMetadata.html#af14e4976f0d179df2bd2065a99b70cea',1,'storage::v0::BucketMetadata']]],
-  ['label_5fcount',['label_count',['../classstorage_1_1v0_1_1BucketMetadata.html#a98a437eab59935c064fd429bd2de0ab7',1,'storage::v0::BucketMetadata']]],
-  ['link_5ftest_2ecc',['link_test.cc',['../link__test_8cc.html',1,'']]],
-  ['location',['location',['../classstorage_1_1v0_1_1BucketMetadata.html#aebb330cefb87c620277a32b6875eef59',1,'storage::v0::BucketMetadata']]]
+  ['label',['label',['../classstorage_1_1v_1_1BucketMetadata.html#a2499058f7f1a1213163d486bd1e97710',1,'storage::v::BucketMetadata']]],
+  ['label_5fcount',['label_count',['../classstorage_1_1v_1_1BucketMetadata.html#abd41538ae03e0c810408ea3a503b1825',1,'storage::v::BucketMetadata']]],
+  ['location',['location',['../classstorage_1_1v_1_1BucketMetadata.html#aa212ace6679e4626f155579cedc8defc',1,'storage::v::BucketMetadata']]]
 ];

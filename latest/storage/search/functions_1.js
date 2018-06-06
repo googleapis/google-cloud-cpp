@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bucket',['Bucket',['../classstorage_1_1v0_1_1Bucket.html#aa9a24b035737350ce0e61a4baf23ad96',1,'storage::v0::Bucket::Bucket()'],['../bucket__test_8cc.html#afe93d658bedf28af86e139dd5860834b',1,'bucket():&#160;bucket_test.cc']]],
-  ['bucket_5fname',['bucket_name',['../classstorage_1_1v0_1_1Bucket.html#ae8bb128ea3d3cc217c8d3f78e40b5eb2',1,'storage::v0::Bucket']]],
-  ['bucketmetadata',['BucketMetadata',['../classstorage_1_1v0_1_1BucketMetadata.html#ac5312782943ba09787d6480871d5c212',1,'storage::v0::BucketMetadata']]]
+  ['bucket',['Bucket',['../classstorage_1_1v_1_1Bucket.html#a98522258e2315364a1a32eaeedb7cb10',1,'storage::v::Bucket']]],
+  ['bucket_5fname',['bucket_name',['../classstorage_1_1v_1_1Bucket.html#a67ff14399883980e2ed752134871eb10',1,'storage::v::Bucket']]],
+  ['bucketmetadata',['BucketMetadata',['../classstorage_1_1v_1_1BucketMetadata.html#a00417fbcf02aeef959a7e2c1fba13255',1,'storage::v::BucketMetadata']]]
 ];

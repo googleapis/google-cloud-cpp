@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../classstorage_1_1v0_1_1BucketMetadata.html#a08be649cdf802c1908e7210604826e8a',1,'storage::v0::BucketMetadata']]]
+  ['name',['name',['../classstorage_1_1v_1_1BucketMetadata.html#a3238f99d07157908ae7db838af555222',1,'storage::v::BucketMetadata']]]
 ];
