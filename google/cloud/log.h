@@ -93,7 +93,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 #define GOOGLE_CLOUD_CPP_PP_CONCAT(a, b) a##b
 
 /**
- * Create a unique, or mostly-likely unique identifier.
+ * Create a unique, or most likely unique identifier.
  *
  * In GCP_LOG() we need an identifier for the logger, we can easily create a C++
  * scope to make it work with any name, say "foo".  However the user may have a
@@ -323,7 +323,7 @@ struct NullStream {
  *
  * @tparam compile_time_enabled this represents whether the severity has been
  *   disabled at compile-time. The class is specialized for `false` to minimize
- *   the run-time impact of (and in practice completely elide) disabled logs.
+ *   the run-time impact of (and, in practice, completely elide) disabled logs.
  */
 template <bool compile_time_enabled>
 class Logger {
