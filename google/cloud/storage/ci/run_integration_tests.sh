@@ -20,4 +20,4 @@ set -eu
 # scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
 (cd google/cloud/storage/tests && \
-    "${BINDIR}/../../../tests/run_integration_tests.sh")
+    "${BINDIR}/../tests/run_integration_tests.sh")

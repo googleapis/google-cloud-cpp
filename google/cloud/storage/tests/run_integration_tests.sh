@@ -17,7 +17,7 @@
 set -eu
 
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/../../ci/colors.sh"
+source "${BINDIR}/../../../../ci/colors.sh"
 
 HTTPBIN_PID=0
 
