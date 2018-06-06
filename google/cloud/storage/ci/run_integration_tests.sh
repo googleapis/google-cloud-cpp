@@ -16,21 +16,8 @@
 
 set -eu
 
+# This script should is called from the build directory, and it finds other
+# scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/colors.sh"
-
-export PATH=$PATH:$HOME/bin
-
-# We cannot simply use //...:all because when submodules are checked out that
-# includes the BUILD files for gRPC, protobuf, etc.
-bazel --batch build "//google/cloud/...:all"
-bazel --batch test \
-    --test_output=errors \
-    --action_env="GTEST_COLOR=1" \
-    "//google/cloud/...:all"
-
-if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
-  echo
-  echo "${COLOR_YELLOW}Testing Bazel files as dependency${COLOR_RESET}"
-  (cd ci/test-install && bazel --batch build //...:all)
-fi
+(cd google/cloud/storage/tests && \
+    "${BINDIR}/../tests/run_integration_tests.sh")

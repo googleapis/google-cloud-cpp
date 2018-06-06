@@ -32,6 +32,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
         "*/google/cloud/internal/*"
         "*/google/cloud/bigtable/*"
         "*/google/cloud/firestore/*"
+        "*/google/cloud/storage/*"
         "*/google/cloud/*_test.cc")
 
 include(GoogleCloudCppCommon)
@@ -141,3 +142,4 @@ install(FILES
 
 add_subdirectory(bigtable)
 add_subdirectory(firestore)
+add_subdirectory(storage)
