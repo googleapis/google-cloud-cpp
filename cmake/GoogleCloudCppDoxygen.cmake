@@ -25,7 +25,7 @@ else ()
                 "${PROJECT_SOURCE_DIR}/google/cloud/bigtable"
                 "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/doc"
                 "${PROJECT_SOURCE_DIR}/google/cloud/firestore"
-                "${PROJECT_SOURCE_DIR}/storage/client")
+                "${PROJECT_SOURCE_DIR}/google/cloud/storage")
         set(DOXYGEN_PREDEFINED
                 "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
                 "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}"
@@ -33,7 +33,7 @@ else ()
                 "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
         set(DOXYGEN_EXAMPLE_PATH
             "${PROJECT_SOURCE_DIR}/google/cloud/bigtable/examples"
-            "${PROJECT_SOURCE_DIR}/storage/examples")
+            "${PROJECT_SOURCE_DIR}/google/cloud/storage/examples")
         set(DOXYGEN_EXCLUDE_PATTERNS "*/README.md" "*_test.cc")
 
         # Do not recurse. Recursively going through the code picks up the
