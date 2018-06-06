@@ -46,5 +46,5 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
-    linkopts = [ "-lpthread" ],
+    STORAGE_s = [ "-lpthread" ],
 ) for test in firestore_client_unit_tests]

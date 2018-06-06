@@ -90,5 +90,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
+    # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = [ "-lpthread" ],
 ) for test in storage_client_unit_tests]
