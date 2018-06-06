@@ -21,6 +21,21 @@ set(STORAGE_CLIENT_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
+set(DOXYGEN_PROJECT_NUMBER
+    "${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+set(DOXYGEN_PREDEFINED "STORAGE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/google/cloud/storage/README.md"
+    "*/google/cloud/storage/ci/*"
+    "*/google/cloud/storage/examples/*.md"
+    "*/google/cloud/storage/internal/*"
+    "*/google/cloud/storage/testing/*"
+    "*/google/cloud/storage/tests/*"
+    "*/google/cloud/storage/*_test.cc")
+
 include(GoogleCloudCppCommon)
 include(IncludeNlohmannJson)
 
