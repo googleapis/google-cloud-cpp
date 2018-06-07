@@ -96,8 +96,7 @@ TEST(MetadataParserTest, ParseInvalidLongFieldValue) {
       std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      storage::internal::MetadataParser::ParseLongField(json, "counter"),
-      "");
+      storage::internal::MetadataParser::ParseLongField(json, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -114,7 +113,6 @@ TEST(MetadataParserTest, ParseInvalidLongFieldType) {
       std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      storage::internal::MetadataParser::ParseLongField(json, "counter"),
-      "");
+      storage::internal::MetadataParser::ParseLongField(json, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
