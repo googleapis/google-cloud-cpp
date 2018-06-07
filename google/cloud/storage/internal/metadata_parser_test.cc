@@ -84,7 +84,7 @@ TEST(MetadataParserTest, ParseMissinLongField) {
 }
 
 /// @test Verify that we raise an exception with invalid long fields.
-TEST(MetadataParserTest, ParseInvalidLongField) {
+TEST(MetadataParserTest, ParseInvalidLongFieldValue) {
   std::string text = R"""({
       "counter": "not-a-number"
 })""";
@@ -93,10 +93,28 @@ TEST(MetadataParserTest, ParseInvalidLongField) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       storage::internal::MetadataParser::ParseLongField(json, "counter"),
-      std::exception);
+      std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       storage::internal::MetadataParser::ParseLongField(json, "counter"),
-      "exceptions are disabled");
+      "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that we raise an exception with invalid long fields.
+TEST(MetadataParserTest, ParseInvalidLongFieldType) {
+  std::string text = R"""({
+      "counter": [0, 1, 2]
+})""";
+  auto json = storage::internal::nl::json::parse(text);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      storage::internal::MetadataParser::ParseLongField(json, "counter"),
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      storage::internal::MetadataParser::ParseLongField(json, "counter"),
+      "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
