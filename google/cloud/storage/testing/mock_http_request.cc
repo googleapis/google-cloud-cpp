@@ -41,27 +41,29 @@ std::shared_ptr<MockHttpRequestHandle> MockHttpRequest::Handle(
   return ins.first->second;
 }
 
-void MockHttpRequest::AddHeader(std::string const& key,
-                                std::string const& value) {
-  handles_[url_]->AddHeader(key, value);
-}
 void MockHttpRequest::AddHeader(std::string const& header) {
   handles_[url_]->AddHeader(header);
 }
+
 void MockHttpRequest::AddQueryParameter(std::string const& name,
                                         std::string const& value) {
   handles_[url_]->AddQueryParameter(name, value);
 }
+
+void MockHttpRequest::AddWellKnownParameters(
+    storage::WellKnownParameters const& p) {
+  handles_[url_]->AddWellKnownParameters(p);
+}
+
 std::unique_ptr<char[]> MockHttpRequest::MakeEscapedString(
     std::string const& x) {
   return handles_[url_]->MakeEscapedString(x);
 }
+
 void MockHttpRequest::PrepareRequest(std::string const& payload) {
   handles_[url_]->PrepareRequest(payload);
 }
-void MockHttpRequest::PrepareRequest(storage::internal::nl::json json) {
-  handles_[url_]->PrepareRequest(std::move(json));
-}
+
 storage::internal::HttpResponse MockHttpRequest::MakeRequest() {
   return handles_[url_]->MakeRequest();
 }

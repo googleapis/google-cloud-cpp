@@ -38,10 +38,6 @@ CurlRequest::~CurlRequest() {
   curl_easy_cleanup(curl_);
 }
 
-void CurlRequest::AddHeader(std::string const& key, std::string const& value) {
-  AddHeader(key + ": " + value);
-}
-
 void CurlRequest::AddHeader(std::string const& header) {
   headers_ = curl_slist_append(headers_, header.c_str());
 }
@@ -54,6 +50,15 @@ void CurlRequest::AddQueryParameter(std::string const& key,
   parameter += MakeEscapedString(value).get();
   query_parameter_separator_ = "&";
   url_.append(parameter);
+}
+
+void CurlRequest::AddWellKnownParameters(WellKnownParameters const& p) {
+  AddWellKnownParameter(p.if_generation_match);
+  AddWellKnownParameter(p.if_generation_not_match);
+  AddWellKnownParameter(p.if_meta_generation_match);
+  AddWellKnownParameter(p.if_meta_generation_not_match);
+  AddWellKnownParameter(p.projection);
+  AddWellKnownParameter(p.user_project);
 }
 
 void CurlRequest::PrepareRequest(std::string payload) {

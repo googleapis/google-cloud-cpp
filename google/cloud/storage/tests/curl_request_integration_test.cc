@@ -156,3 +156,173 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   EXPECT_LE(1U, response.headers.count("X-Test-Foo"));
   EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
 }
+
+/// @test Verify that the Projection parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::Projection("full"));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("full", args.value("projection", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("userProject"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+/// @test Verify that the UserProject parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::UserProject("a-project"));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("a-project", args.value("userProject", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+/// @test Verify that the IfGenerationMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::IfGenerationMatch(42));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("userProject"));
+  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+/// @test Verify that the IfGenerationNotMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::IfGenerationNotMatch(42));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("userProject"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+/// @test Verify that the IfMetaGenerationMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::IfMetaGenerationMatch(42));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("userProject"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+/// @test Verify that the IfMetaGenerationNotMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::IfMetaGenerationNotMatch(42));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("userProject"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+}
+
+/// @test Verify that the well-known query parameters are included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
+  storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("charsets: utf-8");
+
+  storage::WellKnownParameters parameters;
+  parameters.Apply(storage::UserProject("user-project-id"));
+  parameters.Apply(storage::IfMetaGenerationMatch(7));
+  parameters.Apply(storage::IfGenerationNotMatch(42));
+  request.AddWellKnownParameters(parameters);
+
+  request.PrepareRequest(std::string{});
+  auto response = request.MakeRequest();
+  EXPECT_EQ(200, response.status_code);
+  nl::json parsed = nl::json::parse(response.payload);
+  nl::json args = parsed["args"];
+  EXPECT_EQ("user-project-id", args.value("userProject", ""));
+  EXPECT_EQ("7", args.value("ifMetagenerationMatch", ""));
+  EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
+  // The other well known parameters are not set.
+  EXPECT_EQ(0U, args.count("projection"));
+  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}

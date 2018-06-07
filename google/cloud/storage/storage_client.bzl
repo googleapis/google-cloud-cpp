@@ -14,6 +14,7 @@ storage_client_HDRS = [
     "internal/nljson.h",
     "internal/parse_rfc3339.h",
     "object_metadata.h",
+    "well_known_parameters.h",
     "status.h",
     "version.h",
 ]

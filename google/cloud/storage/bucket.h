@@ -45,9 +45,17 @@ class Bucket {
    * @par Example
    * @snippet storage_bucket_samples.cc get metadata
    */
-  BucketMetadata GetMetadata();
+  template <typename... Modifiers>
+  BucketMetadata GetMetadata(Modifiers&&... modifier) {
+    GetBucketMetadataRequest request(bucket_name());
+    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+    return GetMetadataImpl(std::move(request));
+  }
 
   static void ValidateBucketName(std::string const& bucket_name);
+
+ private:
+  BucketMetadata GetMetadataImpl(GetBucketMetadataRequest request);
 
  private:
   std::shared_ptr<Client> client_;

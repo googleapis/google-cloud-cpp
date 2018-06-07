@@ -23,7 +23,8 @@ namespace {
 class MockClient : public storage::Client {
  public:
   using BucketGetResult = std::pair<storage::Status, storage::BucketMetadata>;
-  MOCK_METHOD1(GetBucketMetadata, BucketGetResult(std::string const&));
+  MOCK_METHOD1(GetBucketMetadata,
+               BucketGetResult(GetBucketMetadataRequest const&));
 };
 
 inline Status UNAVAILABLE() { return Status{503, std::string{"try-again"}}; }
@@ -47,9 +48,12 @@ TEST(BucketTest, GetMetadata) {
   auto expected = storage::BucketMetadata::ParseFromJson(text);
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, GetBucketMetadata("foo-bar-baz"))
+  EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(std::make_pair(UNAVAILABLE(), BucketMetadata{})))
-      .WillOnce(Return(std::make_pair(storage::Status(), expected)));
+      .WillOnce(Invoke([&expected](GetBucketMetadataRequest const& r) {
+        EXPECT_EQ("foo-bar-baz", r.bucket_name());
+        return std::make_pair(storage::Status(), expected);
+      }));
   Bucket bucket(mock, "foo-bar-baz");
 
   auto actual = bucket.GetMetadata();

@@ -32,12 +32,12 @@ namespace testing {
  */
 class MockHttpRequestHandle {
  public:
-  MOCK_METHOD2(AddHeader, void(std::string const&, std::string const&));
   MOCK_METHOD1(AddHeader, void(std::string const&));
   MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
+  MOCK_METHOD1(AddWellKnownParameters,
+               void(storage::WellKnownParameters const&));
   MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(std::string const&));
-  MOCK_METHOD1(PrepareRequest, void(storage::internal::nl::json));
   MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
 
   /**
@@ -63,12 +63,11 @@ class MockHttpRequest {
 
   static std::shared_ptr<MockHttpRequestHandle> Handle(std::string const& url);
 
-  void AddHeader(std::string const& key, std::string const& value);
   void AddHeader(std::string const& header);
   void AddQueryParameter(std::string const& name, std::string const& value);
+  void AddWellKnownParameters(WellKnownParameters const& p);
   std::unique_ptr<char[]> MakeEscapedString(std::string const& x);
   void PrepareRequest(std::string const& payload);
-  void PrepareRequest(storage::internal::nl::json json);
   storage::internal::HttpResponse MakeRequest();
 
  private:

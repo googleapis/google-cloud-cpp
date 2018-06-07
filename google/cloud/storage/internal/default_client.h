@@ -29,13 +29,15 @@ class DefaultClient : public Client {
       : credentials_(std::move(credentials)) {}
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
-      std::string const& bucket_name) override {
+      GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequestor request("https://www.googleapis.com/storage/v1/b/" +
-                          bucket_name);
-    request.AddHeader("Authorization", credentials_->AuthorizationHeader());
-    request.PrepareRequest(std::string{});
-    auto payload = request.MakeRequest();
+    HttpRequestor requestor("https://www.googleapis.com/storage/v1/b/" +
+                            request.bucket_name());
+    requestor.AddWellKnownParameters(request.well_known_parameters());
+    requestor.AddHeader("Authorization: " +
+                        credentials_->AuthorizationHeader());
+    requestor.PrepareRequest(std::string{});
+    auto payload = requestor.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},

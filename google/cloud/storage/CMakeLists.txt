@@ -100,6 +100,7 @@ add_library(storage_client
     internal/parse_rfc3339.cc
     object_metadata.h
     object_metadata.cc
+    well_known_parameters.h
     status.h
     version.h
     version.cc)
