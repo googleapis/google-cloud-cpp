@@ -7,6 +7,7 @@ storage_client_unit_tests = [
     "internal/google_application_default_credentials_file_test.cc",
     "internal/nljson_test.cc",
     "internal/parse_rfc3339_test.cc",
+    "object_metadata_test.cc",
     "link_test.cc",
 ]
 

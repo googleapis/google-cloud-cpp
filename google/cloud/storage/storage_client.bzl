@@ -13,6 +13,7 @@ storage_client_HDRS = [
     "internal/metadata_parser.h",
     "internal/nljson.h",
     "internal/parse_rfc3339.h",
+    "object_metadata.h",
     "status.h",
     "version.h",
 ]
@@ -28,6 +29,7 @@ storage_client_SRCS = [
     "internal/google_application_default_credentials_file.cc",
     "internal/metadata_parser.cc",
     "internal/parse_rfc3339.cc",
+    "object_metadata.cc",
     "version.cc",
 ]
 

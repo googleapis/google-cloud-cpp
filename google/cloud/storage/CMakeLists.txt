@@ -98,6 +98,8 @@ add_library(storage_client
     internal/nljson.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
+    object_metadata.h
+    object_metadata.cc
     status.h
     version.h
     version.cc)
@@ -153,6 +155,7 @@ set(storage_client_unit_tests
     internal/google_application_default_credentials_file_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
+    object_metadata_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
