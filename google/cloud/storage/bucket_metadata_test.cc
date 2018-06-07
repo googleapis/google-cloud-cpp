@@ -116,5 +116,5 @@ TEST(BucketMetadataTest, IOStream) {
   auto actual = os.str();
   using ::testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("name=foo-bar-baz"));
-  EXPECT_THAT(actual, HasSubstr("foo : bar"));
+  EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
 }
