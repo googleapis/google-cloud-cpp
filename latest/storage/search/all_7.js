@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kind',['kind',['../classstorage_1_1v_1_1BucketMetadata.html#a40f75fe0f306affdb50e97c2d18e31a1',1,'storage::v::BucketMetadata']]]
+  ['main',['main',['../storage__bucket__samples_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'storage_bucket_samples.cc']]]
 ];

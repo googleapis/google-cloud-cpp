@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['name',['name',['../classstorage_1_1v_1_1BucketMetadata.html#a3238f99d07157908ae7db838af555222',1,'storage::v::BucketMetadata']]]
+  ['status',['Status',['../classstorage_1_1v_1_1Status.html#ab8b4e5b15e16a92e658c196081753726',1,'storage::v::Status::Status()'],['../classstorage_1_1v_1_1Status.html#a3ebd25454466e2b73ae395d68cbbdb74',1,'storage::v::Status::Status(long status_code, std::string error_message)'],['../classstorage_1_1v_1_1Status.html#a05170ece5e22dfb8461209d3c849739b',1,'storage::v::Status::Status(long status_code, std::string error_message, std::string error_details)']]],
+  ['status_5fcode',['status_code',['../classstorage_1_1v_1_1Status.html#a7dc1c1022cde146fbd88af8c0b1d1259',1,'storage::v::Status']]]
 ];

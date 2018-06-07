@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['parsefromjson',['ParseFromJson',['../classstorage_1_1v_1_1BucketMetadata.html#a62af39770319b8086c710a536aeb0aef',1,'storage::v::BucketMetadata']]],
-  ['project_5fnumber',['project_number',['../classstorage_1_1v_1_1BucketMetadata.html#ade70474938c41a914a07005ad78fdc1c',1,'storage::v::BucketMetadata']]]
+  ['_7eclient',['~Client',['../classstorage_1_1v_1_1Client.html#ac7ca2778cee0abcf49a5e1ed550bde91',1,'storage::v::Client']]],
+  ['_7ecredentials',['~Credentials',['../classstorage_1_1v_1_1Credentials.html#ada9e02065a1d58ac2552f497c45251a9',1,'storage::v::Credentials']]]
 ];
