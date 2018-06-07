@@ -22,7 +22,7 @@ readonly PROJECT_ROOT="$(cd ${BINDIR}/..; pwd)"
 
 if [ "${CHECK_ABI:-}" != "yes" ]; then
   echo
-  echo "${COLOR_YELLOW}Skipping abi check as it is disabled for this build." \
+  echo "${COLOR_YELLOW}Skipping ABI check as it is disabled for this build." \
       "${COLOR_RESET}"
   exit 0
 fi
