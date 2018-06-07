@@ -64,7 +64,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
 
   auto metadata2 = bucket.GetMetadata(
       storage::Projection("noAcl"),
-      storage::IfMetaGenerationMatch(metadata.metadata_generation()));
+      storage::IfMetaGenerationMatch(metadata.metageneration()));
   EXPECT_EQ(metadata2, metadata);
 }
 
@@ -82,13 +82,13 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(bucket.GetMetadata(storage::Projection("noAcl"),
                                   storage::IfMetaGenerationNotMatch(
-                                      metadata.metadata_generation())),
+                                      metadata.metageneration())),
                std::exception);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       bucket.GetMetadata(
           storage::Projection("noAcl"),
-          storage::IfMetaGenerationNotMatch(metadata.metadata_generation())),
+          storage::IfMetaGenerationNotMatch(metadata.metageneration())),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
