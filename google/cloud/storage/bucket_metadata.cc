@@ -23,6 +23,9 @@ BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
   BucketMetadata result{};
   static_cast<CommonMetadata&>(result) =
       internal::MetadataParser::ParseCommonMetadata(json);
+  result.location_ = json.value("location", "");
+  result.project_number_ =
+      internal::MetadataParser::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
     for (auto const& kv : json["labels"].items()) {
       result.labels_.emplace(kv.key(), kv.value().get<std::string>());
@@ -33,12 +36,15 @@ BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
 
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata const&>(*this) == rhs and
-         labels_ == rhs.labels_;
+         project_number_ == rhs.project_number_ and
+         location_ == rhs.location_ and labels_ == rhs.labels_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
-  os << static_cast<internal::CommonMetadata const&>(rhs) << ", labels={";
+  os << static_cast<internal::CommonMetadata const&>(rhs)
+     << ", location=" << rhs.location()
+     << ", project_number=" << rhs.project_number() << ", labels={";
   char const* sep = "labels.";
   for (auto const& kv : rhs.labels_) {
     os << sep << kv.first << "=" << kv.second;

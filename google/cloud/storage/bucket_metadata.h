@@ -42,18 +42,18 @@ class BucketMetadata : private internal::CommonMetadata {
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+  std::string const& location() const { return location_; }
+  std::int64_t const& project_number() const { return project_number_; }
 
   using CommonMetadata::etag;
   using CommonMetadata::id;
   using CommonMetadata::kind;
-  using CommonMetadata::location;
-  using CommonMetadata::metadata_generation;
+  using CommonMetadata::metageneration;
   using CommonMetadata::name;
-  using CommonMetadata::project_number;
   using CommonMetadata::self_link;
   using CommonMetadata::storage_class;
   using CommonMetadata::time_created;
-  using CommonMetadata::time_updated;
+  using CommonMetadata::updated;
 
   bool operator==(BucketMetadata const& rhs) const;
   bool operator!=(BucketMetadata const& rhs) { return not(*this == rhs); }
@@ -70,6 +70,8 @@ class BucketMetadata : private internal::CommonMetadata {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::map<std::string, std::string> labels_;
+  std::string location_;
+  std::int64_t project_number_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

@@ -25,14 +25,12 @@ CommonMetadata MetadataParser::ParseCommonMetadata(nl::json const& json) {
   result.etag_ = json.value("etag", "");
   result.id_ = json.value("id", "");
   result.kind_ = json.value("kind", "");
-  result.location_ = json.value("location", "");
-  result.metadata_generation_ = ParseLongField(json, "metageneration");
+  result.metageneration_ = ParseLongField(json, "metageneration");
   result.name_ = json.value("name", "");
-  result.project_number_ = ParseLongField(json, "projectNumber");
   result.self_link_ = json.value("selfLink", "");
   result.storage_class_ = json.value("storageClass", "");
   result.time_created_ = ParseTimestampField(json, "timeCreated");
-  result.time_updated_ = ParseTimestampField(json, "updated");
+  result.updated_ = ParseTimestampField(json, "updated");
   return result;
 }
 

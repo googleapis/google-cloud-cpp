@@ -41,18 +41,14 @@ class CommonMetadata {
   std::string const& etag() const { return etag_; }
   std::string const& id() const { return id_; }
   std::string const& kind() const { return kind_; }
-  std::string const& location() const { return location_; }
-  std::int64_t metadata_generation() const { return metadata_generation_; }
+  std::int64_t metageneration() const { return metageneration_; }
   std::string const& name() const { return name_; }
-  std::int64_t const& project_number() const { return project_number_; }
   std::string const& self_link() const { return self_link_; }
   std::string const& storage_class() const { return storage_class_; }
   std::chrono::system_clock::time_point time_created() const {
     return time_created_;
   }
-  std::chrono::system_clock::time_point time_updated() const {
-    return time_updated_;
-  }
+  std::chrono::system_clock::time_point updated() const { return updated_; }
 
   bool operator==(CommonMetadata const& rhs) const;
   bool operator!=(CommonMetadata const& rhs) { return not(*this == rhs); }
@@ -65,14 +61,13 @@ class CommonMetadata {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  std::string location_;
-  std::int64_t metadata_generation_;
+  std::int64_t metageneration_;
   std::string name_;
-  std::int64_t project_number_;
   std::string self_link_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;
-  std::chrono::system_clock::time_point time_updated_;
+  std::chrono::system_clock::time_point updated_;
+  // TODO(#537) - add common attributes such as acl and owner.
 };
 
 std::ostream& operator<<(std::ostream& os, CommonMetadata const& rhs);

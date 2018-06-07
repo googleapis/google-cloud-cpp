@@ -29,27 +29,22 @@ bool CommonMetadata::operator==(CommonMetadata const& rhs) const {
   // to short-circuit this comparison.  The check the name, project number, and
   // metadata generation, which have the next best chance to short-circuit.  The
   // The rest just put in alphabetical order.
-  return name_ == rhs.name_ and project_number_ == rhs.project_number_ and
-         metadata_generation_ == rhs.metadata_generation_ and id_ == rhs.id_ and
-         etag_ == rhs.etag_ and kind_ == rhs.kind_ and
-         location_ == rhs.location_ and self_link_ == rhs.self_link_ and
+  return name_ == rhs.name_ and metageneration_ == rhs.metageneration_ and
+         id_ == rhs.id_ and etag_ == rhs.etag_ and kind_ == rhs.kind_ and
+         self_link_ == rhs.self_link_ and
          storage_class_ == rhs.storage_class_ and
-         time_created_ == rhs.time_created_ and
-         time_updated_ == rhs.time_updated_;
+         time_created_ == rhs.time_created_ and updated_ == rhs.updated_;
 }
 
 std::ostream& operator<<(std::ostream& os, CommonMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
   return os << "etag=" << rhs.etag() << ", id=" << rhs.id()
-            << ", kind=" << rhs.kind() << ", location=" << rhs.location()
-            << ", metadata_generation=" << rhs.metadata_generation()
-            << ", name=" << rhs.name()
-            << ", project_number=" << rhs.project_number()
-            << ", self_link=" << rhs.self_link()
+            << ", kind=" << rhs.kind()
+            << ", metageneration=" << rhs.metageneration()
+            << ", name=" << rhs.name() << ", self_link=" << rhs.self_link()
             << ", storage_class=" << rhs.storage_class() << ", time_created="
             << rhs.time_created().time_since_epoch().count()
-            << ", time_updated="
-            << rhs.time_updated().time_since_epoch().count();
+            << ", updated=" << rhs.updated().time_since_epoch().count();
 }
 
 }  // namespace internal
