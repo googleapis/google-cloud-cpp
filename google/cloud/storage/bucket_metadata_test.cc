@@ -37,7 +37,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(0U, actual.label_count());
   EXPECT_EQ("US", actual.location());
-  EXPECT_EQ(4, actual.metadata_generation());
+  EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("foo-bar-baz", actual.name());
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar-baz",
@@ -50,7 +50,7 @@ TEST(BucketMetadataTest, Parse) {
                              actual.time_created().time_since_epoch())
                              .count());
   EXPECT_EQ(1526758284L, duration_cast<std::chrono::seconds>(
-                             actual.time_updated().time_since_epoch())
+                             actual.updated().time_since_epoch())
                              .count());
 }
 
@@ -116,5 +116,5 @@ TEST(BucketMetadataTest, IOStream) {
   auto actual = os.str();
   using ::testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("name=foo-bar-baz"));
-  EXPECT_THAT(actual, HasSubstr("foo : bar"));
+  EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
 }

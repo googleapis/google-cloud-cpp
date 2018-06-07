@@ -84,6 +84,8 @@ add_library(storage_client
     credentials.h
     credentials.cc
     internal/authorized_user_credentials.h
+    internal/common_metadata.h
+    internal/common_metadata.cc
     internal/curl_request.h
     internal/curl_request.cc
     internal/curl_wrappers.h
@@ -91,6 +93,8 @@ add_library(storage_client
     internal/default_client.h
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
+    internal/metadata_parser.h
+    internal/metadata_parser.cc
     internal/nljson.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
