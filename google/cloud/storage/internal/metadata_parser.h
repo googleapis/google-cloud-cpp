@@ -42,7 +42,7 @@ struct MetadataParser {
    * Parse a RFC 3339 timestamp.
    */
   static std::chrono::system_clock::time_point ParseTimestampField(
-      nl::json const& json, char const* field);
+      nl::json const& json, char const* field_name);
 };
 
 }  // namespace internal

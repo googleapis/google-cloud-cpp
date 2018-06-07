@@ -32,24 +32,24 @@ CommonMetadata MetadataParser::ParseCommonMetadata(nl::json const& json) {
   result.self_link_ = json.value("selfLink", "");
   result.storage_class_ = json.value("storageClass", "");
   result.time_created_ = ParseTimestampField(json, "timeCreated");
-  result.time_updated_ = storage::internal::ParseRfc3339(json["updated"]);
+  result.time_updated_ = ParseTimestampField(json, "updated");
   return result;
 }
 
 std::chrono::system_clock::time_point MetadataParser::ParseTimestampField(
-    storage::internal::nl::json const& json, char const* field) {
-  if (json.count(field) == 0) {
+    storage::internal::nl::json const& json, char const* field_name) {
+  if (json.count(field_name) == 0) {
     return std::chrono::system_clock::time_point{};
   }
-  return storage::internal::ParseRfc3339(json[field]);
+  return storage::internal::ParseRfc3339(json[field_name]);
 }
 
 std::int64_t MetadataParser::ParseLongField(
-    storage::internal::nl::json const& json, char const* field) {
-  if (json.count(field) == 0) {
+    storage::internal::nl::json const& json, char const* field_name) {
+  if (json.count(field_name) == 0) {
     return 0;
   }
-  auto const& f = json[field];
+  auto const& f = json[field_name];
   if (f.is_number()) {
     return f.get<std::int64_t>();
   }
@@ -57,7 +57,7 @@ std::int64_t MetadataParser::ParseLongField(
     return std::stoll(f.get_ref<std::string const&>());
   }
   std::ostringstream os;
-  os << "Error parsing field <" << field
+  os << "Error parsing field <" << field_name
      << "> as an std::int64_t, json=" << json;
   google::cloud::internal::RaiseInvalidArgument(os.str());
 }
