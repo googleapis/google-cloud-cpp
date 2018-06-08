@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client_options.h"
+#include <cstdlib>
 
 namespace {
 std::shared_ptr<storage::Credentials> StorageDefaultCredentials() {
