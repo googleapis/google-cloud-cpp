@@ -41,8 +41,9 @@ namespace internal {
  *   - No nullopt_t.
  *   - No std::swap(), std::make_optional(), or std::hash().
  *
+ * @tparam T the type of the optional value.
  *
- * TODO() - replace with absl::optional<> or std::optional<> when possible.
+ * TODO(#687) - replace with absl::optional<> or std::optional<> when possible.
  */
 template <typename T>
 class optional {
