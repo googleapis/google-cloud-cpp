@@ -171,6 +171,18 @@ matrix:
         DISTRO=centos
         DISTRO_VERSION=7
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+  allow_failures:
+    - # For the moment, allow failures in the ABI check builds.
+      # TODO(#694) - remove this when the ABI is declared stable.
+      os: linux
+      compiler: g++
+      env:
+        CHECK_ABI=yes
+        TEST_INSTALL=yes
+        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
+        BUILD_TYPE=Debug
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
 
 script:
   - ci/build-linux.sh

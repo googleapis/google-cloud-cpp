@@ -40,10 +40,7 @@ for library in google_cloud_cpp_common bigtable_client; do
       -public-headers "${includedir}" \
       -lver "${version}" \
       -o ${new_dump_file}
-  # TODO(#628) - change this to break the build once the ABI is stable.
   (cd "build-output/${IMAGE}" ; abi-compliance-checker -l ${library} \
       -old "${old_dump_file}" \
-      -new "${new_dump_file}" || \
-      echo "${COLOR_YELLOW}WARNING: ABI mismatch (will become error soon)." \
-          "${COLOR_RESET}")
+      -new "${new_dump_file}")
 done
