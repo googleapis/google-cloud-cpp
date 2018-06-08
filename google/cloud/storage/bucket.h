@@ -39,6 +39,10 @@ class Bucket {
   /**
    * Fetch the bucket metadata and return it.
    *
+   * @param modifier a variadic list. Valid types for this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`.
+   *
    * @throw std::runtime_error if the metadata cannot be fetched using the
    * current policies.
    *

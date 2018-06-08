@@ -39,12 +39,11 @@ class GetBucketMetadataRequest {
   }
 
   /**
-   * Apply an empty list of modifiers to a GetBucketMetadataRequest.
-   */
-  void ApplyModifiers() {}
-
-  /**
    * Apply a list of modifiers to a GetBucketMetadataRequest.
+   *
+   * This is a convenience function to apply multiple modifiers in a single
+   * call. Note that only those modifiers accepted by the `Apply()` overloads
+   * are valid.
    *
    * @tparam H the first modifier type
    * @tparam T the types of the remaining modifiers.
@@ -57,7 +56,8 @@ class GetBucketMetadataRequest {
     ApplyModifiers(std::forward<T>(tail)...);
   }
 
- private:
+  //@{
+  /// @name Apply a single modifier to the request.
   void Apply(IfMetaGenerationMatch&& p) {
     well_known_parameters_.Apply(std::move(p));
   }
@@ -66,6 +66,12 @@ class GetBucketMetadataRequest {
   }
   void Apply(Projection&& p) { well_known_parameters_.Apply(std::move(p)); }
   void Apply(UserProject&& p) { well_known_parameters_.Apply(std::move(p)); }
+  //@}
+
+  /**
+   * Apply an empty list of modifiers to a GetBucketMetadataRequest.
+   */
+  void ApplyModifiers() {}
 
  private:
   std::string bucket_name_;
