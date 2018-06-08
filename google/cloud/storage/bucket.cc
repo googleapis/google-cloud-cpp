@@ -30,7 +30,8 @@ static_assert(std::is_copy_constructible<storage::Bucket>::value,
 static_assert(std::is_copy_assignable<storage::Bucket>::value,
               "storage::Bucket must be assignable");
 
-BucketMetadata Bucket::GetMetadataImpl(GetBucketMetadataRequest request) {
+BucketMetadata Bucket::GetMetadataImpl(
+    GetBucketMetadataRequest const& request) {
   // TODO(#555) - use policies to implement retry loop.
   Status last_status;
   constexpr int MAX_NUM_RETRIES = 3;

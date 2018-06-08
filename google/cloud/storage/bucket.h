@@ -49,13 +49,13 @@ class Bucket {
   BucketMetadata GetMetadata(Modifiers&&... modifier) {
     GetBucketMetadataRequest request(bucket_name());
     request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
-    return GetMetadataImpl(std::move(request));
+    return GetMetadataImpl(request);
   }
 
   static void ValidateBucketName(std::string const& bucket_name);
 
  private:
-  BucketMetadata GetMetadataImpl(GetBucketMetadataRequest request);
+  BucketMetadata GetMetadataImpl(GetBucketMetadataRequest const& request);
 
  private:
   std::shared_ptr<Client> client_;
