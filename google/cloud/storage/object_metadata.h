@@ -21,13 +21,13 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Represents a Google Cloud Storage Bucket Metadata object.
+ * Represents the metadata for a Google Cloud Storage Object.
  *
  * @warning This is an incomplete implementation to validate the design. It does
  * not support changes to the metadata. It also lacks support for ACLs,
  * encryption keys, and other features.
  *
- * TODO(#537) - complete the implementation.
+ * TODO(#693) - complete the implementation.
  */
 class ObjectMetadata : private internal::CommonMetadata {
  public:
@@ -35,11 +35,11 @@ class ObjectMetadata : private internal::CommonMetadata {
 
   static ObjectMetadata ParseFromJson(std::string const& payload);
 
-  std::size_t label_count() const { return metadata_.size(); }
-  bool has_label(std::string const& key) const {
+  std::size_t metadata_count() const { return metadata_.size(); }
+  bool has_metadata(std::string const& key) const {
     return metadata_.end() != metadata_.find(key);
   }
-  std::string const& label(std::string const& key) const {
+  std::string const& metadata(std::string const& key) const {
     return metadata_.at(key);
   }
 
