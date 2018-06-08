@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
-#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <thread>
 
 namespace bigtable {

@@ -95,7 +95,6 @@ export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
 foreach (fname ${google_cloud_cpp_common_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    set(target "google_cloud_cpp_common_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
         google_cloud_cpp_common gmock google_cloud_cpp_common_options)

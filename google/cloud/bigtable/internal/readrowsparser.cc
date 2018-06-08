@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {

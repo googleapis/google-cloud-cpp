@@ -28,14 +28,13 @@ target_link_libraries(bigtable_benchmark_common
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests
-        benchmark_test.cc
+        bigtable_benchmark_test.cc
         embedded_server_test.cc
         format_duration_test.cc
         setup_test.cc)
 foreach (fname ${bigtable_benchmarks_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    set(target "bigtable_benchmarks_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
             bigtable_benchmark_common bigtable_client

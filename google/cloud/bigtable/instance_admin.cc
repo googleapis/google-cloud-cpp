@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/internal/throw_delegate.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
