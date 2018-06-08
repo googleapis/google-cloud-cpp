@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bucket',['Bucket',['../classstorage_1_1v_1_1Bucket.html',1,'storage::v::Bucket'],['../classstorage_1_1v_1_1Client.html#ab6ddc0711869de2bba9e3316713048b8',1,'storage::v::Client::Bucket()'],['../classstorage_1_1v_1_1Bucket.html#a98522258e2315364a1a32eaeedb7cb10',1,'storage::v::Bucket::Bucket()']]],
+  ['bucket',['Bucket',['../classstorage_1_1v_1_1Bucket.html',1,'storage::v::Bucket'],['../classstorage_1_1v_1_1Client.html#ab6ddc0711869de2bba9e3316713048b8',1,'storage::v::Client::Bucket()'],['../classstorage_1_1v_1_1Bucket.html#a98522258e2315364a1a32eaeedb7cb10',1,'storage::v::Bucket::Bucket()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a0da6511dae163b34f9c7ad28b4d65d6e',1,'storage::v::ObjectMetadata::bucket()']]],
   ['bucket_2ecc',['bucket.cc',['../bucket_8cc.html',1,'']]],
   ['bucket_2eh',['bucket.h',['../bucket_8h.html',1,'']]],
   ['bucket_5fmetadata_2ecc',['bucket_metadata.cc',['../bucket__metadata_8cc.html',1,'']]],

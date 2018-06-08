@@ -89,6 +89,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Credentials.html">Credentials</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for the credential objects.  <a href="classstorage_1_1v_1_1Credentials.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the metadata for a Google Cloud Storage Object.  <a href="classstorage_1_1v_1_1ObjectMetadata.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Status.html">Status</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the status code and message returned by the underlying transport.  <a href="classstorage_1_1v_1_1Status.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +122,8 @@ Functions</h2></td></tr>
 <tr class="separator:ac51f6b1fa908e88cf591af12b0272e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9182fe796c31543dd63964cc0bc07f0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestorage_1_1v.html#ad9182fe796c31543dd63964cc0bc07f0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classstorage_1_1v_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
 <tr class="separator:ad9182fe796c31543dd63964cc0bc07f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa03da82261721fa87b36137fafda54a5"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestorage_1_1v.html#aa03da82261721fa87b36137fafda54a5">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classstorage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs)</td></tr>
+<tr class="separator:aa03da82261721fa87b36137fafda54a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage C++ client APIs inlined, versioned namespace. </p>
@@ -163,8 +168,36 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa03da82261721fa87b36137fafda54a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa03da82261721fa87b36137fafda54a5">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; storage::v::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classstorage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a642f950140ca4e0be1deeae9f3138a2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a642f950140ca4e0be1deeae9f3138a2a">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a642f950140ca4e0be1deeae9f3138a2a">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,7 +225,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad9182fe796c31543dd63964cc0bc07f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9182fe796c31543dd63964cc0bc07f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9182fe796c31543dd63964cc0bc07f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
