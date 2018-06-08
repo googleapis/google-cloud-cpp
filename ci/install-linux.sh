@@ -24,28 +24,7 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-# Make three attempts to build the Docker image.  From time to time, the image
-# creation fails because some apt server times out, and more often than not,
-# restarting the build is successful.
-
-# Initially, wait at least 3 minutes (the times are in seconds), because it
-# makes no sense to try faster.  We currently have 20+ minutes of remaining
-# budget to complete a build, and we should be as nice as possible to the
-# servers that provide the packages.
-min_wait=180
-# Do not exit on failures for this loop.
-set +e
-for i in 1 2 3; do
-  sudo docker build -t "${IMAGE}:tip" \
-       --build-arg NCPU="${NCPU:-2}" \
-       --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
-       -f "ci/Dockerfile.${DISTRO}" ci
-  if [ $? -eq 0 ]; then
-    exit 0
-  fi
-  # Sleep for a few minutes before trying again.
-  period=$[ (${RANDOM} % 60) + min_wait ]
-  echo "Fetch failed; trying again in ${period} seconds."
-  sleep ${period}s
-  min_wait=$[ min_wait * 2 ]
-done
+sudo docker build -t "${IMAGE}:tip" \
+     --build-arg NCPU="${NCPU:-2}" \
+     --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
+     -f "ci/Dockerfile.${DISTRO}" ci
