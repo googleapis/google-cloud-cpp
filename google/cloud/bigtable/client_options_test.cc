@@ -17,6 +17,8 @@
 #include <gmock/gmock.h>
 #include <cstdlib>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   EXPECT_EQ("bigtable.googleapis.com", client_options_object.data_endpoint());

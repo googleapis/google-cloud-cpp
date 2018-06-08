@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 TEST(TableConfig, Simple) {
   bigtable::TableConfig config;

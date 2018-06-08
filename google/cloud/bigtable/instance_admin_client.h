@@ -20,6 +20,8 @@
 #include <memory>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
@@ -129,9 +131,11 @@ class InstanceAdminClient {
 
 /// Create a new admin client configured via @p options.
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
-    std::string project, bigtable::ClientOptions options);
+    std::string project, ClientOptions options);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_CLIENT_H_

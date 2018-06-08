@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/testing/inprocess_data_client.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -60,3 +62,5 @@ InProcessDataClient::MutateRows(grpc::ClientContext* context,
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

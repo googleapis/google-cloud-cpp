@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -38,3 +40,5 @@ void RaiseRpcError(grpc::Status const& status, std::string const& msg) {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

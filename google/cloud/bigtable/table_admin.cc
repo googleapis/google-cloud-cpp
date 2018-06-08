@@ -18,6 +18,8 @@
 
 namespace btproto = ::google::bigtable::admin::v2;
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
@@ -148,3 +150,5 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/mutations.h"
 #include <google/protobuf/text_format.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 Mutation SetCell(std::string family, std::string column,
@@ -71,3 +73,5 @@ grpc::Status FailedMutation::ToGrpcStatus(google::rpc::Status const& status) {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -26,6 +26,8 @@
 /**
  * Contains all the Cloud Bigtable C++ client APIs.
  */
+namespace google {
+namespace cloud {
 namespace bigtable {
 /**
  * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.
@@ -71,5 +73,7 @@ std::string version_string();
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VERSION_H_

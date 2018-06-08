@@ -19,6 +19,8 @@
 #include <google/protobuf/text_format.h>
 #include <sstream>
 
+namespace bigtable = google::cloud::bigtable;
+
 int main(int argc, char* argv[]) try {
   // Make sure the arguments are valid.
   if (argc != 4) {

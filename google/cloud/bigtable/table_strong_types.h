@@ -17,6 +17,8 @@
 
 #include "google/cloud/bigtable/internal/strong_type.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 using AppProfileId =
@@ -24,5 +26,7 @@ using AppProfileId =
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_STRONG_TYPES_H_

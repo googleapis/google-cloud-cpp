@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/testing/random.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
@@ -27,3 +29,5 @@ std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

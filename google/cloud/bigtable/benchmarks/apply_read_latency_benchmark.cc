@@ -73,6 +73,7 @@
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 
 struct LatencyBenchmarkResult {

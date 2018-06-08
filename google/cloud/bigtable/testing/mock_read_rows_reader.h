@@ -19,6 +19,8 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 using MockReadRowsReader =
@@ -27,5 +29,7 @@ using MockReadRowsReader =
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_READ_ROWS_READER_H_

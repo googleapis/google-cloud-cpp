@@ -18,6 +18,12 @@
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 
+namespace btproto = google::bigtable::v2;
+namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::chrono_literals;
+using namespace testing;
+namespace bt = google::cloud::bigtable;
+
 /// Define types and functions used in the tests.
 namespace {
 class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
@@ -25,11 +31,6 @@ using bigtable::testing::MockMutateRowsReader;
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
-
-using namespace bigtable::chrono_literals;
-using namespace testing;
-namespace btproto = google::bigtable::v2;
-namespace bt = bigtable;
 
 TEST_F(TableBulkApplyTest, Simple) {
   auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();

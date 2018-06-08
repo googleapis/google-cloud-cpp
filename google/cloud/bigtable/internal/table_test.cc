@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 
+namespace bigtable = google::cloud::bigtable;
 using testing::_;
 using testing::Invoke;
 using testing::Return;

@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 #include <thread>
 
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 using std::chrono::milliseconds;
 

@@ -13,6 +13,8 @@
 
 #include "google/cloud/bigtable/cluster_config.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 constexpr ClusterConfig::StorageType ClusterConfig::STORAGE_TYPE_UNSPECIFIED;
@@ -20,3 +22,5 @@ constexpr ClusterConfig::StorageType ClusterConfig::SSD;
 constexpr ClusterConfig::StorageType ClusterConfig::HDD;
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

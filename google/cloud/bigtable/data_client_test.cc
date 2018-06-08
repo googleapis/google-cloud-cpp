@@ -16,6 +16,8 @@
 
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(DataClientTest, Default) {
   auto data_client = bigtable::CreateDefaultDataClient(
       "test-project", "test-instance",

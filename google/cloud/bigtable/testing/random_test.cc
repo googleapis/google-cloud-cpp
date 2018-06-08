@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/testing/random.h"
 #include <gmock/gmock.h>
 
-using namespace bigtable::testing;
+using namespace google::cloud::bigtable::testing;
 
 TEST(BenchmarksRandom, Basic) {
   // This is not a statistical test for PRNG, basically we want to make

@@ -21,8 +21,8 @@
 #include <sstream>
 #include <vector>
 
-using bigtable::internal::ReadRowsParser;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
+using google::cloud::bigtable::internal::ReadRowsParser;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   grpc::Status status;
@@ -77,7 +77,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   EXPECT_TRUE(status.ok());
   EXPECT_TRUE(parser.HasNext());
 
-  std::vector<bigtable::Row> rows;
+  std::vector<google::cloud::bigtable::Row> rows;
   rows.emplace_back(parser.Next(status));
   EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
@@ -155,7 +155,7 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
   parser.HandleChunk(std::move(chunk), status);
   EXPECT_TRUE(status.ok());
   ASSERT_TRUE(parser.HasNext());
-  bigtable::Row r = parser.Next(status);
+  google::cloud::bigtable::Row r = parser.Next(status);
   ASSERT_EQ(1U, r.cells().size());
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(data_ptr, r.cells().begin()->value().data());
@@ -163,6 +163,8 @@ TEST(ReadRowsParserTest, SingleChunkValueIsMoved) {
 
 // **** Acceptance tests helpers ****
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 
 // Can also be used by gtest to print Cell values
@@ -188,6 +190,8 @@ std::string CellToString(Cell const& cell) {
 }
 
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 class AcceptanceTest : public ::testing::Test {
  protected:
@@ -196,7 +200,8 @@ class AcceptanceTest : public ::testing::Test {
 
     for (auto const& r : rows_) {
       std::transform(r.cells().begin(), r.cells().end(),
-                     std::back_inserter(cells), bigtable::CellToString);
+                     std::back_inserter(cells),
+                     google::cloud::bigtable::CellToString);
     }
     return cells;
   }
@@ -239,7 +244,7 @@ class AcceptanceTest : public ::testing::Test {
 
  private:
   ReadRowsParser parser_;
-  std::vector<bigtable::Row> rows_;
+  std::vector<google::cloud::bigtable::Row> rows_;
 };
 
 // Auto-generated acceptance tests

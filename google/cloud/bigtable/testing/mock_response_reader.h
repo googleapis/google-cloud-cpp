@@ -19,6 +19,8 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/impl/codegen/sync_stream.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 /**
@@ -64,5 +66,7 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_

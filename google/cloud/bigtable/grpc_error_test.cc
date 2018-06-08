@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 TEST(GRpcErrorTest, Simple) {

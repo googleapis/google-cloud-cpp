@@ -21,6 +21,8 @@
 #include <memory>
 #include <random>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -106,5 +108,7 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_

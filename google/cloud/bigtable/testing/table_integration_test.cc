@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <cctype>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -26,14 +28,12 @@ std::string TableTestEnvironment::instance_id_;
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
-      ::bigtable::testing::TableTestEnvironment::project_id(),
-      bigtable::ClientOptions());
+      TableTestEnvironment::project_id(), ClientOptions());
   table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
-      admin_client_, ::bigtable::testing::TableTestEnvironment::instance_id());
+      admin_client_, TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
-      ::bigtable::testing::TableTestEnvironment::project_id(),
-      ::bigtable::testing::TableTestEnvironment::instance_id(),
-      bigtable::ClientOptions());
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      ClientOptions());
 }
 
 std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
@@ -223,3 +223,5 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
 //@}
 
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

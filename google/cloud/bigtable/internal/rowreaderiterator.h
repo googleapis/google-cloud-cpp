@@ -19,6 +19,8 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <iterator>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare the owner class of this iterator.
@@ -107,5 +109,7 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H_

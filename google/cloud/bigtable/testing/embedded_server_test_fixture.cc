@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -57,3 +59,5 @@ void EmbeddedServerTestFixture::TearDown() {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

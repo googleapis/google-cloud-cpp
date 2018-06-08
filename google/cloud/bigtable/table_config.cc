@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/table_config.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -62,3 +64,5 @@ constexpr TableConfig::TimestampGranularity
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

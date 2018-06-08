@@ -18,6 +18,8 @@
 
 namespace btproto = ::google::bigtable::admin::v2;
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
@@ -267,3 +269,5 @@ void TableAdmin::ListSnapshotsImpl(
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

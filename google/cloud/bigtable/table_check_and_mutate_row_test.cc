@@ -16,13 +16,14 @@
 #include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 
+namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::chrono_literals;
+
 /// Define helper types and functions for this test.
 namespace {
 class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
 };
 }  // anonymous namespace
-
-using namespace bigtable::chrono_literals;
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {

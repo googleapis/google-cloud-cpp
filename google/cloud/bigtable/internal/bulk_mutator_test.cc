@@ -21,6 +21,7 @@
 /// Define types and functions used in the tests.
 namespace {
 namespace btproto = google::bigtable::v2;
+namespace bigtable = google::cloud::bigtable;
 namespace bt = ::bigtable;
 using namespace ::testing;
 using namespace bigtable::chrono_literals;

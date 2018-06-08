@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
@@ -119,5 +121,7 @@ inline std::string InstanceName(std::shared_ptr<DataClient> client) {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_

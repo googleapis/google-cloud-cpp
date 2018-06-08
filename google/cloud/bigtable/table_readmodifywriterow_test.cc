@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::v2;
+namespace bigtable = google::cloud::bigtable;
 
 /// Define helper types and functions for this test.
 namespace {

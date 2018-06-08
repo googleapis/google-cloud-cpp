@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/testing/inprocess_admin_client.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -103,3 +105,5 @@ grpc::Status InProcessAdminClient::DeleteSnapshot(
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

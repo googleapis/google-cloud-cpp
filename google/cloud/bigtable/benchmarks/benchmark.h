@@ -23,6 +23,8 @@
 #include <deque>
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 /// The result of a single operation.
@@ -163,5 +165,7 @@ std::ostream& operator<<(std::ostream& os, FormatDuration duration);
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_BENCHMARK_H_

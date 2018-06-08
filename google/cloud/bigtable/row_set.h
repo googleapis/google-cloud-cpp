@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_range.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -109,5 +111,7 @@ class RowSet {
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_SET_H_

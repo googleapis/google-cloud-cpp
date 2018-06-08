@@ -19,6 +19,8 @@
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -81,5 +83,7 @@ class ReadModifyWriteRule {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_READ_MODIFY_WRITE_RULE_H_

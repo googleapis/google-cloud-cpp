@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/internal/common_client.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 namespace {
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all
@@ -135,13 +137,17 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
 };
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
-    std::string project, bigtable::ClientOptions options) {
+    std::string project, ClientOptions options) {
   return std::make_shared<DefaultInstanceAdminClient>(std::move(project),
                                                       std::move(options));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

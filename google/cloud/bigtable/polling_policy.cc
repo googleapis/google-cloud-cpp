@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/polling_policy.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
@@ -22,3 +24,5 @@ std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

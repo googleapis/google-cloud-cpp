@@ -16,12 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
-
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
 #include <string>
 
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
-
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
@@ -133,10 +133,12 @@ class AdminClient {
 };
 
 /// Create a new admin client configured via @p options.
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(
-    std::string project, bigtable::ClientOptions options);
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
+                                                      ClientOptions options);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H_

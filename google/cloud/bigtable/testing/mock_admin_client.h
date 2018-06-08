@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -108,5 +110,7 @@ class MockAdminClient : public bigtable::AdminClient {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_ADMIN_CLIENT_H_

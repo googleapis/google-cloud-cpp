@@ -27,6 +27,8 @@ auto const MAXIMUM_RETRY_PERIOD = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD;
 
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
@@ -82,3 +84,5 @@ bool LimitedTimeRetryPolicy::can_retry(grpc::StatusCode code) const {
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(PrefixRangeEndTest, Simple) {
   // This test assumes ASCII.
   EXPECT_EQ("foo0", bigtable::internal::PrefixRangeEnd("foo/"));

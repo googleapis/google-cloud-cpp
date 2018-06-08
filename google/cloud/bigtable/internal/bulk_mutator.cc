@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/table_strong_types.h"
 #include <numeric>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
@@ -157,3 +159,5 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

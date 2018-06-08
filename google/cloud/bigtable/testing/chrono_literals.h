@@ -18,6 +18,8 @@
 #include <chrono>
 
 // TODO(#109) - these are generally useful, consider submitting to abseil.io
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace chrono_literals {
 constexpr std::chrono::hours operator"" _h(unsigned long long h) {
@@ -46,5 +48,7 @@ constexpr std::chrono::nanoseconds operator"" _ns(unsigned long long ns) {
 
 }  // namespace chrono_literals
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_CHRONO_LITERALS_H_

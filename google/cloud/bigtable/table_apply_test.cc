@@ -16,14 +16,15 @@
 #include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 
+namespace bigtable = google::cloud::bigtable;
+using namespace bigtable::chrono_literals;
+
 /// Define helper types and functions for this test.
 namespace {
 class TableApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::Apply() works in a simplest case.
-
-using namespace bigtable::chrono_literals;
 
 TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;

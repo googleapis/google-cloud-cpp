@@ -16,6 +16,8 @@
 
 #include <gtest/gtest.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 /// @test Verify Cell instantiation and trivial accessors.
 TEST(CellTest, Simple) {
   using namespace ::testing;

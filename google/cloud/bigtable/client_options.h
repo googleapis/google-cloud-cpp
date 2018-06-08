@@ -19,6 +19,8 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/grpcpp.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
@@ -282,5 +284,7 @@ class ClientOptions {
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H_

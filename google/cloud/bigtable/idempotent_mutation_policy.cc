@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<IdempotentMutationPolicy> DefaultIdempotentMutationPolicy() {
@@ -47,3 +49,5 @@ bool AlwaysRetryMutationPolicy::is_idempotent(
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

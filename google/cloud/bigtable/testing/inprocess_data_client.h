@@ -19,6 +19,8 @@
 #include "google/cloud/bigtable/data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace testing {
 
@@ -87,5 +89,7 @@ class InProcessDataClient : public bigtable::DataClient {
 
 }  // namespace testing
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_DATA_CLIENT_H_

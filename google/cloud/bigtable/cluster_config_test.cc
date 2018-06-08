@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/cluster_config.h"
 #include <gmock/gmock.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 TEST(ClusterConfigTest, Constructor) {
   bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::SSD);
   auto proto = config.as_proto();

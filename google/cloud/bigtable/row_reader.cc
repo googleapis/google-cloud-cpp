@@ -18,6 +18,8 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // RowReader::iterator must satisfy the requirements of an InputIterator.
@@ -285,3 +287,5 @@ RowReader::~RowReader() {
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

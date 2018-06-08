@@ -18,6 +18,8 @@
 
 namespace btproto = ::google::bigtable::admin::v2;
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace noex {
@@ -135,3 +137,5 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

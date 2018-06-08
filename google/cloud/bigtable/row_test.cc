@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/row.h"
 #include <gtest/gtest.h>
 
+namespace bigtable = google::cloud::bigtable;
+
 /// @test Verify Row instantiation and trivial accessors.
 TEST(RowTest, RowInstantiation) {
   std::string row_key = "row";

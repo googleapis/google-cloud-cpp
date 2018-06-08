@@ -20,6 +20,8 @@
 #include <string>
 #include <vector>
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 /**
@@ -59,5 +61,7 @@ class BenchmarkSetup {
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_SETUP_H_

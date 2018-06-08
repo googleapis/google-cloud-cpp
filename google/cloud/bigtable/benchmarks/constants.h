@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_CONSTANTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_CONSTANTS_H_
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 /// Supporting classes and functions to implement benchmarks.
 namespace benchmarks {
@@ -58,5 +60,7 @@ constexpr int kTableIdRandomLetters = 8;
 
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_CONSTANTS_H_

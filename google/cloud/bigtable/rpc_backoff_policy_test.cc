@@ -18,6 +18,8 @@
 #include <chrono>
 #include <vector>
 
+namespace bigtable = google::cloud::bigtable;
+
 namespace {
 /// Create a grpc::Status with a status code for transient errors.
 grpc::Status CreateTransientError() {

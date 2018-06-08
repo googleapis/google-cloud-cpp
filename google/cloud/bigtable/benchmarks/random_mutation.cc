@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include "google/cloud/bigtable/benchmarks/constants.h"
 
+namespace google {
+namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 bigtable::Mutation MakeRandomMutation(bigtable::testing::DefaultPRNG& gen,
@@ -31,3 +33,5 @@ std::string MakeRandomValue(bigtable::testing::DefaultPRNG& generator) {
 }
 }  // namespace benchmarks
 }  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

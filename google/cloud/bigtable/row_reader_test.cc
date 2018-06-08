@@ -36,6 +36,7 @@ using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
+namespace bigtable = google::cloud::bigtable;
 using bigtable::Row;
 using bigtable::testing::MockReadRowsReader;
 

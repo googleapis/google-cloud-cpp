@@ -56,6 +56,7 @@
 
 /// Helper functions and types for the scan_throughput_benchmark.
 namespace {
+namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 
 constexpr int kScanSizes[] = {100, 1000, 10000};
