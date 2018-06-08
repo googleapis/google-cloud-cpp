@@ -81,6 +81,8 @@ add_library(storage_client
     bucket_metadata.cc
     client.h
     client.cc
+    client_options.h
+    client_options.cc
     credentials.h
     credentials.cc
     internal/authorized_user_credentials.h

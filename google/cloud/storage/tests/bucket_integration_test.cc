@@ -40,8 +40,7 @@ class BucketIntegrationTest : public ::testing::Test {};
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  auto client =
-      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  auto client = storage::CreateDefaultClient();
   storage::Bucket bucket(client, bucket_name);
 
   auto metadata = bucket.GetMetadata();
