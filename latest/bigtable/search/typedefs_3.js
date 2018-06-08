@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['instance',['Instance',['../namespacebigtable_1_1v0.html#a33648b84081c01fc8e4351278624c084',1,'bigtable::v0']]],
-  ['instanceid',['InstanceId',['../namespacebigtable_1_1v0.html#a9831bbc807f03d0023b907f59e83a78a',1,'bigtable::v0']]],
-  ['instancetype',['InstanceType',['../classbigtable_1_1v0_1_1InstanceConfig.html#af02a35053e81342dc659a4e16fbeaa66',1,'bigtable::v0::InstanceConfig::InstanceType()'],['../classbigtable_1_1v0_1_1InstanceUpdateConfig.html#a75c6361440932e46710cc2153ce49e78',1,'bigtable::v0::InstanceUpdateConfig::InstanceType()']]],
-  ['iterator',['iterator',['../classbigtable_1_1v0_1_1RowReader.html#a6d4d2830e59b96019a024d0b37758430',1,'bigtable::v0::RowReader']]]
+  ['instance',['Instance',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a6fd9b4a69047dfdcd3e57799ff905a8a',1,'google::cloud::bigtable::v0']]],
+  ['instanceid',['InstanceId',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aa9a2503f014b52ebb4ba4b2651070d71',1,'google::cloud::bigtable::v0']]],
+  ['instancetype',['InstanceType',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceConfig.html#a0e01ea75fdf661db9b2597cbf186153c',1,'google::cloud::bigtable::v0::InstanceConfig::InstanceType()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#a7b08927cc05b8d4f5542e17f31c32030',1,'google::cloud::bigtable::v0::InstanceUpdateConfig::InstanceType()']]],
+  ['iterator',['iterator',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#a57f2dd656979f9722af7e6c43d4c280d',1,'google::cloud::bigtable::v0::RowReader']]]
 ];

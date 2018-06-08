@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['table_5fname',['TABLE_NAME',['../classbigtable_1_1v0_1_1MetadataParamTypes.html#aaf5413bb213775257af76df0f4c6d7c8',1,'bigtable::v0::MetadataParamTypes']]],
-  ['timestamp_5fgranularity_5funspecified',['TIMESTAMP_GRANULARITY_UNSPECIFIED',['../classbigtable_1_1v0_1_1TableConfig.html#a65e9a2dfb06730416d33cc9b90d25d0e',1,'bigtable::v0::TableConfig']]],
-  ['type_5funspecified',['TYPE_UNSPECIFIED',['../classbigtable_1_1v0_1_1InstanceConfig.html#aecd0cdff6e1e24921518c7a00a80f58a',1,'bigtable::v0::InstanceConfig::TYPE_UNSPECIFIED()'],['../classbigtable_1_1v0_1_1InstanceUpdateConfig.html#af4664ab840dee0c35a684be254b7ac83',1,'bigtable::v0::InstanceUpdateConfig::TYPE_UNSPECIFIED()']]]
+  ['table_5fname',['TABLE_NAME',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataParamTypes.html#a5b31633eed3b027f3142158b7d912b72',1,'google::cloud::bigtable::v0::MetadataParamTypes']]],
+  ['timestamp_5fgranularity_5funspecified',['TIMESTAMP_GRANULARITY_UNSPECIFIED',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a2926ccd5d124da7ee1971cd521458165',1,'google::cloud::bigtable::v0::TableConfig']]],
+  ['type_5funspecified',['TYPE_UNSPECIFIED',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceConfig.html#abeca15f4a4a3118833f67d532c416e6f',1,'google::cloud::bigtable::v0::InstanceConfig::TYPE_UNSPECIFIED()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#a27245449d8c78dd2c28759f1be250194',1,'google::cloud::bigtable::v0::InstanceUpdateConfig::TYPE_UNSPECIFIED()']]]
 ];

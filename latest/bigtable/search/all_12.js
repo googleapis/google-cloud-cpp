@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['value',['value',['../classbigtable_1_1v0_1_1MetadataUpdatePolicy.html#a09a05b045df1f7c604b695045ff15041',1,'bigtable::v0::MetadataUpdatePolicy::value()'],['../classbigtable_1_1v0_1_1Cell.html#ae278a7e84cd7b09a38633ec6b62c5348',1,'bigtable::v0::Cell::value()']]],
-  ['value_5fas',['value_as',['../classbigtable_1_1v0_1_1Cell.html#a6b1527cc8c857e46a38444393faa0714',1,'bigtable::v0::Cell']]],
-  ['valuerange',['ValueRange',['../classbigtable_1_1v0_1_1Filter.html#a902120a7d42e55003f825c3292444804',1,'bigtable::v0::Filter']]],
-  ['valuerangeclosed',['ValueRangeClosed',['../classbigtable_1_1v0_1_1Filter.html#a99cde7ae9573b8942dff3ebe63aa8db1',1,'bigtable::v0::Filter']]],
-  ['valuerangeleftopen',['ValueRangeLeftOpen',['../classbigtable_1_1v0_1_1Filter.html#a5d3e927efd28eb1d4e5392601116f180',1,'bigtable::v0::Filter']]],
-  ['valuerangeopen',['ValueRangeOpen',['../classbigtable_1_1v0_1_1Filter.html#a428253905bd4560feb1272f20a9b3d5e',1,'bigtable::v0::Filter']]],
-  ['valuerangerightopen',['ValueRangeRightOpen',['../classbigtable_1_1v0_1_1Filter.html#acd6c90bbfe68c8aa2c22d55480654268',1,'bigtable::v0::Filter']]],
-  ['valueregex',['ValueRegex',['../classbigtable_1_1v0_1_1Filter.html#a6d7c78b76e0d15a113170885bfa7cc22',1,'bigtable::v0::Filter']]],
-  ['version',['version',['../namespacebigtable_1_1v0.html#a9be36d34a66576ab67bdaab15ef10330',1,'bigtable::v0']]],
+  ['value',['value',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html#af32e499d6a6b3f6f47959e8dd9f2f26e',1,'google::cloud::bigtable::v0::MetadataUpdatePolicy::value()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#a50a89f9169c580da2502a58edaada7b2',1,'google::cloud::bigtable::v0::Cell::value()']]],
+  ['value_5fas',['value_as',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ab4baf2faf9087f8e41c1aedd6e443ca6',1,'google::cloud::bigtable::v0::Cell']]],
+  ['valuerange',['ValueRange',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#aafbfae7a5b65433b29ff1e7bd37aa981',1,'google::cloud::bigtable::v0::Filter']]],
+  ['valuerangeclosed',['ValueRangeClosed',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a4bd2ad7fbd0b353ae22de4be87515aae',1,'google::cloud::bigtable::v0::Filter']]],
+  ['valuerangeleftopen',['ValueRangeLeftOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ae2cf2a6318c0ede495408cd58262d892',1,'google::cloud::bigtable::v0::Filter']]],
+  ['valuerangeopen',['ValueRangeOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a3a8e3d552aabe0f7ceee5125961d904f',1,'google::cloud::bigtable::v0::Filter']]],
+  ['valuerangerightopen',['ValueRangeRightOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a1890b2160e118266d7bf7db7ca72428d',1,'google::cloud::bigtable::v0::Filter']]],
+  ['valueregex',['ValueRegex',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#af44a8974b23f4abe05c24c005989d5e3',1,'google::cloud::bigtable::v0::Filter']]],
+  ['version',['version',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aa2da4afcc2ccb4d08ca243c17b7b20f9',1,'google::cloud::bigtable::v0']]],
   ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
   ['version_2eh',['version.h',['../version_8h.html',1,'']]],
-  ['version_5fmajor',['version_major',['../namespacebigtable_1_1v0.html#acb51ffbb3b248ba5e66ef8ef5ec8702e',1,'bigtable::v0']]],
-  ['version_5fminor',['version_minor',['../namespacebigtable_1_1v0.html#ad517c0ab41e462a70dc59b35ea914063',1,'bigtable::v0']]],
-  ['version_5fpatch',['version_patch',['../namespacebigtable_1_1v0.html#adccdf10ea76673fd666c668293c196d6',1,'bigtable::v0']]],
-  ['version_5fstring',['version_string',['../namespacebigtable_1_1v0.html#a54d52c6213d980959c7ae0f6de581c87',1,'bigtable::v0']]]
+  ['version_5fmajor',['version_major',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5a2c1c7810a25e6177ed611c6f59bf99',1,'google::cloud::bigtable::v0']]],
+  ['version_5fminor',['version_minor',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a4230a131a722eed387c246efdd0e42e6',1,'google::cloud::bigtable::v0']]],
+  ['version_5fpatch',['version_patch',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5c15a6b960671c60446f13c3447a2b76',1,'google::cloud::bigtable::v0']]],
+  ['version_5fstring',['version_string',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aaac4a3e195d79efc7b78e00a5d3f3e50',1,'google::cloud::bigtable::v0']]]
 ];

@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['readmodifywriterule',['ReadModifyWriteRule',['../classbigtable_1_1v0_1_1ReadModifyWriteRule.html',1,'bigtable::v0']]],
-  ['row',['Row',['../classbigtable_1_1v0_1_1Row.html',1,'bigtable::v0']]],
-  ['rowrange',['RowRange',['../classbigtable_1_1v0_1_1RowRange.html',1,'bigtable::v0']]],
-  ['rowreader',['RowReader',['../classbigtable_1_1v0_1_1RowReader.html',1,'bigtable::v0']]],
-  ['rowset',['RowSet',['../classbigtable_1_1v0_1_1RowSet.html',1,'bigtable::v0']]],
-  ['rpcbackoffpolicy',['RPCBackoffPolicy',['../classbigtable_1_1v0_1_1RPCBackoffPolicy.html',1,'bigtable::v0']]],
-  ['rpcretrypolicy',['RPCRetryPolicy',['../classbigtable_1_1v0_1_1RPCRetryPolicy.html',1,'bigtable::v0']]]
+  ['readmodifywriterule',['ReadModifyWriteRule',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ReadModifyWriteRule.html',1,'google::cloud::bigtable::v0']]],
+  ['row',['Row',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Row.html',1,'google::cloud::bigtable::v0']]],
+  ['rowrange',['RowRange',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html',1,'google::cloud::bigtable::v0']]],
+  ['rowreader',['RowReader',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html',1,'google::cloud::bigtable::v0']]],
+  ['rowset',['RowSet',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html',1,'google::cloud::bigtable::v0']]],
+  ['rpcbackoffpolicy',['RPCBackoffPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html',1,'google::cloud::bigtable::v0']]],
+  ['rpcretrypolicy',['RPCRetryPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html',1,'google::cloud::bigtable::v0']]]
 ];
