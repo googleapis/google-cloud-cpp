@@ -41,9 +41,17 @@ class GetBucketMetadataRequest {
   /**
    * Apply a list of modifiers to a GetBucketMetadataRequest.
    *
-   * This is a convenience function to apply multiple modifiers in a single
-   * call. Note that only those modifiers accepted by the `Apply()` overloads
-   * are valid.
+   * This is a shorthand to replace:
+   *
+   * @code
+   * request.ApplyModifier(m1).ApplyModifier(m2).ApplyModifier(m3)
+   * @endcode
+   *
+   * with:
+   *
+   * @code
+   * request.ApplyModifiers(m1, m2, m3)
+   * @endcode
    *
    * @tparam H the first modifier type
    * @tparam T the types of the remaining modifiers.
@@ -51,27 +59,35 @@ class GetBucketMetadataRequest {
    * @param tail the remaining modifiers in the list.
    */
   template <typename H, typename... T>
-  void ApplyModifiers(H&& head, T&&... tail) {
-    Apply(std::forward<H>(head));
-    ApplyModifiers(std::forward<T>(tail)...);
+  GetBucketMetadataRequest& ApplyModifiers(H&& head, T&&... tail) {
+    ApplyModifier(std::forward<H>(head));
+    return ApplyModifiers(std::forward<T>(tail)...);
   }
 
   //@{
   /// @name Apply a single modifier to the request.
-  void Apply(IfMetaGenerationMatch&& p) {
+  GetBucketMetadataRequest& ApplyModifier(IfMetaGenerationMatch&& p) {
     well_known_parameters_.Apply(std::move(p));
+    return *this;
   }
-  void Apply(IfMetaGenerationNotMatch&& p) {
+  GetBucketMetadataRequest& ApplyModifier(IfMetaGenerationNotMatch&& p) {
     well_known_parameters_.Apply(std::move(p));
+    return *this;
   }
-  void Apply(Projection&& p) { well_known_parameters_.Apply(std::move(p)); }
-  void Apply(UserProject&& p) { well_known_parameters_.Apply(std::move(p)); }
+  GetBucketMetadataRequest& ApplyModifier(Projection&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  GetBucketMetadataRequest& ApplyModifier(UserProject&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
   //@}
 
   /**
    * Apply an empty list of modifiers to a GetBucketMetadataRequest.
    */
-  void ApplyModifiers() {}
+  GetBucketMetadataRequest& ApplyModifiers() { return *this; }
 
  private:
   std::string bucket_name_;
@@ -94,6 +110,11 @@ class Client {
   // classes that do use them friends.
  protected:
   friend class Bucket;
+  /**
+   * Execute a request to fetch bucket metadata.
+   *
+   * TODO(#690) - consider checking that modifiers in a request are compatible.
+   */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
 };
