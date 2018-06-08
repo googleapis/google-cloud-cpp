@@ -16,50 +16,25 @@
 
 set -eu
 
-function install_dependencies {
-  sudo apt-get update
-  sudo apt-get install -y software-properties-common
-  sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  sudo apt-get update
-  sudo apt-get install -y \
-       gcc-4.9 \
-       g++-4.9 \
-       libcurl4-openssl-dev \
-       libssl-dev \
-       unzip \
-       wget \
-       zip \
-       zlib1g-dev
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update
+sudo apt-get install -y \
+     gcc-4.9 \
+     g++-4.9 \
+     libcurl4-openssl-dev \
+     libssl-dev \
+     unzip \
+     wget \
+     zip \
+     zlib1g-dev
 
-  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-  sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
 
-  readonly BAZEL_VERSION=0.12.0
-  readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
-  wget -q "${GITHUB_DL}/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
-  chmod +x "bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
-  ./bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh --user
-}
-
-# Make three attempts to install the dependencies. It is rare, but from time to
-# time the downloading the packages and/or the Bazel installer fails. To make
-# the CI build more robust, try again when that happens.
-
-# Initially, wait at least 3 minutes (the times are in seconds), because it
-# makes no sense to try faster.  We currently have 20+ minutes of remaining
-# budget to complete a build, and we should be as nice as possible to the
-# servers that provide the packages.
-min_wait=180
-# Do not exit on failures for this loop.
-set +e
-for i in 1 2 3; do
-  install_dependencies
-  if [ $? -eq 0 ]; then
-    exit 0
-  fi
-  # Sleep for a few minutes before trying again.
-  period=$[ (${RANDOM} % 60) + min_wait ]
-  echo "Fetch failed; trying again in ${period} seconds."
-  sleep ${period}s
-  min_wait=$[ min_wait * 2 ]
-done
+readonly BAZEL_VERSION=0.12.0
+readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
+wget -q "${GITHUB_DL}/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
+chmod +x "bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
+./bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh --user

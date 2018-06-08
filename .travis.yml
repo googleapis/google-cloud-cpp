@@ -46,13 +46,13 @@ matrix:
         - git submodule update --init
               third_party/googleapis
               third_party/googletest
-        - ci/install-linux.sh
+        - ci/install-retry.sh ci/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
       os: osx
       compiler: clang
-      install: ci/install-macosx.sh
+      install: ci/install-retry.sh ci/install-macosx.sh
       script: ci/build-macosx.sh
       cache: ccache
       if: type != pull_request
@@ -61,7 +61,7 @@ matrix:
       compiler: gcc
       git:
         submodules: false
-      install: ci/install-bazel.sh
+      install: ci/install-retry.sh ci/install-bazel.sh
       script: ci/build-bazel.sh
     - # Compile on Travis' native environment with Bazel
       os: linux
@@ -70,7 +70,7 @@ matrix:
         TEST_BAZEL_AS_DEPENDENCY=yes
       git:
         submodules: false
-      install: ci/install-bazel.sh
+      install: ci/install-retry.sh ci/install-bazel.sh
       script: ci/build-bazel.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Install the google-cloud-cpp libraries and test that one can use the
@@ -90,7 +90,7 @@ matrix:
         - git submodule update --init
               third_party/googleapis
               third_party/googletest
-        - ci/install-linux.sh
+        - ci/install-retry.sh ci/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
@@ -153,7 +153,7 @@ script:
   - ci/build-linux.sh
 
 install:
-  - ci/install-linux.sh
+  - ci/install-retry.sh ci/install-linux.sh
 
 after_success:
   - ci/upload-codecov.sh
