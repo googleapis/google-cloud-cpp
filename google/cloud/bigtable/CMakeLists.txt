@@ -133,6 +133,8 @@ add_library(bigtable_client
         internal/encoder.h
         internal/endian.h
         internal/endian.cc
+        internal/grpc_error_delegate.h
+        internal/grpc_error_delegate.cc
         internal/instance_admin.h
         internal/instance_admin.cc
         internal/make_unique.h
@@ -147,8 +149,6 @@ add_library(bigtable_client
         internal/table.cc
         internal/table_admin.h
         internal/table_admin.cc
-        internal/throw_delegate.h
-        internal/throw_delegate.cc
         internal/unary_client_utils.h
         idempotent_mutation_policy.h
         idempotent_mutation_policy.cc
@@ -242,10 +242,10 @@ set(bigtable_client_unit_tests
         instance_update_config_test.cc
         internal/bulk_mutator_test.cc
         internal/instance_admin_test.cc
+        internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
         internal/table_admin_test.cc
         internal/table_test.cc
-        internal/throw_delegate_test.cc
         mutations_test.cc
         table_admin_test.cc
         table_apply_test.cc
@@ -277,7 +277,6 @@ list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
 foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    set(target "bigtable_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
             bigtable_client_testing bigtable_client bigtable_protos

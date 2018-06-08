@@ -159,7 +159,6 @@ set(storage_client_unit_tests
 foreach (fname ${storage_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    set(target "storage_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target}
         PRIVATE

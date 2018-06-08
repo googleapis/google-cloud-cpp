@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
-#include "google/cloud/bigtable/internal/throw_delegate.h"
 #include <thread>
 #include <type_traits>
 

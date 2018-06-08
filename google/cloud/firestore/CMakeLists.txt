@@ -78,7 +78,6 @@ export_list_to_bazel("firestore_client_unit_tests.bzl" "firestore_client_unit_te
 foreach (fname ${firestore_client_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
-    set(target "firestore_client_${target}")
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
         firestore_client gmock firestore_common_options)
