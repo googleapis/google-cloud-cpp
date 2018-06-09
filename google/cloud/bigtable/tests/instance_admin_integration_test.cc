@@ -201,9 +201,6 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
 
   bigtable::ClusterConfig cluster_config =
       bigtable::ClusterConfig("us-central1-f", 3, bigtable::ClusterConfig::HDD);
-  auto cluster =
-      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id);
-
   std::vector<std::pair<std::string, bigtable::ClusterConfig>>
       clusters_config_list;
   clusters_config_list.push_back(
