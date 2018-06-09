@@ -1,18 +1,12 @@
 var searchData=
 [
-  ['self_5flink',['self_link',['../classstorage_1_1v_1_1BucketMetadata.html#ade0f98ef4edacfbce011244f56328866',1,'storage::v::BucketMetadata']]],
-  ['status',['Status',['../classstorage_1_1v_1_1Status.html',1,'storage::v::Status'],['../classstorage_1_1v_1_1Status.html#ab8b4e5b15e16a92e658c196081753726',1,'storage::v::Status::Status()'],['../classstorage_1_1v_1_1Status.html#a3ebd25454466e2b73ae395d68cbbdb74',1,'storage::v::Status::Status(long status_code, std::string error_message)'],['../classstorage_1_1v_1_1Status.html#a05170ece5e22dfb8461209d3c849739b',1,'storage::v::Status::Status(long status_code, std::string error_message, std::string error_details)']]],
-  ['status_2eh',['status.h',['../status_8h.html',1,'']]],
-  ['status_5fcode',['status_code',['../classstorage_1_1v_1_1Status.html#a7dc1c1022cde146fbd88af8c0b1d1259',1,'storage::v::Status']]],
-  ['storage',['storage',['../namespacestorage.html',1,'']]],
-  ['storage_5fbucket_5fsamples_2ecc',['storage_bucket_samples.cc',['../storage__bucket__samples_8cc.html',1,'']]],
-  ['storage_5fclass',['storage_class',['../classstorage_1_1v_1_1BucketMetadata.html#a5b5add3181158b7ec90e257d9f9eafba',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fcoldline',['STORAGE_CLASS_COLDLINE',['../classstorage_1_1v_1_1BucketMetadata.html#aa9a0688a47c08fe7c52c6f3b480778da',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fdurable_5freduced_5favailability',['STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY',['../classstorage_1_1v_1_1BucketMetadata.html#afddfcd266cd855c58073ccf515a90744',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fmulti_5fregional',['STORAGE_CLASS_MULTI_REGIONAL',['../classstorage_1_1v_1_1BucketMetadata.html#a9a5cbd5fe93c325f73bd78ac46f9e76f',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fnearline',['STORAGE_CLASS_NEARLINE',['../classstorage_1_1v_1_1BucketMetadata.html#a67560bec028de8072c60081d734e16a7',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fregional',['STORAGE_CLASS_REGIONAL',['../classstorage_1_1v_1_1BucketMetadata.html#aa4e8bb8f7767841e79745fb1f025639b',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclass_5fstandard',['STORAGE_CLASS_STANDARD',['../classstorage_1_1v_1_1BucketMetadata.html#ab199a963b0d9f6ede00a3d4f2ad6888a',1,'storage::v::BucketMetadata']]],
-  ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]],
-  ['v',['v',['../namespacestorage_1_1v.html',1,'storage']]]
+  ['validatebucketname',['ValidateBucketName',['../classstorage_1_1v_1_1Bucket.html#a111130f39d4c0fd4f74b8ac7b0e4e466',1,'storage::v::Bucket']]],
+  ['value',['value',['../classstorage_1_1v_1_1WellKnownParameter.html#a9db23b851c8f8612e3b9fd01a89b3977',1,'storage::v::WellKnownParameter']]],
+  ['version',['version',['../namespacestorage_1_1v.html#a613c41091a57cf695308470bab8203cd',1,'storage::v']]],
+  ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
+  ['version_2eh',['version.h',['../version_8h.html',1,'']]],
+  ['version_5fmajor',['version_major',['../namespacestorage_1_1v.html#af8bdcf88250309a0c2fc33b9956b7e3b',1,'storage::v']]],
+  ['version_5fminor',['version_minor',['../namespacestorage_1_1v.html#a75a9095e0429cc1323aa0ab811d8ec89',1,'storage::v']]],
+  ['version_5fpatch',['version_patch',['../namespacestorage_1_1v.html#ac2216055b828a97acc6c1811499c4562',1,'storage::v']]],
+  ['version_5fstring',['version_string',['../namespacestorage_1_1v.html#ac51f6b1fa908e88cf591af12b0272e33',1,'storage::v']]]
 ];

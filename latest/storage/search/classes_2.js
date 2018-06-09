@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['objectmetadata',['ObjectMetadata',['../classstorage_1_1v_1_1ObjectMetadata.html',1,'storage::v']]]
+  ['getbucketmetadatarequest',['GetBucketMetadataRequest',['../classstorage_1_1v_1_1GetBucketMetadataRequest.html',1,'storage::v']]]
 ];

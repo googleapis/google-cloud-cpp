@@ -86,9 +86,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67ff14399883980e2ed752134871eb10"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a67ff14399883980e2ed752134871eb10">bucket_name</a> () const</td></tr>
 <tr class="memdesc:a67ff14399883980e2ed752134871eb10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of the bucket.  <a href="#a67ff14399883980e2ed752134871eb10">More...</a><br /></td></tr>
 <tr class="separator:a67ff14399883980e2ed752134871eb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bbdd4dc4c5c08eff5b0381c3e66e92c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstorage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a1bbdd4dc4c5c08eff5b0381c3e66e92c">GetMetadata</a> ()</td></tr>
-<tr class="memdesc:a1bbdd4dc4c5c08eff5b0381c3e66e92c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#a1bbdd4dc4c5c08eff5b0381c3e66e92c">More...</a><br /></td></tr>
-<tr class="separator:a1bbdd4dc4c5c08eff5b0381c3e66e92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a514fb0f9f8e7bca002e01de23428e7fa"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:a514fb0f9f8e7bca002e01de23428e7fa"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classstorage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a514fb0f9f8e7bca002e01de23428e7fa">GetMetadata</a> (Modifiers &amp;&amp;... modifier)</td></tr>
+<tr class="memdesc:a514fb0f9f8e7bca002e01de23428e7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#a514fb0f9f8e7bca002e01de23428e7fa">More...</a><br /></td></tr>
+<tr class="separator:a514fb0f9f8e7bca002e01de23428e7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -165,29 +166,46 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1bbdd4dc4c5c08eff5b0381c3e66e92c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bbdd4dc4c5c08eff5b0381c3e66e92c">&#9670;&nbsp;</a></span>GetMetadata()</h2>
+<a id="a514fb0f9f8e7bca002e01de23428e7fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a514fb0f9f8e7bca002e01de23428e7fa">&#9670;&nbsp;</a></span>GetMetadata()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Modifiers&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classstorage_1_1v_1_1BucketMetadata.html">BucketMetadata</a> storage::v::Bucket::GetMetadata </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">Modifiers &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>modifier</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Fetch the bucket metadata and return it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">modifier</td><td>a variadic list. Valid types for this operation include <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structstorage_1_1v_1_1UserProject.html">UserProject</a></code>, <code><a class="el" href="structstorage_1_1v_1_1Projection.html">Projection</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>if the metadata cannot be fetched using the current policies.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classstorage_1_1v_1_1Bucket.html#a1bbdd4dc4c5c08eff5b0381c3e66e92c">GetMetadata</a>(storage::Bucket bucket, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keyword">auto</span> meta = bucket.GetMetadata();</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classstorage_1_1v_1_1Bucket.html#a514fb0f9f8e7bca002e01de23428e7fa">GetMetadata</a>(storage::Bucket bucket, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keyword">auto</span> meta = bucket.GetMetadata();</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
