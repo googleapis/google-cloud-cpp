@@ -162,10 +162,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::Projection("full"));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::Projection("full"));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -186,10 +183,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::UserProject("a-project"));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::UserProject("a-project"));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -210,10 +204,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::IfGenerationMatch(42));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::IfGenerationMatch(42));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -234,10 +225,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::IfGenerationNotMatch(42));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -258,10 +246,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::IfMetaGenerationMatch(42));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::IfMetaGenerationMatch(42));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -282,10 +267,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::IfMetaGenerationNotMatch(42));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::IfMetaGenerationNotMatch(42));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
@@ -306,12 +288,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   storage::internal::CurlRequest request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-
-  storage::WellKnownParameters parameters;
-  parameters.Apply(storage::UserProject("user-project-id"));
-  parameters.Apply(storage::IfMetaGenerationMatch(7));
-  parameters.Apply(storage::IfGenerationNotMatch(42));
-  request.AddWellKnownParameters(parameters);
+  request.AddWellKnownParameter(storage::UserProject("user-project-id"));
+  request.AddWellKnownParameter(storage::IfMetaGenerationMatch(7));
+  request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();

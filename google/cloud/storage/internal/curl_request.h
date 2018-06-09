@@ -55,11 +55,6 @@ class CurlRequest {
   /// Add a parameter for a POST request.
   void AddQueryParameter(std::string const& key, std::string const& value);
 
-  /**
-   * Apply the well known parameters to this request.
-   */
-  void AddWellKnownParameters(WellKnownParameters const& p);
-
   /// URL-escape a string.
   CurlString MakeEscapedString(std::string const& s) {
     return CurlString(
@@ -88,7 +83,6 @@ class CurlRequest {
   CurlRequest(CurlRequest&&) = default;
   CurlRequest& operator=(CurlRequest&&) = default;
 
- private:
   template <typename P>
   void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {

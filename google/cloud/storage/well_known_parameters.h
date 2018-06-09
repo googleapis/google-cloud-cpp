@@ -90,36 +90,6 @@ struct Generation : public WellKnownParameter<Generation, std::int64_t> {
   static char const* well_known_parameter_name() { return "generation"; }
 };
 
-/**
- * Define the collection of well known query parameters.
- *
- * While not all parameters apply to all requests, it is simpler to keep all
- * of them in a group, and ignore those that are not set.
- */
-struct WellKnownParameters {
-  Projection projection;
-  UserProject user_project;
-  IfGenerationMatch if_generation_match;
-  IfGenerationNotMatch if_generation_not_match;
-  IfMetaGenerationMatch if_meta_generation_match;
-  IfMetaGenerationNotMatch if_meta_generation_not_match;
-  Generation generation;
-
-  void Apply(IfGenerationMatch&& p) { if_generation_match = std::move(p); }
-  void Apply(IfGenerationNotMatch&& p) {
-    if_generation_not_match = std::move(p);
-  }
-  void Apply(IfMetaGenerationMatch&& p) {
-    if_meta_generation_match = std::move(p);
-  }
-  void Apply(IfMetaGenerationNotMatch&& p) {
-    if_meta_generation_not_match = std::move(p);
-  }
-  void Apply(Projection&& p) { projection = std::move(p); }
-  void Apply(UserProject&& p) { user_project = std::move(p); }
-  void Apply(Generation&& p) { generation = std::move(p); }
-};
-
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 

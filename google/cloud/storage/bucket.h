@@ -50,33 +50,42 @@ class Bucket {
    */
   template <typename... Modifiers>
   BucketMetadata GetMetadata(Modifiers&&... modifiers) {
-    GetBucketMetadataRequest request(bucket_name());
-    request.ApplyModifiers(std::forward<Modifiers>(modifiers)...);
+    internal::GetBucketMetadataRequest request(bucket_name());
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
     return GetMetadataImpl(request);
   }
 
   /**
    * Create an object given its name and media (contents).
    *
+   * @param object_name the name of the object to be created.
+   * @param contents the contents (media) for the new object.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc insert object
-   *
-   * TODO(#682) - prototype modifiers for the request.
    */
   template <typename... Modifiers>
   ObjectMetadata InsertObject(std::string const& object_name,
-                              std::string contents, Modifiers&&... modifier) {
-    InsertObjectMediaRequest request(bucket_name(), object_name,
-                                     std::move(contents));
-    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+                              std::string contents, Modifiers&&... modifiers) {
+    internal::InsertObjectMediaRequest request(bucket_name(), object_name,
+                                               std::move(contents));
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
     return InsertObjectMediaImpl(request);
   }
 
   static void ValidateBucketName(std::string const& bucket_name);
 
  private:
-  BucketMetadata GetMetadataImpl(GetBucketMetadataRequest const& request);
-  ObjectMetadata InsertObjectMediaImpl(InsertObjectMediaRequest const& request);
+  BucketMetadata GetMetadataImpl(
+      internal::GetBucketMetadataRequest const& request);
+  ObjectMetadata InsertObjectMediaImpl(
+      internal::InsertObjectMediaRequest const& request);
 
  private:
   std::shared_ptr<Client> client_;
