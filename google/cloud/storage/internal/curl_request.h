@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/well_known_parameters.h"
 #include <curl/curl.h>
 #include <map>
 
@@ -49,11 +50,15 @@ class CurlRequest {
   ~CurlRequest();
 
   /// Add request headers.
-  void AddHeader(std::string const& key, std::string const& value);
   void AddHeader(std::string const& header);
 
   /// Add a parameter for a POST request.
   void AddQueryParameter(std::string const& key, std::string const& value);
+
+  /**
+   * Apply the well known parameters to this request.
+   */
+  void AddWellKnownParameters(WellKnownParameters const& p);
 
   /// URL-escape a string.
   CurlString MakeEscapedString(std::string const& s) {
@@ -82,6 +87,21 @@ class CurlRequest {
   CurlRequest& operator=(CurlRequest const&) = delete;
   CurlRequest(CurlRequest&&) = default;
   CurlRequest& operator=(CurlRequest&&) = default;
+
+ private:
+  template <typename P>
+  void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
+    if (p.has_value()) {
+      AddQueryParameter(p.parameter_name(), p.value());
+    }
+  }
+
+  template <typename P>
+  void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
+    if (p.has_value()) {
+      AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
+    }
+  }
 
  private:
   std::string url_;

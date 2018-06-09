@@ -39,15 +39,27 @@ class Bucket {
   /**
    * Fetch the bucket metadata and return it.
    *
+   * @param modifier a variadic list. Valid types for this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`.
+   *
    * @throw std::runtime_error if the metadata cannot be fetched using the
    * current policies.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get metadata
    */
-  BucketMetadata GetMetadata();
+  template <typename... Modifiers>
+  BucketMetadata GetMetadata(Modifiers&&... modifier) {
+    GetBucketMetadataRequest request(bucket_name());
+    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+    return GetMetadataImpl(request);
+  }
 
   static void ValidateBucketName(std::string const& bucket_name);
+
+ private:
+  BucketMetadata GetMetadataImpl(GetBucketMetadataRequest const& request);
 
  private:
   std::shared_ptr<Client> client_;

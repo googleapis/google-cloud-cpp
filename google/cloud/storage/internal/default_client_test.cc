@@ -52,7 +52,7 @@ TEST_F(DefaultClientTest, Simple) {
       .WillOnce(Invoke(
           [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
   handle->SetupMakeEscapedString();
-  EXPECT_CALL(*handle, AddHeader("Authorization", "some-secret-credential"))
+  EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
 
   std::string response_payload = R"""({
@@ -75,7 +75,8 @@ TEST_F(DefaultClientTest, Simple) {
   auto expected = storage::BucketMetadata::ParseFromJson(response_payload);
 
   DefaultClient client(credentials_);
-  auto actual = client.GetBucketMetadata("my-bucket");
+  storage::GetBucketMetadataRequest request("my-bucket");
+  auto actual = client.GetBucketMetadata(request);
   EXPECT_TRUE(actual.first.ok());
   EXPECT_EQ(expected, actual.second);
 }
@@ -86,14 +87,15 @@ TEST_F(DefaultClientTest, HandleError) {
   EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
       .WillOnce(Invoke(
           [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
-  EXPECT_CALL(*handle, AddHeader("Authorization", "some-secret-credential"))
+  EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
   EXPECT_CALL(*handle, MakeRequest())
       .WillOnce(Return(
           storage::internal::HttpResponse{404, "cannot find my-bucket", {}}));
 
   DefaultClient client(credentials_);
-  auto actual = client.GetBucketMetadata("my-bucket");
+  storage::GetBucketMetadataRequest request("my-bucket");
+  auto actual = client.GetBucketMetadata(request);
   EXPECT_FALSE(actual.first.ok());
   EXPECT_EQ(404, actual.first.status_code());
   EXPECT_EQ("cannot find my-bucket", actual.first.error_message());

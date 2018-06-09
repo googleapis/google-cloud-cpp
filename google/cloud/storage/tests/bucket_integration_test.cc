@@ -51,6 +51,48 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
   std::cout << metadata << std::endl;
 }
 
+TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  auto client =
+      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  storage::Bucket bucket(client, bucket_name);
+
+  auto metadata = bucket.GetMetadata();
+  EXPECT_EQ(bucket_name, metadata.name());
+  EXPECT_EQ(bucket_name, metadata.id());
+  EXPECT_EQ("storage#bucket", metadata.kind());
+
+  auto metadata2 = bucket.GetMetadata(
+      storage::Projection("noAcl"),
+      storage::IfMetaGenerationMatch(metadata.metageneration()));
+  EXPECT_EQ(metadata2, metadata);
+}
+
+TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  auto client =
+      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  storage::Bucket bucket(client, bucket_name);
+
+  auto metadata = bucket.GetMetadata();
+  EXPECT_EQ(bucket_name, metadata.name());
+  EXPECT_EQ(bucket_name, metadata.id());
+  EXPECT_EQ("storage#bucket", metadata.kind());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(bucket.GetMetadata(storage::Projection("noAcl"),
+                                  storage::IfMetaGenerationNotMatch(
+                                      metadata.metageneration())),
+               std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      bucket.GetMetadata(
+          storage::Projection("noAcl"),
+          storage::IfMetaGenerationNotMatch(metadata.metageneration())),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 
