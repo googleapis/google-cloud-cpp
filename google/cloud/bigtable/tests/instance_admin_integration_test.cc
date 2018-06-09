@@ -278,6 +278,48 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   EXPECT_EQ(4, cluster_after.serve_nodes());
 }
 
+/// @test Verify that default InstanceAdmin::DeleteClusters works as expected.
+TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
+  std::string id =
+      "it-" + bigtable::testing::Sample(generator_, 8,
+                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+  bigtable::InstanceId instance_id(id);
+  bigtable::ClusterId cluster_id1(id + "-cl1");
+  bigtable::ClusterId cluster_id2(id + "-cl2");
+  bigtable::DisplayName display_name(id);
+
+  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
+  clusters_config.push_back(
+      std::make_pair(cluster_id1.get(),
+                     bigtable::ClusterConfig("us-central1-f", 3,
+                                             bigtable::ClusterConfig::HDD)));
+  clusters_config.push_back(
+      std::make_pair(cluster_id2.get(),
+                     bigtable::ClusterConfig("us-central1-b", 3,
+                                             bigtable::ClusterConfig::HDD)));
+  auto instance_config =
+      bigtable::InstanceConfig(instance_id, display_name, clusters_config)
+          .set_type(bigtable::InstanceConfig::PRODUCTION);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  auto clusters_before = instance_admin_->ListClusters(id);
+
+  instance_admin_->DeleteCluster(std::move(instance_id),
+                                 std::move(cluster_id2));
+
+  auto clusters_after = instance_admin_->ListClusters(id);
+
+  instance_admin_->DeleteInstance(id);
+
+  EXPECT_EQ(2U, clusters_before.size());
+  EXPECT_TRUE(IsClusterPresent(
+      clusters_before, instance_details.name() + "/clusters/" + id + "-cl2"));
+  EXPECT_FALSE(IsClusterPresent(
+      clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));
+  EXPECT_EQ(1U, clusters_after.size());
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
 

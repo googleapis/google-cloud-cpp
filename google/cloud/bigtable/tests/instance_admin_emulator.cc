@@ -39,6 +39,12 @@ class InstanceAdminEmulator final
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
+
+    for (auto& kv : request->clusters()) {
+      auto cluster = kv.second;
+      cluster.set_name(name + "/clusters/" + kv.first);
+      clusters_.emplace(name + "/clusters/" + kv.first, cluster);
+    }
     if (ins.second) {
       auto& stored_instance = ins.first->second;
       stored_instance.set_name(name);
@@ -136,7 +142,14 @@ class InstanceAdminEmulator final
     if (i == instances_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
     }
-    instances_.erase(i);
+    instances_.erase(i->first);
+
+    for (auto it : clusters_) {
+      if (it.first.find(request->name()) != std::string::npos) {
+        clusters_.erase(it.first);
+      }
+    }
+
     return grpc::Status::OK;
   }
 
@@ -174,12 +187,21 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    std::string prefix = request->parent() + "/clusters/";
-    for (auto const& kv : clusters_) {
-      if (0 == kv.first.find(prefix)) {
+    std::string prefix = request->parent();
+
+    // magical instance name "-" must return all clusters in the project
+    if (request->parent().back() == '-') {
+      for (auto const& kv : clusters_) {
         *response->add_clusters() = kv.second;
       }
+    } else {
+      for (auto const& kv : clusters_) {
+        if (kv.first.find(prefix) != std::string::npos) {
+          *response->add_clusters() = kv.second;
+        }
+      }
     }
+
     return grpc::Status::OK;
   }
 
@@ -208,7 +230,7 @@ class InstanceAdminEmulator final
     if (i == clusters_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
     }
-    clusters_.erase(i);
+    clusters_.erase(i->first);
     return grpc::Status::OK;
   }
 
