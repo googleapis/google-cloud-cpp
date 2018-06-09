@@ -1,0 +1,564 @@
+$VAR1 = {
+          'ABI_DUMPER_VERSION' => '1.1',
+          'ABI_DUMP_VERSION' => '3.5',
+          'Arch' => 'x86_64',
+          'Compiler' => 'GNU C++11 7.3.0 -mtune=generic -march=x86-64 -g -std=gnu++11 -fPIC -fstack-protector-strong',
+          'Headers' => {
+                         'build_info.h' => 1,
+                         'setenv.h' => 1,
+                         'throw_delegate.h' => 1
+                       },
+          'Language' => 'C++',
+          'LibraryName' => 'libgoogle_cloud_cpp_common.so',
+          'LibraryVersion' => '0.1.0',
+          'MissedOffsets' => '1',
+          'MissedRegs' => '1',
+          'NameSpaces' => {
+                            '__gnu_cxx' => 1,
+                            'google::cloud::v0::internal' => 1,
+                            'std' => 1,
+                            'std::__cxx11' => 1,
+                            'std::__exception_ptr' => 1
+                          },
+          'Needed' => {
+                        'libc.so.6' => 1,
+                        'libgcc_s.so.1' => 1,
+                        'libstdc++.so.6' => 1
+                      },
+          'PublicABI' => '1',
+          'Sources' => {
+                         'build_info.cc' => 1,
+                         'setenv.cc' => 1,
+                         'throw_delegate.cc' => 1
+                       },
+          'SymbolInfo' => {
+                            '16246' => {
+                                         'Data' => 1,
+                                         'Header' => 'build_info.h',
+                                         'Line' => '25',
+                                         'MnglName' => '_ZN6google5cloud2v08internal8COMPILERE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Return' => '16316',
+                                         'ShortName' => 'COMPILER',
+                                         'Source' => 'build_info.cc',
+                                         'SourceLine' => '22'
+                                       },
+                            '16261' => {
+                                         'Data' => 1,
+                                         'Header' => 'build_info.h',
+                                         'Line' => '28',
+                                         'MnglName' => '_ZN6google5cloud2v08internal14COMPILER_FLAGSE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Return' => '16316',
+                                         'ShortName' => 'COMPILER_FLAGS',
+                                         'Source' => 'build_info.cc',
+                                         'SourceLine' => '24'
+                                       },
+                            '16276' => {
+                                         'Data' => 1,
+                                         'Header' => 'build_info.h',
+                                         'Line' => '31',
+                                         'MnglName' => '_ZN6google5cloud2v08internal6GITREVE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Return' => '16316',
+                                         'ShortName' => 'GITREV',
+                                         'Source' => 'build_info.cc',
+                                         'SourceLine' => '26'
+                                       },
+                            '24500' => {
+                                         'Header' => 'setenv.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal6SetEnvEPKcS4_',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'variable',
+                                                               'type' => '11251'
+                                                             },
+                                                      '1' => {
+                                                               'name' => 'value',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'SetEnv',
+                                         'Source' => 'setenv.cc',
+                                         'SourceLine' => '39'
+                                       },
+                            '24526' => {
+                                         'Header' => 'setenv.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal8UnsetEnvEPKc',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'variable',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'UnsetEnv',
+                                         'Source' => 'setenv.cc',
+                                         'SourceLine' => '29'
+                                       },
+                            '43703' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal15RaiseLogicErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '43662'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseLogicError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '63'
+                                       },
+                            '43724' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal15RaiseLogicErrorEPKc',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseLogicError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '61'
+                                       },
+                            '43745' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal17RaiseRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '43662'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseRuntimeError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '57'
+                                       },
+                            '43766' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal17RaiseRuntimeErrorEPKc',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseRuntimeError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '53'
+                                       },
+                            '43787' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal15RaiseRangeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '43662'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseRangeError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '49'
+                                       },
+                            '43808' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal15RaiseRangeErrorEPKc',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseRangeError',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '47'
+                                       },
+                            '43829' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal20RaiseInvalidArgumentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '43662'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseInvalidArgument',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '43'
+                                       },
+                            '43850' => {
+                                         'Header' => 'throw_delegate.h',
+                                         'MnglName' => '_ZN6google5cloud2v08internal20RaiseInvalidArgumentEPKc',
+                                         'NameSpace' => 'google::cloud::v0::internal',
+                                         'Param' => {
+                                                      '0' => {
+                                                               'name' => 'msg',
+                                                               'type' => '11251'
+                                                             }
+                                                    },
+                                         'Return' => '1',
+                                         'ShortName' => 'RaiseInvalidArgument',
+                                         'Source' => 'throw_delegate.cc',
+                                         'SourceLine' => '39'
+                                       }
+                          },
+          'SymbolVersion' => {},
+          'Symbols' => {
+                         'libgoogle_cloud_cpp_common.so' => {
+                                                              '_ZN6google5cloud2v08internal14COMPILER_FLAGSE' => -4,
+                                                              '_ZN6google5cloud2v08internal15RaiseLogicErrorEPKc' => 1,
+                                                              '_ZN6google5cloud2v08internal15RaiseLogicErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE' => 1,
+                                                              '_ZN6google5cloud2v08internal15RaiseRangeErrorEPKc' => 1,
+                                                              '_ZN6google5cloud2v08internal15RaiseRangeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE' => 1,
+                                                              '_ZN6google5cloud2v08internal17RaiseRuntimeErrorEPKc' => 1,
+                                                              '_ZN6google5cloud2v08internal17RaiseRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE' => 1,
+                                                              '_ZN6google5cloud2v08internal20RaiseInvalidArgumentEPKc' => 1,
+                                                              '_ZN6google5cloud2v08internal20RaiseInvalidArgumentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE' => 1,
+                                                              '_ZN6google5cloud2v08internal6GITREVE' => -9,
+                                                              '_ZN6google5cloud2v08internal6SetEnvEPKcS4_' => 1,
+                                                              '_ZN6google5cloud2v08internal8COMPILERE' => -10,
+                                                              '_ZN6google5cloud2v08internal8UnsetEnvEPKc' => 1,
+                                                              '_fini' => 1,
+                                                              '_init' => 1
+                                                            }
+                       },
+          'Target' => 'unix',
+          'TypeInfo' => {
+                          '1' => {
+                                   'Name' => 'void',
+                                   'Type' => 'Intrinsic'
+                                 },
+                          '10480' => {
+                                       'Name' => 'unsigned long',
+                                       'Size' => '8',
+                                       'Type' => 'Intrinsic'
+                                     },
+                          '10806' => {
+                                       'Name' => 'char',
+                                       'Size' => '1',
+                                       'Type' => 'Intrinsic'
+                                     },
+                          '10813' => {
+                                       'BaseType' => '10806',
+                                       'Name' => 'char const',
+                                       'Size' => '1',
+                                       'Type' => 'Const'
+                                     },
+                          '11251' => {
+                                       'BaseType' => '10813',
+                                       'Name' => 'char const*',
+                                       'Size' => '8',
+                                       'Type' => 'Pointer'
+                                     },
+                          '12047' => {
+                                       'BaseType' => '10806',
+                                       'Name' => 'char*',
+                                       'Size' => '8',
+                                       'Type' => 'Pointer'
+                                     },
+                          '16316' => {
+                                       'BaseType' => '10813',
+                                       'Name' => 'char const[]',
+                                       'Size' => '8',
+                                       'Type' => 'Array'
+                                     },
+                          '24809' => {
+                                       'Header' => 'basic_string.h',
+                                       'Line' => '77',
+                                       'Memb' => {
+                                                   '0' => {
+                                                            'access' => 'private',
+                                                            'name' => '_M_dataplus',
+                                                            'offset' => '0',
+                                                            'type' => '24821'
+                                                          },
+                                                   '1' => {
+                                                            'access' => 'private',
+                                                            'name' => '_M_string_length',
+                                                            'offset' => '8',
+                                                            'type' => '24961'
+                                                          },
+                                                   '2' => {
+                                                            'access' => 'private',
+                                                            'name' => 'unnamed0',
+                                                            'offset' => '16',
+                                                            'type' => '24930'
+                                                          }
+                                                 },
+                                       'Name' => 'std::__cxx11::basic_string<char>',
+                                       'NameSpace' => 'std::__cxx11',
+                                       'PrivateABI' => 1,
+                                       'Size' => '32',
+                                       'TParam' => {
+                                                     '0' => {
+                                                              'key' => '_CharT',
+                                                              'type' => '10806'
+                                                            }
+                                                   },
+                                       'Type' => 'Class'
+                                     },
+                          '24821' => {
+                                       'Base' => {
+                                                   '33791' => {
+                                                                'pos' => '0'
+                                                              }
+                                                 },
+                                       'Header' => 'basic_string.h',
+                                       'Line' => '139',
+                                       'Memb' => {
+                                                   '0' => {
+                                                            'name' => '_M_p',
+                                                            'offset' => '0',
+                                                            'type' => '24918'
+                                                          }
+                                                 },
+                                       'Name' => 'struct std::__cxx11::basic_string<char>::_Alloc_hider',
+                                       'NameSpace' => 'std::__cxx11::basic_string<char>',
+                                       'Private' => 1,
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Struct'
+                                     },
+                          '24918' => {
+                                       'BaseType' => '36054',
+                                       'Header' => 'basic_string.h',
+                                       'Line' => '92',
+                                       'Name' => 'std::__cxx11::basic_string<char>::pointer',
+                                       'NameSpace' => 'std::__cxx11::basic_string<char>',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '24930' => {
+                                       'Header' => 'basic_string.h',
+                                       'Line' => '161',
+                                       'Memb' => {
+                                                   '0' => {
+                                                            'name' => '_M_local_buf',
+                                                            'offset' => '0',
+                                                            'type' => '43586'
+                                                          },
+                                                   '1' => {
+                                                            'name' => '_M_allocated_capacity',
+                                                            'offset' => '0',
+                                                            'type' => '24961'
+                                                          }
+                                                 },
+                                       'Name' => 'std::__cxx11::basic_string<char>::anon-union-basic_string.h-161',
+                                       'NameSpace' => 'std::__cxx11::basic_string<char>',
+                                       'Private' => 1,
+                                       'PrivateABI' => 1,
+                                       'Size' => '16',
+                                       'Type' => 'Union'
+                                     },
+                          '24961' => {
+                                       'BaseType' => '36076',
+                                       'Header' => 'basic_string.h',
+                                       'Line' => '88',
+                                       'Name' => 'std::__cxx11::basic_string<char>::size_type',
+                                       'NameSpace' => 'std::__cxx11::basic_string<char>',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '31316' => {
+                                       'BaseType' => '24809',
+                                       'Header' => 'stringfwd.h',
+                                       'Line' => '74',
+                                       'Name' => 'std::__cxx11::string',
+                                       'NameSpace' => 'std::__cxx11',
+                                       'PrivateABI' => 1,
+                                       'Size' => '32',
+                                       'Type' => 'Typedef'
+                                     },
+                          '31327' => {
+                                       'BaseType' => '31316',
+                                       'Name' => 'std::__cxx11::string const',
+                                       'Size' => '32',
+                                       'Type' => 'Const'
+                                     },
+                          '33791' => {
+                                       'Base' => {
+                                                   '35503' => {
+                                                                'pos' => '0'
+                                                              }
+                                                 },
+                                       'Header' => 'allocator.h',
+                                       'Line' => '108',
+                                       'Name' => 'std::allocator<char>',
+                                       'NameSpace' => 'std',
+                                       'PrivateABI' => 1,
+                                       'Size' => '1',
+                                       'TParam' => {
+                                                     '0' => {
+                                                              'name' => 'char'
+                                                            }
+                                                   },
+                                       'Type' => 'Class'
+                                     },
+                          '34341' => {
+                                       'Copied' => 1,
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '384',
+                                       'Name' => 'struct std::allocator_traits<std::allocator<char> >',
+                                       'NameSpace' => 'std',
+                                       'PrivateABI' => 1,
+                                       'Size' => '1',
+                                       'TParam' => {
+                                                     '0' => {
+                                                              'key' => '_Alloc',
+                                                              'type' => '33791'
+                                                            }
+                                                   },
+                                       'Type' => 'Struct'
+                                     },
+                          '34383' => {
+                                       'BaseType' => '12047',
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '392',
+                                       'Name' => 'std::allocator_traits<std::allocator<char> >::pointer',
+                                       'NameSpace' => 'std::allocator_traits<std::allocator<char> >',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '34419' => {
+                                       'BaseType' => '7326',
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '407',
+                                       'Name' => 'std::allocator_traits<std::allocator<char> >::size_type',
+                                       'NameSpace' => 'std::allocator_traits<std::allocator<char> >',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '35503' => {
+                                       'Header' => 'new_allocator.h',
+                                       'Line' => '58',
+                                       'Name' => '__gnu_cxx::new_allocator<char>',
+                                       'NameSpace' => '__gnu_cxx',
+                                       'PrivateABI' => 1,
+                                       'Size' => '1',
+                                       'TParam' => {
+                                                     '0' => {
+                                                              'key' => '_Tp',
+                                                              'type' => '10806'
+                                                            }
+                                                   },
+                                       'Type' => 'Class'
+                                     },
+                          '35999' => {
+                                       'Base' => {
+                                                   '34341' => {
+                                                                'pos' => '0'
+                                                              }
+                                                 },
+                                       'Copied' => 1,
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '50',
+                                       'Name' => 'struct __gnu_cxx::__alloc_traits<std::allocator<char> >',
+                                       'NameSpace' => '__gnu_cxx',
+                                       'PrivateABI' => 1,
+                                       'Size' => '1',
+                                       'TParam' => {
+                                                     '0' => {
+                                                              'key' => '_Alloc',
+                                                              'type' => '33791'
+                                                            }
+                                                   },
+                                       'Type' => 'Struct'
+                                     },
+                          '36054' => {
+                                       'BaseType' => '34383',
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '59',
+                                       'Name' => '__gnu_cxx::__alloc_traits<std::allocator<char> >::pointer',
+                                       'NameSpace' => '__gnu_cxx::__alloc_traits<std::allocator<char> >',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '36076' => {
+                                       'BaseType' => '34419',
+                                       'Header' => 'alloc_traits.h',
+                                       'Line' => '61',
+                                       'Name' => '__gnu_cxx::__alloc_traits<std::allocator<char> >::size_type',
+                                       'NameSpace' => '__gnu_cxx::__alloc_traits<std::allocator<char> >',
+                                       'PrivateABI' => 1,
+                                       'Size' => '8',
+                                       'Type' => 'Typedef'
+                                     },
+                          '43586' => {
+                                       'BaseType' => '10806',
+                                       'Name' => 'char[16]',
+                                       'Size' => '16',
+                                       'Type' => 'Array'
+                                     },
+                          '43662' => {
+                                       'BaseType' => '31327',
+                                       'Name' => 'std::__cxx11::string const&',
+                                       'Size' => '8',
+                                       'Type' => 'Ref'
+                                     },
+                          '7326' => {
+                                      'BaseType' => '10480',
+                                      'Header' => 'c++config.h',
+                                      'Line' => '231',
+                                      'Name' => 'std::size_t',
+                                      'NameSpace' => 'std',
+                                      'PrivateABI' => 1,
+                                      'Size' => '8',
+                                      'Type' => 'Typedef'
+                                    }
+                        },
+          'UndefinedSymbols' => {
+                                  'libgoogle_cloud_cpp_common.so' => {
+                                                                       '_ITM_deregisterTMCloneTable' => 0,
+                                                                       '_ITM_registerTMCloneTable' => 0,
+                                                                       '_Unwind_Resume@GCC_3.0' => 0,
+                                                                       '_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv@GLIBCXX_3.4.21' => 0,
+                                                                       '_ZNSt11logic_errorC1EPKc@GLIBCXX_3.4.21' => 0,
+                                                                       '_ZNSt11logic_errorD1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZNSt11range_errorC1EPKc@GLIBCXX_3.4.21' => 0,
+                                                                       '_ZNSt11range_errorD1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZNSt13runtime_errorC1EPKc@GLIBCXX_3.4.21' => 0,
+                                                                       '_ZNSt13runtime_errorD1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZNSt16invalid_argumentC1EPKc@GLIBCXX_3.4.21' => 0,
+                                                                       '_ZNSt16invalid_argumentD1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZNSt8ios_base4InitC1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZNSt8ios_base4InitD1Ev@GLIBCXX_3.4' => 0,
+                                                                       '_ZTISt11logic_error@GLIBCXX_3.4' => 0,
+                                                                       '_ZTISt11range_error@GLIBCXX_3.4' => 0,
+                                                                       '_ZTISt13runtime_error@GLIBCXX_3.4' => 0,
+                                                                       '_ZTISt16invalid_argument@GLIBCXX_3.4' => 0,
+                                                                       '__cxa_allocate_exception@CXXABI_1.3' => 0,
+                                                                       '__cxa_atexit@GLIBC_2.2.5' => 0,
+                                                                       '__cxa_finalize@GLIBC_2.2.5' => 0,
+                                                                       '__cxa_free_exception@CXXABI_1.3' => 0,
+                                                                       '__cxa_throw@CXXABI_1.3' => 0,
+                                                                       '__gmon_start__' => 0,
+                                                                       '__gxx_personality_v0@CXXABI_1.3' => 0,
+                                                                       'setenv@GLIBC_2.2.5' => 0,
+                                                                       'unsetenv@GLIBC_2.2.5' => 0
+                                                                     }
+                                },
+          'WordSize' => '8'
+        };
