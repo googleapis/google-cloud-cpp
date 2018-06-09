@@ -89,3 +89,41 @@ TEST(BucketTest, GetMetadataPermanentFailure) {
   EXPECT_DEATH_IF_SUPPORTED(bucket.GetMetadata(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+TEST(BucketTest, InsertObjectMedia) {
+  std::string text = R"""({
+      "name": "foo-bar/baz/1"
+})""";
+  auto expected = storage::ObjectMetadata::ParseFromJson(text);
+
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([&expected](InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("foo-bar", request.bucket_name());
+        EXPECT_EQ("baz", request.object_name());
+        EXPECT_EQ("blah blah", request.contents());
+        return std::make_pair(storage::Status(), expected);
+      }));
+  Bucket bucket(mock, "foo-bar");
+
+  auto actual = bucket.InsertObject("baz", "blah blah");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(BucketTest, InsertObjectMediaPermanentFailure) {
+  auto mock = std::make_shared<MockClient>();
+  Bucket bucket(mock, "foo-bar");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Return(std::make_pair(NOT_FOUND(), ObjectMetadata{})));
+  EXPECT_THROW(bucket.InsertObject("baz", "blah blah"), std::runtime_error);
+#else
+  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
+  // operation is called.
+  EXPECT_CALL(*mock, InsertObjectMedia(_, _, _))
+      .WillRepeatedly(Return(std::make_pair(NOT_FOUND(), ObjectMetadata{})));
+  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject("baz", "blah blah"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}

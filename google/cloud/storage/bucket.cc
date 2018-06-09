@@ -43,7 +43,6 @@ BucketMetadata Bucket::GetMetadataImpl(
     }
     // TODO(#581) - use policies to determine what error codes are permanent.
     if (not IsRetryableStatusCode(last_status.status_code())) {
-      // For the moment, only SERVICE UNAVAILABLE (503) is retried.
       std::ostringstream os;
       os << "Permanent error in Bucket::GetMetadata: " << last_status;
       google::cloud::internal::RaiseRuntimeError(os.str());
@@ -52,6 +51,20 @@ BucketMetadata Bucket::GetMetadataImpl(
   }
   std::ostringstream os;
   os << "Retry policy exhausted in Bucket::GetMetadata: " << last_status;
+  google::cloud::internal::RaiseRuntimeError(os.str());
+}
+
+ObjectMetadata Bucket::InsertObjectMediaImpl(
+    InsertObjectMediaRequest const& request) {
+  // This operation is not idempotent, so we do not retry it.
+  Status last_status;
+  auto result = client_->InsertObjectMedia(request);
+  last_status = std::move(result.first);
+  if (last_status.ok()) {
+    return std::move(result.second);
+  }
+  std::ostringstream os;
+  os << "Permanent failure in Bucket::InsertObject: " << last_status;
   google::cloud::internal::RaiseRuntimeError(os.str());
 }
 

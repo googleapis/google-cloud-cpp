@@ -47,7 +47,6 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
   EXPECT_EQ(bucket_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.id());
   EXPECT_EQ("storage#bucket", metadata.kind());
-  std::cout << metadata << std::endl;
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
@@ -88,6 +87,73 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
           storage::IfMetaGenerationNotMatch(metadata.metageneration())),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, InsertObjectMedia) {
+  auto client =
+      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  // TODO(#681) - use random names for the object and buckets in the tests.
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  storage::Bucket bucket(client, bucket_name);
+  auto object_name =
+      std::string("the-test-object-") +
+      std::to_string(
+          std::chrono::system_clock::now().time_since_epoch().count());
+
+  auto metadata = bucket.InsertObject(object_name, "blah blah");
+  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(object_name, metadata.name());
+  EXPECT_EQ("storage#object", metadata.kind());
+}
+
+TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
+  auto client =
+      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  // TODO(#681) - use random names for the object and buckets in the tests.
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  storage::Bucket bucket(client, bucket_name);
+  auto object_name =
+      std::string("the-test-object-") +
+          std::to_string(
+              std::chrono::system_clock::now().time_since_epoch().count());
+
+  auto original = bucket.InsertObject(
+      object_name, "blah blah", storage::IfGenerationMatch(0));
+  EXPECT_EQ(bucket_name, original.bucket());
+  EXPECT_EQ(object_name, original.name());
+  EXPECT_EQ("storage#object", original.kind());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(bucket.InsertObject(
+      object_name, "blah blah", storage::IfGenerationMatch(0)),
+               std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject(
+      object_name, "blah blah", storage::IfGenerationMatch(0)),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
+  auto client =
+      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  // TODO(#681) - use random names for the object and buckets in the tests.
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  storage::Bucket bucket(client, bucket_name);
+  auto object_name =
+      std::string("the-test-object-") +
+          std::to_string(
+              std::chrono::system_clock::now().time_since_epoch().count());
+
+  auto original = bucket.InsertObject(
+      object_name, "blah blah", storage::IfGenerationMatch(0));
+  EXPECT_EQ(bucket_name, original.bucket());
+  EXPECT_EQ(object_name, original.name());
+  EXPECT_EQ("storage#object", original.kind());
+
+  auto metadata = bucket.InsertObject(
+      object_name, "more blah blah", storage::IfGenerationNotMatch(0));
+  EXPECT_EQ(object_name, metadata.name());
+  EXPECT_NE(original.generation(), metadata.generation());
 }
 
 int main(int argc, char* argv[]) {
