@@ -242,10 +242,6 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
 
   bigtable::ClusterConfig cluster_config =
       bigtable::ClusterConfig("us-central1-f", 3, bigtable::ClusterConfig::HDD);
-  auto cluster1 =
-      instance_admin_->CreateCluster(cluster_config, instance_id1, cluster_id1);
-  auto cluster2 =
-      instance_admin_->CreateCluster(cluster_config, instance_id2, cluster_id2);
 
   std::vector<std::pair<std::string, bigtable::ClusterConfig>>
       clusters_config_list;
@@ -261,14 +257,13 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
       bigtable::InstanceConfig(instance_id2, display_name, clusters_config_list)
           .set_type(bigtable::InstanceConfig::DEVELOPMENT);
 
-  auto instance1 = instance_admin_->CreateInstance(instance_config1).get();
-  auto instance2 = instance_admin_->CreateInstance(instance_config2).get();
+  instance_admin_->CreateInstance(instance_config1);
+  instance_admin_->CreateInstance(instance_config2);
 
   auto clusters = instance_admin_->ListClusters();
   for (auto const& cluster : clusters) {
-    auto const npos = std::string::npos;
-    EXPECT_NE(npos, cluster.name().find(instance_admin_->project_name()));
-    EXPECT_NE(npos, cluster.name().find(instance_id1.get()));
+    EXPECT_NE(std::string::npos,
+              cluster.name().find(instance_admin_->project_name()));
   }
   EXPECT_FALSE(clusters.empty());
 

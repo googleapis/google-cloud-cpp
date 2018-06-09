@@ -54,6 +54,14 @@ class InstanceAdminEmulator final
       auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
       contents->PackFrom(stored_instance);
       response->set_allocated_response(contents.release());
+
+      // Add cluster into clusters_
+      for (auto& kv : request->clusters()) {
+        auto cluster = kv.second;
+        cluster.set_name(name + "/clusters/" + kv.first);
+        clusters_.emplace(name + "/clusters/" + kv.first, cluster);
+      }
+
       return grpc::Status::OK;
     }
     return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "duplicate instance");
@@ -188,13 +196,20 @@ class InstanceAdminEmulator final
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
     for (auto const& instance : instances_) {
-      if (0 != instance.first.find(request->parent())) {
+      if (std::string::npos == instance.first.find(request->parent().substr(
+                                   0, request->parent().find_last_of("/")))) {
         continue;
       }
-      std::string prefix = request->parent() + "/clusters/";
-      for (auto const& cluster : clusters_) {
-        if (0 == cluster.first.find(prefix)) {
+      if (request->parent().back() == '-') {
+        for (auto const& cluster : clusters_) {
           *response->add_clusters() = cluster.second;
+        }
+      } else {
+        std::string prefix = request->parent() + "/clusters/";
+        for (auto const& cluster : clusters_) {
+          if (std::string::npos != cluster.first.find(prefix)) {
+            *response->add_clusters() = cluster.second;
+          }
         }
       }
     } else {
