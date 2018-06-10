@@ -39,9 +39,16 @@ class ClientOptions {
     return *this;
   }
 
+  std::string const& version() const { return version_; }
+  ClientOptions& set_version(std::string version) {
+    version_ = std::move(version);
+    return *this;
+  }
+
  private:
   std::shared_ptr<Credentials> credentials_;
   std::string endpoint_;
+  std::string version_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

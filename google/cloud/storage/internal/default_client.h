@@ -29,13 +29,14 @@ class DefaultClient : public Client {
       : DefaultClient(ClientOptions(std::move(credentials))) {}
 
   explicit DefaultClient(ClientOptions options)
-      : options_(std::move(options)) {}
+      : options_(std::move(options)) {
+    storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
+  }
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequestor requestor(options_.endpoint() + "/storage/v1/b/" +
-                            request.bucket_name());
+    HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name());
     requestor.AddWellKnownParameters(request.well_known_parameters());
     requestor.AddHeader("Authorization" +
                         options_.credentials()->AuthorizationHeader());
@@ -52,6 +53,7 @@ class DefaultClient : public Client {
 
  private:
   ClientOptions options_;
+  std::string storage_endpoint_;
 };
 
 }  // namespace internal

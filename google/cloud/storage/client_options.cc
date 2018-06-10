@@ -31,7 +31,8 @@ ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
 
 ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
     : credentials_(std::move(credentials)),
-      endpoint_("https://www.googleapis.com") {
+      endpoint_("https://www.googleapis.com"),
+      version_("v1") {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     endpoint_ = emulator;
