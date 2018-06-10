@@ -13,36 +13,54 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import argparse
-from flask import Flask, url_for
-from werkzeug.serving import run_simple
-from werkzeug.wsgi import DispatcherMiddleware
-from httpbin import app as httpbinapp
-import json
+"""A test bench for the Google Cloud Storage C++ Client Library."""
 
-root = Flask(__name__)
+import argparse
+import json
+import httpbin
+import flask
+from werkzeug import serving
+from werkzeug import wsgi
+
+root = flask.Flask(__name__)
 root.debug = True
 
 
 @root.route('/')
 def index():
+    """Default handler for the test bench."""
     return 'OK'
 
 
-buckets = Flask(__name__)
+@root.route('/shutdown', methods=['POST'])
+def shutdown():
+    """Gracefully shutdown the test bench."""
+    func = flask.request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
+
+
+# Define the WSGI application to handle bucket requests.
+buckets = flask.Flask(__name__)
 buckets.debug = True
 
 
 @buckets.route('/')
-def buckets_index(): return 'index'
+def buckets_index():
+    """The default for the buckets."""
+    return 'OK'
 
 
 @buckets.route('/<bucket_name>')
 def get_bucket(bucket_name):
+    """Implement the 'Buckets: get' API: return the metadata for a bucket."""
+    base_url = flask.url_for('buckets_index', _external=True)
     return json.dumps({
         "kind": "storage#bucket",
         "id": bucket_name,
-        "selfLink": url_for('buckets_index') + bucket_name,
+        "selfLink": base_url + bucket_name,
         "projectNumber": "123456789",
         "name": bucket_name,
         "timeCreated": "2018-05-19T19:31:14Z",
@@ -58,12 +76,8 @@ def get_bucket(bucket_name):
     })
 
 
-application = DispatcherMiddleware(root, {
-    '/httpbin':     httpbinapp,
-    '/storage/v1/b': buckets,
-})
-
-if __name__ == '__main__':
+def main():
+    """Parse the arguments and run the test bench application."""
     parser = argparse.ArgumentParser(
         description='A testbench for the Google Cloud C++ Client Library')
     parser.add_argument('--host', default='localhost',
@@ -75,6 +89,16 @@ if __name__ == '__main__':
     parser.add_argument('--debug', help='Use the WSGI debugger',
                         default=False, action='store_true')
     arguments = parser.parse_args()
-    run_simple(arguments.host, int(arguments.port), application,
-               use_reloader=True, use_debugger=arguments.debug,
-               use_evalex=True)
+
+    # Compose the different WSGI applications.
+    application = wsgi.DispatcherMiddleware(root, {
+        '/httpbin':     httpbin.app,
+        '/storage/v1/b': buckets,
+    })
+    serving.run_simple(arguments.host, int(arguments.port), application,
+                       use_reloader=True, use_debugger=arguments.debug,
+                       use_evalex=True)
+
+
+if __name__ == '__main__':
+    main()
