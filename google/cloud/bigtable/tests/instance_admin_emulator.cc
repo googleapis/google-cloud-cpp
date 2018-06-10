@@ -212,12 +212,6 @@ class InstanceAdminEmulator final
           }
         }
       }
-    } else {
-      for (auto const& kv : clusters_) {
-        if (kv.first.find(prefix) != std::string::npos) {
-          *response->add_clusters() = kv.second;
-        }
-      }
     }
 
     return grpc::Status::OK;
