@@ -16,8 +16,25 @@
 
 set -eu
 
+readonly BUILD_OUTPUT="build-output/cached-${DISTRO}-${DISTRO_VERSION}"
 # Dump the emulator log file. Tests run in the google/cloud/bigtable/tests directory.
+echo
 echo "================ emulator.log ================"
-cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/google/cloud/bigtable/tests/emulator.log >&2 || true
+cat "${BUILD_OUTPUT}/google/cloud/bigtable/tests/emulator.log" >&2 || true
+echo
 echo "================ instance-admin-emulator.log ================"
-cat build-output/cached-${DISTRO}-${DISTRO_VERSION}/google/cloud/bigtable/tests/instance-admin-emulator.log >&2 || true
+cat "${BUILD_OUTPUT}/google/cloud/bigtable/tests/instance-admin-emulator.log" >&2 || true
+
+readonly ABI_CHECK_REPORTS=$(find ${BUILD_OUTPUT} -name 'compat_report.html')
+readonly SCAN_BUILD_REPORTS=$(find scan-build-output/ -name '*.html' 2>/dev/null)
+
+if [ -n "${ABI_CHECK_REPORTS}" -o -n "${SCAN_BUILD_REPORTS}" ]; then
+  # Try to install a HTML renderer.
+  apt install -y w3m
+fi
+
+for report in ${ABI_CHECK_REPORTS} ${SCAN_BUILD_REPORTS}; do
+  echo
+  echo "================ ${report} ================"
+  w3m -dump "${report}"
+done
