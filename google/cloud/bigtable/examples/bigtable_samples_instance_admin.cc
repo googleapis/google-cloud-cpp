@@ -151,6 +151,21 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [list clusters]
 
+//! [list all clusters]
+void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
+                     int argc, char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"list-all-clusters <project-id>"};
+  }
+
+  auto cluster_list = instance_admin.ListClusters();
+  std::cout << "Cluster Name List" << std::endl;
+  for (auto const& cluster : cluster_list) {
+    std::cout << "Cluster Name:" << cluster.name() << std::endl;
+  }
+}
+//! [list all clusters]
+
 //! [update cluster]
 void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
