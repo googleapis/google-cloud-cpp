@@ -90,8 +90,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMedia) {
-  auto client =
-      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   storage::Bucket bucket(client, bucket_name);
@@ -107,8 +106,7 @@ TEST_F(BucketIntegrationTest, InsertObjectMedia) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
-  auto client =
-      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   storage::Bucket bucket(client, bucket_name);
@@ -134,8 +132,7 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
-  auto client =
-      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   storage::Bucket bucket(client, bucket_name);
@@ -162,7 +159,7 @@ int main(int argc, char* argv[]) {
   // Make sure the arguments are valid.
   if (argc != 3) {
     std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of("/");
+    auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
               << " <project> <bucket>" << std::endl;
     return 1;
