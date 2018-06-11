@@ -14,23 +14,50 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
-
-readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/../../../../ci/colors.sh"
+if [ -z "${PROJECT_ROOT+x}" ]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/colors.sh"
 
 TESTBENCH_PID=0
 
-function kill_testbench {
+################################################
+# Terminate the Google Cloud Storage test bench
+# Globals:
+#   TESTBENCH_PID: the process id for the test bench
+#   SHUTDOWN_ENDPOINT: sending a http POST to this endpoint shuts down
+#                      the test bench
+#   COLOR_*: colorize output messages, defined in colors.sh
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+kill_testbench() {
   echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
   echo -n "Killing testbench server [${TESTBENCH_PID}] ... "
-  kill "${TESTBENCH_PID}"
+  curl -d "please shutdown" "${SHUTDOWN_ENDPOINT}"
   wait >/dev/null 2>&1
   echo "done."
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."
 }
 
-function start_testbench {
+################################################
+# Start the Google Cloud Storage test bench
+# Globals:
+#   TESTBENCH_PORT: the listening port for the test bench, 8000 if not set.
+#   HTTPBIN_ENDPOINT: the httpbin endpoint on the test bench.
+#   TESTBENCH_PID: the process id for the test bench.
+#   SHUTDOWN_ENDPOINT: posting to this endpoint will shut down the test bench.
+#   CLOUD_STORAGE_TESTBENCH_ENDPOINT: the google cloud storage endpoint for the
+#       test bench.
+#   COLOR_*: colorize output messages, defined in colors.sh
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+start_testbench() {
   echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment set-up"
   echo "Launching testbench emulator in the background"
   trap kill_testbench EXIT
@@ -39,10 +66,12 @@ function start_testbench {
   # free; when using in manual tests, you can set EMULATOR_PORT.
   readonly PORT=${TESTBENCH_PORT:-8000}
 
-  "${BINDIR}/testbench.py" --port ${PORT} >testbench.log 2>&1 </dev/null &
+  "${PROJECT_ROOT}/google/cloud/storage/tests/testbench.py" --port ${PORT} \
+      >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 
   export HTTPBIN_ENDPOINT="http://localhost:${PORT}/httpbin"
+  export SHUTDOWN_ENDPOINT="http://localhost:${PORT}/shutdown"
   export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${PORT}"
 
   delay=1
@@ -61,27 +90,8 @@ function start_testbench {
     echo "Cannot connect to testbench; aborting test." >&2
     exit 1
   else
-    echo "Successfully connected to testbench"
+    echo "Successfully connected to testbench [${TESTBENCH_PID}]"
   fi
 
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment set-up."
 }
-
-# Create most likely unique names for the project and bucket so multiple tests
-# can use the same testbench.
-readonly PROJECT_ID="fake-project-$(date +%s)"
-readonly BUCKET_NAME="fake-bucket-$(date +%s)"
-
-echo
-echo "Running Storage integration tests against local servers."
-start_testbench
-
-echo
-echo "Running storage::internal::CurlRequest integration test."
-./curl_request_integration_test
-
-echo
-echo "Running storage::Bucket integration tests."
-./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
-
-exit 0
