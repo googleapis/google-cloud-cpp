@@ -30,7 +30,7 @@ namespace {
 const std::string MAGIC_ROW_KEY = "key-000009";
 
 //! [create table]
-void CreateTable(google::cloud::bigtable::TableAdmin& admin,
+void CreateTable(google::cloud::bigtable::TableAdmin admin,
                  std::string const& table_id) {
   auto schema = admin.CreateTable(
       table_id,
@@ -53,7 +53,7 @@ void ListTables(google::cloud::bigtable::TableAdmin& admin) {
 //! [list tables]
 
 //! [get table]
-void GetTable(google::cloud::bigtable::TableAdmin& admin,
+void GetTable(google::cloud::bigtable::TableAdmin admin,
               std::string const& table_id) {
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
@@ -69,14 +69,14 @@ void GetTable(google::cloud::bigtable::TableAdmin& admin,
 //! [get table]
 
 //! [delete table]
-void DeleteTable(google::cloud::bigtable::TableAdmin& admin,
+void DeleteTable(google::cloud::bigtable::TableAdmin admin,
                  std::string const& table_id) {
   admin.DeleteTable(table_id);
 }
 //! [delete table]
 
 //! [modify table]
-void ModifyTable(google::cloud::bigtable::TableAdmin& admin,
+void ModifyTable(google::cloud::bigtable::TableAdmin admin,
                  std::string const& table_id) {
   auto schema = admin.ModifyColumnFamilies(
       table_id,
@@ -99,14 +99,14 @@ void ModifyTable(google::cloud::bigtable::TableAdmin& admin,
 //! [modify table]
 
 //! [drop all rows]
-void DropAllRows(google::cloud::bigtable::TableAdmin& admin,
+void DropAllRows(google::cloud::bigtable::TableAdmin admin,
                  std::string const& table_id) {
   admin.DropAllRows(table_id);
 }
 //! [drop all rows]
 
 //! [drop rows by prefix]
-void DropRowsByPrefix(google::cloud::bigtable::TableAdmin& admin,
+void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
                       std::string const& table_id) {
   admin.DropRowsByPrefix(table_id, "key-00004");
 }
