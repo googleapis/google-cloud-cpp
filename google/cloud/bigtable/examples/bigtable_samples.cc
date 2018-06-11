@@ -113,7 +113,7 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin& admin,
 //! [drop rows by prefix]
 
 //! [apply]
-void Apply(google::cloud::bigtable::Table& table) {
+void Apply(google::cloud::bigtable::Table table) {
   // Write several rows with some trivial data.
   for (int i = 0; i != 20; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
@@ -142,7 +142,7 @@ void Apply(google::cloud::bigtable::Table& table) {
 //! [apply]
 
 //! [bulk apply]
-void BulkApply(google::cloud::bigtable::Table& table) {
+void BulkApply(google::cloud::bigtable::Table table) {
   // Write several rows in a single operation, each row has some trivial data.
   google::cloud::bigtable::BulkMutation bulk;
   for (int i = 0; i != 5000; ++i) {
@@ -173,7 +173,7 @@ void BulkApply(google::cloud::bigtable::Table& table) {
 //! [bulk apply]
 
 //! [read row]
-void ReadRow(google::cloud::bigtable::Table& table) {
+void ReadRow(google::cloud::bigtable::Table table) {
   // Filter the results, only include the latest value on each cell.
   auto filter = google::cloud::bigtable::Filter::Latest(1);
   // Read a row, this returns a tuple (bool, row)
@@ -202,7 +202,7 @@ void ReadRow(google::cloud::bigtable::Table& table) {
 //! [read row]
 
 //! [read rows]
-void ReadRows(google::cloud::bigtable::Table& table) {
+void ReadRows(google::cloud::bigtable::Table table) {
   // Create the range of rows to read.
   auto range =
       google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
@@ -226,7 +226,7 @@ void ReadRows(google::cloud::bigtable::Table& table) {
 //! [read rows]
 
 //! [read rows with limit]
-void ReadRowsWithLimit(google::cloud::bigtable::Table& table) {
+void ReadRowsWithLimit(google::cloud::bigtable::Table table) {
   // Create the range of rows to read.
   auto range =
       google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
@@ -250,7 +250,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table& table) {
 //! [read rows with limit]
 
 //! [check and mutate]
-void CheckAndMutate(google::cloud::bigtable::Table& table) {
+void CheckAndMutate(google::cloud::bigtable::Table table) {
   // Check if the latest value of the flip-flop column is "on".
   auto predicate = google::cloud::bigtable::Filter::Chain(
       google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "flip-flop",
@@ -270,7 +270,7 @@ void CheckAndMutate(google::cloud::bigtable::Table& table) {
 //! [check and mutate]
 
 //! [read modify write]
-void ReadModifyWrite(google::cloud::bigtable::Table& table) {
+void ReadModifyWrite(google::cloud::bigtable::Table table) {
   auto row = table.ReadModifyWriteRow(
       MAGIC_ROW_KEY,
       google::cloud::bigtable::ReadModifyWriteRule::IncrementAmount(
@@ -284,7 +284,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table& table) {
 //! [read modify write]
 
 //! [sample row keys]
-void SampleRows(google::cloud::bigtable::Table& table) {
+void SampleRows(google::cloud::bigtable::Table table) {
   auto samples = table.SampleRows<>();
   for (auto const& sample : samples) {
     std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
@@ -295,7 +295,7 @@ void SampleRows(google::cloud::bigtable::Table& table) {
 //! [sample row keys]
 
 //! [sample row keys collections]
-void SampleRowsCollections(google::cloud::bigtable::Table& table) {
+void SampleRowsCollections(google::cloud::bigtable::Table table) {
   auto list_samples = table.SampleRows<std::list>();
   for (auto const& sample : list_samples) {
     std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
