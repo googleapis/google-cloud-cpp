@@ -100,6 +100,8 @@ add_library(storage_client
     internal/parse_rfc3339.cc
     object_metadata.h
     object_metadata.cc
+    object.h
+    object.cc
     well_known_parameters.h
     status.h
     version.h
@@ -127,6 +129,7 @@ target_include_directories(storage_client PUBLIC
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_library(storage_client_testing
+    testing/mock_client.h
     testing/mock_http_request.h
     testing/mock_http_request.cc)
 target_link_libraries(storage_client_testing
@@ -158,6 +161,7 @@ set(storage_client_unit_tests
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
     object_metadata_test.cc
+    object_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})

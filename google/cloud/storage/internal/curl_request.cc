@@ -59,6 +59,7 @@ void CurlRequest::AddWellKnownParameters(WellKnownParameters const& p) {
   AddWellKnownParameter(p.if_meta_generation_not_match);
   AddWellKnownParameter(p.projection);
   AddWellKnownParameter(p.user_project);
+  AddWellKnownParameter(p.generation);
 }
 
 void CurlRequest::PrepareRequest(std::string payload) {

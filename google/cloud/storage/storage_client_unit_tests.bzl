@@ -9,6 +9,7 @@ storage_client_unit_tests = [
     "internal/nljson_test.cc",
     "internal/parse_rfc3339_test.cc",
     "object_metadata_test.cc",
+    "object_test.cc",
     "link_test.cc",
 ]
 

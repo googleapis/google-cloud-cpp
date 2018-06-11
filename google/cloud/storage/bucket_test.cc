@@ -13,20 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket.h"
+#include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
 using namespace storage;
 using namespace ::testing;
+using storage::testing::MockClient;
 
 namespace {
-
-class MockClient : public storage::Client {
- public:
-  using BucketGetResult = std::pair<storage::Status, storage::BucketMetadata>;
-  MOCK_METHOD1(GetBucketMetadata,
-               BucketGetResult(GetBucketMetadataRequest const&));
-};
-
 inline Status UNAVAILABLE() { return Status{503, std::string{"try-again"}}; }
 inline Status NOT_FOUND() { return Status{404, std::string{"not found"}}; }
 }  // anonymous namespace
