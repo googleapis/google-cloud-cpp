@@ -34,16 +34,19 @@ run_all_bucket_examples() {
   local bucket_name=$1
   shift
 
-  for example in get-metadata insert-object; do
-    log="$(mktemp --tmpdir "storage_examples_${example}.XXXXXXXXXX.log")"
-    if [ ! -x storage_bucket_samples ]; then
-      echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-          " storage_bucket_examples ${example} is not compiled"
-      continue
-    fi
+  # The list of commands in the storage_bucket_samples program that we will
+  # test. Currently get-metadata assumes that $bucket_name is already created.
+  readonly BUCKET_EXAMPLES_COMMANDS="get-metadata insert-object"
+
+  if [ ! -x storage_bucket_samples ]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " storage_bucket_samples is not compiled"
+    return
+  fi
+  for example in get-metadata; do
+    log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        "storage_bucket_examples ${example} running"
-    # The CI environment must provide BUCKET_NAME.
+        "storage_bucket_samples ${example} running"
     ./storage_bucket_samples \
         ${example} "${bucket_name}" >"${log}" 2>&1 </dev/null
     if [ $? = 0 ]; then
@@ -56,11 +59,12 @@ run_all_bucket_examples() {
       cat "${log}"
       echo "================ [end ${log}] ================"
     fi
+    /bin/rm -f "${log}"
   done
 
-  log="$(mktemp --tmpdir "storage_examples_${example}.XXXXXXXXXX.log")"
+  log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "storage_bucket_examples with no command running"
+      "storage_bucket_samples with no command running"
   ./storage_bucket_samples >"${log}" 2>&1 </dev/null
   # Note the inverted test, this is supposed to exit with 1.
   if [ $? != 0 ]; then
@@ -72,6 +76,7 @@ run_all_bucket_examples() {
     cat "${log}"
     echo "================ [end ${log}] ================"
   fi
+  /bin/rm -f "${log}"
 }
 
 ################################################
