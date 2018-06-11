@@ -17,8 +17,8 @@
 
 import argparse
 import json
-import httpbin
 import flask
+import httpbin
 from werkzeug import serving
 from werkzeug import wsgi
 
@@ -46,6 +46,7 @@ def shutdown():
 buckets = flask.Flask(__name__)
 buckets.debug = True
 
+BUCKETS_HANDLER_PATH = '/storage/v1/b'
 
 @buckets.route('/')
 def buckets_index():
@@ -58,20 +59,20 @@ def get_bucket(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('buckets_index', _external=True)
     return json.dumps({
-        "kind": "storage#bucket",
-        "id": bucket_name,
-        "selfLink": base_url + bucket_name,
-        "projectNumber": "123456789",
-        "name": bucket_name,
-        "timeCreated": "2018-05-19T19:31:14Z",
-        "updated": "2018-05-19T19:31:24Z",
-        "metageneration": "4",
-        "location": "US",
-        "storageClass": "STANDARD",
-        "etag": "XYZ=",
-        "labels": {
-            "foo": "bar",
-            "baz": "qux"
+        'kind': 'storage#bucket',
+        'id': bucket_name,
+        'selfLink': base_url + bucket_name,
+        'projectNumber': '123456789',
+        'name': bucket_name,
+        'timeCreated': '2018-05-19T19:31:14Z',
+        'updated': '2018-05-19T19:31:24Z',
+        'metageneration': '4',
+        'location': 'US',
+        'storageClass': 'STANDARD',
+        'etag': 'XYZ=',
+        'labels': {
+          'foo': 'bar',
+          'baz': 'qux'
         }
     })
 
@@ -92,8 +93,8 @@ def main():
 
     # Compose the different WSGI applications.
     application = wsgi.DispatcherMiddleware(root, {
-        '/httpbin':     httpbin.app,
-        '/storage/v1/b': buckets,
+        '/httpbin': httpbin.app,
+        BUCKETS_HANDLER_PATH: buckets,
     })
     serving.run_simple(arguments.host, int(arguments.port), application,
                        use_reloader=True, use_debugger=arguments.debug,
