@@ -184,6 +184,7 @@ class InsertObjectMediaRequest {
   WellKnownParameters const& well_known_parameters() const {
     return well_known_parameters_;
   }
+
  private:
   std::string bucket_name_;
   std::string object_name_;

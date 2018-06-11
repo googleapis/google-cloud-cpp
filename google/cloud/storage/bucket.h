@@ -65,9 +65,9 @@ class Bucket {
    */
   template <typename... Modifiers>
   ObjectMetadata InsertObject(std::string const& object_name,
-                              std::string contents,
-                              Modifiers&&... modifier) {
-    InsertObjectMediaRequest request(bucket_name(), object_name, std::move(contents));
+                              std::string contents, Modifiers&&... modifier) {
+    InsertObjectMediaRequest request(bucket_name(), object_name,
+                                     std::move(contents));
     request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
     return InsertObjectMediaImpl(request);
   }

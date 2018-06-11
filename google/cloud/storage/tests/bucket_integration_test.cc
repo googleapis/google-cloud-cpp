@@ -114,22 +114,22 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
   storage::Bucket bucket(client, bucket_name);
   auto object_name =
       std::string("the-test-object-") +
-          std::to_string(
-              std::chrono::system_clock::now().time_since_epoch().count());
+      std::to_string(
+          std::chrono::system_clock::now().time_since_epoch().count());
 
-  auto original = bucket.InsertObject(
-      object_name, "blah blah", storage::IfGenerationMatch(0));
+  auto original = bucket.InsertObject(object_name, "blah blah",
+                                      storage::IfGenerationMatch(0));
   EXPECT_EQ(bucket_name, original.bucket());
   EXPECT_EQ(object_name, original.name());
   EXPECT_EQ("storage#object", original.kind());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(bucket.InsertObject(
-      object_name, "blah blah", storage::IfGenerationMatch(0)),
+  EXPECT_THROW(bucket.InsertObject(object_name, "blah blah",
+                                   storage::IfGenerationMatch(0)),
                std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject(
-      object_name, "blah blah", storage::IfGenerationMatch(0)),
-      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject(object_name, "blah blah",
+                                                storage::IfGenerationMatch(0)),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -141,17 +141,17 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
   storage::Bucket bucket(client, bucket_name);
   auto object_name =
       std::string("the-test-object-") +
-          std::to_string(
-              std::chrono::system_clock::now().time_since_epoch().count());
+      std::to_string(
+          std::chrono::system_clock::now().time_since_epoch().count());
 
-  auto original = bucket.InsertObject(
-      object_name, "blah blah", storage::IfGenerationMatch(0));
+  auto original = bucket.InsertObject(object_name, "blah blah",
+                                      storage::IfGenerationMatch(0));
   EXPECT_EQ(bucket_name, original.bucket());
   EXPECT_EQ(object_name, original.name());
   EXPECT_EQ("storage#object", original.kind());
 
-  auto metadata = bucket.InsertObject(
-      object_name, "more blah blah", storage::IfGenerationNotMatch(0));
+  auto metadata = bucket.InsertObject(object_name, "more blah blah",
+                                      storage::IfGenerationNotMatch(0));
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_NE(original.generation(), metadata.generation());
 }
