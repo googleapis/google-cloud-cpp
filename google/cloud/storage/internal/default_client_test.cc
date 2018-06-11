@@ -52,6 +52,7 @@ TEST_F(DefaultClientTest, Simple) {
       .WillOnce(Invoke(
           [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
   handle->SetupMakeEscapedString();
+  EXPECT_CALL(*handle, AddWellKnownParameters(_)).Times(1);
   EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
 
@@ -87,6 +88,7 @@ TEST_F(DefaultClientTest, HandleError) {
   EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
       .WillOnce(Invoke(
           [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
+  EXPECT_CALL(*handle, AddWellKnownParameters(_)).Times(1);
   EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
   EXPECT_CALL(*handle, MakeRequest())

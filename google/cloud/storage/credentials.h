@@ -35,6 +35,25 @@ class Credentials {
 
 std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
+/**
+ * Credentials to access Google Cloud Storage anonymously.
+ *
+ * This is only useful in two cases: (a) in testing, where you want to access
+ * a test bench without having to worry about authentication or SSL setup, and
+ * (b) when accessing some public buckets where the bucket owner pays for
+ * network egress.
+ */
+class InsecureCredentials : public storage::Credentials {
+ public:
+  InsecureCredentials() = default;
+
+  std::string AuthorizationHeader() override;
+};
+
+inline std::shared_ptr<Credentials> CreateInsecureCredentials() {
+  return std::make_shared<InsecureCredentials>();
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 

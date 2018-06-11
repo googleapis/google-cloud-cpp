@@ -17,10 +17,9 @@
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-std::shared_ptr<Client> CreateDefaultClient(
-    std::shared_ptr<Credentials> credentials) {
+std::shared_ptr<Client> CreateDefaultClient(ClientOptions options) {
   return std::make_shared<storage::internal::DefaultClient<>>(
-      std::move(credentials));
+      std::move(options));
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

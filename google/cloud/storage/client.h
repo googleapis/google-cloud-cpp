@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/status.h"
 #include "google/cloud/storage/well_known_parameters.h"
@@ -120,12 +121,24 @@ class Client {
 };
 
 /**
- * Create the default client for the Google Cloud Storage C++ Library.
- *
- * TODO(#549) - this function will need a set of ClientOptions.
+ * Create the default client type given the options.
  */
-std::shared_ptr<Client> CreateDefaultClient(
-    std::shared_ptr<Credentials> credentials);
+std::shared_ptr<Client> CreateDefaultClient(ClientOptions options);
+
+/**
+ * Create the default client type with the default configuration.
+ */
+inline std::shared_ptr<Client> CreateDefaultClient() {
+  return CreateDefaultClient(ClientOptions());
+}
+
+/**
+ * Create the default client type given the credentials.
+ */
+inline std::shared_ptr<Client> CreateDefaultClient(
+    std::shared_ptr<Credentials> credentials) {
+  return CreateDefaultClient(ClientOptions(std::move(credentials)));
+}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
