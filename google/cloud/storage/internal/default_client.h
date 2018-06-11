@@ -52,8 +52,8 @@ class DefaultClient : public Client {
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequestor requestor("https://www.googleapis.com/upload/storage/v1/b/" +
-                            request.bucket_name() + "/o");
+    HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name() +
+                            "/o");
     requestor.AddQueryParameter("uploadType", "media");
     requestor.AddQueryParameter("name", request.object_name());
     requestor.AddWellKnownParameters(request.well_known_parameters());
