@@ -22,6 +22,26 @@ import httpbin
 from werkzeug import serving
 from werkzeug import wsgi
 
+
+class ErrorResponse(Exception):
+    """Simplify generation of error responses."""
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def as_response(self):
+        kv = dict(self.payload or ())
+        kv['message'] = self.message
+        response = flask.jsonify(kv)
+        response.status_code = self.status_code
+        return response
+
+
 root = flask.Flask(__name__)
 root.debug = True
 
@@ -43,21 +63,33 @@ def shutdown():
 
 
 # Define the WSGI application to handle bucket requests.
+BUCKETS_HANDLER_PATH = '/storage/v1/b'
 buckets = flask.Flask(__name__)
 buckets.debug = True
 
-BUCKETS_HANDLER_PATH = '/storage/v1/b'
 
 @buckets.route('/')
 def buckets_index():
-    """The default for the buckets."""
+    """The default handler for buckets."""
     return 'OK'
+
+
+@buckets.errorhandler(ErrorResponse)
+def buckets_error(error):
+    return error.as_response()
 
 
 @buckets.route('/<bucket_name>')
 def get_bucket(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('buckets_index', _external=True)
+    metageneration_match = flask.request.args.get('ifMetagenerationMatch', None)
+    if metageneration_match is not None and metageneration_match != '4':
+        raise ErrorResponse('Precondition Failed', status_code=412)
+    metageneration_not_match = flask.request.args.get(
+        'ifMetagenerationNotMatch', None)
+    if metageneration_not_match is not None and metageneration_not_match == '4':
+        raise ErrorResponse('Precondition Failed', status_code=412)
     return json.dumps({
         'kind': 'storage#bucket',
         'id': bucket_name,
@@ -71,8 +103,8 @@ def get_bucket(bucket_name):
         'storageClass': 'STANDARD',
         'etag': 'XYZ=',
         'labels': {
-          'foo': 'bar',
-          'baz': 'qux'
+            'foo': 'bar',
+            'baz': 'qux'
         }
     })
 
