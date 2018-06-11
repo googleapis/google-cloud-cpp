@@ -37,8 +37,7 @@ class DefaultClient : public Client {
     // Assume the bucket name is validated by the caller.
     HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name());
     requestor.AddWellKnownParameters(request.well_known_parameters());
-    requestor.AddHeader("Authorization: " +
-                        options_.credentials()->AuthorizationHeader());
+    requestor.AddHeader(options_.credentials()->AuthorizationHeader());
     requestor.PrepareRequest(std::string{});
     auto payload = requestor.MakeRequest();
     if (200 != payload.status_code) {

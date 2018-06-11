@@ -40,8 +40,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials();
  *
  * This is only useful in two cases: (a) in testing, where you want to access
  * a test bench without having to worry about authentication or SSL setup, and
- * (b) when accessing some public buckets where the bucket owner pays for
- * network egress.
+ * (b) when accessing publicly readable buckets or objects without credentials.
  */
 class InsecureCredentials : public storage::Credentials {
  public:

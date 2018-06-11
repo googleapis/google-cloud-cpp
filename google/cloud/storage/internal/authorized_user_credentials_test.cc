@@ -67,7 +67,8 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
       .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
 
   AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
-  EXPECT_EQ("Type access-token-value", credentials.AuthorizationHeader());
+  EXPECT_EQ("Authorization: Type access-token-value",
+            credentials.AuthorizationHeader());
 }
 
 /// @test Verify that we can refresh service account credentials.
@@ -110,7 +111,10 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
 
   AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
-  EXPECT_EQ("Type access-token-r1", credentials.AuthorizationHeader());
-  EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
-  EXPECT_EQ("Type access-token-r2", credentials.AuthorizationHeader());
+  EXPECT_EQ("Authorization: Type access-token-r1",
+            credentials.AuthorizationHeader());
+  EXPECT_EQ("Authorization: Type access-token-r2",
+            credentials.AuthorizationHeader());
+  EXPECT_EQ("Authorization: Type access-token-r2",
+            credentials.AuthorizationHeader());
 }
