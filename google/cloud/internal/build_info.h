@@ -22,13 +22,13 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /// The compiler version
-extern char const COMPILER[];
+std::string compiler();
 
 /// The compiler flags
-extern char const COMPILER_FLAGS[];
+std::string compiler_flags();
 
 /// The git revision at compile time
-extern char const GITREV[];
+std::string gitrev();
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
