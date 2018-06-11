@@ -17,6 +17,7 @@
 
 import argparse
 import json
+import time
 import flask
 import httpbin
 from werkzeug import serving
@@ -62,27 +63,117 @@ def shutdown():
     return 'Server shutting down...'
 
 
+class GcsObjectVersion(object):
+    """Represent a single revision of a GCS Object."""
+
+    def __init__(self, bucket_name, name, generation, request):
+        gcs_url = flask.url_for('gcs_index', _external=True)
+        self.bucket_name = bucket_name
+        self.name = name
+        self.generation = generation
+        self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
+        now = time.gmtime(time.time())
+        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        self.media = request.data
+        self.metadata = {
+            'kind': 'storage#object',
+            'id': self.object_id,
+            'selfLink': gcs_url + self.object_id,
+            'projectNumber': '123456789',
+            'bucket': bucket_name,
+            'name': name,
+            'timeCreated': timestamp,
+            'updated': timestamp,
+            'metageneration': 1,
+            'generation': generation,
+            'location': 'US',
+            'storageClass': 'STANDARD',
+            'etag': 'XYZ='
+        }
+
+
+class GcsObject(object):
+    """Represent a GCS Object, including all its revisions."""
+
+    def __init__(self, bucket_name, name):
+        self.bucket_name = bucket_name
+        self.name = name
+        # Define the current generation for the object, will use this as a
+        # simple counter to increment on each object change.
+        self.generation = 0
+        self.revisions = {}
+
+    def get_revision(self, revision):
+        return self.revisions.get(revision, None)
+
+    def get_latest(self):
+        return self.revisions.get(self.generation, None)
+
+    def check_preconditions(self, request):
+        """Verify that the preconditions in request are met."""
+
+        generation_match = request.args.get('ifGenerationMatch')
+        if generation_match is not None \
+                and int(generation_match) != self.generation:
+            raise ErrorResponse('Precondition Failed', status_code=412)
+
+        # This object does not exist (yet), testing in this case is special.
+        generation_not_match = request.args.get('ifGenerationNotMatch')
+        if generation_not_match is not None \
+                and int(generation_not_match) == self.generation:
+            raise ErrorResponse('Precondition Failed', status_code=412)
+
+        metageneration_match = request.args.get('ifMetagenerationMatch')
+        metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
+        if self.generation == 0:
+            if metageneration_match is not None \
+                    or metageneration_not_match is not None:
+                raise ErrorResponse('Precondition Failed', status_code=412)
+        else:
+            current = self.revisions.get(self.generation)
+            metageneration = current.metadata.get('metageneration')
+
+            if metageneration_not_match is not None \
+                    and int(metageneration_not_match) == metageneration:
+                raise ErrorResponse('Precondition Failed', status_code=412)
+
+            if metageneration_match is not None \
+                    and int(metageneration_match) != metageneration:
+                raise ErrorResponse('Precondition Failed', status_code=412)
+
+    def insert(self, request):
+        """Insert a new revision based on the give flask request."""
+        self.generation += 1
+        self.revisions[self.generation] = GcsObjectVersion(self.bucket_name,
+                                                           self.name,
+                                                           self.generation,
+                                                           request)
+
+
+# Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
+GCS_OBJECTS = dict()
+
 # Define the WSGI application to handle bucket requests.
-BUCKETS_HANDLER_PATH = '/storage/v1/b'
-buckets = flask.Flask(__name__)
-buckets.debug = True
+GCS_HANDLER_PATH = '/storage/v1'
+gcs = flask.Flask(__name__)
+gcs.debug = True
 
 
-@buckets.route('/')
-def buckets_index():
-    """The default handler for buckets."""
+@gcs.route('/')
+def gcs_index():
+    """The default handler for GCS requests."""
     return 'OK'
 
 
-@buckets.errorhandler(ErrorResponse)
-def buckets_error(error):
+@gcs.errorhandler(ErrorResponse)
+def gcs_error(error):
     return error.as_response()
 
 
-@buckets.route('/<bucket_name>')
-def get_bucket(bucket_name):
+@gcs.route('/b/<bucket_name>')
+def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
-    base_url = flask.url_for('buckets_index', _external=True)
+    base_url = flask.url_for('gcs_index', _external=True)
     metageneration_match = flask.request.args.get('ifMetagenerationMatch', None)
     if metageneration_match is not None and metageneration_match != '4':
         raise ErrorResponse('Precondition Failed', status_code=412)
@@ -109,6 +200,24 @@ def get_bucket(bucket_name):
     })
 
 
+@gcs.route('/b/<bucket_name>/o', methods=['POST'])
+def objects_insert(bucket_name):
+    """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
+    object_name = flask.request.args.get('name', None)
+    if object_name is None:
+        raise ErrorResponse('Name not set in Objects: insert', status_code=412)
+
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    GCS_OBJECTS[object_path] = gcs_object
+    gcs_object.insert(flask.request)
+    current_version = gcs_object.get_latest()
+
+    return json.dumps(current_version.metadata)
+
+
 def main():
     """Parse the arguments and run the test bench application."""
     parser = argparse.ArgumentParser(
@@ -126,7 +235,7 @@ def main():
     # Compose the different WSGI applications.
     application = wsgi.DispatcherMiddleware(root, {
         '/httpbin': httpbin.app,
-        BUCKETS_HANDLER_PATH: buckets,
+        GCS_HANDLER_PATH: gcs,
     })
     serving.run_simple(arguments.host, int(arguments.port), application,
                        use_reloader=True, use_debugger=arguments.debug,
