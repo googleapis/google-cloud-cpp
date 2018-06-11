@@ -28,8 +28,7 @@ class DefaultClient : public Client {
   explicit DefaultClient(std::shared_ptr<Credentials> credentials)
       : DefaultClient(ClientOptions(std::move(credentials))) {}
 
-  explicit DefaultClient(ClientOptions options)
-      : options_(std::move(options)) {
+  explicit DefaultClient(ClientOptions options) : options_(std::move(options)) {
     storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
   }
 
