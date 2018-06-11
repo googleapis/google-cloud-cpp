@@ -1,6 +1,12 @@
 var searchData=
 [
-  ['parameter_5fname',['parameter_name',['../classstorage_1_1v_1_1WellKnownParameter.html#aafa0916d202415267d4f26c11af10389',1,'storage::v::WellKnownParameter']]],
-  ['parsefromjson',['ParseFromJson',['../classstorage_1_1v_1_1BucketMetadata.html#a62af39770319b8086c710a536aeb0aef',1,'storage::v::BucketMetadata::ParseFromJson()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a9d258715a28c07d6f40b5c6903e38947',1,'storage::v::ObjectMetadata::ParseFromJson()']]],
-  ['project_5fnumber',['project_number',['../classstorage_1_1v_1_1BucketMetadata.html#ade70474938c41a914a07005ad78fdc1c',1,'storage::v::BucketMetadata']]]
+  ['objectmetadata',['ObjectMetadata',['../classstorage_1_1v_1_1ObjectMetadata.html#a3f1f9bf6c8ef7108837aa145a88271e6',1,'storage::v::ObjectMetadata']]],
+  ['ok',['ok',['../classstorage_1_1v_1_1Status.html#adeab6dd17a94ca39cc4e148dbb5352e1',1,'storage::v::Status']]],
+  ['operator_21_3d',['operator!=',['../classstorage_1_1v_1_1BucketMetadata.html#af19302ba685d775f93ee095bb20af3c0',1,'storage::v::BucketMetadata::operator!=()'],['../classstorage_1_1v_1_1Status.html#aa4f78bdb96e95e0e2b4a2024cdf5f558',1,'storage::v::Status::operator!=()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a06d9e2991e16c47f24acb0c4645c055b',1,'storage::v::ObjectMetadata::operator!=()']]],
+  ['operator_3c',['operator&lt;',['../classstorage_1_1v_1_1Status.html#a690bf2bb98823d91b6977c193ff411a5',1,'storage::v::Status']]],
+  ['operator_3c_3c',['operator&lt;&lt;',['../namespacestorage_1_1v.html#a642f950140ca4e0be1deeae9f3138a2a',1,'storage::v::operator&lt;&lt;(std::ostream &amp;os, BucketMetadata const &amp;rhs)'],['../namespacestorage_1_1v.html#ad9182fe796c31543dd63964cc0bc07f0',1,'storage::v::operator&lt;&lt;(std::ostream &amp;os, Status const &amp;rhs)'],['../namespacestorage_1_1v.html#aa03da82261721fa87b36137fafda54a5',1,'storage::v::operator&lt;&lt;(std::ostream &amp;os, ObjectMetadata const &amp;rhs)']]],
+  ['operator_3c_3d',['operator&lt;=',['../classstorage_1_1v_1_1Status.html#af88ab6c15c4bbc7101d212c01fe864a1',1,'storage::v::Status']]],
+  ['operator_3d_3d',['operator==',['../classstorage_1_1v_1_1BucketMetadata.html#af1d375b38bdec1c9bb9514e33c6fb771',1,'storage::v::BucketMetadata::operator==()'],['../classstorage_1_1v_1_1Status.html#a62fe876a19d2c73286b086bfc7389ff9',1,'storage::v::Status::operator==()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a823b47a52fe4a294bb696c3a5afcf9b3',1,'storage::v::ObjectMetadata::operator==()']]],
+  ['operator_3e',['operator&gt;',['../classstorage_1_1v_1_1Status.html#a30646ba36a1d510f885a820c6a5ec192',1,'storage::v::Status']]],
+  ['operator_3e_3d',['operator&gt;=',['../classstorage_1_1v_1_1Status.html#a965eeebeaac9ad9fea58e7b0d354e900',1,'storage::v::Status']]]
 ];

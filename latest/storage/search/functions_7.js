@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../storage__bucket__samples_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'storage_bucket_samples.cc']]],
-  ['metadata',['metadata',['../classstorage_1_1v_1_1ObjectMetadata.html#af5d8b8d7599d37209ba5243b9e567854',1,'storage::v::ObjectMetadata']]],
-  ['metadata_5fcount',['metadata_count',['../classstorage_1_1v_1_1ObjectMetadata.html#abc528aff61cf210235a1500ffa97fe48',1,'storage::v::ObjectMetadata']]]
+  ['label',['label',['../classstorage_1_1v_1_1BucketMetadata.html#a2499058f7f1a1213163d486bd1e97710',1,'storage::v::BucketMetadata']]],
+  ['label_5fcount',['label_count',['../classstorage_1_1v_1_1BucketMetadata.html#abd41538ae03e0c810408ea3a503b1825',1,'storage::v::BucketMetadata']]],
+  ['location',['location',['../classstorage_1_1v_1_1BucketMetadata.html#aa212ace6679e4626f155579cedc8defc',1,'storage::v::BucketMetadata']]]
 ];
