@@ -121,7 +121,7 @@ TEST(BucketTest, InsertObjectMediaPermanentFailure) {
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
-  EXPECT_CALL(*mock, InsertObjectMedia(_, _, _))
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillRepeatedly(Return(std::make_pair(NOT_FOUND(), ObjectMetadata{})));
   EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject("baz", "blah blah"),
                             "exceptions are disabled");
