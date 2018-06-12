@@ -30,18 +30,22 @@ namespace internal {
  * So we implement a very minimal "optional" class that documents the intent
  * and we will remove it when possible.
  *
+ * @tparam T the type of the optional value.
+ *
  * @warning this is not a drop-in replacement for std::optional<>, it has at
  *   least the following defects:
  *   - it raises std::logic_error instead of std::bad_optional_access.
  *   - emplace() is a very simple version.
  *   - It does not have the full complement of assignment operators and
  *     constructors required by the standard.
- *   - It lacks operator->() and operator*()
  *   - It lacks comparison operators.
  *   - No nullopt_t.
  *   - No std::swap(), std::make_optional(), or std::hash().
  *
- * @tparam T the type of the optional value.
+ * @warning Some of the member functions have a (commented-out) `constexpr`
+ * qualifier. The spec requires them to be `constexpr` functions, but the spec
+ * assumes C++14 (or newer) semantics for non-const constexpr member functions,
+ * and we often compile with C++11 semantics.
  *
  * TODO(#687) - replace with absl::optional<> or std::optional<> when possible.
  */
@@ -49,28 +53,77 @@ template <typename T>
 class optional {
  public:
   optional() : buffer_{}, has_value_(false) {}
-  optional(T const& x) : has_value_(true) {
+  explicit optional(T const& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(x);
   }
-  optional(T&& x) : has_value_(true) {
+  explicit optional(T&& x) noexcept : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
   }
+  optional(optional<T>&& rhs) noexcept : has_value_(rhs.has_value_) {
+    if (has_value_) {
+      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+    }
+  }
+  optional(optional<T> const& rhs) : has_value_(rhs.has_value_) {
+    if (has_value_) {
+      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+    }
+  }
+  ~optional() { reset(); }
 
-  T& value() & {
-    check_access();
-    return *reinterpret_cast<T*>(&buffer_);
+  optional<T>& operator=(optional<T>&& rhs) noexcept {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not has_value_) {
+      if (not rhs.has_value_) {
+        return *this;
+      }
+      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+      has_value_ = true;
+      return *this;
+    }
+    if (not rhs.has_value_) {
+      reset();
+      return *this;
+    }
+    **this = std::move(*rhs);
+    has_value_ = true;
+    return *this;
   }
-  T const& value() const& {
-    check_access();
+
+  constexpr T const* operator->() const {
+    return reinterpret_cast<T const*>(&buffer_);
+  }
+  /*constexpr*/ T* operator->() { return reinterpret_cast<T*>(&buffer_); }
+  constexpr T const& operator*() const& {
     return *reinterpret_cast<T const*>(&buffer_);
   }
-  T&& value() && {
-    check_access();
-    return *reinterpret_cast<T*>(&buffer_);
-  }
-  T const&& value() const&& {
-    check_access();
+  /*constexpr*/ T& operator*() & { return *reinterpret_cast<T*>(&buffer_); }
+  // Kind of useless, but the spec requires it.
+  constexpr T const&& operator*() const&& {
     return *reinterpret_cast<T const*>(&buffer_);
+  }
+  /*constexpr*/ T&& operator*() && {
+    return std::move(*reinterpret_cast<T*>(&buffer_));
+  }
+
+  /*constexpr*/ T& value() & {
+    check_access();
+    return **this;
+  }
+  /*constexpr*/ T const& value() const& {
+    check_access();
+    return **this;
+  }
+  /*constexpr*/ T&& value() && {
+    check_access();
+    return std::move(**this);
+  }
+  // Kind of useless, but the spec requires it.
+  /*constexpr*/ T const&& value() const&& {
+    check_access();
+    return **this;
   }
 
   template <typename U>
@@ -80,7 +133,7 @@ class optional {
   }
 
   template <typename U>
-  T value_or(U&& default_value) && {
+  /*constexpr*/ T value_or(U&& default_value) && {
     return bool(*this) ? std::move(**this)
                        : static_cast<T>(std::forward<U>(default_value));
   }
@@ -97,6 +150,7 @@ class optional {
   T& emplace(T&& value) {
     reset();
     *reinterpret_cast<T*>(&buffer_) = std::move(value);
+    has_value_ = true;
     return **this;
   }
 
