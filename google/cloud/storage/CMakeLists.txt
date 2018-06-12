@@ -61,16 +61,30 @@ enable_testing()
 find_package(CURL REQUIRED)
 if (NOT TARGET CURL::CURL)
     add_library(CURL::CURL UNKNOWN IMPORTED)
-    set_target_properties(CURL::CURL PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-    set_property(TARGET CURL::CURL APPEND PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
+    set_property(TARGET CURL::CURL APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+            "${CURL_INCLUDE_DIR}")
+    set_property(TARGET CURL::CURL APPEND
+        PROPERTY IMPORTED_LOCATION
+            "${CURL_LIBRARY}")
+endif ()
+# If the library is static, we need to explicitly link its dependencies.
+# However, we should not do so for shared libraries, because the version of
+# OpenSSL (for example) found by find_package() may be newer than the
+# version linked against libcurl.
+if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
+    find_package(OpenSSL REQUIRED)
+    find_package(ZLIB REQUIRED)
+    set_property(TARGET CURL::CURL APPEND
+        PROPERTY INTERFACE_LINK_LIBRARIES
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB)
+    message(STATUS "CURL is static")
+else ()
+    message(STATUS "CURL is not static")
 endif ()
 
-# Find OpenSSL and ZLIB, these define targets as-of CMake 3.5 and higher. The
-# targets are not needed when linking CURL::CURL as a shared library, only when
-# linked statically. Since we only test static linking on Windows you may not
-# notice in other platforms.
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(storage_client
@@ -110,9 +124,6 @@ target_link_libraries(storage_client
     PUBLIC
         google_cloud_cpp_common
         CURL::CURL
-        OpenSSL::SSL
-        OpenSSL::Crypto
-        ZLIB::ZLIB
         Threads::Threads
     PRIVATE
         nlohmann_json
