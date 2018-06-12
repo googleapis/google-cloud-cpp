@@ -103,6 +103,10 @@ class InstanceAdmin {
                      bigtable::ClusterId const& cluster_id,
                      grpc::Status& status);
 
+  ::google::bigtable::admin::v2::Cluster GetCluster(
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id, grpc::Status& status);
+
   //@}
 
  private:
