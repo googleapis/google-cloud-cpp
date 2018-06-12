@@ -179,8 +179,8 @@ TEST(BenchmarkTest, PrintCsv) {
 
   // The output includes the version and compiler info.
   EXPECT_THAT(output, HasSubstr(google::cloud::bigtable::version_string()));
-  EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER));
-  EXPECT_THAT(output, HasSubstr(google::cloud::internal::COMPILER_FLAGS));
+  EXPECT_THAT(output, HasSubstr(google::cloud::internal::compiler()));
+  EXPECT_THAT(output, HasSubstr(google::cloud::internal::compiler_flags()));
 
   // The output includes the latency results.
   EXPECT_THAT(output, HasSubstr(",100,"));    // p0

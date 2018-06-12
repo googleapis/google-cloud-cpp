@@ -14,17 +14,21 @@
 
 #include "google/cloud/internal/build_info.h"
 
-namespace google {
-namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
-
+namespace {
 char const COMPILER[] = R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
 
 char const COMPILER_FLAGS[] = R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${BUILD_TYPE_UPPER}})""";
 
 char const GITREV[] = R"""(@GIT_HEAD@)""";
+}  // namespace
 
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
+std::string compiler() { return COMPILER; }  // NOLINT
+std::string compiler_flags() { return COMPILER_FLAGS; } // NOLINT
+std::string gitrev() { return GITREV; } // NOLINT
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
