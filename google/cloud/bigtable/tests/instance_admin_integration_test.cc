@@ -71,14 +71,18 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
                       });
 }
 
-bigtable::InstanceConfig IntegrationTestConfig(std::string const& id) {
+bigtable::InstanceConfig IntegrationTestConfig(
+    std::string const& id, std::string const& zone = "us-central1-f",
+    bigtable::InstanceConfig::InstanceType instance_type =
+        bigtable::InstanceConfig::DEVELOPMENT,
+    int32_t serve_node = 0) {
   bigtable::InstanceId instance_id(id);
   bigtable::DisplayName display_name("Integration Tests " + id);
   auto cluster_config =
-      bigtable::ClusterConfig("us-central1-f", 0, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
                                   {{id + "-c1", cluster_config}});
-  config.set_type(bigtable::InstanceConfig::DEVELOPMENT);
+  config.set_type(instance_type);
   return config;
 }
 
@@ -195,7 +199,9 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(id);
-  auto instance = instance_admin_->CreateInstance(config).get();
+  auto instance = instance_admin_->CreateInstance(config);
+  ASSERT_THAT(instance.get().name(), HasSubstr(id));
+
   auto clusters = instance_admin_->ListClusters(id);
   for (auto const& cluster : clusters) {
     EXPECT_NE(std::string::npos,
@@ -216,32 +222,15 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  bigtable::InstanceId instance_id1(id1);
-  bigtable::InstanceId instance_id2(id2);
-
-  bigtable::ClusterId cluster_id1(id1);
-  bigtable::ClusterId cluster_id2(id2);
-  bigtable::DisplayName display_name(id1);
-
-  bigtable::ClusterConfig cluster_config =
-      bigtable::ClusterConfig("us-central1-f", 3, bigtable::ClusterConfig::HDD);
-
-  std::vector<std::pair<std::string, bigtable::ClusterConfig>>
-      clusters_config_list;
-  clusters_config_list.push_back(
-      std::make_pair(cluster_id1.get(), cluster_config));
-  clusters_config_list.push_back(
-      std::make_pair(cluster_id2.get(), cluster_config));
-
-  auto instance_config1 =
-      bigtable::InstanceConfig(instance_id1, display_name, clusters_config_list)
-          .set_type(bigtable::InstanceConfig::PRODUCTION);
-  auto instance_config2 =
-      bigtable::InstanceConfig(instance_id2, display_name, clusters_config_list)
-          .set_type(bigtable::InstanceConfig::PRODUCTION);
-
-  instance_admin_->CreateInstance(instance_config1);
-  instance_admin_->CreateInstance(instance_config2);
+  auto instance_config1 = IntegrationTestConfig(
+      id1, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config2 = IntegrationTestConfig(
+      id2, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance1 = instance_admin_->CreateInstance(instance_config1);
+  // Wait for instance creation
+  ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
+  auto instance2 = instance_admin_->CreateInstance(instance_config2);
+  ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
 
   auto clusters = instance_admin_->ListClusters();
   for (auto const& cluster : clusters) {
@@ -250,8 +239,8 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   }
   EXPECT_FALSE(clusters.empty());
 
-  instance_admin_->DeleteInstance(instance_id1.get());
-  instance_admin_->DeleteInstance(instance_id2.get());
+  instance_admin_->DeleteInstance(id1);
+  instance_admin_->DeleteInstance(id2);
 }
 
 /// @test Verify that InstanceAdmin::UpdateCluster works as expected.
@@ -260,20 +249,12 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
       "it-" + bigtable::testing::Sample(generator_, 8,
                                         "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
-  bigtable::ClusterId cluster_id(id + "-cl1");
-  bigtable::DisplayName display_name(id);
-
-  std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
-  clusters_config.push_back(std::make_pair(
-      cluster_id.get(), bigtable::ClusterConfig("us-central1-f", 3,
-                                                bigtable::ClusterConfig::HDD)));
-  auto instance_config =
-      bigtable::InstanceConfig(instance_id, display_name, clusters_config)
-          .set_type(bigtable::InstanceConfig::PRODUCTION);
+  auto instance_config1 = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
+      instance_admin_->CreateInstance(instance_config1).get();
 
-  auto clusters_before = instance_admin_->ListClusters(instance_id.get());
+  auto clusters_before = instance_admin_->ListClusters(id);
 
   bigtable::ClusterId another_cluster_id(id + "-cl2");
   auto location =

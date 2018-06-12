@@ -242,6 +242,8 @@ int main(int argc, char* argv[]) try {
     DeleteInstance(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
+  } else if (command == "list-all-clusters") {
+    ListAllClusters(instance_admin, argc, argv);
   } else if (command == "update-cluster") {
     UpdateCluster(instance_admin, argc, argv);
   } else if (command == "delete-cluster") {

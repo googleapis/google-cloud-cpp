@@ -40,11 +40,6 @@ class InstanceAdminEmulator final
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
 
-    for (auto& kv : request->clusters()) {
-      auto cluster = kv.second;
-      cluster.set_name(name + "/clusters/" + kv.first);
-      clusters_.emplace(name + "/clusters/" + kv.first, cluster);
-    }
     if (ins.second) {
       auto& stored_instance = ins.first->second;
       stored_instance.set_name(name);
@@ -195,16 +190,20 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    std::string instance_path =
-        request->parent().substr(0, request->parent().find_last_of("/"));
-    std::string prefix = request->parent() + "/clusters/";
+    // magical instance name "-" must return all clusters in the project
+    auto project_path =
+        request->parent().substr(0, request->parent().find("/instances"));
+    auto prefix = request->parent() + "/clusters/";
+    auto magical_instance_name_found =
+        (prefix.find("/instances/-/") != std::string::npos) ? true : false;
 
     for (auto const& instance : instances_) {
-      if (std::string::npos == instance.first.find(instance_path)) {
+      if (std::string::npos == instance.first.find(project_path)) {
         continue;
       }
       for (auto const& cluster : clusters_) {
-        if (request->parent().back() == '-') {
+        // Search for the magical instance name "-" in a request
+        if (magical_instance_name_found) {
           *response->add_clusters() = cluster.second;
         } else {
           if (std::string::npos != cluster.first.find(prefix)) {
