@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_H_
 
-#include <string>
 #include "google/cloud/storage/client.h"
+#include <string>
 
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {

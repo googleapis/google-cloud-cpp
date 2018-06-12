@@ -85,12 +85,9 @@ struct IfMetaGenerationNotMatch
   }
 };
 
-struct Generation
-    : public WellKnownParameter<Generation, std::int64_t> {
-  using WellKnownParameter<Generation,std::int64_t>::WellKnownParameter;
-  static char const* well_known_parameter_name() {
-    return "generation";
-  }
+struct Generation : public WellKnownParameter<Generation, std::int64_t> {
+  using WellKnownParameter<Generation, std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "generation"; }
 };
 
 /**
