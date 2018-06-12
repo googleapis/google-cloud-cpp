@@ -201,13 +201,13 @@ Prefer placing nonmember functions in a namespace; use completely global functio
 with a namespace instead of using a class as if it were a namespace. Static methods of a class should generally be
 closely related to instances of the class or the class's static data.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions)
 
 #### Local Variables
 
 Place a function's variables in the narrowest scope possible, and initialize variables in the declaration.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Local_Variables
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Local_Variables)
 
 #### Static and Global Variables
 
@@ -215,14 +215,14 @@ Variables of class type with static storage duration are forbidden: they cause h
 order of construction and destruction. However, such variables are allowed if they are `constexpr`: they have no
 dynamic initialization or destruction.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables)
 
 #### Classes
 
 Classes are the fundamental unit of code in C++. Naturally, we use them extensively. This section lists the main dos
 and don'ts you should follow when writing a class.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Classes
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Classes)
 
 #### Doing Work in Constructors
 
@@ -243,26 +243,26 @@ Do not raise exceptions in destructors.  Declare your destructors as `noexcept`.
 Do not define implicit conversions. Use the `explicit` keyword for conversion operators and single-argument
 constructors.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Implicit_Conversions
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Implicit_Conversions)
 
 #### Copyable and Movable Types
 
 Support copying and/or moving if these operations are clear and meaningful for your type. Otherwise, disable the
 implicitly generated special functions that perform copies and moves.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types)
 
 #### Structs vs. Classes
 
 Use a `struct` only for passive objects that carry data; everything else is a `class`.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Structs_vs._Classes
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Structs_vs._Classes)
 
 #### Inheritance
 
 Composition is often more appropriate than inheritance. When using inheritance, make it `public`.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Inheritance
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Inheritance)
 
 It is common practice in the C++ community to use `private` inheritance for composition, in this case, we prefer to
 follow the GSG because it is fairly rare to use private inheritance in any case.
@@ -323,7 +323,7 @@ Prefer small and focused functions.
 We recognize that long functions are sometimes appropriate, so no hard limit is placed on functions length. If a
 function exceeds about 40 lines, think about whether it can be broken up without harming the structure of the program.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Write_Short_Functions
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Write_Short_Functions)
 
 #### Reference Arguments
 
@@ -337,7 +337,7 @@ This is substantially different from the corresponding
 
 Use overloaded functions (including constructors) only if a reader looking at a call site can get a good idea of what is happening without having to first figure out exactly which overload is being called.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Overloading
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Overloading)
 
 #### Default Arguments
 
@@ -629,7 +629,7 @@ Namespace names are all lower-case. Top-level namespace names are based on the p
 
 #### Enumerator Names
 
-Enumerators (for both scoped and unscoped enums) should be named like [macros](#Macro Names): `ENUM_NAME`.
+Enumerators (for both scoped and unscoped enums) should be named like [macros](#macro-names): `ENUM_NAME`.
 
 This rule is more restrictive than:
 [link to CSG](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
@@ -690,7 +690,7 @@ Do not duplicate comments in both the `.h` and the `.cc`. Duplicated comments di
 
 #### Class Comments
 
-Use Doxygen-style comments to document classes.  Prefer `@directives` over `\directivFes`.  Do document the template
+Use Doxygen-style comments to document classes.  Prefer `@directives` over `\directives`.  Do document the template
 parameters for template classes.  Use `///` for one-line Doxygen comments, use `/** */` otherwise.
 Document all classes exposed as part of the API of the library, even obvious ones.
 
@@ -794,7 +794,8 @@ the tab key.
 
 Return type on the same line as function name, parameters on the same line if they fit. Wrap parameter lists which do not fit on a single line as you would wrap arguments in a function call.
 
-https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions
+[link to GSG](https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions)
+
 #### Lambda Expressions
 
 Format parameters and bodies as for any other function, and capture lists like other comma-separated lists.
