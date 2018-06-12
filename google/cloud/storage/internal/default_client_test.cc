@@ -33,7 +33,7 @@ class DefaultClientTest : public ::testing::Test {
     MockHttpRequest::Clear();
     credentials_ = std::make_shared<MockCredentials>();
     EXPECT_CALL(*credentials_, AuthorizationHeader())
-        .WillRepeatedly(Return("some-secret-credential"));
+        .WillRepeatedly(Return("Authorization: some-secret-credential"));
   }
   void TearDown() {
     credentials_.reset();

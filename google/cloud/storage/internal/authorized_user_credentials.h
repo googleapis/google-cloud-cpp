@@ -91,7 +91,8 @@ class AuthorizedUserCredentials : public storage::Credentials {
       return false;
     }
     nl::json access_token = nl::json::parse(response.payload);
-    std::string header = access_token["token_type"];
+    std::string header = "Authorization: ";
+    header += access_token["token_type"].get_ref<std::string const&>();
     header += ' ';
     header += access_token["access_token"].get_ref<std::string const&>();
     std::string new_id = access_token["id_token"];
