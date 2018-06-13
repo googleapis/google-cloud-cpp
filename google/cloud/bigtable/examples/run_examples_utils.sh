@@ -96,10 +96,13 @@ function run_all_instance_admin_examples {
   echo "Run get-instance example."
   ${setenv} ../examples/bigtable_samples_instance_admin get-instance "${project_id}" "${INSTANCE}"
 
-#  TODO(#490) - disabled until ListClusters works correctly.
-#  echo
-#  echo "Run list-clusters example."
-#  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters "${project_id}"
+  echo
+  echo "Run list-clusters example."
+  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters "${project_id}" "${INSTANCE}"
+
+  echo
+  echo "Run list-all-clusters example."
+  ${setenv} ../examples/bigtable_samples_instance_admin list-all-clusters "${project_id}"
 
   reset_trap
   echo

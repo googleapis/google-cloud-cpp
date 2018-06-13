@@ -40,11 +40,6 @@ class InstanceAdminEmulator final
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
 
-    for (auto& kv : request->clusters()) {
-      auto cluster = kv.second;
-      cluster.set_name(name + "/clusters/" + kv.first);
-      clusters_.emplace(name + "/clusters/" + kv.first, cluster);
-    }
     if (ins.second) {
       auto& stored_instance = ins.first->second;
       stored_instance.set_name(name);
@@ -54,6 +49,14 @@ class InstanceAdminEmulator final
       auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
       contents->PackFrom(stored_instance);
       response->set_allocated_response(contents.release());
+
+      // Add cluster into clusters_
+      for (auto& kv : request->clusters()) {
+        auto cluster = kv.second;
+        cluster.set_name(name + "/clusters/" + kv.first);
+        clusters_.emplace(name + "/clusters/" + kv.first, cluster);
+      }
+
       return grpc::Status::OK;
     }
     return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "duplicate instance");
@@ -187,17 +190,25 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    std::string prefix = request->parent();
-
     // magical instance name "-" must return all clusters in the project
-    if (request->parent().back() == '-') {
-      for (auto const& kv : clusters_) {
-        *response->add_clusters() = kv.second;
+    auto project_path =
+        request->parent().substr(0, request->parent().find("/instances"));
+    auto prefix = request->parent() + "/clusters/";
+    auto magical_instance_name_found =
+        (request->parent() == project_path + "/instances/-");
+
+    for (auto const& instance : instances_) {
+      if (std::string::npos == instance.first.find(project_path)) {
+        continue;
       }
-    } else {
-      for (auto const& kv : clusters_) {
-        if (kv.first.find(prefix) != std::string::npos) {
-          *response->add_clusters() = kv.second;
+      for (auto const& cluster : clusters_) {
+        // Search for the magical instance name "-" in a request
+        if (magical_instance_name_found) {
+          *response->add_clusters() = cluster.second;
+        } else {
+          if (std::string::npos != cluster.first.find(prefix)) {
+            *response->add_clusters() = cluster.second;
+          }
         }
       }
     }
