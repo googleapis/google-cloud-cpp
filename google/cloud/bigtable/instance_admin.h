@@ -170,9 +170,7 @@ class InstanceAdmin {
   /**
    * Updates the specified cluster of an instance in the project.
    *
-   * @param instance_id the id of the instance in the project
-   * @param cluster_id the id of the cluster in the project that needs to be
-   *   deleted
+   * @param cluster_config a description of the new cluster to be created.
    *
    *  @par Example
    *  @snippet bigtable_samples_instance_admin.cc update cluster

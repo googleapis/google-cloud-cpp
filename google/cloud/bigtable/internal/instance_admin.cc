@@ -100,7 +100,7 @@ btproto::Cluster InstanceAdmin::GetCluster(
   return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
                                metadata_update_policy_,
                                &InstanceAdminClient::GetCluster, request,
-                               "InstanceAdmin::DeleteCluster", status, true);
+                               "InstanceAdmin::GetCluster", status, true);
 }
 
 std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
