@@ -68,13 +68,12 @@ auto create_list_instances_lambda = [](std::string expected_token,
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return
-      [] (grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
-          btproto::Cluster* response) {
-        EXPECT_NE(nullptr, response);
-        response->set_name(request.name());
-        return grpc::Status::OK;
-      };
+  return [](grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
+            btproto::Cluster* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
@@ -981,14 +980,12 @@ TEST_F(InstanceAdminTest, GetCluster) {
   bigtable::InstanceAdmin tested(client_);
   auto mock = create_cluster();
   EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
-  grpc::Status status;
   bigtable::InstanceId instance_id("the-instance");
   bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster(instance_id, cluster_id);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
             cluster.name());
-  EXPECT_TRUE(status.ok());
 }
 
 /// @test Verify unrecoverable error for GetCluster
@@ -999,7 +996,6 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  grpc::Status status;
   bigtable::InstanceId instance_id("other-instance");
   bigtable::ClusterId cluster_id("other-cluster");
 
@@ -1029,7 +1025,6 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
       .WillOnce(Invoke(mock_cluster));
 
   // After all the setup, make the actual call we want to test.
-  grpc::Status status;
   bigtable::InstanceId instance_id("the-instance");
   bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.

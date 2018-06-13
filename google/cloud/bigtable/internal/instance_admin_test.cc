@@ -80,13 +80,12 @@ auto create_instance = [](std::string expected_token,
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return
-    [] (grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
-        btproto::Cluster* response) {
-      EXPECT_NE(nullptr, response);
-      response->set_name(request.name());
-      return grpc::Status::OK;
-    };
+  return [](grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
+            btproto::Cluster* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
 };
 
 // A lambda to create lambdas. Basically we would be rewriting the same

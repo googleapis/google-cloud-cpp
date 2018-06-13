@@ -181,8 +181,8 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [update cluster]
 
 //! [get cluster]
-void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
-                 int argc, char* argv[]) {
+void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+                char* argv[]) {
   if (argc != 3) {
     throw Usage{"get-cluster: <project-id> <instance-id> <cluster-id>"};
   }
