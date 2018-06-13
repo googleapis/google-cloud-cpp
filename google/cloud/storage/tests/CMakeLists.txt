@@ -25,8 +25,6 @@ foreach (fname ${storage_client_integration_tests})
             storage_client
             gmock
             CURL::CURL
-            OpenSSL::SSL
-            OpenSSL::Crypto
             Threads::Threads
             nlohmann_json
             storage_common_options)
