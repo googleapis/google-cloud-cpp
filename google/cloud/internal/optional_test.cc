@@ -75,6 +75,25 @@ int Observable::move_constructor = 0;
 int Observable::copy_assignment = 0;
 int Observable::move_assignment = 0;
 int Observable::destructor = 0;
+
+// A class without a default constructor to verify optional<> can handle that.
+class NoDefaultConstructor {
+ public:
+  NoDefaultConstructor() = delete;
+  explicit NoDefaultConstructor(std::string x) : str_(std::move(x)) {}
+
+  bool operator==(NoDefaultConstructor const& rhs) const {
+    return str_ == rhs.str_;
+  }
+  bool operator!=(NoDefaultConstructor const& rhs) const {
+    return !(*this == rhs);
+  }
+
+  std::string str() const { return str_; }
+
+ private:
+  std::string str_;
+};
 }  // namespace
 
 TEST(OptionalTest, Simple) {
@@ -96,25 +115,23 @@ TEST(OptionalTest, Simple) {
   EXPECT_EQ(24, actual.value());
 }
 
-TEST(OptionalTest, NoDefaultConstruction) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
+using OptionalObservable = google::cloud::internal::optional<Observable>;
 
+TEST(OptionalTest, NoDefaultConstruction) {
   Observable::reset_counters();
-  tested_optional other;
+  OptionalObservable other;
   EXPECT_EQ(0, Observable::default_constructor);
   EXPECT_FALSE(other.has_value());
 }
 
 TEST(OptionalTest, Copy) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
   Observable::reset_counters();
-  tested_optional other(Observable("foo"));
+  OptionalObservable other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
   EXPECT_EQ(1, Observable::move_constructor);
 
   Observable::reset_counters();
-  tested_optional copy(other);
+  OptionalObservable copy(other);
   EXPECT_EQ(1, Observable::copy_constructor);
   EXPECT_TRUE(copy.has_value());
   EXPECT_TRUE(other.has_value());
@@ -122,15 +139,13 @@ TEST(OptionalTest, Copy) {
 }
 
 TEST(OptionalTest, MoveCopy) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
   Observable::reset_counters();
-  tested_optional other(Observable("foo"));
+  OptionalObservable other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
   EXPECT_EQ(1, Observable::move_constructor);
 
   Observable::reset_counters();
-  tested_optional copy(std::move(other));
+  OptionalObservable copy(std::move(other));
   EXPECT_EQ(1, Observable::move_constructor);
   EXPECT_TRUE(copy.has_value());
   EXPECT_EQ("foo", copy->str());
@@ -141,10 +156,8 @@ TEST(OptionalTest, MoveCopy) {
 }
 
 TEST(OptionalTest, MoveAssignment_NoValue_NoValue) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other;
-  tested_optional assigned;
+  OptionalObservable other;
+  OptionalObservable assigned;
   EXPECT_FALSE(other.has_value());
   EXPECT_FALSE(assigned.has_value());
 
@@ -160,10 +173,8 @@ TEST(OptionalTest, MoveAssignment_NoValue_NoValue) {
 }
 
 TEST(OptionalTest, MoveAssignment_NoValue_Value) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other(Observable("foo"));
-  tested_optional assigned;
+  OptionalObservable other(Observable("foo"));
+  OptionalObservable assigned;
   EXPECT_TRUE(other.has_value());
   EXPECT_FALSE(assigned.has_value());
 
@@ -181,10 +192,8 @@ TEST(OptionalTest, MoveAssignment_NoValue_Value) {
 }
 
 TEST(OptionalTest, MoveAssignment_Value_NoValue) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other;
-  tested_optional assigned(Observable("bar"));
+  OptionalObservable other;
+  OptionalObservable assigned(Observable("bar"));
   EXPECT_FALSE(other.has_value());
   EXPECT_TRUE(assigned.has_value());
 
@@ -200,10 +209,8 @@ TEST(OptionalTest, MoveAssignment_Value_NoValue) {
 }
 
 TEST(OptionalTest, MoveAssignment_Value_Value) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other(Observable("foo"));
-  tested_optional assigned(Observable("bar"));
+  OptionalObservable other(Observable("foo"));
+  OptionalObservable assigned(Observable("bar"));
   EXPECT_TRUE(other.has_value());
   EXPECT_TRUE(assigned.has_value());
 
@@ -221,9 +228,7 @@ TEST(OptionalTest, MoveAssignment_Value_Value) {
 }
 
 TEST(OptionalTest, MoveValue) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other(Observable("foo"));
+  OptionalObservable other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
 
   Observable::reset_counters();
@@ -236,9 +241,7 @@ TEST(OptionalTest, MoveValue) {
 }
 
 TEST(OptionalTest, MoveValueOr) {
-  using tested_optional = google::cloud::internal::optional<Observable>;
-
-  tested_optional other(Observable("foo"));
+  OptionalObservable other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
 
   auto observed = std::move(other).value_or(Observable("bar"));
@@ -249,31 +252,13 @@ TEST(OptionalTest, MoveValueOr) {
   EXPECT_EQ("moved-out", other->str());
 }
 
-class NoDefaultConstructor {
- public:
-  NoDefaultConstructor() = delete;
-  explicit NoDefaultConstructor(std::string x) : str_(std::move(x)) {}
-
-  bool operator==(NoDefaultConstructor const& rhs) const {
-    return str_ == rhs.str_;
-  }
-  bool operator!=(NoDefaultConstructor const& rhs) const {
-    return !(*this == rhs);
-  }
-
-  std::string str() const { return str_; }
-
- private:
-  std::string str_;
-};
-
 TEST(OptionalTest, WithNoDefaultConstructor) {
-  using tested_optional =
+  using TestedOptional =
       google::cloud::internal::optional<NoDefaultConstructor>;
-  tested_optional empty;
+  TestedOptional empty;
   EXPECT_FALSE(empty.has_value());
 
-  tested_optional actual(NoDefaultConstructor(std::string("foo")));
+  TestedOptional actual(NoDefaultConstructor(std::string("foo")));
   EXPECT_TRUE(actual.has_value());
   EXPECT_EQ(actual->str(), "foo");
 }
