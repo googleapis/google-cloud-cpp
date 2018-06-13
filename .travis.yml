@@ -52,6 +52,8 @@ matrix:
       # requests because Travis often has long backlogs for macOS.
       os: osx
       compiler: clang
+      env:
+        CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl
       install: ci/install-retry.sh ci/install-macosx.sh
       script: ci/build-macosx.sh
       cache: ccache

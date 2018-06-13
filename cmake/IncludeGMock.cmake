@@ -25,10 +25,12 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GMOCK_PROVIDER
                       "vcpkg"
                       "pkg-config")
 
-if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
+if (TARGET gmock)
+    # If the gmock target is already defined then skip the rest.
+elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
 
-    # Compile the googlemock library. This library is rarely installed or pre-
-    # compiled because it should be configured with the same flags as the
+    # Compile the googlemock library.  This library is rarely installed or
+    # pre-compiled because it should be configured with the same flags as the
     # application.
     #
     # TODO(#310) - consider changing the name of this target as it can conflict
