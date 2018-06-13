@@ -195,7 +195,7 @@ class InstanceAdminEmulator final
         request->parent().substr(0, request->parent().find("/instances"));
     auto prefix = request->parent() + "/clusters/";
     auto magical_instance_name_found =
-        (prefix.find("/instances/-/") != std::string::npos) ? true : false;
+        (request->parent() == project_path + "/instances/-");
 
     for (auto const& instance : instances_) {
       if (std::string::npos == instance.first.find(project_path)) {

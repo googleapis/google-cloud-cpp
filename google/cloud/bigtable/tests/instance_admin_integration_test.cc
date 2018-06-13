@@ -227,9 +227,9 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   auto instance_config2 = IntegrationTestConfig(
       id2, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance1 = instance_admin_->CreateInstance(instance_config1);
+  auto instance2 = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
   ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
-  auto instance2 = instance_admin_->CreateInstance(instance_config2);
   ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
 
   auto clusters = instance_admin_->ListClusters();
