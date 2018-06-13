@@ -44,27 +44,38 @@ BucketMetadata Bucket::GetMetadataImpl(
     // TODO(#581) - use policies to determine what error codes are permanent.
     if (not IsRetryableStatusCode(last_status.status_code())) {
       std::ostringstream os;
-      os << "Permanent error in Bucket::GetMetadata: " << last_status;
+      os << "Permanent error in " << __func__ << ": " << last_status;
       google::cloud::internal::RaiseRuntimeError(os.str());
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in Bucket::GetMetadata: " << last_status;
+  os << "Retry policy exhausted in " << __func__ << ": " << last_status;
   google::cloud::internal::RaiseRuntimeError(os.str());
 }
 
 ObjectMetadata Bucket::InsertObjectMediaImpl(
     InsertObjectMediaRequest const& request) {
-  // This operation is not idempotent, so we do not retry it.
+  // TODO(#555) - use policies to implement retry loop.
   Status last_status;
-  auto result = client_->InsertObjectMedia(request);
-  last_status = std::move(result.first);
-  if (last_status.ok()) {
-    return std::move(result.second);
+  constexpr int MAX_NUM_RETRIES = 3;
+  for (int i = 0; i != MAX_NUM_RETRIES; ++i) {
+    auto result = client_->InsertObjectMedia(request);
+    last_status = std::move(result.first);
+    if (last_status.ok()) {
+      return std::move(result.second);
+    }
+    // TODO(#714) - use policies to decide if the operation is idempotent.
+    // TODO(#581) - use policies to determine what error codes are permanent.
+    if (not IsRetryableStatusCode(last_status.status_code())) {
+      std::ostringstream os;
+      os << "Permanent error in " << __func__ << ": " << last_status;
+      google::cloud::internal::RaiseRuntimeError(os.str());
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
   std::ostringstream os;
-  os << "Permanent failure in Bucket::InsertObject: " << last_status;
+  os << "Retry policy exhausted in " << __func__ << ": " << last_status;
   google::cloud::internal::RaiseRuntimeError(os.str());
 }
 

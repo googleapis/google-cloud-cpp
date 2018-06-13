@@ -110,6 +110,26 @@ TEST(BucketTest, InsertObjectMedia) {
   EXPECT_EQ(expected, actual);
 }
 
+TEST(BucketTest, InsertObjectMediaTooManyFailures) {
+  auto mock = std::make_shared<MockClient>();
+  Bucket bucket(mock, "foo-bar");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Return(std::make_pair(UNAVAILABLE(), ObjectMetadata{})))
+      .WillOnce(Return(std::make_pair(UNAVAILABLE(), ObjectMetadata{})))
+      .WillOnce(Return(std::make_pair(UNAVAILABLE(), ObjectMetadata{})));
+  EXPECT_THROW(bucket.InsertObject("baz", "blah blah"), std::runtime_error);
+#else
+  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
+  // operation is called.
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillRepeatedly(Return(std::make_pair(UNAVAILABLE(), ObjectMetadata{})));
+  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject("baz", "blah blah"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(BucketTest, InsertObjectMediaPermanentFailure) {
   auto mock = std::make_shared<MockClient>();
   Bucket bucket(mock, "foo-bar");
