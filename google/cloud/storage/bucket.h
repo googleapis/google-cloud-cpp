@@ -38,7 +38,7 @@ class Bucket {
   /**
    * Fetch the bucket metadata and return it.
    *
-   * @param modifier a variadic list. Valid types for this operation include
+   * @param modifiers a variadic list. Valid types for this operation include
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *   `Projection`.
    *
@@ -49,9 +49,9 @@ class Bucket {
    * @snippet storage_bucket_samples.cc get metadata
    */
   template <typename... Modifiers>
-  BucketMetadata GetMetadata(Modifiers&&... modifier) {
+  BucketMetadata GetMetadata(Modifiers&&... modifiers) {
     GetBucketMetadataRequest request(bucket_name());
-    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+    request.ApplyModifiers(std::forward<Modifiers>(modifiers)...);
     return GetMetadataImpl(request);
   }
 

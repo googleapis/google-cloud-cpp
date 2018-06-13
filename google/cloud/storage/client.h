@@ -141,6 +141,8 @@ class InsertObjectMediaRequest {
    * @tparam T the types of the remaining modifiers.
    * @param head the first modifier in the list.
    * @param tail the remaining modifiers in the list.
+   *
+   * TODO(#710) - implement all other modifiers applicable to Objects: insert
    */
   template <typename H, typename... T>
   InsertObjectMediaRequest& ApplyModifiers(H&& head, T&&... tail) {
