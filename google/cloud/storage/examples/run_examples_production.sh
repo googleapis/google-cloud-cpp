@@ -26,8 +26,12 @@ function run_all_bucket_examples {
   shift
 
   echo
-  echo "Running bucket get-metadata examples"
+  echo "Running bucket get-metadata example"
   ./storage_bucket_samples get-metadata "${bucket_name}"
+
+  echo
+  echo "Running bucket insert-object example"
+  ./storage_bucket_samples insert-object "${bucket_name}"
 }
 
 # Run the examples against the production environment:

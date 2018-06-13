@@ -23,8 +23,12 @@ namespace testing {
 class MockClient : public storage::Client {
  public:
   using BucketGetResult = std::pair<storage::Status, storage::BucketMetadata>;
+  using ObjectInsertResult =
+      std::pair<storage::Status, storage::ObjectMetadata>;
   MOCK_METHOD1(GetBucketMetadata,
                BucketGetResult(GetBucketMetadataRequest const&));
+  MOCK_METHOD1(InsertObjectMedia,
+               ObjectInsertResult(InsertObjectMediaRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

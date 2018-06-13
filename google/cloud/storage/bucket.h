@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_H_
 
-#include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client.h"
 
 namespace storage {
@@ -39,7 +38,7 @@ class Bucket {
   /**
    * Fetch the bucket metadata and return it.
    *
-   * @param modifier a variadic list. Valid types for this operation include
+   * @param modifiers a variadic list. Valid types for this operation include
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *   `Projection`.
    *
@@ -50,16 +49,34 @@ class Bucket {
    * @snippet storage_bucket_samples.cc get metadata
    */
   template <typename... Modifiers>
-  BucketMetadata GetMetadata(Modifiers&&... modifier) {
+  BucketMetadata GetMetadata(Modifiers&&... modifiers) {
     GetBucketMetadataRequest request(bucket_name());
-    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+    request.ApplyModifiers(std::forward<Modifiers>(modifiers)...);
     return GetMetadataImpl(request);
+  }
+
+  /**
+   * Create an object given its name and media (contents).
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc insert object
+   *
+   * TODO(#682) - prototype modifiers for the request.
+   */
+  template <typename... Modifiers>
+  ObjectMetadata InsertObject(std::string const& object_name,
+                              std::string contents, Modifiers&&... modifier) {
+    InsertObjectMediaRequest request(bucket_name(), object_name,
+                                     std::move(contents));
+    request.ApplyModifiers(std::forward<Modifiers>(modifier)...);
+    return InsertObjectMediaImpl(request);
   }
 
   static void ValidateBucketName(std::string const& bucket_name);
 
  private:
   BucketMetadata GetMetadataImpl(GetBucketMetadataRequest const& request);
+  ObjectMetadata InsertObjectMediaImpl(InsertObjectMediaRequest const& request);
 
  private:
   std::shared_ptr<Client> client_;

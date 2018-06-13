@@ -49,6 +49,29 @@ class DefaultClient : public Client {
                           BucketMetadata::ParseFromJson(payload.payload));
   }
 
+  std::pair<Status, ObjectMetadata> InsertObjectMedia(
+      InsertObjectMediaRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name() +
+                            "/o");
+    requestor.AddQueryParameter("uploadType", "media");
+    requestor.AddQueryParameter("name", request.object_name());
+    requestor.AddWellKnownParameters(request.well_known_parameters());
+    requestor.AddHeader(options_.credentials()->AuthorizationHeader());
+    requestor.AddHeader("Content-Type: application/octet-stream");
+    requestor.AddHeader("Content-Length: " +
+                        std::to_string(request.contents().size()));
+    requestor.PrepareRequest(std::move(request.contents()));
+    auto payload = requestor.MakeRequest();
+    if (200 != payload.status_code) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          ObjectMetadata{});
+    }
+    return std::make_pair(Status(),
+                          ObjectMetadata::ParseFromJson(payload.payload));
+  }
+
  private:
   ClientOptions options_;
   std::string storage_endpoint_;

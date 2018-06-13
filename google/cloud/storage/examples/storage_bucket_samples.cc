@@ -39,7 +39,9 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Examples:\n";
-  for (auto example : {"get-metadata <bucket_name>"}) {
+  for (auto const& example :
+       {"get-metadata <bucket_name>",
+        "insert-object <object name> <object contents>"}) {
     std::cerr << "  " << program << " " << example << "\n";
   }
   std::cerr << std::flush;
@@ -52,12 +54,22 @@ void GetMetadata(storage::Bucket bucket, int& argc, char* argv[]) {
 }
 //! [get metadata]
 
+//! [insert object]
+void InsertObject(storage::Bucket bucket, int& argc, char* argv[]) {
+  auto object_name = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  auto meta = bucket.InsertObject(object_name, std::move(contents));
+  std::cout << "The new object metadata is " << meta << std::endl;
+}
+//! [insert object]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(storage::Bucket, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-metadata", &GetMetadata},
+      {"insert-object", &InsertObject},
   };
 
   if (argc < 2) {

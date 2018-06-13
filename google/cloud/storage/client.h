@@ -18,6 +18,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
@@ -95,6 +96,104 @@ class GetBucketMetadataRequest {
   WellKnownParameters well_known_parameters_;
 };
 
+class InsertObjectMediaRequest {
+ public:
+  InsertObjectMediaRequest() = default;
+  explicit InsertObjectMediaRequest(std::string bucket_name,
+                                    std::string object_name,
+                                    std::string contents)
+      : bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)),
+        contents_(std::move(contents)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  InsertObjectMediaRequest& set_bucket_name(std::string bucket_name) {
+    bucket_name_ = std::move(bucket_name);
+    return *this;
+  }
+  std::string const& object_name() const { return object_name_; }
+  InsertObjectMediaRequest& set_object_name(std::string object_name) {
+    object_name_ = std::move(object_name);
+    return *this;
+  }
+  std::string const& contents() const { return contents_; }
+  InsertObjectMediaRequest& set_contents(std::string contents) {
+    contents_ = std::move(contents);
+    return *this;
+  }
+
+  /**
+   * Apply a list of modifiers to a CreateObjectMediaRequest.
+   *
+   * This is a shorthand to replace:
+   *
+   * @code
+   * request.ApplyModifier(m1).ApplyModifier(m2).ApplyModifier(m3)
+   * @endcode
+   *
+   * with:
+   *
+   * @code
+   * request.ApplyModifiers(m1, m2, m3)
+   * @endcode
+   *
+   * @tparam H the first modifier type
+   * @tparam T the types of the remaining modifiers.
+   * @param head the first modifier in the list.
+   * @param tail the remaining modifiers in the list.
+   *
+   * TODO(#710) - implement all other modifiers applicable to Objects: insert
+   */
+  template <typename H, typename... T>
+  InsertObjectMediaRequest& ApplyModifiers(H&& head, T&&... tail) {
+    ApplyModifier(std::forward<H>(head));
+    return ApplyModifiers(std::forward<T>(tail)...);
+  }
+
+  //@{
+  /// @name Apply a single modifier to the request.
+  InsertObjectMediaRequest& ApplyModifier(IfGenerationMatch&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  InsertObjectMediaRequest& ApplyModifier(IfGenerationNotMatch&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  InsertObjectMediaRequest& ApplyModifier(IfMetaGenerationMatch&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  InsertObjectMediaRequest& ApplyModifier(IfMetaGenerationNotMatch&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  InsertObjectMediaRequest& ApplyModifier(Projection&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  InsertObjectMediaRequest& ApplyModifier(UserProject&& p) {
+    well_known_parameters_.Apply(std::move(p));
+    return *this;
+  }
+  //@}
+
+  /**
+   * Apply an empty list of modifiers to a InsertObjectMediaRequest.
+   */
+  InsertObjectMediaRequest& ApplyModifiers() { return *this; }
+
+  WellKnownParameters const& well_known_parameters() const {
+    return well_known_parameters_;
+  }
+
+ private:
+  std::string bucket_name_;
+  std::string object_name_;
+  std::string contents_;
+  WellKnownParameters well_known_parameters_;
+};
+
 /**
  * Define the interface used to communicate with Google Cloud Storage.
  *
@@ -118,6 +217,10 @@ class Client {
    */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
+
+  // TODO(#682) - prototype modifiers for the request.
+  virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
+      InsertObjectMediaRequest const&) = 0;
 };
 
 /**
