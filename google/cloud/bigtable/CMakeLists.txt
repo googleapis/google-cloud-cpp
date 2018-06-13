@@ -93,8 +93,6 @@ add_library(bigtable::protos ALIAS bigtable_protos)
 # Enable unit tests
 enable_testing()
 
-include(IncludeGMock)
-
 add_dependencies(skip-scanbuild-targets gmock bigtable_protos)
 
 # Generate the version information from the CMake values.
