@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 
-#include <gmock/gmock.h>
 #include "google/cloud/storage/client.h"
+#include <gmock/gmock.h>
 
 namespace storage {
 namespace testing {
