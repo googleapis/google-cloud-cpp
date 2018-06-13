@@ -65,6 +65,18 @@ auto create_list_instances_lambda = [](std::string expected_token,
   };
 };
 
+// A lambda to create lambdas. Basically we would be rewriting the same lambda
+// twice without using this thing.
+auto create_cluster = []() {
+  return
+      [] (grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
+          btproto::Cluster* response) {
+        EXPECT_NE(nullptr, response);
+        response->set_name(request.name());
+        return grpc::Status::OK;
+      };
+};
+
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
@@ -960,6 +972,70 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   EXPECT_DEATH_IF_SUPPORTED(tested.ListClusters(instance_id),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify positive scenario for GetCluster
+TEST_F(InstanceAdminTest, GetCluster) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  auto mock = create_cluster();
+  EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
+            cluster.name());
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify unrecoverable error for GetCluster
+TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, GetCluster(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested.GetCluster(instance_id, cluster_id), std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested.GetCluster(instance_id, cluster_id),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify recoverable errors for GetCluster
+TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
+  using namespace ::testing;
+
+  bigtable::InstanceAdmin tested(client_);
+  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
+                                     btproto::GetClusterRequest const& request,
+                                     btproto::Cluster* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto mock_cluster = create_cluster();
+  EXPECT_CALL(*client_, GetCluster(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_cluster));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
+            cluster.name());
 }
 
 /// @test Verify that DeleteCluster works in the positive case.
