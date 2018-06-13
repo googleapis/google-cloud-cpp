@@ -80,9 +80,9 @@ if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
         OpenSSL::SSL
         OpenSSL::Crypto
         ZLIB::ZLIB)
-    message(STATUS "CURL is static")
+    message(STATUS "CURL linkage will be static")
 else ()
-    message(STATUS "CURL is not static")
+    message(STATUS "CURL linkage will be non-static")
 endif ()
 
 
