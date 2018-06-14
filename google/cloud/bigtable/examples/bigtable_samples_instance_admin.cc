@@ -136,6 +136,26 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [delete instance]
 
+//! [create cluster]
+// Before creating cluster, need to create instance first, then create cluster
+// on it.
+void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"create-cluster: <instance-id> <cluster-id>"};
+  }
+
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto cluster_config = google::cloud::bigtable::ClusterConfig(
+      "us-central1-f", 0, google::cloud::bigtable::ClusterConfig::HDD);
+
+  auto cluster =
+      instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
+  std::cout << "Cluster Created " << cluster.get().name() << std::endl;
+}
+//! [create cluster]
+
 //! [list clusters]
 void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                   int argc, char* argv[]) {
@@ -255,6 +275,8 @@ int main(int argc, char* argv[]) try {
     GetInstance(instance_admin, argc, argv);
   } else if (command == "delete-instance") {
     DeleteInstance(instance_admin, argc, argv);
+  } else if (command == "create-cluster") {
+    CreateCluster(instance_admin, argc, argv);
   } else if (command == "list-clusters") {
     ListClusters(instance_admin, argc, argv);
   } else if (command == "list-all-clusters") {
