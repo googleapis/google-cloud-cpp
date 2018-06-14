@@ -168,12 +168,23 @@ class InstanceAdmin {
       std::string const& instance_id);
 
   /**
-   * Updates the specified cluster of an instance in the project.
+   * Update an existing cluster of Cloud Bigtable.
    *
-   * @param cluster_config a description of the new cluster to be created.
+   * @warning Note that this is operation can take seconds or minutes to
+   * complete. The application may prefer to perform other work while waiting
+   * for this operation.
    *
-   *  @par Example
-   *  @snippet bigtable_samples_instance_admin.cc update cluster
+   * @param cluster_config cluster with updated values.
+   * @return a future that becomes satisfied when (a) the operation has
+   *   completed successfully, in which case it returns a proto with the
+   *   Instance details, (b) the operation has failed, in which case the future
+   *   contains an exception (typically `bigtable::GrpcError`) with the details
+   *   of the failure, or (c) the state of the operation is unknown after the
+   *   time allocated by the retry policies has expired, in which case the
+   *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update cluster
    */
   std::future<google::bigtable::admin::v2::Cluster> UpdateCluster(
       ClusterConfig cluster_config);
