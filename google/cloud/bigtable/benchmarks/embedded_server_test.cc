@@ -38,9 +38,8 @@ TEST(EmbeddedServer, Admin) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options;
+  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_admin_endpoint(server->address());
-  options.SetCredentials(grpc::InsecureChannelCredentials());
   bigtable::TableAdmin admin(
       bigtable::CreateDefaultAdminClient("fake-project", options),
       "fake-instance");
@@ -62,9 +61,8 @@ TEST(EmbeddedServer, TableApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options;
+  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  options.SetCredentials(grpc::InsecureChannelCredentials());
   bigtable::Table table(bigtable::CreateDefaultDataClient(
                             "fake-project", "fake-instance", options),
                         "fake-table");
@@ -85,9 +83,8 @@ TEST(EmbeddedServer, TableBulkApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options;
+  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  options.SetCredentials(grpc::InsecureChannelCredentials());
   bigtable::Table table(bigtable::CreateDefaultDataClient(
                             "fake-project", "fake-instance", options),
                         "fake-table");
@@ -110,9 +107,8 @@ TEST(EmbeddedServer, ReadRows1) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options;
+  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  options.SetCredentials(grpc::InsecureChannelCredentials());
   bigtable::Table table(bigtable::CreateDefaultDataClient(
                             "fake-project", "fake-instance", options),
                         "fake-table");
@@ -132,9 +128,8 @@ TEST(EmbeddedServer, ReadRows100) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options;
+  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  options.SetCredentials(grpc::InsecureChannelCredentials());
   bigtable::Table table(bigtable::CreateDefaultDataClient(
                             "fake-project", "fake-instance", options),
                         "fake-table");
