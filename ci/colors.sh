@@ -13,7 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ "${TERM:-}" = "dumb" ]; then
+if [ -n "${COLOR_RESET+x}" ]; then
+  echo "COLOR_* variables already defined."
+elif [ "${TERM:-}" = "dumb" ]; then
   readonly COLOR_RED=""
   readonly COLOR_GREEN=""
   readonly COLOR_YELLOW=""

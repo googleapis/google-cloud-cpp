@@ -91,8 +91,7 @@ int main(int argc, char* argv[]) try {
 
   // Create a client to communicate with Google Cloud Storage.
   //! [create client]
-  auto client =
-      storage::CreateDefaultClient(storage::GoogleDefaultCredentials());
+  auto client = storage::CreateDefaultClient();
   //! [create client]
 
   // Create the object to manage a bucket:

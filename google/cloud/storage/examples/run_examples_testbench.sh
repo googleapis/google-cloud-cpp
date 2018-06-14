@@ -19,19 +19,16 @@ set -eu
 if [ -z "${PROJECT_ROOT+x}" ]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
+source "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_utils.sh"
 
-# This script should is called from the build directory, and it finds other
-# scripts in the source directory using its own path.
-readonly BINDIR="$(dirname $0)"
-(cd google/cloud/storage/tests && \
-    "${BINDIR}/../tests/run_integration_tests_testbench.sh")
+echo
+echo "Starting Google Cloud Storage testbench."
+start_testbench
 
-# In the no-exceptions build this directory does not exist. Note that the script
-# typically runs in ${CMAKE_PROJECT_BINARY_DIR}.
-if [ -d google/cloud/storage/examples ]; then
-  (cd google/cloud/storage/examples && \
-      "${BINDIR}/../examples/run_examples_testbench.sh")
-else
-  echo "${COLOR_YELLOW}Skipping google/cloud/storage/examples.${COLOR_RESET}"
-fi
+# Create most likely unique names for the project and bucket so multiple tests
+# can use the same testbench.
+readonly PROJECT_ID="fake-project-$(date +%s)"
+readonly BUCKET_NAME="fake-bucket-$(date +%s)"
+
+run_all_storage_examples
