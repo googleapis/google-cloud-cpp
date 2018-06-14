@@ -994,7 +994,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetCluster(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   bigtable::InstanceId instance_id("other-instance");
   bigtable::ClusterId cluster_id("other-cluster");
