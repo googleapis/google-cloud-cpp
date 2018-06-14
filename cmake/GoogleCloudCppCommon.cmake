@@ -40,6 +40,9 @@ include(EnableCxxExceptions)
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
+# Add the gmock library if it does not exist.
+include(IncludeGMock)
+
 if (${CMAKE_VERSION} VERSION_LESS "3.9")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
