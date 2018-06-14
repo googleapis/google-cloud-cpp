@@ -70,6 +70,12 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                    google::bigtable::admin::v2::ListClustersResponse*));
 
   MOCK_METHOD3(
+      GetCluster,
+      grpc::Status(grpc::ClientContext*,
+                   google::bigtable::admin::v2::GetClusterRequest const&,
+                   google::bigtable::admin::v2::Cluster*));
+
+  MOCK_METHOD3(
       DeleteCluster,
       grpc::Status(grpc::ClientContext*,
                    google::bigtable::admin::v2::DeleteClusterRequest const&,

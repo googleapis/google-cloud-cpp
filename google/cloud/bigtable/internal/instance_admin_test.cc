@@ -39,7 +39,7 @@ class InstanceAdminTest : public ::testing::Test {
       std::make_shared<MockAdminClient>();
 };
 
-// A lambda to create lambdas.  Basically we would be rewriting the same
+// A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
@@ -63,7 +63,7 @@ auto create_list_instances_lambda = [](std::string expected_token,
   };
 };
 
-// A lambda to create lambdas.  Basically we would be rewriting the same
+// A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_instance = [](std::string expected_token,
                           std::string returned_token) {
@@ -77,7 +77,18 @@ auto create_instance = [](std::string expected_token,
       };
 };
 
-// A lambda to create lambdas.  Basically we would be rewriting the same
+// A lambda to create lambdas. Basically we would be rewriting the same lambda
+// twice without using this thing.
+auto create_cluster = []() {
+  return [](grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
+            btproto::Cluster* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_name(request.name());
+    return grpc::Status::OK;
+  };
+};
+
+// A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
     [](std::string expected_token, std::string returned_token,
@@ -420,6 +431,60 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
   tested.ListClusters("the-instance", status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
+/// @test Verify positive scenario for GetCluster
+TEST_F(InstanceAdminTest, GetCluster) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock = create_cluster();
+  EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  auto cluster = tested.GetCluster(instance_id, cluster_id, status);
+  EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
+            cluster.name());
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify unrecoverable error for GetCluster
+TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, GetCluster(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::ClusterId cluster_id("other-cluster");
+  // After all the setup, make the actual call we want to test.
+  tested.GetCluster(instance_id, cluster_id, status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
+/// @test Verify recoverable errors for GetCluster
+TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
+                                     btproto::GetClusterRequest const& request,
+                                     btproto::Cluster* response) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto mock_cluster = create_cluster();
+  EXPECT_CALL(*client_, GetCluster(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_cluster));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  bigtable::InstanceId instance_id("the-instance");
+  bigtable::ClusterId cluster_id("the-cluster");
+  // After all the setup, make the actual call we want to test.
+  auto cluster = tested.GetCluster(instance_id, cluster_id, status);
+  EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
+            cluster.name());
 }
 
 /// @test Verify positive scenario for DeleteCluster

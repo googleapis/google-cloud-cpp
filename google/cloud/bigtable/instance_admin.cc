@@ -202,6 +202,17 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   }
 }
 
+btproto::Cluster InstanceAdmin::GetCluster(
+    bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id) {
+  grpc::Status status;
+  auto result = impl_.GetCluster(instance_id, cluster_id, status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
 std::vector<btproto::Cluster> InstanceAdmin::ListClusters() {
   return ListClusters("-");
 }

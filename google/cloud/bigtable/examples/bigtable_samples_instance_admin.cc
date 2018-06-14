@@ -195,6 +195,21 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [update cluster]
 
+//! [get cluster]
+void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+                char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"get-cluster: <project-id> <instance-id> <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto cluster = instance_admin.GetCluster(instance_id, cluster_id);
+  std::string cluster_detail;
+  google::protobuf::TextFormat::PrintToString(cluster, &cluster_detail);
+  std::cout << "GetCluster details : " << cluster_detail << std::endl;
+}
+//! [get cluster]
+
 //! [delete cluster]
 void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
@@ -246,6 +261,8 @@ int main(int argc, char* argv[]) try {
     ListAllClusters(instance_admin, argc, argv);
   } else if (command == "update-cluster") {
     UpdateCluster(instance_admin, argc, argv);
+  } else if (command == "get-cluster") {
+    GetCluster(instance_admin, argc, argv);
   } else if (command == "delete-cluster") {
     DeleteCluster(instance_admin, argc, argv);
   } else {

@@ -202,6 +202,21 @@ class InstanceAdmin {
   void DeleteCluster(bigtable::InstanceId const& instance_id,
                      bigtable::ClusterId const& cluster_id);
 
+  /**
+   * Gets the specified cluster of an instance in the project.
+   *
+   * @param instance_id the id of the instance in the project
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *   deleted
+   * @return a Cluster for given instance_id and cluster_id.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get cluster
+   */
+  google::bigtable::admin::v2::Cluster GetCluster(
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
