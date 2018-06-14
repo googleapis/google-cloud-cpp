@@ -111,6 +111,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:af753ff16781eb1c5e9f57ee49d197ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e8996cafa38031ab7ef6b6dc90951f"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a81e8996cafa38031ab7ef6b6dc90951f">CreateCluster</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateClusterRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:a81e8996cafa38031ab7ef6b6dc90951f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43148c492d873348f3ca393d94a4ee30"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a43148c492d873348f3ca393d94a4ee30">GetCluster</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetClusterRequest const &amp;request, google::bigtable::admin::v2::Cluster *response)=0</td></tr>
+<tr class="separator:a43148c492d873348f3ca393d94a4ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f2bb326609f9e98afa4df8fc4545e53"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a0f2bb326609f9e98afa4df8fc4545e53">UpdateCluster</a> (grpc::ClientContext *context, google::bigtable::admin::v2::Cluster const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:a0f2bb326609f9e98afa4df8fc4545e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
@@ -333,6 +335,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::protobuf::Empty *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43148c492d873348f3ca393d94a4ee30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43148c492d873348f3ca393d94a4ee30">&#9670;&nbsp;</a></span>GetCluster()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::GetCluster </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::GetClusterRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::Cluster *&#160;</td>
           <td class="paramname"><em>response</em>&#160;</td>
         </tr>
         <tr>
