@@ -50,8 +50,12 @@ if (NOT TARGET gprc_project)
             ${CMAKE_COMMAND} --build Release ${PARALLEL}
         INSTALL_COMMAND
             ${CMAKE_COMMAND} --build Release --target install
-        LOG_DOWNLOAD ON
-        LOG_CONFIGURE ON
-        LOG_BUILD ON
-        LOG_INSTALL ON)
+            #        LOG_DOWNLOAD ON
+            #        LOG_CONFIGURE ON
+            #        LOG_BUILD ON
+            #        LOG_INSTALL ON
+            USES_TERMINAL_DOWNLOAD 1
+            USES_TERMINAL_CONFIGURE 1
+            USES_TERMINAL_BUILD 1
+            USES_TERMINAL_INSTALL 1)
 endif ()
