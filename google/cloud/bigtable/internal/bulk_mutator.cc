@@ -101,7 +101,7 @@ void BulkMutator::ProcessResponse(
     }
     auto& original = *mutations_.mutable_entries(index);
     // Failed responses are handled according to the current policies.
-    if (IsRetryableStatusCode(code) and annotation.is_idempotent) {
+    if (SafeGrpcRetry::IsTransientFailure(code) and annotation.is_idempotent) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
       // vector and other miscellanea.

@@ -67,6 +67,7 @@ add_library(google_cloud_cpp_common
     internal/port_platform.h
     internal/random.h
     internal/random.cc
+    internal/retry_policy.h
     internal/setenv.h
     internal/setenv.cc
     internal/throw_delegate.h
@@ -90,6 +91,7 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 set(google_cloud_cpp_common_unit_tests
     internal/optional_test.cc
     internal/random_test.cc
+    internal/retry_policy_test.cc
     internal/throw_delegate_test.cc
     log_test.cc)
 
