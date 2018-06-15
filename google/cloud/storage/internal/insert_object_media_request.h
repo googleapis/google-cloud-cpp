@@ -95,7 +95,7 @@ class InsertObjectMediaRequest
   }
 
   /// Set any parameters in a HttpRequest object.
-  using RequestParameters::AddToHttpRequest;
+  using RequestParameters::AddParametersToHttpRequest;
 
  private:
   std::string bucket_name_;

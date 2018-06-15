@@ -21,6 +21,34 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+// Forward declare the template so we can specialize it first. Defining the
+// specialization first, which is the base class, should be more readable.
+template <typename Parameter, typename... Parameters>
+class RequestParameterList;
+
+/**
+ * Refactor common functions that manipulate list of parameters in a request.
+ *
+ * This class is used in the implementation of `RequestParameters`, it is the
+ * base class for a hierarchy of `RequestParameterList<Parameters...>` when the
+ * list has a single parameter.
+ *
+ * @tparam Parameter the parameter contained in this object.
+ */
+template <typename Parameter>
+class RequestParameterList<Parameter> {
+ public:
+  void set_parameter(Parameter&& p) { parameter_ = std::move(p); }
+
+  template <typename HttpRequest>
+  void AddParametersToHttpRequest(HttpRequest& request) const {
+    request.AddWellKnownParameter(parameter_);
+  }
+
+ private:
+  Parameter parameter_;
+};
+
 /**
  * Refactor common functions that manipulate list of parameters in a request.
  *
@@ -35,23 +63,9 @@ class RequestParameterList : public RequestParameterList<Parameters...> {
   void set_parameter(Parameter&& p) { parameter_ = std::move(p); }
 
   template <typename HttpRequest>
-  void AddToHttpRequest(HttpRequest& request) const {
+  void AddParametersToHttpRequest(HttpRequest& request) const {
     request.AddWellKnownParameter(parameter_);
-    RequestParameterList<Parameters...>::AddToHttpRequest(request);
-  }
-
- private:
-  Parameter parameter_;
-};
-
-template <typename Parameter>
-class RequestParameterList<Parameter> {
- public:
-  void set_parameter(Parameter&& p) { parameter_ = std::move(p); }
-
-  template <typename HttpRequest>
-  void AddToHttpRequest(HttpRequest& request) const {
-    request.AddWellKnownParameter(parameter_);
+    RequestParameterList<Parameters...>::AddParametersToHttpRequest(request);
   }
 
  private:

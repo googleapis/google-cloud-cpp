@@ -76,7 +76,7 @@ class GetBucketMetadataRequest
     return *this;
   }
 
-  using RequestParameters::AddToHttpRequest;
+  using RequestParameters::AddParametersToHttpRequest;
 
  private:
   std::string bucket_name_;

@@ -43,7 +43,7 @@ class DefaultClient : public Client {
       GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.
     HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name());
-    request.AddToHttpRequest(http_request);
+    request.AddParametersToHttpRequest(http_request);
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
     http_request.PrepareRequest(std::string{});
     auto payload = http_request.MakeRequest();
@@ -63,7 +63,7 @@ class DefaultClient : public Client {
                              "/o");
     http_request.AddQueryParameter("uploadType", "media");
     http_request.AddQueryParameter("name", request.object_name());
-    request.AddToHttpRequest(http_request);
+    request.AddParametersToHttpRequest(http_request);
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
     http_request.AddHeader("Content-Type: application/octet-stream");
     http_request.AddHeader("Content-Length: " +
