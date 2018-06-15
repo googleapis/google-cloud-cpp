@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
-#include "google/cloud/random.h"
+#include "google/cloud/internal/random.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -49,7 +49,8 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
 
  protected:
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
-  google::cloud::DefaultPRNG generator_ = google::cloud::MakeDefaultPRNG();
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::MakeDefaultPRNG();
 };
 
 bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
@@ -90,8 +91,8 @@ bigtable::InstanceConfig IntegrationTestConfig(
 /// @test Verify that InstanceAdmin::CreateInstance works as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
   std::string instance_id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(instance_id);
 
   auto instances_before = instance_admin_->ListInstances();
@@ -109,8 +110,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateInstanceTest) {
 /// @test Verify that InstanceAdmin::UpdateInstance works as expected.
 TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
   std::string instance_id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(instance_id);
 
   auto instances_before = instance_admin_->ListInstances();
@@ -137,8 +138,8 @@ TEST_F(InstanceAdminIntegrationTest, UpdateInstanceTest) {
 /// @test Verify that InstanceAdmin::ListInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
   std::string instance_id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(instance_id);
   auto instances_before = instance_admin_->ListInstances();
   auto instance = instance_admin_->CreateInstance(config).get();
@@ -157,8 +158,8 @@ TEST_F(InstanceAdminIntegrationTest, ListInstancesTest) {
 /// @test Verify that InstanceAdmin::GetInstance works as expected.
 TEST_F(InstanceAdminIntegrationTest, GetInstanceTest) {
   std::string instance_id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   try {
     auto instance = instance_admin_->GetInstance(instance_id);
     FAIL();
@@ -181,8 +182,8 @@ TEST_F(InstanceAdminIntegrationTest, GetInstanceTest) {
 /// @test Verify that InstanceAdmin::DeleteInstances works as expected.
 TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   std::string instance_id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_before = instance_admin_->ListInstances();
@@ -195,8 +196,8 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   std::string id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto config = IntegrationTestConfig(id);
   auto instance = instance_admin_->CreateInstance(config);
   ASSERT_THAT(instance.get().name(), HasSubstr(id));
@@ -215,11 +216,11 @@ TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   std::string id1 =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   std::string id2 =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   auto instance_config1 = IntegrationTestConfig(
       id1, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
@@ -245,8 +246,8 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
 /// @test Verify that InstanceAdmin::UpdateCluster works as expected.
 TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   std::string id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
   auto instance_config1 = IntegrationTestConfig(
       id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
@@ -289,8 +290,8 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
 /// @test Verify that default InstanceAdmin::GetCluster works as expected.
 TEST_F(InstanceAdminIntegrationTest, GetClusterTest) {
   std::string id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
   bigtable::ClusterId cluster_id1(id + "-cl1");
   bigtable::ClusterId cluster_id2(id + "-cl2");
@@ -325,8 +326,8 @@ TEST_F(InstanceAdminIntegrationTest, GetClusterTest) {
 /// @test Verify that default InstanceAdmin::DeleteClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
   std::string id =
-      "it-" + google::cloud::Sample(generator_, 8,
-                                    "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
   bigtable::ClusterId cluster_id1(id + "-cl1");
   bigtable::ClusterId cluster_id2(id + "-cl2");

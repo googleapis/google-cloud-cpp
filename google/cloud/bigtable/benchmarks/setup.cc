@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/random.h"
 #include <cctype>
 #include <iomanip>
 #include <iostream>
@@ -46,9 +46,9 @@ std::string FormattedAnnotations() {
 std::string MakeRandomTableId(std::string const& prefix) {
   static std::string const table_id_chars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
-  auto gen = google::cloud::MakeDefaultPRNG();
+  auto gen = google::cloud::internal::MakeDefaultPRNG();
   return prefix + "-" +
-         google::cloud::Sample(
+         google::cloud::internal::Sample(
              gen, google::cloud::bigtable::benchmarks::kTableIdRandomLetters,
              table_id_chars);
 }

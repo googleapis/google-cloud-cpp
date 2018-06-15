@@ -125,7 +125,7 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
 
   bigtable::Table table(std::move(data_client), table_id);
 
-  auto generator = google::cloud::MakeDefaultPRNG();
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<long> prng(0, table_size - scan_size - 1);
 
   auto test_start = std::chrono::steady_clock::now();
