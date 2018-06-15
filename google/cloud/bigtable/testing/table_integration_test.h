@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -99,8 +99,8 @@ class TableIntegrationTest : public ::testing::Test {
   std::string RandomTableId();
 
  protected:
-  bigtable::testing::DefaultPRNG generator_ =
-      bigtable::testing::MakeDefaultPRNG();
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::MakeDefaultPRNG();
 
   std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;

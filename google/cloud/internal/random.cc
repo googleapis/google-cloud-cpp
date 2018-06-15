@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/internal/random.h"
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
   std::uniform_int_distribution<std::size_t> rd(0, population.size() - 1);
 
@@ -27,7 +27,7 @@ std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
   return result;
 }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

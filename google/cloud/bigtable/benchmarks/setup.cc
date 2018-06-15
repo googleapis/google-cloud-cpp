@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/setup.h"
-#include "google/cloud/bigtable/testing/random.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <iomanip>
@@ -44,13 +44,13 @@ std::string FormattedAnnotations() {
 }
 
 std::string MakeRandomTableId(std::string const& prefix) {
-  namespace cbt = google::cloud::bigtable;
   static std::string const table_id_chars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
-  auto gen = cbt::testing::MakeDefaultPRNG();
+  auto gen = google::cloud::internal::MakeDefaultPRNG();
   return prefix + "-" +
-         cbt::testing::Sample(gen, cbt::benchmarks::kTableIdRandomLetters,
-                              table_id_chars);
+         google::cloud::internal::Sample(
+             gen, google::cloud::bigtable::benchmarks::kTableIdRandomLetters,
+             table_id_chars);
 }
 }  // anonymous namespace
 

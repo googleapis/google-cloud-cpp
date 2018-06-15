@@ -127,9 +127,9 @@ void TableIntegrationTest::CheckEqualUnordered(
 
 std::string TableIntegrationTest::RandomTableId() {
   constexpr int RANDOM_CHARACTERS = 8;
-  return std::string("table-") +
-         bigtable::testing::Sample(generator_, RANDOM_CHARACTERS,
-                                   "abcdefghijklmnopqrstuvwxyz0123456789");
+  return std::string("table-") + google::cloud::internal::Sample(
+                                     generator_, RANDOM_CHARACTERS,
+                                     "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 }  // namespace testing
 

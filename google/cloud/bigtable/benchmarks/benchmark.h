@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
 #include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/internal/random.h"
 #include <chrono>
 #include <deque>
 #include <thread>
@@ -63,7 +63,7 @@ class Benchmark {
   std::shared_ptr<bigtable::DataClient> MakeDataClient();
 
   /// Create a random key.
-  std::string MakeRandomKey(bigtable::testing::DefaultPRNG& gen) const;
+  std::string MakeRandomKey(google::cloud::internal::DefaultPRNG& gen) const;
 
   /// Return the key for row @p id.
   std::string MakeKey(long id) const;

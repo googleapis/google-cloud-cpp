@@ -19,7 +19,7 @@
 using namespace bigtable::benchmarks;
 
 TEST(BenchmarksRandomMutation, RandomValue) {
-  auto g = bigtable::testing::MakeDefaultPRNG();
+  auto g = google::cloud::internal::MakeDefaultPRNG();
   std::string val = MakeRandomValue(g);
   EXPECT_EQ(static_cast<std::size_t>(kFieldSize), val.size());
   std::string val2 = MakeRandomValue(g);
@@ -27,7 +27,7 @@ TEST(BenchmarksRandomMutation, RandomValue) {
 }
 
 TEST(BenchmarksRandomMutation, RandomMutation) {
-  auto g = bigtable::testing::MakeDefaultPRNG();
+  auto g = google::cloud::internal::MakeDefaultPRNG();
   auto m = MakeRandomMutation(g, 0).op;
 
   ASSERT_TRUE(m.has_set_cell());

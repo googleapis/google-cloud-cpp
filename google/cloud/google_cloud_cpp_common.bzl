@@ -3,6 +3,7 @@ google_cloud_cpp_common_HDRS = [
     "internal/build_info.h",
     "internal/optional.h",
     "internal/port_platform.h",
+    "internal/random.h",
     "internal/setenv.h",
     "internal/throw_delegate.h",
     "log.h",
@@ -10,6 +11,7 @@ google_cloud_cpp_common_HDRS = [
 ]
 
 google_cloud_cpp_common_SRCS = [
+    "internal/random.cc",
     "internal/setenv.cc",
     "internal/throw_delegate.cc",
     "log.cc",

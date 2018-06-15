@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_RANDOM_MUTATION_H_
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/internal/random.h"
 
 namespace google {
 namespace cloud {
@@ -24,11 +24,11 @@ namespace bigtable {
 namespace benchmarks {
 
 /// Create a mutation that changes field @p f to random values.
-bigtable::Mutation MakeRandomMutation(bigtable::testing::DefaultPRNG& gen,
+bigtable::Mutation MakeRandomMutation(google::cloud::internal::DefaultPRNG& gen,
                                       int f);
 
 /// Create a random value to store in a field.
-std::string MakeRandomValue(bigtable::testing::DefaultPRNG& gen);
+std::string MakeRandomValue(google::cloud::internal::DefaultPRNG& gen);
 
 }  // namespace benchmarks
 }  // namespace bigtable
