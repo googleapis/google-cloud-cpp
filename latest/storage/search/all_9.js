@@ -5,7 +5,7 @@ var searchData=
   ['object_2eh',['object.h',['../object_8h.html',1,'']]],
   ['object_5fmetadata_2ecc',['object_metadata.cc',['../object__metadata_8cc.html',1,'']]],
   ['object_5fmetadata_2eh',['object_metadata.h',['../object__metadata_8h.html',1,'']]],
-  ['object_5fname',['object_name',['../classstorage_1_1v_1_1InsertObjectMediaRequest.html#a3f6177a2865dae71123e21ec4aa28b78',1,'storage::v::InsertObjectMediaRequest::object_name()'],['../classstorage_1_1v_1_1Object.html#a2822f7d683c1d48d0401f708a2aabaae',1,'storage::v::Object::object_name()']]],
+  ['object_5fname',['object_name',['../classstorage_1_1v_1_1Object.html#a2822f7d683c1d48d0401f708a2aabaae',1,'storage::v::Object']]],
   ['objectmetadata',['ObjectMetadata',['../classstorage_1_1v_1_1ObjectMetadata.html',1,'storage::v::ObjectMetadata'],['../classstorage_1_1v_1_1ObjectMetadata.html#a3f1f9bf6c8ef7108837aa145a88271e6',1,'storage::v::ObjectMetadata::ObjectMetadata()']]],
   ['ok',['ok',['../classstorage_1_1v_1_1Status.html#adeab6dd17a94ca39cc4e148dbb5352e1',1,'storage::v::Status']]],
   ['operator_21_3d',['operator!=',['../classstorage_1_1v_1_1BucketMetadata.html#af19302ba685d775f93ee095bb20af3c0',1,'storage::v::BucketMetadata::operator!=()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a06d9e2991e16c47f24acb0c4645c055b',1,'storage::v::ObjectMetadata::operator!=()'],['../classstorage_1_1v_1_1Status.html#aa4f78bdb96e95e0e2b4a2024cdf5f558',1,'storage::v::Status::operator!=()']]],

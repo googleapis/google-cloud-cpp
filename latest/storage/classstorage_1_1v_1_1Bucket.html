@@ -90,10 +90,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a94ac99079b5d44e1fbf05995439f11"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classstorage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a9a94ac99079b5d44e1fbf05995439f11">GetMetadata</a> (Modifiers &amp;&amp;... modifiers)</td></tr>
 <tr class="memdesc:a9a94ac99079b5d44e1fbf05995439f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#a9a94ac99079b5d44e1fbf05995439f11">More...</a><br /></td></tr>
 <tr class="separator:a9a94ac99079b5d44e1fbf05995439f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a922de0514818868c059ebcbec37a1684"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
-<tr class="memitem:a922de0514818868c059ebcbec37a1684"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classstorage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a922de0514818868c059ebcbec37a1684">InsertObject</a> (std::string const &amp;object_name, std::string contents, Modifiers &amp;&amp;... modifier)</td></tr>
-<tr class="memdesc:a922de0514818868c059ebcbec37a1684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object given its name and media (contents).  <a href="#a922de0514818868c059ebcbec37a1684">More...</a><br /></td></tr>
-<tr class="separator:a922de0514818868c059ebcbec37a1684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186172177f4691170c67c4ad52bafe72"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:a186172177f4691170c67c4ad52bafe72"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classstorage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classstorage_1_1v_1_1Bucket.html#a186172177f4691170c67c4ad52bafe72">InsertObject</a> (std::string const &amp;object_name, std::string contents, Modifiers &amp;&amp;... modifiers)</td></tr>
+<tr class="memdesc:a186172177f4691170c67c4ad52bafe72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object given its name and media (contents).  <a href="#a186172177f4691170c67c4ad52bafe72">More...</a><br /></td></tr>
+<tr class="separator:a186172177f4691170c67c4ad52bafe72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -213,8 +213,8 @@ template&lt;typename... Modifiers&gt; </div>
 
 </div>
 </div>
-<a id="a922de0514818868c059ebcbec37a1684"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a922de0514818868c059ebcbec37a1684">&#9670;&nbsp;</a></span>InsertObject()</h2>
+<a id="a186172177f4691170c67c4ad52bafe72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a186172177f4691170c67c4ad52bafe72">&#9670;&nbsp;</a></span>InsertObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +240,7 @@ template&lt;typename... Modifiers&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Modifiers &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>modifier</em>&#160;</td>
+          <td class="paramname"><em>modifiers</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -256,7 +256,21 @@ template&lt;typename... Modifiers&gt; </div>
 </div><div class="memdoc">
 
 <p>Create an object given its name and media (contents). </p>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classstorage_1_1v_1_1Bucket.html#a922de0514818868c059ebcbec37a1684">InsertObject</a>(storage::Bucket bucket, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keyword">auto</span> object_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> contents = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> meta = bucket.InsertObject(object_name, std::move(contents));</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The new object metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --> TODO(#682) - prototype modifiers for the request. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object_name</td><td>the name of the object to be created. </td></tr>
+    <tr><td class="paramname">contents</td><td>the contents (media) for the new object. </td></tr>
+    <tr><td class="paramname">modifiers</td><td>a variadic list. Valid types for this operation include <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structstorage_1_1v_1_1UserProject.html">UserProject</a></code>, <code><a class="el" href="structstorage_1_1v_1_1Projection.html">Projection</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation cannot be completed using the current policies.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classstorage_1_1v_1_1Bucket.html#a186172177f4691170c67c4ad52bafe72">InsertObject</a>(storage::Bucket bucket, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keyword">auto</span> object_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> contents = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> meta = bucket.InsertObject(object_name, std::move(contents));</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The new object metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
