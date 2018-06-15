@@ -20,6 +20,7 @@
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
+#include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
 
@@ -41,6 +42,8 @@ class Client {
   // classes that do use them friends.
  protected:
   friend class Bucket;
+  friend class Object;
+  friend class ObjectReadStreamBuf;
   /**
    * Execute a request to fetch bucket metadata.
    *
@@ -51,6 +54,9 @@ class Client {
 
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       internal::InsertObjectMediaRequest const&) = 0;
+
+  virtual std::pair<Status, std::string> ReadObjectRangeMedia(
+      internal::ReadObjectRangeRequest const&) = 0;
 };
 
 /**

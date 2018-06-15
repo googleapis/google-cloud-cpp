@@ -118,10 +118,12 @@ add_library(storage_client
     internal/parse_rfc3339.cc
     internal/read_object_range_request.h
     internal/request_parameters.h
-    object_metadata.h
-    object_metadata.cc
     object.h
     object.cc
+    object_metadata.h
+    object_metadata.cc
+    object_stream.h
+    object_stream.cc
     well_known_parameters.h
     status.h
     version.h
@@ -146,6 +148,7 @@ target_include_directories(storage_client PUBLIC
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_library(storage_client_testing
+    testing/canonical_errors.h
     testing/mock_client.h
     testing/mock_http_request.h
     testing/mock_http_request.cc)
@@ -179,6 +182,7 @@ set(storage_client_unit_tests
     internal/parse_rfc3339_test.cc
     internal/read_object_range_request_test.cc
     object_metadata_test.cc
+    object_stream_test.cc
     object_test.cc
     link_test.cc)
 

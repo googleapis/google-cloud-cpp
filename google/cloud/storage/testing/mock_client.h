@@ -20,15 +20,24 @@
 
 namespace storage {
 namespace testing {
+
 class MockClient : public storage::Client {
  public:
-  using BucketGetResult = std::pair<storage::Status, storage::BucketMetadata>;
-  using ObjectInsertResult =
-      std::pair<storage::Status, storage::ObjectMetadata>;
+  // The MOCK_* macros get confused if the return type is a compound template
+  // with a comma, that is because Foo<T,R> looks like two arguments to the
+  // preprocessor, but Foo<R> will look like a single argument.
+  template <typename R>
+  using ResponseWrapper = std::pair<storage::Status, R>;
+
   MOCK_METHOD1(GetBucketMetadata,
-               BucketGetResult(internal::GetBucketMetadataRequest const&));
+               ResponseWrapper<storage::BucketMetadata>(
+                   internal::GetBucketMetadataRequest const&));
   MOCK_METHOD1(InsertObjectMedia,
-               ObjectInsertResult(internal::InsertObjectMediaRequest const&));
+               ResponseWrapper<storage::ObjectMetadata>(
+                   internal::InsertObjectMediaRequest const&));
+  MOCK_METHOD1(
+      ReadObjectRangeMedia,
+      ResponseWrapper<std::string>(internal::ReadObjectRangeRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

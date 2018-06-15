@@ -79,6 +79,26 @@ class DefaultClient : public Client {
                           ObjectMetadata::ParseFromJson(payload.payload));
   }
 
+  std::pair<Status, std::string> ReadObjectRangeMedia(
+      internal::ReadObjectRangeRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
+    http_request.AddQueryParameter("alt", "media");
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.AddHeader("Range: bytes=" + std::to_string(request.begin()) +
+                           '-' + std::to_string(request.end()));
+    http_request.PrepareRequest(std::string{});
+    auto payload = http_request.MakeRequest();
+    if (200 != payload.status_code) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          std::string{});
+    }
+    return std::make_pair(Status(), std::move(payload.payload));
+  }
+
  private:
   ClientOptions options_;
   std::string storage_endpoint_;
