@@ -141,8 +141,8 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 // on it.
 void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"create-cluster: <instance-id> <cluster-id>"};
+  if (argc != 3) {
+    throw Usage{"create-cluster: <project-id> <instance-id> <cluster-id>"};
   }
 
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));

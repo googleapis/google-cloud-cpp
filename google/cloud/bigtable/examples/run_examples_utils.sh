@@ -109,7 +109,8 @@ function run_all_instance_admin_examples {
 
   echo
   echo "Run create cluster example."
-  ${setenv} ../examples/bigtable_samples_instance_admin create-cluster "${INSTANCE}" "${CLUSTER}"
+  ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  ${setenv} ../examples/bigtable_samples_instance_admin create-cluster "${project_id}" "${INSTANCE}" "${CLUSTER}"
 
   reset_trap
   echo
