@@ -196,8 +196,8 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
 /// @test Verify that InstanceAdmin::CreateCluster works as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
   std::string id =
-      "it-" + bigtable::testing::Sample(generator_, 8,
-                                        "abcdefghijklmnopqrstuvwxyz0123456789");
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
