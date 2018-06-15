@@ -19,17 +19,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
-bigtable::Mutation MakeRandomMutation(bigtable::testing::DefaultPRNG& gen,
-                                      int f) {
+bigtable::Mutation MakeRandomMutation(DefaultPRNG& gen, int f) {
   std::string field = "field" + std::to_string(f);
   return bigtable::SetCell(kColumnFamily, std::move(field),
                            std::chrono::milliseconds(0), MakeRandomValue(gen));
 }
 
-std::string MakeRandomValue(bigtable::testing::DefaultPRNG& generator) {
+std::string MakeRandomValue(DefaultPRNG& generator) {
   static std::string const letters(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/_");
-  return bigtable::testing::Sample(generator, kFieldSize, letters);
+  return google::cloud::Sample(generator, kFieldSize, letters);
 }
 }  // namespace benchmarks
 }  // namespace bigtable

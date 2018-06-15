@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/testing/random.h"
+#include "google/cloud/random.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::bigtable::testing;
+using namespace google::cloud;
 
 TEST(BenchmarksRandom, Basic) {
   // This is not a statistical test for PRNG, basically we want to make

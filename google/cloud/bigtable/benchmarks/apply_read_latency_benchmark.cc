@@ -203,7 +203,7 @@ LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto data_client = benchmark.MakeDataClient();
   bigtable::Table table(std::move(data_client), table_id);
 
-  auto generator = bigtable::testing::MakeDefaultPRNG();
+  auto generator = google::cloud::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);
 
   auto start = std::chrono::steady_clock::now();

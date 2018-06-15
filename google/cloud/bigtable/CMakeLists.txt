@@ -211,8 +211,6 @@ add_library(bigtable_client_testing
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
         testing/mock_sample_row_keys_reader.h
-        testing/random.h
-        testing/random.cc
         testing/table_integration_test.h
         testing/table_integration_test.cc
         testing/table_test_fixture.h
@@ -257,7 +255,6 @@ set(bigtable_client_unit_tests
         table_sample_row_keys_test.cc
         table_test.cc
         table_readmodifywriterow_test.cc
-        testing/random_test.cc
         read_modify_write_rule_test.cc
         row_reader_test.cc
         row_test.cc

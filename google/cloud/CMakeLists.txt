@@ -71,6 +71,8 @@ add_library(google_cloud_cpp_common
     internal/throw_delegate.cc
     log.h
     log.cc
+    random.h
+    random.cc
     version.h)
 target_link_libraries(google_cloud_cpp_common PUBLIC Threads::Threads
     PRIVATE google_cloud_cpp_common_options)
@@ -88,6 +90,7 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 set(google_cloud_cpp_common_unit_tests
     internal/optional_test.cc
     internal/throw_delegate_test.cc
+    random_test.cc
     log_test.cc)
 
 # Export the list of unit tests so the Bazel BUILD file can pick it up.

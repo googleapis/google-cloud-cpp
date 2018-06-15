@@ -45,7 +45,7 @@ class BigtableImpl final : public btproto::Bigtable::Service {
     // want the overhead of this implementation to be as small as possible.
     // Using a single value is an option, but compresses too well and makes the
     // tests a bit unrealistic.
-    auto generator = bigtable::testing::MakeDefaultPRNG();
+    auto generator = google::cloud::MakeDefaultPRNG();
     values_.resize(1000);
     std::generate(values_.begin(), values_.end(),
                   [&generator]() { return MakeRandomValue(generator); });

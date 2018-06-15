@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_RANDOM_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_RANDOM_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RANDOM_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RANDOM_H_
 
+#include "google/cloud/version.h"
 #include <algorithm>
 #include <random>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // While std::mt19937_64 is not the best PRNG ever, it is fairly good for
 // most purposes.  Please read:
 //    http://www.pcg-random.org/
@@ -79,9 +79,8 @@ inline DefaultPRNG MakeDefaultPRNG() { return MakePRNG<DefaultPRNG>(); }
  */
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population);
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_RANDOM_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RANDOM_H_

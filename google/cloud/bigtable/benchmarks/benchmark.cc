@@ -126,8 +126,7 @@ BenchmarkResult Benchmark::PopulateTable() {
   return result;
 }
 
-std::string Benchmark::MakeRandomKey(
-    bigtable::testing::DefaultPRNG& gen) const {
+std::string Benchmark::MakeRandomKey(DefaultPRNG& gen) const {
   std::uniform_int_distribution<long> prng_user(0, setup_.table_size() - 1);
   return MakeKey(prng_user(gen));
 }
@@ -247,7 +246,7 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
   BenchmarkResult result{};
   result.row_count = 0;
 
-  auto generator = bigtable::testing::MakeDefaultPRNG();
+  auto generator = google::cloud::MakeDefaultPRNG();
   int bulk_size = 0;
   bigtable::BulkMutation bulk;
 

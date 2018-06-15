@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
-#include "google/cloud/bigtable/testing/random.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/random.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
