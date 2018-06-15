@@ -50,11 +50,6 @@ void MockHttpRequest::AddQueryParameter(std::string const& name,
   handles_[url_]->AddQueryParameter(name, value);
 }
 
-void MockHttpRequest::AddWellKnownParameters(
-    storage::WellKnownParameters const& p) {
-  handles_[url_]->AddWellKnownParameters(p);
-}
-
 std::unique_ptr<char[]> MockHttpRequest::MakeEscapedString(
     std::string const& x) {
   return handles_[url_]->MakeEscapedString(x);

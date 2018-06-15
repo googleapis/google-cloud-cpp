@@ -31,7 +31,7 @@ static_assert(std::is_copy_assignable<storage::Bucket>::value,
               "storage::Bucket must be assignable");
 
 BucketMetadata Bucket::GetMetadataImpl(
-    GetBucketMetadataRequest const& request) {
+    internal::GetBucketMetadataRequest const& request) {
   // TODO(#555) - use policies to implement retry loop.
   Status last_status;
   constexpr int MAX_NUM_RETRIES = 3;
@@ -55,7 +55,7 @@ BucketMetadata Bucket::GetMetadataImpl(
 }
 
 ObjectMetadata Bucket::InsertObjectMediaImpl(
-    InsertObjectMediaRequest const& request) {
+    internal::InsertObjectMediaRequest const& request) {
   // TODO(#555) - use policies to implement retry loop.
   Status last_status;
   constexpr int MAX_NUM_RETRIES = 3;

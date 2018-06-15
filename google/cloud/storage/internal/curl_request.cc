@@ -52,16 +52,6 @@ void CurlRequest::AddQueryParameter(std::string const& key,
   url_.append(parameter);
 }
 
-void CurlRequest::AddWellKnownParameters(WellKnownParameters const& p) {
-  AddWellKnownParameter(p.if_generation_match);
-  AddWellKnownParameter(p.if_generation_not_match);
-  AddWellKnownParameter(p.if_meta_generation_match);
-  AddWellKnownParameter(p.if_meta_generation_not_match);
-  AddWellKnownParameter(p.projection);
-  AddWellKnownParameter(p.user_project);
-  AddWellKnownParameter(p.generation);
-}
-
 void CurlRequest::PrepareRequest(std::string payload) {
   // Pre-compute and cache the user agent string:
   static std::string const user_agent = [] {

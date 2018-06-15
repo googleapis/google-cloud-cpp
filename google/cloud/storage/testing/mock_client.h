@@ -26,9 +26,9 @@ class MockClient : public storage::Client {
   using ObjectInsertResult =
       std::pair<storage::Status, storage::ObjectMetadata>;
   MOCK_METHOD1(GetBucketMetadata,
-               BucketGetResult(GetBucketMetadataRequest const&));
+               BucketGetResult(internal::GetBucketMetadataRequest const&));
   MOCK_METHOD1(InsertObjectMedia,
-               ObjectInsertResult(InsertObjectMediaRequest const&));
+               ObjectInsertResult(internal::InsertObjectMediaRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

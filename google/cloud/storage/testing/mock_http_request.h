@@ -34,8 +34,6 @@ class MockHttpRequestHandle {
  public:
   MOCK_METHOD1(AddHeader, void(std::string const&));
   MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
-  MOCK_METHOD1(AddWellKnownParameters,
-               void(storage::WellKnownParameters const&));
   MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
   MOCK_METHOD1(PrepareRequest, void(std::string const&));
   MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
@@ -65,10 +63,24 @@ class MockHttpRequest {
 
   void AddHeader(std::string const& header);
   void AddQueryParameter(std::string const& name, std::string const& value);
-  void AddWellKnownParameters(WellKnownParameters const& p);
   std::unique_ptr<char[]> MakeEscapedString(std::string const& x);
   void PrepareRequest(std::string const& payload);
   storage::internal::HttpResponse MakeRequest();
+
+  template <typename P>
+  void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
+    if (p.has_value()) {
+      handles_[url_]->AddQueryParameter(p.parameter_name(), p.value());
+    }
+  }
+
+  template <typename P>
+  void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
+    if (p.has_value()) {
+      handles_[url_]->AddQueryParameter(p.parameter_name(),
+                                        std::to_string(p.value()));
+    }
+  }
 
  private:
   std::string url_;

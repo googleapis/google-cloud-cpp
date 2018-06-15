@@ -21,8 +21,15 @@
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
-template <typename HttpRequestor = CurlRequest>
+/**
+ * Implement storage::Client using a class meeting the CurlRequest interface.
+ *
+ * @tparam HttpRequest a dependency injection point to replace CurlRequest with
+ *   a mock.
+ *
+ * TODO(#717) - document the CurlRequest interface as a concept.
+ */
+template <typename HttpRequest = CurlRequest>
 class DefaultClient : public Client {
  public:
   explicit DefaultClient(std::shared_ptr<Credentials> credentials)
@@ -35,11 +42,11 @@ class DefaultClient : public Client {
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name());
-    requestor.AddWellKnownParameters(request.well_known_parameters());
-    requestor.AddHeader(options_.credentials()->AuthorizationHeader());
-    requestor.PrepareRequest(std::string{});
-    auto payload = requestor.MakeRequest();
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name());
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{});
+    auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},
@@ -52,17 +59,17 @@ class DefaultClient : public Client {
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequestor requestor(storage_endpoint_ + "/b/" + request.bucket_name() +
-                            "/o");
-    requestor.AddQueryParameter("uploadType", "media");
-    requestor.AddQueryParameter("name", request.object_name());
-    requestor.AddWellKnownParameters(request.well_known_parameters());
-    requestor.AddHeader(options_.credentials()->AuthorizationHeader());
-    requestor.AddHeader("Content-Type: application/octet-stream");
-    requestor.AddHeader("Content-Length: " +
-                        std::to_string(request.contents().size()));
-    requestor.PrepareRequest(std::move(request.contents()));
-    auto payload = requestor.MakeRequest();
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
+    http_request.AddQueryParameter("uploadType", "media");
+    http_request.AddQueryParameter("name", request.object_name());
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.AddHeader("Content-Type: application/octet-stream");
+    http_request.AddHeader("Content-Length: " +
+                           std::to_string(request.contents().size()));
+    http_request.PrepareRequest(std::move(request.contents()));
+    auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},

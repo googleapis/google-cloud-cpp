@@ -107,13 +107,16 @@ add_library(storage_client
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
     internal/default_client.h
+    internal/get_bucket_metadata_request.h
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
+    internal/insert_object_media_request.h
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
+    internal/request_parameters.h
     object_metadata.h
     object_metadata.cc
     object.h

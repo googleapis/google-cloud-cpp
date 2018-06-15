@@ -18,6 +18,8 @@
 
 using namespace storage;
 using namespace ::testing;
+using storage::internal::GetBucketMetadataRequest;
+using storage::internal::InsertObjectMediaRequest;
 using storage::testing::MockClient;
 
 namespace {
