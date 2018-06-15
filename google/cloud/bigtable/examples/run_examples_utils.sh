@@ -83,6 +83,9 @@ function run_all_instance_admin_examples {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
+  #Create a cluster name.
+  local -r CLUSTER="cl2"
+
   echo
   echo "Run create-instance example."
   ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
@@ -103,6 +106,10 @@ function run_all_instance_admin_examples {
   echo
   echo "Run list-all-clusters example."
   ${setenv} ../examples/bigtable_samples_instance_admin list-all-clusters "${project_id}"
+
+  echo
+  echo "Run create cluster example."
+  ${setenv} ../examples/bigtable_samples_instance_admin create-cluster "${INSTANCE}" "${CLUSTER}"
 
   reset_trap
   echo
