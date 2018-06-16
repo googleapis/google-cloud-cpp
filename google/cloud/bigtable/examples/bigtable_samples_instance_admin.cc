@@ -145,10 +145,10 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw Usage{"create-cluster: <project-id> <instance-id> <cluster-id>"};
   }
 
-  std::string project_id = ConsumeArg(argc, argv);
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  auto location = "projects/" + project_id + "/locations/us-central1-x";
+  auto location =
+      "projects/" + instance_admin.project_id() + "/locations/us-central1-a";
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
       location, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =

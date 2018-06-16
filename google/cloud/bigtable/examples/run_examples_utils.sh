@@ -84,7 +84,7 @@ function run_all_instance_admin_examples {
   local -r INSTANCE="in-$(date +%s)"
 
   #Create a cluster name.
-  local -r CLUSTER="cl2"
+  local -r CLUSTER="cluster2"
 
   echo
   echo "Run create-instance example."
