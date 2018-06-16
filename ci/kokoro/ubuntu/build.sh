@@ -72,8 +72,7 @@ echo "================================================================"
 # integration tests. We have not figured out how to run the integration test
 # scripts with the more advanced bazelrc file (the artifacts go missing), so
 # build with very simple settings instead.
-bazel build \
-    --bazelrc=/dev/null \
+bazel --bazelrc=/dev/null build \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
