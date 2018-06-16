@@ -193,6 +193,32 @@ TEST_F(InstanceAdminIntegrationTest, DeleteInstancesTest) {
   EXPECT_FALSE(IsInstancePresent(instances_after, instance.name()));
 }
 
+/// @test Verify that InstanceAdmin::CreateCluster works as expected.
+TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+  auto clusters_before = instance_admin_->ListClusters(id);
+  bigtable::ClusterId cluster_id(id + "-cl2");
+  auto location =
+      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
+  auto cluster_config =
+      bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
+  auto cluster =
+      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+          .get();
+  auto clusters_after = instance_admin_->ListClusters(id);
+  instance_admin_->DeleteInstance(id);
+
+  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
+}
+
 /// @test Verify that InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListClustersTest) {
   std::string id =
