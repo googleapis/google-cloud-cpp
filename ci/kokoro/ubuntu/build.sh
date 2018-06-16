@@ -71,8 +71,8 @@ echo "================================================================"
 # go last (and in a separate invocation) so Bazel state is preserved to run the
 # integration tests. We have not figured out how to run the integration test
 # scripts with the more advanced bazelrc file (the artifacts go missing), so
-# build with very simple settings instead.
-bazel --bazelrc=/dev/null build \
+# build with the default settings (whatever is in .bazelrc) instead.
+bazel build \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
