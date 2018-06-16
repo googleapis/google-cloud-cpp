@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/backoff_policy.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <memory>
-#include <random>
 
 namespace google {
 namespace cloud {
@@ -79,31 +79,15 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
   ExponentialBackoffPolicy();
   template <typename duration_t1, typename duration_t2>
   ExponentialBackoffPolicy(duration_t1 initial_delay, duration_t2 maximum_delay)
-      : current_delay_range_(
-            std::chrono::duration_cast<std::chrono::microseconds>(
-                initial_delay)),
-        maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            maximum_delay)) {
-    auto const S =
-        std::mt19937::state_size *
-        (std::mt19937::word_size / std::numeric_limits<unsigned int>::digits);
-    std::random_device rd;
-    std::vector<unsigned int> entropy(S);
-    std::generate(entropy.begin(), entropy.end(), [&rd]() { return rd(); });
-
-    // Finally, put the entropy into the form that the C++11 PRNG classes want.
-    std::seed_seq seq(entropy.begin(), entropy.end());
-    generator_ = std::mt19937(seq);
-  }
+      : impl_(initial_delay / 2, maximum_delay, 2.0) {}
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
   std::chrono::milliseconds on_completion(grpc::Status const& status) override;
 
  private:
-  std::chrono::microseconds current_delay_range_;
-  std::chrono::microseconds maximum_delay_;
-  std::mt19937 generator_;
+  using Impl = google::cloud::internal::ExponentialBackoffPolicy;
+  Impl impl_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

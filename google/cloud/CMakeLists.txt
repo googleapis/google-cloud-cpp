@@ -61,6 +61,8 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library
 add_library(google_cloud_cpp_common
+    internal/backoff_policy.h
+    internal/backoff_policy.cc
     internal/build_info.h
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     internal/optional.h
@@ -88,6 +90,7 @@ create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 set(google_cloud_cpp_common_unit_tests
+    internal/backoff_policy_test.cc
     internal/optional_test.cc
     internal/random_test.cc
     internal/throw_delegate_test.cc
