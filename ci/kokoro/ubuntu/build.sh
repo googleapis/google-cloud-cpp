@@ -82,6 +82,18 @@ bazel --bazelrc=/dev/null build \
 echo
 echo "================================================================"
 echo "================================================================"
+
+echo "DEBUG DEBUG DEBUG DO NOT MERGE"
+echo "================================================================"
+echo "================================================================"
+bazel info
+echo "================================================================"
+echo "================================================================"
+bazel info output_base
+ls -l "$(bazel info output_base)
+ls -l "$(bazel info output_base)/external
+ls -l "$(bazel info output_base)/external/com_github_grpc_grpc/
+echo "DEBUG DEBUG DEBUG DO NOT MERGE"
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$(bazel info output_base)/external/com_github_grpc_grpc/etc/roots.pem"
 # If this file does not exist gRPC blocks trying to connect, so it is better
 # to break the build early (the ls command breaks and the build stops) if that
