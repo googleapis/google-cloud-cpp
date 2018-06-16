@@ -83,28 +83,11 @@ echo
 echo "================================================================"
 echo "================================================================"
 
-echo "DEBUG DEBUG DEBUG DO NOT MERGE"
-echo "================================================================"
-echo "================================================================"
-bazel info
-echo "================================================================"
-echo "================================================================"
-bazel info output_base
-ls -l "$(bazel info output_base)
-ls -l "$(bazel info output_base)/external
-ls -l "$(bazel info output_base)/external/com_github_grpc_grpc/
-echo "DEBUG DEBUG DEBUG DO NOT MERGE"
-export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$(bazel info output_base)/external/com_github_grpc_grpc/etc/roots.pem"
-# If this file does not exist gRPC blocks trying to connect, so it is better
-# to break the build early (the ls command breaks and the build stops) if that
-# is the case.
-echo "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = ${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-ls -l "$(dirname "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}")"
-ls -l "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-
-export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
-
 echo "Download dependencies for integration tests."
+# Download the gRPC roots.pem file, somewhere inside the bowels of Bazel this
+# file might exist, but my attempts and using it fail.
+echo "    Getting roots.pem for gRPC."
+wget -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 echo "    Getting cbt tool"
 export GOPATH="${KOKORO_ROOT}/golang"
 go get -u cloud.google.com/go/bigtable/cmd/cbt
@@ -112,6 +95,16 @@ go get -u cloud.google.com/go/bigtable/cmd/cbt
 # echo "    Getting python modules"
 # sudo python2 -m pip install httpbin
 echo "End of download."
+
+export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
+
+# If this file does not exist gRPC blocks trying to connect, so it is better
+# to break the build early (the ls command breaks and the build stops) if that
+# is the case.
+echo "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = ${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
+ls -l "$(dirname "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}")"
+ls -l "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 
 echo
 echo "================================================================"
