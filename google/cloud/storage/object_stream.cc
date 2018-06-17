@@ -50,7 +50,7 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
     auto result = client_->ReadObjectRangeMedia(request_);
     last_status = std::move(result.first);
     if (last_status.ok()) {
-      buffer_ = std::move(result.second);
+      buffer_ = std::move(result.second.contents);
       return RepositionInputSequence();
     }
     // TODO(#714) - use policies to decide if the operation is idempotent.

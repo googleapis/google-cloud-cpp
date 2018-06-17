@@ -79,7 +79,7 @@ class DefaultClient : public Client {
                           ObjectMetadata::ParseFromJson(payload.payload));
   }
 
-  std::pair<Status, std::string> ReadObjectRangeMedia(
+  std::pair<Status, internal::ReadObjectRangeResponse> ReadObjectRangeMedia(
       internal::ReadObjectRangeRequest const& request) override {
     // Assume the bucket name is validated by the caller.
     HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -100,9 +100,11 @@ class DefaultClient : public Client {
     if (200 != payload.status_code) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},
-          std::string{});
+          internal::ReadObjectRangeResponse{});
     }
-    return std::make_pair(Status(), std::move(payload.payload));
+    return std::make_pair(Status(),
+                          internal::ReadObjectRangeResponse::FromHttpResponse(
+                              std::move(payload)));
   }
 
  private:

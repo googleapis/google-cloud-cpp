@@ -55,8 +55,8 @@ class Client {
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       internal::InsertObjectMediaRequest const&) = 0;
 
-  virtual std::pair<Status, std::string> ReadObjectRangeMedia(
-      internal::ReadObjectRangeRequest const&) = 0;
+  virtual std::pair<Status, internal::ReadObjectRangeResponse>
+  ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
 };
 
 /**
