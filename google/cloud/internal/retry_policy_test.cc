@@ -45,6 +45,8 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
  * @test Verify that a retry policy configured to run for 50ms works correctly.
  *
  * This eliminates some amount of code duplication in the following tests.
+ *
+ * TODO(#733) - refactor this and the implementations in bigtable/
  */
 void CheckLimitedTime(RetryPolicyForTest& tested) {
   auto start = std::chrono::system_clock::now();
@@ -55,26 +57,38 @@ void CheckLimitedTime(RetryPolicyForTest& tested) {
   //   - All calls to OnFailure() in the first 50ms - 10ms pass.
   //   - Calls to OnFailure() after 50ms + 10ms are rejected.
   //   - We do not care about the results from 40ms to 60ms.
+  //   - We must handle the case where the test is called before the 40ms mark
+  //     and finishes after the 60ms mark. Yes, that can happen on heavily
+  //     loaded machines, which CI servers often are.
   // I know 10ms feels like a long time, but it is not on a loaded VM running
   // the tests inside some container.
   auto must_be_true_before =
       start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
   auto must_be_false_after =
       start + kLimitedTimeTestPeriod + kLimitedTimeTolerance;
+  int true_count = 0;
+  int false_count = 0;
   for (int i = 0; i != 100; ++i) {
+    auto iteration_start = std::chrono::system_clock::now();
     auto actual = tested.OnFailure(CreateTransientError());
-    auto now = std::chrono::system_clock::now();
-    if (now < must_be_true_before) {
+    auto iteration_end = std::chrono::system_clock::now();
+    if (iteration_end < must_be_true_before) {
       EXPECT_TRUE(actual);
-    } else if (must_be_false_after < now) {
+      if (actual) {
+        ++true_count;
+      }
+    } else if (must_be_false_after < iteration_start) {
       EXPECT_FALSE(actual);
       if (not actual) {
         // Terminate the loop early if we can.
+        ++false_count;
         break;
       }
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
   }
+  EXPECT_LE(0, true_count);
+  EXPECT_LE(0, false_count);
 }
 
 }  // anonymous namespace
