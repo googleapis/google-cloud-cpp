@@ -91,3 +91,32 @@ TEST(ObjectStreamTest, ReadPermanentFailure) {
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+TEST(ObjectStreamTest, ReadLarge) {
+  std::int64_t const object_size = 1024 * 1024 + 12345;
+
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, ReadObjectRangeMedia(_))
+      .WillRepeatedly(Invoke([](ReadObjectRangeRequest const& r) {
+        if (r.begin() > object_size) {
+          return std::make_pair(storage::Status(), std::string());
+        }
+        // Return just a bunch of spaces.
+        auto size = static_cast<std::size_t>(r.end() - r.begin());
+        if (r.end() > object_size) {
+          size = static_cast<std::size_t>(object_size - r.begin());
+        }
+        return std::make_pair(storage::Status(),
+                              std::string(static_cast<std::size_t>(size), ' '));
+      }));
+
+  ObjectReadStream actual(mock, ReadObjectRangeRequest("foo-bar", "baz.txt"));
+
+  std::streamsize received_bytes = 0;
+  while (not actual.eof()) {
+    char buffer[4096];
+    actual.read(buffer, sizeof(buffer));
+    received_bytes += actual.gcount();
+  }
+  EXPECT_EQ(object_size, received_bytes);
+}
