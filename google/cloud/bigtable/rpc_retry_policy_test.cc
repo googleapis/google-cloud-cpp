@@ -51,10 +51,10 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   // I know 10ms feels like a long time, but it is not on a loaded VM running
   // the tests inside some container.
   // There is one case observed in this which will cause the result fail.
-  //   - Due to server overload if there is a delay between "OnFailure" and
+  //   - Due to server overload if there is a delay between "on_failure" and
   //       "now" statement execution then test case may fail. Due to this
-  //       reason we are checking the timestamp before OnFailure and with
-  //       now and both should satify the criteria of the value of "actual"
+  //       reason we are checking the timestamp before "on_failure" and with
+  //       "now" and both should satify the criteria of the value of "actual"
   auto must_be_true_before =
       start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
   auto must_be_false_after =
@@ -63,7 +63,7 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   int false_counter = 0;
   for (int i = 0; i != 100; ++i) {
     auto new_start = std::chrono::system_clock::now();
-    auto actual = tested.OnFailure(
+    auto actual = tested.on_failure(
         grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
     auto now = std::chrono::system_clock::now();
     if (new_start < must_be_true_before and now < must_be_true_before) {
@@ -76,7 +76,7 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
     std::this_thread::sleep_for(1_ms);
   }
   EXPECT_LE(0, true_counter);
-  EXPECT_GE(false_counter, 0);
+  EXPECT_GE(0, false_counter);
 }
 
 }  // anonymous namespace
