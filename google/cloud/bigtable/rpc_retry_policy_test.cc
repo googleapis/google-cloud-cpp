@@ -76,7 +76,7 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
     std::this_thread::sleep_for(1_ms);
   }
   EXPECT_LE(0, true_counter);
-  EXPECT_GE(0, false_counter);
+  EXPECT_LE(0, false_counter);
 }
 
 }  // anonymous namespace
