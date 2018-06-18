@@ -104,7 +104,7 @@ TEST(ObjectStreamTest, ReadPermanentFailure) {
 }
 
 TEST(ObjectStreamTest, ReadLarge) {
-  std::int64_t const object_size = 1024 * 1024 + 12345;
+  std::int64_t const object_size = 128 * 1024 + 12345;
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ReadObjectRangeMedia(_))
@@ -119,7 +119,7 @@ TEST(ObjectStreamTest, ReadLarge) {
           size = static_cast<std::size_t>(object_size - r.begin());
         }
         ReadObjectRangeResponse response{
-            std::string(static_cast<std::size_t>(size), ' '), r.begin(), r.end(),
+            std::string(static_cast<std::size_t>(size), ' '), r.begin(), r.end() - 1,
             object_size};
         return std::make_pair(storage::Status(), std::move(response));
       }));
@@ -130,7 +130,10 @@ TEST(ObjectStreamTest, ReadLarge) {
   while (not actual.eof()) {
     char buffer[4096];
     actual.read(buffer, sizeof(buffer));
-    received_bytes += actual.gcount();
+    auto actual_count = actual.gcount();
+    EXPECT_LE(0, actual_count) << "actual_count=" << actual.gcount();
+    received_bytes += actual_count;
+    SUCCEED() << "received_bytes=" << received_bytes;
   }
   EXPECT_EQ(object_size, received_bytes);
 }

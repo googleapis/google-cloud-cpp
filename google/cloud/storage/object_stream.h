@@ -23,12 +23,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
  * A `std::basic_streambuf` to read from a GCS Object.
- *
- * TODO(#554) - complete this
  */
 class ObjectReadStreamBuf : public std::basic_streambuf<char> {
  public:
-  ObjectReadStreamBuf() : std::basic_streambuf<char>(), sentinel_{} {
+  ObjectReadStreamBuf() : std::basic_streambuf<char>(), response_{} {
     RepositionInputSequence();
   }
 
@@ -37,7 +35,7 @@ class ObjectReadStreamBuf : public std::basic_streambuf<char> {
       : std::basic_streambuf<char>(),
         client_(std::move(client)),
         request_(std::move(request)),
-        sentinel_(0) {
+        response_{} {
     RepositionInputSequence();
   }
 
@@ -45,15 +43,14 @@ class ObjectReadStreamBuf : public std::basic_streambuf<char> {
       : std::basic_streambuf<char>(),
         client_(std::move(rhs.client_)),
         request_(std::move(rhs.request_)),
-        buffer_(std::move(rhs.buffer_)),
-        sentinel_(0) {
+        response_(std::move(rhs.response_)) {
     RepositionInputSequence();
   }
 
   ObjectReadStreamBuf& operator=(ObjectReadStreamBuf&& rhs) noexcept {
     client_ = std::move(rhs.client_);
     request_ = std::move(rhs.request_);
-    buffer_ = std::move(rhs.buffer_);
+    response_ = std::move(rhs.response_);
     RepositionInputSequence();
     return *this;
   }
@@ -79,8 +76,7 @@ class ObjectReadStreamBuf : public std::basic_streambuf<char> {
  private:
   std::shared_ptr<Client> client_;
   internal::ReadObjectRangeRequest request_;
-  std::string buffer_;
-  char sentinel_;
+  internal::ReadObjectRangeResponse response_;
 };
 
 /**
