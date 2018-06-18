@@ -35,7 +35,8 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ReadObjectRangeMedia(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ReadObjectRangeResponse{})))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), ReadObjectRangeResponse{})))
       .WillOnce(Invoke([&expected](ReadObjectRangeRequest const& r) {
         EXPECT_EQ("foo-bar", r.bucket_name());
         EXPECT_EQ("baz.txt", r.object_name());
@@ -119,8 +120,8 @@ TEST(ObjectStreamTest, ReadLarge) {
           size = static_cast<std::size_t>(object_size - r.begin());
         }
         ReadObjectRangeResponse response{
-            std::string(static_cast<std::size_t>(size), ' '), r.begin(), r.end() - 1,
-            object_size};
+            std::string(static_cast<std::size_t>(size), ' '), r.begin(),
+            r.end() - 1, object_size};
         return std::make_pair(storage::Status(), std::move(response));
       }));
 
