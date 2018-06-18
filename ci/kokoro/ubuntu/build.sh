@@ -39,7 +39,7 @@ build:results-local --experimental_remote_spawn_cache
 _EOF_
 
 # First build and run the unit tests.
-INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
+readonly INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
 echo "Configure and start Bazel: " ${INVOCATION_ID}
 echo "================================================================"
 echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
@@ -84,8 +84,8 @@ echo "================================================================"
 echo "================================================================"
 
 echo "Download dependencies for integration tests."
-# Download the gRPC roots.pem file, somewhere inside the bowels of Bazel this
-# file might exist, but my attempts and using it fail.
+# Download the gRPC `roots.pem` file. Somewhere inside the bowels of Bazel, this
+# file might exist, but my attempts at using it have failed.
 echo "    Getting roots.pem for gRPC."
 wget -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 echo "    Getting cbt tool"
