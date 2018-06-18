@@ -85,6 +85,9 @@ else ()
     message(STATUS "CURL linkage will be non-static")
 endif ()
 
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
+
 
 # the client library
 add_library(storage_client
@@ -102,6 +105,7 @@ add_library(storage_client
     internal/authorized_user_credentials.h
     internal/common_metadata.h
     internal/common_metadata.cc
+    internal/credential_constants.h
     internal/curl_request.h
     internal/curl_request.cc
     internal/curl_wrappers.h
@@ -115,6 +119,8 @@ add_library(storage_client
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
+    internal/openssl_util.h
+    internal/openssl_util.cc
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/read_object_range_request.h
@@ -122,6 +128,7 @@ add_library(storage_client
     internal/request_parameters.h
     internal/retry_client.h
     internal/retry_client.cc
+    internal/service_account_credentials.h
     object.h
     object.cc
     object_metadata.h
@@ -138,6 +145,9 @@ target_link_libraries(storage_client
         google_cloud_cpp_common
         CURL::CURL
         Threads::Threads
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
     PRIVATE
         nlohmann_json
         storage_common_options)

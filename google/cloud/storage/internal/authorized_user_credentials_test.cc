@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
+#include <cstring>
 
 namespace storage = google::cloud::storage;
 using storage::internal::AuthorizedUserCredentials;
@@ -39,7 +40,8 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
 
   auto handle =
-      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
+      MockHttpRequest::Handle(
+          storage::internal::GoogleOAuthRefreshEndpoint());
   EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
       .WillOnce(Invoke([](std::string const& payload) {
         auto npos = std::string::npos;
@@ -81,7 +83,8 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 })""";
 
   auto handle =
-      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
+      MockHttpRequest::Handle(
+          storage::internal::GoogleOAuthRefreshEndpoint());
   EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>())).Times(1);
   EXPECT_CALL(*handle, MakeEscapedString(_))
       .WillRepeatedly(Invoke([](std::string const& x) {
