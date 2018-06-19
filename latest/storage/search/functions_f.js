@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['validatebucketname',['ValidateBucketName',['../classstorage_1_1v_1_1Bucket.html#a111130f39d4c0fd4f74b8ac7b0e4e466',1,'storage::v::Bucket']]],
-  ['version',['version',['../namespacestorage_1_1v.html#a613c41091a57cf695308470bab8203cd',1,'storage::v']]],
-  ['version_5fmajor',['version_major',['../namespacestorage_1_1v.html#af8bdcf88250309a0c2fc33b9956b7e3b',1,'storage::v']]],
-  ['version_5fminor',['version_minor',['../namespacestorage_1_1v.html#a75a9095e0429cc1323aa0ab811d8ec89',1,'storage::v']]],
-  ['version_5fpatch',['version_patch',['../namespacestorage_1_1v.html#ac2216055b828a97acc6c1811499c4562',1,'storage::v']]],
-  ['version_5fstring',['version_string',['../namespacestorage_1_1v.html#ac51f6b1fa908e88cf591af12b0272e33',1,'storage::v']]]
+  ['well_5fknown_5fparameter_5fname',['well_known_parameter_name',['../structstorage_1_1v_1_1Projection.html#a03f80dbf3876c921e58eff132b931741',1,'storage::v::Projection::well_known_parameter_name()'],['../structstorage_1_1v_1_1UserProject.html#aee271f5e06a6e359fb895c63a87f3e1b',1,'storage::v::UserProject::well_known_parameter_name()'],['../structstorage_1_1v_1_1IfGenerationMatch.html#a7d7012fdab2727c4e858fc8253485de9',1,'storage::v::IfGenerationMatch::well_known_parameter_name()'],['../structstorage_1_1v_1_1IfGenerationNotMatch.html#ab7e6a7eb06eb5c1fc9d2b75339b9ec55',1,'storage::v::IfGenerationNotMatch::well_known_parameter_name()'],['../structstorage_1_1v_1_1IfMetaGenerationMatch.html#a46c15bc809e7583c644ba20e8ae11af8',1,'storage::v::IfMetaGenerationMatch::well_known_parameter_name()'],['../structstorage_1_1v_1_1IfMetaGenerationNotMatch.html#afdece539d6c5d18801932aac991a3224',1,'storage::v::IfMetaGenerationNotMatch::well_known_parameter_name()'],['../structstorage_1_1v_1_1Generation.html#af145a9da654861744990f0428bacba56',1,'storage::v::Generation::well_known_parameter_name()']]],
+  ['wellknownparameter',['WellKnownParameter',['../classstorage_1_1v_1_1WellKnownParameter.html#ac2b65b853f25017e52c30f3e87e8d155',1,'storage::v::WellKnownParameter::WellKnownParameter()'],['../classstorage_1_1v_1_1WellKnownParameter.html#af22f4682553fa677e3f05b88ad1288cf',1,'storage::v::WellKnownParameter::WellKnownParameter(T &amp;&amp;value)']]]
 ];
