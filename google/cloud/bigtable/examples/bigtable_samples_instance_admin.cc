@@ -12,8 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all code]
+
+//! [bigtable includes]
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
+//! [bigtable includes]
 #include <google/protobuf/text_format.h>
 
 namespace btproto = ::google::bigtable::admin::v2;
@@ -40,8 +44,12 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   std::cerr << msg << "\nUsage: " << program
             << " <command> <project_id> [arguments]\n\n"
             << "Examples:\n";
-  for (auto example : {"create-instance my-project my-instance us-central1-f",
-                       "list-clusters my-project my-instance"}) {
+  for (auto example :
+       {"run my-project my-instance my-cluster us-central1-f",
+        "create-dev-instance my-project my-instance us-central1-f",
+        "delete-instance my-project my-instance",
+        "create-cluster my-project my-instance my-cluster",
+        "delete-cluster my-project my-instance my-cluster"}) {
     std::cerr << "  " << program << " " << example << "\n";
   }
   std::cerr << std::flush;
@@ -79,6 +87,39 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "TIMEOUT" << std::endl;
 }
 //! [create instance]
+
+//! [create dev instance]
+void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
+                       int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-dev-instance: <instance-id> <zone>"};
+  }
+  std::string const instance_id = ConsumeArg(argc, argv);
+  std::string const zone = ConsumeArg(argc, argv);
+
+  google::cloud::bigtable::DisplayName display_name("Put description here");
+  std::string cluster_id = instance_id + "-c1";
+  auto cluster_config = google::cloud::bigtable::ClusterConfig(
+      zone, 0, google::cloud::bigtable::ClusterConfig::HDD);
+  google::cloud::bigtable::InstanceConfig config(
+      google::cloud::bigtable::InstanceId(instance_id), display_name,
+      {{cluster_id, cluster_config}});
+  config.set_type(google::cloud::bigtable::InstanceConfig::DEVELOPMENT);
+
+  auto future = instance_admin.CreateInstance(config);
+  // Most applications would simply call future.get(), here we show how to
+  // perform additional work while the long running operation completes.
+  std::cout << "Waiting for instance creation to complete ";
+  for (int i = 0; i != 100; ++i) {
+    if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
+      std::cout << "DONE: " << future.get().name() << std::endl;
+      return;
+    }
+    std::cout << '.' << std::flush;
+  }
+  std::cout << "TIMEOUT" << std::endl;
+}
+//! [create dev instance]
 
 //! [update instance]
 void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -137,8 +178,8 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [delete instance]
 
 //! [create cluster]
-// Before creating cluster, need to create instance first, then create cluster
-// on it.
+// Before creating cluster, need to create instance (type:PRODUCTION) first,
+// then create cluster on it.
 void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
   if (argc != 3) {
@@ -243,6 +284,59 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [delete cluster]
 
+//! [run instance operations]
+void RunInstanceOperations(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"run: <project-id> <instance-id> <cluster-id> <zone>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  std::string const zone = ConsumeArg(argc, argv);
+
+  // Create production instance
+  google::cloud::bigtable::DisplayName display_name("Put description here");
+  auto cluster_config = google::cloud::bigtable::ClusterConfig(
+      zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
+  google::cloud::bigtable::InstanceConfig config(
+      google::cloud::bigtable::InstanceId(instance_id), display_name,
+      {{cluster_id.get(), cluster_config}});
+  config.set_type(google::cloud::bigtable::InstanceConfig::PRODUCTION);
+
+  std::cout << std::endl << "Creating a PRODUCTION Instance:";
+  auto future = instance_admin.CreateInstance(config).get();
+  std::cout << " Done" << std::endl;
+
+  // List Instances
+  std::cout << std::endl << "Listing Instances:" << std::endl;
+  auto instances = instance_admin.ListInstances();
+  for (auto const& instance : instances) {
+    std::cout << instance.name() << std::endl;
+  }
+
+  // get Instance
+  std::cout << std::endl << "Get Instance:" << std::endl;
+  auto instance = instance_admin.GetInstance(instance_id.get());
+  std::string instance_detail;
+  google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
+  std::cout << "GetInstance details : " << std::endl << instance_detail;
+
+  // List clusters
+  std::cout << std::endl << "Listing Clusters:" << std::endl;
+  auto cluster_list = instance_admin.ListClusters(instance_id.get());
+  std::cout << "Cluster Name List" << std::endl;
+  for (auto const& cluster : cluster_list) {
+    std::cout << "Cluster Name:" << cluster.name() << std::endl;
+  }
+
+  // Delete Instance
+  std::cout << std::endl << "Deleting Instance:";
+  instance_admin.DeleteInstance(instance_id.get());
+  std::cout << " Done" << std::endl;
+}
+//! [run instance operations]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -266,8 +360,12 @@ int main(int argc, char* argv[]) try {
   google::cloud::bigtable::InstanceAdmin instance_admin(instance_admin_client);
   //! [connect instance admin]
 
-  if (command == "create-instance") {
+  if (command == "run") {
+    RunInstanceOperations(instance_admin, argc, argv);
+  } else if (command == "create-instance") {
     CreateInstance(instance_admin, argc, argv);
+  } else if (command == "create-dev-instance") {
+    CreateDevInstance(instance_admin, argc, argv);
   } else if (command == "update-instance") {
     UpdateInstance(instance_admin, argc, argv);
   } else if (command == "list-instances") {
@@ -301,3 +399,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }
+//! [all code]
