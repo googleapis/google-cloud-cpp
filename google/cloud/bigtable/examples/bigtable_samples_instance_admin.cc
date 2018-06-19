@@ -48,7 +48,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
        {"run my-project my-instance my-cluster us-central1-f",
         "create-dev-instance my-project my-instance us-central1-f",
         "delete-instance my-project my-instance",
-        "create-cluster my-project my-instance my-cluster",
+        "create-cluster my-project my-instance my-cluster us-central1-a",
         "delete-cluster my-project my-instance my-cluster"}) {
     std::cerr << "  " << program << " " << example << "\n";
   }
@@ -182,14 +182,17 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 // then create cluster on it.
 void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-cluster: <project-id> <instance-id> <cluster-id>"};
+  if (argc != 4) {
+    throw Usage{
+        "create-cluster: <project-id> <instance-id> <cluster-id> <zone>"};
   }
 
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  std::string const zone = ConsumeArg(argc, argv);
+
   auto location =
-      "projects/" + instance_admin.project_id() + "/locations/us-central1-a";
+      "projects/" + instance_admin.project_id() + "/locations/" + zone;
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
       location, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =

@@ -119,7 +119,7 @@ Examples:
   bigtable_samples_instance_admin run my-project my-instance my-cluster us-central1-f
   bigtable_samples_instance_admin create-dev-instance my-project my-instance us-central1-f
   bigtable_samples_instance_admin delete-instance my-project my-instance
-  bigtable_samples_instance_admin create-cluster my-project my-instance my-cluster
+  bigtable_samples_instance_admin create-cluster my-project my-instance my-cluster us-central1-a
   bigtable_samples_instance_admin delete-cluster my-project my-instance my-cluster
 ```
 #### Running instance admin samples
@@ -131,7 +131,7 @@ $ export PROJECT_ID=... # The name of your project
 $ export INSTANCE_ID=... # The name of your instance
 $ export CLUSTER_ID=... # The name of cluster
 $ export ZONE=... # The name of zone
-$ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${ZONE}
+$ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
 ```
 
 [hello_world_code]: bigtable_hello_world.cc
