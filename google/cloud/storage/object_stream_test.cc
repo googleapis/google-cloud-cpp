@@ -126,8 +126,7 @@ TEST(ObjectStreamTest, ReadLarge) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ReadObjectRangeMedia(_))
-      .WillRepeatedly(Invoke(mock_impl));
+  EXPECT_CALL(*mock, ReadObjectRangeMedia(_)).WillRepeatedly(Invoke(mock_impl));
 
   ObjectReadStream actual(mock, ReadObjectRangeRequest("foo-bar", "baz.txt"));
 
