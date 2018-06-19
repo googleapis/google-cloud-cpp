@@ -55,8 +55,8 @@ void AppCode(Bucket b, FixedArgument1 foo, FixedArgument2 bar) {
 
 The downsides include:
 
-- All APIs become templates, we should be careful not to massive headers that
-  are slow to compile.
+- All APIs become templates, we should be careful not to create massive header
+  files that are slow to compile.
 - It is harder to overload APIs.
 - It is not clear how other optional parameters of the APIs, such as timeouts,
   fit with this structure.
