@@ -49,7 +49,6 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   if (buffer[0] == '*' and buffer[1] == '/') {
     // The header is just the indication of size ('bytes */<size>'), parse that.
     buffer += 2;
-    size -= 2;
     long long object_size;
     auto count = std::sscanf(buffer, "%lld", &object_size);
     if (count != 1) {
