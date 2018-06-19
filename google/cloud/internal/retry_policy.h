@@ -26,14 +26,13 @@ namespace internal {
 /**
  * Define the interface for retry policies.
  *
- * @tparam StatusTypeParam the type used to represent success/failures.
- * @tparam RetryablePolicyParam the policy to decide if status is retryable.
+ * @tparam StatusType the type used to represent success/failures.
+ * @tparam RetryablePolicy the policy to decide if a status represents a
+ *     permanent failure.
  */
-template <typename StatusTypeParam, typename RetryablePolicyParam>
+template <typename StatusType, typename RetryablePolicy>
 class RetryPolicy {
  public:
-  using StatusType = StatusTypeParam;
-  using RetryablePolicy = RetryablePolicyParam;
 
   virtual ~RetryPolicy() = default;
 
@@ -44,9 +43,9 @@ class RetryPolicy {
       return false;
     }
     OnFailureImpl();
-    return not Exhausted();
+    return not IsExhausted();
   }
-  virtual bool Exhausted() const = 0;
+  virtual bool IsExhausted() const = 0;
 
  protected:
   virtual void OnFailureImpl() = 0;
@@ -54,14 +53,16 @@ class RetryPolicy {
 
 /**
  * Implement a simple "count errors and then stop" retry policy.
+ *
+ * @tparam StatusType the type used to represent success/failures.
+ * @tparam RetryablePolicy the policy to decide if a status represents a
+ *     permanent failure.
  */
-template <typename StatusTypeParam, typename RetryablePolicyParam>
+template <typename StatusType, typename RetryablePolicy>
 class LimitedErrorCountRetryPolicy
-    : public RetryPolicy<StatusTypeParam, RetryablePolicyParam> {
+    : public RetryPolicy<StatusType, RetryablePolicy> {
  public:
-  using BaseType = RetryPolicy<StatusTypeParam, RetryablePolicyParam>;
-  using typename BaseType::RetryablePolicy;
-  using typename BaseType::StatusType;
+  using BaseType = RetryPolicy<StatusType, RetryablePolicy>;
 
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
       : failure_count_(0), maximum_failures_(maximum_failures) {}
@@ -75,7 +76,9 @@ class LimitedErrorCountRetryPolicy
     return std::unique_ptr<BaseType>(
         new LimitedErrorCountRetryPolicy(maximum_failures_));
   }
-  bool Exhausted() const override { return failure_count_ > maximum_failures_; }
+  bool IsExhausted() const override {
+    return failure_count_ > maximum_failures_;
+  }
 
  protected:
   void OnFailureImpl() override { ++failure_count_; }
@@ -87,14 +90,16 @@ class LimitedErrorCountRetryPolicy
 
 /**
  * Implement a simple "keep trying for this time" retry policy.
+ *
+ * @tparam StatusType the type used to represent success/failures.
+ * @tparam RetryablePolicy the policy to decide if a status represents a
+ *     permanent failure.
  */
-template <typename StatusTypeParam, typename RetryablePolicyParam>
+template <typename StatusType, typename RetryablePolicy>
 class LimitedTimeRetryPolicy
-    : public RetryPolicy<StatusTypeParam, RetryablePolicyParam> {
+    : public RetryPolicy<StatusType, RetryablePolicy> {
  public:
-  using BaseType = RetryPolicy<StatusTypeParam, RetryablePolicyParam>;
-  using typename BaseType::RetryablePolicy;
-  using typename BaseType::StatusType;
+  using BaseType = RetryPolicy<StatusType, RetryablePolicy>;
 
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -129,7 +134,7 @@ class LimitedTimeRetryPolicy
     return std::unique_ptr<BaseType>(
         new LimitedTimeRetryPolicy(maximum_duration_));
   }
-  bool Exhausted() const override {
+  bool IsExhausted() const override {
     return std::chrono::system_clock::now() >= deadline_;
   }
 

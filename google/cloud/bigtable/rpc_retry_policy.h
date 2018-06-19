@@ -35,7 +35,7 @@ struct SafeGrpcRetry {
            code == grpc::StatusCode::DEADLINE_EXCEEDED;
   }
 
-  static inline bool IsOkay(grpc::Status const& status) { return status.ok(); }
+  static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
   static inline bool IsTransientFailure(grpc::Status const& status) {
     return IsTransientFailure(status.error_code());
   }
@@ -59,6 +59,7 @@ struct SafeGrpcRetry {
  * prototype to create new RPCRetryPolicy objects of the same
  * (dynamic) type and with the same initial state.
  *
+ * TODO(#740) - fix the snake_case member function names.
  */
 class RPCRetryPolicy {
  public:
