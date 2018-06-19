@@ -58,9 +58,14 @@ class BackoffPolicy {
   virtual std::unique_ptr<BackoffPolicy> clone() const = 0;
 
   /**
-   * Return the delay after an RPC operation has completed.
+   * Handle an operation completion.
    *
-   * @return how long to wait before trying the operation again.
+   * This function is typically called when an operation has failed (if it had
+   * succeeded there is no reason to retry and backoff), the decision to retry
+   * the operation is handled by other policies, this separates the concerns
+   * of how much to retry vs. how much delay to put between retries.
+   *
+   * @return the delay to wait before the next retry attempt.
    */
   virtual std::chrono::milliseconds OnCompletion() = 0;
 };
@@ -103,19 +108,18 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
    *     used to store the number of ticks), for our purposes it is simply a
    *     formal parameter.
-   * @tparam Rep2 similar formal parameter for the type of @p maximum_delay.
    * @tparam Period1 a placeholder to match the Period tparam for
    *     @p initial_delay's type, the semantics of this template parameter are
    *     documented in `std::chrono::duration<>` (in brief, the length of the
    *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
    *     is simply a formal parameter.
    * @tparam Period2 similar formal parameter for the type of @p maximum_delay.
+   * @tparam Rep2 similar formal parameter for the type of @p maximum_delay.
    *
    * @see
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
    */
-
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
   ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
