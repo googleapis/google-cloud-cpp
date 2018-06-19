@@ -36,6 +36,7 @@ std::streamsize ObjectReadStreamBuf::showmanyc() {
 
 ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
   // TODO(#554) - for now, just read the first 64KiB
+  // TODO(#742) - use literals for KiB and MiB and GiB.
   std::int64_t const max_read_bytes = 64 * 1024;
   if (request_.end() >= max_read_bytes) {
     return traits_type::eof();

@@ -87,6 +87,12 @@ class DefaultClient : public Client {
     http_request.AddQueryParameter("alt", "media");
     request.AddParametersToHttpRequest(http_request);
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    // For the moment, we are using range reads to read the objects (see #727)
+    // disable decompression because range reads do not work in that case:
+    //   https://cloud.google.com/storage/docs/transcoding#range
+    // and
+    //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+    http_request.AddHeader("Cache-Control: no-transform");
     http_request.AddHeader("Range: bytes=" + std::to_string(request.begin()) +
                            '-' + std::to_string(request.end()));
     http_request.PrepareRequest(std::string{});
