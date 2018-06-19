@@ -49,7 +49,6 @@ class Client {
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       internal::GetBucketMetadataRequest const& request) = 0;
 
-  // TODO(#682) - prototype modifiers for the request.
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       internal::InsertObjectMediaRequest const&) = 0;
 };

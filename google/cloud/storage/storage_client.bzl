@@ -16,6 +16,7 @@ storage_client_HDRS = [
     "internal/metadata_parser.h",
     "internal/nljson.h",
     "internal/parse_rfc3339.h",
+    "internal/read_object_range_request.h",
     "internal/request_parameters.h",
     "object_metadata.h",
     "object.h",
