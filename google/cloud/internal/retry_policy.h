@@ -33,7 +33,6 @@ namespace internal {
 template <typename StatusType, typename RetryablePolicy>
 class RetryPolicy {
  public:
-
   virtual ~RetryPolicy() = default;
 
   virtual std::unique_ptr<RetryPolicy> clone() const = 0;
@@ -96,8 +95,7 @@ class LimitedErrorCountRetryPolicy
  *     permanent failure.
  */
 template <typename StatusType, typename RetryablePolicy>
-class LimitedTimeRetryPolicy
-    : public RetryPolicy<StatusType, RetryablePolicy> {
+class LimitedTimeRetryPolicy : public RetryPolicy<StatusType, RetryablePolicy> {
  public:
   using BaseType = RetryPolicy<StatusType, RetryablePolicy>;
 
