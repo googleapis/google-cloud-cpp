@@ -18,8 +18,9 @@ storage_client_HDRS = [
     "internal/parse_rfc3339.h",
     "internal/read_object_range_request.h",
     "internal/request_parameters.h",
-    "object_metadata.h",
     "object.h",
+    "object_metadata.h",
+    "object_stream.h",
     "well_known_parameters.h",
     "status.h",
     "version.h",
@@ -37,8 +38,9 @@ storage_client_SRCS = [
     "internal/google_application_default_credentials_file.cc",
     "internal/metadata_parser.cc",
     "internal/parse_rfc3339.cc",
-    "object_metadata.cc",
     "object.cc",
+    "object_metadata.cc",
+    "object_stream.cc",
     "version.cc",
 ]
 
