@@ -61,8 +61,8 @@ class BackoffPolicy {
    * Handle an operation completion.
    *
    * This function is typically called when an operation has failed (if it had
-   * succeeded there is no reason to retry and backoff), the decision to retry
-   * the operation is handled by other policies, this separates the concerns
+   * succeeded there is no reason to retry and backoff). The decision to retry
+   * the operation is handled by other policies. This separates the concerns
    * of how much to retry vs. how much delay to put between retries.
    *
    * @return the delay to wait before the next retry attempt.
@@ -113,8 +113,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *     documented in `std::chrono::duration<>` (in brief, the length of the
    *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
    *     is simply a formal parameter.
-   * @tparam Period2 similar formal parameter for the type of @p maximum_delay.
    * @tparam Rep2 similar formal parameter for the type of @p maximum_delay.
+   * @tparam Period2 similar formal parameter for the type of @p maximum_delay.
    *
    * @see
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
