@@ -56,6 +56,10 @@ void GetMetadata(storage::Bucket bucket, int& argc, char* argv[]) {
 
 //! [insert object]
 void InsertObject(storage::Bucket bucket, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "insert-object <bucket-name> <object-name> <object-contents (string)>"};
+  }
   auto object_name = ConsumeArg(argc, argv);
   auto contents = ConsumeArg(argc, argv);
   auto meta = bucket.InsertObject(object_name, std::move(contents));

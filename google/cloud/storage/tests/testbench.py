@@ -200,7 +200,13 @@ def buckets_get(bucket_name):
     })
 
 
-@gcs.route('/b/<bucket_name>/o', methods=['POST'])
+# Define the WSGI application to handle bucket requests.
+UPLOAD_HANDLER_PATH = '/upload/storage/v1'
+upload = flask.Flask(__name__)
+upload.debug = True
+
+
+@upload.route('/b/<bucket_name>/o', methods=['POST'])
 def objects_insert(bucket_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
     object_name = flask.request.args.get('name', None)
@@ -236,6 +242,7 @@ def main():
     application = wsgi.DispatcherMiddleware(root, {
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
+        UPLOAD_HANDLER_PATH: upload,
     })
     serving.run_simple(arguments.host, int(arguments.port), application,
                        use_reloader=True, use_debugger=arguments.debug,
