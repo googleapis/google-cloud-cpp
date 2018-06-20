@@ -178,7 +178,7 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [delete instance]
 
 //! [create cluster]
-// Before creating cluster, need to create instance (type:PRODUCTION) first,
+// Before creating cluster, need to create a production instance first,
 // then create cluster on it.
 void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
@@ -351,16 +351,11 @@ int main(int argc, char* argv[]) try {
   std::string const command = ConsumeArg(argc, argv);
   std::string const project_id = ConsumeArg(argc, argv);
 
-  // Connect to the Cloud Bigtable admin endpoint.
-  //! [connect instance admin client]
-  auto instance_admin_client(
+  // Create an instance admin endpoint.
+  //! [connect instance admin]
+  google::cloud::bigtable::InstanceAdmin instance_admin(
       google::cloud::bigtable::CreateDefaultInstanceAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()));
-  //! [connect instance admin client]
-
-  // Connect to the Cloud Bigtable endpoint.
-  //! [connect instance admin]
-  google::cloud::bigtable::InstanceAdmin instance_admin(instance_admin_client);
   //! [connect instance admin]
 
   if (command == "run") {

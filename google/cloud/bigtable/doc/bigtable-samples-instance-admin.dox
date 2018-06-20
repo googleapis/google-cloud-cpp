@@ -4,7 +4,7 @@
 This example is a very simple "Instance Admin" application, written in C++, that
 illustrates how to:
 
-- Creates an instance(type: PRODUCTION) and run basic instance-operations.
+- Creates a production instance and runs basic instance admin operations.
 - Create a development instance.
 - Delete an instance
 - Create a new cluster.
@@ -26,15 +26,11 @@ The example uses the following headers:
 
 @snippet bigtable_samples_instance_admin.cc bigtable includes
 
-### Connect to the Cloud Bigtable admin endpoint
-
-@snippet bigtable_samples_instance_admin.cc connect instance admin client 
-
-### Connect to the Cloud Bigtable endpoint.
+### Connect to the Cloud Bigtable instance admin endpoint.
 
 @snippet bigtable_samples_instance_admin.cc connect instance admin 
 
-### Creates an instance(type: PRODUCTION) and run basic instance-operations.  
+### Creates a production instance and run basic instance-operations.
 
 @snippet bigtable_samples_instance_admin.cc run instance operations
 
@@ -46,7 +42,7 @@ The example uses the following headers:
 
 @snippet bigtable_samples_instance_admin.cc delete instance
 
-### Create Cluster
+### Create an additional cluster on an existing instance
 
 @snippet bigtable_samples_instance_admin.cc create cluster
 
