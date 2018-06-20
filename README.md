@@ -114,7 +114,7 @@ apt install abi-compliance-checker abi-dumper automake build-essential ccache cl
 brew install curl cmake
 ```
 
-### Windows
+#### Windows
 
 ```bash
 .\install-windows.ps1
