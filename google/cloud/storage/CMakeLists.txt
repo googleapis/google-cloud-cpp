@@ -110,6 +110,7 @@ add_library(storage_client
     internal/get_bucket_metadata_request.h
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
+    internal/http_response.h
     internal/insert_object_media_request.h
     internal/metadata_parser.h
     internal/metadata_parser.cc
@@ -117,6 +118,7 @@ add_library(storage_client
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/read_object_range_request.h
+    internal/read_object_range_request.cc
     internal/request_parameters.h
     object.h
     object.cc
