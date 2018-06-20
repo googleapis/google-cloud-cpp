@@ -115,8 +115,6 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
   bool on_failure(grpc::Status const& status) override {
     return on_failure_impl(status);
   }
-
-  bool can_retry(grpc::StatusCode code) const override { return true; }
 };
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
