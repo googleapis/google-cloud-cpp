@@ -37,6 +37,8 @@ class DefaultClient : public Client {
 
   explicit DefaultClient(ClientOptions options) : options_(std::move(options)) {
     storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
+    upload_endpoint_ =
+        options_.endpoint() + "/upload/storage/" + options_.version();
   }
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
@@ -59,7 +61,7 @@ class DefaultClient : public Client {
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override {
     // Assume the bucket name is validated by the caller.
-    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+    HttpRequest http_request(upload_endpoint_ + "/b/" + request.bucket_name() +
                              "/o");
     http_request.AddQueryParameter("uploadType", "media");
     http_request.AddQueryParameter("name", request.object_name());
@@ -108,6 +110,7 @@ class DefaultClient : public Client {
  private:
   ClientOptions options_;
   std::string storage_endpoint_;
+  std::string upload_endpoint_;
 };
 
 }  // namespace internal
