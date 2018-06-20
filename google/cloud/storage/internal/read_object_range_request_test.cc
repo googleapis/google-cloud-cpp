@@ -18,10 +18,11 @@
 using namespace storage::internal;
 
 namespace {
-HttpResponse CreateRangeRequestResponse(char const* content_range_header) {
+HttpResponse CreateRangeRequestResponse(
+    char const* content_range_header_value) {
   HttpResponse response;
   response.headers.emplace(std::string("content-range"),
-                           std::string(content_range_header));
+                           std::string(content_range_header_value));
   response.payload = "some payload";
   return response;
 }

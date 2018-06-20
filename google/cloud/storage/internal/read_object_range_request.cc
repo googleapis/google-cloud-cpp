@@ -26,19 +26,19 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
         "invalid http response for ReadObjectRange");
   }
 
-  std::string const& header = loc->second;
-  auto raise_error = [&header]() {
+  std::string const& content_range_value = loc->second;
+  auto raise_error = [&content_range_value]() {
     std::ostringstream os;
     os << static_cast<char const*>(__func__)
-       << " invalid format for content-range header <" << header << ">";
+       << " invalid format for content-range header <" << content_range_value << ">";
     google::cloud::internal::RaiseInvalidArgument(os.str());
   };
   char unit_descriptor[] = "bytes";
-  if (0 != header.find(unit_descriptor)) {
+  if (0 != content_range_value.find(unit_descriptor)) {
     raise_error();
   }
-  char const* buffer = header.data();
-  auto size = header.size();
+  char const* buffer = content_range_value.data();
+  auto size = content_range_value.size();
   // skip the initial "bytes " string.
   buffer += sizeof(unit_descriptor);
 
