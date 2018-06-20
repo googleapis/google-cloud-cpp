@@ -46,3 +46,15 @@ cc_library(
     hdrs = google_cloud_cpp_common_HDRS + [ "internal/version_info.h" ],
     deps = [],
 )
+
+load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_SRCS", "google_cloud_cpp_testing_HDRS")
+cc_library(
+    name = "google_cloud_cpp_testing",
+    srcs = google_cloud_cpp_testing_SRCS,
+    hdrs = google_cloud_cpp_testing_HDRS,
+    deps = [
+      ":google_cloud_cpp_common",
+      "@com_google_googletest//:gtest",
+      "@com_google_googletest//:gtest_main",
+    ],
+)

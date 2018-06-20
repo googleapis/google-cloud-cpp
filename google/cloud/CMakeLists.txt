@@ -90,6 +90,13 @@ include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
+add_library(google_cloud_cpp_testing
+    cloud_testing/check_predicate_becomes_false.h)
+target_link_libraries(google_cloud_cpp_testing PRIVATE
+    google_cloud_cpp_common gmock)
+
+create_bazel_config(google_cloud_cpp_testing)
+
 set(google_cloud_cpp_common_unit_tests
     internal/backoff_policy_test.cc
     internal/optional_test.cc

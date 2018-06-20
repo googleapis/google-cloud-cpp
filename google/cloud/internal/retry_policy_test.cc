@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/cloud_testing/check_predicate_becomes_false.h"
 #include <gmock/gmock.h>
-#include <thread>
 
 namespace {
 struct Status {
@@ -49,46 +49,10 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
  * TODO(#733) - refactor this and the implementations in bigtable/
  */
 void CheckLimitedTime(RetryPolicyForTest& tested) {
-  auto start = std::chrono::system_clock::now();
-  // This is one of those tests that can get annoyingly flaky, it is based on
-  // time.  Basically we want to know that the policy will accept failures
-  // until around its prescribed deadline (50ms in this test).  Instead of
-  // measuring for *exactly* 50ms, we pass the test if:
-  //   - All calls to OnFailure() in the first 50ms - 10ms pass.
-  //   - Calls to OnFailure() after 50ms + 10ms are rejected.
-  //   - We do not care about the results from 40ms to 60ms.
-  //   - We must handle the case where the test is called before the 40ms mark
-  //     and finishes after the 60ms mark. Yes, that can happen on heavily
-  //     loaded machines, which CI servers often are.
-  // I know 10ms feels like a long time, but it is not on a loaded VM running
-  // the tests inside some container.
-  auto must_be_true_before =
-      start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
-  auto must_be_false_after =
-      start + kLimitedTimeTestPeriod + kLimitedTimeTolerance;
-  int true_count = 0;
-  int false_count = 0;
-  for (int i = 0; i != 100; ++i) {
-    auto iteration_start = std::chrono::system_clock::now();
-    auto actual = tested.OnFailure(CreateTransientError());
-    auto iteration_end = std::chrono::system_clock::now();
-    if (iteration_end < must_be_true_before) {
-      EXPECT_TRUE(actual);
-      if (actual) {
-        ++true_count;
-      }
-    } else if (must_be_false_after < iteration_start) {
-      EXPECT_FALSE(actual);
-      if (not actual) {
-        // Terminate the loop early if we can.
-        ++false_count;
-        break;
-      }
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
-  EXPECT_LE(0, true_count);
-  EXPECT_LE(0, false_count);
+  google::cloud::cloud_testing::CheckPredicateBecomesFalse(
+      [&tested] { return tested.OnFailure(CreateTransientError()); },
+      std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
+      kLimitedTimeTolerance);
 }
 
 }  // anonymous namespace
