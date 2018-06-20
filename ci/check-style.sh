@@ -24,7 +24,10 @@ fi
 # This script assumes it is running the top-level google-cloud-cpp directory.
 
 find google/cloud -name '*.h' -print0 \
-  | xargs -0 awk 'BEGINFILE {
+  | xargs -0 awk 'BEGIN {
+    found_errors = 0;
+  }
+  BEGINFILE {
     # The guard must begin with the name of the project.
     guard_prefix="GOOGLE_CLOUD_CPP_"
     # The guard must end with "_"
@@ -65,10 +68,15 @@ find google/cloud -name '*.h' -print0 \
              FILENAME, guard, $0);
     }
   }
-  END {
+  ENDFILE {
     if (matches != 3) {
       printf("%s has invalid include guards\n", FILENAME);
-      exit(1);
+      found_errors = 1;
+    }
+  }
+  END {
+    if (found_errors) {
+      exit 1;
     }
   }'
 
