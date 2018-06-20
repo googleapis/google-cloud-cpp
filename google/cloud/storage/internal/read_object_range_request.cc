@@ -30,7 +30,8 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   auto raise_error = [&content_range_value]() {
     std::ostringstream os;
     os << static_cast<char const*>(__func__)
-       << " invalid format for content-range header <" << content_range_value << ">";
+       << " invalid format for content-range header <" << content_range_value
+       << ">";
     google::cloud::internal::RaiseInvalidArgument(os.str());
   };
   char unit_descriptor[] = "bytes";
