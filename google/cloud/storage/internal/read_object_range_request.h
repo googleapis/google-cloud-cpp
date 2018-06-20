@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_READ_OBJECT_RANGE_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_READ_OBJECT_RANGE_REQUEST_H_
 
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
@@ -91,6 +92,15 @@ class ReadObjectRangeRequest
   std::string object_name_;
   std::int64_t begin_;
   std::int64_t end_;
+};
+
+struct ReadObjectRangeResponse {
+  std::string contents;
+  std::int64_t first_byte;
+  std::int64_t last_byte;
+  std::int64_t object_size;
+
+  static ReadObjectRangeResponse FromHttpResponse(HttpResponse&& response);
 };
 
 }  // namespace internal

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_RETRY_POLICY_H_
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/retry_policy.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <memory>
@@ -24,6 +25,25 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
+struct SafeGrpcRetry {
+  // Sometimes we need to use google::protobuf::rpc::Status, in which case this
+  // is a easier function
+  static inline bool IsTransientFailure(grpc::StatusCode code) {
+    return code == grpc::StatusCode::OK or code == grpc::StatusCode::ABORTED or
+           code == grpc::StatusCode::UNAVAILABLE or
+           code == grpc::StatusCode::DEADLINE_EXCEEDED;
+  }
+
+  static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
+  static inline bool IsTransientFailure(grpc::Status const& status) {
+    return IsTransientFailure(status.error_code());
+  }
+  static inline bool IsPermanentFailure(grpc::Status const& status) {
+    return not IsTransientFailure(status);
+  }
+};
+
 /**
  * Define the interface for controlling how the Bigtable client
  * retries RPC operations.
@@ -39,6 +59,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  * prototype to create new RPCRetryPolicy objects of the same
  * (dynamic) type and with the same initial state.
  *
+ * TODO(#740) - fix the snake_case member function names.
  */
 class RPCRetryPolicy {
  public:
@@ -66,8 +87,9 @@ class RPCRetryPolicy {
    */
   virtual bool on_failure(grpc::Status const& status) = 0;
 
-  /// Return true if the status code is retryable.
-  virtual bool can_retry(grpc::StatusCode code) const = 0;
+  static bool IsPermanentFailure(grpc::Status const& status) {
+    return SafeGrpcRetry::IsPermanentFailure(status);
+  }
 };
 
 /// Return an instance of the default RPCRetryPolicy.
@@ -79,16 +101,17 @@ std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy();
 class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  public:
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
-      : failure_count_(0), maximum_failures_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
   bool on_failure(grpc::Status const& status) override;
-  bool can_retry(grpc::StatusCode code) const override;
 
  private:
-  int failure_count_;
-  int maximum_failures_;
+  using Impl =
+      google::cloud::internal::LimitedErrorCountRetryPolicy<grpc::Status,
+                                                            SafeGrpcRetry>;
+  Impl impl_;
 };
 
 /**
@@ -99,27 +122,17 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
   LimitedTimeRetryPolicy();
   template <typename duration_t>
   explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
-      : maximum_duration_(std::chrono::duration_cast<std::chrono::milliseconds>(
-            maximum_duration)),
-        deadline_(std::chrono::system_clock::now() + maximum_duration_) {}
+      : impl_(maximum_duration) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
   void setup(grpc::ClientContext& context) const override;
   bool on_failure(grpc::Status const& status) override;
-  bool can_retry(grpc::StatusCode code) const override;
 
  private:
-  std::chrono::milliseconds maximum_duration_;
-  std::chrono::system_clock::time_point deadline_;
+  using Impl = google::cloud::internal::LimitedTimeRetryPolicy<grpc::Status,
+                                                               SafeGrpcRetry>;
+  Impl impl_;
 };
-
-/// The most common retryable codes, refactored because it is used in several
-/// places.
-constexpr bool IsRetryableStatusCode(grpc::StatusCode code) {
-  return code == grpc::StatusCode::OK or code == grpc::StatusCode::ABORTED or
-         code == grpc::StatusCode::UNAVAILABLE or
-         code == grpc::StatusCode::DEADLINE_EXCEEDED;
-}
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

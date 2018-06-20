@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <curl/curl.h>
@@ -26,15 +27,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// Hold a character string created by CURL use correct deleter.
 using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
-
-/**
- * Contains the results of a HTTP request.
- */
-struct HttpResponse {
-  long status_code;
-  std::string payload;
-  std::multimap<std::string, std::string> headers;
-};
 
 /**
  * Automatically manage the resources associated with a libcurl HTTP request.

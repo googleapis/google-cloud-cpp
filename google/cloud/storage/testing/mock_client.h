@@ -35,9 +35,9 @@ class MockClient : public storage::Client {
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::InsertObjectMediaRequest const&));
-  MOCK_METHOD1(
-      ReadObjectRangeMedia,
-      ResponseWrapper<std::string>(internal::ReadObjectRangeRequest const&));
+  MOCK_METHOD1(ReadObjectRangeMedia,
+               ResponseWrapper<internal::ReadObjectRangeResponse>(
+                   internal::ReadObjectRangeRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

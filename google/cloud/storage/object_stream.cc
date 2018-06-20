@@ -30,18 +30,32 @@ static_assert(std::is_move_constructible<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move constructible.");
 
 std::streamsize ObjectReadStreamBuf::showmanyc() {
-  // TODO(#554) - use the returned headers to have a better estimate.
-  return 0;
+  if (response_.object_size == 0) {
+    return 0;
+  }
+  if (response_.object_size == response_.last_byte + 1) {
+    return -1;
+  }
+  return response_.object_size - response_.last_byte - 1;
 }
 
 ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
-  // TODO(#554) - for now, just read the first 64KiB
   // TODO(#742) - use literals for KiB and MiB and GiB.
-  std::int64_t const max_read_bytes = 64 * 1024;
-  if (request_.end() >= max_read_bytes) {
-    return traits_type::eof();
+  std::int64_t const read_size = 64 * 1024;
+  if (response_.object_size == 0) {
+    request_.set_begin(0).set_end(read_size);
+  } else {
+    auto begin = response_.last_byte + 1;
+    auto end = begin + read_size;
+    if (end > response_.object_size) {
+      end = response_.object_size;
+    }
+    if (begin == end) {
+      response_.contents.clear();
+      return RepositionInputSequence();
+    }
+    request_.set_begin(begin).set_end(end);
   }
-  request_.set_begin(0).set_end(max_read_bytes);
 
   // TODO(#555) - use policies to implement retry loop.
   Status last_status;
@@ -50,7 +64,7 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
     auto result = client_->ReadObjectRangeMedia(request_);
     last_status = std::move(result.first);
     if (last_status.ok()) {
-      buffer_ = std::move(result.second);
+      response_ = std::move(result.second);
       return RepositionInputSequence();
     }
     // TODO(#714) - use policies to decide if the operation is idempotent.
@@ -68,12 +82,14 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
 }
 
 ObjectReadStreamBuf::int_type ObjectReadStreamBuf::RepositionInputSequence() {
-  if (buffer_.empty()) {
-    setg(&sentinel_, &sentinel_ + 1, &sentinel_ + 1);
+  if (response_.contents.empty()) {
+    response_.contents.push_back('\0');
+    char* data = &response_.contents[0];
+    setg(data, data + 1, data + 1);
     return traits_type::eof();
   }
-  char* data = &buffer_[0];
-  setg(data, data, data + buffer_.size());
+  char* data = &response_.contents[0];
+  setg(data, data, data + response_.contents.size());
   return traits_type::to_int_type(*data);
 }
 }  // namespace STORAGE_CLIENT_NS

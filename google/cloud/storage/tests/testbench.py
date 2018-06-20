@@ -66,8 +66,7 @@ def shutdown():
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
-    def __init__(self, bucket_name, name, generation, request):
-        gcs_url = flask.url_for('gcs_index', _external=True)
+    def __init__(self, gcs_url, bucket_name, name, generation, request):
         self.bucket_name = bucket_name
         self.name = name
         self.generation = generation
@@ -141,10 +140,11 @@ class GcsObject(object):
                     and int(metageneration_match) != metageneration:
                 raise ErrorResponse('Precondition Failed', status_code=412)
 
-    def insert(self, request):
+    def insert(self, gcs_url, request):
         """Insert a new revision based on the give flask request."""
         self.generation += 1
-        self.revisions[self.generation] = GcsObjectVersion(self.bucket_name,
+        self.revisions[self.generation] = GcsObjectVersion(gcs_url,
+                                                           self.bucket_name,
                                                            self.name,
                                                            self.generation,
                                                            request)
@@ -200,9 +200,17 @@ def buckets_get(bucket_name):
     })
 
 
-@gcs.route('/b/<bucket_name>/o', methods=['POST'])
+# Define the WSGI application to handle bucket requests.
+UPLOAD_HANDLER_PATH = '/upload/storage/v1'
+upload = flask.Flask(__name__)
+upload.debug = True
+
+
+@upload.route('/b/<bucket_name>/o', methods=['POST'])
 def objects_insert(bucket_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
+    gcs_url = flask.url_for('objects_insert', bucket_name=bucket_name,
+                            _external=True).replace('/upload/', '/')
     object_name = flask.request.args.get('name', None)
     if object_name is None:
         raise ErrorResponse('Name not set in Objects: insert', status_code=412)
@@ -212,7 +220,7 @@ def objects_insert(bucket_name):
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
     GCS_OBJECTS[object_path] = gcs_object
-    gcs_object.insert(flask.request)
+    gcs_object.insert(gcs_url, flask.request)
     current_version = gcs_object.get_latest()
 
     return json.dumps(current_version.metadata)
@@ -236,6 +244,7 @@ def main():
     application = wsgi.DispatcherMiddleware(root, {
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
+        UPLOAD_HANDLER_PATH: upload,
     })
     serving.run_simple(arguments.host, int(arguments.port), application,
                        use_reloader=True, use_debugger=arguments.debug,

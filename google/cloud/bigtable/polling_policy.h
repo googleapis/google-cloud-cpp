@@ -81,7 +81,7 @@ class GenericPollingPolicy : public PollingPolicy {
   }
 
   bool IsPermanentError(grpc::Status const& status) override {
-    return not rpc_retry_policy_.can_retry(status.error_code());
+    return RPCRetryPolicy::IsPermanentFailure(status);
   }
 
   bool OnFailure(grpc::Status const& status) override {

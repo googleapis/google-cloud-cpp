@@ -43,12 +43,21 @@ run_all_bucket_examples() {
         " storage_bucket_samples is not compiled"
     return
   fi
-  for example in $BUCKET_EXAMPLES_COMMANDS; do
+  local object_name="object-$(date +%s)"
+  for example in ${BUCKET_EXAMPLES_COMMANDS}; do
     log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         "storage_bucket_samples ${example} running"
+    case ${example} in
+        insert-object)
+            parameters="${object_name} a-short-string-to-put-in-the-object"
+            ;;
+        *)
+            parameters=""
+            ;;
+    esac
     ./storage_bucket_samples \
-        ${example} "${bucket_name}" >"${log}" 2>&1 </dev/null
+        ${example} "${bucket_name}" ${parameters} >"${log}" 2>&1 </dev/null
     if [ $? = 0 ]; then
       echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example}"
       continue
