@@ -169,6 +169,14 @@ std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
                               __func__);
 }
 
+std::pair<Status, internal::ListObjectsResponse> RetryClient::ListObjects(
+    internal::ListObjectsRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return RetryUtils::MakeCall(*retry_policy, *backoff_policy, *client_,
+                              &Client::ListObjects, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

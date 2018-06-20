@@ -111,6 +111,27 @@ class DefaultClient : public RawClient {
                               std::move(payload)));
   }
 
+  std::pair<Status, internal::ListObjectsResponse> ListObjects(
+      internal::ListObjectsRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddQueryParameter("pageToken", request.page_token());
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{});
+    auto payload = http_request.MakeRequest();
+    if (200 != payload.status_code) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          internal::ListObjectsResponse{});
+    }
+    std::cerr << __func__ << "\n" << payload.payload << std::endl;
+    return std::make_pair(
+        Status(),
+        internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
+  }
+
  private:
   ClientOptions options_;
   std::string storage_endpoint_;
