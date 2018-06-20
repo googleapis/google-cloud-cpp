@@ -133,14 +133,13 @@ cmake -H. -Bbuild-output
 cmake --build build-output
 (cd build-output && ctest --output-on-failure)
 ```
-
-On Linux and macOS you can speed up the build by replacing the
+You can speed up the build by replacing the
 `cmake --build build-output` step with:
 
 ```bash
 cmake --build build-output -- -j $(nproc)
 ```
-You will find compiled binaries in `build-output/` respective to their source path.
+You will find compiled binaries in `build-output/` respective to their source paths.
 
 #### Windows
 
@@ -150,7 +149,7 @@ On Windows with MSVC use:
 cmake --build build-output -- /m
 ```
 
-You will find compiled binaries in `.\build-output\` respective to their source directory.
+You will find compiled binaries in `build-output\` respective to their source directories.
 
 ## Versioning
 
