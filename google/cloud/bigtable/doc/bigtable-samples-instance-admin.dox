@@ -30,7 +30,7 @@ The example uses the following headers:
 
 @snippet bigtable_samples_instance_admin.cc connect instance admin 
 
-### Creates a production instance and run basic instance-operations.
+### Create a production instance and run basic instance-operations.
 
 @snippet bigtable_samples_instance_admin.cc run instance operations
 

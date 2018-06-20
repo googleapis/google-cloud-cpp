@@ -109,10 +109,19 @@ function run_all_instance_admin_examples {
   ${setenv} ../examples/bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
 
-  reset_trap
   echo
   echo "Run delete-instance example."
   cleanup_instance "${project_id}" "${INSTANCE}"
+
+  echo
+  echo "Run example for basic instance operations"
+    ${setenv} ../examples/bigtable_samples_instance_admin run \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
+
+  reset_trap
+  echo
+
 }
 
 # Run all the table admin examples.
