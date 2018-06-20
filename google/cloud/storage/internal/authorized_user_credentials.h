@@ -23,6 +23,8 @@
 #include <mutex>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -119,5 +121,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_

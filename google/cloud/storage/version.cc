@@ -16,6 +16,8 @@
 #include "google/cloud/internal/build_info.h"
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -30,3 +32,5 @@ std::string version_string() {
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

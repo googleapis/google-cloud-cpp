@@ -16,15 +16,18 @@
 #include <cstdlib>
 
 namespace {
-std::shared_ptr<storage::Credentials> StorageDefaultCredentials() {
+std::shared_ptr<google::cloud::storage::Credentials>
+StorageDefaultCredentials() {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
-    return storage::CreateInsecureCredentials();
+    return google::cloud::storage::CreateInsecureCredentials();
   }
-  return storage::GoogleDefaultCredentials();
+  return google::cloud::storage::GoogleDefaultCredentials();
 }
 }  // namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
@@ -40,3 +43,5 @@ ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

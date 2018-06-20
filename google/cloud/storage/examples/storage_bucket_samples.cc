@@ -18,6 +18,8 @@
 #include <map>
 #include <sstream>
 
+namespace storage = google::cloud::storage;
+
 namespace {
 struct Usage {
   std::string msg;

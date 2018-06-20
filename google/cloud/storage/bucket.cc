@@ -23,6 +23,8 @@ bool IsRetryableStatusCode(long status_code) {
 }
 }  // namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 static_assert(std::is_copy_constructible<storage::Bucket>::value,
@@ -97,3 +99,5 @@ void Bucket::ValidateBucketName(std::string const& bucket_name) {
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

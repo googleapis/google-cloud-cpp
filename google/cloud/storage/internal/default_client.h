@@ -18,6 +18,8 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -118,5 +120,7 @@ class DefaultClient : public Client {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_

@@ -19,6 +19,8 @@
 #include <iostream>
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -94,3 +96,5 @@ HttpResponse CurlRequest::MakeRequest() {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

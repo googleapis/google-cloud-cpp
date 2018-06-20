@@ -15,6 +15,8 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/default_client.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::shared_ptr<Client> CreateDefaultClient(ClientOptions options) {
@@ -23,3 +25,5 @@ std::shared_ptr<Client> CreateDefaultClient(ClientOptions options) {
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

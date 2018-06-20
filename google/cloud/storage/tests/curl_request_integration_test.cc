@@ -17,7 +17,8 @@
 #include <cstdlib>
 #include <vector>
 
-namespace nl = storage::internal::nl;
+namespace storage = google::cloud::storage;
+namespace nl = google::cloud::storage::internal::nl;
 using testing::HasSubstr;
 
 namespace {

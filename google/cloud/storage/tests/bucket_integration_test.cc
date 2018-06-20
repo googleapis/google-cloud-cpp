@@ -15,6 +15,8 @@
 #include "google/cloud/storage/bucket.h"
 #include <gtest/gtest.h>
 
+namespace storage = google::cloud::storage;
+
 namespace {
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {

@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/testing/mock_http_request.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 namespace testing {
 void MockHttpRequestHandle::SetupMakeEscapedString() {
@@ -65,3 +67,5 @@ storage::internal::HttpResponse MockHttpRequest::MakeRequest() {
 
 }  // namespace testing
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

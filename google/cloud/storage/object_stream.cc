@@ -22,6 +22,8 @@ bool IsRetryableStatusCode(long status_code) {
 }
 }  // namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 static_assert(std::is_move_assignable<ObjectReadStream>::value,
@@ -94,3 +96,5 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::RepositionInputSequence() {
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

@@ -18,6 +18,8 @@
 #include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -84,5 +86,7 @@ class GetBucketMetadataRequest
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GET_BUCKET_METADATA_REQUEST_H_

@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace storage {
 namespace testing {
 /**
@@ -88,5 +90,7 @@ class MockHttpRequest {
 };
 }  // namespace testing
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_HTTP_REQUEST_H_

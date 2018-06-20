@@ -18,6 +18,8 @@
 #include "google/cloud/storage/client.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace storage {
 namespace testing {
 
@@ -41,5 +43,7 @@ class MockClient : public storage::Client {
 };
 }  // namespace testing
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
