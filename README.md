@@ -26,39 +26,25 @@ at an [Alpha](#versioning) quality level:
 - [Google Cloud Bigtable](bigtable)
 
 The libraries in this code base likely do not (yet) cover all the available
-APIs. See the [`googleapis` repo](https://github.com/googleapis/googleapis)
-for the full list of APIs callable using gRPC.
+APIs.
 
-## Quick Start
+## Table of Contents
 
-To build the available libraries and run the tests, run the following commands
-after cloning this repo:
+- [Requirements](#requirements)
+  - [Compiler](#compiler)
+  - [Build Tools](#build-tools)
+  - [Libraries](#libraries)
+  - [Tests](#tests)
+- [Install Dependencies](#install-dependencies)
+  - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
+  - [Ubuntu (Trusty)](#ubuntu-trusty)
+  - [macOS (using brew)](#macos-using-brew)
+  - [Windows](#windows)
+- [Build](#)
+  - [Linux and macOS](#linux-and-macos)
+  - [Windows](#windows-1)
 
-```bash
-git submodule init
-git submodule update --init --recursive
-cmake -H. -Bbuild-output
-cmake --build build-output
-(cd build-output && ctest --output-on-failure)
-```
-
-On Linux and macOS you can speed up the build by replacing the
-`cmake --build build-output` step with:
-
-```bash
-cmake --build build-output -- -j $(nproc)
-```
-
-On Windows with MSVC use:
-
-```bash
-cmake --build build-output -- /m
-```
-
-Consult the `README.md` file for each library for links to the examples and
-tutorials.
-
-## Build Dependencies
+## Requirements 
 
 #### Compiler
 
@@ -82,7 +68,7 @@ of these tools we test with are:
 | CMake      | 3.5 |
 | Bazel      | 0.12.0 |
 
-#### Other Libraries
+#### Libraries
 
 The libraries also depends on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
@@ -93,21 +79,78 @@ versions of these dependencies:
 | gRPC    | v1.10.x |
 | libcurl | 7.47.0  |
 
-For Linux, the `ci/Dockerfile.*` files are a good reference on how to install
-all the necessary dependencies on each distribution. For Windows,
-consult [ci/install-windows.ps1](ci/install-windows.ps1).
+#### Tests
 
-On macOS, the following commands should install all the dependencies you need:
+Integration tests at times use the
+[Google Cloud SDK](https://cloud.google.com/sdk/). The integration tests run
+against the latest version of the SDK on each commit and PR.
+
+## Install Dependencies
+
+#### Fedora
+
+```bash
+dnf makecache
+dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra cmake curl dia doxygen gcc-c++ git golang graphviz  lcov libcurl-devel libtool make ncurses-term openssl-devel pkgconfig python python-gunicorn python-httpbin shtool unzip wget  which zlib-devel
+```
+
+#### Ubuntu (Bionic Beaver)
+
+```bash
+apt update
+apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+```
+
+#### Ubuntu (Trusty)
+
+```bash
+apt update
+apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+```
+
+#### macOS (using brew)
 
 ```bash
 brew install curl cmake
 ```
 
-#### Other Dependencies
+### Windows
 
-Some of the integration tests use the
-[Google Cloud SDK](https://cloud.google.com/sdk/). The integration tests run
-against the latest version of the SDK on each commit and PR.
+```bash
+.\install-windows.ps1
+```
+## Build
+
+To build the available libraries and run the tests, run the following commands
+after cloning this repo:
+
+#### Linux and macOS
+
+```bash
+git submodule init
+git submodule update --init --recursive
+cmake -H. -Bbuild-output
+cmake --build build-output
+(cd build-output && ctest --output-on-failure)
+```
+
+On Linux and macOS you can speed up the build by replacing the
+`cmake --build build-output` step with:
+
+```bash
+cmake --build build-output -- -j $(nproc)
+```
+#### Windows
+
+On Windows with MSVC use:
+
+```bash
+cmake --build build-output -- /m
+```
+
+Consult the `README.md` file for each library for links to the examples and
+tutorials.
+
 
 ## Versioning
 
