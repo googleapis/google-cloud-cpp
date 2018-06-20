@@ -23,7 +23,7 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 This library supports the following Google Cloud Platform services with clients
 at an [Alpha](#versioning) quality level:
 
-- [Google Cloud Bigtable](bigtable)
+- [Google Cloud Bigtable](google/cloud/bigtable#google-cloud-bigtable)
 
 The libraries in this code base likely do not (yet) cover all the available
 APIs.
@@ -40,7 +40,7 @@ APIs.
   - [Ubuntu (Trusty)](#ubuntu-trusty)
   - [macOS (using brew)](#macos-using-brew)
   - [Windows](#windows)
-- [Build](#)
+- [Build](#build)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows-1)
 
@@ -121,7 +121,7 @@ brew install curl cmake
 ```
 ## Build
 
-To build the available libraries and run the tests, run the following commands
+To build all available libraries and run the tests, run the following commands
 after cloning this repo:
 
 #### Linux and macOS
@@ -140,6 +140,8 @@ On Linux and macOS you can speed up the build by replacing the
 ```bash
 cmake --build build-output -- -j $(nproc)
 ```
+You will find compiled binaries in `build-output/` respective to their source path.
+
 #### Windows
 
 On Windows with MSVC use:
@@ -148,9 +150,7 @@ On Windows with MSVC use:
 cmake --build build-output -- /m
 ```
 
-Consult the `README.md` file for each library for links to the examples and
-tutorials.
-
+You will find compiled binaries in `.\build-output\` respective to their source directory.
 
 ## Versioning
 
