@@ -66,6 +66,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::bigtable::v0::LimitedTimeRetryPolicy Class Reference</div>  </div>
@@ -93,9 +94,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae9db729bd74c14b17c7f831574961b66"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#ae9db729bd74c14b17c7f831574961b66">on_failure</a> (grpc::Status const &amp;status) override</td></tr>
 <tr class="memdesc:ae9db729bd74c14b17c7f831574961b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle an RPC failure.  <a href="#ae9db729bd74c14b17c7f831574961b66">More...</a><br /></td></tr>
 <tr class="separator:ae9db729bd74c14b17c7f831574961b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ba8882dba77e9f1d407d9df33790ecc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html#a8ba8882dba77e9f1d407d9df33790ecc">can_retry</a> (grpc::StatusCode code) const override</td></tr>
-<tr class="memdesc:a8ba8882dba77e9f1d407d9df33790ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the status code is retryable.  <a href="#a8ba8882dba77e9f1d407d9df33790ecc">More...</a><br /></td></tr>
-<tr class="separator:a8ba8882dba77e9f1d407d9df33790ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:af2235a91638124c5eaf421fc90af911e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html#af2235a91638124c5eaf421fc90af911e">IsPermanentFailure</a> (grpc::Status const &amp;status)</td></tr>
+<tr class="separator:af2235a91638124c5eaf421fc90af911e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implement a simple "keep trying for this time" retry policy. </p>
@@ -146,36 +149,6 @@ template&lt;typename duration_t &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8ba8882dba77e9f1d407d9df33790ecc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ba8882dba77e9f1d407d9df33790ecc">&#9670;&nbsp;</a></span>can_retry()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool google::cloud::bigtable::v0::LimitedTimeRetryPolicy::can_retry </td>
-          <td>(</td>
-          <td class="paramtype">grpc::StatusCode&#160;</td>
-          <td class="paramname"><em>code</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return true if the status code is retryable. </p>
-
-<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html#a270bb9e84a4a7108b4c89c853049f969">google::cloud::bigtable::v0::RPCRetryPolicy</a>.</p>
-
-</div>
-</div>
 <a id="a2a1dd75163984b9df4e7bc34ec705c56"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2a1dd75163984b9df4e7bc34ec705c56">&#9670;&nbsp;</a></span>clone()</h2>
 
@@ -202,6 +175,32 @@ template&lt;typename duration_t &gt; </div>
 <p>Return a new copy of this object. </p>
 <p>Typically implemented as </p><div class="fragment"><div class="line"><span class="keywordflow">return</span> std::unique_ptr&lt;RPCRetryPolicy&gt;(<span class="keyword">new</span> Foo(*<span class="keyword">this</span>));</div></div><!-- fragment --> 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html#ae52b2119a6792f93efdac66454dd2a85">google::cloud::bigtable::v0::RPCRetryPolicy</a>.</p>
+
+</div>
+</div>
+<a id="af2235a91638124c5eaf421fc90af911e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2235a91638124c5eaf421fc90af911e">&#9670;&nbsp;</a></span>IsPermanentFailure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool google::cloud::bigtable::v0::RPCRetryPolicy::IsPermanentFailure </td>
+          <td>(</td>
+          <td class="paramtype">grpc::Status const &amp;&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

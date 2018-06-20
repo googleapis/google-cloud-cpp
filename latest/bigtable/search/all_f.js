@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['safegrpcretry',['SafeGrpcRetry',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeGrpcRetry.html',1,'google::cloud::bigtable::v0']]],
   ['safeidempotentmutationpolicy',['SafeIdempotentMutationPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html',1,'google::cloud::bigtable::v0::SafeIdempotentMutationPolicy'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a51cb822a24056e43dcad7c78a09df9a6',1,'google::cloud::bigtable::v0::SafeIdempotentMutationPolicy::SafeIdempotentMutationPolicy()']]],
   ['samplerowkeys',['SampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#ad807b3cf9bbc87d2c29353fdfd6a1032',1,'google::cloud::bigtable::v0::DefaultDataClient::SampleRowKeys()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad26a4da6215afbfe88fefa44e5c4d664',1,'google::cloud::bigtable::v0::DataClient::SampleRowKeys()']]],
   ['samplerows',['SampleRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#ad13ee373480b6eded62945b506a4e753',1,'google::cloud::bigtable::v0::Table']]],
