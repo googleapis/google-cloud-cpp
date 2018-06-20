@@ -43,7 +43,7 @@ run_all_bucket_examples() {
         " storage_bucket_samples is not compiled"
     return
   fi
-  for example in get-metadata; do
+  for example in $BUCKET_EXAMPLES_COMMANDS; do
     log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         "storage_bucket_samples ${example} running"
