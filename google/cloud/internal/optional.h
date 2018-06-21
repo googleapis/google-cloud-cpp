@@ -71,6 +71,27 @@ class optional {
   }
   ~optional() { reset(); }
 
+  optional<T>& operator=(optional<T> const& rhs) noexcept {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not has_value_) {
+      if (not rhs.has_value_) {
+        return *this;
+      }
+      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+      has_value_ = true;
+      return *this;
+    }
+    if (not rhs.has_value_) {
+      reset();
+      return *this;
+    }
+    **this = *rhs;
+    has_value_ = true;
+    return *this;
+  }
+
   optional<T>& operator=(optional<T>&& rhs) noexcept {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
@@ -102,7 +123,7 @@ class optional {
   /*constexpr*/ T& operator*() & { return *reinterpret_cast<T*>(&buffer_); }
   // Kind of useless, but the spec requires it.
   constexpr T const&& operator*() const&& {
-    return *reinterpret_cast<T const*>(&buffer_);
+    return std::move(*reinterpret_cast<T const*>(&buffer_));
   }
   /*constexpr*/ T&& operator*() && {
     return std::move(*reinterpret_cast<T*>(&buffer_));
@@ -149,7 +170,7 @@ class optional {
   }
   T& emplace(T&& value) {
     reset();
-    *reinterpret_cast<T*>(&buffer_) = std::move(value);
+    new (reinterpret_cast<T*>(&buffer_)) T(std::move(value));
     has_value_ = true;
     return **this;
   }
