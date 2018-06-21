@@ -29,8 +29,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+// Forward declare RetryClient so we can make it a friend.  Cannot include
+// the file because that would create a loop.
 class RetryClient;
 }  // namespace internal
+
 /**
  * Define the interface used to communicate with Google Cloud Storage.
  *
