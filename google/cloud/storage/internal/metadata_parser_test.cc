@@ -15,8 +15,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include <gmock/gmock.h>
 
-using google::cloud::storage::internal::MetadataParser;
-using google::cloud::storage::internal::nl::json;
+using namespace google::cloud::storage::internal;
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
 TEST(MetadataParserTest, ParseTimestampField) {
@@ -24,8 +23,8 @@ TEST(MetadataParserTest, ParseTimestampField) {
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto json = json::parse(text);
-  auto actual = MetadataParser::ParseTimestampField(json, "timeCreated");
+  auto json_object = nl::json::parse(text);
+  auto actual = MetadataParser::ParseTimestampField(json_object, "timeCreated");
 
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
@@ -39,8 +38,8 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
   std::string text = R"""({
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto json = json::parse(text);
-  auto actual = MetadataParser::ParseTimestampField(json, "timeCreated");
+  auto json_object = nl::json::parse(text);
+  auto actual = MetadataParser::ParseTimestampField(json_object, "timeCreated");
 
   using std::chrono::duration_cast;
   EXPECT_EQ(
@@ -53,8 +52,8 @@ TEST(MetadataParserTest, ParseLongField) {
   std::string text = R"""({
       "counter": 42
 })""";
-  auto json = json::parse(text);
-  auto actual = MetadataParser::ParseLongField(json, "counter");
+  auto json_object = nl::json::parse(text);
+  auto actual = MetadataParser::ParseLongField(json_object, "counter");
 
   EXPECT_EQ(42L, actual);
 }
@@ -64,8 +63,8 @@ TEST(MetadataParserTest, ParseLongFieldFromString) {
   std::string text = R"""({
       "counter": "42"
 })""";
-  auto json = json::parse(text);
-  auto actual = MetadataParser::ParseLongField(json, "counter");
+  auto json_object = nl::json::parse(text);
+  auto actual = MetadataParser::ParseLongField(json_object, "counter");
 
   EXPECT_EQ(42L, actual);
 }
@@ -75,8 +74,9 @@ TEST(MetadataParserTest, ParseMissinLongField) {
   std::string text = R"""({
       "counter": "42"
 })""";
-  auto json = json::parse(text);
-  auto actual = MetadataParser::ParseLongField(json, "some-other-counter");
+  auto json_object = nl::json::parse(text);
+  auto actual =
+      MetadataParser::ParseLongField(json_object, "some-other-counter");
 
   EXPECT_EQ(0L, actual);
 }
@@ -86,14 +86,14 @@ TEST(MetadataParserTest, ParseInvalidLongFieldValue) {
   std::string text = R"""({
       "counter": "not-a-number"
 })""";
-  auto json = json::parse(text);
+  auto json_object = nl::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(MetadataParser::ParseLongField(json, "counter"),
+  EXPECT_THROW(MetadataParser::ParseLongField(json_object, "counter"),
                std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(MetadataParser::ParseLongField(json, "counter"),
-                            "");
+  EXPECT_DEATH_IF_SUPPORTED(
+      MetadataParser::ParseLongField(json_object, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -102,13 +102,13 @@ TEST(MetadataParserTest, ParseInvalidLongFieldType) {
   std::string text = R"""({
       "counter": [0, 1, 2]
 })""";
-  auto json = json::parse(text);
+  auto json_object = nl::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(MetadataParser::ParseLongField(json, "counter"),
+  EXPECT_THROW(MetadataParser::ParseLongField(json_object, "counter"),
                std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(MetadataParser::ParseLongField(json, "counter"),
-                            "");
+  EXPECT_DEATH_IF_SUPPORTED(
+      MetadataParser::ParseLongField(json_object, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
