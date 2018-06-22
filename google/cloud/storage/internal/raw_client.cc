@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/default_client.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-std::shared_ptr<Client> CreateDefaultClient(ClientOptions options) {
+std::shared_ptr<internal::RawClient> CreateDefaultClient(
+    ClientOptions options) {
   return std::make_shared<storage::internal::DefaultClient<>>(
       std::move(options));
 }

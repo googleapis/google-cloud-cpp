@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/raw_client.h"
 
 namespace google {
 namespace cloud {
@@ -32,7 +32,7 @@ namespace internal {
  * TODO(#717) - document the CurlRequest interface as a concept.
  */
 template <typename HttpRequest = CurlRequest>
-class DefaultClient : public Client {
+class DefaultClient : public RawClient {
  public:
   explicit DefaultClient(std::shared_ptr<Credentials> credentials)
       : DefaultClient(ClientOptions(std::move(credentials))) {}

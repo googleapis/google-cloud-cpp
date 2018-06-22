@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H_
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
@@ -29,30 +29,16 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-// Forward declare RetryClient so we can make it a friend.  Cannot include
-// the file because that would create a loop.
-class RetryClient;
-}  // namespace internal
-
 /**
  * Define the interface used to communicate with Google Cloud Storage.
  *
  * This is a dependency injection point so higher-level abstractions (like
  * `storage::Bucket` or `storage::Object`) can be effectively tested.
  */
-class Client {
+class RawClient {
  public:
-  virtual ~Client() = default;
+  virtual ~RawClient() = default;
 
-  // The member functions of this class are not intended for general use by
-  // application developers (they are simply a dependency injection point). Make
-  // them protected, so the mock classes can override them, and then make the
-  // classes that do use them friends.
- protected:
-  friend class internal::RetryClient;
-  friend class Bucket;
-  friend class Object;
-  friend class ObjectReadStreamBuf;
   /**
    * Execute a request to fetch bucket metadata.
    *
@@ -68,22 +54,24 @@ class Client {
   ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
 };
 
+}  // namespace internal
+
 /**
  * Create the default client type given the options.
  */
-std::shared_ptr<Client> CreateDefaultClient(ClientOptions options);
+std::shared_ptr<internal::RawClient> CreateDefaultClient(ClientOptions options);
 
 /**
  * Create the default client type with the default configuration.
  */
-inline std::shared_ptr<Client> CreateDefaultClient() {
+inline std::shared_ptr<internal::RawClient> CreateDefaultClient() {
   return CreateDefaultClient(ClientOptions());
 }
 
 /**
  * Create the default client type given the credentials.
  */
-inline std::shared_ptr<Client> CreateDefaultClient(
+inline std::shared_ptr<internal::RawClient> CreateDefaultClient(
     std::shared_ptr<Credentials> credentials) {
   return CreateDefaultClient(ClientOptions(std::move(credentials)));
 }
@@ -93,4 +81,4 @@ inline std::shared_ptr<Client> CreateDefaultClient(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H_

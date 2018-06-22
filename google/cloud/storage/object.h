@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <string>
 
 namespace google {
@@ -30,7 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
 class Object {
  public:
   /// Create an object to access @p bucket_name.
-  Object(std::shared_ptr<Client> client, std::string bucket_name,
+  Object(std::shared_ptr<internal::RawClient> client, std::string bucket_name,
          std::string object_name)
       : client_(std::move(client)),
         bucket_name_(std::move(bucket_name)),
@@ -43,7 +43,7 @@ class Object {
   std::string const& object_name() const { return object_name_; }
 
  private:
-  std::shared_ptr<Client> client_;
+  std::shared_ptr<internal::RawClient> client_;
   std::string bucket_name_;
   std::string object_name_;
 };

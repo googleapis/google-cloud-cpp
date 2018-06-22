@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/retry_policy.h"
 
 namespace google {
@@ -26,19 +26,18 @@ namespace internal {
 /**
  * A decorator for `storage::Client` that retries operations using policies.
  */
-class RetryClient : public Client {
+class RetryClient : public RawClient {
  public:
-  RetryClient(std::shared_ptr<Client> client);
+  RetryClient(std::shared_ptr<RawClient> client);
 
   template <typename RetryPolicy, typename BackoffPolicy>
-  RetryClient(std::shared_ptr<Client> client, RetryPolicy retry_policy,
+  RetryClient(std::shared_ptr<RawClient> client, RetryPolicy retry_policy,
               BackoffPolicy backoff_policy)
       : client_(client),
         retry_policy_(retry_policy.clone()),
         backoff_policy_(backoff_policy.clone()) {}
   ~RetryClient() override = default;
 
- protected:
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       internal::GetBucketMetadataRequest const& request) override;
 
@@ -49,7 +48,7 @@ class RetryClient : public Client {
       internal::ReadObjectRangeRequest const&) override;
 
  private:
-  std::shared_ptr<Client> client_;
+  std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy> retry_policy_;
   std::shared_ptr<BackoffPolicy> backoff_policy_;
 };
