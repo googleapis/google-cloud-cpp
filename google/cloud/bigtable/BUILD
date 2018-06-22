@@ -58,6 +58,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     deps = [
       ":bigtable_client_testing",
       ":bigtable_client",
+      "//google/cloud:google_cloud_cpp_testing",
       "@com_google_googletest//:gtest",
       "@com_google_googletest//:gtest_main",
     ],
