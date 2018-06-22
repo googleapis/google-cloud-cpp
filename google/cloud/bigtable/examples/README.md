@@ -99,7 +99,7 @@ Usage: bigtable_hello_world <project_id> <instance_id> <table_id>
 After configuring gRPC, you can run the examples using:
 
 ```console
-$ export PROJECT_ID=... # Google Cloud Platform project ID
+$ export PROJECT_ID=... # Your Google Cloud Platform project ID
 $ export INSTANCE_ID=... # Cloud Bigtable instance ID
 $ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
 ```
@@ -129,10 +129,10 @@ Examples:
 After configuring gRPC, you can run the examples using:
 
 ```console
-$ export PROJECT_ID=... # Google Cloud Platform project ID
+$ export PROJECT_ID=... # # Your Google Cloud Platform project ID
 $ export INSTANCE_ID=... # Cloud Bigtable instance ID
 $ export CLUSTER_ID=... # Cloud Bigtable cluster ID
-$ export ZONE=... # The name of zone
+$ export ZONE=... # Name of the zone where the example will create a new instance
 $ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
 ```
 
