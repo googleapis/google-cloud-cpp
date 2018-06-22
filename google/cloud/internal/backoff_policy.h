@@ -152,4 +152,4 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RANDOM_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BACKOFF_POLICY_H_
