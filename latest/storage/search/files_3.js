@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['status_2eh',['status.h',['../status_8h.html',1,'']]],
-  ['storage_5fbucket_5fsamples_2ecc',['storage_bucket_samples.cc',['../storage__bucket__samples_8cc.html',1,'']]]
+  ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]]
 ];

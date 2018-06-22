@@ -65,7 +65,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::storage::v Namespace Reference</div>  </div>
@@ -75,6 +77,11 @@ $(function() {
 <p>The Google Cloud Storage C++ client APIs inlined, versioned namespace.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v_1_1internal.html">internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html">Bucket</a></td></tr>
@@ -122,11 +129,31 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the status code and message returned by the underlying transport.  <a href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html">WellKnownParameter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refactor definition of well-known query parameters using the CRTP.  <a href="classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ac40b51e7f769f9d328e5a24715c46f23"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a> &gt;</td></tr>
+<tr class="memdesc:ac40b51e7f769f9d328e5a24715c46f23"><td class="mdescLeft">&#160;</td><td class="mdescRight">The retry policy base class.  <a href="#ac40b51e7f769f9d328e5a24715c46f23">More...</a><br /></td></tr>
+<tr class="separator:ac40b51e7f769f9d328e5a24715c46f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45d73828b1f686f53e58b448e6859942"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a45d73828b1f686f53e58b448e6859942">LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a> &gt;</td></tr>
+<tr class="memdesc:a45d73828b1f686f53e58b448e6859942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until some time has expired.  <a href="#a45d73828b1f686f53e58b448e6859942">More...</a><br /></td></tr>
+<tr class="separator:a45d73828b1f686f53e58b448e6859942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#aca96e8258f0d7a5e681f1d7448e5c19b">LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a> &gt;</td></tr>
+<tr class="memdesc:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until the error count has been exceeded.  <a href="#aca96e8258f0d7a5e681f1d7448e5c19b">More...</a><br /></td></tr>
+<tr class="separator:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56f702b95907edcb6756027e3f9b5f90"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">BackoffPolicy</a> = google::cloud::internal::BackoffPolicy</td></tr>
+<tr class="memdesc:a56f702b95907edcb6756027e3f9b5f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">The backoff policy base class.  <a href="#a56f702b95907edcb6756027e3f9b5f90">More...</a><br /></td></tr>
+<tr class="separator:a56f702b95907edcb6756027e3f9b5f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60cb09490057caa9e94c57bcbe29c430"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a60cb09490057caa9e94c57bcbe29c430">ExponentialBackoffPolicy</a> = google::cloud::internal::ExponentialBackoffPolicy</td></tr>
+<tr class="memdesc:a60cb09490057caa9e94c57bcbe29c430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement truncated exponential backoff with randomization.  <a href="#a60cb09490057caa9e94c57bcbe29c430">More...</a><br /></td></tr>
+<tr class="separator:a60cb09490057caa9e94c57bcbe29c430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -169,7 +196,88 @@ Functions</h2></td></tr>
 <div class="textblock"><p>The Google Cloud Storage C++ client APIs inlined, versioned namespace. </p>
 <p>Applications may need to link multiple versions of the Google Cloud Storage C++ client, for example, if they link a library that uses an older version of the client than they do. This namespace is inlined, so applications can use <code>storage::Foo</code> in their source, but the symbols are versioned, i.e., the symbol becomes <code>storage::v1::Foo</code>.</p>
 <p>Note that, consistent with the semver.org guidelines, the v0 version makes no guarantees with respect to backwards compatibility. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a56f702b95907edcb6756027e3f9b5f90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56f702b95907edcb6756027e3f9b5f90">&#9670;&nbsp;</a></span>BackoffPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">google::cloud::storage::v::BackoffPolicy</a> = typedef google::cloud::internal::BackoffPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The backoff policy base class. </p>
+
+</div>
+</div>
+<a id="a60cb09490057caa9e94c57bcbe29c430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60cb09490057caa9e94c57bcbe29c430">&#9670;&nbsp;</a></span>ExponentialBackoffPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a60cb09490057caa9e94c57bcbe29c430">google::cloud::storage::v::ExponentialBackoffPolicy</a> = typedef google::cloud::internal::ExponentialBackoffPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implement truncated exponential backoff with randomization. </p>
+
+</div>
+</div>
+<a id="aca96e8258f0d7a5e681f1d7448e5c19b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca96e8258f0d7a5e681f1d7448e5c19b">&#9670;&nbsp;</a></span>LimitedErrorCountRetryPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#aca96e8258f0d7a5e681f1d7448e5c19b">google::cloud::storage::v::LimitedErrorCountRetryPolicy</a> = typedef google::cloud::internal::LimitedErrorCountRetryPolicy&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Keep retrying until the error count has been exceeded. </p>
+
+</div>
+</div>
+<a id="a45d73828b1f686f53e58b448e6859942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45d73828b1f686f53e58b448e6859942">&#9670;&nbsp;</a></span>LimitedTimeRetryPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a45d73828b1f686f53e58b448e6859942">google::cloud::storage::v::LimitedTimeRetryPolicy</a> = typedef google::cloud::internal::LimitedTimeRetryPolicy&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Keep retrying until some time has expired. </p>
+
+</div>
+</div>
+<a id="ac40b51e7f769f9d328e5a24715c46f23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac40b51e7f769f9d328e5a24715c46f23">&#9670;&nbsp;</a></span>RetryPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">google::cloud::storage::v::RetryPolicy</a> = typedef google::cloud::internal::RetryPolicy&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">StatusTraits</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The retry policy base class. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a6702853c14557f0941aa6008aa2d2c92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6702853c14557f0941aa6008aa2d2c92">&#9670;&nbsp;</a></span>CreateDefaultClient() <span class="overload">[1/3]</span></h2>
 

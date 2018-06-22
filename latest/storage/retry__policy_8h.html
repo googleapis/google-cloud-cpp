@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Storage C++ Client: client.h File Reference</title>
+<title>Google Cloud Storage C++ Client: retry_policy.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,26 +63,20 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">client.h File Reference</div>  </div>
+<div class="title">retry_policy.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="bucket__metadata_8h_source.html">google/cloud/storage/bucket_metadata.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="client__options_8h_source.html">google/cloud/storage/client_options.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="credentials_8h_source.html">google/cloud/storage/credentials.h</a>&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/get_bucket_metadata_request.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/insert_object_media_request.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/read_object_range_request.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="object__metadata_8h_source.html">google/cloud/storage/object_metadata.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/internal/backoff_policy.h&quot;</code><br />
+<code>#include &quot;google/cloud/internal/retry_policy.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="status_8h_source.html">google/cloud/storage/status.h</a>&quot;</code><br />
 </div>
-<p><a href="client_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="retry__policy_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html">google::cloud::storage::v::Client</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the interface used to communicate with Google Cloud Storage.  <a href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html">google::cloud::storage::v::StatusTraits</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -97,20 +91,24 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html">google::cloud::storage::v</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1storage_1_1v"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Google Cloud Storage C++ client APIs inlined, versioned namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v_1_1internal.html">google::cloud::storage::v::internal</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a6702853c14557f0941aa6008aa2d2c92"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Client &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a6702853c14557f0941aa6008aa2d2c92">google::cloud::storage::v::CreateDefaultClient</a> (ClientOptions options)</td></tr>
-<tr class="memdesc:a6702853c14557f0941aa6008aa2d2c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type given the options.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a6702853c14557f0941aa6008aa2d2c92">More...</a><br /></td></tr>
-<tr class="separator:a6702853c14557f0941aa6008aa2d2c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeac0c471e21b8bb33fbd332df2f88df"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Client &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#abeac0c471e21b8bb33fbd332df2f88df">google::cloud::storage::v::CreateDefaultClient</a> ()</td></tr>
-<tr class="memdesc:abeac0c471e21b8bb33fbd332df2f88df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type with the default configuration.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#abeac0c471e21b8bb33fbd332df2f88df">More...</a><br /></td></tr>
-<tr class="separator:abeac0c471e21b8bb33fbd332df2f88df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc7da2aa32d0912ec9f872bf88bb47b3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Client &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#afc7da2aa32d0912ec9f872bf88bb47b3">google::cloud::storage::v::CreateDefaultClient</a> (std::shared_ptr&lt; Credentials &gt; credentials)</td></tr>
-<tr class="memdesc:afc7da2aa32d0912ec9f872bf88bb47b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type given the credentials.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#afc7da2aa32d0912ec9f872bf88bb47b3">More...</a><br /></td></tr>
-<tr class="separator:afc7da2aa32d0912ec9f872bf88bb47b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ac40b51e7f769f9d328e5a24715c46f23"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">google::cloud::storage::v::RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
+<tr class="memdesc:ac40b51e7f769f9d328e5a24715c46f23"><td class="mdescLeft">&#160;</td><td class="mdescRight">The retry policy base class.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">More...</a><br /></td></tr>
+<tr class="separator:ac40b51e7f769f9d328e5a24715c46f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45d73828b1f686f53e58b448e6859942"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a45d73828b1f686f53e58b448e6859942">google::cloud::storage::v::LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
+<tr class="memdesc:a45d73828b1f686f53e58b448e6859942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until some time has expired.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a45d73828b1f686f53e58b448e6859942">More...</a><br /></td></tr>
+<tr class="separator:a45d73828b1f686f53e58b448e6859942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#aca96e8258f0d7a5e681f1d7448e5c19b">google::cloud::storage::v::LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
+<tr class="memdesc:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until the error count has been exceeded.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#aca96e8258f0d7a5e681f1d7448e5c19b">More...</a><br /></td></tr>
+<tr class="separator:aca96e8258f0d7a5e681f1d7448e5c19b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56f702b95907edcb6756027e3f9b5f90"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">google::cloud::storage::v::BackoffPolicy</a> = google::cloud::internal::BackoffPolicy</td></tr>
+<tr class="memdesc:a56f702b95907edcb6756027e3f9b5f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">The backoff policy base class.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">More...</a><br /></td></tr>
+<tr class="separator:a56f702b95907edcb6756027e3f9b5f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60cb09490057caa9e94c57bcbe29c430"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a60cb09490057caa9e94c57bcbe29c430">google::cloud::storage::v::ExponentialBackoffPolicy</a> = google::cloud::internal::ExponentialBackoffPolicy</td></tr>
+<tr class="memdesc:a60cb09490057caa9e94c57bcbe29c430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement truncated exponential backoff with randomization.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a60cb09490057caa9e94c57bcbe29c430">More...</a><br /></td></tr>
+<tr class="separator:a60cb09490057caa9e94c57bcbe29c430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
