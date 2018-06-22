@@ -119,9 +119,20 @@ function run_all_instance_admin_examples {
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
+  echo
+  echo "Run example for basic instance operations on production isnstance"
+    ${setenv} ../examples/bigtable_samples_instance_admin run-full-example-1 \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}" "${INSTANCE}-c2" "us-central1-a"
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
+
+  echo
+  echo "Run example for basic instance operations on development instance"
+    ${setenv} ../examples/bigtable_samples_instance_admin run-full-example-2 \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
+  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
+
   reset_trap
   echo
-
 }
 
 # Run all the table admin examples.

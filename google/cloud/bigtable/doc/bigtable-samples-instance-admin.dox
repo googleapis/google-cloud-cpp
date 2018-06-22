@@ -1,16 +1,15 @@
 /*!
-@page bigtable-samples-instance-admin Example: C++ Instance Admin Samples
+@page bigtable-samples-instance-admin Example: Instance Admin Samples
 
-This example is a very simple "Instance Admin" application, written in C++, that
-illustrates how to:
+This example is a very simple "Instance Admin" application, which illustrates how to:
 
-- Creates a production instance and runs basic instance admin operations.
+- Create a production instance and run basic instance admin operations.
 - Create a development instance.
 - Delete an instance
 - Create a new cluster.
 - Delete a cluster.
 
-## Running the example
+## Run the example
 
 This example uses the
 [Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/google-cloud-cpp)
@@ -20,7 +19,7 @@ To run the example program, follow the
 [instructions](https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/)
 for the example on GitHub.
 
-### Including the Necessary Headers
+### Includ the Necessary Headers
 
 The example uses the following headers:
 
@@ -34,11 +33,11 @@ The example uses the following headers:
 
 @snippet bigtable_samples_instance_admin.cc run instance operations
 
-### Creating a Development Instance 
+### Create a Development Instance 
 
 @snippet bigtable_samples_instance_admin.cc create dev instance
 
-### Deleting an instance
+### Delete an instance
 
 @snippet bigtable_samples_instance_admin.cc delete instance
 
@@ -46,11 +45,11 @@ The example uses the following headers:
 
 @snippet bigtable_samples_instance_admin.cc create cluster
 
-### Deleting a cluster
+### Delete a cluster
 
 @snippet bigtable_samples_instance_admin.cc delete cluster
 
-### Putting it all together
+### Put it all together
 
 Here is the full example
 
