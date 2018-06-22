@@ -28,6 +28,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+// Forward declare RetryClient so we can make it a friend.  Cannot include
+// the file because that would create a loop.
+class RetryClient;
+}  // namespace internal
+
 /**
  * Define the interface used to communicate with Google Cloud Storage.
  *
@@ -43,6 +49,7 @@ class Client {
   // them protected, so the mock classes can override them, and then make the
   // classes that do use them friends.
  protected:
+  friend class internal::RetryClient;
   friend class Bucket;
   friend class Object;
   friend class ObjectReadStreamBuf;

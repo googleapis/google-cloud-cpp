@@ -120,6 +120,8 @@ add_library(storage_client
     internal/read_object_range_request.h
     internal/read_object_range_request.cc
     internal/request_parameters.h
+    internal/retry_client.h
+    internal/retry_client.cc
     object.h
     object.cc
     object_metadata.h
@@ -127,6 +129,7 @@ add_library(storage_client
     object_stream.h
     object_stream.cc
     well_known_parameters.h
+    retry_policy.h
     status.h
     version.h
     version.cc)
@@ -182,10 +185,12 @@ set(storage_client_unit_tests
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
+    internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
     object_metadata_test.cc
     object_stream_test.cc
     object_test.cc
+    retry_policy_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
