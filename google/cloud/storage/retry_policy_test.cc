@@ -15,7 +15,7 @@
 #include <gmock/gmock.h>
 #include "google/cloud/storage/internal/retry_client.h"
 
-using namespace storage;
+using namespace google::cloud::storage;
 
 TEST(RetryPolicyTest, PermanentFailure) {
   // https://cloud.google.com/storage/docs/json_api/v1/status-codes

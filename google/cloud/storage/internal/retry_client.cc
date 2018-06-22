@@ -42,8 +42,8 @@ struct RetryUtils {
    * The signature for a Client member function to wrap in a retry loop.
    */
   template <typename Request, typename Response>
-  using DesiredSignature =
-      std::pair<storage::Status, Response> (storage::Client::*)(Request const&);
+  using DesiredSignature = std::pair<google::cloud::storage::Status, Response> (
+      google::cloud::storage::Client::*)(Request const&);
 
   /**
    * Determine if @p T is a pointer to member function with the expected
@@ -79,7 +79,7 @@ struct RetryUtils {
     using ResponseType = Response;
     using RequestType = Request;
     using MemberFunctionType = DesiredSignature<Request, Response>;
-    using ReturnType = std::pair<storage::Status, ResponseType>;
+    using ReturnType = std::pair<google::cloud::storage::Status, ResponseType>;
   };
 
   /**
@@ -101,12 +101,12 @@ struct RetryUtils {
   static typename std::enable_if<
       CheckSignature<MemberFunction>::value,
       typename CheckSignature<MemberFunction>::ReturnType>::type
-  MakeCall(storage::RetryPolicy& retry_policy,
-           storage::BackoffPolicy& backoff_policy, storage::Client& client,
-           MemberFunction function,
+  MakeCall(google::cloud::storage::RetryPolicy& retry_policy,
+           google::cloud::storage::BackoffPolicy& backoff_policy,
+           google::cloud::storage::Client& client, MemberFunction function,
            typename CheckSignature<MemberFunction>::RequestType const& request,
            char const* error_message) {
-    storage::Status last_status;
+    google::cloud::storage::Status last_status;
     while (not retry_policy.IsExhausted()) {
       auto result = (client.*function)(request);
       if (result.first.ok()) {
@@ -128,6 +128,8 @@ struct RetryUtils {
 };
 }  // namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -168,3 +170,5 @@ std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

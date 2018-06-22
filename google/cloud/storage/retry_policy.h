@@ -19,10 +19,12 @@
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/storage/status.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 struct StatusTraits {
-  static bool IsPermanentFailure(Status const& status) {
+  static bool IsPermanentFailure(Status const &status) {
     return status.status_code() != 429 and status.status_code() < 500;
   }
 };
@@ -32,20 +34,22 @@ using RetryPolicy = google::cloud::internal::RetryPolicy<Status, StatusTraits>;
 
 /// Keep retrying until some time has expired.
 using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<Status, StatusTraits>;
+google::cloud::internal::LimitedTimeRetryPolicy<Status, StatusTraits>;
 
 /// Keep retrying until the error count has been exceeded.
 using LimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<Status, StatusTraits>;
+google::cloud::internal::LimitedErrorCountRetryPolicy<Status, StatusTraits>;
 
 /// The backoff policy base class.
 using BackoffPolicy = google::cloud::internal::BackoffPolicy;
 
 /// Implement truncated exponential backoff with randomization.
 using ExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+google::cloud::internal::ExponentialBackoffPolicy;
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_RETRY_POLICY_H_
