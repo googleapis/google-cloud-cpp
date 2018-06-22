@@ -21,6 +21,8 @@
 #include <iostream>
 #include <iterator>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
@@ -43,3 +45,5 @@ std::string InsecureCredentials::AuthorizationHeader() { return ""; }
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

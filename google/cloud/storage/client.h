@@ -24,6 +24,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -81,5 +83,7 @@ inline std::shared_ptr<Client> CreateDefaultClient(
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_

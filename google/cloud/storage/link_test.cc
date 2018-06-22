@@ -15,6 +15,8 @@
 #include "google/cloud/storage/version.h"
 #include <gtest/gtest.h>
 
+namespace storage = google::cloud::storage;
+
 /// @test A trivial test for the Google Cloud Storage C++ Client
 TEST(LinkTest, Simple) {
   EXPECT_FALSE(storage::version_string().empty());

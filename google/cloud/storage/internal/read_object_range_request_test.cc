@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include <gtest/gtest.h>
 
+namespace storage = google::cloud::storage;
 using namespace storage::internal;
 
 namespace {

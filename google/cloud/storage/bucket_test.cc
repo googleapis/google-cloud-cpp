@@ -17,7 +17,10 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
-using namespace storage;
+namespace storage = google::cloud::storage;
+using storage::Bucket;
+using storage::BucketMetadata;
+using storage::ObjectMetadata;
 using namespace ::testing;
 using storage::internal::GetBucketMetadataRequest;
 using storage::internal::InsertObjectMediaRequest;
@@ -38,7 +41,7 @@ TEST(BucketTest, GetMetadata) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = storage::BucketMetadata::ParseFromJson(text);
+  auto expected = google::cloud::storage::BucketMetadata::ParseFromJson(text);
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, GetBucketMetadata(_))

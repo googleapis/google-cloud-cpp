@@ -35,6 +35,8 @@ std::string const& GoogleCredentialsSuffix() {
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -61,3 +63,5 @@ std::string GoogleApplicationDefaultCredentialsFile() {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

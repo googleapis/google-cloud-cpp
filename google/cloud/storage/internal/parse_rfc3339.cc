@@ -170,6 +170,8 @@ std::chrono::seconds ParseOffset(char const*& buffer,
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -211,3 +213,5 @@ std::chrono::system_clock::time_point ParseRfc3339(
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

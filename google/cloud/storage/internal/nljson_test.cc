@@ -17,7 +17,7 @@
 
 /// @test Verify that we can compile agains the nlohmann::json library.
 TEST(NlJsonTest, Simple) {
-  storage::internal::nl::json json = {
+  google::cloud::storage::internal::nl::json json = {
       {"pi", 3.141},
       {"happy", true},
       {"nothing", nullptr},

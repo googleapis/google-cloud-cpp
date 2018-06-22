@@ -17,6 +17,8 @@
 #include <sstream>
 #include <thread>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 static_assert(std::is_copy_constructible<storage::Object>::value,
@@ -26,3 +28,5 @@ static_assert(std::is_copy_assignable<storage::Object>::value,
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

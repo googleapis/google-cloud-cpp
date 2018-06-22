@@ -18,16 +18,16 @@
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
 
+namespace storage = google::cloud::storage;
+using storage::internal::AuthorizedUserCredentials;
 using storage::testing::MockHttpRequest;
+using namespace ::testing;
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() { MockHttpRequest::Clear(); }
   void TearDown() { MockHttpRequest::Clear(); }
 };
-
-using namespace ::testing;
-using storage::internal::AuthorizedUserCredentials;
 
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {

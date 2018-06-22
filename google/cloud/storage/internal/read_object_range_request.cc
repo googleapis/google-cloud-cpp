@@ -15,6 +15,8 @@
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -75,3 +77,5 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

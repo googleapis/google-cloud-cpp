@@ -16,9 +16,9 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
-using namespace storage;
+using namespace google::cloud::storage;
 using namespace ::testing;
-using storage::testing::MockClient;
+using google::cloud::storage::testing::MockClient;
 
 TEST(ObjectTest, CopyConstructor) {
   auto mock = std::make_shared<MockClient>();

@@ -17,12 +17,12 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
-using namespace storage;
+using namespace google::cloud::storage;
 using namespace ::testing;
-using storage::internal::ReadObjectRangeRequest;
-using storage::internal::ReadObjectRangeResponse;
-using storage::testing::MockClient;
-using namespace storage::testing::canonical_errors;
+using google::cloud::storage::internal::ReadObjectRangeRequest;
+using google::cloud::storage::internal::ReadObjectRangeResponse;
+using google::cloud::storage::testing::MockClient;
+using namespace google::cloud::storage::testing::canonical_errors;
 
 TEST(ObjectStreamTest, ReadSmall) {
   std::string expected = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -41,7 +41,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         EXPECT_EQ("foo-bar", r.bucket_name());
         EXPECT_EQ("baz.txt", r.object_name());
         return std::make_pair(
-            storage::Status(),
+            google::cloud::storage::Status(),
             ReadObjectRangeResponse{
                 expected, 0, static_cast<std::int64_t>(expected.size()) - 1,
                 static_cast<std::int64_t>(expected.size())});
@@ -111,8 +111,9 @@ TEST(ObjectStreamTest, ReadLarge) {
   // why bother!) and visual studio complains if we do not capture it, sigh...
   auto mock_impl = [=](ReadObjectRangeRequest const& r) {
     if (r.begin() > object_size) {
-      return std::make_pair(storage::Status(416, "invalid range"),
-                            ReadObjectRangeResponse{});
+      return std::make_pair(
+          google::cloud::storage::Status(416, "invalid range"),
+          ReadObjectRangeResponse{});
     }
     // Return just a bunch of spaces.
     auto size = static_cast<std::size_t>(r.end() - r.begin());
@@ -122,7 +123,8 @@ TEST(ObjectStreamTest, ReadLarge) {
     ReadObjectRangeResponse response{
         std::string(static_cast<std::size_t>(size), ' '), r.begin(),
         r.end() - 1, object_size};
-    return std::make_pair(storage::Status(), std::move(response));
+    return std::make_pair(google::cloud::storage::Status(),
+                          std::move(response));
   };
 
   auto mock = std::make_shared<MockClient>();

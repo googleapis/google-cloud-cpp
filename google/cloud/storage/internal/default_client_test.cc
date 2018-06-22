@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 
 namespace {
+namespace storage = google::cloud::storage;
 using storage::testing::MockHttpRequest;
 using namespace ::testing;
 
