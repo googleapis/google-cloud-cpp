@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['validatebucketname',['ValidateBucketName',['../classstorage_1_1v_1_1Bucket.html#a111130f39d4c0fd4f74b8ac7b0e4e466',1,'storage::v::Bucket']]],
-  ['value',['value',['../classstorage_1_1v_1_1WellKnownParameter.html#a9db23b851c8f8612e3b9fd01a89b3977',1,'storage::v::WellKnownParameter']]],
-  ['version',['version',['../classstorage_1_1v_1_1ClientOptions.html#ae9ab54c09ced40e83aed7df869ca195f',1,'storage::v::ClientOptions::version()'],['../namespacestorage_1_1v.html#a613c41091a57cf695308470bab8203cd',1,'storage::v::version()']]],
-  ['version_5fmajor',['version_major',['../namespacestorage_1_1v.html#af8bdcf88250309a0c2fc33b9956b7e3b',1,'storage::v']]],
-  ['version_5fminor',['version_minor',['../namespacestorage_1_1v.html#a75a9095e0429cc1323aa0ab811d8ec89',1,'storage::v']]],
-  ['version_5fpatch',['version_patch',['../namespacestorage_1_1v.html#ac2216055b828a97acc6c1811499c4562',1,'storage::v']]],
-  ['version_5fstring',['version_string',['../namespacestorage_1_1v.html#ac51f6b1fa908e88cf591af12b0272e33',1,'storage::v']]]
+  ['validatebucketname',['ValidateBucketName',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html#a0e44b7970d345d2c968a8ae3fba2db6d',1,'google::cloud::storage::v::Bucket']]],
+  ['value',['value',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html#a4bbaf5a43bd3619c31d5fd4b86ebc3dc',1,'google::cloud::storage::v::WellKnownParameter']]],
+  ['version',['version',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3a2cbce32306d029d1338b7ffd911cc0',1,'google::cloud::storage::v::ClientOptions::version()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#ad9411f8799ed0871afc36182be31294c',1,'google::cloud::storage::v::version()']]],
+  ['version_5fmajor',['version_major',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a848535eca2cdac22f8840b7be3072dd6',1,'google::cloud::storage::v']]],
+  ['version_5fminor',['version_minor',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#add2ac2a2bd3f660662a636cc02952656',1,'google::cloud::storage::v']]],
+  ['version_5fpatch',['version_patch',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a9dbe096912e8637ba6e965c1f10946b1',1,'google::cloud::storage::v']]],
+  ['version_5fstring',['version_string',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a0c4adf799a9de252fcb66b6ec92962a2',1,'google::cloud::storage::v']]]
 ];

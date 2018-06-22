@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parameter_5fname',['parameter_name',['../classstorage_1_1v_1_1WellKnownParameter.html#aafa0916d202415267d4f26c11af10389',1,'storage::v::WellKnownParameter']]],
-  ['parsefromjson',['ParseFromJson',['../classstorage_1_1v_1_1BucketMetadata.html#a62af39770319b8086c710a536aeb0aef',1,'storage::v::BucketMetadata::ParseFromJson()'],['../classstorage_1_1v_1_1ObjectMetadata.html#a9d258715a28c07d6f40b5c6903e38947',1,'storage::v::ObjectMetadata::ParseFromJson()']]],
-  ['project_5fnumber',['project_number',['../classstorage_1_1v_1_1BucketMetadata.html#ade70474938c41a914a07005ad78fdc1c',1,'storage::v::BucketMetadata']]]
+  ['parameter_5fname',['parameter_name',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html#af5fec9f61e070a147af451696c333d27',1,'google::cloud::storage::v::WellKnownParameter']]],
+  ['parsefromjson',['ParseFromJson',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#aa2fb91957496d8a50f5ca1f66fe8ee62',1,'google::cloud::storage::v::BucketMetadata::ParseFromJson()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a79f50712493bc50cb09e83dfea7b574a',1,'google::cloud::storage::v::ObjectMetadata::ParseFromJson()']]],
+  ['project_5fnumber',['project_number',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a0dbcb7896e70314e59020f64b4b7fbe4',1,'google::cloud::storage::v::BucketMetadata']]]
 ];

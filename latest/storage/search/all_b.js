@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readobjectrangemedia',['ReadObjectRangeMedia',['../classstorage_1_1v_1_1Client.html#a307f99c03e76215116898aaa96dbe827',1,'storage::v::Client']]]
+  ['readobjectrangemedia',['ReadObjectRangeMedia',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#aa9c3489b70ee0960ad4029b009fb7d02',1,'google::cloud::storage::v::Client']]]
 ];

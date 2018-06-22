@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['ifgenerationmatch',['IfGenerationMatch',['../structstorage_1_1v_1_1IfGenerationMatch.html',1,'storage::v']]],
-  ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structstorage_1_1v_1_1IfGenerationNotMatch.html',1,'storage::v']]],
-  ['ifmetagenerationmatch',['IfMetaGenerationMatch',['../structstorage_1_1v_1_1IfMetaGenerationMatch.html',1,'storage::v']]],
-  ['ifmetagenerationnotmatch',['IfMetaGenerationNotMatch',['../structstorage_1_1v_1_1IfMetaGenerationNotMatch.html',1,'storage::v']]],
-  ['insecurecredentials',['InsecureCredentials',['../classstorage_1_1v_1_1InsecureCredentials.html',1,'storage::v::InsecureCredentials'],['../classstorage_1_1v_1_1InsecureCredentials.html#abfdd3d4d397fe96e33af5a062628ea4f',1,'storage::v::InsecureCredentials::InsecureCredentials()']]],
-  ['insertobject',['InsertObject',['../classstorage_1_1v_1_1Bucket.html#a186172177f4691170c67c4ad52bafe72',1,'storage::v::Bucket']]],
-  ['insertobjectmedia',['InsertObjectMedia',['../classstorage_1_1v_1_1Client.html#a2ce20efd5144eba180196d24c7b3a61b',1,'storage::v::Client']]],
-  ['isopen',['IsOpen',['../classstorage_1_1v_1_1ObjectReadStreamBuf.html#a1334b0dee5f1b33a1991c7a20c0101e0',1,'storage::v::ObjectReadStreamBuf::IsOpen()'],['../classstorage_1_1v_1_1ObjectReadStream.html#adc82bae4a061a37b1aa97ba6553286f0',1,'storage::v::ObjectReadStream::IsOpen()']]]
+  ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationMatch.html',1,'google::cloud::storage::v']]],
+  ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v']]],
+  ['ifmetagenerationmatch',['IfMetaGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfMetaGenerationMatch.html',1,'google::cloud::storage::v']]],
+  ['ifmetagenerationnotmatch',['IfMetaGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfMetaGenerationNotMatch.html',1,'google::cloud::storage::v']]],
+  ['insecurecredentials',['InsecureCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1InsecureCredentials.html',1,'google::cloud::storage::v::InsecureCredentials'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1InsecureCredentials.html#a7cd5c422f49551b0d0061a5d7e1af049',1,'google::cloud::storage::v::InsecureCredentials::InsecureCredentials()']]],
+  ['insertobject',['InsertObject',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html#ac7de6b7e8fc8475034f26757f6d6bb48',1,'google::cloud::storage::v::Bucket']]],
+  ['insertobjectmedia',['InsertObjectMedia',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#ab679adec726090ca8e8cc07608c6800e',1,'google::cloud::storage::v::Client']]],
+  ['isopen',['IsOpen',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html#a8cd4fcea136f74d8b80e66281c937061',1,'google::cloud::storage::v::ObjectReadStreamBuf::IsOpen()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStream.html#a96c56c6629e10157cace8aa6366dab4b',1,'google::cloud::storage::v::ObjectReadStream::IsOpen()']]]
 ];

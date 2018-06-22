@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['authorizationheader',['AuthorizationHeader',['../classstorage_1_1v_1_1Credentials.html#acd8fe519975400c14dfa03502299757b',1,'storage::v::Credentials::AuthorizationHeader()'],['../classstorage_1_1v_1_1InsecureCredentials.html#a5e9d8c4ca8a709bcbe38510b738d4e20',1,'storage::v::InsecureCredentials::AuthorizationHeader()']]]
+  ['authorizationheader',['AuthorizationHeader',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Credentials.html#aeb282e5f35536ab400b2baf735729c1c',1,'google::cloud::storage::v::Credentials::AuthorizationHeader()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1InsecureCredentials.html#a38067baeb6c17a85c2b9f0b96bc6cd9b',1,'google::cloud::storage::v::InsecureCredentials::AuthorizationHeader()']]]
 ];

@@ -1,7 +1,11 @@
 var searchData=
 [
-  ['generation',['Generation',['../structstorage_1_1v_1_1Generation.html',1,'storage::v::Generation'],['../classstorage_1_1v_1_1ObjectMetadata.html#a694ebe7d988a96205223d422fe30fd14',1,'storage::v::ObjectMetadata::generation()']]],
-  ['getbucketmetadata',['GetBucketMetadata',['../classstorage_1_1v_1_1Client.html#a9eae32b18cc1bb4c25255ecd9e4ec048',1,'storage::v::Client']]],
-  ['getmetadata',['GetMetadata',['../classstorage_1_1v_1_1Bucket.html#a9a94ac99079b5d44e1fbf05995439f11',1,'storage::v::Bucket']]],
-  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacestorage_1_1v.html#aeabc03dec167d97659cfd64ddecdd816',1,'storage::v']]]
+  ['cloud',['cloud',['../namespacegoogle_1_1cloud.html',1,'google']]],
+  ['generation',['Generation',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1Generation.html',1,'google::cloud::storage::v::Generation'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a1df10ae8462bf30817c9adb289b8edb8',1,'google::cloud::storage::v::ObjectMetadata::generation()']]],
+  ['getbucketmetadata',['GetBucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a182c3739a191d546dcae8c31a84dc17b',1,'google::cloud::storage::v::Client']]],
+  ['getmetadata',['GetMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html#a9162d4c0c0fee6eaf48ba67d7daac6d4',1,'google::cloud::storage::v::Bucket']]],
+  ['google',['google',['../namespacegoogle.html',1,'']]],
+  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a8481d2d3c4ead81c0f70d722b652a4d8',1,'google::cloud::storage::v']]],
+  ['storage',['storage',['../namespacegoogle_1_1cloud_1_1storage.html',1,'google::cloud']]],
+  ['v',['v',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html',1,'google::cloud::storage']]]
 ];

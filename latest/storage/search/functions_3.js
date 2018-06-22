@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['endpoint',['endpoint',['../classstorage_1_1v_1_1ClientOptions.html#ae3f342c0f0c2d085dd743a2df4887500',1,'storage::v::ClientOptions']]],
-  ['error_5fdetails',['error_details',['../classstorage_1_1v_1_1Status.html#a490e69a4b9a15bc38f1a41d61dae8619',1,'storage::v::Status']]],
-  ['error_5fmessage',['error_message',['../classstorage_1_1v_1_1Status.html#ae5de6e82ecca4e2528bfa784da9cbcab',1,'storage::v::Status']]]
+  ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3bf3922c6b1238d7ec3b90a51f2778ad',1,'google::cloud::storage::v::ClientOptions']]],
+  ['error_5fdetails',['error_details',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#a050fc42d4bc954e2fbc8583b01b6ade3',1,'google::cloud::storage::v::Status']]],
+  ['error_5fmessage',['error_message',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#a1edddf830bd840f8aff8c9eb40c9f343',1,'google::cloud::storage::v::Status']]]
 ];
