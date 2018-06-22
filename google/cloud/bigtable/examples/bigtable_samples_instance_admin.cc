@@ -577,11 +577,9 @@ int main(int argc, char* argv[]) try {
     GetCluster(instance_admin, argc, argv);
   } else if (command == "delete-cluster") {
     DeleteCluster(instance_admin, argc, argv);
-  }
-  if (command == "run-full-example-1") {
+  } else if (command == "run-full-example-1") {
     RunFullExample1(project_id, argc, argv);
-  }
-  if (command == "run-full-example-2") {
+  } else if (command == "run-full-example-2") {
     RunFullExample2(project_id, argc, argv);
   } else {
     std::string msg("Unknown_command: " + command);
