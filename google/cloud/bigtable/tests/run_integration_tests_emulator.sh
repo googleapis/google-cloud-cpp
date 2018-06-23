@@ -17,7 +17,6 @@
 set -eu
 
 readonly BINDIR=$(dirname $0)
-source ${BINDIR}/integration_tests_utils.sh
 source ${BINDIR}/../tools/run_emulator_utils.sh
 
 # Start the emulator, setup the environment variables and traps to cleanup.
@@ -27,4 +26,25 @@ start_emulators
 # Use a unique project name to allow multiple runs of the test with
 # an externally launched emulator.
 readonly NONCE=$(date +%s)
-run_all_integration_tests "emulated-${NONCE}"
+readonly PROJECT_ID="emulated-${NONCE}"
+
+echo
+echo "Running bigtable::InstanceAdmin integration test."
+  env "BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" \
+     ./instance_admin_integration_test "${PROJECT_ID}";
+
+echo
+echo "Running bigtable::TableAdmin integration test."
+./admin_integration_test "${PROJECT_ID}" "admin-test"
+
+echo
+echo "Running bigtable::Table integration test."
+./data_integration_test "${PROJECT_ID}" "data-test"
+
+echo
+echo "Running bigtable::Filters integration tests."
+./filters_integration_test "${PROJECT_ID}" "filters-test"
+
+echo
+echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
+./mutations_integration_test "${PROJECT_ID}" "mutations-test"
