@@ -16,10 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
 
 #include "google/cloud/storage/credentials.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/time_fetcher.h"
 #include <chrono>
 #include <condition_variable>
 #include <ctime>
@@ -51,16 +52,18 @@ namespace internal {
  *
  * @tparam HttpRequestType a dependency injection point to make HTTP requests.
  */
-template <typename HttpRequestType = CurlRequest>
+template <typename HttpRequestType = CurlRequest,
+          typename TimeFetcherType = TimeFetcher>
 class ServiceAccountCredentials : public storage::Credentials {
  public:
-  explicit ServiceAccountCredentials(std::string const& contents)
-      : ServiceAccountCredentials(
-            contents, GoogleOAuthRefreshEndpoint()) {}
+  explicit ServiceAccountCredentials(std::string const& content)
+      : ServiceAccountCredentials(content, GoogleOAuthRefreshEndpoint()) {}
 
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string oauth_server)
-      : requestor_(std::move(oauth_server)), expiration_time_() {
+      : requestor_(std::move(oauth_server)),
+        expiration_time_(),
+        time_fetcher_() {
     auto credentials = nl::json::parse(content);
     // This is the value of grant_type for:
     // - JSON-formatted service account keyfiles downloaded from Cloud Console
@@ -75,16 +78,26 @@ class ServiceAccountCredentials : public storage::Credentials {
               << " " << GoogleOAuthScopeDevstorageFullControl()
               << " " << GoogleOAuthScopeDevstorageReadOnly()
               << " " << GoogleOAuthScopeDevstorageReadWrite();
-    std::time_t cur_time = std::time(0);
+    // Some credential formats (e.g. gcloud's ADC file) don't contain a
+    // "token_uri" attribute in the JSON object.  In this case, we try using the
+    // default value. See the comments around GoogleOAuthRefreshEndpoint about
+    // potential drawbacks to this approach.
+    std::string token_uri;
+    const char TOKEN_URI_KEY[] = "token_uri";
+    if (credentials.count(TOKEN_URI_KEY)) {
+      token_uri = credentials["token_uri"].get_ref<std::string const&>();
+    } else {
+      token_uri = GoogleOAuthRefreshEndpoint();
+    }
+    long int cur_time = time_fetcher_.GetSecondsSinceEpoch();
     nl::json assertion_payload = {
         {"iss",
          credentials["private_key_id"].get_ref<std::string const&>()},
         {"scope", scope_oss.str()},
-        {"aud",
-        credentials["token_uri"].get_ref<std::string const&>()},
-        {"iat", static_cast<long int>(cur_time)},
+        {"aud", token_uri},
+        {"iat", cur_time},
         // Resulting access token should be expire after one hour.
-        {"exp", static_cast<long int>(cur_time) + 3600}};
+        {"exp", cur_time + GoogleOAuthAccessTokenLifetime()}};
 
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
@@ -105,6 +118,20 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
  private:
+  std::string MakeJWTAssertion(
+      const nl::json& header,  const nl::json& payload,
+      const std::string& pem_contents) {
+    std::string encoded_header = OpenSslUtils::UrlsafeBase64Encode(
+        header.dump());
+    std::string encoded_payload = OpenSslUtils::UrlsafeBase64Encode(
+        payload.dump());
+    std::string encoded_signature = OpenSslUtils::UrlsafeBase64Encode(
+        OpenSslUtils::SignStringWithPem(
+            encoded_header + '.' + encoded_payload, pem_contents,
+            JWTSigningAlgorithms::RS256));
+    return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
+  }
+
   bool Refresh() {
     if (std::chrono::system_clock::now() < expiration_time_) {
       return true;
@@ -140,24 +167,12 @@ class ServiceAccountCredentials : public storage::Credentials {
     return true;
   }
 
-  std::string MakeJWTAssertion(
-      const nl::json& header,  const nl::json& payload,
-      const std::string& pem_contents) {
-    std::string encoded_header = OpenSslUtils::UrlsafeBase64Encode(
-        header.dump());
-    std::string encoded_payload = OpenSslUtils::UrlsafeBase64Encode(
-        payload.dump());
-    std::string encoded_signature = OpenSslUtils::SignStringWithPem(
-        encoded_header + '.' + encoded_payload, pem_contents,
-        JWTSigningAlgorithms::RSA_SHA256);
-    return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
-  }
-
   HttpRequestType requestor_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;
   std::chrono::system_clock::time_point expiration_time_;
+  TimeFetcherType time_fetcher_;
 };
 
 }  // namespace internal

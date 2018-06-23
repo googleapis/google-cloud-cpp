@@ -15,7 +15,6 @@ google_cloud_cpp_common_HDRS = [
 google_cloud_cpp_common_SRCS = [
     "internal/backoff_policy.cc",
     "internal/random.cc",
-    "storage/internal/base64.cc",
     "internal/setenv.cc",
     "internal/throw_delegate.cc",
     "log.cc",

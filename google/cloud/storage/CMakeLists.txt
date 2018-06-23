@@ -129,6 +129,7 @@ add_library(storage_client
     internal/retry_client.h
     internal/retry_client.cc
     internal/service_account_credentials.h
+    internal/time_fetcher.h
     object.h
     object.cc
     object_metadata.h
@@ -197,6 +198,7 @@ set(storage_client_unit_tests
     internal/parse_rfc3339_test.cc
     internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
+    internal/service_account_credentials_test.cc
     object_metadata_test.cc
     object_stream_test.cc
     object_test.cc

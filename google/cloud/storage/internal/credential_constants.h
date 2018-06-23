@@ -31,7 +31,7 @@ namespace internal {
  * readability and easy addition of support for other algorithms.
  */
 enum JWTSigningAlgorithms {
-  RSA_SHA256
+  RS256
 };
 
 /// The endpoint to create an access token from.
@@ -40,13 +40,18 @@ inline const char* GoogleOAuthRefreshEndpoint() {
   //     https://oauth2.googleapis.com/token
   // The two are not always interchangeable, as some credentials require you
   // pass the same "aud" value used to create it (e.g. in a JSON keyfile
-  // downloaded from the Cloud Console, this is the value for "token_uri" and
-  // "auth_uri"). Google devs may see more context on this at the internally
-  // visible issue: https://issuetracker.google.com/issues/79946689
+  // downloaded from the Cloud Console, this is the value for "token_uri", but
+  // gcloud ADC files don't contain "token_uri", so we basically have to guess
+  // which refresh endpoint, new or old, it was intended for use with.
+  // Google devs may see more context on this at the internally visible issue:
+  // https://issuetracker.google.com/issues/79946689
   static constexpr char endpoint[] =
       "https://accounts.google.com/o/oauth2/token";
   return endpoint;
 }
+
+/// The max lifetime of an access token, in seconds.
+constexpr int GoogleOAuthAccessTokenLifetime() { return 3600; }
 
 // OAuth2.0 scopes used for various Cloud Storage functionality.
 

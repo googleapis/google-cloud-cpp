@@ -103,7 +103,7 @@ struct OpenSslUtils {
 
     const EVP_MD *digest_type = nullptr;
     switch (alg) {
-      case google::cloud::storage::internal:: RSA_SHA256:
+      case RS256:
         digest_type = EVP_get_digestbyname("RSA-SHA256");
         break;
     }
