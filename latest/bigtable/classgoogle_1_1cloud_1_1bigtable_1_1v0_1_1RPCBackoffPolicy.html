@@ -84,12 +84,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a262dc5fefea0eeef71d907421dd7376b"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a262dc5fefea0eeef71d907421dd7376b">clone</a> () const =0</td></tr>
 <tr class="memdesc:a262dc5fefea0eeef71d907421dd7376b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a new copy of this object.  <a href="#a262dc5fefea0eeef71d907421dd7376b">More...</a><br /></td></tr>
 <tr class="separator:a262dc5fefea0eeef71d907421dd7376b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d05f70c3e6249adbbfaecd22f72abc9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a8d05f70c3e6249adbbfaecd22f72abc9">setup</a> (grpc::ClientContext &amp;context) const =0</td></tr>
-<tr class="memdesc:a8d05f70c3e6249adbbfaecd22f72abc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the ClientContext for the next call.  <a href="#a8d05f70c3e6249adbbfaecd22f72abc9">More...</a><br /></td></tr>
-<tr class="separator:a8d05f70c3e6249adbbfaecd22f72abc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd06ade0d096214f44ec0eb8a6eeae5c"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#abd06ade0d096214f44ec0eb8a6eeae5c">on_completion</a> (grpc::Status const &amp;s)=0</td></tr>
-<tr class="memdesc:abd06ade0d096214f44ec0eb8a6eeae5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the delay after an RPC operation has completed.  <a href="#abd06ade0d096214f44ec0eb8a6eeae5c">More...</a><br /></td></tr>
-<tr class="separator:abd06ade0d096214f44ec0eb8a6eeae5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5738f8d8ec968a64a1e27401da9b7853"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a5738f8d8ec968a64a1e27401da9b7853">Setup</a> (grpc::ClientContext &amp;context) const =0</td></tr>
+<tr class="memdesc:a5738f8d8ec968a64a1e27401da9b7853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the ClientContext for the next call.  <a href="#a5738f8d8ec968a64a1e27401da9b7853">More...</a><br /></td></tr>
+<tr class="separator:a5738f8d8ec968a64a1e27401da9b7853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4929b7879dfe40723de8788c4f6a05"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a4c4929b7879dfe40723de8788c4f6a05">OnCompletion</a> (grpc::Status const &amp;s)=0</td></tr>
+<tr class="memdesc:a4c4929b7879dfe40723de8788c4f6a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the delay after an RPC operation has completed.  <a href="#a4c4929b7879dfe40723de8788c4f6a05">More...</a><br /></td></tr>
+<tr class="separator:a4c4929b7879dfe40723de8788c4f6a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define the interface for controlling how the Bigtable client backsoff from failed RPC operations. </p>
@@ -151,8 +151,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abd06ade0d096214f44ec0eb8a6eeae5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd06ade0d096214f44ec0eb8a6eeae5c">&#9670;&nbsp;</a></span>on_completion()</h2>
+<a id="a4c4929b7879dfe40723de8788c4f6a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4929b7879dfe40723de8788c4f6a05">&#9670;&nbsp;</a></span>OnCompletion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::chrono::milliseconds google::cloud::bigtable::v0::RPCBackoffPolicy::on_completion </td>
+          <td class="memname">virtual std::chrono::milliseconds google::cloud::bigtable::v0::RPCBackoffPolicy::OnCompletion </td>
           <td>(</td>
           <td class="paramtype">grpc::Status const &amp;&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -184,12 +184,12 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#ada4ccb02815abd86a358511b32131f9e">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#a93476db0882751b870a97fc64af06b1b">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
 
 </div>
 </div>
-<a id="a8d05f70c3e6249adbbfaecd22f72abc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d05f70c3e6249adbbfaecd22f72abc9">&#9670;&nbsp;</a></span>setup()</h2>
+<a id="a5738f8d8ec968a64a1e27401da9b7853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5738f8d8ec968a64a1e27401da9b7853">&#9670;&nbsp;</a></span>Setup()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +198,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void google::cloud::bigtable::v0::RPCBackoffPolicy::setup </td>
+          <td class="memname">virtual void google::cloud::bigtable::v0::RPCBackoffPolicy::Setup </td>
           <td>(</td>
           <td class="paramtype">grpc::ClientContext &amp;&#160;</td>
           <td class="paramname"><em>context</em></td><td>)</td>
@@ -214,7 +214,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Update the ClientContext for the next call. </p>
 
-<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#aa62475ba6d74e05ccf4c78d757721e8e">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#a85f3b50fac34ccbace185ea56b899583">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
 
 </div>
 </div>
