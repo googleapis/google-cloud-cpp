@@ -33,14 +33,14 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
 
-  EXPECT_GE(10_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
-  EXPECT_NE(500_ms, tested.on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, tested.OnCompletion(CreateTransientError()));
+  EXPECT_NE(500_ms, tested.OnCompletion(CreateTransientError()));
+  EXPECT_NE(500_ms, tested.OnCompletion(CreateTransientError()));
   // Value should not be exactly XX_ms after few iterations.
   for (int i = 0; i < 5; ++i) {
-    tested.on_completion(CreateTransientError());
+    tested.OnCompletion(CreateTransientError());
   }
-  EXPECT_GE(500_ms, tested.on_completion(CreateTransientError()));
+  EXPECT_GE(500_ms, tested.OnCompletion(CreateTransientError()));
 }
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
@@ -49,8 +49,8 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   bigtable::ExponentialBackoffPolicy original(10_ms, 50_ms);
   auto tested = original.clone();
 
-  EXPECT_GE(10_ms, tested->on_completion(CreateTransientError()));
-  EXPECT_LE(10_ms, tested->on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, tested->OnCompletion(CreateTransientError()));
+  EXPECT_LE(10_ms, tested->OnCompletion(CreateTransientError()));
 }
 
 /// @test Test for testing randomness for 2 objects of
@@ -61,13 +61,13 @@ TEST(ExponentialBackoffRetryPolicy, Randomness) {
   bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
   std::vector<int> output1, output2;
 
-  EXPECT_GE(10_ms, test_object1.on_completion(CreateTransientError()));
-  EXPECT_GE(10_ms, test_object2.on_completion(CreateTransientError()));
+  EXPECT_GE(10_ms, test_object1.OnCompletion(CreateTransientError()));
+  EXPECT_GE(10_ms, test_object2.OnCompletion(CreateTransientError()));
   for (int i = 0; i < 100; ++i) {
     output1.push_back(
-        test_object1.on_completion(CreateTransientError()).count());
+        test_object1.OnCompletion(CreateTransientError()).count());
     output2.push_back(
-        test_object2.on_completion(CreateTransientError()).count());
+        test_object2.OnCompletion(CreateTransientError()).count());
   }
   EXPECT_NE(output1, output2);
 }

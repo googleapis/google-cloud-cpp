@@ -106,14 +106,14 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
     google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
 
-  MOCK_CONST_METHOD1(setup_impl, void(grpc::ClientContext&));
-  void setup(grpc::ClientContext& context) const override {
-    setup_impl(context);
+  MOCK_CONST_METHOD1(SetupHook, void(grpc::ClientContext&));
+  void Setup(grpc::ClientContext& context) const override {
+    SetupHook(context);
   }
 
-  MOCK_METHOD1(on_failure_impl, bool(grpc::Status const& status));
-  bool on_failure(grpc::Status const& status) override {
-    return on_failure_impl(status);
+  MOCK_METHOD1(OnFailureHook, bool(grpc::Status const& status));
+  bool OnFailure(grpc::Status const& status) override {
+    return OnFailureHook(status);
   }
 };
 
@@ -123,11 +123,11 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
     google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
   }
-  void setup(grpc::ClientContext& context) const override {}
-  MOCK_METHOD1(on_completion_impl,
+  void Setup(grpc::ClientContext& context) const override {}
+  MOCK_METHOD1(OnCompletionHook,
                std::chrono::milliseconds(grpc::Status const& s));
-  std::chrono::milliseconds on_completion(grpc::Status const& s) override {
-    return on_completion_impl(s);
+  std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
+    return OnCompletionHook(s);
   }
 };
 
@@ -307,8 +307,8 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
@@ -344,8 +344,8 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -370,8 +370,8 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -401,8 +401,8 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
@@ -445,8 +445,8 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(testing::SetArgReferee<1>(
             grpc::Status(grpc::StatusCode::INTERNAL, "parser exception")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
@@ -484,8 +484,8 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
         .WillOnce(testing::SetArgReferee<0>(
             grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -516,8 +516,8 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
         .WillOnce(testing::SetArgReferee<0>(
             grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
@@ -556,8 +556,8 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
     EXPECT_CALL(*parser, HandleEndOfStreamHook(_))
         .WillOnce(testing::SetArgReferee<0>(
             grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_)).Times(0);
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -638,8 +638,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it
@@ -821,7 +821,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   parser->SetRows({"r1"});
 
   void* previous_context = nullptr;
-  EXPECT_CALL(*retry_policy_, setup_impl(_))
+  EXPECT_CALL(*retry_policy_, SetupHook(_))
       .Times(2)
       .WillRepeatedly(Invoke([&previous_context](grpc::ClientContext& context) {
         // This is a big hack, we want to make sure the context is new,
@@ -838,8 +838,8 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
 
-    EXPECT_CALL(*retry_policy_, on_failure_impl(_)).WillOnce(Return(true));
-    EXPECT_CALL(*backoff_policy_, on_completion_impl(_))
+    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
         .WillOnce(Return(std::chrono::milliseconds(0)));
 
     auto stream_retry = new MockReadRowsReader;  // the stub will free it

@@ -43,7 +43,7 @@ auto const kLimitedTimeTolerance = 10_ms;
 void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   google::cloud::cloud_testing::CheckPredicateBecomesFalse(
       [&tested] {
-        return tested.on_failure(
+        return tested.OnFailure(
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
       },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
@@ -71,18 +71,18 @@ TEST(LimitedTimeRetryPolicy, Clone) {
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedTimeRetryPolicy tested(10_ms);
-  EXPECT_FALSE(tested.on_failure(CreatePermanentError()));
+  EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
 /// @test A simple test for the LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Simple) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy tested(3);
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested.on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
 }
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
@@ -90,15 +90,15 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
   using namespace bigtable::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
-  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
-  EXPECT_TRUE(tested->on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested->on_failure(CreateTransientError()));
-  EXPECT_FALSE(tested->on_failure(CreateTransientError()));
+  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested->OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested->OnFailure(CreateTransientError()));
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   bigtable::LimitedErrorCountRetryPolicy tested(3);
-  EXPECT_FALSE(tested.on_failure(CreatePermanentError()));
+  EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
