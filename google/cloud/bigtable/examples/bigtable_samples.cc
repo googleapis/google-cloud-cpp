@@ -310,6 +310,42 @@ void SampleRowsCollections(google::cloud::bigtable::Table table) {
 }
 //! [sample row keys collections]
 
+//! [run table operations]
+void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
+                        std::string const& table_id) {
+  // Create the table
+  std::cout << std::endl << "Creating a table: ";
+  auto schema = admin.CreateTable(
+      table_id,
+      google::cloud::bigtable::TableConfig(
+          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
+           {"foo",
+            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
+          {}));
+  std::cout << " Done" << std::endl;
+
+  // List tables
+  std::cout << std::endl << "Listing tables: " << std::endl;
+  auto tables =
+      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+  for (auto const& table : tables) {
+    std::cout << table.name() << std::endl;
+  }
+
+  // Get table
+  std::cout << std::endl << "Get table: " << std::endl;
+  auto table =
+      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+  std::cout << table.name() << "\n";
+  std::cout << "Table name : " << table.name() << std::endl;
+
+  // Delete table
+  std::cout << std::endl << "Deleting table: " << std::endl;
+  admin.DeleteTable(table_id);
+  std::cout << " Done" << std::endl;
+}
+//! [run table operations]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -317,14 +353,19 @@ int main(int argc, char* argv[]) try {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     auto program = cmd.substr(last_slash + 1);
-    std::cerr << "Usage: " << program
-              << " <command> <project_id> <instance_id> <table_id>"
-              << "\n\n"
-              << "Examples:\n"
-              << "  " << program
-              << " create-table my-project my-instance example-table\n"
-              << "  " << program
-              << " write my-project my-instance example-table" << std::endl;
+    std::cerr << "\nUsage: " << program
+              << " <command> <project_id> [arguments]\n\n"
+              << "Examples:\n";
+    for (auto example : {"run my-project my-instance my-table",
+                         "create-table my-project my-instance my-table",
+                         "list-tables my-project my-instance",
+                         "get-table my-project my-instance my-table",
+                         "modify-table my-project my-instance my-table",
+                         "drop-all-rows my-project my-instance my-table",
+                         "delete-table my-project my-instance my-table"}) {
+      std::cerr << "  " << program << " " << example << "\n";
+    }
+    std::cerr << std::flush;
   };
 
   if (argc != 5) {
@@ -353,7 +394,9 @@ int main(int argc, char* argv[]) try {
       table_id);
   //! [connect data]
 
-  if (command == "create-table") {
+  if (command == "run") {
+    RunTableOperations(admin, table_id);
+  } else if (command == "create-table") {
     CreateTable(admin, table_id);
   } else if (command == "list-tables") {
     ListTables(admin);
