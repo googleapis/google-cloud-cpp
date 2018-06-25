@@ -65,6 +65,7 @@ class Client {
   /**
    * Fetch the bucket metadata and return it.
    *
+   * @param bucket_name query metadata information about this bucket.
    * @param modifiers a variadic list. Valid types for this operation include
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *   `Projection`.
@@ -86,6 +87,7 @@ class Client {
   /**
    * Create an object given its name and media (contents).
    *
+   * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
    * @param contents the contents (media) for the new object.
    * @param modifiers a variadic list. Valid types for this operation include
@@ -121,11 +123,11 @@ class Client {
    *   current policies.
    *
    */
-  template <typename... Modifiers>
+  template <typename... Parameters>
   ListObjectsReader ListObjects(std::string const& bucket_name,
-                                Modifiers&&... modifiers) {
+                                Parameters&&... parameters) {
     return ListObjectsReader(raw_client_, bucket_name,
-                             std::forward<Modifiers>(modifiers)...);
+                             std::forward<Parameters>(parameters)...);
   }
 
  private:
