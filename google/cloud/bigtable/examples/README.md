@@ -6,8 +6,7 @@ referenced from the Doxygen landing page as "Hello World".
 ## Table of Contents
 
 - [Before you begin](#before-you-begin)
-  - [Compile the Examples](#compile-the-examples)
-  - [Run the examples against the Cloud Bigtable Emulator](#run-the-examples-against-the-cloud-bigtable-emulator)
+  - [Compile the Examples](#compile-the-examples)  
   - [Run the examples against the Cloud Bigtable Service](#run-the-examples-against-the-cloud-bigtable-service)
 - [Samples](#samples)
   - [Hello World](#hello-world)
@@ -20,32 +19,6 @@ referenced from the Doxygen landing page as "Hello World".
 These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
 [top-level README](../../README.md) file.
-
-### Run the examples against the Cloud Bigtable Emulator
-
-The easiest way to run these examples is to use the Cloud Bigtable Emulator.
-This emulator is included as part of the
-[Google Cloud SDK](https://cloud.google.com/sdk/).
-
-#### Install the Emulator
-
-Follow the relevant
-[documentation](https://cloud.google.com/bigtable/docs/emulator) to install
-the emulator.
-
-#### Start the Emulator
-
-Start the emulator as described in the documentation:
-
-```console
-$ gcloud beta emulators bigtable start
-```
-
-On a separate shell setup the necessary environment variables:
-
-```console
-$ $(gcloud beta emulators bigtable env-init)
-```
 
 ### Run the examples against the Cloud Bigtable Service
 
