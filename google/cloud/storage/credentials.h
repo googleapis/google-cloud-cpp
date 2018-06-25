@@ -23,7 +23,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 /**
  * Base class for the credential objects.
  */

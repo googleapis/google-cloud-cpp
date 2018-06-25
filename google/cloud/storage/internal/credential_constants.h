@@ -30,9 +30,7 @@ namespace internal {
  * We currently only support RSA with SHA-256, but use this enum for
  * readability and easy addition of support for other algorithms.
  */
-enum JWTSigningAlgorithms {
-  RS256
-};
+enum JWTSigningAlgorithms { RS256 };
 
 /// The endpoint to create an access token from.
 inline const char* GoogleOAuthRefreshEndpoint() {

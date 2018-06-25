@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/internal/service_account_credentials.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/service_account_credentials.h"
 #include "google/cloud/storage/internal/time_fetcher.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
@@ -37,6 +37,20 @@ using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 
+// This "magic" assertion was generated using logic from an existing crypto
+// library (Python's oauth2client) from the keyfile above. It was slightly
+// modified to get the b64-encoded versions of each of the JSON objects used in
+// the signature; our JSON library's string dump of the objects dumps the keys
+// in alphabetical order (while the oauth2client crypto functionality does not),
+// which results in different strings and thus different b64-encodings of those
+// strings.
+constexpr char EXPECTED_ASSERTION_PARAM[] =
+    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1Mjk3MzY4NjMsImlhdCI6MTUyOTczMzI2MywiaXNzIjoiYTFhMTExYWExMTExYTExYTExYTExYWExMTFhMTExYTFhMTExMTExMSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9jbG91ZC1wbGF0Zm9ybSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtLnJlYWQtb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UuZnVsbF9jb250cm9sIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5yZWFkX29ubHkgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfd3JpdGUifQ.ZMO0DqAn7sQf17gECzWk3kNaywl1tuPRtPPcfa6OyCQAg0uvy3niiIgRmOt53ziF0Lz1XRvoX1IauRnAEjAjFVWND7tXSkNL40nWwcT0WiNxX78xXR61zNZ-3Fv2L4bTnNfnS7DtR0__ReKkL7zErLDVnErfnpihijZOOkzIPv4q3QRul2lupAPurnjdiYVQBScvWSG-kXAzt58fwUe8-VdvLc1NH6P37OWw6fZQ1Fa8Ue3ybH5NlpHTFaz94WwvFpHDzhoLIKztNvOsK-pImkpKzCNqZAhfbuXuoDUiGCoLlDVi3Viw7PLI4NEMh-aMmYA02qyg_xZyzwUDBNv0Vg)""";
+constexpr long int FIXED_JWT_TIMESTAMP = 1529733263;
+constexpr char GRANT_PARAM_UNESCAPED[] =
+    "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer";
+constexpr char GRANT_PARAM_ESCAPED[] =
+    "grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
 constexpr char JSON_KEYFILE_CONTENTS[] = R"""({
       "type": "service_account",
       "project_id": "foo-project",
@@ -49,16 +63,6 @@ constexpr char JSON_KEYFILE_CONTENTS[] = R"""({
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
-// This "magic" assertion was generated using logic from an existing crypto
-// library (Python's oauth2client) from the keyfile above. It was slightly
-// modified to get the b64-encoded versions of each of the JSON objects used in
-// the signature; our JSON library's string dump of the objects dumps the keys
-// in alphabetical order (while the oauth2client crypto functionality does not),
-// which results in different strings and thus different b64-encodings of those
-// strings.
-constexpr char FIXED_ASSERTION[] =
-    R"""(eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1Mjk3MzY4NjMsImlhdCI6MTUyOTczMzI2MywiaXNzIjoiYTFhMTExYWExMTExYTExYTExYTExYWExMTFhMTExYTFhMTExMTExMSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9jbG91ZC1wbGF0Zm9ybSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtLnJlYWQtb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UuZnVsbF9jb250cm9sIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5yZWFkX29ubHkgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfd3JpdGUifQ.ZMO0DqAn7sQf17gECzWk3kNaywl1tuPRtPPcfa6OyCQAg0uvy3niiIgRmOt53ziF0Lz1XRvoX1IauRnAEjAjFVWND7tXSkNL40nWwcT0WiNxX78xXR61zNZ-3Fv2L4bTnNfnS7DtR0__ReKkL7zErLDVnErfnpihijZOOkzIPv4q3QRul2lupAPurnjdiYVQBScvWSG-kXAzt58fwUe8-VdvLc1NH6P37OWw6fZQ1Fa8Ue3ybH5NlpHTFaz94WwvFpHDzhoLIKztNvOsK-pImkpKzCNqZAhfbuXuoDUiGCoLlDVi3Viw7PLI4NEMh-aMmYA02qyg_xZyzwUDBNv0Vg)""";
-constexpr long int FIXED_JWT_TIMESTAMP = 1529733263;
 
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
@@ -90,12 +94,9 @@ void SetExpectCallsForMakeEscapedString(
   // Add this matcher AFTER the AnyMatcher above; gmock matches in reverse
   // order of how you defined matchers, and we want this specific string to be
   // matched before being checked and matched against the AnyMatcher above.
-  EXPECT_CALL(
-      *handle, MakeEscapedString(StrEq(
-      "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer")))
+  EXPECT_CALL(*handle, MakeEscapedString(StrEq(GRANT_PARAM_UNESCAPED)))
       .WillRepeatedly(Invoke([](std::string const& x) {
-        const std::string actual_grant =
-            "grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
+        const std::string actual_grant(GRANT_PARAM_ESCAPED);
         auto const escaped_str_size = actual_grant.size();
         auto copy = new char[escaped_str_size + 1];
         std::memcpy(copy, actual_grant.data(), actual_grant.size());
@@ -107,22 +108,17 @@ void SetExpectCallsForMakeEscapedString(
 /// @test Verify that we can create service account credentials from a keyfile.
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponse) {
-
   auto mock_http_request_handle =
-      MockHttpRequest::Handle(
-          storage::internal::GoogleOAuthRefreshEndpoint());
+      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
 
   SetExpectCallsForMakeEscapedString(mock_http_request_handle);
 
   EXPECT_CALL(*mock_http_request_handle,
               PrepareRequest(An<std::string const&>()))
       .WillOnce(Invoke([](std::string const& payload) {
-        std::string expected_assertion_query_param =
-            std::string("assertion=") + FIXED_ASSERTION;
-        EXPECT_THAT(payload, HasSubstr(expected_assertion_query_param));
+        EXPECT_THAT(payload, HasSubstr(EXPECTED_ASSERTION_PARAM));
         // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload, HasSubstr(
-            "grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer"));
+        EXPECT_THAT(payload, HasSubstr(GRANT_PARAM_ESCAPED));
       }));
 
   std::string response = R"""({
@@ -145,10 +141,10 @@ TEST_F(ServiceAccountCredentialsTest,
 TEST_F(ServiceAccountCredentialsTest,
        RefreshCalledOnlyWhenAccessTokenIsMissingOrInvalid) {
   auto mock_http_request_handle =
-      MockHttpRequest::Handle(
-          storage::internal::GoogleOAuthRefreshEndpoint());
+      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
   EXPECT_CALL(*mock_http_request_handle,
-              PrepareRequest(An<std::string const&>())).Times(1);
+              PrepareRequest(An<std::string const&>()))
+      .Times(1);
   SetExpectCallsForMakeEscapedString(mock_http_request_handle);
 
   // Prepare two responses, the first one is used but becomes immediately
@@ -168,8 +164,7 @@ TEST_F(ServiceAccountCredentialsTest,
       .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
       .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest> credentials(
-      JSON_KEYFILE_CONTENTS);
+  ServiceAccountCredentials<MockHttpRequest> credentials(JSON_KEYFILE_CONTENTS);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader());

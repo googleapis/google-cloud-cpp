@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
 
 #include "google/cloud/storage/credentials.h"
-#include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/credential_constants.h"
+#include "google/cloud/storage/internal/curl_request.h"
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
@@ -51,8 +51,7 @@ template <typename HttpRequestType = CurlRequest>
 class AuthorizedUserCredentials : public storage::Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents)
-      : AuthorizedUserCredentials(
-            contents, GoogleOAuthRefreshEndpoint()) {}
+      : AuthorizedUserCredentials(contents, GoogleOAuthRefreshEndpoint()) {}
 
   explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string oauth_server)

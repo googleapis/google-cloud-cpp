@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/internal/credential_constants.h"
+#include "google/cloud/storage/version.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
@@ -27,7 +27,8 @@
 #include <sstream>
 #include <vector>
 
-namespace google { namespace cloud {
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -43,8 +44,8 @@ struct OpenSslUtils {
     auto bio_chain = MakeBioChainForBase64Transcoding();
     int retval = 0;
     while (true) {
-      retval = BIO_write(
-          bio_chain.get(), str.c_str(), static_cast<int>(str.length()));
+      retval = BIO_write(bio_chain.get(), str.c_str(),
+                         static_cast<int>(str.length()));
       if (retval > 0) break;  // Positive value == successful write.
       if (!BIO_should_retry(bio_chain.get())) {
         std::ostringstream err_builder;
@@ -53,12 +54,12 @@ struct OpenSslUtils {
         google::cloud::internal::RaiseRuntimeError(err_builder.str());
       }
     }
-    // Tell the b64 encoder that we're done writing data, thus prompting it to add
-    // trailing '=' characters for padding if needed.
+    // Tell the b64 encoder that we're done writing data, thus prompting it to
+    // add trailing '=' characters for padding if needed.
     BIO_flush(bio_chain.get());
 
     // This buffer belongs to the BIO chain and is freed upon its destruction.
-    BUF_MEM *buf_mem;
+    BUF_MEM* buf_mem;
     BIO_get_mem_ptr(bio_chain.get(), &buf_mem);
     // Return a string copy of the buffer's bytes, as the buffer will be freed
     // upon this method's exit.
@@ -66,18 +67,19 @@ struct OpenSslUtils {
   }
 
   /**
-    * Transform a string in-place, removing trailing occurrences of a character.
-    *
-    * Warning: this was written with the intent of operating on a string
-    * containing ASCII-encoded (8-bit) characters (e.g. removing trailing '='
-    * characters from a Base64-encoded string) and may not function correctly
-    * for strings containing Unicode characters.
-    */
-  static std::string& RightTrim(
-      std::string &str, const char& trim_char) {
-    str.erase(std::find_if(str.rbegin(), str.rend(), [&trim_char](char cur_char) {
-      return trim_char != cur_char;
-    }).base(), str.end());
+   * Transform a string in-place, removing trailing occurrences of a character.
+   *
+   * Warning: this was written with the intent of operating on a string
+   * containing ASCII-encoded (8-bit) characters (e.g. removing trailing '='
+   * characters from a Base64-encoded string) and may not function correctly
+   * for strings containing Unicode characters.
+   */
+  static std::string& RightTrim(std::string& str, const char& trim_ch) {
+    str.erase(
+        std::find_if(str.rbegin(), str.rend(),
+                     [&trim_ch](char cur_ch) { return trim_ch != cur_ch; })
+            .base(),
+        str.end());
     return str;
   }
 
@@ -90,7 +92,7 @@ struct OpenSslUtils {
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
     auto func_name = __func__;  // Avoid using the lambda name instead.
-    auto handle_openssl_failure = [&func_name]()->void{
+    auto handle_openssl_failure = [&func_name]() -> void {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << func_name << ": "
                   << "Failed to sign string with with PEM key.";
@@ -101,7 +103,7 @@ struct OpenSslUtils {
         EVP_MD_CTX_new(), &EVP_MD_CTX_free);
     if (not(digest_ctx)) handle_openssl_failure();
 
-    const EVP_MD *digest_type = nullptr;
+    const EVP_MD* digest_type = nullptr;
     switch (alg) {
       case RS256:
         digest_type = EVP_get_digestbyname("RSA-SHA256");
@@ -110,7 +112,8 @@ struct OpenSslUtils {
     if (digest_type == nullptr) handle_openssl_failure();
 
     auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
-        BIO_new_mem_buf(pem_contents.c_str(), pem_contents.length()), &BIO_free);
+        BIO_new_mem_buf(pem_contents.c_str(), pem_contents.length()),
+        &BIO_free);
     if (not(pem_buffer)) handle_openssl_failure();
 
     auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
@@ -126,36 +129,36 @@ struct OpenSslUtils {
     if (not(private_key)) handle_openssl_failure();
 
     const int DIGEST_SIGN_SUCCESS_CODE = 1;
-    if (DIGEST_SIGN_SUCCESS_CODE != EVP_DigestSignInit(
-        static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-        nullptr,  // EVP_PKEY_CTX **pctx
-        digest_type,
-        nullptr,  // ENGINE *e
-        static_cast<EVP_PKEY*>(private_key.get()))) {
+    if (DIGEST_SIGN_SUCCESS_CODE !=
+        EVP_DigestSignInit(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                           nullptr,  // EVP_PKEY_CTX **pctx
+                           digest_type,
+                           nullptr,  // ENGINE *e
+                           static_cast<EVP_PKEY*>(private_key.get()))) {
       handle_openssl_failure();
     }
 
-    if (DIGEST_SIGN_SUCCESS_CODE != EVP_DigestSignUpdate(
-        static_cast<EVP_MD_CTX*>(digest_ctx.get()), str.c_str(),
-        str.length())) {
+    if (DIGEST_SIGN_SUCCESS_CODE !=
+        EVP_DigestSignUpdate(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                             str.c_str(), str.length())) {
       handle_openssl_failure();
     }
 
     std::size_t signed_str_size = 0;
-    // Calling this method with a nullptr buffer will populate our size var with,
-    // the resulting buffer's size. This allows us to then call it again, with the
-    // correct buffer and size, which actually populates the buffer.
-    if (DIGEST_SIGN_SUCCESS_CODE != EVP_DigestSignFinal(
-        static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-        nullptr,  // unsigned char *sig
-        &signed_str_size)) {
+    // Calling this method with a nullptr buffer will populate our size var
+    // with, the resulting buffer's size. This allows us to then call it again,
+    // with the correct buffer and size, which actually populates the buffer.
+    if (DIGEST_SIGN_SUCCESS_CODE !=
+        EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                            nullptr,  // unsigned char *sig
+                            &signed_str_size)) {
       handle_openssl_failure();
     }
 
     std::vector<unsigned char> signed_str(signed_str_size);
-    if (DIGEST_SIGN_SUCCESS_CODE != EVP_DigestSignFinal(
-        static_cast<EVP_MD_CTX*>(digest_ctx.get()), signed_str.data(),
-        &signed_str_size)) {
+    if (DIGEST_SIGN_SUCCESS_CODE !=
+        EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                            signed_str.data(), &signed_str_size)) {
       handle_openssl_failure();
     }
 
@@ -180,7 +183,7 @@ struct OpenSslUtils {
 
  private:
   static std::unique_ptr<BIO, decltype(&BIO_free_all)>
-      MakeBioChainForBase64Transcoding() {
+  MakeBioChainForBase64Transcoding() {
     std::ostringstream err_builder;
     auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
         BIO_new(BIO_f_base64()), &BIO_free);

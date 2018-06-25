@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
 
 #include "google/cloud/storage/credentials.h"
-#include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/credential_constants.h"
+#include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/time_fetcher.h"
@@ -26,8 +26,8 @@
 #include <ctime>
 #include <iostream>
 #include <mutex>
-#include <string>
 #include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -73,11 +73,11 @@ class ServiceAccountCredentials : public storage::Credentials {
         {"typ", "JWT"}};
 
     std::ostringstream scope_oss;
-    scope_oss << GoogleOAuthScopeCloudPlatform()
-              << " " << GoogleOAuthScopeCloudPlatformReadOnly()
-              << " " << GoogleOAuthScopeDevstorageFullControl()
-              << " " << GoogleOAuthScopeDevstorageReadOnly()
-              << " " << GoogleOAuthScopeDevstorageReadWrite();
+    scope_oss << GoogleOAuthScopeCloudPlatform() << " "
+              << GoogleOAuthScopeCloudPlatformReadOnly() << " "
+              << GoogleOAuthScopeDevstorageFullControl() << " "
+              << GoogleOAuthScopeDevstorageReadOnly() << " "
+              << GoogleOAuthScopeDevstorageReadWrite();
     // Some credential formats (e.g. gcloud's ADC file) don't contain a
     // "token_uri" attribute in the JSON object.  In this case, we try using the
     // default value. See the comments around GoogleOAuthRefreshEndpoint about
@@ -91,8 +91,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     }
     long int cur_time = time_fetcher_.GetSecondsSinceEpoch();
     nl::json assertion_payload = {
-        {"iss",
-         credentials["private_key_id"].get_ref<std::string const&>()},
+        {"iss", credentials["private_key_id"].get_ref<std::string const&>()},
         {"scope", scope_oss.str()},
         {"aud", token_uri},
         {"iat", cur_time},
@@ -102,12 +101,13 @@ class ServiceAccountCredentials : public storage::Credentials {
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
     std::string payload(
-        requestor_.MakeEscapedString(
-            "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer").get());
+        requestor_
+            .MakeEscapedString(
+                "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer")
+            .get());
     payload += "&assertion=";
-    payload += MakeJWTAssertion(
-        assertion_header, assertion_payload,
-        svc_acct_private_key_pem);
+    payload += MakeJWTAssertion(assertion_header, assertion_payload,
+                                svc_acct_private_key_pem);
     requestor_.PrepareRequest(std::move(payload));
   }
 
@@ -118,15 +118,14 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
  private:
-  std::string MakeJWTAssertion(
-      const nl::json& header,  const nl::json& payload,
-      const std::string& pem_contents) {
-    std::string encoded_header = OpenSslUtils::UrlsafeBase64Encode(
-        header.dump());
-    std::string encoded_payload = OpenSslUtils::UrlsafeBase64Encode(
-        payload.dump());
-    std::string encoded_signature = OpenSslUtils::UrlsafeBase64Encode(
-        OpenSslUtils::SignStringWithPem(
+  std::string MakeJWTAssertion(const nl::json& header, const nl::json& payload,
+                               const std::string& pem_contents) {
+    std::string encoded_header =
+        OpenSslUtils::UrlsafeBase64Encode(header.dump());
+    std::string encoded_payload =
+        OpenSslUtils::UrlsafeBase64Encode(payload.dump());
+    std::string encoded_signature =
+        OpenSslUtils::UrlsafeBase64Encode(OpenSslUtils::SignStringWithPem(
             encoded_header + '.' + encoded_payload, pem_contents,
             JWTSigningAlgorithms::RS256));
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
