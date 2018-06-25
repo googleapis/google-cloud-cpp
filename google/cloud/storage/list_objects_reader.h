@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_READER_H_
 
-#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <iterator>
 
 namespace google {
@@ -76,8 +76,7 @@ class ListObjectsReader {
  public:
   template <typename... Parameters>
   ListObjectsReader(std::shared_ptr<internal::RawClient> client,
-                    std::string bucket_name,
-                    Parameters&&... parameters)
+                    std::string bucket_name, Parameters&&... parameters)
       : client_(std::move(client)),
         request_(std::move(bucket_name)),
         next_page_token_(),
