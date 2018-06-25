@@ -142,7 +142,7 @@ function run_all_table_admin_examples {
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
   echo
-  echo "Run all basic table operation example."
+  echo "Run all basic table operations example."
   ../examples/bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
 
   echo

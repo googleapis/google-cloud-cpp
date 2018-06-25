@@ -51,10 +51,4 @@ The example uses the following headers:
 
 @snippet bigtable_samples.cc delete table
 
-### Put it all together
-
-Here is the full example
-
-@snippet bigtable_samples.cc all code
-
 */

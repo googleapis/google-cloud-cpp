@@ -5,9 +5,7 @@ referenced from the Doxygen landing page as "Hello World".
 
 ## Table of Contents
 
-- [Before you begin](#before-you-begin)
-  - [Compile the Examples](#compile-the-examples)
-  - [Run the examples against the Cloud Bigtable Emulator](#run-the-examples-against-the-cloud-bigtable-emulator)
+- [Before you begin](#before-you-begin)  
   - [Run the examples against the Cloud Bigtable Service](#run-the-examples-against-the-cloud-bigtable-service)
 - [Samples](#samples)
   - [Hello World](#hello-world)

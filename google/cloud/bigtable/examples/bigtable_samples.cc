@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include <google/protobuf/text_format.h>
 #include <deque>
 #include <list>
 #include <sstream>
+//! [bigtable includes]
 
 namespace {
 
