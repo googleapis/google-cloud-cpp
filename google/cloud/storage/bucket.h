@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 
 namespace google {
 namespace cloud {
@@ -29,7 +29,7 @@ inline namespace STORAGE_CLIENT_NS {
 class Bucket {
  public:
   /// Create an object to access @p bucket_name.
-  Bucket(std::shared_ptr<Client> client, std::string bucket_name)
+  Bucket(std::shared_ptr<internal::RawClient> client, std::string bucket_name)
       : client_(std::move(client)), bucket_name_(std::move(bucket_name)) {
     ValidateBucketName(bucket_name_);
   }
@@ -90,7 +90,7 @@ class Bucket {
       internal::InsertObjectMediaRequest const& request);
 
  private:
-  std::shared_ptr<Client> client_;
+  std::shared_ptr<internal::RawClient> client_;
   std::string bucket_name_;
 };
 }  // namespace STORAGE_CLIENT_NS

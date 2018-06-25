@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -23,13 +23,13 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
-class MockClient : public storage::Client {
+class MockClient : public google::cloud::storage::internal::RawClient {
  public:
   // The MOCK_* macros get confused if the return type is a compound template
   // with a comma, that is because Foo<T,R> looks like two arguments to the
   // preprocessor, but Foo<R> will look like a single argument.
   template <typename R>
-  using ResponseWrapper = std::pair<storage::Status, R>;
+  using ResponseWrapper = std::pair<google::cloud::storage::Status, R>;
 
   MOCK_METHOD1(GetBucketMetadata,
                ResponseWrapper<storage::BucketMetadata>(

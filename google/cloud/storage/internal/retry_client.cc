@@ -43,7 +43,7 @@ struct RetryUtils {
    */
   template <typename Request, typename Response>
   using DesiredSignature = std::pair<google::cloud::storage::Status, Response> (
-      google::cloud::storage::Client::*)(Request const&);
+      google::cloud::storage::internal::RawClient::*)(Request const&);
 
   /**
    * Determine if @p T is a pointer to member function with the expected
@@ -103,7 +103,8 @@ struct RetryUtils {
       typename CheckSignature<MemberFunction>::ReturnType>::type
   MakeCall(google::cloud::storage::RetryPolicy& retry_policy,
            google::cloud::storage::BackoffPolicy& backoff_policy,
-           google::cloud::storage::Client& client, MemberFunction function,
+           google::cloud::storage::internal::RawClient& client,
+           MemberFunction function,
            typename CheckSignature<MemberFunction>::RequestType const& request,
            char const* error_message) {
     google::cloud::storage::Status last_status;
@@ -133,7 +134,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-RetryClient::RetryClient(std::shared_ptr<Client> client)
+RetryClient::RetryClient(std::shared_ptr<RawClient> client)
     : RetryClient(
           std::move(client),
           google::cloud::internal::LimitedTimeRetryPolicy<Status, StatusTraits>(
@@ -148,7 +149,7 @@ std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return RetryUtils::MakeCall(*retry_policy, *backoff_policy, *client_,
-                              &Client::GetBucketMetadata, request, __func__);
+                              &RawClient::GetBucketMetadata, request, __func__);
 }
 
 std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
@@ -156,7 +157,7 @@ std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return RetryUtils::MakeCall(*retry_policy, *backoff_policy, *client_,
-                              &Client::InsertObjectMedia, request, __func__);
+                              &RawClient::InsertObjectMedia, request, __func__);
 }
 
 std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
@@ -164,7 +165,8 @@ std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return RetryUtils::MakeCall(*retry_policy, *backoff_policy, *client_,
-                              &Client::ReadObjectRangeMedia, request, __func__);
+                              &RawClient::ReadObjectRangeMedia, request,
+                              __func__);
 }
 
 }  // namespace internal
