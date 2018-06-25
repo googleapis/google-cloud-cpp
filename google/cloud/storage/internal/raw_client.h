@@ -60,26 +60,6 @@ class RawClient {
 
 }  // namespace internal
 
-/**
- * Create the default client type given the options.
- */
-std::shared_ptr<internal::RawClient> CreateDefaultClient(ClientOptions options);
-
-/**
- * Create the default client type with the default configuration.
- */
-inline std::shared_ptr<internal::RawClient> CreateDefaultClient() {
-  return CreateDefaultClient(ClientOptions());
-}
-
-/**
- * Create the default client type given the credentials.
- */
-inline std::shared_ptr<internal::RawClient> CreateDefaultClient(
-    std::shared_ptr<Credentials> credentials) {
-  return CreateDefaultClient(ClientOptions(std::move(credentials)));
-}
-
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

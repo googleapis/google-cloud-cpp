@@ -44,7 +44,7 @@ run_all_bucket_examples() {
     return
   fi
   local object_name="object-$(date +%s)"
-  for example in get-metadata insert-object; do
+  for example in get-bucket-metadata insert-object; do
     log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         "storage_bucket_samples ${example} running"

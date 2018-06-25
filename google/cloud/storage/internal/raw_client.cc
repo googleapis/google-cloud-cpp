@@ -18,13 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
-std::shared_ptr<internal::RawClient> CreateDefaultClient(
-    ClientOptions options) {
-  return std::make_shared<storage::internal::DefaultClient<>>(
-      std::move(options));
-}
-}  // namespace STORAGE_CLIENT_NS
+inline namespace STORAGE_CLIENT_NS {}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

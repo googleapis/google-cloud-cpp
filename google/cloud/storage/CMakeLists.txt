@@ -89,12 +89,10 @@ endif ()
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-    bucket.h
-    bucket.cc
-    list_objects_reader.h
-    list_objects_reader.cc
     bucket_metadata.h
     bucket_metadata.cc
+    client.h
+    client.cc
     client_options.h
     client_options.cc
     credentials.h
@@ -126,8 +124,8 @@ add_library(storage_client
     internal/request_parameters.h
     internal/retry_client.h
     internal/retry_client.cc
-    object.h
-    object.cc
+    list_objects_reader.h
+    list_objects_reader.cc
     object_metadata.h
     object_metadata.cc
     object_stream.h
@@ -181,7 +179,6 @@ create_bazel_config(storage_client_testing)
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
-    list_objects_reader_test.cc
     bucket_metadata_test.cc
     bucket_test.cc
     internal/authorized_user_credentials_test.cc
@@ -193,9 +190,9 @@ set(storage_client_unit_tests
     internal/parse_rfc3339_test.cc
     internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
+    list_objects_reader_test.cc
     object_metadata_test.cc
     object_stream_test.cc
-    object_test.cc
     retry_policy_test.cc
     link_test.cc)
 
