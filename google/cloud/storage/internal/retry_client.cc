@@ -174,7 +174,7 @@ std::pair<Status, internal::ListObjectsResponse> RetryClient::ListObjects(
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return RetryUtils::MakeCall(*retry_policy, *backoff_policy, *client_,
-                              &Client::ListObjects, request, __func__);
+                              &RawClient::ListObjects, request, __func__);
 }
 
 }  // namespace internal
