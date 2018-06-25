@@ -14,7 +14,9 @@
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include <algorithm>
+#include <cctype>
 #include <iostream>
+#include <string>
 
 namespace {
 class CurlInitializer {
@@ -78,6 +80,8 @@ void CurlHeaders::Append(char* data, std::size_t size) {
   if (static_cast<std::size_t>(separator - data) < size - 2) {
     header_value = std::string(separator + 2, data + size - 2);
   }
+  std::transform(header_name.begin(), header_name.end(), header_name.begin(),
+                 [](char x) { return std::tolower(x); });
   contents_.emplace(std::move(header_name), std::move(header_value));
 }
 }  // namespace internal

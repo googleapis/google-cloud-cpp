@@ -102,8 +102,14 @@ class GcsObject(object):
         self.generation = 0
         self.revisions = {}
 
-    def get_revision(self, revision):
-        return self.revisions.get(revision, None)
+    def get_revision(self, request):
+        generation = request.args.get('generation')
+        if generation is None:
+            return self.get_latest()
+        version = self.revisions.get(generation)
+        if version is None:
+            raise ErrorResponse('Precondition Failed: generation %s not found'
+                                % generation)
 
     def get_latest(self):
         return self.revisions.get(self.generation, None)
@@ -213,6 +219,27 @@ def buckets_list(bucket_name):
             continue
         result['items'].append(o.get_latest().metadata)
     return json.dumps(result)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>')
+def objects_get(bucket_name, object_name):
+    """Implement the 'Objects: get' API.  Read objects or their metadata."""
+    media = flask.request.args.get('alt', None)
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+
+    if media is not None:
+        if media != 'media':
+            raise ErrorResponse('Invalid alt=%s parameter' % media)
+        response = flask.make_response(revision.media)
+        length = len(revision.media)
+        response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+        return response
+
+    return json.dumps(revision.metadata)
 
 
 # Define the WSGI application to handle bucket requests.

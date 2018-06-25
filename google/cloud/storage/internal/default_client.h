@@ -101,7 +101,7 @@ class DefaultClient : public RawClient {
                            '-' + std::to_string(request.end()));
     http_request.PrepareRequest(std::string{});
     auto payload = http_request.MakeRequest();
-    if (200 != payload.status_code) {
+    if (payload.status_code >= 300) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},
           internal::ReadObjectRangeResponse{});

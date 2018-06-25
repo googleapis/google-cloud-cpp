@@ -152,10 +152,10 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   request.PrepareRequest(std::string{});
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
-  EXPECT_EQ(1U, response.headers.count("X-Test-Empty"));
-  EXPECT_EQ("", response.headers.find("X-Test-Empty")->second);
-  EXPECT_LE(1U, response.headers.count("X-Test-Foo"));
-  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
+  EXPECT_EQ(1U, response.headers.count("x-test-empty"));
+  EXPECT_EQ("", response.headers.find("x-test-empty")->second);
+  EXPECT_LE(1U, response.headers.count("x-test-foo"));
+  EXPECT_EQ("bar", response.headers.find("x-test-foo")->second);
 }
 
 /// @test Verify that the Projection parameter is included if set.
