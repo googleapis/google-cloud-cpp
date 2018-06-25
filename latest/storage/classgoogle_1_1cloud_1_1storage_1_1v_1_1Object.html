@@ -79,9 +79,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a85de356acdf0f905653c0f2825562535"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a85de356acdf0f905653c0f2825562535">Object</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html">Client</a> &gt; client, std::string <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a9a99470a887bcecc37643306fcedab39">bucket_name</a>, std::string <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a0fd821269e0133b38e901e426d8331ef">object_name</a>)</td></tr>
-<tr class="memdesc:a85de356acdf0f905653c0f2825562535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object to access <code>bucket_name</code>.  <a href="#a85de356acdf0f905653c0f2825562535">More...</a><br /></td></tr>
-<tr class="separator:a85de356acdf0f905653c0f2825562535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02dec7e5d22854dba961056300e1d5f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#aa02dec7e5d22854dba961056300e1d5f">Object</a> (std::shared_ptr&lt; internal::RawClient &gt; client, std::string <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a9a99470a887bcecc37643306fcedab39">bucket_name</a>, std::string <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a0fd821269e0133b38e901e426d8331ef">object_name</a>)</td></tr>
+<tr class="memdesc:aa02dec7e5d22854dba961056300e1d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object to access <code>bucket_name</code>.  <a href="#aa02dec7e5d22854dba961056300e1d5f">More...</a><br /></td></tr>
+<tr class="separator:aa02dec7e5d22854dba961056300e1d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a99470a887bcecc37643306fcedab39"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html#a9a99470a887bcecc37643306fcedab39">bucket_name</a> () const</td></tr>
 <tr class="memdesc:a9a99470a887bcecc37643306fcedab39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of the bucket containing this object.  <a href="#a9a99470a887bcecc37643306fcedab39">More...</a><br /></td></tr>
 <tr class="separator:a9a99470a887bcecc37643306fcedab39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -93,8 +93,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>A handle for a Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html" title="A handle for a Google Cloud Storage Object. ">Object</a>. </p>
 <dl class="section warning"><dt>Warning</dt><dd>this implementation is incomplete, we are still prototyping. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a85de356acdf0f905653c0f2825562535"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85de356acdf0f905653c0f2825562535">&#9670;&nbsp;</a></span>Object()</h2>
+<a id="aa02dec7e5d22854dba961056300e1d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa02dec7e5d22854dba961056300e1d5f">&#9670;&nbsp;</a></span>Object()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">google::cloud::storage::v::Object::Object </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html">Client</a> &gt;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; internal::RawClient &gt;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
         </tr>
         <tr>
