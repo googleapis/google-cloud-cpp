@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CREDENTIAL_CONSTANTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CREDENTIAL_CONSTANTS_H_
 
-#include "google/cloud/version.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 
 namespace google {
