@@ -59,7 +59,9 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   google::cloud::bigtable::DisplayName display_name("Put description here");
   std::string cluster_id = instance_id + "-c1";
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
+      google::cloud::bigtable::ProjectId(instance_admin.project_id()),
+      google::cloud::bigtable::Zone(zone), 3,
+      google::cloud::bigtable::ClusterConfig::HDD);
   google::cloud::bigtable::InstanceConfig config(
       google::cloud::bigtable::InstanceId(instance_id), display_name,
       {{cluster_id, cluster_config}});
@@ -147,10 +149,10 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  auto location =
-      "projects/" + instance_admin.project_id() + "/locations/us-central1-a";
+  google::cloud::bigtable::Zone zone("us-central1-a");
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      location, 3, google::cloud::bigtable::ClusterConfig::HDD);
+      google::cloud::bigtable::ProjectId(instance_admin.project_id()), zone, 3,
+      google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
   std::cout << "Cluster Created " << cluster.get().name() << std::endl;
@@ -196,8 +198,11 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   // CreateCluster or GetCluster first and then modify it
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::Zone zone("us-central1-a");
+
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      "us-central1-f", 0, google::cloud::bigtable::ClusterConfig::HDD);
+      google::cloud::bigtable::ProjectId(instance_admin.project_id()), zone, 0,
+      google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)
           .get();

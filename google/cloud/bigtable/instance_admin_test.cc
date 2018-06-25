@@ -307,7 +307,9 @@ TEST_F(InstanceAdminTest, CreateInstance) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
 
   std::string delta;
@@ -351,7 +353,9 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
 
   std::string delta;
@@ -408,7 +412,9 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
 
   std::string delta;
@@ -429,7 +435,9 @@ TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
 
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
@@ -454,7 +462,9 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -500,7 +510,9 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
 
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
-      {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
+      {{"c1",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("a-zone"), 3,
+         bigtable::ClusterConfig::SSD}}}));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -1105,7 +1117,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       default_storage_type: SSD
   )";
 
@@ -1133,7 +1145,9 @@ TEST_F(InstanceAdminTest, CreateCluster) {
           }));
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig(bigtable::ProjectId("my-project"),
+                              bigtable::Zone("zone1"), 10,
+                              bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
 
@@ -1153,7 +1167,7 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       default_storage_type: SSD
   )";
   btproto::Cluster expected;
@@ -1177,7 +1191,9 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
   EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig(bigtable::ProjectId("my-project"),
+                              bigtable::Zone("zone1"), 10,
+                              bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();
@@ -1206,7 +1222,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       default_storage_type: SSD
   )";
 
@@ -1239,7 +1255,9 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
           }));
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig(bigtable::ProjectId("my-project"),
+                              bigtable::Zone("zone1"), 10,
+                              bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();
@@ -1267,7 +1285,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       state: READY
       serve_nodes: 0
       default_storage_type: SSD
@@ -1325,7 +1343,7 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       state: READY
       serve_nodes: 0
       default_storage_type: SSD
@@ -1382,7 +1400,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
-      location: 'Location1'
+      location: 'projects/my-project/locations/zone1'
       state: READY
       serve_nodes: 0
       default_storage_type: SSD

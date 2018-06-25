@@ -60,10 +60,6 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   // Build the RPC request, try to minimize copying.
   auto request = instance_config.as_proto_move();
   request.set_parent(project_name());
-  for (auto& kv : *request.mutable_clusters()) {
-    kv.second.set_location(project_name() + "/locations/" +
-                           kv.second.location());
-  }
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;

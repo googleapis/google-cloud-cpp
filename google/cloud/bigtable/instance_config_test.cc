@@ -20,13 +20,15 @@ namespace bigtable = google::cloud::bigtable;
 TEST(InstanceConfigTest, Constructor) {
   bigtable::InstanceConfig config(
       bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
-      {{"my-cluster", {"somewhere", 7, bigtable::ClusterConfig::SSD}}});
+      {{"my-cluster",
+        {bigtable::ProjectId("my-project"), bigtable::Zone("somewhere"), 7,
+         bigtable::ClusterConfig::SSD}}});
   auto proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
   EXPECT_EQ("pretty name", proto.instance().display_name());
   ASSERT_EQ(1, proto.clusters_size());
   auto cluster = proto.clusters().at("my-cluster");
-  EXPECT_EQ("somewhere", cluster.location());
+  EXPECT_EQ("projects/my-project/locations/somewhere", cluster.location());
   EXPECT_EQ(7, cluster.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::SSD, cluster.default_storage_type());
 }
@@ -35,9 +37,15 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
   bigtable::InstanceConfig config(
       bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
       {
-          {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
-          {"cluster-2", {"elsewhere", 7, bigtable::ClusterConfig::HDD}},
-          {"cluster-3", {"nowhere", 17, bigtable::ClusterConfig::HDD}},
+          {"cluster-1",
+           {bigtable::ProjectId("my-project"), bigtable::Zone("somewhere"), 7,
+            bigtable::ClusterConfig::SSD}},
+          {"cluster-2",
+           {bigtable::ProjectId("my-project"), bigtable::Zone("elsewhere"), 7,
+            bigtable::ClusterConfig::HDD}},
+          {"cluster-3",
+           {bigtable::ProjectId("my-project"), bigtable::Zone("nowhere"), 17,
+            bigtable::ClusterConfig::HDD}},
       });
   auto proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
@@ -45,12 +53,12 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
   ASSERT_EQ(3, proto.clusters_size());
 
   auto c1 = proto.clusters().at("cluster-1");
-  EXPECT_EQ("somewhere", c1.location());
+  EXPECT_EQ("projects/my-project/locations/somewhere", c1.location());
   EXPECT_EQ(7, c1.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::SSD, c1.default_storage_type());
 
   auto c3 = proto.clusters().at("cluster-3");
-  EXPECT_EQ("nowhere", c3.location());
+  EXPECT_EQ("projects/my-project/locations/nowhere", c3.location());
   EXPECT_EQ(17, c3.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::HDD, c3.default_storage_type());
 }
@@ -59,7 +67,9 @@ TEST(InstanceConfigTest, SetLabels) {
   bigtable::InstanceConfig config(
       bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
       {
-          {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
+          {"cluster-1",
+           {bigtable::ProjectId("my-project"), bigtable::Zone("somewhere"), 7,
+            bigtable::ClusterConfig::SSD}},
       });
 
   config.insert_label("foo", "bar").emplace_label("baz", "qux");
