@@ -36,7 +36,8 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   if (type == "authorized_user") {
     return std::make_shared<storage::internal::AuthorizedUserCredentials<>>(
         contents);
-  } else if (type == "service_account") {
+  }
+  if (type == "service_account") {
     return std::make_shared<storage::internal::ServiceAccountCredentials<>>(
         contents);
   }

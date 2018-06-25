@@ -44,7 +44,6 @@ storage_client_SRCS = [
     "internal/curl_wrappers.cc",
     "internal/google_application_default_credentials_file.cc",
     "internal/metadata_parser.cc",
-    "internal/openssl_util.cc",
     "internal/parse_rfc3339.cc",
     "internal/read_object_range_request.cc",
     "internal/retry_client.cc",

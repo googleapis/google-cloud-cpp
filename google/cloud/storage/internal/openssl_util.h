@@ -21,8 +21,10 @@
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
+#include <openssl/opensslv.h>
 #include <openssl/pem.h>
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <sstream>
 #include <vector>
@@ -32,6 +34,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
+#define EVP_MD_CTX_new EVP_MD_CTX_create
+#define EVP_MD_CTX_free EVP_MD_CTX_destroy
+#endif
+
 /**
  * Helper functions for Base64 and related transcoding.
  */
@@ -43,11 +50,12 @@ struct OpenSslUtils {
   static std::string Base64Encode(const std::string& str) {
     auto bio_chain = MakeBioChainForBase64Transcoding();
     int retval = 0;
+
     while (true) {
-      retval = BIO_write(bio_chain.get(), str.c_str(),
+      retval = BIO_write(static_cast<BIO*>(bio_chain.get()), str.c_str(),
                          static_cast<int>(str.length()));
       if (retval > 0) break;  // Positive value == successful write.
-      if (!BIO_should_retry(bio_chain.get())) {
+      if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
         std::ostringstream err_builder;
         err_builder << "Permanent error in " << __func__ << ": "
                     << "BIO_write returned non-retryable value of " << retval;
@@ -56,11 +64,20 @@ struct OpenSslUtils {
     }
     // Tell the b64 encoder that we're done writing data, thus prompting it to
     // add trailing '=' characters for padding if needed.
-    BIO_flush(bio_chain.get());
+    while (true) {
+      retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
+      if (retval > 0) break;  // Positive value == successful flush.
+      if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+        std::ostringstream err_builder;
+        err_builder << "Permanent error in " << __func__ << ": "
+                    << "BIO_flush returned non-retryable value of " << retval;
+        google::cloud::internal::RaiseRuntimeError(err_builder.str());
+      }
+    }
 
     // This buffer belongs to the BIO chain and is freed upon its destruction.
     BUF_MEM* buf_mem;
-    BIO_get_mem_ptr(bio_chain.get(), &buf_mem);
+    BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
     // Return a string copy of the buffer's bytes, as the buffer will be freed
     // upon this method's exit.
     return std::string(buf_mem->data, buf_mem->length);
@@ -92,29 +109,35 @@ struct OpenSslUtils {
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
     auto func_name = __func__;  // Avoid using the lambda name instead.
-    auto handle_openssl_failure = [&func_name]() -> void {
+    auto handle_openssl_failure = [&func_name](std::string error_msg) -> void {
       std::ostringstream err_builder;
-      err_builder << "Permanent error in " << func_name << ": "
-                  << "Failed to sign string with with PEM key.";
+      err_builder << "Permanent error in " << func_name
+                  << " (failed to sign string with PEM key): " << std::endl
+                  << error_msg;
       google::cloud::internal::RaiseRuntimeError(err_builder.str());
     };
 
     auto digest_ctx = std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>(
         EVP_MD_CTX_new(), &EVP_MD_CTX_free);
-    if (not(digest_ctx)) handle_openssl_failure();
+    if (not(digest_ctx)) {
+      handle_openssl_failure("Could not create context for OpenSSL digest.");
+    }
 
     const EVP_MD* digest_type = nullptr;
     switch (alg) {
       case RS256:
-        digest_type = EVP_get_digestbyname("RSA-SHA256");
+        digest_type = EVP_sha256();
         break;
     }
-    if (digest_type == nullptr) handle_openssl_failure();
+    if (digest_type == nullptr) {
+      handle_openssl_failure("Could not find specified digest in OpenSSL.");
+    }
 
     auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
-        BIO_new_mem_buf(pem_contents.c_str(), pem_contents.length()),
+        BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
+                        pem_contents.length()),
         &BIO_free);
-    if (not(pem_buffer)) handle_openssl_failure();
+    if (not(pem_buffer)) handle_openssl_failure("Could not create PEM buffer.");
 
     auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
         PEM_read_bio_PrivateKey(
@@ -126,7 +149,9 @@ struct OpenSslUtils {
             // a password, which we don't currently support.
             nullptr),
         &EVP_PKEY_free);
-    if (not(private_key)) handle_openssl_failure();
+    if (not(private_key)) {
+      handle_openssl_failure("Could not parse PEM to get private key.");
+    }
 
     const int DIGEST_SIGN_SUCCESS_CODE = 1;
     if (DIGEST_SIGN_SUCCESS_CODE !=
@@ -135,13 +160,13 @@ struct OpenSslUtils {
                            digest_type,
                            nullptr,  // ENGINE *e
                            static_cast<EVP_PKEY*>(private_key.get()))) {
-      handle_openssl_failure();
+      handle_openssl_failure("Could not initialize PEM digest.");
     }
 
     if (DIGEST_SIGN_SUCCESS_CODE !=
         EVP_DigestSignUpdate(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
                              str.c_str(), str.length())) {
-      handle_openssl_failure();
+      handle_openssl_failure("Could not update PEM digest.");
     }
 
     std::size_t signed_str_size = 0;
@@ -152,14 +177,14 @@ struct OpenSslUtils {
         EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
                             nullptr,  // unsigned char *sig
                             &signed_str_size)) {
-      handle_openssl_failure();
+      handle_openssl_failure("Could not finalize PEM digest (1/2).");
     }
 
     std::vector<unsigned char> signed_str(signed_str_size);
     if (DIGEST_SIGN_SUCCESS_CODE !=
         EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
                             signed_str.data(), &signed_str_size)) {
-      handle_openssl_failure();
+      handle_openssl_failure("Could not finalize PEM digest (2/2).");
     }
 
     return std::string(signed_str.begin(),

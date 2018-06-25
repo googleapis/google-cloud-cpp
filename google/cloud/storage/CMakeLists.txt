@@ -120,7 +120,6 @@ add_library(storage_client
     internal/metadata_parser.cc
     internal/nljson.h
     internal/openssl_util.h
-    internal/openssl_util.cc
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/read_object_range_request.h
