@@ -211,7 +211,6 @@ def buckets_list(bucket_name):
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
             continue
-        print(name)
         result['items'].append(o.get_latest().metadata)
     return json.dumps(result)
 

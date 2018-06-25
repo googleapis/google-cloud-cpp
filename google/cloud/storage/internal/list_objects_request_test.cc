@@ -15,15 +15,18 @@
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include <gmock/gmock.h>
 
-namespace gcs = google::cloud::storage;
-using namespace google::cloud::storage::internal;
+namespace google {
+namespace cloud {
+namespace storage {
+namespace testing {
+namespace {
 
 TEST(ReadObjectRangeRequest, Simple) {
-  ListObjectsRequest request("my-bucket");
+  internal::ListObjectsRequest request("my-bucket");
 
   EXPECT_EQ("my-bucket", request.bucket_name());
 
-  request.set_parameter(gcs::Prefix("foo/"));
+  request.set_parameter(Prefix("foo/"));
 }
 
 TEST(ReadObjectRangeResponse, Parse) {
@@ -72,11 +75,17 @@ TEST(ReadObjectRangeResponse, Parse) {
 )""";
   text += "[" + object1 + "," + object2 + "]}";
 
-  auto o1 = gcs::ObjectMetadata::ParseFromJson(object1);
-  auto o2 = gcs::ObjectMetadata::ParseFromJson(object2);
+  auto o1 = ObjectMetadata::ParseFromJson(object1);
+  auto o2 = ObjectMetadata::ParseFromJson(object2);
 
-  auto actual =
-      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = internal::ListObjectsResponse::FromHttpResponse(
+      internal::HttpResponse{200, text, {}});
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, testing::ElementsAre(o1, o2));
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
 }
+
+}  // namespace
+}  // namespace testing
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
