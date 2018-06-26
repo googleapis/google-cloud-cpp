@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3c_3c',['operator&lt;&lt;',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a62761f1abd6e11510ac74d60c7ef3532',1,'google::cloud::storage::v::BucketMetadata::operator&lt;&lt;()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a4d65ad17192085650f535671a3c65f97',1,'google::cloud::storage::v::ObjectMetadata::operator&lt;&lt;()']]]
+  ['listobjectsiterator',['ListObjectsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a13ebe8d065b63e1e289b734de551763e',1,'google::cloud::storage::v::ListObjectsReader']]],
+  ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a923e9a38a0457578746afb7fd85659b2',1,'google::cloud::storage::v::ListObjectsIterator']]]
 ];
