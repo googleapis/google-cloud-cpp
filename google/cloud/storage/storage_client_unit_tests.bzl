@@ -11,6 +11,7 @@ storage_client_unit_tests = [
     "internal/parse_rfc3339_test.cc",
     "internal/retry_client_test.cc",
     "internal/read_object_range_request_test.cc",
+    "internal/service_account_credentials_test.cc",
     "list_objects_reader_test.cc",
     "object_metadata_test.cc",
     "object_stream_test.cc",

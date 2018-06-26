@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/authorized_user_credentials.h"
 #include "google/cloud/storage/internal/google_application_default_credentials_file.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/service_account_credentials.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -36,7 +37,10 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
     return std::make_shared<storage::internal::AuthorizedUserCredentials<>>(
         contents);
   }
-  // TODO(#656) - support "service_account" credentials type.
+  if (type == "service_account") {
+    return std::make_shared<storage::internal::ServiceAccountCredentials<>>(
+        contents);
+  }
   google::cloud::internal::RaiseRuntimeError("Unsupported credential type (" +
                                              type + ")");
 }

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
 
 #include "google/cloud/storage/version.h"
+#include <chrono>
 #include <memory>
 
 namespace google {
