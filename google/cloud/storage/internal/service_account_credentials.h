@@ -82,8 +82,8 @@ class ServiceAccountCredentials : public storage::Credentials {
     // default value. See the comments around GoogleOAuthRefreshEndpoint about
     // potential drawbacks to this approach.
     char const TOKEN_URI_KEY[] = "token_uri";
-    std::string token_uri = credentials.value(
-        TOKEN_URI_KEY, GoogleOAuthRefreshEndpoint());
+    std::string token_uri =
+        credentials.value(TOKEN_URI_KEY, GoogleOAuthRefreshEndpoint());
     long int cur_time = static_cast<long int>(
         std::chrono::system_clock::to_time_t(clock_.now()));
     long int expiration_time =

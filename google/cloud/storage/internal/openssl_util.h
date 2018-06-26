@@ -34,6 +34,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+// TODO(#774): Replace this struct with standalone functions.
+
 /**
  * Helper functions for Base64 and related transcoding.
  */
@@ -109,7 +112,7 @@ struct OpenSslUtils {
     };
 
     auto digest_ctx = GetDigestCtx();
-    if (not(digest_ctx)) {
+    if (not digest_ctx) {
       handle_openssl_failure("Could not create context for OpenSSL digest.");
     }
 
@@ -127,7 +130,7 @@ struct OpenSslUtils {
         BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
                         pem_contents.length()),
         &BIO_free);
-    if (not(pem_buffer)) handle_openssl_failure("Could not create PEM buffer.");
+    if (not pem_buffer) handle_openssl_failure("Could not create PEM buffer.");
 
     auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
         PEM_read_bio_PrivateKey(
