@@ -7,7 +7,7 @@ referenced from the Doxygen landing page as "Hello World".
 
 - [Before you begin](#before-you-begin)
   - [Compile the Examples](#compile-the-examples)  
-  - [Run the examples against the Cloud Bigtable Service](#run-the-examples-against-the-cloud-bigtable-service)
+  - [Run the Examples](#run-the-examples)
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
@@ -20,7 +20,7 @@ These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
 [top-level README](../../README.md) file.
 
-### Run the examples against the Cloud Bigtable Service
+### Run the Examples
 
 You first need to create a production instance, the easiest way is to
 follow the
@@ -73,7 +73,7 @@ After configuring gRPC, you can run the examples using:
 
 ```console
 $ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
+$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
 $ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
 ```
 
@@ -102,9 +102,9 @@ Examples:
 After configuring gRPC, you can run the examples using:
 
 ```console
-$ export PROJECT_ID=... # # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
-$ export CLUSTER_ID=... # Cloud Bigtable cluster ID
+$ export PROJECT_ID=... # Your Google Cloud Platform project ID
+$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
+$ export CLUSTER_ID=... # Your Cloud Bigtable cluster ID
 $ export ZONE=... # Name of the zone where the example will create a new instance
 $ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
 ```

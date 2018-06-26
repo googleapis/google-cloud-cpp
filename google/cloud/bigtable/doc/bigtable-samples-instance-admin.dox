@@ -5,7 +5,7 @@ This example is a very simple "Instance Admin" application, which illustrates ho
 
 - Create a production instance and run basic instance admin operations.
 - Create a development instance.
-- Delete an instance
+- Delete an instance.
 - Create a new cluster.
 - Delete a cluster.
 
