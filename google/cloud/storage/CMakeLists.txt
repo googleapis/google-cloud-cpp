@@ -128,7 +128,6 @@ add_library(storage_client
     internal/retry_client.h
     internal/retry_client.cc
     internal/service_account_credentials.h
-    internal/time_fetcher.h
     object.h
     object.cc
     object_metadata.h

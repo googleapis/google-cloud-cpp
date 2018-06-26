@@ -30,19 +30,12 @@ namespace internal {
  * We currently only support RSA with SHA-256, but use this enum for
  * readability and easy addition of support for other algorithms.
  */
-enum JWTSigningAlgorithms { RS256 };
+enum class JwtSigningAlgorithms { RS256 };
 
 /// The endpoint to create an access token from.
 inline const char* GoogleOAuthRefreshEndpoint() {
-  // TODO(houglum): Transition to using the new audience endpoint:
-  //     https://oauth2.googleapis.com/token
-  // The two are not always interchangeable, as some credentials require you
-  // pass the same "aud" value used to create it (e.g. in a JSON keyfile
-  // downloaded from the Cloud Console, this is the value for "token_uri", but
-  // gcloud ADC files don't contain "token_uri", so we basically have to guess
-  // which refresh endpoint, new or old, it was intended for use with.
-  // Google devs may see more context on this at the internally visible issue:
-  // https://issuetracker.google.com/issues/79946689
+  // TODO(#769): Transition to using the new audience endpoint:
+  // https://oauth2.googleapis.com/token
   static constexpr char endpoint[] =
       "https://accounts.google.com/o/oauth2/token";
   return endpoint;
@@ -50,6 +43,13 @@ inline const char* GoogleOAuthRefreshEndpoint() {
 
 /// The max lifetime of an access token, in seconds.
 constexpr int GoogleOAuthAccessTokenLifetime() { return 3600; }
+
+/// The skew in seconds, to be subtracted from a token's expiration time,
+/// used to determine if we should attempt to refresh and get a new access
+/// token. This helps avoid a token potentially expiring mid-request.
+constexpr std::chrono::seconds GoogleOAuthTokenExpirationSlack() {
+  return std::chrono::seconds(500);
+}
 
 // OAuth2.0 scopes used for various Cloud Storage functionality.
 
@@ -82,15 +82,6 @@ inline const char* GoogleOAuthScopeDevstorageReadWrite() {
       "https://www.googleapis.com/auth/devstorage.read_write";
   return scope;
 }
-
-/// Start refreshing tokens as soon as only this percent of their TTL is left.
-constexpr int RefreshTimeSlackPercent() { return 5; }
-
-/// Minimum time before the token expiration to start refreshing tokens.
-constexpr std::chrono::seconds RefreshTimeSlackMin() {
-  return std::chrono::seconds(10);
-}
-
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

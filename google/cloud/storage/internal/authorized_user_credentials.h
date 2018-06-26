@@ -35,7 +35,7 @@ namespace internal {
  * Takes a JSON object with the authorized user client id, secret, and access
  * token and uses Google's OAuth2 service to obtain an access token.
  *
- * @par Warning
+ * @warning
  * The current implementation is a placeholder to unblock development of the
  * Google Cloud Storage client libraries. There is substantial work needed
  * before this class is complete, in fact, we do not even have a complete set of
@@ -91,12 +91,8 @@ class AuthorizedUserCredentials : public storage::Credentials {
     header += access_token["access_token"].get_ref<std::string const&>();
     std::string new_id = access_token["id_token"];
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
-    auto slack_multiplier = RefreshTimeSlackPercent();
-    auto slack = expires_in * slack_multiplier / 100;
-    if (slack < RefreshTimeSlackMin()) {
-      slack = RefreshTimeSlackMin();
-    }
-    auto new_expiration = std::chrono::system_clock::now() + expires_in - slack;
+    auto new_expiration = std::chrono::system_clock::now() + expires_in -
+                          GoogleOAuthTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;

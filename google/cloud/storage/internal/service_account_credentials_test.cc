@@ -16,9 +16,9 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/time_fetcher.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
+#include <chrono>
 #include <cstring>
 
 namespace google {
@@ -28,7 +28,6 @@ namespace testing {
 namespace {
 
 using storage::internal::ServiceAccountCredentials;
-using storage::internal::TimeFetcher;
 using storage::testing::MockHttpRequest;
 using ::testing::_;
 using ::testing::An;
@@ -37,13 +36,14 @@ using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 
-// This "magic" assertion was generated using logic from an existing crypto
-// library (Python's oauth2client) from the keyfile above. It was slightly
-// modified to get the b64-encoded versions of each of the JSON objects used in
-// the signature; our JSON library's string dump of the objects dumps the keys
-// in alphabetical order (while the oauth2client crypto functionality does not),
-// which results in different strings and thus different b64-encodings of those
-// strings.
+// This "magic" assertion below was generated using logic from an existing
+// crypto library (Python's oauth2client) from the keyfile above. It was
+// slightly modified to get the b64-encoded versions of each of the JSON objects
+// used in the signature; our JSON library's string dump of the objects dumps
+// the keys in alphabetical order (while the oauth2client crypto functionality
+// does not), which results in different strings and thus different
+// b64-encodings of those strings.
+// TODO(#771): Document reproducible script to generate a fixed JWT assertion.
 constexpr char EXPECTED_ASSERTION_PARAM[] =
     R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1Mjk3MzY4NjMsImlhdCI6MTUyOTczMzI2MywiaXNzIjoiYTFhMTExYWExMTExYTExYTExYTExYWExMTFhMTExYTFhMTExMTExMSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9jbG91ZC1wbGF0Zm9ybSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtLnJlYWQtb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UuZnVsbF9jb250cm9sIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5yZWFkX29ubHkgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfd3JpdGUifQ.ZMO0DqAn7sQf17gECzWk3kNaywl1tuPRtPPcfa6OyCQAg0uvy3niiIgRmOt53ziF0Lz1XRvoX1IauRnAEjAjFVWND7tXSkNL40nWwcT0WiNxX78xXR61zNZ-3Fv2L4bTnNfnS7DtR0__ReKkL7zErLDVnErfnpihijZOOkzIPv4q3QRul2lupAPurnjdiYVQBScvWSG-kXAzt58fwUe8-VdvLc1NH6P37OWw6fZQ1Fa8Ue3ybH5NlpHTFaz94WwvFpHDzhoLIKztNvOsK-pImkpKzCNqZAhfbuXuoDUiGCoLlDVi3Viw7PLI4NEMh-aMmYA02qyg_xZyzwUDBNv0Vg)""";
 constexpr long int FIXED_JWT_TIMESTAMP = 1529733263;
@@ -70,14 +70,15 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
   void TearDown() { MockHttpRequest::Clear(); }
 };
 
-struct FakeTimeFetcher : public TimeFetcher {
+struct FakeClock : public std::chrono::system_clock {
  public:
-  long int GetSecondsSinceEpoch() {
-    // gmock doesn't easily allow copying mock objects, but we require this
-    // struct to be copyable. So while the usual approach would be mocking this
-    // method and defining its return value in each test, we instead override
-    // this method and hard-code the return value for all instances.
-    return FIXED_JWT_TIMESTAMP;
+  // gmock doesn't easily allow copying mock objects, but we require this
+  // struct to be copyable. So while the usual approach would be mocking this
+  // method and defining its return value in each test, we instead override
+  // this method and hard-code the return value for all instances.
+  static std::chrono::system_clock::time_point now() {
+    return std::chrono::system_clock::from_time_t(
+        static_cast<std::time_t>(FIXED_JWT_TIMESTAMP));
   }
 };
 
@@ -129,7 +130,7 @@ TEST_F(ServiceAccountCredentialsTest,
   EXPECT_CALL(*mock_http_request_handle, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest, FakeTimeFetcher> credentials(
+  ServiceAccountCredentials<MockHttpRequest, FakeClock> credentials(
       JSON_KEYFILE_CONTENTS);
 
   // Calls Refresh to obtain the access token for our authorization header.

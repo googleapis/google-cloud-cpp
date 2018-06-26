@@ -23,7 +23,6 @@ storage_client_HDRS = [
     "internal/request_parameters.h",
     "internal/retry_client.h",
     "internal/service_account_credentials.h",
-    "internal/time_fetcher.h",
     "object.h",
     "object_metadata.h",
     "object_stream.h",

@@ -47,7 +47,7 @@ struct OpenSslUtils {
   /**
    * Encode a string using Base64.
    */
-  static std::string Base64Encode(const std::string& str) {
+  static std::string Base64Encode(std::string const& str) {
     auto bio_chain = MakeBioChainForBase64Transcoding();
     int retval = 0;
 
@@ -55,7 +55,7 @@ struct OpenSslUtils {
       retval = BIO_write(static_cast<BIO*>(bio_chain.get()), str.c_str(),
                          static_cast<int>(str.length()));
       if (retval > 0) break;  // Positive value == successful write.
-      if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+      if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
         std::ostringstream err_builder;
         err_builder << "Permanent error in " << __func__ << ": "
                     << "BIO_write returned non-retryable value of " << retval;
@@ -67,7 +67,7 @@ struct OpenSslUtils {
     while (true) {
       retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
       if (retval > 0) break;  // Positive value == successful flush.
-      if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+      if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
         std::ostringstream err_builder;
         err_builder << "Permanent error in " << __func__ << ": "
                     << "BIO_flush returned non-retryable value of " << retval;
@@ -91,21 +91,18 @@ struct OpenSslUtils {
    * characters from a Base64-encoded string) and may not function correctly
    * for strings containing Unicode characters.
    */
-  static std::string& RightTrim(std::string& str, const char& trim_ch) {
-    str.erase(
-        std::find_if(str.rbegin(), str.rend(),
-                     [&trim_ch](char cur_ch) { return trim_ch != cur_ch; })
-            .base(),
-        str.end());
-    return str;
+  static void RightTrim(std::string& str, char trim_ch) {
+    if (str.length() == 0) return;
+    size_t end_pos = str.find_last_not_of(trim_ch);
+    if (std::string::npos != end_pos) str.resize(end_pos + 1);
   }
 
   /**
    * Sign a string with the private key from a PEM container.
    */
   static std::string SignStringWithPem(
-      const std::string& str, const std::string& pem_contents,
-      google::cloud::storage::internal::JWTSigningAlgorithms alg) {
+      std::string const& str, std::string const& pem_contents,
+      google::cloud::storage::internal::JwtSigningAlgorithms alg) {
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
     auto func_name = __func__;  // Avoid using the lambda name instead.
@@ -125,7 +122,7 @@ struct OpenSslUtils {
 
     const EVP_MD* digest_type = nullptr;
     switch (alg) {
-      case RS256:
+      case JwtSigningAlgorithms::RS256:
         digest_type = EVP_sha256();
         break;
     }
@@ -198,7 +195,7 @@ struct OpenSslUtils {
    * -  Replace '/' with '_'
    * -  Right-trim '=' characters
    */
-  static std::string UrlsafeBase64Encode(const std::string& str) {
+  static std::string UrlsafeBase64Encode(std::string const& str) {
     std::string b64str = Base64Encode(str);
     std::replace(b64str.begin(), b64str.end(), '+', '-');
     std::replace(b64str.begin(), b64str.end(), '/', '_');

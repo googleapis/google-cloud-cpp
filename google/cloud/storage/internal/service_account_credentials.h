@@ -20,7 +20,6 @@
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/time_fetcher.h"
 #include <chrono>
 #include <condition_variable>
 #include <ctime>
@@ -40,7 +39,7 @@ namespace internal {
  * Takes a JSON object representing the contents of a service account keyfile,
  * and uses Google's OAuth2 service to obtain an access token.
  *
- * @par Warning
+ * @warning
  * The current implementation is a placeholder to unblock development of the
  * Google Cloud Storage client libraries. There is substantial work needed
  * before this class is complete, in fact, we do not even have a complete set of
@@ -53,7 +52,7 @@ namespace internal {
  * @tparam HttpRequestType a dependency injection point to make HTTP requests.
  */
 template <typename HttpRequestType = CurlRequest,
-          typename TimeFetcherType = TimeFetcher>
+          typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public storage::Credentials {
  public:
   explicit ServiceAccountCredentials(std::string const& content)
@@ -61,9 +60,7 @@ class ServiceAccountCredentials : public storage::Credentials {
 
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string oauth_server)
-      : requestor_(std::move(oauth_server)),
-        expiration_time_(),
-        time_fetcher_() {
+      : requestor_(std::move(oauth_server)), expiration_time_(), clock_() {
     auto credentials = nl::json::parse(content);
     // This is the value of grant_type for:
     // - JSON-formatted service account keyfiles downloaded from Cloud Console
@@ -72,6 +69,7 @@ class ServiceAccountCredentials : public storage::Credentials {
         {"kid", credentials["private_key_id"].get_ref<std::string const&>()},
         {"typ", "JWT"}};
 
+    // TODO(#770): Remove all scopes except "cloud-platform".
     std::ostringstream scope_oss;
     scope_oss << GoogleOAuthScopeCloudPlatform() << " "
               << GoogleOAuthScopeCloudPlatformReadOnly() << " "
@@ -89,7 +87,8 @@ class ServiceAccountCredentials : public storage::Credentials {
     } else {
       token_uri = GoogleOAuthRefreshEndpoint();
     }
-    long int cur_time = time_fetcher_.GetSecondsSinceEpoch();
+    long int cur_time = static_cast<long int>(
+        std::chrono::system_clock::to_time_t(clock_.now()));
     nl::json assertion_payload = {
         {"iss", credentials["private_key_id"].get_ref<std::string const&>()},
         {"scope", scope_oss.str()},
@@ -127,7 +126,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     std::string encoded_signature =
         OpenSslUtils::UrlsafeBase64Encode(OpenSslUtils::SignStringWithPem(
             encoded_header + '.' + encoded_payload, pem_contents,
-            JWTSigningAlgorithms::RS256));
+            JwtSigningAlgorithms::RS256));
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
   }
 
@@ -152,14 +151,8 @@ class ServiceAccountCredentials : public storage::Credentials {
                << access_token["access_token"].get_ref<std::string const&>();
     std::string header = header_oss.str();
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
-
-    auto slack_multiplier = RefreshTimeSlackPercent();
-    auto slack = expires_in * slack_multiplier / 100;
-    if (slack < RefreshTimeSlackMin()) {
-      slack = RefreshTimeSlackMin();
-    }
-    auto new_expiration = std::chrono::system_clock::now() + expires_in - slack;
-
+    auto new_expiration = std::chrono::system_clock::now() + expires_in -
+                          GoogleOAuthTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;
@@ -171,7 +164,7 @@ class ServiceAccountCredentials : public storage::Credentials {
   std::condition_variable cv_;
   std::string authorization_header_;
   std::chrono::system_clock::time_point expiration_time_;
-  TimeFetcherType time_fetcher_;
+  ClockType clock_;
 };
 
 }  // namespace internal
