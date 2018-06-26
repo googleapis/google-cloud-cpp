@@ -221,6 +221,11 @@ upload = flask.Flask(__name__)
 upload.debug = True
 
 
+@upload.errorhandler(ErrorResponse)
+def upload_error(error):
+    return error.as_response()
+
+
 @upload.route('/b/<bucket_name>/o', methods=['POST'])
 def objects_insert(bucket_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
