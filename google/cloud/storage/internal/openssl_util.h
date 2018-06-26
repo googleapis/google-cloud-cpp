@@ -34,11 +34,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
-#define EVP_MD_CTX_new EVP_MD_CTX_create
-#define EVP_MD_CTX_free EVP_MD_CTX_destroy
-#endif
-
 /**
  * Helper functions for Base64 and related transcoding.
  */
@@ -114,8 +109,7 @@ struct OpenSslUtils {
       google::cloud::internal::RaiseRuntimeError(err_builder.str());
     };
 
-    auto digest_ctx = std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>(
-        EVP_MD_CTX_new(), &EVP_MD_CTX_free);
+    auto digest_ctx = GetDigestCtx();
     if (not(digest_ctx)) {
       handle_openssl_failure("Could not create context for OpenSSL digest.");
     }
@@ -226,6 +220,20 @@ struct OpenSslUtils {
     BIO_set_flags(static_cast<BIO*>(bio_chain.get()), BIO_FLAGS_BASE64_NO_NL);
     return bio_chain;
   }
+
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0
+  inline static std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>
+  GetDigestCtx() {
+    return std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>(
+        EVP_MD_CTX_create(), &EVP_MD_CTX_destroy);
+  };
+#else
+  inline static std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>
+  GetDigestCtx() {
+    return std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>(
+        EVP_MD_CTX_new(), &EVP_MD_CTX_free);
+  };
+#endif
 };
 
 }  // namespace internal
