@@ -40,10 +40,10 @@ std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
       new LimitedErrorCountRetryPolicy(*this));
 }
 
-void LimitedErrorCountRetryPolicy::setup(
+void LimitedErrorCountRetryPolicy::Setup(
     grpc::ClientContext& /*unused*/) const {}
 
-bool LimitedErrorCountRetryPolicy::on_failure(grpc::Status const& status) {
+bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(status);
 }
 
@@ -54,13 +54,13 @@ std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
   return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(*this));
 }
 
-void LimitedTimeRetryPolicy::setup(grpc::ClientContext& context) const {
+void LimitedTimeRetryPolicy::Setup(grpc::ClientContext& context) const {
   if (context.deadline() >= impl_.deadline()) {
     context.set_deadline(impl_.deadline());
   }
 }
 
-bool LimitedTimeRetryPolicy::on_failure(grpc::Status const& status) {
+bool LimitedTimeRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(status);
 }
 

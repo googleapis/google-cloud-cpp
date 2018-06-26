@@ -157,9 +157,9 @@ void RowReader::MakeRequest() {
   }
 
   context_ = bigtable::internal::make_unique<grpc::ClientContext>();
-  retry_policy_->setup(*context_);
-  backoff_policy_->setup(*context_);
-  metadata_update_policy_.setup(*context_);
+  retry_policy_->Setup(*context_);
+  backoff_policy_->Setup(*context_);
+  metadata_update_policy_.Setup(*context_);
   stream_ = client_->ReadRows(context_.get(), request);
   stream_is_open_ = true;
 
@@ -206,7 +206,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
       return;
     }
 
-    if (not status.ok() and not retry_policy_->on_failure(status)) {
+    if (not status.ok() and not retry_policy_->OnFailure(status)) {
       if (raise_on_error_) {
         google::cloud::internal::RaiseRuntimeError("Unretriable error: " +
                                                    status.error_message());
@@ -215,7 +215,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
       return;
     }
 
-    auto delay = backoff_policy_->on_completion(status);
+    auto delay = backoff_policy_->OnCompletion(status);
     std::this_thread::sleep_for(delay);
 
     // If we reach this place, we failed and need to restart the call.

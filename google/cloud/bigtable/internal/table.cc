@@ -58,16 +58,16 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
   grpc::Status status;
   while (true) {
     grpc::ClientContext client_context;
-    rpc_policy->setup(client_context);
-    backoff_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
+    rpc_policy->Setup(client_context);
+    backoff_policy->Setup(client_context);
+    metadata_update_policy_.Setup(client_context);
     status = client_->MutateRow(&client_context, request, &response);
     if (status.ok()) {
       return failures;
     }
     // It is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended).
-    if (not rpc_policy->on_failure(status) or not is_idempotent) {
+    if (not rpc_policy->OnFailure(status) or not is_idempotent) {
       google::rpc::Status rpc_status;
       rpc_status.set_code(status.error_code());
       rpc_status.set_message(status.error_message());
@@ -78,7 +78,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
           "Permanent (or too many transient) errors in Table::Apply()");
       return failures;
     }
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
 }
@@ -101,14 +101,14 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
                                           std::forward<BulkMutation>(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
-    backoff_policy->setup(client_context);
-    retry_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
+    backoff_policy->Setup(client_context);
+    retry_policy->Setup(client_context);
+    metadata_update_policy_.Setup(client_context);
     status = mutator.MakeOneRequest(*client_, client_context);
-    if (not status.ok() and not retry_policy->on_failure(status)) {
+    if (not status.ok() and not retry_policy->OnFailure(status)) {
       break;
     }
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
   auto failures = mutator.ExtractFinalFailures();
@@ -239,9 +239,9 @@ void Table::SampleRowsImpl(
 
   while (true) {
     grpc::ClientContext client_context;
-    backoff_policy->setup(client_context);
-    retry_policy->setup(client_context);
-    metadata_update_policy_.setup(client_context);
+    backoff_policy->Setup(client_context);
+    retry_policy->Setup(client_context);
+    metadata_update_policy_.Setup(client_context);
 
     auto stream = client_->SampleRowKeys(&client_context, request);
     while (stream->Read(&response)) {
@@ -255,13 +255,13 @@ void Table::SampleRowsImpl(
     if (status.ok()) {
       break;
     }
-    if (not retry_policy->on_failure(status)) {
+    if (not retry_policy->OnFailure(status)) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "No more retries allowed as per policy.");
       return;
     }
     clearer();
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
 }

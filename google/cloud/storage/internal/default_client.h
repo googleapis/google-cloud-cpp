@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/raw_client.h"
 
 namespace google {
 namespace cloud {
@@ -32,7 +32,7 @@ namespace internal {
  * TODO(#717) - document the CurlRequest interface as a concept.
  */
 template <typename HttpRequest = CurlRequest>
-class DefaultClient : public Client {
+class DefaultClient : public RawClient {
  public:
   explicit DefaultClient(std::shared_ptr<Credentials> credentials)
       : DefaultClient(ClientOptions(std::move(credentials))) {}
@@ -109,6 +109,27 @@ class DefaultClient : public Client {
     return std::make_pair(Status(),
                           internal::ReadObjectRangeResponse::FromHttpResponse(
                               std::move(payload)));
+  }
+
+  std::pair<Status, internal::ListObjectsResponse> ListObjects(
+      internal::ListObjectsRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddQueryParameter("pageToken", request.page_token());
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{});
+    auto payload = http_request.MakeRequest();
+    if (200 != payload.status_code) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          internal::ListObjectsResponse{});
+    }
+    std::cerr << __func__ << "\n" << payload.payload << std::endl;
+    return std::make_pair(
+        Status(),
+        internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
   }
 
  private:

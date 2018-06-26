@@ -15,78 +15,130 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
-#include "google/cloud/storage/bucket_metadata.h"
-#include "google/cloud/storage/client_options.h"
-#include "google/cloud/storage/credentials.h"
-#include "google/cloud/storage/internal/get_bucket_metadata_request.h"
-#include "google/cloud/storage/internal/insert_object_media_request.h"
-#include "google/cloud/storage/internal/read_object_range_request.h"
-#include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/status.h"
+#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/list_objects_reader.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
-// Forward declare RetryClient so we can make it a friend.  Cannot include
-// the file because that would create a loop.
-class RetryClient;
-}  // namespace internal
-
 /**
- * Define the interface used to communicate with Google Cloud Storage.
+ * The Google Cloud Storage Client.
  *
- * This is a dependency injection point so higher-level abstractions (like
- * `storage::Bucket` or `storage::Object`) can be effectively tested.
+ * @warning this implementation is incomplete, we are still prototyping.
  */
 class Client {
  public:
-  virtual ~Client() = default;
-
-  // The member functions of this class are not intended for general use by
-  // application developers (they are simply a dependency injection point). Make
-  // them protected, so the mock classes can override them, and then make the
-  // classes that do use them friends.
- protected:
-  friend class internal::RetryClient;
-  friend class Bucket;
-  friend class Object;
-  friend class ObjectReadStreamBuf;
   /**
-   * Execute a request to fetch bucket metadata.
-   *
-   * TODO(#690) - consider checking that modifiers in a request are compatible.
+   * Create the default client type given the options.
    */
-  virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
-      internal::GetBucketMetadataRequest const& request) = 0;
+  explicit Client(ClientOptions options);
 
-  virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
-      internal::InsertObjectMediaRequest const&) = 0;
+  /**
+   * Create the default client type with the default configuration.
+   */
+  explicit Client() : Client(ClientOptions()) {}
 
-  virtual std::pair<Status, internal::ReadObjectRangeResponse>
-  ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
+  /**
+   * Create the default client type given the credentials.
+   */
+  explicit Client(std::shared_ptr<Credentials> credentials)
+      : Client(ClientOptions(std::move(credentials))) {}
+
+  /// Build a client with specific retry and backoff policies.
+  template <typename RetryPolicy, typename BackoffPolicy>
+  Client(std::shared_ptr<internal::RawClient> client, RetryPolicy retry_policy,
+         BackoffPolicy backoff_policy)
+      : raw_client_(new internal::RetryClient(std::move(client),
+                                              std::move(retry_policy),
+                                              std::move(backoff_policy))) {}
+
+  /// Build a client with an specific RawClient, with the default retry policy
+  explicit Client(std::shared_ptr<internal::RawClient> client);
+
+  /// Build a client with an specific RawClient, without retry policies.
+  struct NoRetry {};
+  explicit Client(std::shared_ptr<internal::RawClient> client, NoRetry)
+      : raw_client_(std::move(client)) {}
+
+  /**
+   * Fetch the bucket metadata and return it.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc get bucket metadata
+   */
+  template <typename... Modifiers>
+  BucketMetadata GetBucketMetadata(std::string const& bucket_name,
+                                   Modifiers&&... modifiers) {
+    internal::GetBucketMetadataRequest request(bucket_name);
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
+    return GetBucketMetadataImpl(request);
+  }
+
+  /**
+   * Create an object given its name and media (contents).
+   *
+   * @param bucket_name the name of the bucket that will contain the object.
+   * @param object_name the name of the object to be created.
+   * @param contents the contents (media) for the new object.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc insert object
+   */
+  template <typename... Modifiers>
+  ObjectMetadata InsertObject(std::string const& bucket_name,
+                              std::string const& object_name,
+                              std::string contents, Modifiers&&... modifiers) {
+    internal::InsertObjectMediaRequest request(bucket_name, object_name,
+                                               std::move(contents));
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
+    return InsertObjectMediaImpl(request);
+  }
+
+  /**
+   * List the objects in a bucket.
+   *
+   * @param bucket_name the name of the bucket to list.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *   `Projection`, `Prefix`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
+   */
+  template <typename... Parameters>
+  ListObjectsReader ListObjects(std::string const& bucket_name,
+                                Parameters&&... parameters) {
+    return ListObjectsReader(raw_client_, bucket_name,
+                             std::forward<Parameters>(parameters)...);
+  }
+
+ private:
+  BucketMetadata GetBucketMetadataImpl(
+      internal::GetBucketMetadataRequest const& request);
+  ObjectMetadata InsertObjectMediaImpl(
+      internal::InsertObjectMediaRequest const& request);
+
+ private:
+  std::shared_ptr<internal::RawClient> raw_client_;
 };
-
-/**
- * Create the default client type given the options.
- */
-std::shared_ptr<Client> CreateDefaultClient(ClientOptions options);
-
-/**
- * Create the default client type with the default configuration.
- */
-inline std::shared_ptr<Client> CreateDefaultClient() {
-  return CreateDefaultClient(ClientOptions());
-}
-
-/**
- * Create the default client type given the credentials.
- */
-inline std::shared_ptr<Client> CreateDefaultClient(
-    std::shared_ptr<Credentials> credentials) {
-  return CreateDefaultClient(ClientOptions(std::move(credentials)));
-}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
