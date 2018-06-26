@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H_
 
+#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 
@@ -34,9 +35,10 @@ class ClusterConfig {
   ClusterConfig(google::bigtable::admin::v2::Cluster cluster)
       : proto_(std::move(cluster)) {}
 
-  ClusterConfig(std::string location, std::int32_t serve_nodes,
+  ClusterConfig(ProjectId project_id, Zone zone, std::int32_t serve_nodes,
                 StorageType storage) {
-    proto_.set_location(std::move(location));
+    proto_.set_location("projects/" + project_id.get() + "/locations/" +
+                        zone.get());
     proto_.set_serve_nodes(serve_nodes);
     proto_.set_default_storage_type(storage);
   }

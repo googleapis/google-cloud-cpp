@@ -72,14 +72,16 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone = "us-central1-f",
+    std::string const& id, std::string const& zone_id = "us-central1-f",
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
+  bigtable::ProjectId project_id(InstanceTestEnvironment::project_id());
   bigtable::InstanceId instance_id(id);
+  bigtable::Zone zone(zone_id);
   bigtable::DisplayName display_name("Integration Tests " + id);
-  auto cluster_config =
-      bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
+  auto cluster_config = bigtable::ClusterConfig(project_id, zone, serve_node,
+                                                bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
                                   {{id + "-c1", cluster_config}});
   config.set_type(instance_type);
@@ -205,10 +207,11 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
       instance_admin_->CreateInstance(instance_config).get();
   auto clusters_before = instance_admin_->ListClusters(id);
   bigtable::ClusterId cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
-  auto cluster_config =
-      bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
+  bigtable::ProjectId project_id(instance_admin_->project_id());
+  bigtable::Zone zone("us-central1-b");
+
+  auto cluster_config = bigtable::ClusterConfig(project_id, zone, 3,
+                                                bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
@@ -283,10 +286,11 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   auto clusters_before = instance_admin_->ListClusters(id);
 
   bigtable::ClusterId another_cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
-  auto cluster_config =
-      bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
+  bigtable::ProjectId project_id(instance_admin_->project_id());
+  bigtable::Zone zone("us-central1-b");
+
+  auto cluster_config = bigtable::ClusterConfig(project_id, zone, 3,
+                                                bigtable::ClusterConfig::HDD);
   auto cluster_before =
       instance_admin_
           ->CreateCluster(cluster_config, instance_id, another_cluster_id)
@@ -322,15 +326,18 @@ TEST_F(InstanceAdminIntegrationTest, GetClusterTest) {
   bigtable::ClusterId cluster_id1(id + "-cl1");
   bigtable::ClusterId cluster_id2(id + "-cl2");
   bigtable::DisplayName display_name(id);
+  bigtable::ProjectId project_id(instance_admin_->project_id());
+  bigtable::Zone zone1("us-central1-f");
+  bigtable::Zone zone2("us-central1-b");
 
   std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
   clusters_config.push_back(
       std::make_pair(cluster_id1.get(),
-                     bigtable::ClusterConfig("us-central1-f", 3,
+                     bigtable::ClusterConfig(project_id, zone1, 3,
                                              bigtable::ClusterConfig::HDD)));
   clusters_config.push_back(
       std::make_pair(cluster_id2.get(),
-                     bigtable::ClusterConfig("us-central1-b", 3,
+                     bigtable::ClusterConfig(project_id, zone2, 3,
                                              bigtable::ClusterConfig::HDD)));
   auto instance_config =
       bigtable::InstanceConfig(instance_id, display_name, clusters_config)
@@ -358,15 +365,18 @@ TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
   bigtable::ClusterId cluster_id1(id + "-cl1");
   bigtable::ClusterId cluster_id2(id + "-cl2");
   bigtable::DisplayName display_name(id);
+  bigtable::ProjectId project_id(instance_admin_->project_id());
+  bigtable::Zone zone1("us-central1-f");
+  bigtable::Zone zone2("us-central1-b");
 
   std::vector<std::pair<std::string, bigtable::ClusterConfig>> clusters_config;
   clusters_config.push_back(
       std::make_pair(cluster_id1.get(),
-                     bigtable::ClusterConfig("us-central1-f", 3,
+                     bigtable::ClusterConfig(project_id, zone1, 3,
                                              bigtable::ClusterConfig::HDD)));
   clusters_config.push_back(
       std::make_pair(cluster_id2.get(),
-                     bigtable::ClusterConfig("us-central1-b", 3,
+                     bigtable::ClusterConfig(project_id, zone2, 3,
                                              bigtable::ClusterConfig::HDD)));
   auto instance_config =
       bigtable::InstanceConfig(instance_id, display_name, clusters_config)

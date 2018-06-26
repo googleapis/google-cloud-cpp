@@ -27,6 +27,8 @@ using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
 using InstanceId = internal::StrongType<std::string, struct InstanceTag>;
 using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
 using TableId = internal::StrongType<std::string, struct TableParam>;
+using ProjectId = internal::StrongType<std::string, struct ProjectTag>;
+using Zone = internal::StrongType<std::string, struct ZoneTag>;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
