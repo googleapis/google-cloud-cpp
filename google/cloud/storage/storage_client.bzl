@@ -42,7 +42,6 @@ storage_client_SRCS = [
     "internal/list_objects_request.cc",
     "internal/metadata_parser.cc",
     "internal/parse_rfc3339.cc",
-    "internal/raw_client.cc",
     "internal/read_object_range_request.cc",
     "internal/retry_client.cc",
     "list_objects_reader.cc",

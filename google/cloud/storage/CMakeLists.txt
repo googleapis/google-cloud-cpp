@@ -118,8 +118,7 @@ add_library(storage_client
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/raw_client.h
-    internal/raw_client.cc
-    internal/read_object_range_request.h
+        internal/read_object_range_request.h
     internal/read_object_range_request.cc
     internal/request_parameters.h
     internal/retry_client.h
