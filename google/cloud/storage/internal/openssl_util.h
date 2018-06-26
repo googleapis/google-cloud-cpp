@@ -87,8 +87,7 @@ struct OpenSslUtils {
    * for strings containing Unicode characters.
    */
   static void RightTrim(std::string& str, char trim_ch) {
-    if (str.length() == 0) return;
-    size_t end_pos = str.find_last_not_of(trim_ch);
+    auto end_pos = str.find_last_not_of(trim_ch);
     if (std::string::npos != end_pos) str.resize(end_pos + 1);
   }
 
@@ -114,7 +113,7 @@ struct OpenSslUtils {
       handle_openssl_failure("Could not create context for OpenSSL digest.");
     }
 
-    const EVP_MD* digest_type = nullptr;
+    EVP_MD const* digest_type = nullptr;
     switch (alg) {
       case JwtSigningAlgorithms::RS256:
         digest_type = EVP_sha256();
@@ -140,11 +139,11 @@ struct OpenSslUtils {
             // a password, which we don't currently support.
             nullptr),
         &EVP_PKEY_free);
-    if (not(private_key)) {
+    if (not private_key) {
       handle_openssl_failure("Could not parse PEM to get private key.");
     }
 
-    const int DIGEST_SIGN_SUCCESS_CODE = 1;
+    int const DIGEST_SIGN_SUCCESS_CODE = 1;
     if (DIGEST_SIGN_SUCCESS_CODE !=
         EVP_DigestSignInit(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
                            nullptr,  // EVP_PKEY_CTX **pctx

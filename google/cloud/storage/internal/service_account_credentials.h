@@ -50,6 +50,7 @@ namespace internal {
  *   https://tools.ietf.org/html/rfc7523
  *
  * @tparam HttpRequestType a dependency injection point to make HTTP requests.
+ * @tparam ClockType a dependency injection point to fetch the current time.
  */
 template <typename HttpRequestType = CurlRequest,
           typename ClockType = std::chrono::system_clock>
@@ -80,22 +81,20 @@ class ServiceAccountCredentials : public storage::Credentials {
     // "token_uri" attribute in the JSON object.  In this case, we try using the
     // default value. See the comments around GoogleOAuthRefreshEndpoint about
     // potential drawbacks to this approach.
-    std::string token_uri;
-    const char TOKEN_URI_KEY[] = "token_uri";
-    if (credentials.count(TOKEN_URI_KEY)) {
-      token_uri = credentials["token_uri"].get_ref<std::string const&>();
-    } else {
-      token_uri = GoogleOAuthRefreshEndpoint();
-    }
+    char const TOKEN_URI_KEY[] = "token_uri";
+    std::string token_uri = credentials.value(
+        TOKEN_URI_KEY, GoogleOAuthRefreshEndpoint());
     long int cur_time = static_cast<long int>(
         std::chrono::system_clock::to_time_t(clock_.now()));
+    long int expiration_time =
+        cur_time + GoogleOAuthAccessTokenLifetime().count();
     nl::json assertion_payload = {
         {"iss", credentials["private_key_id"].get_ref<std::string const&>()},
         {"scope", scope_oss.str()},
         {"aud", token_uri},
         {"iat", cur_time},
         // Resulting access token should be expire after one hour.
-        {"exp", cur_time + GoogleOAuthAccessTokenLifetime()}};
+        {"exp", expiration_time}};
 
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();

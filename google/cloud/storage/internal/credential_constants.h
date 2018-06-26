@@ -33,7 +33,7 @@ namespace internal {
 enum class JwtSigningAlgorithms { RS256 };
 
 /// The endpoint to create an access token from.
-inline const char* GoogleOAuthRefreshEndpoint() {
+inline char const* GoogleOAuthRefreshEndpoint() {
   // TODO(#769): Transition to using the new audience endpoint:
   // https://oauth2.googleapis.com/token
   static constexpr char endpoint[] =
@@ -41,8 +41,10 @@ inline const char* GoogleOAuthRefreshEndpoint() {
   return endpoint;
 }
 
-/// The max lifetime of an access token, in seconds.
-constexpr int GoogleOAuthAccessTokenLifetime() { return 3600; }
+/// The max lifetime in seconds of an access token.
+constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
+  return std::chrono::seconds(3600);
+}
 
 /// The skew in seconds, to be subtracted from a token's expiration time,
 /// used to determine if we should attempt to refresh and get a new access
@@ -51,37 +53,39 @@ constexpr std::chrono::seconds GoogleOAuthTokenExpirationSlack() {
   return std::chrono::seconds(500);
 }
 
-// OAuth2.0 scopes used for various Cloud Storage functionality.
+//@{
+/// @name OAuth2.0 scopes used for various Cloud Storage functionality.
 
-inline const char* GoogleOAuthScopeCloudPlatform() {
+inline char const* GoogleOAuthScopeCloudPlatform() {
   static constexpr char scope[] =
       "https://www.googleapis.com/auth/cloud-platform";
   return scope;
 }
 
-inline const char* GoogleOAuthScopeCloudPlatformReadOnly() {
+inline char const* GoogleOAuthScopeCloudPlatformReadOnly() {
   static constexpr char scope[] =
       "https://www.googleapis.com/auth/cloud-platform.read-only";
   return scope;
 }
 
-inline const char* GoogleOAuthScopeDevstorageFullControl() {
+inline char const* GoogleOAuthScopeDevstorageFullControl() {
   static constexpr char scope[] =
       "https://www.googleapis.com/auth/devstorage.full_control";
   return scope;
 }
 
-inline const char* GoogleOAuthScopeDevstorageReadOnly() {
+inline char const* GoogleOAuthScopeDevstorageReadOnly() {
   static constexpr char scope[] =
       "https://www.googleapis.com/auth/devstorage.read_only";
   return scope;
 }
 
-inline const char* GoogleOAuthScopeDevstorageReadWrite() {
+inline char const* GoogleOAuthScopeDevstorageReadWrite() {
   static constexpr char scope[] =
       "https://www.googleapis.com/auth/devstorage.read_write";
   return scope;
 }
+//@}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
