@@ -91,6 +91,8 @@ add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
     bucket.h
     bucket.cc
+    list_objects_reader.h
+    list_objects_reader.cc
     bucket_metadata.h
     bucket_metadata.cc
     client_options.h
@@ -110,6 +112,8 @@ add_library(storage_client
     internal/google_application_default_credentials_file.cc
     internal/http_response.h
     internal/insert_object_media_request.h
+    internal/list_objects_request.h
+    internal/list_objects_request.cc
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
@@ -177,11 +181,13 @@ create_bazel_config(storage_client_testing)
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
+    list_objects_reader_test.cc
     bucket_metadata_test.cc
     bucket_test.cc
     internal/authorized_user_credentials_test.cc
     internal/default_client_test.cc
     internal/google_application_default_credentials_file_test.cc
+    internal/list_objects_request_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc

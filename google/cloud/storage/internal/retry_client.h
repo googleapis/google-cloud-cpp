@@ -47,6 +47,9 @@ class RetryClient : public RawClient {
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       internal::ReadObjectRangeRequest const&) override;
 
+  std::pair<Status, internal::ListObjectsResponse> ListObjects(
+      internal::ListObjectsRequest const&) override;
+
  private:
   std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy> retry_policy_;

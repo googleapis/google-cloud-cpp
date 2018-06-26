@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/throw_delegate.h"
 #include <type_traits>
+#include <utility>
 
 namespace google {
 namespace cloud {

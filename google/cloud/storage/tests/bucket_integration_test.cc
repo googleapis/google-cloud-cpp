@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/random.h"
 #include "google/cloud/storage/bucket.h"
-#include <gtest/gtest.h>
+#include "google/cloud/storage/list_objects_reader.h"
+#include <gmock/gmock.h>
 
 namespace storage = google::cloud::storage;
+using ::testing::HasSubstr;
 
 namespace {
 /// Store the project and instance captured from the command-line arguments.
@@ -153,6 +156,39 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
                                       storage::IfGenerationNotMatch(0));
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_NE(original.generation(), metadata.generation());
+}
+
+TEST_F(BucketIntegrationTest, ListObjects) {
+  auto client = storage::CreateDefaultClient();
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  storage::Bucket bucket(client, bucket_name);
+
+  auto gen = google::cloud::internal::MakeDefaultPRNG();
+  auto create_small_object = [&bucket, &gen] {
+    auto object_name =
+        "object-" + google::cloud::internal::Sample(
+                        gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    auto meta = bucket.InsertObject(object_name, "blah blah",
+                                    storage::IfGenerationMatch(0));
+    return meta.name();
+  };
+
+  std::vector<std::string> expected(3);
+  std::generate_n(expected.begin(), expected.size(), create_small_object);
+
+  storage::ListObjectsReader reader(client, bucket_name);
+  std::vector<std::string> actual;
+  for (auto it = reader.begin(); it != reader.end(); ++it) {
+    auto const& meta = *it;
+    EXPECT_EQ(bucket_name, meta.bucket());
+    actual.push_back(meta.name());
+  }
+  // There may be a lot of other objects in the bucket, so we want to verify
+  // that any objects we created are found there, but cannot expect a perfect
+  // match.
+  for (auto const& name : expected) {
+    EXPECT_EQ(1, std::count(actual.begin(), actual.end(), name));
+  }
 }
 
 int main(int argc, char* argv[]) {

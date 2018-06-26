@@ -20,6 +20,7 @@
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
+#include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
@@ -52,6 +53,9 @@ class RawClient {
 
   virtual std::pair<Status, internal::ReadObjectRangeResponse>
   ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
+
+  virtual std::pair<Status, internal::ListObjectsResponse> ListObjects(
+      internal::ListObjectsRequest const&) = 0;
 };
 
 }  // namespace internal

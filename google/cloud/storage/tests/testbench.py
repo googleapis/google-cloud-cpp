@@ -200,6 +200,21 @@ def buckets_get(bucket_name):
     })
 
 
+@gcs.route('/b/<bucket_name>/o')
+def buckets_list(bucket_name):
+    """Implement the 'Objects: list' API: return the objects in a bucket."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    result = {
+        'next_page_token': '',
+        'items': []
+    }
+    for name, o in GCS_OBJECTS.items():
+        if name.find(bucket_name + '/o') != 0:
+            continue
+        result['items'].append(o.get_latest().metadata)
+    return json.dumps(result)
+
+
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
