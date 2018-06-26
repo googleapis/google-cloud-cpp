@@ -58,12 +58,26 @@ void GetBucketMetadata(storage::Client client, int& argc, char* argv[]) {
 }
 //! [get bucket metadata]
 
+//! [list objects]
+void ListObjects(storage::Client client, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{"list-objects <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  for (auto const& meta : client.ListObjects(bucket_name)) {
+    std::cout << "bucket_name=" << meta.bucket()
+              << ", object_name=" << meta.name() << std::endl;
+  }
+}
+//! [list objects]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-metadata", &GetBucketMetadata},
+      {"list-objects", &ListObjects},
   };
 
   if (argc < 2) {

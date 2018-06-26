@@ -123,6 +123,8 @@ class Client {
    * @throw std::runtime_error if the operation cannot be completed using the
    *   current policies.
    *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list objects
    */
   template <typename... Parameters>
   ListObjectsReader ListObjects(std::string const& bucket_name,
