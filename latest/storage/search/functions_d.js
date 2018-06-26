@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['validatebucketname',['ValidateBucketName',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html#a0e44b7970d345d2c968a8ae3fba2db6d',1,'google::cloud::storage::v::Bucket']]],
   ['value',['value',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html#a4bbaf5a43bd3619c31d5fd4b86ebc3dc',1,'google::cloud::storage::v::WellKnownParameter']]],
   ['version',['version',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3a2cbce32306d029d1338b7ffd911cc0',1,'google::cloud::storage::v::ClientOptions::version()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#ad9411f8799ed0871afc36182be31294c',1,'google::cloud::storage::v::version()']]],
   ['version_5fmajor',['version_major',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a848535eca2cdac22f8840b7be3072dd6',1,'google::cloud::storage::v']]],

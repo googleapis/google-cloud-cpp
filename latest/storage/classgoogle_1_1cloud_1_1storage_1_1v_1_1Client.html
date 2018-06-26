@@ -65,52 +65,64 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">google::cloud::storage::v::Client Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">google::cloud::storage::v::Client Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Define the interface used to communicate with Google Cloud Storage.  
+<p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>.  
  <a href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="client_8h_source.html">google/cloud/storage/client.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Client_1_1NoRetry.html">NoRetry</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a client with an specific RawClient, without retry policies.  <a href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Client_1_1NoRetry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5a27bb3658856d2d26f9eb4f0652f259"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a5a27bb3658856d2d26f9eb4f0652f259">~Client</a> ()=default</td></tr>
-<tr class="separator:a5a27bb3658856d2d26f9eb4f0652f259"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a182c3739a191d546dcae8c31a84dc17b"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a182c3739a191d546dcae8c31a84dc17b">GetBucketMetadata</a> (internal::GetBucketMetadataRequest const &amp;request)=0</td></tr>
-<tr class="memdesc:a182c3739a191d546dcae8c31a84dc17b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a request to fetch bucket metadata.  <a href="#a182c3739a191d546dcae8c31a84dc17b">More...</a><br /></td></tr>
-<tr class="separator:a182c3739a191d546dcae8c31a84dc17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab679adec726090ca8e8cc07608c6800e"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#ab679adec726090ca8e8cc07608c6800e">InsertObjectMedia</a> (internal::InsertObjectMediaRequest const &amp;)=0</td></tr>
-<tr class="separator:ab679adec726090ca8e8cc07608c6800e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9c3489b70ee0960ad4029b009fb7d02"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, internal::ReadObjectRangeResponse &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#aa9c3489b70ee0960ad4029b009fb7d02">ReadObjectRangeMedia</a> (internal::ReadObjectRangeRequest const &amp;)=0</td></tr>
-<tr class="separator:aa9c3489b70ee0960ad4029b009fb7d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a3bf4282c52fb43381b87d10205ae0e73"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a3bf4282c52fb43381b87d10205ae0e73">internal::RetryClient</a></td></tr>
-<tr class="separator:a3bf4282c52fb43381b87d10205ae0e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6ddc0711869de2bba9e3316713048b8"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#ab6ddc0711869de2bba9e3316713048b8">Bucket</a></td></tr>
-<tr class="separator:ab6ddc0711869de2bba9e3316713048b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0720b5f434e636e22a3ed34f847eec57"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a0720b5f434e636e22a3ed34f847eec57">Object</a></td></tr>
-<tr class="separator:a0720b5f434e636e22a3ed34f847eec57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a6273d845a7b7697aee8452b674d890"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a3a6273d845a7b7697aee8452b674d890">ObjectReadStreamBuf</a></td></tr>
-<tr class="separator:a3a6273d845a7b7697aee8452b674d890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae36719051a01248e33ac43e077a815"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a2ae36719051a01248e33ac43e077a815">Client</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html">ClientOptions</a> options)</td></tr>
+<tr class="memdesc:a2ae36719051a01248e33ac43e077a815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type given the options.  <a href="#a2ae36719051a01248e33ac43e077a815">More...</a><br /></td></tr>
+<tr class="separator:a2ae36719051a01248e33ac43e077a815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cc5c130fdb8504ff02ea2d2a2e3738e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a3cc5c130fdb8504ff02ea2d2a2e3738e">Client</a> ()</td></tr>
+<tr class="memdesc:a3cc5c130fdb8504ff02ea2d2a2e3738e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type with the default configuration.  <a href="#a3cc5c130fdb8504ff02ea2d2a2e3738e">More...</a><br /></td></tr>
+<tr class="separator:a3cc5c130fdb8504ff02ea2d2a2e3738e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe11b89b5ae59d1839bb6a3006cac90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#acbe11b89b5ae59d1839bb6a3006cac90">Client</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Credentials.html">Credentials</a> &gt; credentials)</td></tr>
+<tr class="memdesc:acbe11b89b5ae59d1839bb6a3006cac90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type given the credentials.  <a href="#acbe11b89b5ae59d1839bb6a3006cac90">More...</a><br /></td></tr>
+<tr class="separator:acbe11b89b5ae59d1839bb6a3006cac90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d7584a2908998a25dcfd6ff6011ab4"><td class="memTemplParams" colspan="2">template&lt;typename RetryPolicy , typename BackoffPolicy &gt; </td></tr>
+<tr class="memitem:a66d7584a2908998a25dcfd6ff6011ab4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a66d7584a2908998a25dcfd6ff6011ab4">Client</a> (std::shared_ptr&lt; internal::RawClient &gt; client, <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">RetryPolicy</a> retry_policy, <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">BackoffPolicy</a> backoff_policy)</td></tr>
+<tr class="memdesc:a66d7584a2908998a25dcfd6ff6011ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a client with specific retry and backoff policies.  <a href="#a66d7584a2908998a25dcfd6ff6011ab4">More...</a><br /></td></tr>
+<tr class="separator:a66d7584a2908998a25dcfd6ff6011ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a344f97645a1eb18e01cdb9153577f186"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a344f97645a1eb18e01cdb9153577f186">Client</a> (std::shared_ptr&lt; internal::RawClient &gt; client)</td></tr>
+<tr class="memdesc:a344f97645a1eb18e01cdb9153577f186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a client with an specific RawClient, with the default retry policy.  <a href="#a344f97645a1eb18e01cdb9153577f186">More...</a><br /></td></tr>
+<tr class="separator:a344f97645a1eb18e01cdb9153577f186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f46b6cb7a15526f15c45d8e2901e284"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a6f46b6cb7a15526f15c45d8e2901e284">Client</a> (std::shared_ptr&lt; internal::RawClient &gt; client, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Client_1_1NoRetry.html">NoRetry</a>)</td></tr>
+<tr class="separator:a6f46b6cb7a15526f15c45d8e2901e284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a600b8a5bcb7807d3c3691a820dd25d63"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:a600b8a5bcb7807d3c3691a820dd25d63"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a600b8a5bcb7807d3c3691a820dd25d63">GetBucketMetadata</a> (std::string const &amp;bucket_name, Modifiers &amp;&amp;... modifiers)</td></tr>
+<tr class="memdesc:a600b8a5bcb7807d3c3691a820dd25d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#a600b8a5bcb7807d3c3691a820dd25d63">More...</a><br /></td></tr>
+<tr class="separator:a600b8a5bcb7807d3c3691a820dd25d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#abd87fb73090a0dc45224f93ef8fb6cd4">InsertObject</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string contents, Modifiers &amp;&amp;... modifiers)</td></tr>
+<tr class="memdesc:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object given its name and media (contents).  <a href="#abd87fb73090a0dc45224f93ef8fb6cd4">More...</a><br /></td></tr>
+<tr class="separator:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b4e411a7826728ab6413cb9ebce946a"><td class="memTemplParams" colspan="2">template&lt;typename... Parameters&gt; </td></tr>
+<tr class="memitem:a5b4e411a7826728ab6413cb9ebce946a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html">ListObjectsReader</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a5b4e411a7826728ab6413cb9ebce946a">ListObjects</a> (std::string const &amp;bucket_name, Parameters &amp;&amp;... parameters)</td></tr>
+<tr class="memdesc:a5b4e411a7826728ab6413cb9ebce946a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the objects in a bucket.  <a href="#a5b4e411a7826728ab6413cb9ebce946a">More...</a><br /></td></tr>
+<tr class="separator:a5b4e411a7826728ab6413cb9ebce946a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Define the interface used to communicate with Google Cloud Storage. </p>
-<p>This is a dependency injection point so higher-level abstractions (like <code>storage::Bucket</code> or <code>storage::Object</code>) can be effectively tested. </p>
+<div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
+<dl class="section warning"><dt>Warning</dt><dd>this implementation is incomplete, we are still prototyping. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5a27bb3658856d2d26f9eb4f0652f259"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a27bb3658856d2d26f9eb4f0652f259">&#9670;&nbsp;</a></span>~Client()</h2>
+<a id="a2ae36719051a01248e33ac43e077a815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ae36719051a01248e33ac43e077a815">&#9670;&nbsp;</a></span>Client() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -119,7 +131,35 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual google::cloud::storage::v::Client::~Client </td>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html">ClientOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create the default client type given the options. </p>
+
+</div>
+</div>
+<a id="a3cc5c130fdb8504ff02ea2d2a2e3738e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cc5c130fdb8504ff02ea2d2a2e3738e">&#9670;&nbsp;</a></span>Client() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -127,7 +167,147 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create the default client type with the default configuration. </p>
+
+</div>
+</div>
+<a id="acbe11b89b5ae59d1839bb6a3006cac90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe11b89b5ae59d1839bb6a3006cac90">&#9670;&nbsp;</a></span>Client() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Credentials.html">Credentials</a> &gt;&#160;</td>
+          <td class="paramname"><em>credentials</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create the default client type given the credentials. </p>
+
+</div>
+</div>
+<a id="a66d7584a2908998a25dcfd6ff6011ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d7584a2908998a25dcfd6ff6011ab4">&#9670;&nbsp;</a></span>Client() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RetryPolicy , typename BackoffPolicy &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; internal::RawClient &gt;&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23">RetryPolicy</a>&#160;</td>
+          <td class="paramname"><em>retry_policy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a56f702b95907edcb6756027e3f9b5f90">BackoffPolicy</a>&#160;</td>
+          <td class="paramname"><em>backoff_policy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Build a client with specific retry and backoff policies. </p>
+
+</div>
+</div>
+<a id="a344f97645a1eb18e01cdb9153577f186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a344f97645a1eb18e01cdb9153577f186">&#9670;&nbsp;</a></span>Client() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; internal::RawClient &gt;&#160;</td>
+          <td class="paramname"><em>client</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Build a client with an specific RawClient, with the default retry policy. </p>
+
+</div>
+</div>
+<a id="a6f46b6cb7a15526f15c45d8e2901e284"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f46b6cb7a15526f15c45d8e2901e284">&#9670;&nbsp;</a></span>Client() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::storage::v::Client::Client </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; internal::RawClient &gt;&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Client_1_1NoRetry.html">NoRetry</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -135,178 +315,184 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a182c3739a191d546dcae8c31a84dc17b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a182c3739a191d546dcae8c31a84dc17b">&#9670;&nbsp;</a></span>GetBucketMetadata()</h2>
+<a id="a600b8a5bcb7807d3c3691a820dd25d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a600b8a5bcb7807d3c3691a820dd25d63">&#9670;&nbsp;</a></span>GetBucketMetadata()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Modifiers&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::pair&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&gt; google::cloud::storage::v::Client::GetBucketMetadata </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a> google::cloud::storage::v::Client::GetBucketMetadata </td>
           <td>(</td>
-          <td class="paramtype">internal::GetBucketMetadataRequest const &amp;&#160;</td>
-          <td class="paramname"><em>request</em></td><td>)</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Modifiers &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>modifiers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Execute a request to fetch bucket metadata. </p>
-<p>TODO(#690) - consider checking that modifiers in a request are compatible. </p>
+<p>Fetch the bucket metadata and return it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>query metadata information about this bucket. </td></tr>
+    <tr><td class="paramname">modifiers</td><td>a variadic list. Valid types for this operation include <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Projection.html">Projection</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the metadata cannot be fetched using the current policies.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a600b8a5bcb7807d3c3691a820dd25d63">GetBucketMetadata</a>(storage::Client client, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{<span class="stringliteral">&quot;get-bucket-metadata &lt;bucket-name&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> bucket_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> meta = client.GetBucketMetadata(bucket_name);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
-<a id="ab679adec726090ca8e8cc07608c6800e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab679adec726090ca8e8cc07608c6800e">&#9670;&nbsp;</a></span>InsertObjectMedia()</h2>
+<a id="abd87fb73090a0dc45224f93ef8fb6cd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd87fb73090a0dc45224f93ef8fb6cd4">&#9670;&nbsp;</a></span>InsertObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Modifiers&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::pair&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&gt; google::cloud::storage::v::Client::InsertObjectMedia </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a> google::cloud::storage::v::Client::InsertObject </td>
           <td>(</td>
-          <td class="paramtype">internal::InsertObjectMediaRequest const &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>contents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Modifiers &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>modifiers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Create an object given its name and media (contents). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket that will contain the object. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object to be created. </td></tr>
+    <tr><td class="paramname">contents</td><td>the contents (media) for the new object. </td></tr>
+    <tr><td class="paramname">modifiers</td><td>a variadic list. Valid types for this operation include <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Projection.html">Projection</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation cannot be completed using the current policies.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#abd87fb73090a0dc45224f93ef8fb6cd4">InsertObject</a>(storage::Client client, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 3) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{</div><div class="line">        <span class="stringliteral">&quot;insert-object &lt;bucket-name&gt; &lt;object-name&gt; &lt;object-contents (string)&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> bucket_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> object_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> contents = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> meta =</div><div class="line">      client.InsertObject(bucket_name, object_name, std::move(contents));</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The new object metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
 </div>
 </div>
-<a id="aa9c3489b70ee0960ad4029b009fb7d02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9c3489b70ee0960ad4029b009fb7d02">&#9670;&nbsp;</a></span>ReadObjectRangeMedia()</h2>
+<a id="a5b4e411a7826728ab6413cb9ebce946a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b4e411a7826728ab6413cb9ebce946a">&#9670;&nbsp;</a></span>ListObjects()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Parameters&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::pair&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html">Status</a>, internal::ReadObjectRangeResponse&gt; google::cloud::storage::v::Client::ReadObjectRangeMedia </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html">ListObjectsReader</a> google::cloud::storage::v::Client::ListObjects </td>
           <td>(</td>
-          <td class="paramtype">internal::ReadObjectRangeRequest const &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Parameters &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
         </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="ab6ddc0711869de2bba9e3316713048b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6ddc0711869de2bba9e3316713048b8">&#9670;&nbsp;</a></span>Bucket</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Bucket.html">Bucket</a></td>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a3bf4282c52fb43381b87d10205ae0e73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bf4282c52fb43381b87d10205ae0e73">&#9670;&nbsp;</a></span>internal::RetryClient</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class internal::RetryClient</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>List the objects in a bucket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket to list. </td></tr>
+    <tr><td class="paramname">parameters</td><td>a variadic list of optional parameters. Valid types for this operation include <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Projection.html">Projection</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Prefix.html">Prefix</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation cannot be completed using the current policies. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a0720b5f434e636e22a3ed34f847eec57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0720b5f434e636e22a3ed34f847eec57">&#9670;&nbsp;</a></span>Object</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Object.html">Object</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3a6273d845a7b7697aee8452b674d890"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a6273d845a7b7697aee8452b674d890">&#9670;&nbsp;</a></span>ObjectReadStreamBuf</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html">ObjectReadStreamBuf</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="client_8h_source.html">client.h</a></li>
+<li><a class="el" href="client_8cc.html">client.cc</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

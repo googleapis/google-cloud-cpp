@@ -61,14 +61,17 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">client.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="client_8h_source.html">google/cloud/storage/client.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/internal/throw_delegate.h&quot;</code><br />
 <code>#include &quot;google/cloud/storage/internal/default_client.h&quot;</code><br />
+<code>#include &quot;google/cloud/storage/internal/retry_client.h&quot;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -82,12 +85,6 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html">google::cloud::storage::v</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1storage_1_1v"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Google Cloud Storage C++ client APIs inlined, versioned namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a6702853c14557f0941aa6008aa2d2c92"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Client &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a6702853c14557f0941aa6008aa2d2c92">google::cloud::storage::v::CreateDefaultClient</a> (ClientOptions options)</td></tr>
-<tr class="memdesc:a6702853c14557f0941aa6008aa2d2c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the default client type given the options.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v.html#a6702853c14557f0941aa6008aa2d2c92">More...</a><br /></td></tr>
-<tr class="separator:a6702853c14557f0941aa6008aa2d2c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
