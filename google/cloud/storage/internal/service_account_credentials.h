@@ -63,8 +63,11 @@ class ServiceAccountCredentials : public storage::Credentials {
                                      std::string oauth_server)
       : requestor_(std::move(oauth_server)), expiration_time_(), clock_() {
     auto credentials = nl::json::parse(content);
-    // This is the value of grant_type for:
-    // - JSON-formatted service account keyfiles downloaded from Cloud Console
+    // Below, we construct a JWT refresh request used to obtain an access token.
+    // The structure of a JWT is defined in RFC 7519 (see
+    // https://tools.ietf.org/html/rfc7519), and Google-specific JWT validation
+    // logic is further described at:
+    // https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
     nl::json assertion_header = {
         {"alg", "RS256"},
         {"kid", credentials["private_key_id"].get_ref<std::string const&>()},
@@ -98,6 +101,8 @@ class ServiceAccountCredentials : public storage::Credentials {
 
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
+    // This is the value of grant_type for JSON-formatted service account
+    // keyfiles downloaded from Cloud Console.
     std::string payload("grant_type=");
     payload +=
         requestor_
