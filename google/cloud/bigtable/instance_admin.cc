@@ -314,6 +314,8 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
 
   // Build the RPC request, try to minimize copying.
   auto cluster = cluster_config.as_proto_move();
+  cluster.set_location(project_name() + "/locations/" + cluster.location());
+
   btproto::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
   request.set_parent(project_name() + "/instances/" + instance_id.get());

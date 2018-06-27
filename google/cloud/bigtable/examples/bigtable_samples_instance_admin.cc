@@ -147,8 +147,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  auto location =
-      "projects/" + instance_admin.project_id() + "/locations/us-central1-a";
+  auto location = "us-central1-a";
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
       location, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
