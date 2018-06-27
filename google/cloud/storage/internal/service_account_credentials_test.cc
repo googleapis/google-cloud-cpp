@@ -45,12 +45,12 @@ using ::testing::StrEq;
 // b64-encodings of those strings.
 // TODO(#771): Document reproducible script to generate a fixed JWT assertion.
 constexpr char EXPECTED_ASSERTION_PARAM[] =
-    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1Mjk3MzY4NjMsImlhdCI6MTUyOTczMzI2MywiaXNzIjoiYTFhMTExYWExMTExYTExYTExYTExYWExMTFhMTExYTFhMTExMTExMSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9jbG91ZC1wbGF0Zm9ybSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtLnJlYWQtb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UuZnVsbF9jb250cm9sIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5yZWFkX29ubHkgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfd3JpdGUifQ.ZMO0DqAn7sQf17gECzWk3kNaywl1tuPRtPPcfa6OyCQAg0uvy3niiIgRmOt53ziF0Lz1XRvoX1IauRnAEjAjFVWND7tXSkNL40nWwcT0WiNxX78xXR61zNZ-3Fv2L4bTnNfnS7DtR0__ReKkL7zErLDVnErfnpihijZOOkzIPv4q3QRul2lupAPurnjdiYVQBScvWSG-kXAzt58fwUe8-VdvLc1NH6P37OWw6fZQ1Fa8Ue3ybH5NlpHTFaz94WwvFpHDzhoLIKztNvOsK-pImkpKzCNqZAhfbuXuoDUiGCoLlDVi3Viw7PLI4NEMh-aMmYA02qyg_xZyzwUDBNv0Vg)""";
-constexpr long int FIXED_JWT_TIMESTAMP = 1529733263;
+    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1MzAwNjM5MjQsImlhdCI6MTUzMDA2MDMyNCwiaXNzIjoiZm9vLWVtYWlsQGZvby1wcm9qZWN0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ucmVhZC1vbmx5IGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UucmVhZF93cml0ZSJ9.C4f77UL0i1U7j6YwQEVSW0DFa6TWBt1FZbUrrL0CEyVdcWvUTAWEQbkw0kl-6OJOm6FDCgx4UOKwjPlOIcNdz0PH85n-LEWeQcSzo15k_LMaEmvh1eDSM0pWnJRJyrNi4NGrIHO4_CqRy38mH6PvThw7r_7l0oK95srZ2VJ-lOki5kO6rON4R7Kxe-IRSMoFBBEjHg2bry_4I2mHQk1yDldElBiU83VEV0kOSMbulQ-kwLaZXn8nBdAyi8UpMyqPu-ovnCCGZo4JCU_iYpF4S10Pcm0wkEOo2pS-Zqpu4pojatC-zMMAhaUiL-_yXXDrAsO4t6HCdqFcz9xSX_MWmQ)""";
+constexpr long int FIXED_JWT_TIMESTAMP = 1530060324;
 constexpr char GRANT_PARAM_UNESCAPED[] =
-    "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer";
+    "urn:ietf:params:oauth:grant-type:jwt-bearer";
 constexpr char GRANT_PARAM_ESCAPED[] =
-    "grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
+    "urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
 constexpr char JSON_KEYFILE_CONTENTS[] = R"""({
       "type": "service_account",
       "project_id": "foo-project",
@@ -119,8 +119,13 @@ TEST_F(ServiceAccountCredentialsTest,
       .WillOnce(Invoke([](std::string const& payload) {
         EXPECT_THAT(payload, HasSubstr(EXPECTED_ASSERTION_PARAM));
         // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload, HasSubstr(GRANT_PARAM_ESCAPED));
+        EXPECT_THAT(payload, HasSubstr(std::string("grant_type=") +
+                                       GRANT_PARAM_ESCAPED));
       }));
+
+  EXPECT_CALL(
+      *mock_http_request_handle,
+      AddHeader(StrEq("Content-Type: application/x-www-form-urlencoded")));
 
   std::string response = R"""({
       "token_type": "Type",
@@ -145,6 +150,8 @@ TEST_F(ServiceAccountCredentialsTest,
       MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
   EXPECT_CALL(*mock_http_request_handle,
               PrepareRequest(An<std::string const&>()))
+      .Times(1);
+  EXPECT_CALL(*mock_http_request_handle, AddHeader(An<std::string const&>()))
       .Times(1);
   SetExpectCallsForMakeEscapedString(mock_http_request_handle);
 
