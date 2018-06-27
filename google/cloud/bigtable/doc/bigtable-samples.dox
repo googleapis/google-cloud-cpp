@@ -6,8 +6,8 @@ This example is a very simple "Table Admin" application, which illustrates how t
 - Create a table and run basic table admin operations.
 - Create a table.
 - List tables.
-- Retrieve table metadata
-- Modify the existing tables
+- Retrieve table metadata.
+- Modify the existing tables.
 - Delete all the rows.
 - Delete a table.
 
@@ -29,13 +29,13 @@ The example uses the following headers:
 
 ### Create a new table in the instance.
 
-@snippet bigtable_samples.cc create table 
+@snippet bigtable_samples.cc create table
 
 ### Return all the tables in the instance.
 
 @snippet bigtable_samples.cc list tables
 
-### Get information about a single table. 
+### Get information about a single table.
 
 @snippet bigtable_samples.cc get table
 
@@ -51,4 +51,9 @@ The example uses the following headers:
 
 @snippet bigtable_samples.cc delete table
 
+### Put it all together
+
+Here is the full example
+
+@snippet bigtable_samples.cc all code
 */

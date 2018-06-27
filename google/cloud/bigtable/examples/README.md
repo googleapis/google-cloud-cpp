@@ -6,7 +6,8 @@ referenced from the Doxygen landing page as "Hello World".
 ## Table of Contents
 
 - [Before you begin](#before-you-begin)  
-  - [Run the examples against the Cloud Bigtable Service](#run-the-examples-against-the-cloud-bigtable-service)
+  - [Compile the Examples](#compile-the-examples)
+  - [Run the Examples](#run-the-examples)
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
@@ -18,33 +19,7 @@ These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
 [top-level README](../../README.md) file.
 
-### Run the examples against the Cloud Bigtable Emulator
-
-The easiest way to run these examples is to use the Cloud Bigtable Emulator.
-This emulator is included as part of the
-[Google Cloud SDK](https://cloud.google.com/sdk/).
-
-#### Install the Emulator
-
-Follow the relevant
-[documentation](https://cloud.google.com/bigtable/docs/emulator) to install
-the emulator.
-
-#### Start the Emulator
-
-Start the emulator as described in the documentation:
-
-```console
-$ gcloud beta emulators bigtable start
-```
-
-On a separate shell setup the necessary environment variables:
-
-```console
-$ $(gcloud beta emulators bigtable env-init)
-```
-
-### Run the examples against the Cloud Bigtable Service
+### Run the Examples
 
 You first need to create a production instance, the easiest way is to
 follow the
@@ -97,41 +72,10 @@ After configuring gRPC, you can run the examples using:
 
 ```console
 $ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
+$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
 
 $ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
 ```
-### Administer Instances
-
-View the [example][instance_admin_code] to see sample usage of instance administration of
-the Bigtable client library.
-
-#### Usage
-
-```console
-$ ./bigtable_samples_instance_admin
-
-Usage: bigtable_samples_instance_admin <command> <project_id> [arguments]
-
-Examples:
-  bigtable_samples_instance_admin run my-project my-instance my-cluster us-central1-f
-  bigtable_samples_instance_admin create-dev-instance my-project my-instance us-central1-f
-  bigtable_samples_instance_admin delete-instance my-project my-instance
-  bigtable_samples_instance_admin create-cluster my-project my-instance my-cluster us-central1-a
-  bigtable_samples_instance_admin delete-cluster my-project my-instance my-cluster
-```
-
-#### Run instance admin samples
-After configuring gRPC, you can run the examples using:
-
-```console
-$ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
-$ export CLUSTER_ID=... # Cloud Bigtable cluster ID
-$ export ZONE=... # Name of the zone where the example will create a new instance
-$ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
-```
-
 ### Table/Column family management
 
 This sample showcases the basic table / column family operations:

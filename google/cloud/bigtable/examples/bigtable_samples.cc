@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all code]
+
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+//! [bigtable includes]
 #include <google/protobuf/text_format.h>
 #include <deque>
 #include <list>
 #include <sstream>
-//! [bigtable includes]
 
 namespace {
 
@@ -315,8 +317,7 @@ void SampleRowsCollections(google::cloud::bigtable::Table table) {
 //! [run table operations]
 void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
                         std::string const& table_id) {
-  // Create the table
-  std::cout << std::endl << "Creating a table: ";
+  std::cout << "Creating a table: " << std::endl;
   auto schema = admin.CreateTable(
       table_id,
       google::cloud::bigtable::TableConfig(
@@ -326,27 +327,63 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
           {}));
   std::cout << " Done" << std::endl;
 
-  // List tables
-  std::cout << std::endl << "Listing tables: " << std::endl;
+  std::cout << "Listing tables: " << std::endl;
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
   for (auto const& table : tables) {
     std::cout << table.name() << std::endl;
   }
 
-  // Get table
-  std::cout << std::endl << "Get table: " << std::endl;
+  std::cout << "Get table: " << std::endl;
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   std::cout << table.name() << "\n";
   std::cout << "Table name : " << table.name() << std::endl;
 
-  // Delete table
-  std::cout << std::endl << "Deleting table: " << std::endl;
+  std::cout << "Deleting table: " << std::endl;
   admin.DeleteTable(table_id);
   std::cout << " Done" << std::endl;
 }
 //! [run table operations]
+
+// This full example demonstrate various instance operations
+void RunFullExample(google::cloud::bigtable::TableAdmin admin,
+                    std::string const& table_id) {
+  // [START bigtable_create_table]
+  std::cout << "Creating a table: " << std::endl;
+  auto schema = admin.CreateTable(
+      table_id,
+      google::cloud::bigtable::TableConfig(
+          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
+           {"foo",
+            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
+          {}));
+  std::cout << " Done" << std::endl;
+  // [END bigtable_create_table]
+
+  // [START bigtable_list_table]
+  std::cout << "Listing tables: " << std::endl;
+  auto tables =
+      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+  for (auto const& table : tables) {
+    std::cout << table.name() << std::endl;
+  }
+  // [END bigtable_list_table]
+
+  // [START bigtable_get_table]
+  std::cout << "Get table: " << std::endl;
+  auto table =
+      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+  std::cout << table.name() << "\n";
+  std::cout << "Table name : " << table.name() << std::endl;
+  // [END bigtable_get_table]
+
+  // [START bigtable_delete_table]
+  std::cout << "Deleting table: " << std::endl;
+  admin.DeleteTable(table_id);
+  std::cout << " Done" << std::endl;
+  // [END bigtable_delete_table]
+}
 
 }  // anonymous namespace
 
@@ -364,7 +401,8 @@ int main(int argc, char* argv[]) try {
                          "get-table my-project my-instance my-table",
                          "modify-table my-project my-instance my-table",
                          "drop-all-rows my-project my-instance my-table",
-                         "delete-table my-project my-instance my-table"}) {
+                         "delete-table my-project my-instance my-table",
+                         "run-full-example my-project my-instance my-table"}) {
       std::cerr << "  " << program << " " << example << "\n";
     }
     std::cerr << std::flush;
@@ -428,6 +466,8 @@ int main(int argc, char* argv[]) try {
     ReadModifyWrite(table);
   } else if (command == "sample-rows") {
     SampleRows(table);
+  } else if (command == "run-full-example") {
+    RunFullExample(admin, table_id);
   } else {
     std::cerr << "Unknown command: " << command << std::endl;
     print_usage();
@@ -438,3 +478,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }
+//! [all code]
