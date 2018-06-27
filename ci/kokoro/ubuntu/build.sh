@@ -91,9 +91,6 @@ wget -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 echo "    Getting cbt tool"
 export GOPATH="${KOKORO_ROOT}/golang"
 go get -u cloud.google.com/go/bigtable/cmd/cbt
-# TODO(#640) - disabled, the GCS library does not support credential files yet.
-# echo "    Getting python modules"
-# sudo python2 -m pip install httpbin
 echo "End of download."
 
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
@@ -116,10 +113,9 @@ echo "Running Google Cloud Bigtable Integration Tests"
 (cd $(bazel info bazel-bin)/google/cloud/bigtable/tests && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
 
-# TODO(#640) - disabled, the GCS library does not support credential files yet.
-# echo "Running Google Cloud Storage Integration Tests"
-# (cd $(bazel info bazel-bin)/google/cloud/storage/tests && \
-#     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
-# echo "Running Google Cloud Storage Examples"
-# (cd $(bazel info bazel-bin)/google/cloud/storage/examples && \
-#     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
+echo "Running Google Cloud Storage Integration Tests"
+(cd $(bazel info bazel-bin)/google/cloud/storage/tests && \
+    "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
+echo "Running Google Cloud Storage Examples"
+(cd $(bazel info bazel-bin)/google/cloud/storage/examples && \
+    "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")

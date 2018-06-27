@@ -15,9 +15,12 @@
 package(default_visibility=["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
-cc_binary(
-    name="bucket_integration_test",
-    srcs=["bucket_integration_test.cc"],
+load(":storage_client_integration_tests.bzl",
+    "storage_client_integration_tests")
+
+[cc_binary(
+    name=test.replace('/', '_').replace('.cc', ''),
+    srcs=[test],
     deps=[
         "//google/cloud/storage:storage_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -26,4 +29,4 @@ cc_binary(
     ],
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = [ "-lpthread" ],
-)
+) for test in storage_client_integration_tests]

@@ -126,7 +126,6 @@ class DefaultClient : public RawClient {
           Status{payload.status_code, std::move(payload.payload)},
           internal::ListObjectsResponse{});
     }
-    std::cerr << __func__ << "\n" << payload.payload << std::endl;
     return std::make_pair(
         Status(),
         internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
