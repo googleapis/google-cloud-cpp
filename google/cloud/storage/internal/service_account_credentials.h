@@ -63,8 +63,11 @@ class ServiceAccountCredentials : public storage::Credentials {
                                      std::string oauth_server)
       : requestor_(std::move(oauth_server)), expiration_time_(), clock_() {
     auto credentials = nl::json::parse(content);
-    // This is the value of grant_type for:
-    // - JSON-formatted service account keyfiles downloaded from Cloud Console
+    // Below, we construct a JWT refresh request used to obtain an access token.
+    // The structure of a JWT is defined in RFC 7519 (see
+    // https://tools.ietf.org/html/rfc7519), and Google-specific JWT validation
+    // logic is further described at:
+    // https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
     nl::json assertion_header = {
         {"alg", "RS256"},
         {"kid", credentials["private_key_id"].get_ref<std::string const&>()},
@@ -89,7 +92,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     long int expiration_time =
         cur_time + GoogleOAuthAccessTokenLifetime().count();
     nl::json assertion_payload = {
-        {"iss", credentials["private_key_id"].get_ref<std::string const&>()},
+        {"iss", credentials["client_email"].get_ref<std::string const&>()},
         {"scope", scope_oss.str()},
         {"aud", token_uri},
         {"iat", cur_time},
@@ -98,14 +101,18 @@ class ServiceAccountCredentials : public storage::Credentials {
 
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
-    std::string payload(
+    // This is the value of grant_type for JSON-formatted service account
+    // keyfiles downloaded from Cloud Console.
+    std::string payload("grant_type=");
+    payload +=
         requestor_
-            .MakeEscapedString(
-                "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer")
-            .get());
+            .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
+            .get();
     payload += "&assertion=";
     payload += MakeJWTAssertion(assertion_header, assertion_payload,
                                 svc_acct_private_key_pem);
+
+    requestor_.AddHeader("Content-Type: application/x-www-form-urlencoded");
     requestor_.PrepareRequest(std::move(payload));
   }
 
