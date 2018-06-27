@@ -147,11 +147,12 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  *
  *
  */
-#define GCP_LOG(level) \
-  GOOGLE_CLOUD_CPP_LOG_I(level, ::google::cloud::LogSink::Instance())
+#define GCP_LOG(level)                                               \
+  GOOGLE_CLOUD_CPP_LOG_I(GOOGLE_CLOUD_CPP_PP_CONCAT(GCP_LS_, level), \
+                         ::google::cloud::LogSink::Instance())
 
 #ifndef GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
-#define GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED DEBUG
+#define GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED GCP_LS_DEBUG
 #endif  // GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
 
 /**
@@ -167,31 +168,31 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 enum class Severity : int {
   /// Use this level for messages that indicate the code is entering and leaving
   /// functions.
-  TRACE,
+  GCP_LS_TRACE,
   /// Use this level for debug messages that should not be present in
   /// production.
-  DEBUG,
+  GCP_LS_DEBUG,
   /// Informational messages, such as normal progress.
-  INFO,
+  GCP_LS_INFO,
   /// Informational messages, such as unusual, but expected conditions.
-  NOTICE,
+  GCP_LS_NOTICE,
   /// An indication of problems, users may need to take action.
-  WARNING,
+  GCP_LS_WARNING,
   /// An error has been detected.  Do not use for normal conditions, such as
   /// remote servers disconnecting.
-  ERROR,
+  GCP_LS_ERROR,
   /// The system is in a critical state, such as running out of local resources.
-  CRITICAL,
+  GCP_LS_CRITICAL,
   /// The system is at risk of immediate failure.
-  ALERT,
+  GCP_LS_ALERT,
   /// The system is about to crash or terminate.
-  FATAL,
+  GCP_LS_FATAL,
   /// The highest possible severity level.
-  HIGHEST = int(FATAL),
+  GCP_LS_HIGHEST = int(GCP_LS_FATAL),
   /// The lowest possible severity level.
-  LOWEST = int(TRACE),
+  GCP_LS_LOWEST = int(GCP_LS_TRACE),
   /// The lowest level that is enabled at compile-time.
-  LOWEST_ENABLED = int(GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED),
+  GCP_LS_LOWEST_ENABLED = int(GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED),
 };
 
 /// Streaming operator, writes a human readable representation.
@@ -232,7 +233,7 @@ class LogSink {
 
   /// Return true if the severity is enabled at compile time.
   constexpr static bool CompileTimeEnabled(Severity level) {
-    return level >= Severity::LOWEST_ENABLED;
+    return level >= Severity::GCP_LS_LOWEST_ENABLED;
   }
 
   /**
