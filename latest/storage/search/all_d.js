@@ -15,5 +15,6 @@ var searchData=
   ['storage_5fclass_5fnearline',['STORAGE_CLASS_NEARLINE',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#adc721d17a6198ab4f25febb305f71dfb',1,'google::cloud::storage::v::BucketMetadata']]],
   ['storage_5fclass_5fregional',['STORAGE_CLASS_REGIONAL',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a386b179ec79f1892fed350e4e6b65181',1,'google::cloud::storage::v::BucketMetadata']]],
   ['storage_5fclass_5fstandard',['STORAGE_CLASS_STANDARD',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#ac1da6b937c9fe1101efa831bac809ea5',1,'google::cloud::storage::v::BucketMetadata']]],
-  ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]]
+  ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]],
+  ['storage_5fobject_5fsamples_2ecc',['storage_object_samples.cc',['../storage__object__samples_8cc.html',1,'']]]
 ];
