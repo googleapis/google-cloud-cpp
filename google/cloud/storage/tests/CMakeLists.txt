@@ -14,7 +14,8 @@
 
 set(storage_client_integration_tests
     bucket_integration_test.cc
-    curl_request_integration_test.cc)
+    curl_request_integration_test.cc
+    object_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
     string(REPLACE "/" "_" target ${fname})

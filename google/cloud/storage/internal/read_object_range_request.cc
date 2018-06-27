@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/read_object_range_request.h"
+#include <iostream>
 #include <sstream>
 
 namespace google {
@@ -29,9 +30,10 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   }
 
   std::string const& content_range_value = loc->second;
-  auto raise_error = [&content_range_value]() {
+  auto function = __func__;  // capture this function name, not the lambda's
+  auto raise_error = [&content_range_value, &function]() {
     std::ostringstream os;
-    os << static_cast<char const*>(__func__)
+    os << static_cast<char const*>(function)
        << " invalid format for content-range header <" << content_range_value
        << ">";
     google::cloud::internal::RaiseInvalidArgument(os.str());

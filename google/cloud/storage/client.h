@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/object_stream.h"
 
 namespace google {
 namespace cloud {
@@ -98,7 +99,7 @@ class Client {
    *   current policies.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc insert object
+   * @snippet storage_object_samples.cc insert object
    */
   template <typename... Modifiers>
   ObjectMetadata InsertObject(std::string const& bucket_name,
@@ -128,6 +129,28 @@ class Client {
                                 Parameters&&... parameters) {
     return ListObjectsReader(raw_client_, bucket_name,
                              std::forward<Parameters>(parameters)...);
+  }
+
+  /**
+   * Read the contents of an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include
+   *   `IfGenerationMatch`/`IfGenerationNotMatch`, `IfMetagenerationMatch`/
+   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc read object
+   */
+  template <typename... Parameters>
+  ObjectReadStream Read(std::string const& bucket_name,
+                        std::string const& object_name,
+                        Parameters&&... parameters) {
+    internal::ReadObjectRangeRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return ObjectReadStream(raw_client_, request);
   }
 
  private:
