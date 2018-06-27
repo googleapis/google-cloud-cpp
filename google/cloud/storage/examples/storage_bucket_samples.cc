@@ -78,7 +78,7 @@ void InsertObject(storage::Client client, int& argc, char* argv[]) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(storage::Client, int&, char*[])>;
+  using CommandType = std::function<void(storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-metadata", &GetBucketMetadata},
       {"insert-object", &InsertObject},
