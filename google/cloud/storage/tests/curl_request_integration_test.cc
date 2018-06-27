@@ -38,7 +38,7 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -52,7 +52,7 @@ TEST(CurlRequestTest, FailedGET) {
   // can't, but just documenting the assumptions in this test).
   storage::internal::CurlRequest request("https://localhost:0/");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(request.MakeRequest(), std::exception);
 #else
@@ -67,7 +67,7 @@ TEST(CurlRequestTest, RepeatedGET) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
 
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -104,7 +104,7 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("Content-Type: application/x-www-form-urlencoded");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(data);
+  request.PrepareRequest(data, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -119,7 +119,7 @@ TEST(CurlRequestTest, Handle404) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(404, response.status_code);
 }
@@ -130,7 +130,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(418, response.status_code);
   EXPECT_THAT(response.payload, HasSubstr("[ teapot ]"));
@@ -149,7 +149,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   EXPECT_EQ(1U, response.headers.count("x-test-empty"));
@@ -165,7 +165,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::Projection("full"));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -186,7 +186,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::UserProject("a-project"));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -207,7 +207,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfGenerationMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -228,7 +228,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -249,7 +249,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfMetaGenerationMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -270,7 +270,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfMetaGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -293,7 +293,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   request.AddWellKnownParameter(storage::IfMetaGenerationMatch(7));
   request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);

@@ -60,8 +60,9 @@ class CurlRequest {
    * Make a request with the given payload.
    *
    * @param payload The contents of the request.
+   * @param enable_logging if true, log the traffic in plain text.
    */
-  void PrepareRequest(std::string payload);
+  void PrepareRequest(std::string payload, bool enable_logging);
 
   /**
    * Make the prepared request.
@@ -97,6 +98,7 @@ class CurlRequest {
   CURL* curl_;
   curl_slist* headers_;
   std::string payload_;
+  std::string debug_buffer_;
 
   CurlBuffer response_payload_;
   CurlHeaders response_headers_;

@@ -64,7 +64,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     payload += requestor_.MakeEscapedString(credentials["client_secret"]).get();
     payload += "&refresh_token=";
     payload += requestor_.MakeEscapedString(credentials["refresh_token"]).get();
-    requestor_.PrepareRequest(std::move(payload));
+    requestor_.PrepareRequest(std::move(payload), false);
   }
 
   std::string AuthorizationHeader() override {

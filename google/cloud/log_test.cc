@@ -175,8 +175,8 @@ TEST(LogSinkTest, CompileTimeDisabledCannotBeEnabled) {
 
   // Compile-time disabled logs cannot be enabled at r
   if (Severity::LOWEST_ENABLED >= Severity::TRACE) {
-    sink.set_minimum_severity(Severity::DEBUG);
-    GOOGLE_CLOUD_CPP_LOG_I(DEBUG, sink) << "count is " << counter;
+    sink.set_minimum_severity(Severity::TRACE);
+    GOOGLE_CLOUD_CPP_LOG_I(TRACE, sink) << "count is " << counter;
     EXPECT_EQ(0, counter.count);
   }
   sink.set_minimum_severity(Severity::CRITICAL);
