@@ -95,9 +95,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3a2cbce32306d029d1338b7ffd911cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae47baf98182c9a6667cce98d920a8c2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ae47baf98182c9a6667cce98d920a8c2d">set_version</a> (std::string <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3a2cbce32306d029d1338b7ffd911cc0">version</a>)</td></tr>
 <tr class="separator:ae47baf98182c9a6667cce98d920a8c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7993622ea71d6cc1959c6e66b7ec70b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ac7993622ea71d6cc1959c6e66b7ec70b">enable_http_tracing</a> () const</td></tr>
+<tr class="separator:ac7993622ea71d6cc1959c6e66b7ec70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9e0b13090060fa82ce50085ce68649"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a0d9e0b13090060fa82ce50085ce68649">set_enable_http_tracing</a> (bool enable)</td></tr>
+<tr class="separator:a0d9e0b13090060fa82ce50085ce68649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Control the configuration for a <code>storage::Client</code> object. </p>
+<p>By default read several environment variables to configure the client:</p>
+<ul>
+<li><code>CLOUD_STORAGE_TESTBENCH_ENDPOINT</code>: if set, use this http endpoint to make all http requests instead of the production GCS service. Also, if set it uses the <code>google::cloud::storage::InsecureCredentials</code> by default.</li>
+<li><code>CLOUD_STORAGE_ENABLE_CLOG</code>: if set, enable std::clog as a backend for <code>google::cloud::LogSink</code>.</li>
+<li><code>CLOUD_STORAGE_ENABLE_TRACING</code>: if set, this is the list of components that will have logging enabled, the component this is:<ul>
+<li><code>http</code>: trace all http request / responses. </li>
+</ul>
+</li>
+</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8a13ed679af1faecd0b856c16749a973"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8a13ed679af1faecd0b856c16749a973">&#9670;&nbsp;</a></span>ClientOptions() <span class="overload">[1/2]</span></h2>
@@ -168,6 +181,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac7993622ea71d6cc1959c6e66b7ec70b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7993622ea71d6cc1959c6e66b7ec70b">&#9670;&nbsp;</a></span>enable_http_tracing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage::v::ClientOptions::enable_http_tracing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3bf3922c6b1238d7ec3b90a51f2778ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bf3922c6b1238d7ec3b90a51f2778ad">&#9670;&nbsp;</a></span>endpoint()</h2>
 
@@ -207,6 +245,32 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Credentials.html">Credentials</a> &gt;&#160;</td>
           <td class="paramname"><em>credentials</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d9e0b13090060fa82ce50085ce68649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d9e0b13090060fa82ce50085ce68649">&#9670;&nbsp;</a></span>set_enable_http_tracing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html">ClientOptions</a>&amp; google::cloud::storage::v::ClientOptions::set_enable_http_tracing </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
