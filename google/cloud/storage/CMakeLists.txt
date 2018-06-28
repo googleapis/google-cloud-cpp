@@ -193,6 +193,7 @@ create_bazel_config(storage_client_testing)
 set(storage_client_unit_tests
     bucket_metadata_test.cc
     bucket_test.cc
+    storage_client_options_test.cc
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
     internal/default_client_test.cc
@@ -221,6 +222,7 @@ foreach (fname ${storage_client_unit_tests})
             storage_client_testing
             google_cloud_cpp_testing
             storage_client
+            google_cloud_cpp_testing
             gmock
             CURL::CURL
             storage_common_options

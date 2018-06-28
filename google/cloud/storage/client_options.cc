@@ -40,7 +40,8 @@ ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("https://www.googleapis.com"),
       version_("v1"),
-      enable_http_tracing_(false) {
+      enable_http_tracing_(false),
+      enable_raw_client_tracing_(false) {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     endpoint_ = emulator;
@@ -68,6 +69,10 @@ void ClientOptions::SetupFromEnvironment() {
     if (enabled.end() != enabled.find("http")) {
       GCP_LOG(INFO) << "Enabling logging for http";
       set_enable_http_tracing(true);
+    }
+    if (enabled.end() != enabled.find("raw-client")) {
+      GCP_LOG(INFO) << "Enabling logging for RawClient functions";
+      set_enable_raw_client_tracing(true);
     }
   }
 }
