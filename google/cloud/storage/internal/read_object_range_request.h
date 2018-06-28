@@ -89,12 +89,17 @@ class ReadObjectRangeRequest
 
   using RequestParameters::AddParametersToHttpRequest;
 
+  /// Dump parameter values to a std::ostream
+  using RequestParameters::DumpParameters;
+
  private:
   std::string bucket_name_;
   std::string object_name_;
   std::int64_t begin_;
   std::int64_t end_;
 };
+
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
 
 struct ReadObjectRangeResponse {
   std::string contents;
@@ -105,6 +110,7 @@ struct ReadObjectRangeResponse {
   static ReadObjectRangeResponse FromHttpResponse(HttpResponse&& response);
 };
 
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

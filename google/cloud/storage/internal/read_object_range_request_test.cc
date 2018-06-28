@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/read_object_range_request.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
-namespace storage = google::cloud::storage;
-using namespace storage::internal;
-
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
 namespace {
 HttpResponse CreateRangeRequestResponse(
     char const* content_range_header_value) {
@@ -27,9 +29,8 @@ HttpResponse CreateRangeRequestResponse(
   response.payload = "some payload";
   return response;
 }
-}  // namespace
 
-TEST(ReadObjectRangeRequest, Simple) {
+TEST(ReadObjectRangeRequestTest, Simple) {
   ReadObjectRangeRequest request("my-bucket", "my-object", 0, 1024);
 
   EXPECT_EQ("my-bucket", request.bucket_name());
@@ -42,7 +43,29 @@ TEST(ReadObjectRangeRequest, Simple) {
                                   storage::UserProject("my-project"));
 }
 
-TEST(ReadObjectRangeResponse, Parse) {
+using ::testing::HasSubstr;
+
+TEST(ReadObjectRangeRequestTest, OStreamBasic) {
+  ReadObjectRangeRequest request("my-bucket", "my-object");
+  request.set_begin(1024).set_end(2048);
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
+  EXPECT_THAT(os.str(), HasSubstr("my-object"));
+  EXPECT_THAT(os.str(), HasSubstr("begin=1024"));
+  EXPECT_THAT(os.str(), HasSubstr("end=2048"));
+}
+
+TEST(ReadObjectRangeRequestTest, OStreamParameter) {
+  ReadObjectRangeRequest request("my-bucket", "my-object");
+  request.set_multiple_parameters(Generation(3));
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
+  EXPECT_THAT(os.str(), HasSubstr("generation=3"));
+}
+
+TEST(ReadObjectRangeResponseTest, Parse) {
   auto actual = ReadObjectRangeResponse::FromHttpResponse(
       CreateRangeRequestResponse("bytes 100-200/20000"));
   EXPECT_EQ(100, actual.first_byte);
@@ -51,7 +74,7 @@ TEST(ReadObjectRangeResponse, Parse) {
   EXPECT_EQ("some payload", actual.contents);
 }
 
-TEST(ReadObjectRangeResponse, ParseStar) {
+TEST(ReadObjectRangeResponseTest, ParseStar) {
   auto actual = ReadObjectRangeResponse::FromHttpResponse(
       CreateRangeRequestResponse("bytes */20000"));
   EXPECT_EQ(0, actual.first_byte);
@@ -59,7 +82,7 @@ TEST(ReadObjectRangeResponse, ParseStar) {
   EXPECT_EQ(20000, actual.object_size);
 }
 
-TEST(ReadObjectRangeResponse, ParseErrors) {
+TEST(ReadObjectRangeResponseTest, ParseErrors) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
                    CreateRangeRequestResponse("bits 100-200/20000")),
@@ -107,3 +130,10 @@ TEST(ReadObjectRangeResponse, ParseErrors) {
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

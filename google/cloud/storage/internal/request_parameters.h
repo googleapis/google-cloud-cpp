@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REQUEST_PARAMETERS_H_
 
 #include "google/cloud/storage/version.h"
+#include <iostream>
 #include <utility>
 
 namespace google {
@@ -47,6 +48,12 @@ class RequestParameterList<Parameter> {
     request.AddWellKnownParameter(parameter_);
   }
 
+  void DumpParameters(std::ostream& os, char const* sep) const {
+    if (parameter_.has_value()) {
+      os << sep << parameter_.parameter_name() << "=" << parameter_.value();
+    }
+  }
+
  private:
   Parameter parameter_;
 };
@@ -68,6 +75,15 @@ class RequestParameterList : public RequestParameterList<Parameters...> {
   void AddParametersToHttpRequest(HttpRequest& request) const {
     request.AddWellKnownParameter(parameter_);
     RequestParameterList<Parameters...>::AddParametersToHttpRequest(request);
+  }
+
+  void DumpParameters(std::ostream& os, char const* sep) const {
+    if (parameter_.has_value()) {
+      os << sep << parameter_.parameter_name() << "=" << parameter_.value();
+      RequestParameterList<Parameters...>::DumpParameters(os, ", ");
+    } else {
+      RequestParameterList<Parameters...>::DumpParameters(os, sep);
+    }
   }
 
  private:

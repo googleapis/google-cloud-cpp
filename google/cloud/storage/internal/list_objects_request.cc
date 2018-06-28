@@ -22,6 +22,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
+  os << "ListObjectsRequest={bucket_name=" << r.bucket_name();
+  r.DumpParameters(os, ", ");
+  return os << "}";
+}
+
 ListObjectsResponse ListObjectsResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto json = storage::internal::nl::json::parse(response.payload);
@@ -35,6 +41,14 @@ ListObjectsResponse ListObjectsResponse::FromHttpResponse(
   }
 
   return result;
+}
+
+std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r) {
+  os << "ListObjectsResponse={next_page_token=" << r.next_page_token
+     << ", items={";
+  std::copy(r.items.begin(), r.items.end(),
+            std::ostream_iterator<ObjectMetadata>(os, "\n  "));
+  return os << "}}";
 }
 
 }  // namespace internal

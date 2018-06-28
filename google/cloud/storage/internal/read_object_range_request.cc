@@ -21,6 +21,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
+  os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", begin=" << r.begin()
+     << ", end=" << r.end();
+  r.DumpParameters(os, ", ");
+  return os << "}";
+}
+
 ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto loc = response.headers.find(std::string("content-range"));
@@ -74,6 +82,12 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
 
   return ReadObjectRangeResponse{std::move(response.payload), first_byte,
                                  last_byte, object_size};
+}
+
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
+  // TODO(coryan) - remember to print the contents before merging.
+  return os << "ReadObjectRangeResponse={range=" << r.first_byte << "-"
+            << r.last_byte << "/" << r.object_size << "}";
 }
 
 }  // namespace internal

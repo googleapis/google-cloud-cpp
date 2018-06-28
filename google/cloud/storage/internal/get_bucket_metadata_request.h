@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include <iosfwd>
 
 namespace google {
 namespace cloud {
@@ -80,9 +81,14 @@ class GetBucketMetadataRequest
 
   using RequestParameters::AddParametersToHttpRequest;
 
+  /// Dump parameter values to a std::ostream
+  using RequestParameters::DumpParameters;
+
  private:
   std::string bucket_name_;
 };
+
+std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
