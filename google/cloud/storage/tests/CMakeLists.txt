@@ -30,3 +30,7 @@ foreach (fname ${storage_client_integration_tests})
             nlohmann_json
             storage_common_options)
 endforeach ()
+
+include(CreateBazelConfig)
+export_list_to_bazel("storage_client_integration_tests.bzl"
+    "storage_client_integration_tests")
