@@ -40,6 +40,8 @@ class RawClient {
  public:
   virtual ~RawClient() = default;
 
+  virtual ClientOptions const& client_options() const = 0;
+
   /**
    * Execute a request to fetch bucket metadata.
    *

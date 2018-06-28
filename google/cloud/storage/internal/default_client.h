@@ -43,6 +43,8 @@ class DefaultClient : public RawClient {
         options_.endpoint() + "/upload/storage/" + options_.version();
   }
 
+  ClientOptions const& client_options() const override { return options_; }
+
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.

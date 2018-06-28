@@ -103,6 +103,7 @@ add_library(storage_client
     internal/authorized_user_credentials.h
     internal/binary_data_as_debug_string.h
     internal/binary_data_as_debug_string.cc
+    internal/raw_client_wrapper_utils.h
     internal/common_metadata.h
     internal/common_metadata.cc
     internal/credential_constants.h
@@ -120,6 +121,8 @@ add_library(storage_client
     internal/insert_object_media_request.cc
     internal/list_objects_request.h
     internal/list_objects_request.cc
+    internal/logging_client.h
+    internal/logging_client.cc
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
@@ -201,6 +204,7 @@ set(storage_client_unit_tests
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
     internal/list_objects_request_test.cc
+    internal/logging_client_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc

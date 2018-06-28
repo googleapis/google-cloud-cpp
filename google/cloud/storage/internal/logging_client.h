@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H_
 
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/retry_policy.h"
 
 namespace google {
 namespace cloud {
@@ -26,17 +25,10 @@ namespace internal {
 /**
  * A decorator for `storage::Client` that retries operations using policies.
  */
-class RetryClient : public RawClient {
+class LoggingClient : public RawClient {
  public:
-  RetryClient(std::shared_ptr<RawClient> client);
-
-  template <typename RetryPolicy, typename BackoffPolicy>
-  RetryClient(std::shared_ptr<RawClient> client, RetryPolicy retry_policy,
-              BackoffPolicy backoff_policy)
-      : client_(client),
-        retry_policy_(retry_policy.clone()),
-        backoff_policy_(backoff_policy.clone()) {}
-  ~RetryClient() override = default;
+  explicit LoggingClient(std::shared_ptr<RawClient> client);
+  ~LoggingClient() override = default;
 
   ClientOptions const& client_options() const override;
 
@@ -54,8 +46,6 @@ class RetryClient : public RawClient {
 
  private:
   std::shared_ptr<RawClient> client_;
-  std::shared_ptr<RetryPolicy> retry_policy_;
-  std::shared_ptr<BackoffPolicy> backoff_policy_;
 };
 
 }  // namespace internal
@@ -64,4 +54,4 @@ class RetryClient : public RawClient {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H_
