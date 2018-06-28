@@ -65,6 +65,12 @@ class ClientOptions {
     return *this;
   }
 
+  bool enable_raw_client_tracing() const { return enable_raw_client_tracing_; }
+  ClientOptions& set_enable_raw_client_tracing(bool enable) {
+    enable_raw_client_tracing_ = enable;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -73,6 +79,7 @@ class ClientOptions {
   std::string endpoint_;
   std::string version_;
   bool enable_http_tracing_;
+  bool enable_raw_client_tracing_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
