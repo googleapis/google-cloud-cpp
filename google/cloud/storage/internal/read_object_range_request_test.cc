@@ -61,7 +61,6 @@ TEST(ReadObjectRangeRequestTest, OStreamParameter) {
   request.set_multiple_parameters(Generation(3));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
   EXPECT_THAT(os.str(), HasSubstr("generation=3"));
 }
 

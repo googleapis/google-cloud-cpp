@@ -37,7 +37,6 @@ TEST(GetBucketMetadataRequestTest, OStreamParameter) {
                                   UserProject("my-project"));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
   EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
 }

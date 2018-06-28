@@ -24,7 +24,7 @@ namespace {
 using ::testing::HasSubstr;
 
 TEST(InsertObjectMediaRequestTest, OStreamBasic) {
-  InsertObjectMediaRequest request("my-bucket", "my-object", "1234");
+  InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
@@ -32,11 +32,10 @@ TEST(InsertObjectMediaRequestTest, OStreamBasic) {
 }
 
 TEST(InsertObjectMediaRequestTest, OStreamParameter) {
-  InsertObjectMediaRequest request("my-bucket", "my-object", "1234");
+  InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
   request.set_multiple_parameters(IfGenerationMatch(0), Projection("full"));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
   EXPECT_THAT(os.str(), HasSubstr("ifGenerationMatch=0"));
   EXPECT_THAT(os.str(), HasSubstr("projection=full"));
 }

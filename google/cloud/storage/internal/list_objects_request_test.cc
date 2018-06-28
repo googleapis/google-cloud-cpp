@@ -45,7 +45,6 @@ TEST(ListObjectsRequestTest, OStreamParameter) {
                                   Prefix("foo-bar-baz/"));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
   EXPECT_THAT(os.str(), HasSubstr("prefix=foo-bar-baz/"));
 }
