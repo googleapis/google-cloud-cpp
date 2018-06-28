@@ -487,10 +487,11 @@ template&lt;typename... Parameters&gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the operation cannot be completed using the current policies. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation cannot be completed using the current policies.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a5b4e411a7826728ab6413cb9ebce946a">ListObjects</a>(storage::Client client, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{<span class="stringliteral">&quot;list-objects &lt;bucket-name&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> bucket_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; meta : client.ListObjects(bucket_name)) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;bucket_name=&quot;</span> &lt;&lt; meta.bucket()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;, object_name=&quot;</span> &lt;&lt; meta.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
