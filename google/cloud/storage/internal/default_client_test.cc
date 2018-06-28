@@ -49,9 +49,10 @@ class DefaultClientTest : public ::testing::Test {
 TEST_F(DefaultClientTest, Simple) {
   auto handle = MockHttpRequest::Handle(
       "https://www.googleapis.com/storage/v1/b/my-bucket");
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
-      .WillOnce(Invoke(
-          [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .WillOnce(Invoke([](std::string const& payload, bool) {
+        EXPECT_TRUE(payload.empty());
+      }));
   handle->SetupMakeEscapedString();
   EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
@@ -85,9 +86,10 @@ TEST_F(DefaultClientTest, Simple) {
 TEST_F(DefaultClientTest, HandleError) {
   auto handle = MockHttpRequest::Handle(
       "https://www.googleapis.com/storage/v1/b/my-bucket");
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
-      .WillOnce(Invoke(
-          [](std::string const& payload) { EXPECT_TRUE(payload.empty()); }));
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .WillOnce(Invoke([](std::string const& payload, bool) {
+        EXPECT_TRUE(payload.empty());
+      }));
   EXPECT_CALL(*handle, AddHeader("Authorization: some-secret-credential"))
       .Times(1);
   EXPECT_CALL(*handle, MakeRequest())

@@ -57,8 +57,9 @@ std::unique_ptr<char[]> MockHttpRequest::MakeEscapedString(
   return handles_[url_]->MakeEscapedString(x);
 }
 
-void MockHttpRequest::PrepareRequest(std::string const& payload) {
-  handles_[url_]->PrepareRequest(payload);
+void MockHttpRequest::PrepareRequest(std::string const& payload,
+                                     bool enable_logging) {
+  handles_[url_]->PrepareRequest(payload, enable_logging);
 }
 
 storage::internal::HttpResponse MockHttpRequest::MakeRequest() {

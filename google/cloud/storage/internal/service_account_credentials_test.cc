@@ -115,8 +115,8 @@ TEST_F(ServiceAccountCredentialsTest,
   SetExpectCallsForMakeEscapedString(mock_http_request_handle);
 
   EXPECT_CALL(*mock_http_request_handle,
-              PrepareRequest(An<std::string const&>()))
-      .WillOnce(Invoke([](std::string const& payload) {
+              PrepareRequest(An<std::string const&>(), false))
+      .WillOnce(Invoke([](std::string const& payload, bool) {
         EXPECT_THAT(payload, HasSubstr(EXPECTED_ASSERTION_PARAM));
         // Hard-coded in this order in ServiceAccountCredentials class.
         EXPECT_THAT(payload, HasSubstr(std::string("grant_type=") +
@@ -149,7 +149,7 @@ TEST_F(ServiceAccountCredentialsTest,
   auto mock_http_request_handle =
       MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
   EXPECT_CALL(*mock_http_request_handle,
-              PrepareRequest(An<std::string const&>()))
+              PrepareRequest(An<std::string const&>(), false))
       .Times(1);
   EXPECT_CALL(*mock_http_request_handle, AddHeader(An<std::string const&>()))
       .Times(1);

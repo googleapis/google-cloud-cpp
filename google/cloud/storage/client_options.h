@@ -23,6 +23,18 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
  * Control the configuration for a `storage::Client` object.
+ *
+ * By default read several environment variables to configure the client:
+ *
+ * - `CLOUD_STORAGE_TESTBENCH_ENDPOINT`: if set, use this http endpoint to
+ *   make all http requests instead of the production GCS service. Also,
+ *   if set it uses the `google::cloud::storage::InsecureCredentials` by
+ *   default.
+ * - `CLOUD_STORAGE_ENABLE_CLOG`: if set, enable std::clog as a backend for
+ *   `google::cloud::LogSink`.
+ * - `CLOUD_STORAGE_ENABLE_TRACING`: if set, this is the list of components that
+ *   will have logging enabled, the component this is:
+ *   - `http`: trace all http request / responses.
  */
 class ClientOptions {
  public:
@@ -47,10 +59,20 @@ class ClientOptions {
     return *this;
   }
 
+  bool enable_http_tracing() const { return enable_http_tracing_; }
+  ClientOptions& set_enable_http_tracing(bool enable) {
+    enable_http_tracing_ = enable;
+    return *this;
+  }
+
+ private:
+  void SetupFromEnvironment();
+
  private:
   std::shared_ptr<Credentials> credentials_;
   std::string endpoint_;
   std::string version_;
+  bool enable_http_tracing_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -113,7 +113,7 @@ class ServiceAccountCredentials : public storage::Credentials {
                                 svc_acct_private_key_pem);
 
     requestor_.AddHeader("Content-Type: application/x-www-form-urlencoded");
-    requestor_.PrepareRequest(std::move(payload));
+    requestor_.PrepareRequest(std::move(payload), false);
   }
 
   std::string AuthorizationHeader() override {

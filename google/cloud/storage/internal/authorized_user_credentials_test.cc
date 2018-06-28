@@ -41,8 +41,8 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 
   auto handle =
       MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
-      .WillOnce(Invoke([](std::string const& payload) {
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .WillOnce(Invoke([](std::string const& payload, bool) {
         auto npos = std::string::npos;
         EXPECT_NE(npos, payload.find("grant_type=refresh_token"));
         EXPECT_NE(npos, payload.find("client_id=a-client-id.example.com"));
@@ -83,7 +83,8 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 
   auto handle =
       MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>())).Times(1);
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .Times(1);
   EXPECT_CALL(*handle, MakeEscapedString(_))
       .WillRepeatedly(Invoke([](std::string const& x) {
         auto const size = x.size();

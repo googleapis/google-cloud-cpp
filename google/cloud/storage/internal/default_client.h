@@ -49,7 +49,7 @@ class DefaultClient : public RawClient {
     HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name());
     request.AddParametersToHttpRequest(http_request);
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-    http_request.PrepareRequest(std::string{});
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
@@ -72,7 +72,8 @@ class DefaultClient : public RawClient {
     http_request.AddHeader("Content-Type: application/octet-stream");
     http_request.AddHeader("Content-Length: " +
                            std::to_string(request.contents().size()));
-    http_request.PrepareRequest(std::move(request.contents()));
+    http_request.PrepareRequest(std::move(request.contents()),
+                                options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
@@ -99,7 +100,7 @@ class DefaultClient : public RawClient {
     http_request.AddHeader("Cache-Control: no-transform");
     http_request.AddHeader("Range: bytes=" + std::to_string(request.begin()) +
                            '-' + std::to_string(request.end()));
-    http_request.PrepareRequest(std::string{});
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (payload.status_code >= 300) {
       return std::make_pair(
@@ -119,7 +120,7 @@ class DefaultClient : public RawClient {
     request.AddParametersToHttpRequest(http_request);
     http_request.AddQueryParameter("pageToken", request.page_token());
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-    http_request.PrepareRequest(std::string{});
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
