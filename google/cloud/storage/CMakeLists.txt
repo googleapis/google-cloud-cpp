@@ -219,6 +219,7 @@ foreach (fname ${storage_client_unit_tests})
     target_link_libraries(${target}
         PRIVATE
             storage_client_testing
+            google_cloud_cpp_testing
             storage_client
             gmock
             CURL::CURL
