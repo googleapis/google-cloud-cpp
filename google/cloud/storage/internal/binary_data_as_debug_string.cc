@@ -37,13 +37,17 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size) {
 
   std::size_t count = 0;
   for (char const* c = data; c != data + size; ++c) {
-    if (std::isprint(*c) != 0) {
+    // std::isprint() actually takes an int argument, signed, without this
+    // explicit conversion MSVC in Debug mode asserts an invalid argument, and
+    // pops up a nice dialog box that breaks the CI builds.
+    int cval = static_cast<unsigned char>(*c);
+    if (std::isprint(cval) != 0) {
       text_column[count] = *c;
     } else {
       text_column[count] = '.';
     }
     char buf[3];
-    snprintf(buf, sizeof(buf), "%02x", static_cast<unsigned char>(*c));
+    snprintf(buf, sizeof(buf), "%02x", cval);
     hex_column[2 * count] = buf[0];
     hex_column[2 * count + 1] = buf[1];
     ++count;
