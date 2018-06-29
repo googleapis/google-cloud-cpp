@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
@@ -305,4 +306,50 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   EXPECT_EQ(0U, args.count("projection"));
   EXPECT_EQ(0U, args.count("ifGenerationMatch"));
   EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+class MockLogBackend : public google::cloud::LogBackend {
+ public:
+  void Process(google::cloud::LogRecord const& lr) { ProcessWithOwnership(lr); }
+  MOCK_METHOD1(ProcessWithOwnership, void(google::cloud::LogRecord));
+};
+
+/// @test Verify that CurlRequest logs when requested.
+TEST(CurlRequestTest, Logging) {
+  // Prepare the Log subsystem to receive mock calls:
+  auto mock_logger = std::make_shared<MockLogBackend>();
+  google::cloud::LogSink::Instance().AddBackend(mock_logger);
+
+  using testing::_;
+  using testing::Invoke;
+
+  std::string log_messages;
+  EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))
+      .WillRepeatedly(Invoke([&log_messages](google::cloud::LogRecord lr) {
+        log_messages += lr.message;
+        log_messages += "\n";
+      }));
+
+  {
+    storage::internal::CurlRequest request(HttpBinEndpoint() + "/post?foo=bar");
+    request.AddHeader("Accept: application/json");
+    request.AddHeader("charsets: utf-8");
+    request.AddHeader("x-test-header: foo");
+
+    request.PrepareRequest(std::string{"this is some text"}, true);
+    auto response = request.MakeRequest();
+    EXPECT_EQ(200, response.status_code);
+  }
+
+  google::cloud::LogSink::Instance().ClearBackends();
+
+  // Verify the URL, and headers, and payload are logged.
+  EXPECT_THAT(log_messages, HasSubstr("/post?foo=bar"));
+  EXPECT_THAT(log_messages, HasSubstr("x-test-header: foo"));
+  EXPECT_THAT(log_messages, HasSubstr("this is some text"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Info)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Send Header)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Send Data)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Recv Header)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }
