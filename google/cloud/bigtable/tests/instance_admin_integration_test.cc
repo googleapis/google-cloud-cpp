@@ -205,8 +205,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
       instance_admin_->CreateInstance(instance_config).get();
   auto clusters_before = instance_admin_->ListClusters(id);
   bigtable::ClusterId cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
+  auto location = "us-central1-b";
   auto cluster_config =
       bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -283,8 +282,7 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   auto clusters_before = instance_admin_->ListClusters(id);
 
   bigtable::ClusterId another_cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
+  auto location = "us-central1-b";
   auto cluster_config =
       bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
   auto cluster_before =

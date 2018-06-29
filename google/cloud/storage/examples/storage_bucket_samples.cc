@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/bucket.h"
+#include "google/cloud/storage/client.h"
 #include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
+
+namespace storage = google::cloud::storage;
 
 namespace {
 struct Usage {
@@ -34,42 +36,48 @@ char const* ConsumeArg(int& argc, char* argv[]) {
 }
 
 void PrintUsage(int argc, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
+  std::string const cmd = argc > 1 ? argv[0] : "unknown";
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Examples:\n";
-  for (auto const& example :
-       {"get-metadata <bucket_name>",
-        "insert-object <object name> <object contents>"}) {
+  for (auto const& example : {"get-bucket-metadata <bucket-name>"}) {
     std::cerr << "  " << program << " " << example << "\n";
   }
   std::cerr << std::flush;
 }
 
-//! [get metadata]
-void GetMetadata(storage::Bucket bucket, int& argc, char* argv[]) {
-  auto meta = bucket.GetMetadata();
+//! [get bucket metadata]
+void GetBucketMetadata(storage::Client client, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{"get-bucket-metadata <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto meta = client.GetBucketMetadata(bucket_name);
   std::cout << "The metadata is " << meta << std::endl;
 }
-//! [get metadata]
+//! [get bucket metadata]
 
-//! [insert object]
-void InsertObject(storage::Bucket bucket, int& argc, char* argv[]) {
-  auto object_name = ConsumeArg(argc, argv);
-  auto contents = ConsumeArg(argc, argv);
-  auto meta = bucket.InsertObject(object_name, std::move(contents));
-  std::cout << "The new object metadata is " << meta << std::endl;
+//! [list objects]
+void ListObjects(storage::Client client, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{"list-objects <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  for (auto const& meta : client.ListObjects(bucket_name)) {
+    std::cout << "bucket_name=" << meta.bucket()
+              << ", object_name=" << meta.name() << std::endl;
+  }
 }
-//! [insert object]
+//! [list objects]
 
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(storage::Bucket, int&, char* [])>;
+  using CommandType = std::function<void(storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
-      {"get-metadata", &GetMetadata},
-      {"insert-object", &InsertObject},
+      {"get-bucket-metadata", &GetBucketMetadata},
+      {"list-objects", &ListObjects},
   };
 
   if (argc < 2) {
@@ -83,21 +91,13 @@ int main(int argc, char* argv[]) try {
     PrintUsage(argc, argv, "Unknown command: " + command);
     return 1;
   }
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing bucket-name");
-    return 1;
-  }
-  std::string const bucket_name = ConsumeArg(argc, argv);
 
   // Create a client to communicate with Google Cloud Storage.
   //! [create client]
-  auto client = storage::CreateDefaultClient();
+  storage::Client client;
   //! [create client]
 
-  // Create the object to manage a bucket:
-  storage::Bucket bucket(client, bucket_name);
-
-  it->second(bucket, argc, argv);
+  it->second(client, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

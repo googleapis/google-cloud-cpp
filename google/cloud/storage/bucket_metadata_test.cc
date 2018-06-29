@@ -15,6 +15,8 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include <gmock/gmock.h>
 
+using google::cloud::storage::BucketMetadata;
+
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataTest, Parse) {
   std::string text = R"""({
@@ -30,7 +32,7 @@ TEST(BucketMetadataTest, Parse) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto actual = storage::BucketMetadata::ParseFromJson(text);
+  auto actual = BucketMetadata::ParseFromJson(text);
 
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("foo-bar-baz", actual.id());
@@ -42,8 +44,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar-baz",
             actual.self_link());
-  EXPECT_EQ(storage::BucketMetadata::STORAGE_CLASS_STANDARD,
-            actual.storage_class());
+  EXPECT_EQ(BucketMetadata::STORAGE_CLASS_STANDARD, actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
   EXPECT_EQ(1526758274L, duration_cast<std::chrono::seconds>(
@@ -73,7 +74,7 @@ TEST(BucketMetadataTest, ParseWithLabels) {
         "baz": "qux"
       }
 })""";
-  auto actual = storage::BucketMetadata::ParseFromJson(text);
+  auto actual = BucketMetadata::ParseFromJson(text);
 
   EXPECT_EQ(2U, actual.label_count());
   EXPECT_TRUE(actual.has_label("foo"));
@@ -110,7 +111,7 @@ TEST(BucketMetadataTest, IOStream) {
       }
 })""";
 
-  auto meta = storage::BucketMetadata::ParseFromJson(text);
+  auto meta = BucketMetadata::ParseFromJson(text);
   std::ostringstream os;
   os << meta;
   auto actual = os.str();

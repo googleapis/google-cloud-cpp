@@ -18,6 +18,8 @@
 #include "google/cloud/storage/version.h"
 #include <utility>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -131,5 +133,7 @@ class RequestParameters : public RequestParameterList<Parameters...> {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REQUEST_PARAMETERS_H_

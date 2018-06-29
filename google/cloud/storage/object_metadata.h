@@ -18,6 +18,8 @@
 #include "google/cloud/storage/internal/common_metadata.h"
 #include <map>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -71,5 +73,7 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_

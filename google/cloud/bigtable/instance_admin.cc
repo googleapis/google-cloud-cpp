@@ -98,14 +98,14 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
     }
     // Wait before polling, and then poll the operation to get the new
     // "response.
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
     op.set_name(response.name());
     grpc::ClientContext context;
     status = impl_.client_->GetOperation(&context, op, &response);
     if (not status.ok()) {
-      if (not rpc_policy->on_failure(status)) {
+      if (not rpc_policy->OnFailure(status)) {
         bigtable::internal::RaiseRpcError(
             status,
             "unrecoverable error polling longrunning Operation in "
@@ -167,14 +167,14 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
     // Wait before polling, and then poll the operation to get the new
     // "response.
     // TODO(#578) here to use the PollingPolicy once #461 is merged.
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
     op.set_name(response.name());
     grpc::ClientContext context;
     status = impl_.client_->GetOperation(&context, op, &response);
     if (not status.ok()) {
-      if (not rpc_policy->on_failure(status)) {
+      if (not rpc_policy->OnFailure(status)) {
         bigtable::internal::RaiseRpcError(
             status,
             "unrecoverable error polling longrunning Operation in "
@@ -278,14 +278,14 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
     // Wait before polling, and then poll the operation to get the new
     // "response.
     // TODO(#578) here to use the PollingPolicy once #461 is merged.
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
     op.set_name(response.name());
     grpc::ClientContext context;
     status = impl_.client_->GetOperation(&context, op, &response);
     if (not status.ok()) {
-      if (not rpc_policy->on_failure(status)) {
+      if (not rpc_policy->OnFailure(status)) {
         bigtable::internal::RaiseRpcError(
             status,
             "unrecoverable error polling longrunning Operation in "
@@ -314,6 +314,8 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
 
   // Build the RPC request, try to minimize copying.
   auto cluster = cluster_config.as_proto_move();
+  cluster.set_location(project_name() + "/locations/" + cluster.location());
+
   btproto::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
   request.set_parent(project_name() + "/instances/" + instance_id.get());
@@ -354,14 +356,14 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
     // Wait before polling, and then poll the operation to get the new
     // "response.
     // TODO(#422) we should use the PollingPolicy here once #461 is merged.
-    auto delay = backoff_policy->on_completion(status);
+    auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
     op.set_name(response.name());
     grpc::ClientContext context;
     status = impl_.client_->GetOperation(&context, op, &response);
     if (not status.ok()) {
-      if (not rpc_policy->on_failure(status)) {
+      if (not rpc_policy->OnFailure(status)) {
         bigtable::internal::RaiseRpcError(
             status,
             "unrecoverable error polling longrunning Operation in "

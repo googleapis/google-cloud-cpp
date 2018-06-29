@@ -18,8 +18,6 @@ set -eu
 readonly BINDIR="$(dirname $0)"
 source "${BINDIR}/run_examples_utils.sh"
 
-# Run the integration tests assuming the CI scripts have setup the PROJECT_ID
-# and ZONE_ID environment variable.
-run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+# Run only the data examples in production. The CI systems go over project
+# quotas for admin operations if we run the admin examples too.
 run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"

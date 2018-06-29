@@ -15,10 +15,6 @@
 
 set -eu
 
-readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
-readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
-readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
-
 function cleanup_instance {
   local project=$1
   local instance=$2

@@ -190,9 +190,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
   std::string const zone = ConsumeArg(argc, argv);
-
-  auto location =
-      "projects/" + instance_admin.project_id() + "/locations/" + zone;
+  auto location = "us-central1-a";
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
       location, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -419,10 +417,8 @@ void RunFullExample1(std::string project_id, int argc, char* argv[]) {
 
   // [START bigtable_create_cluster]
   std::cout << "\nAdding Cluster: " << std::endl;
-  auto location =
-      "projects/" + instance_admin.project_id() + "/locations/" + zone_2;
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      location, 3, google::cloud::bigtable::ClusterConfig::HDD);
+      zone_2, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id_2);
   std::cout << "Cluster Created " << cluster.get().name() << std::endl;

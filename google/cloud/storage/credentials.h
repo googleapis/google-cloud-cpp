@@ -16,8 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
 
 #include "google/cloud/storage/version.h"
+#include <chrono>
 #include <memory>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -55,5 +58,7 @@ inline std::shared_ptr<Credentials> CreateInsecureCredentials() {
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_

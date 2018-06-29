@@ -1105,7 +1105,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/fake-zone'
       default_storage_type: SSD
   )";
 
@@ -1133,7 +1133,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
           }));
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig("fake-zone", 10, bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
 
@@ -1153,7 +1153,7 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/fake-zone'
       default_storage_type: SSD
   )";
   btproto::Cluster expected;
@@ -1177,7 +1177,7 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
   EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig("fake-zone", 10, bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();
@@ -1206,7 +1206,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
 
   std::string expected_text = R"(
       name: 'projects/my-project/instances/test-instance'
-      location: 'Location1'
+      location: 'projects/my-project/locations/fake-zone'
       default_storage_type: SSD
   )";
 
@@ -1239,7 +1239,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
           }));
 
   auto future = tested.CreateCluster(
-      bigtable::ClusterConfig("Location1", 10, bigtable::ClusterConfig::SSD),
+      bigtable::ClusterConfig("fake-zone", 10, bigtable::ClusterConfig::SSD),
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();

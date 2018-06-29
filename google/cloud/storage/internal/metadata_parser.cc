@@ -17,6 +17,8 @@
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <sstream>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -63,3 +65,5 @@ std::int64_t MetadataParser::ParseLongField(
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

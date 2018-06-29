@@ -35,51 +35,33 @@ std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy() {
   return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy);
 }
 
-LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()
-    : maximum_duration_(MAXIMUM_RETRY_PERIOD),
-      deadline_(std::chrono::system_clock::now() + maximum_duration_) {}
-
 std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
   return std::unique_ptr<RPCRetryPolicy>(
       new LimitedErrorCountRetryPolicy(*this));
 }
 
-void LimitedErrorCountRetryPolicy::setup(
+void LimitedErrorCountRetryPolicy::Setup(
     grpc::ClientContext& /*unused*/) const {}
 
-bool LimitedErrorCountRetryPolicy::on_failure(grpc::Status const& status) {
-  using namespace std::chrono;
-  if (not can_retry(status.error_code())) {
-    return false;
-  }
-  return ++failure_count_ <= maximum_failures_;
+bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
+  return impl_.OnFailure(status);
 }
 
-bool LimitedErrorCountRetryPolicy::can_retry(grpc::StatusCode code) const {
-  return IsRetryableStatusCode(code);
-}
+LimitedTimeRetryPolicy::LimitedTimeRetryPolicy()
+    : impl_(MAXIMUM_RETRY_PERIOD) {}
 
 std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
-  return std::unique_ptr<RPCRetryPolicy>(
-      new LimitedTimeRetryPolicy(maximum_duration_));
+  return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(*this));
 }
 
-void LimitedTimeRetryPolicy::setup(grpc::ClientContext& context) const {
-  if (context.deadline() >= deadline_) {
-    context.set_deadline(deadline_);
+void LimitedTimeRetryPolicy::Setup(grpc::ClientContext& context) const {
+  if (context.deadline() >= impl_.deadline()) {
+    context.set_deadline(impl_.deadline());
   }
 }
 
-bool LimitedTimeRetryPolicy::on_failure(grpc::Status const& status) {
-  using namespace std::chrono;
-  if (not can_retry(status.error_code())) {
-    return false;
-  }
-  return std::chrono::system_clock::now() < deadline_;
-}
-
-bool LimitedTimeRetryPolicy::can_retry(grpc::StatusCode code) const {
-  return IsRetryableStatusCode(code);
+bool LimitedTimeRetryPolicy::OnFailure(grpc::Status const& status) {
+  return impl_.OnFailure(status);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

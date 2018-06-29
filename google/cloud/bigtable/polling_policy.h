@@ -81,17 +81,17 @@ class GenericPollingPolicy : public PollingPolicy {
   }
 
   bool IsPermanentError(grpc::Status const& status) override {
-    return not rpc_retry_policy_.can_retry(status.error_code());
+    return RPCRetryPolicy::IsPermanentFailure(status);
   }
 
   bool OnFailure(grpc::Status const& status) override {
-    return rpc_retry_policy_.on_failure(status);
+    return rpc_retry_policy_.OnFailure(status);
   }
 
   bool Exhausted() override { return not OnFailure(grpc::Status::OK); }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return rpc_backoff_policy_.on_completion(grpc::Status::OK);
+    return rpc_backoff_policy_.OnCompletion(grpc::Status::OK);
   }
 
  private:

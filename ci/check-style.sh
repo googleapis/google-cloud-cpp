@@ -23,54 +23,10 @@ fi
 
 # This script assumes it is running the top-level google-cloud-cpp directory.
 
+readonly BINDIR="$(dirname $0)"
+
 find google/cloud -name '*.h' -print0 \
-  | xargs -0 awk 'BEGINFILE {
-    # The guard must begin with the name of the project.
-    guard_prefix="GOOGLE_CLOUD_CPP_"
-    # The guard must end with "_"
-    guard_suffix="_"
-    # The guard name is the filename (including path from the root of the
-    # project), with "/" and "." characters replaced with "_", and all
-    # characters converted to uppercase:
-    guard_body=toupper(FILENAME)
-    gsub("[/\\.]", "_", guard_body)
-    guard=toupper(guard_prefix guard_body guard_suffix)
-    matches=0
-  }
-  /^#ifndef / {
-    # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
-    if (index($0, guard) == 9) {
-      matches++;
-    } else {
-     printf("%s:\nexpected: #ifndef %s\n   found: %s\n", FILENAME, guard, $0);
-    }
-  }
-  /^#define / {
-    # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
-    if (index($0, guard) == 9) {
-      matches++;
-    } else {
-      printf("%s:\nexpected: #define %s\n   found: %s\n", FILENAME, guard, $0);
-    }
-  }
-  /^#endif / {
-    # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
-    if (index($0, "// " guard) == 9) {
-      matches++;
-    } else {
-      printf("%s:\nexpected: #endif  // %s\n   found: %s\n",
-             FILENAME, guard, $0);
-    }
-  }
-  END {
-    if (matches != 3) {
-      printf("%s has invalid include guards\n", FILENAME);
-      exit(1);
-    }
-  }'
+  | xargs -0 awk -f ${BINDIR}/check-include-guards.gawk
 
 find google/cloud -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 sed -i 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g'

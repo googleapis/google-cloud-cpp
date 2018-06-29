@@ -16,6 +16,10 @@
 EMULATOR_PID=0
 INSTANCE_ADMIN_EMULATOR_PID=0
 
+readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
+readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
+readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="./instance_admin_emulator"
+
 function kill_emulators {
   echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}] ... "
   kill "${EMULATOR_PID}"

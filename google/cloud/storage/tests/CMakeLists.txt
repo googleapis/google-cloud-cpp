@@ -14,7 +14,8 @@
 
 set(storage_client_integration_tests
     bucket_integration_test.cc
-    curl_request_integration_test.cc)
+    curl_request_integration_test.cc
+    object_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
     string(REPLACE "/" "_" target ${fname})
@@ -29,3 +30,7 @@ foreach (fname ${storage_client_integration_tests})
             nlohmann_json
             storage_common_options)
 endforeach ()
+
+include(CreateBazelConfig)
+export_list_to_bazel("storage_client_integration_tests.bzl"
+    "storage_client_integration_tests")

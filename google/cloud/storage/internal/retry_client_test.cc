@@ -12,17 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/object.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include <sstream>
-#include <thread>
-
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
-static_assert(std::is_copy_constructible<storage::Object>::value,
-              "storage::Object must be copy-constructible");
-static_assert(std::is_copy_assignable<storage::Object>::value,
-              "storage::Objects must be copy-assignable");
-
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+#include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/testing/mock_http_request.h"
+#include <gmock/gmock.h>

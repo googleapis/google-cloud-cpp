@@ -80,7 +80,7 @@ matrix:
       env:
         TEST_INSTALL=yes
         DISTRO=ubuntu
-        DISTRO_VERSION=17.10
+        DISTRO_VERSION=18.04
       # Because this build installs gRPC, we can skip that submodule, which
       # saves us substantial time in the build, but requires some tweaking of
       # the installation step.
@@ -96,7 +96,7 @@ matrix:
       # not changing, or rather, that if there are changes the changes are
       # intentional.
       os: linux
-      compiler: g++
+      compiler: gcc
       env:
         CHECK_ABI=yes
         TEST_INSTALL=yes
@@ -175,7 +175,7 @@ matrix:
     - # For the moment, allow failures in the ABI check builds.
       # TODO(#694) - remove this when the ABI is declared stable.
       os: linux
-      compiler: g++
+      compiler: gcc
       env:
         CHECK_ABI=yes
         TEST_INSTALL=yes

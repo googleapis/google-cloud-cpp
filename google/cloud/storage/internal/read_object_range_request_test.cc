@@ -15,7 +15,19 @@
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include <gtest/gtest.h>
 
+namespace storage = google::cloud::storage;
 using namespace storage::internal;
+
+namespace {
+HttpResponse CreateRangeRequestResponse(
+    char const* content_range_header_value) {
+  HttpResponse response;
+  response.headers.emplace(std::string("content-range"),
+                           std::string(content_range_header_value));
+  response.payload = "some payload";
+  return response;
+}
+}  // namespace
 
 TEST(ReadObjectRangeRequest, Simple) {
   ReadObjectRangeRequest request("my-bucket", "my-object", 0, 1024);
@@ -28,4 +40,70 @@ TEST(ReadObjectRangeRequest, Simple) {
   request.set_parameter(storage::UserProject("my-project"));
   request.set_multiple_parameters(storage::IfGenerationMatch(7),
                                   storage::UserProject("my-project"));
+}
+
+TEST(ReadObjectRangeResponse, Parse) {
+  auto actual = ReadObjectRangeResponse::FromHttpResponse(
+      CreateRangeRequestResponse("bytes 100-200/20000"));
+  EXPECT_EQ(100, actual.first_byte);
+  EXPECT_EQ(200, actual.last_byte);
+  EXPECT_EQ(20000, actual.object_size);
+  EXPECT_EQ("some payload", actual.contents);
+}
+
+TEST(ReadObjectRangeResponse, ParseStar) {
+  auto actual = ReadObjectRangeResponse::FromHttpResponse(
+      CreateRangeRequestResponse("bytes */20000"));
+  EXPECT_EQ(0, actual.first_byte);
+  EXPECT_EQ(0, actual.last_byte);
+  EXPECT_EQ(20000, actual.object_size);
+}
+
+TEST(ReadObjectRangeResponse, ParseErrors) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bits 100-200/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("100-200/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes ")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes */")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes 100-200/")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes 100-/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes -200/20000")),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ReadObjectRangeResponse::FromHttpResponse(
+          CreateRangeRequestResponse("bits 100-200/20000")),
+      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("100-200/20000")),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes ")),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes */")),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes 100-200/")),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes 100-/20000")),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes -200/20000")),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

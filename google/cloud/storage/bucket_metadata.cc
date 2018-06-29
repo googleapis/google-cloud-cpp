@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
@@ -61,3 +63,5 @@ constexpr char BucketMetadata::STORAGE_CLASS_COLDLINE[];
 constexpr char BucketMetadata::STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY[];
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

@@ -20,8 +20,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 static_assert(sizeof(Severity) <= sizeof(int),
               "Expected Severity to fit in an integer");
 
-static_assert(static_cast<int>(Severity::LOWEST) <
-                  static_cast<int>(Severity::HIGHEST),
+static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
+                  static_cast<int>(Severity::GCP_LS_HIGHEST),
               "Expect LOWEST severity to be smaller than HIGHEST severity");
 
 std::ostream& operator<<(std::ostream& os, Severity x) {
@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
 
 LogSink::LogSink()
     : empty_(true),
-      minimum_severity_(static_cast<int>(Severity::LOWEST_ENABLED)),
+      minimum_severity_(static_cast<int>(Severity::GCP_LS_LOWEST_ENABLED)),
       next_id_(0) {}
 
 LogSink& LogSink::Instance() {
@@ -103,7 +103,7 @@ class StdClogBackend : public LogBackend {
 
   void Process(LogRecord const& lr) override {
     std::clog << lr << "\n";
-    if (lr.severity >= Severity::WARNING) {
+    if (lr.severity >= Severity::GCP_LS_WARNING) {
       std::clog << std::flush;
     }
   }

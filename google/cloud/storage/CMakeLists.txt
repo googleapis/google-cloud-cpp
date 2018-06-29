@@ -85,12 +85,13 @@ else ()
     message(STATUS "CURL linkage will be non-static")
 endif ()
 
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
+
 
 # the client library
 add_library(storage_client
     ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-    bucket.h
-    bucket.cc
     bucket_metadata.h
     bucket_metadata.cc
     client.h
@@ -102,6 +103,7 @@ add_library(storage_client
     internal/authorized_user_credentials.h
     internal/common_metadata.h
     internal/common_metadata.cc
+    internal/credential_constants.h
     internal/curl_request.h
     internal/curl_request.cc
     internal/curl_wrappers.h
@@ -110,19 +112,31 @@ add_library(storage_client
     internal/get_bucket_metadata_request.h
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
+    internal/http_response.h
     internal/insert_object_media_request.h
+    internal/list_objects_request.h
+    internal/list_objects_request.cc
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
+    internal/openssl_util.h
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
-    internal/read_object_range_request.h
+    internal/raw_client.h
+        internal/read_object_range_request.h
+    internal/read_object_range_request.cc
     internal/request_parameters.h
+    internal/retry_client.h
+    internal/retry_client.cc
+    internal/service_account_credentials.h
+    list_objects_reader.h
+    list_objects_reader.cc
     object_metadata.h
     object_metadata.cc
-    object.h
-    object.cc
+    object_stream.h
+    object_stream.cc
     well_known_parameters.h
+    retry_policy.h
     status.h
     version.h
     version.cc)
@@ -131,6 +145,9 @@ target_link_libraries(storage_client
         google_cloud_cpp_common
         CURL::CURL
         Threads::Threads
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
     PRIVATE
         nlohmann_json
         storage_common_options)
@@ -146,6 +163,7 @@ target_include_directories(storage_client PUBLIC
 target_compile_options(storage_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_library(storage_client_testing
+    testing/canonical_errors.h
     testing/mock_client.h
     testing/mock_http_request.h
     testing/mock_http_request.cc)
@@ -174,12 +192,17 @@ set(storage_client_unit_tests
     internal/authorized_user_credentials_test.cc
     internal/default_client_test.cc
     internal/google_application_default_credentials_file_test.cc
+    internal/list_objects_request_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
+    internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
+    internal/service_account_credentials_test.cc
+    list_objects_reader_test.cc
     object_metadata_test.cc
-    object_test.cc
+    object_stream_test.cc
+    retry_policy_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})

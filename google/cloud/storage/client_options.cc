@@ -13,30 +13,66 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/log.h"
 #include <cstdlib>
+#include <set>
+#include <sstream>
 
-namespace {
-std::shared_ptr<storage::Credentials> StorageDefaultCredentials() {
-  char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (emulator != nullptr) {
-    return storage::CreateInsecureCredentials();
-  }
-  return storage::GoogleDefaultCredentials();
-}
-}  // namespace
-
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+std::shared_ptr<google::cloud::storage::Credentials>
+StorageDefaultCredentials() {
+  char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  if (emulator != nullptr) {
+    return google::cloud::storage::CreateInsecureCredentials();
+  }
+  return google::cloud::storage::GoogleDefaultCredentials();
+}
+
+}  // namespace
+
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
 
 ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("https://www.googleapis.com"),
-      version_("v1") {
+      version_("v1"),
+      enable_http_tracing_(false) {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     endpoint_ = emulator;
   }
+  SetupFromEnvironment();
 }
+
+void ClientOptions::SetupFromEnvironment() {
+  char const* enable_clog = std::getenv("CLOUD_STORAGE_ENABLE_CLOG");
+  if (enable_clog != nullptr) {
+    google::cloud::LogSink::EnableStdClog();
+  }
+  // This is overkill right now, eventually we will have different components
+  // that can be traced (http being the first), so we parse the environment
+  // variable.
+  char const* tracing = std::getenv("CLOUD_STORAGE_ENABLE_TRACING");
+  if (tracing != nullptr) {
+    std::set<std::string> enabled;
+    std::istringstream is{std::string(tracing)};
+    while (not is.eof()) {
+      std::string token;
+      std::getline(is, token, ',');
+      enabled.emplace(std::move(token));
+    }
+    if (enabled.end() != enabled.find("http")) {
+      GCP_LOG(INFO) << "Enabling logging for http";
+      set_enable_http_tracing(true);
+    }
+  }
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

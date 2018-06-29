@@ -40,28 +40,17 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
 }
 
 ExponentialBackoffPolicy::ExponentialBackoffPolicy()
-    : current_delay_range_(DEFAULT_INITIAL_DELAY),
-      maximum_delay_(DEFAULT_MAXIMUM_DELAY) {}
+    : ExponentialBackoffPolicy(DEFAULT_INITIAL_DELAY, DEFAULT_MAXIMUM_DELAY) {}
 
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(*this));
 }
 
-void ExponentialBackoffPolicy::setup(grpc::ClientContext& /*unused*/) const {}
+void ExponentialBackoffPolicy::Setup(grpc::ClientContext& /*unused*/) const {}
 
-std::chrono::milliseconds ExponentialBackoffPolicy::on_completion(
+std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion(
     grpc::Status const& status) {
-  using namespace std::chrono;
-  std::uniform_int_distribution<int> rng_distribution(
-      current_delay_range_.count() / 2, current_delay_range_.count());
-  // Randomized sleep period because it is possible that after some time all
-  // client have same sleep period if we use only exponential backoff policy.
-  auto delay = microseconds(rng_distribution(generator_));
-  current_delay_range_ *= 2;
-  if (current_delay_range_ >= maximum_delay_) {
-    current_delay_range_ = maximum_delay_;
-  }
-  return duration_cast<milliseconds>(delay);
+  return impl_.OnCompletion();
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

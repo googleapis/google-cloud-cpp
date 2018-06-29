@@ -18,6 +18,8 @@
 #include "google/cloud/storage/version.h"
 #include <iostream>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -84,5 +86,7 @@ inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STATUS_H_
