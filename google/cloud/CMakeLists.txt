@@ -91,9 +91,9 @@ create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 add_library(google_cloud_cpp_testing
-    cloud_testing/check_predicate_becomes_false.h
-    cloud_testing/environment_variable_restore.h
-    cloud_testing/environment_variable_restore.cc)
+    testing_util/check_predicate_becomes_false.h
+    testing_util/environment_variable_restore.h
+    testing_util/environment_variable_restore.cc)
 target_link_libraries(google_cloud_cpp_testing PUBLIC
     google_cloud_cpp_common gmock)
 

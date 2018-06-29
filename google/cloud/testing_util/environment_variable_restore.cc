@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/cloud_testing/environment_variable_restore.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/internal/setenv.h"
 #include <cstdlib>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace cloud_testing {
+namespace testing_util {
 
 void EnvironmentVariableRestore::SetUp() {
   previous_ = std::getenv(variable_name_.c_str());
@@ -29,7 +29,7 @@ void EnvironmentVariableRestore::TearDown() {
   google::cloud::internal::SetEnv(variable_name_.c_str(), previous_);
 }
 
-}  // namespace cloud_testing
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

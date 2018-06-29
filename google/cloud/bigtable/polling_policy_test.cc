@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/testing/chrono_literals.h"
-#include "google/cloud/cloud_testing/check_predicate_becomes_false.h"
+#include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <thread>
@@ -38,7 +38,7 @@ auto const kLimitedTimeTolerance = 10_ms;
  * This eliminates some amount of code duplication in the following tests.
  */
 void CheckLimitedTime(bigtable::PollingPolicy& tested) {
-  google::cloud::cloud_testing::CheckPredicateBecomesFalse(
+  google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] {
         return tested.OnFailure(
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));

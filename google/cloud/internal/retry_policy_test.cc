@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/cloud_testing/check_predicate_becomes_false.h"
+#include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gmock/gmock.h>
 
 namespace {
@@ -49,7 +49,7 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
  * TODO(#733) - refactor this and the implementations in bigtable/
  */
 void CheckLimitedTime(RetryPolicyForTest& tested) {
-  google::cloud::cloud_testing::CheckPredicateBecomesFalse(
+  google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(CreateTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);

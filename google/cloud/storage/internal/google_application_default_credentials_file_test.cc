@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/google_application_default_credentials_file.h"
-#include "google/cloud/cloud_testing/environment_variable_restore.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 
 using namespace google::cloud::storage::internal;
-using google::cloud::cloud_testing::EnvironmentVariableRestore;
+using google::cloud::testing_util::EnvironmentVariableRestore;
 
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
