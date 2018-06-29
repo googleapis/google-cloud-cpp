@@ -14,27 +14,11 @@
 
 #include "google/cloud/storage/internal/google_application_default_credentials_file.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 
 using namespace google::cloud::storage::internal;
-
-class EnvironmentVariableRestore {
- public:
-  explicit EnvironmentVariableRestore(char const* variable_name)
-      : EnvironmentVariableRestore(std::string(variable_name)) {}
-
-  explicit EnvironmentVariableRestore(std::string variable_name)
-      : variable_name_(std::move(variable_name)) {}
-
-  void SetUp() { previous_ = std::getenv(variable_name_.c_str()); }
-  void TearDown() {
-    google::cloud::internal::SetEnv(variable_name_.c_str(), previous_);
-  }
-
- private:
-  std::string variable_name_;
-  char const* previous_;
-};
+using google::cloud::testing_util::EnvironmentVariableRestore;
 
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
