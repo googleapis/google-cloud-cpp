@@ -134,6 +134,20 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return impl_.Stub()->UpdateCluster(context, request, response);
   }
 
+  grpc::Status CreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) override {
+    return impl_.Stub()->CreateAppProfile(context, request, response);
+  }
+
+  grpc::Status ListAppProfiles(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
+      google::bigtable::admin::v2::ListAppProfilesResponse* response) override {
+    return impl_.Stub()->ListAppProfiles(context, request, response);
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;

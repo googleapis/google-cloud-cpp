@@ -149,6 +149,49 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteCluster", status);
 }
 
+btproto::AppProfile InstanceAdmin::CreateAppProfile(
+    bigtable::InstanceId const& instance_id, AppProfileConfig config,
+    grpc::Status& status) {
+  auto request = config.as_proto_move();
+  request.set_parent(InstanceName(instance_id.get()));
+
+  // This API is not idempotent, call it without retry.
+  return ClientUtils::MakeNonIdemponentCall(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &InstanceAdminClient::CreateAppProfile, request,
+      "InstanceAdmin::CreateAppProfile", status);
+}
+
+std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
+    std::string const& instance_id, grpc::Status& status) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  // Build the RPC request, try to minimize copying.
+  std::vector<btproto::AppProfile> result;
+  std::string page_token;
+  do {
+    btproto::ListAppProfilesRequest request;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(InstanceName(instance_id));
+
+    auto response = ClientUtils::MakeCall(
+        *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
+        &InstanceAdminClient::ListAppProfiles, request,
+        "InstanceAdmin::ListAppProfiles", status, true);
+    if (not status.ok()) {
+      return result;
+    }
+
+    for (auto& x : *response.mutable_app_profiles()) {
+      result.emplace_back(std::move(x));
+    }
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (not page_token.empty());
+  return result;
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

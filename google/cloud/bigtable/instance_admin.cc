@@ -304,6 +304,26 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
   }
 }
 
+btproto::AppProfile InstanceAdmin::CreateAppProfile(
+    bigtable::InstanceId const& instance_id, AppProfileConfig config) {
+  grpc::Status status;
+  auto result = impl_.CreateAppProfile(instance_id, std::move(config), status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
+std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
+    std::string const& instance_id) {
+  grpc::Status status;
+  auto result = impl_.ListAppProfiles(instance_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
 google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
     ClusterConfig const& cluster_config,
     bigtable::InstanceId const& instance_id,

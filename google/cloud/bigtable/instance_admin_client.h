@@ -123,6 +123,16 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::Cluster const& request,
       google::longrunning::Operation* response) = 0;
+
+  virtual grpc::Status CreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) = 0;
+
+  virtual grpc::Status ListAppProfiles(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
+      google::bigtable::admin::v2::ListAppProfilesResponse* response) = 0;
   //@}
 
   //@{
