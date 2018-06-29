@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/read_object_range_request.h"
+#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include <iostream>
 #include <sstream>
 
@@ -85,9 +86,10 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
 }
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
-  // TODO(coryan) - remember to print the contents before merging.
   return os << "ReadObjectRangeResponse={range=" << r.first_byte << "-"
-            << r.last_byte << "/" << r.object_size << "}";
+            << r.last_byte << "/" << r.object_size << ", contents=\n"
+            << BinaryDataAsDebugString(r.contents.data(), r.contents.size())
+            << "}";
 }
 
 }  // namespace internal

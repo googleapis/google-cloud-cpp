@@ -12,24 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/insert_object_media_request.h"
-#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BINARY_DATA_AS_DEBUG_STRING_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BINARY_DATA_AS_DEBUG_STRING_H_
+
+#include "google/cloud/storage/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
-  os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
-  os << ", contents=\n"
-     << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
-  return os << "}";
-}
+/**
+ * Format a block of data for debug printing.
+ *
+ * Takes a block of data, possible with non-printable characters and creates
+ * a string with two columns.  The first column is 24 characters wide and has
+ * the non-printable characters replaced by periods.  The second column is 48
+ * characters wide and contains the hexdump of the data.  The columns are
+ * separated by a single space.
+ */
+std::string BinaryDataAsDebugString(char const* data, std::size_t size);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BINARY_DATA_AS_DEBUG_STRING_H_
