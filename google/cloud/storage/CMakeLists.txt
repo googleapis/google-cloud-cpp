@@ -101,6 +101,8 @@ add_library(storage_client
     credentials.h
     credentials.cc
     internal/authorized_user_credentials.h
+    internal/binary_data_as_debug_string.h
+    internal/binary_data_as_debug_string.cc
     internal/common_metadata.h
     internal/common_metadata.cc
     internal/credential_constants.h
@@ -110,10 +112,12 @@ add_library(storage_client
     internal/curl_wrappers.cc
     internal/default_client.h
     internal/get_bucket_metadata_request.h
+    internal/get_bucket_metadata_request.cc
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
     internal/http_response.h
     internal/insert_object_media_request.h
+    internal/insert_object_media_request.cc
     internal/list_objects_request.h
     internal/list_objects_request.cc
     internal/metadata_parser.h
@@ -123,7 +127,7 @@ add_library(storage_client
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/raw_client.h
-        internal/read_object_range_request.h
+    internal/read_object_range_request.h
     internal/read_object_range_request.cc
     internal/request_parameters.h
     internal/retry_client.h
@@ -190,8 +194,11 @@ set(storage_client_unit_tests
     bucket_metadata_test.cc
     bucket_test.cc
     internal/authorized_user_credentials_test.cc
+    internal/binary_data_as_debug_string_test.cc
     internal/default_client_test.cc
+    internal/get_bucket_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
+    internal/insert_object_media_request_test.cc
     internal/list_objects_request_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc

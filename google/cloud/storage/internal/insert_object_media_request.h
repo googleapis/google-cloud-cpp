@@ -99,11 +99,16 @@ class InsertObjectMediaRequest
   /// Set any parameters in a HttpRequest object.
   using RequestParameters::AddParametersToHttpRequest;
 
+  /// Dump parameter values to a std::ostream
+  using RequestParameters::DumpParameters;
+
  private:
   std::string bucket_name_;
   std::string object_name_;
   std::string contents_;
 };
+
+std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
