@@ -2,6 +2,7 @@ var searchData=
 [
   ['set_5fcredentials',['set_credentials',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ac6eb5001fa70a6aca234c885bf7344d1',1,'google::cloud::storage::v::ClientOptions']]],
   ['set_5fenable_5fhttp_5ftracing',['set_enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a0d9e0b13090060fa82ce50085ce68649',1,'google::cloud::storage::v::ClientOptions']]],
+  ['set_5fenable_5fraw_5fclient_5ftracing',['set_enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a8880322fa84573f1069409e255a7fbce',1,'google::cloud::storage::v::ClientOptions']]],
   ['set_5fendpoint',['set_endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a4516d35ece23e161926cee1620575d58',1,'google::cloud::storage::v::ClientOptions']]],
   ['set_5fversion',['set_version',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ae47baf98182c9a6667cce98d920a8c2d',1,'google::cloud::storage::v::ClientOptions']]],
   ['showmanyc',['showmanyc',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html#a91bae4b6c5ddcdd4ce17190cc441caa0',1,'google::cloud::storage::v::ObjectReadStreamBuf']]],
