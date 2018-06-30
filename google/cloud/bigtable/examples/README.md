@@ -83,7 +83,8 @@ This sample showcases the basic table / column family operations:
 - Create a table
 - List tables in the current project
 - Retrieve table metadata
-- Modify the existing tables
+- List table column families and GC rules
+- Update a column family GC rule
 - Delete all the rows
 - Delete a table
 
