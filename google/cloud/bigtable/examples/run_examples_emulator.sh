@@ -39,9 +39,9 @@ for example in instance_admin table_admin data; do
   else
     echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example} examples"
     echo
-    echo "================ ${LOG} ================"
+    echo "================ ${log} ================"
     cat ${log}
-    echo "================ ${LOG} ================"
+    echo "================ ${log} ================"
   fi
   /bin/rm "${log}"
 done

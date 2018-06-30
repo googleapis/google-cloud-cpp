@@ -124,6 +124,10 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id, grpc::Status& status);
 
+  ::google::longrunning::Operation UpdateAppProfile(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config, grpc::Status& status);
+
   ::google::bigtable::admin::v2::AppProfile CreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       grpc::Status& status);

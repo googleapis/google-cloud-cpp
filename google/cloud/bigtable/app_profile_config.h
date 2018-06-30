@@ -67,6 +67,61 @@ class AppProfileConfig {
   google::bigtable::admin::v2::CreateAppProfileRequest proto_;
 };
 
+/// Build a proto to update an Application Profile configuration.
+class AppProfileUpdateConfig {
+ public:
+  AppProfileUpdateConfig() : proto_() {}
+
+  AppProfileUpdateConfig& set_ignore_warnings(bool value) {
+    proto_.set_ignore_warnings(value);
+    return *this;
+  }
+  AppProfileUpdateConfig& set_description(std::string description) {
+    proto_.mutable_app_profile()->set_description(std::move(description));
+    AddPathIfNotPresent("description");
+    return *this;
+  }
+  AppProfileUpdateConfig& set_etag(std::string etag) {
+    proto_.mutable_app_profile()->set_etag(std::move(etag));
+    AddPathIfNotPresent("etag");
+    return *this;
+  }
+  AppProfileUpdateConfig& set_multi_cluster_use_any() {
+    *proto_.mutable_app_profile()->mutable_multi_cluster_routing_use_any() = {};
+    RemoveIfPresent("single_cluster_routing");
+    AddPathIfNotPresent("multi_cluster_routing_use_any");
+    return *this;
+  }
+  AppProfileUpdateConfig& set_single_cluster_routing(
+      ClusterId const& cluster_id, bool allow_transactional_writes = false) {
+    proto_.mutable_app_profile()
+        ->mutable_single_cluster_routing()
+        ->set_cluster_id(cluster_id.get());
+    proto_.mutable_app_profile()
+        ->mutable_single_cluster_routing()
+        ->set_allow_transactional_writes(allow_transactional_writes);
+    RemoveIfPresent("multi_cluster_routing_use_any");
+    AddPathIfNotPresent("single_cluster_routing");
+    return *this;
+  }
+
+  // NOLINT: accessors can (and should) be snake_case.
+  google::bigtable::admin::v2::UpdateAppProfileRequest const& as_proto() const {
+    return proto_;
+  }
+
+  // NOLINT: accessors can (and should) be snake_case.
+  google::bigtable::admin::v2::UpdateAppProfileRequest as_proto_move() {
+    return std::move(proto_);
+  }
+
+ private:
+  void AddPathIfNotPresent(std::string field_name);
+  void RemoveIfPresent(std::string const& field_name);
+
+  google::bigtable::admin::v2::UpdateAppProfileRequest proto_;
+};
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

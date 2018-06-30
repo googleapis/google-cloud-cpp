@@ -28,7 +28,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Implements a minimal API to administer Cloud Bigtable instances.
+ * Implements the APIs to administer Cloud Bigtable instances.
  */
 class InstanceAdmin {
  public:
@@ -65,6 +65,26 @@ class InstanceAdmin {
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
       : impl_(std::move(client), std::forward<Policies>(policies)...) {}
+
+  /**
+   * Create a new InstanceAdmin using explicit policies to handle RPC errors.
+   *
+   * @tparam RPCRetryPolicy control which operations to retry and for how long.
+   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
+   *     error.
+   * @tparam PollingPolicy controls polling of long running operations
+   * @param client the interface to create grpc stubs, report errors, etc.
+   * @param retry_policy the policy to handle RPC errors.
+   * @param backoff_policy the policy to control backoff after an error.
+   * @param polling_policy the PollingPolicy instance.
+   */
+  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
+            typename PollingPolicy>
+  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
+                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
+                PollingPolicy polling_policy)
+      : impl_(std::move(client), std::move(retry_policy),
+              std::move(backoff_policy), std::move(polling_policy)) {}
 
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return impl_.project_name(); }
@@ -260,6 +280,27 @@ class InstanceAdmin {
       bigtable::AppProfileId const& profile_id);
 
   /**
+   * Create a new application profile.
+   *
+   * @param instance_id the instance for the new application profile.
+   * @param profile_id the id (not the full name) of the profile to update.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile description
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing any
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing
+   */
+  std::future<google::bigtable::admin::v2::AppProfile> UpdateAppProfile(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
+
+  /**
    * List the application profiles in an instance.
    *
    * @param instance_id the instance to list the profiles for.
@@ -304,6 +345,11 @@ class InstanceAdmin {
   // Implement UpdateCluster() with a separate thread.
   google::bigtable::admin::v2::Cluster UpdateClusterImpl(
       ClusterConfig cluster_config);
+
+  /// Poll the result of UpdateAppProfile in a separate thread.
+  google::bigtable::admin::v2::AppProfile UpdateAppProfileImpl(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
 
  private:
   noex::InstanceAdmin impl_;

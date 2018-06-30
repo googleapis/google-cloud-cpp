@@ -175,6 +175,20 @@ btproto::AppProfile InstanceAdmin::GetAppProfile(
       "InstanceAdmin::GetAppProfile", status, true);
 }
 
+::google::longrunning::Operation InstanceAdmin::UpdateAppProfile(
+    bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+    AppProfileUpdateConfig config, grpc::Status& status) {
+  auto request = config.as_proto_move();
+  request.mutable_app_profile()->set_name(
+      InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
+
+  // This API is not idempotent, call it without retry.
+  return ClientUtils::MakeNonIdemponentCall(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &InstanceAdminClient::UpdateAppProfile, request,
+      "InstanceAdmin::UpdateAppProfile", status);
+}
+
 std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id, grpc::Status& status) {
   // Copy the policies in effect for the operation.

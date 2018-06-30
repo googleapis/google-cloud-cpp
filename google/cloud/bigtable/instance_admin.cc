@@ -236,6 +236,14 @@ btproto::AppProfile InstanceAdmin::GetAppProfile(
   return result;
 }
 
+std::future<btproto::AppProfile> InstanceAdmin::UpdateAppProfile(
+    bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+    AppProfileUpdateConfig config) {
+  return std::async(std::launch::async, &InstanceAdmin::UpdateAppProfileImpl,
+                    this, std::move(instance_id), std::move(profile_id),
+                    std::move(config));
+}
+
 std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
@@ -244,6 +252,16 @@ std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     internal::RaiseRpcError(status, status.error_message());
   }
   return result;
+}
+
+void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                                     bigtable::AppProfileId const& profile_id,
+                                     bool ignore_warnings) {
+  grpc::Status status;
+  impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
 }
 
 google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
@@ -285,14 +303,22 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
   return result;
 }
 
-void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
-                                     bigtable::AppProfileId const& profile_id,
-                                     bool ignore_warnings) {
+btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
+    bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+    AppProfileUpdateConfig config) {
   grpc::Status status;
-  impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
+  auto operation = impl_.UpdateAppProfile(
+      std::move(instance_id), std::move(profile_id), std::move(config), status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
+
+  auto result = impl_.PollLongRunningOperation<btproto::AppProfile>(
+      operation, "InstanceAdmin::UpdateAppProfileImpl", status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

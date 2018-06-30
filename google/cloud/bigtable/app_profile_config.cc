@@ -39,6 +39,24 @@ AppProfileConfig AppProfileConfig::SingleClusterRouting(
   return tmp;
 }
 
+void AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {
+  auto const& paths = proto_.update_mask().paths();
+  auto is_present =
+      paths.end() != std::find(paths.begin(), paths.end(), field_name);
+  if (not is_present) {
+    proto_.mutable_update_mask()->add_paths(std::move(field_name));
+  }
+}
+
+void AppProfileUpdateConfig::RemoveIfPresent(std::string const& field_name) {
+  auto& paths = *proto_.mutable_update_mask()->mutable_paths();
+  auto i = std::find(paths.begin(), paths.end(), field_name);
+  if (paths.end() == i) {
+    return;
+  }
+  paths.erase(i);
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
