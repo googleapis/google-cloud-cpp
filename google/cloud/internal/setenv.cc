@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/internal/setenv.h"
-#ifdef WIN32
+#ifdef _WIN32
 // We need _putenv_s(), which is defined here:
 #include <stdlib.h>
 #else
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
 #include <cstdlib>
-#endif  // WIN32
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -27,24 +27,24 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 void UnsetEnv(char const* variable) {
-#ifdef WIN32
+#ifdef _WIN32
   // Use _putenv_s() instead of SetEnvironmentVariable() because std::getenv()
   // caches the environment during program startup.
   (void)_putenv_s(variable, "");
 #else
   unsetenv(variable);
-#endif  // WIN32
+#endif  // _WIN32
 }
 
 void SetEnv(char const* variable, char const* value) {
   // Use _putenv_s() instead of SetEnvironmentVariable() because std::getenv()
   // caches the environment during program startup.
   if (value != nullptr) {
-#ifdef WIN32
+#ifdef _WIN32
     (void)_putenv_s(variable, value);
 #else
     (void)setenv(variable, value, 1);
-#endif  // WIN32
+#endif  // _WIN32
   } else {
     UnsetEnv(variable);
   }

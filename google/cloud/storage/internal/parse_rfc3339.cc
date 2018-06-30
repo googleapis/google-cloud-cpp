@@ -187,11 +187,11 @@ std::chrono::system_clock::time_point ParseRfc3339(
     std::tm lcl;
 // The standard C++ function to convert time_t to a struct tm is not thread
 // safe (it holds global storage), use some OS specific stuff here:
-#if WIN32
+#if _WIN32
     gmtime_s(&lcl, &now);
 #else
     gmtime_r(&now, &lcl);
-#endif  // WIN32
+#endif  // _WIN32
     return std::chrono::seconds(mktime(&lcl) - now);
   }();
 
