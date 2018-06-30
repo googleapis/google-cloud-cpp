@@ -108,7 +108,7 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillRepeatedly(
           Return(std::make_pair(PermanentError(), BucketMetadata{})));
-  EXPECT_DEATH_IF_SUPPORTED(client.GetBucketMetadata("foo-bar-baz"),
+  EXPECT_DEATH_IF_SUPPORTED(client->GetBucketMetadata("foo-bar-baz"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -151,7 +151,7 @@ TEST_F(BucketTest, InsertObjectMediaTooManyFailures) {
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillRepeatedly(
           Return(std::make_pair(TransientError(), ObjectMetadata{})));
-  EXPECT_DEATH_IF_SUPPORTED(client->InsertObject("foo-bar", "baz", "blah blah"),
+  EXPECT_DEATH_IF_SUPPORTED(client.InsertObject("foo-bar", "baz", "blah blah"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
