@@ -141,11 +141,32 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return impl_.Stub()->CreateAppProfile(context, request, response);
   }
 
+  grpc::Status GetAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) override {
+    return impl_.Stub()->GetAppProfile(context, request, response);
+  }
+
   grpc::Status ListAppProfiles(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListAppProfilesRequest const& request,
       google::bigtable::admin::v2::ListAppProfilesResponse* response) override {
     return impl_.Stub()->ListAppProfiles(context, request, response);
+  }
+
+  grpc::Status UpdateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      google::longrunning::Operation* response) override {
+    return impl_.Stub()->UpdateAppProfile(context, request, response);
+  }
+
+  grpc::Status DeleteAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+      google::protobuf::Empty* response) override {
+    return impl_.Stub()->DeleteAppProfile(context, request, response);
   }
 
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;

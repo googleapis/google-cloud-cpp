@@ -391,7 +391,7 @@ TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
 }
 
 /// @test Verify that AppProfile CRUD operations work as expected.
-TEST_F(InstanceAdminIntegrationTest, CreateListAppProfile) {
+TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
@@ -436,6 +436,24 @@ TEST_F(InstanceAdminIntegrationTest, CreateListAppProfile) {
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
   EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  auto detail_1 = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
+  EXPECT_EQ(detail_1.name(), profile_1.name());
+  EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_1.name(), HasSubstr(id1));
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id1), true);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id2), false);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
 
   instance_admin_->DeleteInstance(instance_id);
 }

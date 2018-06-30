@@ -142,8 +142,16 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       grpc::Status& status);
 
+  ::google::bigtable::admin::v2::AppProfile GetAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id, grpc::Status& status);
+
   std::vector<::google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& instance_id, grpc::Status& status);
+
+  void DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                        bigtable::AppProfileId const& profile_id,
+                        bool ignore_warnings, grpc::Status& status);
   //@}
 
   template <typename ResultType>
