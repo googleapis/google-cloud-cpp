@@ -39,12 +39,23 @@ class CredentialsTest : public ::testing::Test {
       testing_util::EnvironmentVariableRestore(VAR_NAME);
 };
 
+/// @test Verify `InsecureCredentials` works as expected.
 TEST_F(CredentialsTest, Insecure) {
   InsecureCredentials credentials;
   EXPECT_EQ("", credentials.AuthorizationHeader());
 }
 
-TEST_F(CredentialsTest, LoadAuthorizedUser) {
+/**
+ * @test Verify `GoogleDefaultCredentials()` loads authorized user credentials.
+ *
+ * This test only verifies the right type of object is created, the unit tests
+ * for `AuthorizedUserCredentials` already check that once loaded the class
+ * works correctly. Testing here would be redundant. Furthermore, calling
+ * `AuthorizationHeader()` initiates the key verification workflow, that
+ * requires valid keys and contacting Google's production servers, and would
+ * make this an integration test.
+ */
+TEST_F(CredentialsTest, LoadValidAuthorizedUserCredentials) {
   char const filename[] = "authorized-user.json";
   std::ofstream os(filename);
   os << R"""({
@@ -63,7 +74,17 @@ TEST_F(CredentialsTest, LoadAuthorizedUser) {
   EXPECT_EQ(typeid(*ptr), typeid(internal::AuthorizedUserCredentials<>));
 }
 
-TEST_F(CredentialsTest, LoadServiceAccount) {
+/**
+ * @test Verify `GoogleDefaultCredentials()` loads service account credentials.
+ *
+ * This test only verifies the right type of object is created, the unit tests
+ * for `ServiceAccountCredentials` already check that once loaded the class
+ * works correctly. Testing here would be redundant. Furthermore, calling
+ * `AuthorizationHeader()` initiates the key verification workflow, that
+ * requires valid keys and contacting Google's production servers, and would
+ * make this an integration test.
+ */
+TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
   char const filename[] = "service-account.json";
   std::ofstream os(filename);
   os << R"""({
