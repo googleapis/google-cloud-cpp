@@ -58,3 +58,18 @@ cc_library(
       "@com_google_googletest//:gtest_main",
     ],
 )
+
+load(":google_cloud_cpp_common_unit_tests.bzl",
+     "google_cloud_cpp_common_unit_tests")
+[cc_test(
+    name = "google_cloud_cpp_common_" + test.replace('/', '_').replace('.cc', ''),
+    srcs = [test],
+    deps = [
+      ":google_cloud_cpp_testing",
+      ":google_cloud_cpp_common",
+      "@com_google_googletest//:gtest",
+      "@com_google_googletest//:gtest_main",
+    ],
+    # TODO(#664 / #666) - use the right condition when porting Bazel builds
+    linkopts = [ "-lpthread" ],
+) for test in google_cloud_cpp_common_unit_tests]
