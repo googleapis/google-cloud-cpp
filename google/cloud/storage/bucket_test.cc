@@ -26,7 +26,25 @@ namespace {
 using namespace ::testing;
 using ms = std::chrono::milliseconds;
 
-TEST(BucketTest, GetBucketMetadata) {
+class BucketTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    mock = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock, client_options())
+        .WillRepeatedly(ReturnRef(client_options));
+    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+  }
+  void TearDown() override {
+    client.reset();
+    mock.reset();
+  }
+
+  std::shared_ptr<testing::MockClient> mock;
+  std::unique_ptr<Client> client;
+  ClientOptions client_options = ClientOptions(CreateInsecureCredentials());
+};
+
+TEST_F(BucketTest, GetBucketMetadata) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "foo-bar-baz",
@@ -42,7 +60,6 @@ TEST(BucketTest, GetBucketMetadata) {
 })""";
   auto expected = BucketMetadata::ParseFromJson(text);
 
-  auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(
@@ -58,8 +75,7 @@ TEST(BucketTest, GetBucketMetadata) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(BucketTest, GetMetadataTooManyFailures) {
-  auto mock = std::make_shared<testing::MockClient>();
+TEST_F(BucketTest, GetMetadataTooManyFailures) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2),
                 ExponentialBackoffPolicy(ms(100), ms(500), 2)};
@@ -69,7 +85,13 @@ TEST(BucketTest, GetMetadataTooManyFailures) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})));
-  EXPECT_THROW(client.GetBucketMetadata("foo-bar-baz"), std::runtime_error);
+  EXPECT_THROW(try { client.GetBucketMetadata("foo-bar-baz"); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
+    EXPECT_THAT(ex.what(), HasSubstr("GetBucketMetadata"));
+    throw;
+  },
+               std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
@@ -81,32 +103,34 @@ TEST(BucketTest, GetMetadataTooManyFailures) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(BucketTest, GetMetadataPermanentFailure) {
-  auto mock = std::make_shared<testing::MockClient>();
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
+TEST_F(BucketTest, GetMetadataPermanentFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(std::make_pair(PermanentError(), BucketMetadata{})));
-  EXPECT_THROW(client.GetBucketMetadata("foo-bar-baz"), std::runtime_error);
+  EXPECT_THROW(try { client->GetBucketMetadata("foo-bar-baz"); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
+    EXPECT_THAT(ex.what(), HasSubstr("GetBucketMetadata"));
+    throw;
+  },
+               std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillRepeatedly(
           Return(std::make_pair(PermanentError(), BucketMetadata{})));
-  EXPECT_DEATH_IF_SUPPORTED(client.GetBucketMetadata("foo-bar-baz"),
+  EXPECT_DEATH_IF_SUPPORTED(client->GetBucketMetadata("foo-bar-baz"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(BucketTest, InsertObjectMedia) {
+TEST_F(BucketTest, InsertObjectMedia) {
   std::string text = R"""({
       "name": "foo-bar/baz/1"
 })""";
   auto expected = storage::ObjectMetadata::ParseFromJson(text);
 
-  auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Invoke(
           [&expected](internal::InsertObjectMediaRequest const& request) {
@@ -115,14 +139,12 @@ TEST(BucketTest, InsertObjectMedia) {
             EXPECT_EQ("blah blah", request.contents());
             return std::make_pair(storage::Status(), expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  auto actual = client.InsertObject("foo-bar", "baz", "blah blah");
+  auto actual = client->InsertObject("foo-bar", "baz", "blah blah");
   EXPECT_EQ(expected, actual);
 }
 
-TEST(BucketTest, InsertObjectMediaTooManyFailures) {
-  auto mock = std::make_shared<testing::MockClient>();
+TEST_F(BucketTest, InsertObjectMediaTooManyFailures) {
   using ms = std::chrono::milliseconds;
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2),
@@ -133,8 +155,15 @@ TEST(BucketTest, InsertObjectMediaTooManyFailures) {
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})));
-  EXPECT_THROW(client.InsertObject("foo-bar", "baz", "blah blah"),
-               std::runtime_error);
+  EXPECT_THROW(
+      try {
+        client.InsertObject("foo-bar", "baz", "blah blah");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
+        EXPECT_THAT(ex.what(), HasSubstr("InsertObjectMedia"));
+        throw;
+      },
+      std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
@@ -146,22 +175,26 @@ TEST(BucketTest, InsertObjectMediaTooManyFailures) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(BucketTest, InsertObjectMediaPermanentFailure) {
-  auto mock = std::make_shared<testing::MockClient>();
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
+TEST_F(BucketTest, InsertObjectMediaPermanentFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(std::make_pair(PermanentError(), ObjectMetadata{})));
-  EXPECT_THROW(client.InsertObject("foo-bar", "baz", "blah blah"),
-               std::runtime_error);
+  EXPECT_THROW(
+      try {
+        client->InsertObject("foo-bar", "baz", "blah blah");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
+        EXPECT_THAT(ex.what(), HasSubstr("InsertObjectMedia"));
+        throw;
+      },
+      std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillRepeatedly(
           Return(std::make_pair(PermanentError(), ObjectMetadata{})));
-  EXPECT_DEATH_IF_SUPPORTED(client.InsertObject("foo-bar", "baz", "blah blah"),
+  EXPECT_DEATH_IF_SUPPORTED(client->InsertObject("foo-bar", "baz", "blah blah"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
