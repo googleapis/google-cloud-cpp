@@ -24,8 +24,9 @@ load(":bigtable_client_integration_tests.bzl",
     deps=[
       "//google/cloud/bigtable:bigtable_client_testing",
       "//google/cloud/bigtable:bigtable_client",
-      "@com_google_googletest//:gtest",
-      "@com_google_googletest//:gtest_main",
+      "//google/cloud:google_cloud_cpp_testing",
+      "//google/cloud:google_cloud_cpp_common",
+      "@com_google_googletest//:gtest"
     ],
 ) for test in bigtable_client_integration_tests]
 

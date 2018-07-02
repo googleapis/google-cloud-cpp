@@ -96,9 +96,9 @@ cc_library(
         ":libcurl",
         ":nlohmann_json",
         ":storage_client",
+        "//google/cloud:google_cloud_cpp_testing",
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
     ],
 )
 

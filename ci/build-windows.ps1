@@ -56,7 +56,7 @@ if ($LastExitCode) {
 }
 
 # Compile inside the build directory. Pass /m flag to msbuild to use all cores.
-cmake --build build-output -- /m
+cmake --build build-output --config $env:CONFIG -- /m
 if ($LastExitCode) {
     throw "cmake build failed with exit code $LastExitCode"
 }

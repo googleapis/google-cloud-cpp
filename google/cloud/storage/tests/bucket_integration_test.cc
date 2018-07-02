@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace storage = google::cloud::storage;
@@ -187,7 +188,7 @@ TEST_F(BucketIntegrationTest, ListObjects) {
 }
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {

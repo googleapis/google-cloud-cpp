@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -390,7 +391,7 @@ TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
 }
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   if (argc != 2) {
     std::string const cmd = argv[0];
