@@ -17,11 +17,6 @@
 
 namespace firestore = google::cloud::firestore;
 
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
-
 TEST(FieldPath, EmptyStringInConstructor) {
   const std::vector<std::string> parts = {"a", "", "b"};
   ASSERT_FALSE(firestore::FieldPath(parts).valid());

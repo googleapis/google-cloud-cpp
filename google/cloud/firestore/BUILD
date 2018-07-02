@@ -42,9 +42,9 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
     srcs = [test],
     deps = [
         ":firestore_client",
+        "//google/cloud:google_cloud_cpp_testing",
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
     ],
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = [ "-lpthread" ],

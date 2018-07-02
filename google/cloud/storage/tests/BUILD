@@ -23,9 +23,9 @@ load(":storage_client_integration_tests.bzl",
     srcs=[test],
     deps=[
         "//google/cloud/storage:storage_client",
+        "//google/cloud:google_cloud_cpp_testing",
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
     ],
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = [ "-lpthread" ],

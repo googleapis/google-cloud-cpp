@@ -80,7 +80,10 @@ foreach (fname ${firestore_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-        firestore_client gmock firestore_common_options)
+            firestore_client
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
+            gmock firestore_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 

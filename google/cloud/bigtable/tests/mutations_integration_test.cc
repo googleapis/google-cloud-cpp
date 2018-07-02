@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
 
@@ -490,7 +491,7 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {

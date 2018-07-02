@@ -276,7 +276,11 @@ foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-            bigtable_client_testing bigtable_client bigtable_protos
+            bigtable_client_testing
+            bigtable_client
+            bigtable_protos
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
             bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})

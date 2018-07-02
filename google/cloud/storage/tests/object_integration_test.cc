@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace gcs = google::cloud::storage;
@@ -81,7 +82,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 }
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {
