@@ -41,7 +41,7 @@ class ClientOptions {
    * constructor configures the object to connect to the host and port set in
    * that environment variable. If the environment variable is not set, this
    * constructor configures the object to connect to the production instance of
-   * Cloud Bigtable using the aplication default credentials.
+   * Cloud Bigtable using the application default credentials.
    *
    * @see The Google Cloud Platform introduction to
    * [application default
