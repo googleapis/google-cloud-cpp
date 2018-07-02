@@ -85,7 +85,13 @@ TEST_F(BucketTest, GetMetadataTooManyFailures) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})));
-  EXPECT_THROW(client.GetBucketMetadata("foo-bar-baz"), std::runtime_error);
+  EXPECT_THROW(try { client.GetBucketMetadata("foo-bar-baz"); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
+    EXPECT_THAT(ex.what(), HasSubstr("GetBucketMetadata"));
+    throw;
+  },
+               std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
@@ -101,7 +107,13 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(std::make_pair(PermanentError(), BucketMetadata{})));
-  EXPECT_THROW(client->GetBucketMetadata("foo-bar-baz"), std::runtime_error);
+  EXPECT_THROW(try { client->GetBucketMetadata("foo-bar-baz"); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
+    EXPECT_THAT(ex.what(), HasSubstr("GetBucketMetadata"));
+    throw;
+  },
+               std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
@@ -143,8 +155,15 @@ TEST_F(BucketTest, InsertObjectMediaTooManyFailures) {
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})));
-  EXPECT_THROW(client.InsertObject("foo-bar", "baz", "blah blah"),
-               std::runtime_error);
+  EXPECT_THROW(
+      try {
+        client.InsertObject("foo-bar", "baz", "blah blah");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
+        EXPECT_THAT(ex.what(), HasSubstr("InsertObjectMedia"));
+        throw;
+      },
+      std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.
@@ -160,8 +179,15 @@ TEST_F(BucketTest, InsertObjectMediaPermanentFailure) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(std::make_pair(PermanentError(), ObjectMetadata{})));
-  EXPECT_THROW(client->InsertObject("foo-bar", "baz", "blah blah"),
-               std::runtime_error);
+  EXPECT_THROW(
+      try {
+        client->InsertObject("foo-bar", "baz", "blah blah");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
+        EXPECT_THAT(ex.what(), HasSubstr("InsertObjectMedia"));
+        throw;
+      },
+      std::runtime_error);
 #else
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
   // operation is called.

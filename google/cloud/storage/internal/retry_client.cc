@@ -79,7 +79,12 @@ MakeCall(google::cloud::storage::RetryPolicy& retry_policy,
     last_status = std::move(result.first);
     if (not retry_policy.OnFailure(last_status)) {
       std::ostringstream os;
-      os << "Permanent error in " << error_message << ": " << last_status;
+      if (retry_policy.IsExhausted()) {
+        os << "Retry policy exhausted in " << error_message << ": "
+           << last_status;
+      } else {
+        os << "Permanent error in " << error_message << ": " << last_status;
+      }
       google::cloud::internal::RaiseRuntimeError(os.str());
     }
     auto delay = backoff_policy.OnCompletion();
