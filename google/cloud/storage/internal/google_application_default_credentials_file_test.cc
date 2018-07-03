@@ -51,7 +51,7 @@ TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
 
 /// @test Verify that the file path works as expected when using HOME.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
+  google::cloud::internal::UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
   char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
   google::cloud::internal::SetEnv(home, "/foo/bar/baz");
   auto actual = GoogleApplicationDefaultCredentialsFile();
@@ -62,7 +62,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
 /// @test Verify that the service account file path fails when HOME is not set.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
+  google::cloud::internal::UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
   char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
   google::cloud::internal::UnsetEnv(home);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

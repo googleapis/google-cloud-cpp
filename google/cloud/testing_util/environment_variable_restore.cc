@@ -22,11 +22,19 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 void EnvironmentVariableRestore::SetUp() {
-  previous_ = std::getenv(variable_name_.c_str());
+  auto ptr = std::getenv(variable_name_.c_str());
+  was_null_ = (ptr == nullptr);
+  if (not was_null_) {
+    previous_ = std::string(ptr);
+  }
 }
 
 void EnvironmentVariableRestore::TearDown() {
-  google::cloud::internal::SetEnv(variable_name_.c_str(), previous_);
+  if (was_null_) {
+    google::cloud::internal::UnsetEnv(variable_name_.c_str());
+  } else {
+    google::cloud::internal::SetEnv(variable_name_.c_str(), previous_.c_str());
+  }
 }
 
 }  // namespace testing_util
