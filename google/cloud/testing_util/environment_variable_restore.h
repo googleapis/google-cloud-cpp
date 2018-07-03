@@ -34,15 +34,17 @@ class EnvironmentVariableRestore {
       : EnvironmentVariableRestore(std::string(variable_name)) {}
 
   explicit EnvironmentVariableRestore(std::string variable_name)
-      : variable_name_(std::move(variable_name)),
-        previous_(std::getenv(variable_name_.c_str())) {}
+      : variable_name_(std::move(variable_name)) {
+    SetUp();
+  }
 
   void SetUp();
   void TearDown();
 
  private:
   std::string variable_name_;
-  char const* previous_;
+  bool was_null_;
+  std::string previous_;
 };
 
 }  // namespace testing_util
