@@ -54,8 +54,13 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
 
   Row const& operator*() const& { return *row_; }
   Row& operator*() & { return *row_; }
+#if !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 8)
+  // Exclude this function for gcc-4.8. While we do not support gcc-4.8, we have
+  // made an exception here because the TensorFlow folks need it.
+  Row const&& operator*() const&& { return *std::move(row_); }
+#endif  // !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 &&
+        // __GNUC_MINOR__ > 8)
   Row&& operator*() && { return *std::move(row_); }
-
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
     return owner_ == that.owner_ and row_.has_value() == that.row_.has_value();
