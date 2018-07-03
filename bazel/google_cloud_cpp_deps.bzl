@@ -38,9 +38,9 @@ def google_cloud_cpp_deps():
     if "com_github_googleapis_googleapis" not in native.existing_rules():
         native.new_http_archive(
             name = "com_github_googleapis_googleapis",
-            url = "https://github.com/google/googleapis/archive/f81082ea1e2f85c43649bee26e0d9871d4b41cdb.zip",
-            strip_prefix="googleapis-f81082ea1e2f85c43649bee26e0d9871d4b41cdb",
-            sha256 = "824870d87a176f26bcef663e92051f532fac756d1a06b404055dc078425f4378",
+            url = "https://github.com/google/googleapis/archive/6a3277c0656219174ff7c345f31fb20a90b30b97.zip",
+            strip_prefix="googleapis-6a3277c0656219174ff7c345f31fb20a90b30b97",
+            sha256 = "82ba91a41fb01305de4e8805c0a9270ed2035007161aa5a4ec60f887a499f5e9",
             build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.BUILD",
             workspace_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.WORKSPACE",
         )
