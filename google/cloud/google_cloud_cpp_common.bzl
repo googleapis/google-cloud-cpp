@@ -19,4 +19,3 @@ google_cloud_cpp_common_SRCS = [
     "internal/throw_delegate.cc",
     "log.cc",
 ]
-

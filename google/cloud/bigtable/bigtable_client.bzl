@@ -80,4 +80,3 @@ bigtable_client_SRCS = [
     "table_config.cc",
     "version.cc",
 ]
-

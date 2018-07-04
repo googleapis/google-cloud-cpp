@@ -39,7 +39,7 @@ def google_cloud_cpp_deps():
         native.new_http_archive(
             name = "com_github_googleapis_googleapis",
             url = "https://github.com/google/googleapis/archive/6a3277c0656219174ff7c345f31fb20a90b30b97.zip",
-            strip_prefix="googleapis-6a3277c0656219174ff7c345f31fb20a90b30b97",
+            strip_prefix = "googleapis-6a3277c0656219174ff7c345f31fb20a90b30b97",
             sha256 = "82ba91a41fb01305de4e8805c0a9270ed2035007161aa5a4ec60f887a499f5e9",
             build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.BUILD",
             workspace_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.WORKSPACE",
@@ -51,11 +51,11 @@ def google_cloud_cpp_deps():
         native.http_archive(
             name = "com_github_grpc_grpc",
             strip_prefix = "grpc-1.10.0",
-                    urls = [
-                        "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.10.0.tar.gz",
-                        "https://github.com/grpc/grpc/archive/v1.10.0.tar.gz",
-                    ],
-                    sha256 = "39a73de6fa2a03bdb9c43c89a4283e09880833b3c1976ef3ce3edf45c8cacf72"
+            urls = [
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.10.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.10.0.tar.gz",
+            ],
+            sha256 = "39a73de6fa2a03bdb9c43c89a4283e09880833b3c1976ef3ce3edf45c8cacf72",
         )
 
     # We need the nlohmann_json library
@@ -70,10 +70,10 @@ def google_cloud_cpp_deps():
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//:grpc_cpp_plugin"
+        actual = "@com_github_grpc_grpc//:grpc_cpp_plugin",
     )
 
     native.bind(
         name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++"
+        actual = "@com_github_grpc_grpc//:grpc++",
     )

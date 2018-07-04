@@ -8,4 +8,3 @@ storage_client_testing_HDRS = [
 storage_client_testing_SRCS = [
     "testing/mock_http_request.cc",
 ]
-
