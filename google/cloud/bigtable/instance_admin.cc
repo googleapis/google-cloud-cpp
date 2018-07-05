@@ -69,7 +69,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
 
   grpc::Status status;
-  auto response = ClientUtils::MakeCall(
+  auto operation = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateInstance,
       request, "InstanceAdmin::CreateInstance", status, false);
@@ -78,41 +78,12 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  google::bigtable::admin::v2::Instance result;
-  do {
-    if (response.done()) {
-      if (response.has_response()) {
-        auto const& any = response.response();
-        if (not any.Is<google::bigtable::admin::v2::Instance>()) {
-          google::cloud::internal::RaiseRuntimeError("invalid result type");
-        }
-        any.UnpackTo(&result);
-        return result;
-      }
-      if (response.has_error()) {
-        bigtable::internal::RaiseRpcError(
-            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
-                         response.error().message()),
-            "long running op failed");
-      }
-    }
-    // Wait before polling, and then poll the operation to get the new
-    // "response.
-    auto delay = backoff_policy->OnCompletion(status);
-    std::this_thread::sleep_for(delay);
-    google::longrunning::GetOperationRequest op;
-    op.set_name(response.name());
-    grpc::ClientContext context;
-    status = impl_.client_->GetOperation(&context, op, &response);
-    if (not status.ok()) {
-      if (not rpc_policy->OnFailure(status)) {
-        bigtable::internal::RaiseRpcError(
-            status,
-            "unrecoverable error polling longrunning Operation in "
-            "CreateInstance()");
-      }
-    }
-  } while (true);
+  auto result = impl_.PollLongRunningOperation<btproto::Instance>(
+      operation, "InstanceAdmin::CreateInstance", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "while polling operation in InstanceAdmin::CreateInstance");
+  }
   return result;
 }
 
@@ -137,7 +108,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
 
   grpc::Status status;
-  auto response = ClientUtils::MakeCall(
+  auto operation = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::UpdateInstance,
       request, "InstanceAdmin::UpdateInstance", status, false);
@@ -146,42 +117,12 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  google::bigtable::admin::v2::Instance result;
-  do {
-    if (response.done()) {
-      if (response.has_response()) {
-        auto const& any = response.response();
-        if (not any.Is<google::bigtable::admin::v2::Instance>()) {
-          google::cloud::internal::RaiseRuntimeError("invalid result type");
-        }
-        any.UnpackTo(&result);
-        return result;
-      }
-      if (response.has_error()) {
-        bigtable::internal::RaiseRpcError(
-            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
-                         response.error().message()),
-            "long running op failed");
-      }
-    }
-    // Wait before polling, and then poll the operation to get the new
-    // "response.
-    // TODO(#578) here to use the PollingPolicy once #461 is merged.
-    auto delay = backoff_policy->OnCompletion(status);
-    std::this_thread::sleep_for(delay);
-    google::longrunning::GetOperationRequest op;
-    op.set_name(response.name());
-    grpc::ClientContext context;
-    status = impl_.client_->GetOperation(&context, op, &response);
-    if (not status.ok()) {
-      if (not rpc_policy->OnFailure(status)) {
-        bigtable::internal::RaiseRpcError(
-            status,
-            "unrecoverable error polling longrunning Operation in "
-            "UpdateInstance()");
-      }
-    }
-  } while (true);
+  auto result = impl_.PollLongRunningOperation<btproto::Instance>(
+      operation, "InstanceAdmin::UpdateInstance", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "while polling operation in InstanceAdmin::UpdateInstance");
+  }
   return result;
 }
 
@@ -248,7 +189,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
 
   grpc::Status status;
-  auto response = ClientUtils::MakeCall(
+  auto operation = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::UpdateCluster,
       request, "InstanceAdmin::UpdateCluster", status, false);
@@ -257,42 +198,12 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  google::bigtable::admin::v2::Cluster result;
-  do {
-    if (response.done()) {
-      if (response.has_response()) {
-        auto const& any = response.response();
-        if (not any.Is<google::bigtable::admin::v2::Cluster>()) {
-          google::cloud::internal::RaiseRuntimeError("invalid result type");
-        }
-        any.UnpackTo(&result);
-        return result;
-      }
-      if (response.has_error()) {
-        bigtable::internal::RaiseRpcError(
-            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
-                         response.error().message()),
-            "long running op failed");
-      }
-    }
-    // Wait before polling, and then poll the operation to get the new
-    // "response.
-    // TODO(#578) here to use the PollingPolicy once #461 is merged.
-    auto delay = backoff_policy->OnCompletion(status);
-    std::this_thread::sleep_for(delay);
-    google::longrunning::GetOperationRequest op;
-    op.set_name(response.name());
-    grpc::ClientContext context;
-    status = impl_.client_->GetOperation(&context, op, &response);
-    if (not status.ok()) {
-      if (not rpc_policy->OnFailure(status)) {
-        bigtable::internal::RaiseRpcError(
-            status,
-            "unrecoverable error polling longrunning Operation in "
-            "UpdateInstance()");
-      }
-    }
-  } while (true);
+  auto result = impl_.PollLongRunningOperation<btproto::Cluster>(
+      operation, "InstanceAdmin::UpdateCluster", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "while polling operation in InstanceAdmin::UpdateCluster");
+  }
   return result;
 }
 void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
@@ -345,7 +256,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
 
   grpc::Status status;
-  auto response = ClientUtils::MakeCall(
+  auto operation = ClientUtils::MakeCall(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateCluster,
       request, "InstanceAdmin::CreateCluster", status, false);
@@ -354,43 +265,12 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  google::bigtable::admin::v2::Cluster result;
-
-  do {
-    if (response.done()) {
-      if (response.has_response()) {
-        auto const& any = response.response();
-        if (not any.Is<google::bigtable::admin::v2::Cluster>()) {
-          google::cloud::internal::RaiseRuntimeError("invalid result type");
-        }
-        any.UnpackTo(&result);
-        return result;
-      }
-      if (response.has_error()) {
-        bigtable::internal::RaiseRpcError(
-            grpc::Status(static_cast<grpc::StatusCode>(response.error().code()),
-                         response.error().message()),
-            "long running op failed");
-      }
-    }
-    // Wait before polling, and then poll the operation to get the new
-    // "response.
-    // TODO(#422) we should use the PollingPolicy here once #461 is merged.
-    auto delay = backoff_policy->OnCompletion(status);
-    std::this_thread::sleep_for(delay);
-    google::longrunning::GetOperationRequest op;
-    op.set_name(response.name());
-    grpc::ClientContext context;
-    status = impl_.client_->GetOperation(&context, op, &response);
-    if (not status.ok()) {
-      if (not rpc_policy->OnFailure(status)) {
-        bigtable::internal::RaiseRpcError(
-            status,
-            "unrecoverable error polling longrunning Operation in "
-            "CreateCluster()");
-      }
-    }
-  } while (true);
+  auto result = impl_.PollLongRunningOperation<btproto::Cluster>(
+      operation, "InstanceAdmin::CreateCluster", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "while polling operation in InstanceAdmin::CreateCluster");
+  }
   return result;
 }
 
