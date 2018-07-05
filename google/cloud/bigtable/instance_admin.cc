@@ -225,6 +225,17 @@ btproto::AppProfile InstanceAdmin::CreateAppProfile(
   return result;
 }
 
+btproto::AppProfile InstanceAdmin::GetAppProfile(
+    bigtable::InstanceId const& instance_id,
+    bigtable::AppProfileId const& profile_id) {
+  grpc::Status status;
+  auto result = impl_.GetAppProfile(instance_id, profile_id, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
 std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
@@ -272,6 +283,16 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
         status, "while polling operation in InstanceAdmin::CreateCluster");
   }
   return result;
+}
+
+void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                                     bigtable::AppProfileId const& profile_id,
+                                     bool ignore_warnings) {
+  grpc::Status status;
+  impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
+  if (not status.ok()) {
+    internal::RaiseRpcError(status, status.error_message());
+  }
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

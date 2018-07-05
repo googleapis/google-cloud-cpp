@@ -234,6 +234,20 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id, AppProfileConfig config);
 
   /**
+   * Fetch the detailed information about an existing application profile.
+   *
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @return The proto describing the application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get app profile
+   */
+  google::bigtable::admin::v2::AppProfile GetAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id);
+
+  /**
    * List the application profiles in an instance.
    *
    * @param instance_id the instance to list the profiles for.
@@ -244,6 +258,21 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& instance_id);
+
+  /**
+   * Delete an existing application profile.
+   *
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @param ignore_warnings if true, ignore safety checks when deleting the
+   *     application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc delete app profile
+   */
+  void DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                        bigtable::AppProfileId const& profile_id,
+                        bool ignore_warnings = false);
 
  private:
   /// Implement CreateInstance() with a separate thread.

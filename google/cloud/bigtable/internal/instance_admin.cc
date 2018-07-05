@@ -162,6 +162,19 @@ btproto::AppProfile InstanceAdmin::CreateAppProfile(
       "InstanceAdmin::CreateAppProfile", status);
 }
 
+btproto::AppProfile InstanceAdmin::GetAppProfile(
+    bigtable::InstanceId const& instance_id,
+    bigtable::AppProfileId const& profile_id, grpc::Status& status) {
+  btproto::GetAppProfileRequest request;
+  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
+                   profile_id.get());
+
+  return ClientUtils::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy_, &InstanceAdminClient::GetAppProfile, request,
+      "InstanceAdmin::GetAppProfile", status, true);
+}
+
 std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id, grpc::Status& status) {
   // Copy the policies in effect for the operation.
@@ -190,6 +203,21 @@ std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
     page_token = std::move(*response.mutable_next_page_token());
   } while (not page_token.empty());
   return result;
+}
+
+void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                                     bigtable::AppProfileId const& profile_id,
+                                     bool ignore_warnings,
+                                     grpc::Status& status) {
+  btproto::DeleteAppProfileRequest request;
+  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
+                   profile_id.get());
+  request.set_ignore_warnings(ignore_warnings);
+
+  ClientUtils::MakeNonIdemponentCall(
+      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
+      &InstanceAdminClient::DeleteAppProfile, request,
+      "InstanceAdmin::DeleteAppProfile", status);
 }
 
 }  // namespace noex

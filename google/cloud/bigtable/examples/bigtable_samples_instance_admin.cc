@@ -276,6 +276,21 @@ void CreateAppProfileCluster(
 }
 //! [create app profile cluster]
 
+//! [get app profile]
+void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"get-app-profile: <project-id> <instance-id> <profile-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto profile = instance_admin.GetAppProfile(instance_id, profile_id);
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [get app profile]
+
 //! [list app profiles]
 void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                      int argc, char* argv[]) {
@@ -294,16 +309,75 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [list app profiles]
 
+//! [delete app profile]
+void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                      int argc, char* argv[]) {
+  std::string basic_usage =
+      "delete-app-profile: <project-id> <instance-id> <profile-id>"
+      " [ignore-warnings (default: true)]";
+  if (argc < 3) {
+    throw Usage{basic_usage};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  bool ignore_warnings = true;
+  if (argc >= 2) {
+    std::string arg = ConsumeArg(argc, argv);
+    if (arg == "true") {
+      ignore_warnings = true;
+    } else if (arg == "false") {
+      ignore_warnings = false;
+    } else {
+      auto msg = basic_usage;
+      msg +=
+          "\ndelete-app-profile: ignore-warnings parameter must be either"
+          " 'true' or 'false'";
+      throw Usage{msg};
+    }
+  }
+  instance_admin.DeleteAppProfile(instance_id, profile_id, ignore_warnings);
+  std::cout << "Application Profile deleted" << std::endl;
+}
+//! [delete app profile]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
+  using CommandType = std::function<void(google::cloud::bigtable::InstanceAdmin,
+                                         int, char* [])>;
+
+  std::map<std::string, CommandType> commands = {
+      {"create-instance", &CreateInstance},
+      {"update-instance", &UpdateInstance},
+      {"list-instances", &ListInstances},
+      {"get-instance", &GetInstance},
+      {"delete-instance", &DeleteInstance},
+      {"create-cluster", &CreateCluster},
+      {"list-clusters", &ListClusters},
+      {"list-all-clusters", &ListAllClusters},
+      {"update-cluster", &UpdateCluster},
+      {"get-cluster", &GetCluster},
+      {"delete-cluster", &DeleteCluster},
+      {"create-app-profile", &CreateAppProfile},
+      {"create-app-profile-cluster", &CreateAppProfileCluster},
+      {"get-app-profile", &GetAppProfile},
+      {"list-app-profiles", &ListAppProfiles},
+      {"delete-app-profile", &DeleteAppProfile},
+  };
+
   if (argc < 3) {
-    PrintUsage(argc, argv, "Missing command");
+    PrintUsage(argc, argv, "Missing command and/or project-id");
     return 1;
   }
 
-  std::string const command = ConsumeArg(argc, argv);
+  std::string const command_name = ConsumeArg(argc, argv);
   std::string const project_id = ConsumeArg(argc, argv);
+
+  auto command = commands.find(command_name);
+  if (commands.end() == command) {
+    PrintUsage(argc, argv, "Unknown command: " + command_name);
+    return 1;
+  }
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect instance admin client]
@@ -317,38 +391,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::bigtable::InstanceAdmin instance_admin(instance_admin_client);
   //! [connect instance admin]
 
-  if (command == "create-instance") {
-    CreateInstance(instance_admin, argc, argv);
-  } else if (command == "update-instance") {
-    UpdateInstance(instance_admin, argc, argv);
-  } else if (command == "list-instances") {
-    ListInstances(instance_admin, argc, argv);
-  } else if (command == "get-instance") {
-    GetInstance(instance_admin, argc, argv);
-  } else if (command == "delete-instance") {
-    DeleteInstance(instance_admin, argc, argv);
-  } else if (command == "create-cluster") {
-    CreateCluster(instance_admin, argc, argv);
-  } else if (command == "list-clusters") {
-    ListClusters(instance_admin, argc, argv);
-  } else if (command == "list-all-clusters") {
-    ListAllClusters(instance_admin, argc, argv);
-  } else if (command == "update-cluster") {
-    UpdateCluster(instance_admin, argc, argv);
-  } else if (command == "get-cluster") {
-    GetCluster(instance_admin, argc, argv);
-  } else if (command == "delete-cluster") {
-    DeleteCluster(instance_admin, argc, argv);
-  } else if (command == "create-app-profile") {
-    CreateAppProfile(instance_admin, argc, argv);
-  } else if (command == "create-app-profile-cluster") {
-    CreateAppProfileCluster(instance_admin, argc, argv);
-  } else if (command == "list-app-profiles") {
-    ListAppProfiles(instance_admin, argc, argv);
-  } else {
-    std::string msg("Unknown_command: " + command);
-    PrintUsage(argc, argv, msg);
-  }
+  command->second(instance_admin, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

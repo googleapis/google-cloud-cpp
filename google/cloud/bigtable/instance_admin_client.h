@@ -129,10 +129,25 @@ class InstanceAdminClient {
       google::bigtable::admin::v2::CreateAppProfileRequest const& request,
       google::bigtable::admin::v2::AppProfile* response) = 0;
 
+  virtual grpc::Status GetAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) = 0;
+
   virtual grpc::Status ListAppProfiles(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListAppProfilesRequest const& request,
       google::bigtable::admin::v2::ListAppProfilesResponse* response) = 0;
+
+  virtual grpc::Status UpdateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      google::longrunning::Operation* response) = 0;
+
+  virtual grpc::Status DeleteAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+      google::protobuf::Empty* response) = 0;
   //@}
 
   //@{
