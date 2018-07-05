@@ -4,7 +4,7 @@
 The Cloud Bigtable C++ Client library introduces a single environment variable
 that affects its behavior. If `BIGTABLE_EMULATOR_HOST` is set, it specifies the
 endpoint (typically a `host:port` string) for the [Cloud Bigtable
-Emulator](https://cloud.google.com/bigtable/docs/emulator). And configure the
+emulator](https://cloud.google.com/bigtable/docs/emulator) and configures the
 library to connect to the emulator by default.
 
 In addition, the library inherits all the [gRPC environment

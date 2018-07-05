@@ -37,11 +37,11 @@ class ClientOptions {
   /**
    * Initialize the client options with the default credentials.
    *
-   * Configure the client to connect to the production instance of Cloud
-   * Bigtable, using the default google credentials for authentication.
+   * Configure the client to connect to the Cloud Bigtable service, using the
+   * default Google credentials for authentication.
    *
    * @par Environment Variables
-   * If the `BIGTABLE_EMULATOR_HOST` environment variable is set the default
+   * If the `BIGTABLE_EMULATOR_HOST` environment variable is set, the default
    * configuration changes in important ways:
    *
    * - The credentials are initialized to `grpc::InsecureCredentials()`.
