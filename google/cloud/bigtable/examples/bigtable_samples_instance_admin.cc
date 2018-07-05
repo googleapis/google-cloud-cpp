@@ -312,10 +312,11 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [delete app profile]
 void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                       int argc, char* argv[]) {
+  std::string basic_usage =
+      "delete-app-profile: <project-id> <instance-id> <profile-id>"
+      " [ignore-warnings (default: true)]";
   if (argc < 3) {
-    throw Usage{
-        "delete-app-profile: <project-id> <instance-id> <profile-id>"
-        " [ignore-warnings (default: true)]"};
+    throw Usage{basic_usage};
   }
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
@@ -327,9 +328,11 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
     } else if (arg == "false") {
       ignore_warnings = false;
     } else {
-      throw Usage{
-          "delete-app-profile: ignore-warnings parameter must be either"
-          " 'true' or 'false'"};
+      auto msg = basic_usage;
+      msg +=
+          "\ndelete-app-profile: ignore-warnings parameter must be either"
+          " 'true' or 'false'";
+      throw Usage{msg};
     }
   }
   instance_admin.DeleteAppProfile(instance_id, profile_id, ignore_warnings);
