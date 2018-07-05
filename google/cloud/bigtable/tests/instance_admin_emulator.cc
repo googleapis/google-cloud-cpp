@@ -248,33 +248,88 @@ class InstanceAdminEmulator final
   grpc::Status CreateAppProfile(grpc::ServerContext* context,
                                 btadmin::CreateAppProfileRequest const* request,
                                 btadmin::AppProfile* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
+    auto ins = app_profiles_.emplace(name, request->app_profile());
+    if (ins.second) {
+      auto& profile = ins.first->second;
+      profile.set_name(std::move(name));
+      profile.set_etag("xyz" + std::to_string(++counter_));
+      *response = profile;
+      return grpc::Status::OK;
+    }
+    return grpc::Status(grpc::StatusCode::ALREADY_EXISTS,
+                        "duplicate app profile");
   }
 
   grpc::Status GetAppProfile(grpc::ServerContext* context,
                              btadmin::GetAppProfileRequest const* request,
                              btadmin::AppProfile* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto i = app_profiles_.find(request->name());
+    if (i == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+    *response = i->second;
+    return grpc::Status::OK;
   }
 
   grpc::Status ListAppProfiles(
       grpc::ServerContext* context,
       btadmin::ListAppProfilesRequest const* request,
       btadmin::ListAppProfilesResponse* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto const& parent = request->parent();
+    for (auto const& kv : app_profiles_) {
+      if (0 == kv.first.find(parent)) {
+        *response->add_app_profiles() = kv.second;
+      }
+    }
+    response->mutable_next_page_token()->clear();
+    return grpc::Status::OK;
   }
 
   grpc::Status UpdateAppProfile(
       grpc::ServerContext* context,
       btadmin::UpdateAppProfileRequest const* request,
       google::longrunning::Operation* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string name = request->app_profile().name();
+    auto it = app_profiles_.find(name);
+    if (it == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+
+    auto& stored_app_profile = it->second;
+
+    for (int index = 0; index != request->update_mask().paths_size(); ++index) {
+      if ("description" == request->update_mask().paths(index)) {
+        stored_app_profile.set_description(
+            request->app_profile().description());
+      }
+      if ("multi_cluster_routing_policy_use_any" ==
+          request->update_mask().paths(index)) {
+        *stored_app_profile.mutable_multi_cluster_routing_use_any() =
+            request->app_profile().multi_cluster_routing_use_any();
+      }
+      if ("single_cluster_routing" == request->update_mask().paths(index)) {
+        *stored_app_profile.mutable_single_cluster_routing() =
+            request->app_profile().single_cluster_routing();
+      }
+    }
+    response->set_name("update-app-profile/" + name);
+    response->set_done(true);
+    auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
+    contents->PackFrom(stored_app_profile);
+    response->set_allocated_response(contents.release());
+    return grpc::Status::OK;
   }
 
   grpc::Status DeleteAppProfile(grpc::ServerContext* context,
                                 btadmin::DeleteAppProfileRequest const* request,
                                 google::protobuf::Empty* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto i = app_profiles_.find(request->name());
+    if (i == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+    app_profiles_.erase(i);
+    return grpc::Status::OK;
   }
 
   grpc::Status GetIamPolicy(grpc::ServerContext* context,
@@ -300,6 +355,8 @@ class InstanceAdminEmulator final
   std::map<std::string, btadmin::Instance> instances_;
   std::map<std::string, btadmin::Cluster> clusters_;
   std::map<std::string, google::longrunning::Operation> pending_operations_;
+  std::map<std::string, btadmin::AppProfile> app_profiles_;
+  long counter_ = 0;
 };
 
 class LongRunningEmulator final

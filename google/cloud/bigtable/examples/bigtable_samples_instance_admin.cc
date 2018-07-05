@@ -242,6 +242,58 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [delete cluster]
 
+//! [create app profile]
+void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                      int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-app-profile: <project-id> <instance-id> <profile-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto config =
+      google::cloud::bigtable::AppProfileConfig::MultiClusterUseAny(profile_id);
+  auto profile = instance_admin.CreateAppProfile(instance_id, config);
+  std::cout << "New profile created with name=" << profile.name() << std::endl;
+}
+//! [create app profile]
+
+//! [create app profile cluster]
+void CreateAppProfileCluster(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "create-app-profile-cluster: <project-id> <instance-id> <profile-id>"
+        " <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto config = google::cloud::bigtable::AppProfileConfig::SingleClusterRouting(
+      profile_id, cluster_id);
+  auto profile = instance_admin.CreateAppProfile(instance_id, config);
+  std::cout << "New profile created with name=" << profile.name() << std::endl;
+}
+//! [create app profile cluster]
+
+//! [list app profiles]
+void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
+                     int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-app-profiles: <project-id> <instance-id>"};
+  }
+  std::string instance_id(ConsumeArg(argc, argv));
+  auto profiles = instance_admin.ListAppProfiles(instance_id);
+  std::cout << "The " << instance_id << " instance has " << profiles.size()
+            << " application profiles" << std::endl;
+  for (auto const& profile : profiles) {
+    std::string detail;
+    google::protobuf::TextFormat::PrintToString(profile, &detail);
+    std::cout << detail << std::endl;
+  }
+}
+//! [list app profiles]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -287,6 +339,12 @@ int main(int argc, char* argv[]) try {
     GetCluster(instance_admin, argc, argv);
   } else if (command == "delete-cluster") {
     DeleteCluster(instance_admin, argc, argv);
+  } else if (command == "create-app-profile") {
+    CreateAppProfile(instance_admin, argc, argv);
+  } else if (command == "create-app-profile-cluster") {
+    CreateAppProfileCluster(instance_admin, argc, argv);
+  } else if (command == "list-app-profiles") {
+    ListAppProfiles(instance_admin, argc, argv);
   } else {
     std::string msg("Unknown_command: " + command);
     PrintUsage(argc, argv, msg);

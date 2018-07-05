@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_INSTANCE_ADMIN_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_INSTANCE_ADMIN_H_
 
+#include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
@@ -107,6 +108,12 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id, grpc::Status& status);
 
+  ::google::bigtable::admin::v2::AppProfile CreateAppProfile(
+      bigtable::InstanceId const& instance_id, AppProfileConfig config,
+      grpc::Status& status);
+
+  std::vector<::google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      std::string const& instance_id, grpc::Status& status);
   //@}
 
  private:

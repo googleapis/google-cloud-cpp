@@ -217,6 +217,34 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
+  /**
+   * Create a new application profile.
+   *
+   * @param instance_id the instance for the new application profile.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create app profile
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create app profile cluster
+   */
+  google::bigtable::admin::v2::AppProfile CreateAppProfile(
+      bigtable::InstanceId const& instance_id, AppProfileConfig config);
+
+  /**
+   * List the application profiles in an instance.
+   *
+   * @param instance_id the instance to list the profiles for.
+   * @return a std::vector with the protos describing any profiles.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list app profiles
+   */
+  std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      std::string const& instance_id);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
