@@ -42,4 +42,3 @@ bigtable_client_unit_tests = [
     "rpc_retry_policy_test.cc",
     "polling_policy_test.cc",
 ]
-

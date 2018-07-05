@@ -59,4 +59,3 @@ storage_client_SRCS = [
     "object_stream.cc",
     "version.cc",
 ]
-

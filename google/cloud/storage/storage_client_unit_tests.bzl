@@ -24,4 +24,3 @@ storage_client_unit_tests = [
     "storage_client_options_test.cc",
     "link_test.cc",
 ]
-

@@ -2,4 +2,3 @@
 firestore_client_unit_tests = [
     "field_path_test.cc",
 ]
-
