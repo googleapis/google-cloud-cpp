@@ -37,15 +37,26 @@ class ClientOptions {
   /**
    * Initialize the client options with the default credentials.
    *
-   * If the `BIGTABLE_EMULATOR_HOST` environment variable is set this
-   * constructor configures the object to connect to the host and port set in
-   * that environment variable. If the environment variable is not set, this
-   * constructor configures the object to connect to the production instance of
-   * Cloud Bigtable using the application default credentials.
+   * Configure the client to connect to the Cloud Bigtable service, using the
+   * default Google credentials for authentication.
+   *
+   * @par Environment Variables
+   * If the `BIGTABLE_EMULATOR_HOST` environment variable is set, the default
+   * configuration changes in important ways:
+   *
+   * - The credentials are initialized to `grpc::InsecureCredentials()`.
+   * - Any client created with these objects will connect to the endpoint
+   *   (typically just a `host:port` string) set in the environment variable.
+   *
+   * This makes it easy to test applications using the Cloud Bigtable Emulator.
    *
    * @see The Google Cloud Platform introduction to
    * [application default
    * credentials](https://cloud.google.com/docs/authentication/production)
+   * @see `grpc::GoogleDefaultCredentials` in the [grpc
+   * documentation](https://grpc.io/grpc/cpp/namespacegrpc.html)
+   * @see The [documentation](https://cloud.google.com/bigtable/docs/emulator)
+   * for the Cloud Bigtable Emulator.
    */
   ClientOptions();
 
