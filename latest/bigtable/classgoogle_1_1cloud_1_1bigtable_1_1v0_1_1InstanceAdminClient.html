@@ -115,6 +115,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a43148c492d873348f3ca393d94a4ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f2bb326609f9e98afa4df8fc4545e53"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a0f2bb326609f9e98afa4df8fc4545e53">UpdateCluster</a> (grpc::ClientContext *context, google::bigtable::admin::v2::Cluster const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:a0f2bb326609f9e98afa4df8fc4545e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55e1a5ad12842b5aae5d6a26dacd5cf0"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a55e1a5ad12842b5aae5d6a26dacd5cf0">CreateAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateAppProfileRequest const &amp;request, google::bigtable::admin::v2::AppProfile *response)=0</td></tr>
+<tr class="separator:a55e1a5ad12842b5aae5d6a26dacd5cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e4d9e0cbcef7c943c65123ad2e56261"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a2e4d9e0cbcef7c943c65123ad2e56261">ListAppProfiles</a> (grpc::ClientContext *context, google::bigtable::admin::v2::ListAppProfilesRequest const &amp;request, google::bigtable::admin::v2::ListAppProfilesResponse *response)=0</td></tr>
+<tr class="separator:a2e4d9e0cbcef7c943c65123ad2e56261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
 <tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +185,48 @@ Friends</h2></td></tr>
 
 <p>Return a new channel to handle admin operations. </p>
 <p>Intended to access rarely used services in the same endpoints as the Bigtable admin interfaces, for example, the google.longrunning.Operations. </p>
+
+</div>
+</div>
+<a id="a55e1a5ad12842b5aae5d6a26dacd5cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55e1a5ad12842b5aae5d6a26dacd5cf0">&#9670;&nbsp;</a></span>CreateAppProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::CreateAppProfile </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::CreateAppProfileRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::AppProfile *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -461,6 +507,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::longrunning::Operation *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e4d9e0cbcef7c943c65123ad2e56261"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e4d9e0cbcef7c943c65123ad2e56261">&#9670;&nbsp;</a></span>ListAppProfiles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::ListAppProfiles </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::ListAppProfilesRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::ListAppProfilesResponse *&#160;</td>
           <td class="paramname"><em>response</em>&#160;</td>
         </tr>
         <tr>
