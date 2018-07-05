@@ -117,8 +117,14 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a0f2bb326609f9e98afa4df8fc4545e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55e1a5ad12842b5aae5d6a26dacd5cf0"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a55e1a5ad12842b5aae5d6a26dacd5cf0">CreateAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateAppProfileRequest const &amp;request, google::bigtable::admin::v2::AppProfile *response)=0</td></tr>
 <tr class="separator:a55e1a5ad12842b5aae5d6a26dacd5cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe695e8155d9b5803188475f3ee2a79"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#acfe695e8155d9b5803188475f3ee2a79">GetAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetAppProfileRequest const &amp;request, google::bigtable::admin::v2::AppProfile *response)=0</td></tr>
+<tr class="separator:acfe695e8155d9b5803188475f3ee2a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e4d9e0cbcef7c943c65123ad2e56261"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a2e4d9e0cbcef7c943c65123ad2e56261">ListAppProfiles</a> (grpc::ClientContext *context, google::bigtable::admin::v2::ListAppProfilesRequest const &amp;request, google::bigtable::admin::v2::ListAppProfilesResponse *response)=0</td></tr>
 <tr class="separator:a2e4d9e0cbcef7c943c65123ad2e56261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948454d0b835bdd2c7746d071d35bd95"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a948454d0b835bdd2c7746d071d35bd95">UpdateAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::UpdateAppProfileRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
+<tr class="separator:a948454d0b835bdd2c7746d071d35bd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae1cb9d28ecb4b7b8505b27f7cdb09ab"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#aae1cb9d28ecb4b7b8505b27f7cdb09ab">DeleteAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteAppProfileRequest const &amp;request, google::protobuf::Empty *response)=0</td></tr>
+<tr class="separator:aae1cb9d28ecb4b7b8505b27f7cdb09ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
 <tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,6 +320,48 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="aae1cb9d28ecb4b7b8505b27f7cdb09ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae1cb9d28ecb4b7b8505b27f7cdb09ab">&#9670;&nbsp;</a></span>DeleteAppProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::DeleteAppProfile </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::DeleteAppProfileRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::protobuf::Empty *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af753ff16781eb1c5e9f57ee49d197ea1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af753ff16781eb1c5e9f57ee49d197ea1">&#9670;&nbsp;</a></span>DeleteCluster()</h2>
 
@@ -381,6 +429,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::protobuf::Empty *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acfe695e8155d9b5803188475f3ee2a79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfe695e8155d9b5803188475f3ee2a79">&#9670;&nbsp;</a></span>GetAppProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::GetAppProfile </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::GetAppProfileRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::AppProfile *&#160;</td>
           <td class="paramname"><em>response</em>&#160;</td>
         </tr>
         <tr>
@@ -702,6 +792,48 @@ Friends</h2></td></tr>
 
 <p>Reset and create a new Stub(). </p>
 <p>Currently this is only used in testing. In the future, we expect this, or a similar member function, will be needed to handle errors that require a new connection, or an explicit refresh of the credentials. </p>
+
+</div>
+</div>
+<a id="a948454d0b835bdd2c7746d071d35bd95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948454d0b835bdd2c7746d071d35bd95">&#9670;&nbsp;</a></span>UpdateAppProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::UpdateAppProfile </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::UpdateAppProfileRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::longrunning::Operation *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
