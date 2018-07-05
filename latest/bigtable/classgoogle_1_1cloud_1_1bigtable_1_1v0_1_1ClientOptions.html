@@ -165,8 +165,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize the client options with the default credentials. </p>
-<p>If the <code>BIGTABLE_EMULATOR_HOST</code> environment variable is set this constructor configures the object to connect to the host and port set in that environment variable. If the environment variable is not set, this constructor configures the object to connect to the production instance of Cloud Bigtable using the application default credentials.</p>
-<dl class="section see"><dt>See also</dt><dd>The Google Cloud Platform introduction to <a href="https://cloud.google.com/docs/authentication/production">application default credentials</a> </dd></dl>
+<p>Configure the client to connect to the Cloud Bigtable service, using the default Google credentials for authentication.</p>
+<dl class="section user"><dt>Environment Variables</dt><dd>If the <code>BIGTABLE_EMULATOR_HOST</code> environment variable is set, the default configuration changes in important ways:</dd></dl>
+<ul>
+<li>The credentials are initialized to <code>grpc::InsecureCredentials()</code>.</li>
+<li>Any client created with these objects will connect to the endpoint (typically just a <code>host:port</code> string) set in the environment variable.</li>
+</ul>
+<p>This makes it easy to test applications using the Cloud Bigtable Emulator.</p>
+<dl class="section see"><dt>See also</dt><dd>The Google Cloud Platform introduction to <a href="https://cloud.google.com/docs/authentication/production">application default credentials</a> </dd>
+<dd>
+<code>grpc::GoogleDefaultCredentials</code> in the <a href="https://grpc.io/grpc/cpp/namespacegrpc.html">grpc documentation</a> </dd>
+<dd>
+The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> for the Cloud Bigtable Emulator. </dd></dl>
 
 </div>
 </div>
