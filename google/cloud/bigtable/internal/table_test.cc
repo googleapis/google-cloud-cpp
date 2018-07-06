@@ -67,6 +67,19 @@ struct MockRpcFactory {
 
 }  // anonymous namespace
 
+TEST_F(NoexTableTest, ChangeOnePolicy) {
+  bigtable::noex::Table table(client_, "some-table",
+                              bigtable::AlwaysRetryMutationPolicy());
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+}
+
+TEST_F(NoexTableTest, ChangePolicies) {
+  bigtable::noex::Table table(client_, "some-table",
+                              bigtable::AlwaysRetryMutationPolicy(),
+                              bigtable::LimitedErrorCountRetryPolicy(42));
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+}
+
 TEST_F(NoexTableTest, ClientProjectId) {
   EXPECT_EQ(kProjectId, client_->project_id());
 }
@@ -706,9 +719,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
       // Configure the Table to stop at 3 failures.
       bt::LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.
-      bt::ExponentialBackoffPolicy(10_us, 40_us),
-      // TODO(#66) - it is annoying to set a policy we do not care about.
-      bt::SafeIdempotentMutationPolicy());
+      bt::ExponentialBackoffPolicy(10_us, 40_us));
 
   // Setup the mocks to fail more than 3 times.
   auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();

@@ -74,29 +74,6 @@ struct RowKeySample {
 namespace noex {
 class Table {
  public:
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : client_(std::move(client)),
-        app_profile_id_(bigtable::AppProfileId("")),
-        table_name_(bigtable::TableId(TableName(client_, table_id))),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
-        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
-        idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()) {}
-
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename IdempotentMutationPolicy>
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-        IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(std::move(client)),
-        app_profile_id_(bigtable::AppProfileId("")),
-        table_name_(bigtable::TableId(TableName(client_, table_id))),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
-        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
-
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id)
       : client_(std::move(client)),
@@ -108,19 +85,23 @@ class Table {
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename IdempotentMutationPolicy>
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
+      : Table(std::move(client), bigtable::AppProfileId(""), table_id) {}
+
+  template <typename... Policies>
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
+        Policies&&... policies)
+      : Table(std::move(client), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+
+  template <typename... Policies>
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-        IdempotentMutationPolicy idempotent_mutation_policy)
-      : client_(std::move(client)),
-        app_profile_id_(std::move(app_profile_id)),
-        table_name_(bigtable::TableId(TableName(client_, table_id))),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
-        idempotent_mutation_policy_(idempotent_mutation_policy.clone()) {}
+        Policies&&... policies)
+      : Table(std::move(client), bigtable::AppProfileId(""), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
   std::string const& table_name() const { return table_name_.get(); }
 
@@ -195,6 +176,28 @@ class Table {
   //@}
 
  private:
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy& policy) {
+    rpc_retry_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy& policy) {
+    rpc_backoff_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(IdempotentMutationPolicy& policy) {
+    idempotent_mutation_policy_ = policy.clone();
+  }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
