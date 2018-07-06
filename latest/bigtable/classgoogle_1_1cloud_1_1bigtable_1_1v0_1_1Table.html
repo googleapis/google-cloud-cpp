@@ -85,14 +85,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a71933c08e2b1ed812c353af336fae6c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a71933c08e2b1ed812c353af336fae6c5">Table</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, bigtable::AppProfileId app_profile_id, std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:a71933c08e2b1ed812c353af336fae6c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with default policies.  <a href="#a71933c08e2b1ed812c353af336fae6c5">More...</a><br /></td></tr>
 <tr class="separator:a71933c08e2b1ed812c353af336fae6c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2bf9d9255ea04b97b2531b728d85f21"><td class="memTemplParams" colspan="2">template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename IdempotentMutationPolicy &gt; </td></tr>
-<tr class="memitem:aa2bf9d9255ea04b97b2531b728d85f21"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#aa2bf9d9255ea04b97b2531b728d85f21">Table</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string const &amp;table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> retry_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> backoff_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a> idempotent_mutation_policy)</td></tr>
-<tr class="memdesc:aa2bf9d9255ea04b97b2531b728d85f21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with explicit policies.  <a href="#aa2bf9d9255ea04b97b2531b728d85f21">More...</a><br /></td></tr>
-<tr class="separator:aa2bf9d9255ea04b97b2531b728d85f21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac47815ea4b1a28bfa75b3ec69f5d63f2"><td class="memTemplParams" colspan="2">template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename IdempotentMutationPolicy &gt; </td></tr>
-<tr class="memitem:ac47815ea4b1a28bfa75b3ec69f5d63f2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#ac47815ea4b1a28bfa75b3ec69f5d63f2">Table</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, bigtable::AppProfileId app_profile_id, std::string const &amp;table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> retry_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> backoff_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a> idempotent_mutation_policy)</td></tr>
-<tr class="memdesc:ac47815ea4b1a28bfa75b3ec69f5d63f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with explicit policies.  <a href="#ac47815ea4b1a28bfa75b3ec69f5d63f2">More...</a><br /></td></tr>
-<tr class="separator:ac47815ea4b1a28bfa75b3ec69f5d63f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c15317cfa9137f8efcd1c28a9528aee"><td class="memTemplParams" colspan="2">template&lt;typename... Policies&gt; </td></tr>
+<tr class="memitem:a4c15317cfa9137f8efcd1c28a9528aee"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a4c15317cfa9137f8efcd1c28a9528aee">Table</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, std::string const &amp;table_id, Policies &amp;&amp;... policies)</td></tr>
+<tr class="memdesc:a4c15317cfa9137f8efcd1c28a9528aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with explicit policies.  <a href="#a4c15317cfa9137f8efcd1c28a9528aee">More...</a><br /></td></tr>
+<tr class="separator:a4c15317cfa9137f8efcd1c28a9528aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78f6a3b5d7dddaa23b704510ff2c76ba"><td class="memTemplParams" colspan="2">template&lt;typename... Policies&gt; </td></tr>
+<tr class="memitem:a78f6a3b5d7dddaa23b704510ff2c76ba"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a78f6a3b5d7dddaa23b704510ff2c76ba">Table</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html">DataClient</a> &gt; client, bigtable::AppProfileId app_profile_id, std::string const &amp;table_id, Policies &amp;&amp;... policies)</td></tr>
+<tr class="memdesc:a78f6a3b5d7dddaa23b704510ff2c76ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with explicit policies.  <a href="#a78f6a3b5d7dddaa23b704510ff2c76ba">More...</a><br /></td></tr>
+<tr class="separator:a78f6a3b5d7dddaa23b704510ff2c76ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a84118bf4f098d5a4785b586484ab14"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a1a84118bf4f098d5a4785b586484ab14">table_name</a> () const</td></tr>
 <tr class="separator:a1a84118bf4f098d5a4785b586484ab14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64ba917df84436b0f4daee0d65f8b477"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a64ba917df84436b0f4daee0d65f8b477">Apply</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> &amp;&amp;mut)</td></tr>
@@ -230,13 +230,13 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa2bf9d9255ea04b97b2531b728d85f21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2bf9d9255ea04b97b2531b728d85f21">&#9670;&nbsp;</a></span>Table() <span class="overload">[3/4]</span></h2>
+<a id="a4c15317cfa9137f8efcd1c28a9528aee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c15317cfa9137f8efcd1c28a9528aee">&#9670;&nbsp;</a></span>Table() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename IdempotentMutationPolicy &gt; </div>
+template&lt;typename... Policies&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -256,20 +256,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a>&#160;</td>
-          <td class="paramname"><em>retry_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a>&#160;</td>
-          <td class="paramname"><em>backoff_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a>&#160;</td>
-          <td class="paramname"><em>idempotent_mutation_policy</em>&#160;</td>
+          <td class="paramtype">Policies &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>policies</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -291,30 +279,32 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
   <table class="params">
     <tr><td class="paramname">client</td><td>how to communicate with Cloud Bigtable, including credentials, the project id, and the instance id. </td></tr>
     <tr><td class="paramname">table_id</td><td>the table id within the instance defined by client. The full table name is <code>client-&gt;instance_name() + "/tables/" + table_id</code>. </td></tr>
-    <tr><td class="paramname">retry_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></code>, for example, the policy type may be <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> which tolerates a maximum number of errors, the value controls how many. </td></tr>
-    <tr><td class="paramname">backoff_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></code>, for example, the policy type may be <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> which will double the wait period on each failure, up to a limit. The value controls the initial and maximum wait periods. </td></tr>
-    <tr><td class="paramname">idempotent_mutation_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></code>. The policies implemented by this library (<code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> and <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code>) are stateless, but the application may implement stateful policies.</td></tr>
+    <tr><td class="paramname">policies</td><td>the set of policy overrides for this object. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></td><td>which mutations are retried. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> to only retry idempotent operations, use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code> to retry all operations. Read the caveats in the class defintion to understand the downsides of the latter. You can also create your own policies that decide which mutations to retry. </td></tr>
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></td><td>how to backoff from a failed RPC. Currently only <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> is implemented. You can also create your own policies that backoff using a different algorithm. </td></tr>
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></td><td>for how long to retry failed RPCs. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> to limit the number of failures allowed. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a></code> to bound the time for any request. You can also create your own policies that combine time and error counts. </td></tr>
+    <tr><td class="paramname">Policies</td><td>the types of the policies to override, the types must derive from one of the following types:</td></tr>
   </table>
   </dd>
 </dl>
+<ul>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></code> which mutations are retried. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> to only retry idempotent operations, use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code> to retry all operations. Read the caveats in the class definition to understand the downsides of the latter. You can also create your own policies that decide which mutations to retry.</li>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></code> how to backoff from a failed RPC. Currently only <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> is implemented. You can also create your own policies that backoff using a different algorithm.</li>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></code> for how long to retry failed RPCs. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> to limit the number of failures allowed. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a></code> to bound the time for any request. You can also create your own policies that combine time and error counts.</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a>. </dd></dl>
 
 </div>
 </div>
-<a id="ac47815ea4b1a28bfa75b3ec69f5d63f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac47815ea4b1a28bfa75b3ec69f5d63f2">&#9670;&nbsp;</a></span>Table() <span class="overload">[4/4]</span></h2>
+<a id="a78f6a3b5d7dddaa23b704510ff2c76ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78f6a3b5d7dddaa23b704510ff2c76ba">&#9670;&nbsp;</a></span>Table() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename IdempotentMutationPolicy &gt; </div>
+template&lt;typename... Policies&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -340,20 +330,8 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html">RPCRetryPolicy</a>&#160;</td>
-          <td class="paramname"><em>retry_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a>&#160;</td>
-          <td class="paramname"><em>backoff_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a>&#160;</td>
-          <td class="paramname"><em>idempotent_mutation_policy</em>&#160;</td>
+          <td class="paramtype">Policies &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>policies</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -376,20 +354,22 @@ template&lt;typename RPCRetryPolicy , typename RPCBackoffPolicy , typename Idemp
     <tr><td class="paramname">client</td><td>how to communicate with Cloud Bigtable, including credentials, the project id, and the instance id. </td></tr>
     <tr><td class="paramname">app_profile_id</td><td>the app_profile_id needed for using replication and snapshot APIs. </td></tr>
     <tr><td class="paramname">table_id</td><td>the table id within the instance defined by client. The full table name is <code>client-&gt;instance_name() + "/tables/" + table_id</code>. </td></tr>
-    <tr><td class="paramname">retry_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></code>, for example, the policy type may be <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> which tolerates a maximum number of errors, the value controls how many. </td></tr>
-    <tr><td class="paramname">backoff_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></code>, for example, the policy type may be <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> which will double the wait period on each failure, up to a limit. The value controls the initial and maximum wait periods. </td></tr>
-    <tr><td class="paramname">idempotent_mutation_policy</td><td>the value of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></code>. The policies implemented by this library (<code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> and <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code>) are stateless, but the application may implement stateful policies.</td></tr>
+    <tr><td class="paramname">policies</td><td>the set of policy overrides for this object. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></td><td>which mutations are retried. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> to only retry idempotent operations, use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code> to retry all operations. Read the caveats in the class defintion to understand the downsides of the latter. You can also create your own policies that decide which mutations to retry. </td></tr>
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></td><td>how to backoff from a failed RPC. Currently only <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> is implemented. You can also create your own policies that backoff using a different algorithm. </td></tr>
-    <tr><td class="paramname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></td><td>for how long to retry failed RPCs. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> to limit the number of failures allowed. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a></code> to bound the time for any request. You can also create your own policies that combine time and error counts. </td></tr>
+    <tr><td class="paramname">Policies</td><td>the types of the policies to override, the types must derive from one of the following types:<ul>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a></code> which mutations are retried. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a></code> to only retry idempotent operations, use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a></code> to retry all operations. Read the caveats in the class definition to understand the downsides of the latter. You can also create your own policies that decide which mutations to retry.</li>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a></code> how to backoff from a failed RPC. Currently only <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a></code> is implemented. You can also create your own policies that backoff using a different algorithm.</li>
+<li><code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html" title="Define the interface for controlling how the Bigtable client retries RPC operations. ">RPCRetryPolicy</a></code> for how long to retry failed RPCs. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a></code> to limit the number of failures allowed. Use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a></code> to bound the time for any request. You can also create your own policies that combine time and error counts.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. ">SafeIdempotentMutationPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. ">AlwaysRetryMutationPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a>. </dd></dl>
 
 </div>
 </div>
