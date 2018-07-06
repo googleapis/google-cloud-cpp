@@ -81,3 +81,16 @@ TEST_F(TableTest, MoveAssignment) {
   dest = std::move(source);
   EXPECT_EQ(expected, dest.table_name());
 }
+
+TEST_F(TableTest, ChangeOnePolicy) {
+  bigtable::Table table(client_, "some-table",
+                        bigtable::AlwaysRetryMutationPolicy());
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+}
+
+TEST_F(TableTest, ChangePolicies) {
+  bigtable::Table table(client_, "some-table",
+                        bigtable::AlwaysRetryMutationPolicy(),
+                        bigtable::LimitedErrorCountRetryPolicy(42));
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+}

@@ -52,46 +52,32 @@ class InstanceAdmin {
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
    * @param client the interface to create grpc stubs, report errors, etc.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
-                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : client_(std::move(client)),
-        project_name_("projects/" + project_id()),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        polling_policy_(DefaultPollingPolicy()),
-        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
-
-  /**
-   * Create a new InstanceAdmin using explicit policies to handle RPC errors.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *     - `PollingPolicy` for how long will the class wait for
+   *       `google.longrunning.Operation` to complete. This class combines both
+   *       the backoff policy for checking long running operations and the
+   *       retry policy
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
-   * @tparam Control polling for long running operations.
-   * @param client the interface to create grpc stubs, report errors, etc.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   * @param polling_policy the PollingPolicy instance.
+   * @see GenericPollingPolicy, ExponentialBackoffPolicy,
+   *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename PollingPolicy>
+  template <typename... Policies>
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
-                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-                PollingPolicy polling_policy)
-      : client_(std::move(client)),
-        project_name_("projects/" + project_id()),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        polling_policy_(polling_policy.clone()),
-        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
+                Policies&&... policies)
+      : InstanceAdmin(std::move(client)) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return project_name_; }
@@ -204,6 +190,26 @@ class InstanceAdmin {
   }
 
  private:
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy& policy) {
+    rpc_retry_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy& policy) {
+    rpc_backoff_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(PollingPolicy& policy) { polling_policy_ = policy.clone(); }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   friend class bigtable::BIGTABLE_CLIENT_NS::InstanceAdmin;
   std::shared_ptr<InstanceAdminClient> client_;
   std::string project_name_;

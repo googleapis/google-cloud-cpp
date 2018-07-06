@@ -58,55 +58,35 @@ class TableAdmin {
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
    * @param client the interface to create grpc stubs, report errors, etc.
    * @param instance_id the id of the instance, e.g., "my-instance", the full
    *   name (e.g. '/projects/my-project/instances/my-instance') is built using
    *   the project id in the @p client parameter.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
-  TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
-             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : client_(std::move(client)),
-        instance_id_(std::move(instance_id)),
-        instance_name_(InstanceName()),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(DefaultPollingPolicy()) {}
-
-  /**
-   * Create a new TableAdmin using explicit policies to handle RPC errors.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *     - `PollingPolicy` for how long will the class wait for
+   *       `google.longrunning.Operation` to complete. This class combines both
+   *       the backoff policy for checking long running operations and the
+   *       retry policy
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
-   * @tparam PollingPolicy provides parameters for asynchronous calls.
-   * @param client the interface to create grpc stubs, report errors, etc.
-   * @param instance_id the id of the instance, e.g., "my-instance", the full
-   *   name (e.g. '/projects/my-project/instances/my-instance') is built using
-   *   the project id in the @p client parameter.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   * @param polling_policy the policy to control the asynchronous call
-   * parameters
+   * @see GenericPollingPolicy, ExponentialBackoffPolicy,
+   *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename PollingPolicy>
+  template <typename... Policies>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
-             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-             PollingPolicy polling_policy)
-      : client_(std::move(client)),
-        instance_id_(std::move(instance_id)),
-        instance_name_(InstanceName()),
-        rpc_retry_policy_(retry_policy.clone()),
-        rpc_backoff_policy_(backoff_policy.clone()),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(polling_policy.clone()) {}
+             Policies&&... policies)
+      : TableAdmin(std::move(client), std::move(instance_id)) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
   std::string const& project() const { return client_->project(); }
   std::string const& instance_id() const { return instance_id_; }
@@ -176,6 +156,26 @@ class TableAdmin {
   //@}
 
  private:
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy& policy) {
+    rpc_retry_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy& policy) {
+    rpc_backoff_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(PollingPolicy& policy) { polling_policy_ = policy.clone(); }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   /// Compute the fully qualified instance name.
   std::string InstanceName() const;
 

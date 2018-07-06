@@ -35,24 +35,36 @@ class InstanceAdmin {
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    */
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
+  explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : impl_(std::move(client)) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
    * @param client the interface to create grpc stubs, report errors, etc.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *     - `PollingPolicy` for how long will the class wait for
+   *       `google.longrunning.Operation` to complete. This class combines both
+   *       the backoff policy for checking long running operations and the
+   *       retry policy
+   *
+   * @see GenericPollingPolicy, ExponentialBackoffPolicy,
+   *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
-                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : impl_(std::move(client), std::move(retry_policy),
-              std::move(backoff_policy)) {}
+  template <typename... Policies>
+  explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
+                         Policies&&... policies)
+      : impl_(std::move(client), std::forward<Policies>(policies)...) {}
 
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return impl_.project_name(); }
