@@ -56,7 +56,7 @@ class InstanceAdmin {
    *     - `PollingPolicy` for how long will the class wait for
    *       `google.longrunning.Operation` to complete. This class combines both
    *       the backoff policy for checking long running operations and the
-   *       retry policy
+   *       retry policy.
    *
    * @see GenericPollingPolicy, ExponentialBackoffPolicy,
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
