@@ -38,6 +38,7 @@ class MockHttpRequestHandle {
   MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
   MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
   MOCK_METHOD2(PrepareRequest, void(std::string const&, bool));
+  MOCK_METHOD1(SetMethod, void(std::string const&));
   MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
 
   /**
@@ -67,6 +68,7 @@ class MockHttpRequest {
   void AddQueryParameter(std::string const& name, std::string const& value);
   std::unique_ptr<char[]> MakeEscapedString(std::string const& x);
   void PrepareRequest(std::string const& payload, bool enable_logging);
+  void SetMethod(std::string const&);
   storage::internal::HttpResponse MakeRequest();
 
   template <typename P>

@@ -79,6 +79,8 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   auto stream = client.Read(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 int main(int argc, char* argv[]) {

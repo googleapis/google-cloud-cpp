@@ -77,6 +77,11 @@ std::pair<Status, internal::ListObjectsResponse> LoggingClient::ListObjects(
   return MakeCall(*client_, &RawClient::ListObjects, request, __func__);
 }
 
+std::pair<Status, internal::EmptyResponse> LoggingClient::DeleteObject(
+    google::cloud::storage::internal::DeleteObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteObject, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

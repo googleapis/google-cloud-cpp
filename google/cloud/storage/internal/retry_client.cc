@@ -142,6 +142,14 @@ std::pair<Status, internal::ListObjectsResponse> RetryClient::ListObjects(
                   &RawClient::ListObjects, request, __func__);
 }
 
+std::pair<Status, internal::EmptyResponse> RetryClient::DeleteObject(
+    internal::DeleteObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteObject, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -44,6 +44,9 @@ class LoggingClient : public RawClient {
   std::pair<Status, internal::ListObjectsResponse> ListObjects(
       internal::ListObjectsRequest const&) override;
 
+  std::pair<Status, internal::EmptyResponse> DeleteObject(
+      internal::DeleteObjectRequest const&) override;
+
  private:
   std::shared_ptr<RawClient> client_;
 };

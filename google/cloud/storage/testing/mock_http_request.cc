@@ -62,6 +62,10 @@ void MockHttpRequest::PrepareRequest(std::string const& payload,
   handles_[url_]->PrepareRequest(payload, enable_logging);
 }
 
+void MockHttpRequest::SetMethod(std::string const& method) {
+  handles_[url_]->SetMethod(method);
+}
+
 storage::internal::HttpResponse MockHttpRequest::MakeRequest() {
   return handles_[url_]->MakeRequest();
 }

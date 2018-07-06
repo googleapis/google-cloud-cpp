@@ -134,6 +134,24 @@ class DefaultClient : public RawClient {
         internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
   }
 
+  std::pair<Status, internal::EmptyResponse> DeleteObject(
+      internal::DeleteObjectRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
+    http_request.SetMethod("DELETE");
+    auto payload = http_request.MakeRequest();
+    if (payload.status_code >= 300) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          internal::EmptyResponse{});
+    }
+    return std::make_pair(Status(), internal::EmptyResponse{});
+  }
+
  private:
   ClientOptions options_;
   std::string storage_endpoint_;
