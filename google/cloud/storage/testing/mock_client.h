@@ -43,6 +43,8 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                    internal::ReadObjectRangeRequest const&));
   MOCK_METHOD1(ListObjects, ResponseWrapper<internal::ListObjectsResponse>(
                                 internal::ListObjectsRequest const&));
+  MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(
+                                 internal::DeleteObjectRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

@@ -111,6 +111,18 @@ class GcsObject(object):
             raise ErrorResponse('Precondition Failed: generation %s not found'
                                 % generation)
 
+    def del_revision(self, request):
+        generation = request.args.get('generation')
+        if generation is None:
+            generation = self.generation
+        self.revisions.pop(generation)
+        if len(self.revisions) == 0:
+            self.generation = None
+            return True
+        if generation == self.generation:
+            self.generation = sorted(self.revisions.keys())[-1]
+        return False
+
     def get_latest(self):
         return self.revisions.get(self.generation, None)
 
@@ -240,6 +252,20 @@ def objects_get(bucket_name, object_name):
         return response
 
     return json.dumps(revision.metadata)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
+def objects_delete(bucket_name, object_name):
+    """Implement the 'Objects: delete' API.  Delete objects."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    remove = gcs_object.del_revision(flask.request)
+    if remove:
+        GCS_OBJECTS.pop(object_path)
+
+    return json.dumps({})
 
 
 # Define the WSGI application to handle bucket requests.

@@ -118,6 +118,10 @@ void CurlRequest::PrepareRequest(std::string payload, bool enable_logging) {
   }
 }
 
+void CurlRequest::SetMethod(std::string const& method) {
+  curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
+}
+
 HttpResponse CurlRequest::MakeRequest() {
   response_payload_.Attach(curl_);
   response_headers_.Attach(curl_);
