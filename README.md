@@ -5,9 +5,9 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Travis CI status][travis-shield]][travis-link]
 [![AppVeyor CI status][appveyor-shield]][appveyor-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
-[![Documentation][doxygen-shield]][doxygen-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
+- [Client Library Documentation][client-library-docs]
 
 [travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
@@ -15,15 +15,14 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [appveyor-link]: https://ci.appveyor.com/project/coryan/google-cloud-cpp/branch/master
 [codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
-[doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
 [cloud-platform]: https://cloud.google.com/
 [cloud-platform-docs]: https://cloud.google.com/docs/
+[client-library-docs]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
 
 This library supports the following Google Cloud Platform services with clients
 at an [Alpha](#versioning) quality level:
 
-- [Google Cloud Bigtable](bigtable)
+- [Google Cloud Bigtable](google/cloud/bigtable)
 
 The libraries in this code base likely do not (yet) cover all the available
 APIs. See the [`googleapis` repo](https://github.com/googleapis/googleapis)
