@@ -66,26 +66,6 @@ class InstanceAdmin {
                          Policies&&... policies)
       : impl_(std::move(client), std::forward<Policies>(policies)...) {}
 
-  /**
-   * Create a new InstanceAdmin using explicit policies to handle RPC errors.
-   *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
-   * @tparam PollingPolicy controls polling of long running operations
-   * @param client the interface to create grpc stubs, report errors, etc.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   * @param polling_policy the PollingPolicy instance.
-   */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename PollingPolicy>
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
-                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-                PollingPolicy polling_policy)
-      : impl_(std::move(client), std::move(retry_policy),
-              std::move(backoff_policy), std::move(polling_policy)) {}
-
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return impl_.project_name(); }
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
