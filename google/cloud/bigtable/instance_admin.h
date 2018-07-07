@@ -28,7 +28,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Implements a minimal API to administer Cloud Bigtable instances.
+ * Implements the APIs to administer Cloud Bigtable instances.
  */
 class InstanceAdmin {
  public:
@@ -260,6 +260,27 @@ class InstanceAdmin {
       bigtable::AppProfileId const& profile_id);
 
   /**
+   * Create a new application profile.
+   *
+   * @param instance_id the instance for the new application profile.
+   * @param profile_id the id (not the full name) of the profile to update.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile description
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing any
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing
+   */
+  std::future<google::bigtable::admin::v2::AppProfile> UpdateAppProfile(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
+
+  /**
    * List the application profiles in an instance.
    *
    * @param instance_id the instance to list the profiles for.
@@ -304,6 +325,11 @@ class InstanceAdmin {
   // Implement UpdateCluster() with a separate thread.
   google::bigtable::admin::v2::Cluster UpdateClusterImpl(
       ClusterConfig cluster_config);
+
+  /// Poll the result of UpdateAppProfile in a separate thread.
+  google::bigtable::admin::v2::AppProfile UpdateAppProfileImpl(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
 
  private:
   noex::InstanceAdmin impl_;

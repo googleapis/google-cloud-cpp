@@ -63,6 +63,65 @@ TEST(AppProfileConfig, SingleClusterRoutingWithTransactionalWrites) {
   EXPECT_TRUE(routing.allow_transactional_writes());
 }
 
+bool HasFieldNameOnce(google::protobuf::FieldMask const& mask,
+                      std::string const& name) {
+  return 1U == std::count(mask.paths().begin(), mask.paths().end(), name);
+}
+
+TEST(AppProfileUpdateConfig, SetDescription) {
+  auto proto =
+      AppProfileUpdateConfig().set_description("a description").as_proto();
+  EXPECT_EQ("a description", proto.app_profile().description());
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "description"));
+}
+
+TEST(AppProfileUpdateConfig, SetETag) {
+  auto proto = AppProfileUpdateConfig().set_etag("xyzzy").as_proto();
+  EXPECT_EQ("xyzzy", proto.app_profile().etag());
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "etag"));
+}
+
+TEST(AppProfileUpdateConfig, SetMultiClusterUseAny) {
+  auto proto = AppProfileUpdateConfig().set_multi_cluster_use_any().as_proto();
+  EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
+  EXPECT_TRUE(
+      HasFieldNameOnce(proto.update_mask(), "multi_cluster_routing_use_any"));
+}
+
+TEST(AppProfileUpdateConfig, SetSingleClusterRouting) {
+  auto proto = AppProfileUpdateConfig()
+                   .set_single_cluster_routing(bigtable::ClusterId("c1"), true)
+                   .as_proto();
+  EXPECT_TRUE(proto.app_profile().has_single_cluster_routing());
+  EXPECT_EQ("c1", proto.app_profile().single_cluster_routing().cluster_id());
+  EXPECT_TRUE(proto.app_profile()
+                  .single_cluster_routing()
+                  .allow_transactional_writes());
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "single_cluster_routing"));
+}
+
+TEST(AppProfileUpdateConfig, SetSeveral) {
+  auto proto = AppProfileUpdateConfig()
+                   .set_description("foo")
+                   .set_description("bar")
+                   .set_etag("e1")
+                   .set_etag("abcdef")
+                   .set_multi_cluster_use_any()
+                   .set_single_cluster_routing(bigtable::ClusterId("c1"), true)
+                   .as_proto();
+  EXPECT_EQ("bar", proto.app_profile().description());
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "description"));
+  EXPECT_EQ("abcdef", proto.app_profile().etag());
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "etag"));
+  EXPECT_FALSE(proto.app_profile().has_multi_cluster_routing_use_any());
+  EXPECT_TRUE(proto.app_profile().has_single_cluster_routing());
+  EXPECT_EQ("c1", proto.app_profile().single_cluster_routing().cluster_id());
+  EXPECT_TRUE(proto.app_profile()
+                  .single_cluster_routing()
+                  .allow_transactional_writes());
+  EXPECT_FALSE(HasFieldNameOnce(proto.update_mask(), "multi_cluster_use_any"));
+  EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "single_cluster_routing"));
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

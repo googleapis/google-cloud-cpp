@@ -443,6 +443,22 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_1.name(), HasSubstr(id1));
 
+  auto detail_2 = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  EXPECT_EQ(detail_2.name(), profile_2.name());
+  EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_2.name(), HasSubstr(id2));
+
+  auto profile_updated_future = instance_admin_->UpdateAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      bigtable::AppProfileUpdateConfig().set_description("new description"));
+
+  auto update_2 = profile_updated_future.get();
+  auto detail_2_after_update = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  EXPECT_EQ("new description", update_2.description());
+  EXPECT_EQ("new description", detail_2_after_update.description());
+
   instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
                                     bigtable::AppProfileId(id1), true);
   current_profiles = instance_admin_->ListAppProfiles(instance_id);

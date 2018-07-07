@@ -291,6 +291,76 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [get app profile]
 
+//! [update app profile description]
+void UpdateAppProfileDescription(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "update-app-profile-description: <project-id> <instance-id>"
+        " <profile-id> <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  std::string description = ConsumeArg(argc, argv);
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig().set_description(
+          description));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile description]
+
+//! [update app profile routing any]
+void UpdateAppProfileRoutingAny(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "update-app-profile-routing-any: <project-id> <instance-id>"
+        " <profile-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_multi_cluster_use_any()
+          .set_ignore_warnings(true));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile routing any]
+
+//! [update app profile routing]
+void UpdateAppProfileRoutingSingleCluster(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "update-app-profile-routing: <project-id> <instance-id> <profile-id>"
+        " <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_single_cluster_routing(cluster_id)
+          .set_ignore_warnings(true));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile routing]
+
 //! [list app profiles]
 void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                      int argc, char* argv[]) {
@@ -361,6 +431,9 @@ int main(int argc, char* argv[]) try {
       {"create-app-profile", &CreateAppProfile},
       {"create-app-profile-cluster", &CreateAppProfileCluster},
       {"get-app-profile", &GetAppProfile},
+      {"update-app-profile-description", &UpdateAppProfileDescription},
+      {"update-app-profile-routing-any", &UpdateAppProfileRoutingAny},
+      {"update-app-profile-routing", &UpdateAppProfileRoutingSingleCluster},
       {"list-app-profiles", &ListAppProfiles},
       {"delete-app-profile", &DeleteAppProfile},
   };
