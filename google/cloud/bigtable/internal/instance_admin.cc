@@ -183,10 +183,10 @@ btproto::AppProfile InstanceAdmin::GetAppProfile(
       InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
 
   // This API is not idempotent, call it without retry.
-  return ClientUtils::MakeNonIdemponentCall(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &InstanceAdminClient::UpdateAppProfile, request,
-      "InstanceAdmin::UpdateAppProfile", status);
+  return ClientUtils::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy_, &InstanceAdminClient::UpdateAppProfile, request,
+      "InstanceAdmin::UpdateAppProfile", status, true);
 }
 
 std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(

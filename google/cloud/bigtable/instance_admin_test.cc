@@ -1434,31 +1434,31 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
   using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
-  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::UpdateAppProfileRequest const& request,
                           google::longrunning::Operation* response) {
-        auto const cluster_name =
-            "projects/my-project/instances/test-instance/clusters/test-cluster";
-        EXPECT_EQ(cluster_name, request.name());
+        auto const expected_profile_name =
+            "projects/the-project/instances/test-instance/appProfiles/"
+            "my-profile";
+        EXPECT_EQ(expected_profile_name, request.app_profile().name());
         return grpc::Status::OK;
       }));
 
   std::string expected_text = R"(
-      name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
-      location: 'Location1'
-      state: READY
-      serve_nodes: 0
-      default_storage_type: SSD
+      name: 'projects/the-project/instances/test-instance/appProfiles/my-profile'
+      etag: '1234'
+      description: 'Test Profile'
+      multi_cluster_routing_use_any {
+      }
   )";
 
-  btproto::Cluster expected;
+  btproto::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btproto::AppProfile expected_copy;
   expected_copy.CopyFrom(expected);
-
-  bigtable::ClusterConfig cluster_config(std::move(expected));
 
   EXPECT_CALL(*client_, GetOperation(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
@@ -1485,7 +1485,12 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
             return grpc::Status::OK;
           }));
 
-  auto future = tested.UpdateCluster(std::move(cluster_config));
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
   auto actual = future.get();
 
   std::string delta;
@@ -1498,49 +1503,182 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
 TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
   using ::testing::_;
   using ::testing::Invoke;
-
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
-      name: 'projects/my-project/instances/test-instance/clusters/test-cluster'
-      location: 'Location1'
-      state: READY
-      serve_nodes: 0
-      default_storage_type: SSD
+      name: 'projects/the-project/instances/test-instance/appProfiles/my-profile'
+      etag: '1234'
+      description: 'Test Profile'
+      multi_cluster_routing_use_any {
+      }
   )";
-  btproto::Cluster expected;
+  btproto::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btproto::AppProfile expected_copy;
   expected_copy.CopyFrom(expected);
-  bigtable::ClusterConfig cluster_config(std::move(expected));
 
-  EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([&expected_copy](
-                           grpc::ClientContext*,
-                           btproto::Cluster const& request,
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillOnce(Invoke(
+          [&expected_copy](grpc::ClientContext*,
+                           btproto::UpdateAppProfileRequest const& request,
                            google::longrunning::Operation* response) {
-        auto const cluster_name =
-            "projects/my-project/instances/test-instance/clusters/test-cluster";
-        EXPECT_EQ(cluster_name, request.name());
-        response->set_done(true);
-        response->set_name("operation-name");
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
-        any->PackFrom(expected_copy);
-        response->set_allocated_response(any.release());
-        return grpc::Status::OK;
-      }));
+            auto const expected_profile_name =
+                "projects/the-project/instances/test-instance/appProfiles/"
+                "my-profile";
+            EXPECT_EQ(expected_profile_name, request.app_profile().name());
+            response->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            response->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
 
-  EXPECT_CALL(*client_, GetOperation(_, _, _)).Times(0);
-
-  auto future = tested.UpdateCluster(std::move(cluster_config));
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
   auto actual = future.get();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
+TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  using ::testing::Return;
+  bigtable::InstanceAdmin tested(client_);
+
+  std::string expected_text = R"(
+      name: 'projects/the-project/instances/test-instance/appProfiles/my-profile'
+      etag: '1234'
+      description: 'Test Profile'
+      multi_cluster_routing_use_any {
+      }
+  )";
+  btproto::AppProfile expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+
+  btproto::AppProfile expected_copy;
+  expected_copy.CopyFrom(expected);
+
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(
+          [&expected_copy](grpc::ClientContext*,
+                           btproto::UpdateAppProfileRequest const& request,
+                           google::longrunning::Operation* response) {
+            auto const expected_profile_name =
+                "projects/the-project/instances/test-instance/appProfiles/"
+                "my-profile";
+            EXPECT_EQ(expected_profile_name, request.app_profile().name());
+            response->set_done(true);
+            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected_copy);
+            response->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
+  auto actual = future.get();
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
+TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
+  using ::testing::_;
+  using ::testing::HasSubstr;
+  using ::testing::Invoke;
+  using ::testing::Return;
+  bigtable::InstanceAdmin tested(client_,
+                                 bigtable::LimitedErrorCountRetryPolicy(3));
+
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { future.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("try-again"));
+    EXPECT_THAT(ex.what(), HasSubstr("UpdateAppProfile"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      tested.UpdateAppProfile(future.get(),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
+TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
+  using ::testing::_;
+  using ::testing::HasSubstr;
+  using ::testing::Invoke;
+  using ::testing::Return;
+  bigtable::InstanceAdmin tested(client_);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
+
+  EXPECT_THROW(try { future.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("uh oh"));
+    EXPECT_THAT(ex.what(), HasSubstr("UpdateAppProfile"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  auto future = tested.UpdateAppProfile(
+      google::cloud::bigtable::InstanceId("test-instance"),
+      google::cloud::bigtable::AppProfileId("my-profile"),
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_description("Test Profile")
+          .set_multi_cluster_use_any());
+  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateAppProfile`.
