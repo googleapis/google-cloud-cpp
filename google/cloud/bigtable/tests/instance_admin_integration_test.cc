@@ -412,14 +412,14 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
 
   // Simplify writing the rest of the test.
-  auto count_matching_profiles =
-      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
-        std::string suffix = "/appProfiles/" + id;
-        return std::count_if(
-            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
-              return std::string::npos != x.name().find(suffix);
-            });
-      };
+  auto count_matching_profiles = [](
+      std::string const& id, std::vector<btadmin::AppProfile> const& list) {
+    std::string suffix = "/appProfiles/" + id;
+    return std::count_if(list.begin(), list.end(),
+                         [&suffix](btadmin::AppProfile const& x) {
+                           return std::string::npos != x.name().find(suffix);
+                         });
+  };
 
   EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
@@ -472,6 +472,104 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
 
   instance_admin_->DeleteInstance(instance_id);
+}
+
+/// @test Verify that Instance CRUD operations work as expected.
+TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  // verify new instance id in list of instances
+  auto instances_before = instance_admin_->ListInstances();
+  EXPECT_FALSE(IsInstancePresent(instances_before, instance_id));
+
+  // create instance
+  auto config = IntegrationTestConfig(instance_id);
+  auto instance = instance_admin_->CreateInstance(config).get();
+  auto instances_current = instance_admin_->ListInstances();
+  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+
+  // Get instance
+  auto instance_check = instance_admin_->GetInstance(instance_id);
+  auto const npos = std::string::npos;
+  EXPECT_NE(npos, instance_check.name().find(instance_admin_->project_name()));
+  EXPECT_NE(npos, instance_check.name().find(instance_id));
+
+  // update instance
+  btadmin::Instance instance_copy;
+  instance_copy.CopyFrom(instance);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  auto const updated_display_name = instance_id + " updated";
+  instance_update_config.set_display_name(updated_display_name);
+  auto instance_after =
+      instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
+  auto instances_after = instance_admin_->ListInstances();
+  EXPECT_EQ(updated_display_name, instance_after.display_name());
+
+  // Delete instance
+  instance_admin_->DeleteInstance(instance_id);
+  auto instances_after_delete = instance_admin_->ListInstances();
+  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+}
+
+/// @test Verify that cluster CRUD operations work as expected.
+TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string cluster_id_str = id + "-cl2";
+
+  // create instance prerequisites for cluster operations
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  // create cluster
+  auto clusters_before = instance_admin_->ListClusters(id);
+  bigtable::ClusterId cluster_id(cluster_id_str);
+  auto cluster_config =
+      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
+  auto cluster =
+      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+          .get();
+  auto clusters_after = instance_admin_->ListClusters(id);
+  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
+
+  // Get cluster
+  auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
+  std::string cluster_name_prefix =
+      instance_admin_->project_name() + "/instances/" + id + "/clusters/";
+  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check.name());
+
+  // Update cluster
+  btadmin::Cluster cluster_copy;
+  cluster_copy.CopyFrom(cluster);
+  // update the storage type
+  cluster.set_serve_nodes(4);
+  cluster.clear_state();
+  bigtable::ClusterConfig updated_cluster_config(std::move(cluster));
+  auto cluster_after_update =
+      instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
+  auto clusters_after_update = instance_admin_->ListClusters(instance_id.get());
+  EXPECT_TRUE(IsClusterPresent(clusters_after_update, cluster_copy.name()));
+  EXPECT_EQ(3, cluster_copy.serve_nodes());
+  EXPECT_EQ(4, cluster_after_update.serve_nodes());
+
+  // Delete cluster
+  instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
+  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  instance_admin_->DeleteInstance(id);
+  EXPECT_TRUE(
+      IsClusterPresent(clusters_after_update,
+                       instance_details.name() + "/clusters/" + id + "-cl2"));
+  EXPECT_FALSE(
+      IsClusterPresent(clusters_after_delete,
+                       instance_details.name() + "/clusters/" + id + "-cl2"));
 }
 
 int main(int argc, char* argv[]) {

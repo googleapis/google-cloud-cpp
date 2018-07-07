@@ -256,6 +256,75 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
   ASSERT_TRUE(actual_cells.empty());
 }
 
+/// @test Verify that `bigtable::TableAdmin` CRUD operations work as expected.
+TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
+  using GC = bigtable::GcRule;
+  std::string const table_id = RandomTableId();
+
+  // verify new table id in current table list
+  auto previous_table_list =
+      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  auto previous_count = CountMatchingTables(table_id, previous_table_list);
+  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
+                               << " This is unexpected, as the table ids are"
+                               << " generated at random.";
+  // create table config
+  bigtable::TableConfig table_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  // create table
+  auto table = CreateTable(table_id, table_config);
+
+  // verify new table was created
+  auto table_result = table_admin_->GetTable(table_id);
+  EXPECT_EQ(table->table_name(), table_result.name())
+      << "Mismatched names for GetTable(" << table_id
+      << "): " << table->table_name() << " != " << table_result.name();
+
+  // get table
+  auto table_detailed =
+      table_admin_->GetTable(table_id, admin_proto::Table::FULL);
+  auto count_matching_families = [](admin_proto::Table const& table,
+                                    std::string const& name) {
+    int count = 0;
+    for (auto const& kv : table.column_families()) {
+      if (kv.first == name) {
+        ++count;
+      }
+    }
+    return count;
+  };
+  EXPECT_EQ(1, count_matching_families(table_detailed, "fam"));
+  EXPECT_EQ(1, count_matching_families(table_detailed, "foo"));
+
+  // update table
+  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
+      bigtable::ColumnFamilyModification::Create(
+          "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
+                                     GC::MaxNumVersions(1))),
+      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
+      bigtable::ColumnFamilyModification::Drop("foo")};
+
+  auto table_modified =
+      table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
+  EXPECT_EQ(1, count_matching_families(table_modified, "fam"));
+  EXPECT_EQ(0, count_matching_families(table_modified, "foo"));
+  EXPECT_EQ(1, count_matching_families(table_modified, "newfam"));
+  auto const& gc = table_modified.column_families().at("newfam").gc_rule();
+  EXPECT_TRUE(gc.has_intersection());
+  EXPECT_EQ(2, gc.intersection().rules_size());
+
+  // delete table
+  DeleteTable(table_id);
+  // List to verify it is no longer there
+  auto current_table_list =
+      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  auto table_count = CountMatchingTables(table_id, current_table_list);
+  EXPECT_EQ(0, table_count);
+}
+
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {
