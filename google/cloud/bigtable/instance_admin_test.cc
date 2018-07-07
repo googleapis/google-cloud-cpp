@@ -1606,6 +1606,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
   EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
   using ::testing::_;
@@ -1626,18 +1627,12 @@ TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(try { future.get(); } catch (std::runtime_error const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("try-again"));
     EXPECT_THAT(ex.what(), HasSubstr("UpdateAppProfile"));
     throw;
   },
                std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.UpdateAppProfile(future.get(),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
@@ -1648,7 +1643,6 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
   using ::testing::Return;
   bigtable::InstanceAdmin tested(client_);
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
@@ -1666,20 +1660,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
     throw;
   },
                std::runtime_error);
-#else
-  EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-
-  auto future = tested.UpdateAppProfile(
-      google::cloud::bigtable::InstanceId("test-instance"),
-      google::cloud::bigtable::AppProfileId("my-profile"),
-      google::cloud::bigtable::AppProfileUpdateConfig()
-          .set_description("Test Profile")
-          .set_multi_cluster_use_any());
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateAppProfile`.
 TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
