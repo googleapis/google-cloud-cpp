@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['has_5flabel',['has_label',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a200b3a13893c7d7bb03baeb906f83898',1,'google::cloud::storage::v::BucketMetadata']]],
-  ['has_5fmetadata',['has_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a21c4aad57782880d506232570ee35a44',1,'google::cloud::storage::v::ObjectMetadata']]],
-  ['has_5fvalue',['has_value',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1WellKnownParameter.html#a5e99f9f5182cac7ef44d4a6e663cad34',1,'google::cloud::storage::v::WellKnownParameter']]]
+  ['generation',['generation',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a1df10ae8462bf30817c9adb289b8edb8',1,'google::cloud::storage::v::ObjectMetadata']]],
+  ['getbucketmetadata',['GetBucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a600b8a5bcb7807d3c3691a820dd25d63',1,'google::cloud::storage::v::Client']]],
+  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a8481d2d3c4ead81c0f70d722b652a4d8',1,'google::cloud::storage::v']]]
 ];
