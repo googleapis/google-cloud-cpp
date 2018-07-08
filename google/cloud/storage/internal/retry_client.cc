@@ -94,13 +94,18 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 }
 }  // namespace
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client)
-    : RetryClient(
-          std::move(client),
-          LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD),
-          ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
-                                   STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
-                                   STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)) {}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client,
+                         DefaultPolicies unused)
+    : client_(std::move(client)) {
+  retry_policy_ =
+      LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
+          .clone();
+  backoff_policy_ =
+      ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
+                               STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
+                               STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
+          .clone();
+}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
