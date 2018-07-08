@@ -412,14 +412,14 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
 
   // Simplify writing the rest of the test.
-  auto count_matching_profiles = [](
-      std::string const& id, std::vector<btadmin::AppProfile> const& list) {
-    std::string suffix = "/appProfiles/" + id;
-    return std::count_if(list.begin(), list.end(),
-                         [&suffix](btadmin::AppProfile const& x) {
-                           return std::string::npos != x.name().find(suffix);
-                         });
-  };
+  auto count_matching_profiles =
+      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
+        std::string suffix = "/appProfiles/" + id;
+        return std::count_if(
+            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
+              return std::string::npos != x.name().find(suffix);
+            });
+      };
 
   EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
@@ -510,7 +510,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   // Delete instance
   instance_admin_->DeleteInstance(instance_id);
   auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_current, instance_copy.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
 }
 
