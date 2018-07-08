@@ -106,10 +106,11 @@ class GcsObject(object):
         generation = request.args.get('generation')
         if generation is None:
             return self.get_latest()
-        version = self.revisions.get(generation)
+        version = self.revisions.get(int(generation))
         if version is None:
             raise ErrorResponse('Precondition Failed: generation %s not found'
                                 % generation)
+        return version
 
     def del_revision(self, request):
         generation = request.args.get('generation')

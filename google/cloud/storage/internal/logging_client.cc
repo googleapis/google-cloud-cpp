@@ -65,6 +65,11 @@ std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
 }
 
+std::pair<Status, ObjectMetadata> LoggingClient::GetObjectMetadata(
+    GetObjectMetadataRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
+}
+
 std::pair<Status, ReadObjectRangeResponse> LoggingClient::ReadObjectRangeMedia(
     ReadObjectRangeRequest const& request) {
   return MakeCall(*client_, &RawClient::ReadObjectRangeMedia, request,

@@ -44,6 +44,8 @@ class CurlClient : public RawClient {
       GetBucketMetadataRequest const& request) override;
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
+  std::pair<Status, ObjectMetadata> GetObjectMetadata(
+      GetObjectMetadataRequest const& request) override;
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       ReadObjectRangeRequest const& request) override;
   std::pair<Status, ListObjectsResponse> ListObjects(

@@ -64,6 +64,22 @@ void InsertObject(gcs::Client client, int& argc, char* argv[]) {
 }
 //! [insert object]
 
+void GetObjectMetadata(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 3) {
+    throw Usage{"get-object-metadata <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [get object metadata] [START storage_get_metadata]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name) {
+    auto meta = client.GetObjectMetadata(bucket_name, object_name);
+    std::cout << "The metadata is " << meta << std::endl;
+  }
+  //! [get object metadata] [END storage_get_metadata]
+  (std::move(client), bucket_name, object_name);
+}
+
 //! [read object]
 void ReadObject(gcs::Client client, int& argc, char* argv[]) {
   if (argc < 2) {
@@ -103,6 +119,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"read-object", &ReadObject},
       {"insert-object", &InsertObject},
+      {"get-object-metadata", &GetObjectMetadata},
       {"delete-object", &DeleteObject},
   };
 

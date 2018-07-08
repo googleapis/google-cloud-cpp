@@ -50,24 +50,68 @@ class ObjectIntegrationTest : public ::testing::Test {
            ".txt";
   }
 
- protected:
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
-};
-}  // anonymous namespace
-
-TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  gcs::Client client;
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
+  std::string LoremIpsum() const {
+    return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
 non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 })""";
+  }
+
+ protected:
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::MakeDefaultPRNG();
+};
+}  // anonymous namespace
+
+/// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
+TEST_F(ObjectIntegrationTest, BasicCRUD) {
+  gcs::Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+
+  auto objects = client.ListObjects(bucket_name);
+  std::vector<gcs::ObjectMetadata> initial_list(objects.begin(), objects.end());
+
+  auto name_counter = [](std::string const& name,
+                         std::vector<gcs::ObjectMetadata> const& list) {
+    auto name_matcher = [](std::string const& name) {
+      return [name](gcs::ObjectMetadata const& m) { return m.name() == name; };
+    };
+    return std::count_if(list.begin(), list.end(), name_matcher(name));
+  };
+
+  auto object_name = MakeRandomObjectName();
+  ASSERT_EQ(0, name_counter(object_name, initial_list))
+      << "Test aborted. The object <" << object_name << "> already exists."
+      << "This is unexpected as the test generates a random object name.";
+
+  // Create the object, but only if it does not exist already.
+  auto insert_meta = client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                                         gcs::IfGenerationMatch(0));
+  objects = client.ListObjects(bucket_name);
+
+  std::vector<gcs::ObjectMetadata> current_list(objects.begin(), objects.end());
+  EXPECT_EQ(1U, name_counter(object_name, current_list));
+
+  auto get_meta = client.GetObjectMetadata(
+      bucket_name, object_name, gcs::Generation(insert_meta.generation()));
+  EXPECT_EQ(get_meta, insert_meta);
+
+  client.DeleteObject(bucket_name, object_name);
+  objects = client.ListObjects(bucket_name);
+  current_list.assign(objects.begin(), objects.end());
+
+  EXPECT_EQ(0U, name_counter(object_name, current_list));
+}
+
+TEST_F(ObjectIntegrationTest, BasicReadWrite) {
+  gcs::Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
   auto meta = client.InsertObject(bucket_name, object_name, expected,
