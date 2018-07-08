@@ -28,8 +28,8 @@ namespace internal {
  * Request the metadata for a bucket.
  */
 class GetBucketMetadataRequest
-    : private RequestParameters<IfMetaGenerationMatch, IfMetaGenerationNotMatch,
-                                Projection, UserProject> {
+    : public GenericRequest<GetBucketMetadataRequest, IfMetaGenerationMatch,
+                            IfMetaGenerationNotMatch, Projection, UserProject> {
  public:
   GetBucketMetadataRequest() = default;
   explicit GetBucketMetadataRequest(std::string bucket_name)
@@ -40,49 +40,6 @@ class GetBucketMetadataRequest
     bucket_name_ = std::move(bucket_name);
     return *this;
   }
-
-  /**
-   * Set a single optional parameter.
-   *
-   * @tparam Parameter the type of the parameter.
-   * @param p the parameter value.
-   * @return a reference to this object for chaining.
-   */
-  template <typename Parameter>
-  GetBucketMetadataRequest& set_parameter(Parameter&& p) {
-    RequestParameters::set_parameter(std::forward<Parameter>(p));
-    return *this;
-  }
-
-  /**
-   * Change one or more parameters for the request.
-   *
-   * This is a shorthand to replace:
-   *
-   * @code
-   * request.set_parameter(m1).set_parameter(m2).set_parameter(m3)
-   * @endcode
-   *
-   * with:
-   *
-   * @code
-   * request.set_multiple_parameters(m1, m2, m3)
-   * @endcode
-
-   * @tparam Parameters the type of the parameters
-   * @param p the parameter values
-   * @return The object after all the parameters have been changed.
-   */
-  template <typename... Parameters>
-  GetBucketMetadataRequest& set_multiple_parameters(Parameters&&... p) {
-    RequestParameters::set_multiple_parameters(std::forward<Parameters>(p)...);
-    return *this;
-  }
-
-  using RequestParameters::AddParametersToHttpRequest;
-
-  /// Dump parameter values to a std::ostream
-  using RequestParameters::DumpParameters;
 
  private:
   std::string bucket_name_;
