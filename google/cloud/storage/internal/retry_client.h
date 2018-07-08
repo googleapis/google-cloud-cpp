@@ -41,19 +41,19 @@ class RetryClient : public RawClient {
   ClientOptions const& client_options() const override;
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
-      internal::GetBucketMetadataRequest const& request) override;
+      GetBucketMetadataRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
-      internal::InsertObjectMediaRequest const& request) override;
+      InsertObjectMediaRequest const& request) override;
 
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
-      internal::ReadObjectRangeRequest const&) override;
+      ReadObjectRangeRequest const&) override;
 
-  std::pair<Status, internal::ListObjectsResponse> ListObjects(
-      internal::ListObjectsRequest const&) override;
+  std::pair<Status, ListObjectsResponse> ListObjects(
+      ListObjectsRequest const&) override;
 
-  std::pair<Status, internal::EmptyResponse> DeleteObject(
-      internal::DeleteObjectRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteObject(
+      DeleteObjectRequest const&) override;
 
  private:
   std::shared_ptr<RawClient> client_;

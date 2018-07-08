@@ -22,7 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using namespace google::cloud::storage::internal::raw_client_wrapper_utils;
+using namespace raw_client_wrapper_utils;
 /**
  * Call a RawClient operation logging both the input and the result.
  *
@@ -37,8 +37,7 @@ template <typename MemberFunction>
 static typename std::enable_if<
     CheckSignature<MemberFunction>::value,
     typename CheckSignature<MemberFunction>::ReturnType>::type
-MakeCall(google::cloud::storage::internal::RawClient& client,
-         MemberFunction function,
+MakeCall(RawClient& client, MemberFunction function,
          typename CheckSignature<MemberFunction>::RequestType const& request,
          char const* context) {
   GCP_LOG(INFO) << context << " << " << request;
@@ -57,28 +56,28 @@ ClientOptions const& LoggingClient::client_options() const {
 }
 
 std::pair<Status, BucketMetadata> LoggingClient::GetBucketMetadata(
-    internal::GetBucketMetadataRequest const& request) {
+    GetBucketMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);
 }
 
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
-    internal::InsertObjectMediaRequest const& request) {
+    InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
 }
 
 std::pair<Status, ReadObjectRangeResponse> LoggingClient::ReadObjectRangeMedia(
-    internal::ReadObjectRangeRequest const& request) {
+    ReadObjectRangeRequest const& request) {
   return MakeCall(*client_, &RawClient::ReadObjectRangeMedia, request,
                   __func__);
 }
 
-std::pair<Status, internal::ListObjectsResponse> LoggingClient::ListObjects(
-    internal::ListObjectsRequest const& request) {
+std::pair<Status, ListObjectsResponse> LoggingClient::ListObjects(
+    ListObjectsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjects, request, __func__);
 }
 
-std::pair<Status, internal::EmptyResponse> LoggingClient::DeleteObject(
-    google::cloud::storage::internal::DeleteObjectRequest const& request) {
+std::pair<Status, EmptyResponse> LoggingClient::DeleteObject(
+    DeleteObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteObject, request, __func__);
 }
 

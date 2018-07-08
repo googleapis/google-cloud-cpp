@@ -50,19 +50,19 @@ class RawClient {
    * TODO(#690) - consider checking that modifiers in a request are compatible.
    */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
-      internal::GetBucketMetadataRequest const& request) = 0;
+      GetBucketMetadataRequest const& request) = 0;
 
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
-      internal::InsertObjectMediaRequest const&) = 0;
+      InsertObjectMediaRequest const&) = 0;
 
-  virtual std::pair<Status, internal::ReadObjectRangeResponse>
-  ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
+  virtual std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
+      ReadObjectRangeRequest const&) = 0;
 
-  virtual std::pair<Status, internal::ListObjectsResponse> ListObjects(
-      internal::ListObjectsRequest const&) = 0;
+  virtual std::pair<Status, ListObjectsResponse> ListObjects(
+      ListObjectsRequest const&) = 0;
 
-  virtual std::pair<Status, internal::EmptyResponse> DeleteObject(
-      internal::DeleteObjectRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteObject(
+      DeleteObjectRequest const&) = 0;
 };
 
 }  // namespace internal
