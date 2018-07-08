@@ -227,26 +227,34 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "request=" << request_text << std::endl;
 
-    // magical instance name "-" must return all clusters in the project
+    // We should only return the clusters for the project embedded in the
+    // request->parent() field. Do some simple (and naive) parsing, ignore
+    // malformed requests for now.
     auto project_path =
         request->parent().substr(0, request->parent().find("/instances"));
-    auto prefix = request->parent() + "/clusters/";
-    auto magical_instance_name_found =
-        (request->parent() == project_path + "/instances/-");
 
-    for (auto const& instance : instances_) {
-      if (std::string::npos == instance.first.find(project_path)) {
+    auto return_all_clusters = false;
+    // This is only used if we are returning the clusters for an specific
+    // instance.
+    std::string prefix;
+    // If the instance name is "-" then we are supposed to return all clusters,
+    // otherwise we just return the clusters for the given instance. Parse some
+    // more to figure out if all clusters should be returned.
+    if (request->parent() == project_path + "/instances/-") {
+      return_all_clusters = true;
+    } else {
+      prefix = request->parent() + "/clusters/";
+    }
+
+    for (auto const& cluster : clusters_) {
+      // Ignore clusters for other projects.
+      if (std::string::npos == cluster.first.find(project_path)) {
         continue;
       }
-      for (auto const& cluster : clusters_) {
-        // Search for the magical instance name "-" in a request
-        if (magical_instance_name_found) {
-          *response->add_clusters() = cluster.second;
-        } else {
-          if (std::string::npos != cluster.first.find(prefix)) {
-            *response->add_clusters() = cluster.second;
-          }
-        }
+      if (return_all_clusters) {
+        *response->add_clusters() = cluster.second;
+      } else if (std::string::npos != cluster.first.find(prefix)) {
+        *response->add_clusters() = cluster.second;
       }
     }
 
