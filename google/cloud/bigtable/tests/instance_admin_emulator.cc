@@ -172,10 +172,12 @@ class InstanceAdminEmulator final
     }
     instances_.erase(i->first);
 
-    for (auto it : clusters_) {
-      if (it.first.find(request->name()) != std::string::npos) {
-        clusters_.erase(it.first);
+    for (auto it = clusters_.begin(); it != clusters_.end();) {
+      if (std::string::npos == it->first.find(request->name())) {
+        ++it;
+        continue;
       }
+      clusters_.erase(it++);
     }
 
     return grpc::Status::OK;
