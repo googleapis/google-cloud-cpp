@@ -5,7 +5,6 @@ storage_client_unit_tests = [
     "credentials_test.cc",
     "internal/authorized_user_credentials_test.cc",
     "internal/binary_data_as_debug_string_test.cc",
-    "internal/default_client_test.cc",
     "internal/delete_object_request_test.cc",
     "internal/get_bucket_metadata_request_test.cc",
     "internal/google_application_default_credentials_file_test.cc",
