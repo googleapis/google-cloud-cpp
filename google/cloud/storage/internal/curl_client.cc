@@ -49,7 +49,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
   http_request.AddHeader("Content-Type: application/octet-stream");
   http_request.AddHeader("Content-Length: " +
                          std::to_string(request.contents().size()));
-  http_request.PrepareRequest(std::move(request.contents()),
+  http_request.PrepareRequest(request.contents(),
                               options_.enable_http_tracing());
   auto payload = http_request.MakeRequest();
   if (200 != payload.status_code) {
