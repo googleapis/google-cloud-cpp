@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include(GNUInstallDirs)
+
 function (set_library_properties_for_external_project _target _lib)
     cmake_parse_arguments(F_OPT "ALWAYS_SHARED" "" "" ${ARGN})
     # This is the main disadvantage of external projects. We cannot use the
@@ -25,7 +27,20 @@ function (set_library_properties_for_external_project _target _lib)
         set(_libfullname "${CMAKE_STATIC_LIBRARY_PREFIX}${_lib}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     endif ()
 
-    set(_libpath "${PROJECT_BINARY_DIR}/external/lib/${_libfullname}")
+    # Some libraries always install themselves in the "lib/" directory, while
+    # others use "lib64/" if the distributions uses that directory. We just have
+    # to "know" how to handle these libraries, if the library was already
+    # installed were installed then we could use FindPackage() and the
+    # *-config.cmake file would have the right information. But the
+    # configuration for external libraries runs before the installation of the
+    # external libraries, so we cannot use FindPackage(). Sigh.
+    set(_libs_always_install_in_libdir "grpc++" "grpc" "gpr" "cares" "z")
+
+    if (${_lib} IN_LIST _libs_always_install_in_libdir)
+        set(_libpath "${PROJECT_BINARY_DIR}/external/lib/${_libfullname}")
+    else ()
+        set(_libpath "${PROJECT_BINARY_DIR}/external/${CMAKE_INSTALL_LIBDIR}/${_libfullname}")
+    endif ()
     set(_includepath "${PROJECT_BINARY_DIR}/external/include")
     message(STATUS "Configuring ${_target} with ${_libpath}")
     set_property(TARGET ${_target} APPEND PROPERTY
