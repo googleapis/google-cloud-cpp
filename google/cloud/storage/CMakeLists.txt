@@ -136,6 +136,8 @@ add_library(storage_client
             internal/http_response.h
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
+            internal/list_object_acl_request.h
+            internal/list_object_acl_request.cc
             internal/list_objects_request.h
             internal/list_objects_request.cc
             internal/logging_client.h
@@ -168,12 +170,13 @@ add_library(storage_client
             version.cc)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
+                             nlohmann_json
                              CURL::CURL
                              Threads::Threads
                              OpenSSL::SSL
                              OpenSSL::Crypto
                              ZLIB::ZLIB
-                      PRIVATE nlohmann_json storage_common_options)
+                      PRIVATE storage_common_options)
 if (WIN32)
     target_link_libraries(storage_client PUBLIC wsock32 ws2_32)
 endif ()
@@ -218,6 +221,7 @@ set(storage_client_unit_tests
     internal/get_bucket_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
+    internal/list_object_acl_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc

@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_ACCESS_CONTROL_H_
 
 #include "google/cloud/storage/internal/access_control_common.h"
+#include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/internal/nljson.h"
 
 namespace google {
 namespace cloud {
@@ -30,11 +32,9 @@ inline namespace STORAGE_CLIENT_NS {
  */
 class ObjectAccessControl : private internal::AccessControlCommon {
  public:
-  ObjectAccessControl() = default;
+  ObjectAccessControl() : generation_(0) {}
 
   static ObjectAccessControl ParseFromJson(internal::nl::json const& json);
-
-  /// Parse from a string in JSON format.
   static ObjectAccessControl ParseFromString(std::string const& payload);
 
   using AccessControlCommon::ROLE_OWNER;
