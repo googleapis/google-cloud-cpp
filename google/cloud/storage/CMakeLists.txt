@@ -142,6 +142,8 @@ add_library(storage_client
     internal/service_account_credentials.h
     list_objects_reader.h
     list_objects_reader.cc
+    object_access_control.h
+    object_access_control.cc
     object_metadata.h
     object_metadata.cc
     object_stream.h
@@ -217,6 +219,7 @@ set(storage_client_unit_tests
     internal/read_object_range_request_test.cc
     internal/service_account_credentials_test.cc
     list_objects_reader_test.cc
+    object_access_control_test.cc
     object_metadata_test.cc
     object_stream_test.cc
     object_test.cc
