@@ -206,6 +206,9 @@ class Client {
    * @param object_name the name of the object to be deleted.
    * @param parameters a variadic list of optional parameters. Valid types for
    *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc list object acl
    */
   template <typename... Parameters>
   std::vector<ObjectAccessControl> ListObjectAcl(std::string const& bucket_name,

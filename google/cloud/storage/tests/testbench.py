@@ -269,6 +269,20 @@ def objects_delete(bucket_name, object_name):
     return json.dumps({})
 
 
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl')
+def objects_acl_list(bucket_name, object_name):
+    """Implement the 'ObjectAccessControls: list' API.
+
+     List Object Access Controls.
+     """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    return json.dumps(revision.metadata.get('acl', []))
+
+
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
