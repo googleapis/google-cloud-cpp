@@ -221,7 +221,7 @@ int main(int argc, char* argv[]) try {
   // We can only do about 100,000 Apply operations in each BulkApply (see the
   // Cloud Bigtable bigtable.proto file for details), and each SingleRowMutation
   // we create below has roughly headers.size() elements. So we want at most:
-  auto bulk_apply_size = static_cast<int>(10000 / headers.size());
+  auto bulk_apply_size = static_cast<int>(100000 / headers.size());
   cbt::BulkMutation bulk;
   int count = 0;
   while (not is.eof()) {
