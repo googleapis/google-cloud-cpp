@@ -173,6 +173,23 @@ class Client {
     raw_client_->DeleteObject(request);
   }
 
+  /**
+   * Retrieve the list of ObjectAccessControls for an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   */
+  template <typename... Parameters>
+  std::vector<ObjectAccessControl> ListObjectAcl(std::string const& bucket_name,
+                                                 std::string const& object_name,
+                                                 Parameters&&... parameters) {
+    internal::ListObjectAclRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->ListObjectAcl(request).second.items;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

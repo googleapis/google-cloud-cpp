@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
+#include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -63,6 +64,9 @@ class RawClient {
 
   virtual std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) = 0;
+
+  virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
+      ListObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

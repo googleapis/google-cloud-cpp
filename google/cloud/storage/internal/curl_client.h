@@ -50,6 +50,8 @@ class CurlClient : public RawClient {
       ListObjectsRequest const& request) override;
   std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const& request) override;
+  std::pair<Status, ListObjectAclResponse> ListObjectAcl(
+      ListObjectAclRequest const& request) override;
 
  private:
   ClientOptions options_;
