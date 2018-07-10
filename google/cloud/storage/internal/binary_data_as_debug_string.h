@@ -32,7 +32,8 @@ namespace internal {
  * characters wide and contains the hexdump of the data.  The columns are
  * separated by a single space.
  */
-std::string BinaryDataAsDebugString(char const* data, std::size_t size);
+std::string BinaryDataAsDebugString(char const* data, std::size_t size,
+                                    std::size_t max_output_bytes = 0);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

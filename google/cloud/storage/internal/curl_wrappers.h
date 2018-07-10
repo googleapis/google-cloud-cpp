@@ -15,53 +15,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_WRAPPERS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_WRAPPERS_H_
 
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/storage/well_known_parameters.h"
 #include <curl/curl.h>
+#include <functional>
 #include <map>
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/**
- * Receive the output from a libcurl request.
- */
-class CurlBuffer {
- public:
-  CurlBuffer() = default;
+/// Hold a CURLM* handle and automatically clean it up.
+using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
 
-  /// Use this object to capture the payload of the @p curl handle.
-  void Attach(CURL* curl);
+/// Hold a character string created by CURL use correct deleter.
+using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
 
-  /// Return the contents and reset the contents.
-  std::string contents() { return std::move(buffer_); }
+using CurlHeaders = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
 
-  /// Add data to the buffer.
-  void Append(char* data, std::size_t size);
+using CurlReceivedHeaders = std::multimap<std::string, std::string>;
+std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
+                                 char const* data, std::size_t size);
 
- private:
-  std::string buffer_;
-};
-
-class CurlHeaders {
- public:
-  CurlHeaders() = default;
-
-  /// Use this object to capture the headers of the @p curl handle.
-  void Attach(CURL* curl);
-
-  /// Return the contents and reset them.
-  std::multimap<std::string, std::string> contents() {
-    return std::move(contents_);
-  }
-
-  /// Add a new header line to the contents.
-  void Append(char* data, std::size_t size);
-
- private:
-  std::multimap<std::string, std::string> contents_;
-};
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

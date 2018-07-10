@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl_request_builder.h"
 
 namespace google {
 namespace cloud {
@@ -23,11 +23,12 @@ namespace internal {
 std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name());
-  request.AddParametersToHttpRequest(http_request);
-  http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-  http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
-  auto payload = http_request.MakeRequest();
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
+      request.bucket_name());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (200 != payload.status_code) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
@@ -40,18 +41,17 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequest http_request(upload_endpoint_ + "/b/" + request.bucket_name() +
-                           "/o");
-  http_request.AddQueryParameter("uploadType", "media");
-  http_request.AddQueryParameter("name", request.object_name());
-  request.AddParametersToHttpRequest(http_request);
-  http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-  http_request.AddHeader("Content-Type: application/octet-stream");
-  http_request.AddHeader("Content-Length: " +
-                         std::to_string(request.contents().size()));
-  http_request.PrepareRequest(request.contents(),
-                              options_.enable_http_tracing());
-  auto payload = http_request.MakeRequest();
+  CurlRequestBuilder builder(upload_endpoint_ + "/b/" +
+      request.bucket_name() + "/o");
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  builder.AddQueryParameter("uploadType", "media");
+  builder.AddQueryParameter("name", request.object_name());
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: " +
+      std::to_string(request.contents().size()));
+  auto payload = builder.BuildRequest(request.contents()).MakeRequest();
   if (200 != payload.status_code) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
@@ -65,41 +65,41 @@ std::pair<Status, internal::ReadObjectRangeResponse>
 CurlClient::ReadObjectRangeMedia(
     internal::ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
-                           "/o/" + request.object_name());
-  http_request.AddQueryParameter("alt", "media");
-  request.AddParametersToHttpRequest(http_request);
-  http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
+      request.bucket_name() + "/o/" +
+      request.object_name());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  builder.AddQueryParameter("alt", "media");
   // For the moment, we are using range reads to read the objects (see #727)
   // disable decompression because range reads do not work in that case:
   //   https://cloud.google.com/storage/docs/transcoding#range
   // and
   //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
-  http_request.AddHeader("Cache-Control: no-transform");
-  http_request.AddHeader("Range: bytes=" + std::to_string(request.begin()) +
-                         '-' + std::to_string(request.end()));
-  http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
-  auto payload = http_request.MakeRequest();
+  builder.AddHeader("Cache-Control: no-transform");
+  builder.AddHeader("Range: bytes=" + std::to_string(request.begin()) + '-' +
+      std::to_string(request.end()));
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
         internal::ReadObjectRangeResponse{});
   }
-  return std::make_pair(
-      Status(),
-      internal::ReadObjectRangeResponse::FromHttpResponse(std::move(payload)));
+  return std::make_pair(Status(),
+                        internal::ReadObjectRangeResponse::FromHttpResponse(
+                            std::move(payload)));
 }
 
 std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
     internal::ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
-                           "/o");
-  request.AddParametersToHttpRequest(http_request);
-  http_request.AddQueryParameter("pageToken", request.page_token());
-  http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-  http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
-  auto payload = http_request.MakeRequest();
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
+      request.bucket_name() + "/o");
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  builder.AddQueryParameter("pageToken", request.page_token());
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (200 != payload.status_code) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
@@ -113,13 +113,14 @@ std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
 std::pair<Status, internal::EmptyResponse> CurlClient::DeleteObject(
     internal::DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
-                           "/o/" + request.object_name());
-  request.AddParametersToHttpRequest(http_request);
-  http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-  http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
-  http_request.SetMethod("DELETE");
-  auto payload = http_request.MakeRequest();
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
+      request.bucket_name() + "/o/" +
+      request.object_name());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  builder.SetMethod("DELETE");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},

@@ -22,80 +22,68 @@
 namespace storage = google::cloud::storage;
 using storage::internal::AuthorizedUserCredentials;
 using storage::testing::MockHttpRequest;
+using storage::testing::MockHttpRequestBuilder;
 using namespace ::testing;
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
-  void SetUp() { MockHttpRequest::Clear(); }
-  void TearDown() { MockHttpRequest::Clear(); }
+  void SetUp() override {
+    MockHttpRequestBuilder::mock =
+        std::make_shared<MockHttpRequestBuilder::Impl>();
+  }
+  void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
 };
 
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {
-  std::string jwt = R"""({
-      "client_id": "a-client-id.example.com",
-      "client_secret": "a-123456ABCDEF",
-      "refresh_token": "1/THETOKEN",
-      "type": "magic_type"
-})""";
-
-  auto handle =
-      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
-      .WillOnce(Invoke([](std::string const& payload, bool) {
-        auto npos = std::string::npos;
-        EXPECT_NE(npos, payload.find("grant_type=refresh_token"));
-        EXPECT_NE(npos, payload.find("client_id=a-client-id.example.com"));
-        EXPECT_NE(npos, payload.find("client_secret=a-123456ABCDEF"));
-        EXPECT_NE(npos, payload.find("refresh_token=1/THETOKEN"));
-      }));
-  EXPECT_CALL(*handle, MakeEscapedString(_))
-      .WillRepeatedly(Invoke([](std::string const& x) {
-        auto const size = x.size();
-        auto copy = new char[size + 1];
-        std::memcpy(copy, x.data(), x.size());
-        copy[size] = '\0';
-        return std::unique_ptr<char[]>(copy);
-      }));
-
   std::string response = R"""({
     "token_type": "Type",
     "access_token": "access-token-value",
     "id_token": "id-token-value",
     "expires_in": 1234
 })""";
-  EXPECT_CALL(*handle, MakeRequest())
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
 
-  AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
-  EXPECT_EQ("Authorization: Type access-token-value",
-            credentials.AuthorizationHeader());
-}
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder,
+              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, BuildRequest(_))
+      .WillOnce(Invoke([mock_request](std::string payload) {
+        EXPECT_THAT(payload, HasSubstr("grant_type=refresh_token"));
+        EXPECT_THAT(payload, HasSubstr("client_id=a-client-id.example.com"));
+        EXPECT_THAT(payload, HasSubstr("client_secret=a-123456ABCDEF"));
+        EXPECT_THAT(payload, HasSubstr("refresh_token=1/THETOKEN"));
+        MockHttpRequest result;
+        result.mock = mock_request;
+        return result;
+      }));
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(Invoke([](std::string const& s) {
+        auto t = std::unique_ptr<char[]>(new char[s.size()]);
+        std::copy(s.begin(), s.end(), t.get());
+        return t;
+      }));
 
-/// @test Verify that we can refresh service account credentials.
-TEST_F(AuthorizedUserCredentialsTest, Refresh) {
-  std::string jwt = R"""({
+  std::string config = R"""({
       "client_id": "a-client-id.example.com",
       "client_secret": "a-123456ABCDEF",
       "refresh_token": "1/THETOKEN",
       "type": "magic_type"
 })""";
 
-  auto handle =
-      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
-      .Times(1);
-  EXPECT_CALL(*handle, MakeEscapedString(_))
-      .WillRepeatedly(Invoke([](std::string const& x) {
-        auto const size = x.size();
-        auto copy = new char[size + 1];
-        std::memcpy(copy, x.data(), x.size());
-        copy[size] = '\0';
-        return std::unique_ptr<char[]>(copy);
-      }));
+  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(config);
+  EXPECT_EQ("Authorization: Type access-token-value",
+            credentials.AuthorizationHeader());
+}
 
+/// @test Verify that we can refresh service account credentials.
+TEST_F(AuthorizedUserCredentialsTest, Refresh) {
   // Prepare two responses, the first one is used but becomes immediately
-  // expired.
+  // expired, resulting in another refresh next time the caller tries to get
+  // an authorization header.
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",
@@ -108,11 +96,36 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
     "id_token": "id-token-value",
     "expires_in": 1000
 })""";
-  EXPECT_CALL(*handle, MakeRequest())
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
       .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
 
-  AuthorizedUserCredentials<MockHttpRequest> credentials(jwt);
+  // Now setup the builder to return those responses.
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder, BuildRequest(_))
+      .WillOnce(Invoke([mock_request](std::string unused) {
+        MockHttpRequest request;
+        request.mock = mock_request;
+        return request;
+      }));
+  EXPECT_CALL(*mock_builder,
+              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(Invoke([](std::string const& s) {
+        auto t = std::unique_ptr<char[]>(new char[s.size()]);
+        std::copy(s.begin(), s.end(), t.get());
+        return t;
+      }));
+
+  std::string config = R"""({
+      "client_id": "a-client-id.example.com",
+      "client_secret": "a-123456ABCDEF",
+      "refresh_token": "1/THETOKEN",
+      "type": "magic_type"
+})""";
+  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(config);
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader());
   EXPECT_EQ("Authorization: Type access-token-r2",

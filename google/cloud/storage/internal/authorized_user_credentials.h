@@ -17,7 +17,8 @@
 
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/credential_constants.h"
-#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
@@ -45,9 +46,10 @@ namespace internal {
  *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *   https://tools.ietf.org/html/rfc7523
  *
- * @tparam HttpRequestType a dependency injection point to make HTTP requests.
+ * @tparam HttpRequestBuilderType a dependency injection point. It makes it
+ *     possible to mock the libcurl wrappers.
  */
-template <typename HttpRequestType = CurlRequest>
+template <typename HttpRequestBuilderType = CurlRequestBuilder>
 class AuthorizedUserCredentials : public storage::Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents)
@@ -55,16 +57,20 @@ class AuthorizedUserCredentials : public storage::Credentials {
 
   explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string oauth_server)
-      : requestor_(std::move(oauth_server)), expiration_time_() {
+      : expiration_time_() {
+    HttpRequestBuilderType request_builder(std::move(oauth_server));
     auto credentials = nl::json::parse(content);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
-    payload += requestor_.MakeEscapedString(credentials["client_id"]).get();
+    payload +=
+        request_builder.MakeEscapedString(credentials["client_id"]).get();
     payload += "&client_secret=";
-    payload += requestor_.MakeEscapedString(credentials["client_secret"]).get();
+    payload +=
+        request_builder.MakeEscapedString(credentials["client_secret"]).get();
     payload += "&refresh_token=";
-    payload += requestor_.MakeEscapedString(credentials["refresh_token"]).get();
-    requestor_.PrepareRequest(std::move(payload), false);
+    payload +=
+        request_builder.MakeEscapedString(credentials["refresh_token"]).get();
+    request_ = request_builder.BuildRequest(std::move(payload));
   }
 
   std::string AuthorizationHeader() override {
@@ -80,7 +86,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
-    auto response = requestor_.MakeRequest();
+    auto response = request_.MakeRequest();
     if (200 != response.status_code) {
       return false;
     }
@@ -99,7 +105,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     return true;
   }
 
-  HttpRequestType requestor_;
+  typename HttpRequestBuilderType::RequestType request_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

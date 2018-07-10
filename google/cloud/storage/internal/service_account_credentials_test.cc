@@ -28,7 +28,6 @@ namespace testing {
 namespace {
 
 using storage::internal::ServiceAccountCredentials;
-using storage::testing::MockHttpRequest;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
@@ -66,8 +65,11 @@ constexpr char JSON_KEYFILE_CONTENTS[] = R"""({
 
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
-  void SetUp() { MockHttpRequest::Clear(); }
-  void TearDown() { MockHttpRequest::Clear(); }
+  void SetUp() override {
+    MockHttpRequestBuilder::mock =
+        std::make_shared<MockHttpRequestBuilder::Impl>();
+  }
+  void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
 };
 
 struct FakeClock : public std::chrono::system_clock {
@@ -82,60 +84,49 @@ struct FakeClock : public std::chrono::system_clock {
   }
 };
 
-void SetExpectCallsForMakeEscapedString(
-    std::shared_ptr<storage::testing::MockHttpRequestHandle> handle) {
-  EXPECT_CALL(*handle, MakeEscapedString(_))
-      .WillRepeatedly(Invoke([](std::string const& x) {
-        auto const size = x.size();
-        auto copy = new char[size + 1];
-        std::memcpy(copy, x.data(), x.size());
-        copy[size] = '\0';
-        return std::unique_ptr<char[]>(copy);
-      }));
-  // Add this matcher AFTER the AnyMatcher above; gmock matches in reverse
-  // order of how you defined matchers, and we want this specific string to be
-  // matched before being checked and matched against the AnyMatcher above.
-  EXPECT_CALL(*handle, MakeEscapedString(StrEq(GRANT_PARAM_UNESCAPED)))
-      .WillRepeatedly(Invoke([](std::string const& x) {
-        const std::string actual_grant(GRANT_PARAM_ESCAPED);
-        auto const escaped_str_size = actual_grant.size();
-        auto copy = new char[escaped_str_size + 1];
-        std::memcpy(copy, actual_grant.data(), actual_grant.size());
-        copy[escaped_str_size] = '\0';
-        return std::unique_ptr<char[]>(copy);
-      }));
-}
-
 /// @test Verify that we can create service account credentials from a keyfile.
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponse) {
-  auto mock_http_request_handle =
-      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-
-  SetExpectCallsForMakeEscapedString(mock_http_request_handle);
-
-  EXPECT_CALL(*mock_http_request_handle,
-              PrepareRequest(An<std::string const&>(), false))
-      .WillOnce(Invoke([](std::string const& payload, bool) {
-        EXPECT_THAT(payload, HasSubstr(EXPECTED_ASSERTION_PARAM));
-        // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload, HasSubstr(std::string("grant_type=") +
-                                       GRANT_PARAM_ESCAPED));
-      }));
-
-  EXPECT_CALL(
-      *mock_http_request_handle,
-      AddHeader(StrEq("Content-Type: application/x-www-form-urlencoded")));
-
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   std::string response = R"""({
       "token_type": "Type",
       "access_token": "access-token-value",
       "expires_in": 1234
   })""";
-  EXPECT_CALL(*mock_http_request_handle, MakeRequest())
+  EXPECT_CALL(*mock_request, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest, FakeClock> credentials(
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder, BuildRequest(_))
+      .WillOnce(Invoke([mock_request](std::string payload) {
+        EXPECT_THAT(payload, HasSubstr(EXPECTED_ASSERTION_PARAM));
+        // Hard-coded in this order in ServiceAccountCredentials class.
+        EXPECT_THAT(payload, HasSubstr(std::string("grant_type=") +
+                                       GRANT_PARAM_ESCAPED));
+        MockHttpRequest result;
+        result.mock = mock_request;
+        return result;
+      }));
+
+  std::string expected_header =
+      "Content-Type: application/x-www-form-urlencoded";
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
+  EXPECT_CALL(*mock_builder,
+              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            EXPECT_EQ(GRANT_PARAM_UNESCAPED, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(GRANT_PARAM_ESCAPED)]);
+            std::copy(GRANT_PARAM_ESCAPED,
+                      GRANT_PARAM_ESCAPED + sizeof(GRANT_PARAM_ESCAPED),
+                      t.get());
+            return t;
+          }));
+
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       JSON_KEYFILE_CONTENTS);
 
   // Calls Refresh to obtain the access token for our authorization header.
@@ -146,15 +137,6 @@ TEST_F(ServiceAccountCredentialsTest,
 /// @test Verify that we refresh service account credentials appropriately.
 TEST_F(ServiceAccountCredentialsTest,
        RefreshCalledOnlyWhenAccessTokenIsMissingOrInvalid) {
-  auto mock_http_request_handle =
-      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
-  EXPECT_CALL(*mock_http_request_handle,
-              PrepareRequest(An<std::string const&>(), false))
-      .Times(1);
-  EXPECT_CALL(*mock_http_request_handle, AddHeader(An<std::string const&>()))
-      .Times(1);
-  SetExpectCallsForMakeEscapedString(mock_http_request_handle);
-
   // Prepare two responses, the first one is used but becomes immediately
   // expired, resulting in another refresh next time the caller tries to get
   // an authorization header.
@@ -168,11 +150,37 @@ TEST_F(ServiceAccountCredentialsTest,
     "access_token": "access-token-r2",
     "expires_in": 1000
 })""";
-  EXPECT_CALL(*mock_http_request_handle, MakeRequest())
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest())
       .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
       .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
 
-  ServiceAccountCredentials<MockHttpRequest> credentials(JSON_KEYFILE_CONTENTS);
+  // Now setup the builder to return those responses.
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder, BuildRequest(_))
+      .WillOnce(Invoke([mock_request](std::string unused) {
+        MockHttpRequest request;
+        request.mock = mock_request;
+        return request;
+      }));
+  EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>())).Times(1);
+  EXPECT_CALL(*mock_builder,
+              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            EXPECT_EQ(GRANT_PARAM_UNESCAPED, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(GRANT_PARAM_ESCAPED)]);
+            std::copy(GRANT_PARAM_ESCAPED,
+                      GRANT_PARAM_ESCAPED + sizeof(GRANT_PARAM_ESCAPED),
+                      t.get());
+            return t;
+          }));
+
+  ServiceAccountCredentials<MockHttpRequestBuilder> credentials(
+      JSON_KEYFILE_CONTENTS);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader());
