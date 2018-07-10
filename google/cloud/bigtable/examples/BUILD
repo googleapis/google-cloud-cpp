@@ -33,3 +33,9 @@ cc_binary(
     srcs = ["bigtable_samples_instance_admin.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
+
+cc_binary(
+    name = "bigtable_upload_csv",
+    srcs = ["bigtable_upload_csv.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)

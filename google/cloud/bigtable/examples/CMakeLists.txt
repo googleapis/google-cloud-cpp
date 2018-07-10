@@ -25,3 +25,5 @@ target_link_libraries(bigtable_samples bigtable_client)
 add_executable(bigtable_samples_instance_admin bigtable_samples_instance_admin.cc)
 target_link_libraries(bigtable_samples_instance_admin bigtable_client)
 
+add_executable(bigtable_upload_csv bigtable_upload_csv.cc)
+target_link_libraries(bigtable_upload_csv bigtable_client)
