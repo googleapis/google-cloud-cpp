@@ -62,8 +62,9 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
       }));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(Invoke([](std::string const& s) {
-        auto t = std::unique_ptr<char[]>(new char[s.size()]);
+        auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
+        t[s.size()] = '\0';
         return t;
       }));
 
@@ -114,8 +115,9 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(Invoke([](std::string const& s) {
-        auto t = std::unique_ptr<char[]>(new char[s.size()]);
+        auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
+        t[s.size()] = '\0';
         return t;
       }));
 
