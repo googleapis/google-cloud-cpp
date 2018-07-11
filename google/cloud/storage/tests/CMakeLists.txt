@@ -18,19 +18,24 @@ set(storage_client_integration_tests
     object_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-                          PRIVATE
-                          storage_client
-                          google_cloud_cpp_testing
-                          google_cloud_cpp_common
-                          gmock
-                          CURL::CURL
-                          Threads::Threads
-                          nlohmann_json
-                          storage_common_options)
+                          PRIVATE storage_client
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  CURL::CURL
+                                  Threads::Threads
+                                  nlohmann_json
+                                  storage_common_options)
 endforeach ()
 
 include(CreateBazelConfig)

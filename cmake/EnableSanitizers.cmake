@@ -30,7 +30,7 @@ function (sanitizer_test NAME)
             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${FLAG}"
                 PARENT_SCOPE)
             set(${NAME}_ENABLED TRUE PARENT_SCOPE)
-            return ()
+            return()
         endif ()
     endforeach ()
 endfunction ()
@@ -42,13 +42,14 @@ if (SANITIZE_ADDRESS) # Try each group of options and pick the first one that
         "-fsanitize=address")
     sanitizer_test(AddressSanitizer ${ASAN_CANDIDATES})
     if (NOT AddressSanitizer_ENABLED)
-        message(FATAL_ERROR
-                    "AddressSanitizer requested but could not be enabled. "
-                    "The most common problems are that your compiler (the CXX "
-                    "cmake variable) does not support the AddressSanitizer "
-                    "or that you have already setup incompatible flags "
-                    "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
-    else ()
+        message(
+            FATAL_ERROR
+                "AddressSanitizer requested but could not be enabled. "
+                "The most common problems are that your compiler (the CXX "
+                "cmake variable) does not support the AddressSanitizer "
+                "or that you have already setup incompatible flags "
+                "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
+    else()
         message(STATUS "AddressSanitizer is enabled.")
     endif ()
 endif (SANITIZE_ADDRESS)
@@ -60,13 +61,14 @@ if (SANITIZE_LEAKS) # Try each group of options and pick the first one that
         "-fsanitize=leaks")
     sanitizer_test(LeaksSanitizer ${ASAN_CANDIDATES})
     if (NOT LeaksSanitizer_ENABLED)
-        message(FATAL_ERROR
-                    "LeaksSanitizer requested but could not be enabled. "
-                    "The most common problems are that your compiler (the CXX "
-                    "cmake variable) does not support the LeaksSanitizer "
-                    "or that you have already setup incompatible flags "
-                    "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
-    else ()
+        message(
+            FATAL_ERROR
+                "LeaksSanitizer requested but could not be enabled. "
+                "The most common problems are that your compiler (the CXX "
+                "cmake variable) does not support the LeaksSanitizer "
+                "or that you have already setup incompatible flags "
+                "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
+    else()
         message(STATUS "LeaksSanitizer is enabled.")
     endif ()
 endif (SANITIZE_LEAKS)
@@ -78,7 +80,7 @@ if (SANITIZE_MEMORY)
             FATAL_ERROR
                 "Cannot enable MemorySanitizer when AddressSanitizer is enabled"
             )
-    else () # Try each group of options and pick the first one that works.
+    else() # Try each group of options and pick the first one that works.
         set(
             MSAN_CANDIDATES
             "-fsanitize=memory -fno-omit-frame-pointer -fsanitize-memory-track-origins=2"
@@ -87,13 +89,14 @@ if (SANITIZE_MEMORY)
         sanitizer_test(MemorySanitizer ${MSAN_CANDIDATES})
     endif ()
     if (NOT MemorySanitizer_ENABLED)
-        message(FATAL_ERROR
-                    "MemorySanitizer requested but could not be enabled. "
-                    "The most common problems are that your compiler (the CXX "
-                    "cmake variable) does not support the MemorySanitizer "
-                    "or that you have already setup incompatible flags "
-                    "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
-    else ()
+        message(
+            FATAL_ERROR
+                "MemorySanitizer requested but could not be enabled. "
+                "The most common problems are that your compiler (the CXX "
+                "cmake variable) does not support the MemorySanitizer "
+                "or that you have already setup incompatible flags "
+                "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
+    else()
         message(STATUS "MemorySanitizer is enabled.")
     endif ()
 endif (SANITIZE_MEMORY)
@@ -105,19 +108,20 @@ if (SANITIZE_THREAD)
             FATAL_ERROR
                 "Cannot enable ThreadSanitizer when AddressSanitizer is enabled"
             )
-    else () # Try each group of options and pick the first one that works.
+    else() # Try each group of options and pick the first one that works.
         set(TSAN_CANDIDATES "-fsanitize=thread -fno-omit-frame-pointer"
             "-fsanitize=thread")
         sanitizer_test(ThreadSanitizer ${TSAN_CANDIDATES})
     endif ()
     if (NOT ThreadSanitizer_ENABLED)
-        message(FATAL_ERROR
-                    "ThreadSanitizer requested but could not be enabled. "
-                    "The most common problems are that your compiler (the CXX "
-                    "cmake variable) does not support the ThreadSanitizer "
-                    "or that you have already setup incompatible flags "
-                    "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
-    else ()
+        message(
+            FATAL_ERROR
+                "ThreadSanitizer requested but could not be enabled. "
+                "The most common problems are that your compiler (the CXX "
+                "cmake variable) does not support the ThreadSanitizer "
+                "or that you have already setup incompatible flags "
+                "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
+    else()
         message(STATUS "ThreadSanitizer is enabled.")
     endif ()
 endif (SANITIZE_THREAD)
@@ -136,7 +140,7 @@ if (SANITIZE_UNDEFINED) # Try each group of options and pick the first one that
                 "cmake variable) does not support the UndefinedBehaviorSanitizer "
                 "or that you have already setup incompatible flags "
                 "(such as another sanitizer) in CMAKE_CXX_FLAGS.")
-    else ()
+    else()
         message(STATUS "UndefinedBehaviorSanitizer is enabled.")
     endif ()
 endif (SANITIZE_UNDEFINED)

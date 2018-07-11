@@ -13,8 +13,8 @@
 # the License.
 
 # Find out the name of the subproject.
-get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
-                       "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT "${CMAKE_CURRENT_SOURCE_DIR}"
+                       NAME)
 
 # Find out what flags turn on all available warnings and turn those warnings
 # into errors.
@@ -22,7 +22,7 @@ include(CheckCXXCompilerFlag)
 if (NOT MSVC)
     check_cxx_compiler_flag(-Wall GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WALL)
     check_cxx_compiler_flag(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
-else ()
+else()
     check_cxx_compiler_flag("/std:c++latest"
                             GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CPP_LATEST)
 endif ()
@@ -46,7 +46,7 @@ if (${CMAKE_VERSION} VERSION_LESS "3.9")
 
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
-else ()
+else()
     find_package(Doxygen)
     if (Doxygen_FOUND)
         set(DOXYGEN_RECURSIVE YES)
@@ -67,15 +67,12 @@ else ()
         set(DOXYGEN_GENERATE_BUGLIST NO)
         set(DOXYGEN_GENERATE_TESTLIST NO)
         set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
-        set(
-            DOXYGEN_CLANG_OPTIONS
-            "\
+        set(DOXYGEN_CLANG_OPTIONS "\
 -std=c++11 \
 -I${PROJECT_SOURCE_DIR} \
 -I${PROJECT_BINARY_DIR} \
 -I${PROJECT_SOURCE_DIR}/googletest/include \
--I${PROJECT_SOURCE_DIR}/googletest/googlemock/include"
-            )
+-I${PROJECT_SOURCE_DIR}/googletest/googlemock/include")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)

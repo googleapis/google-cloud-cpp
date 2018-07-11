@@ -70,8 +70,8 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
                                    ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
     endif (WIN32)
     if (MSVC)
-        target_compile_options(libprotobuf PUBLIC
-                               ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
+        target_compile_options(libprotobuf
+                               PUBLIC ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
 
     # TODO(#286) - workaround build breakage for gRPC v1.10.x on Ubuntu:16.04.
@@ -88,7 +88,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
     set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 
-elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
+elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
 
@@ -105,12 +105,14 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     # The necessary compiler options and definitions are not defined by the
     # targets, we need to add them.
     if (WIN32)
-        set_property(TARGET protobuf::libprotobuf APPEND
+        set_property(TARGET protobuf::libprotobuf
+                     APPEND
                      PROPERTY INTERFACE_COMPILE_DEFINITIONS
                               ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
     endif (WIN32)
     if (MSVC)
-        set_property(TARGET protobuf::libprotobuf APPEND
+        set_property(TARGET protobuf::libprotobuf
+                     APPEND
                      PROPERTY INTERFACE_COMPILE_OPTIONS
                               ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
@@ -132,7 +134,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
-elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
+elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
 
     # Use pkg-config to find the libraries.
     find_package(PkgConfig REQUIRED)
@@ -144,19 +146,22 @@ elseif ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     pkg_check_modules(Protobuf REQUIRED protobuf>=3.5)
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(protobuf::libprotobuf Protobuf)
-    set_property(TARGET protobuf::libprotobuf APPEND
+    set_property(TARGET protobuf::libprotobuf
+                 APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
 
     pkg_check_modules(gRPC REQUIRED grpc>=1.9)
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc gRPC)
-    set_property(TARGET gRPC::grpc APPEND
+    set_property(TARGET gRPC::grpc
+                 APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf)
 
     pkg_check_modules(gRPC++ REQUIRED grpc++>=1.9)
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc++ gRPC++)
-    set_property(TARGET gRPC::grpc++ APPEND
+    set_property(TARGET gRPC::grpc++
+                 APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc)
 
     # Discover the protobuf compiler and the gRPC plugin.

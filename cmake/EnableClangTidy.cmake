@@ -17,7 +17,7 @@ option(GOOGLE_CLOUD_CPP_CLANG_TIDY
 
 if (${CMAKE_VERSION} VERSION_LESS "3.6")
     message(STATUS "clang-tidy is not enabled because cmake version is too old")
-else ()
+else()
     if (${CMAKE_VERSION} VERSION_LESS "3.8")
         message(WARNING "clang-tidy exit code ignored in this version of cmake")
     endif ()
@@ -27,7 +27,7 @@ else ()
 
     if (NOT CLANG_TIDY_EXE)
         message(STATUS "clang-tidy not found.")
-    else ()
+    else()
         message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
     endif ()
 endif ()

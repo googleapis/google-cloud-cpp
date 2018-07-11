@@ -36,16 +36,12 @@ if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
         ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
     target_include_directories(
         gmock
-        PUBLIC
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-        PUBLIC
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
-        PUBLIC
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
-        PUBLIC
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
+        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest
+        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/include
+        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock)
 
-elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
+elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     find_package(GTest REQUIRED)
 
     # The FindGTest module finds GTest by default, but does not search for
@@ -80,7 +76,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     add_library(gmock INTERFACE)
     target_link_libraries(gmock INTERFACE GMock::GMock)
 
-elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
+elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     find_package(Threads REQUIRED)
     find_package(GTest REQUIRED)
 
@@ -100,8 +96,8 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
 
     find_library(GMOCK_MAIN_LIBRARY gmock_main)
     if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
-        message(FATAL_ERROR
-                    "Cannot find gmock_main library ${GMOCK_MAIN_LIBRARY}.")
+        message(
+            FATAL_ERROR "Cannot find gmock_main library ${GMOCK_MAIN_LIBRARY}.")
     endif ()
     mark_as_advanced(GMOCK_MAIN_LIBRARY)
 
@@ -128,7 +124,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     add_library(gmock INTERFACE)
     target_link_libraries(gmock INTERFACE GMock::Main GMock::GMock GTest::GTest)
 
-elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
+elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
 
     # Use pkg-config to find the libraries.
     find_package(PkgConfig REQUIRED) # We need a helper function to convert pkg-
@@ -138,7 +134,8 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
     pkg_check_modules(gmock_pc REQUIRED gmock_main gmock gtest)
     add_library(GMock::GMock INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(GMock::GMock gmock_pc)
-    set_property(TARGET GMock::GMock APPEND
+    set_property(TARGET GMock::GMock
+                 APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
 
     # TODO(#310) - consider changing the name of this target as it can conflict

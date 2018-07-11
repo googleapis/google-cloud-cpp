@@ -19,7 +19,7 @@ function (PROTOBUF_GENERATE_CPP SRCS HDRS)
         message(
             SEND_ERROR
                 "Error: PROTOBUF_GENERATE_CPP() called without any proto files")
-        return ()
+        return()
     endif ()
 
     if (DEFINED PROTOBUF_IMPORT_DIRS)
@@ -39,12 +39,15 @@ function (PROTOBUF_GENERATE_CPP SRCS HDRS)
         get_filename_component(FIL_WE ${FIL} NAME_WE)
 
         # Strip all the prefixes in ${PROTOBUF_IMPORT_DIRS} from the source
-        # proto
-        # directory
+        # proto directory
         set(D ${DIR})
         if (DEFINED PROTOBUF_IMPORT_DIRS)
             foreach (P ${PROTOBUF_IMPORT_DIRS})
-                string(REGEX REPLACE "^${P}" "" T "${D}")
+                string(REGEX
+                       REPLACE "^${P}"
+                               ""
+                               T
+                               "${D}")
                 set(D ${T})
             endforeach ()
         endif ()
@@ -52,14 +55,15 @@ function (PROTOBUF_GENERATE_CPP SRCS HDRS)
         set(HDR "${CMAKE_CURRENT_BINARY_DIR}/${D}/${FIL_WE}.pb.h")
         list(APPEND ${SRCS} ${SRC})
         list(APPEND ${HDRS} ${HDR})
-        add_custom_command(OUTPUT ${SRC} ${HDR}
-                           COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ARGS
-                                   --cpp_out ${CMAKE_CURRENT_BINARY_DIR}
-                                   ${_protobuf_include_path} ${FIL}
-                           DEPENDS ${FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
-                           COMMENT
-                               "Running C++ protocol buffer compiler on ${FIL}"
-                               VERBATIM)
+        add_custom_command(
+            OUTPUT ${SRC} ${HDR}
+            COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+                    ARGS
+                    --cpp_out ${CMAKE_CURRENT_BINARY_DIR}
+                              ${_protobuf_include_path} ${FIL}
+            DEPENDS ${FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
+            COMMENT "Running C++ protocol buffer compiler on ${FIL}"
+            VERBATIM)
     endforeach ()
 
     set_source_files_properties(${${SRCS}} ${${HDRS}} PROPERTIES GENERATED TRUE)
@@ -92,7 +96,7 @@ function (GRPC_GENERATE_CPP_BASE SRCS HDRS MHDRS WITH_MOCK)
             SEND_ERROR
                 "Error: GRPC_GENERATE_CPP_BASE() called without any proto files"
             )
-        return ()
+        return()
     endif ()
 
     set(GRPC_OUT_EXTRA)
@@ -118,12 +122,15 @@ function (GRPC_GENERATE_CPP_BASE SRCS HDRS MHDRS WITH_MOCK)
         get_filename_component(FIL_WE ${FIL} NAME_WE)
 
         # Strip all the prefixes in ${PROTOBUF_IMPORT_DIRS} from the source
-        # proto
-        # directory
+        # proto directory
         set(D ${DIR})
         if (DEFINED PROTOBUF_IMPORT_DIRS)
             foreach (P ${PROTOBUF_IMPORT_DIRS})
-                string(REGEX REPLACE "^${P}" "" T "${D}")
+                string(REGEX
+                       REPLACE "^${P}"
+                               ""
+                               T
+                               "${D}")
                 set(D ${T})
             endforeach ()
         endif ()
@@ -135,15 +142,17 @@ function (GRPC_GENERATE_CPP_BASE SRCS HDRS MHDRS WITH_MOCK)
         list(APPEND ${MHDRS} "${MHDR}")
         add_custom_command(
             OUTPUT "${SRC}" "${HDR}"
-            COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} ARGS
-                    --plugin=protoc-gen-grpc=${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
-                    --grpc_out=${GRPC_OUT_EXTRA}${CMAKE_CURRENT_BINARY_DIR}
-                    --cpp_out=${CMAKE_CURRENT_BINARY_DIR}
-                    ${_protobuf_include_path} ${FIL}
+            COMMAND
+                ${PROTOBUF_PROTOC_EXECUTABLE}
+                ARGS
+                --plugin=protoc-gen-grpc=${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
+                --grpc_out=${GRPC_OUT_EXTRA}${CMAKE_CURRENT_BINARY_DIR}
+                --cpp_out=${CMAKE_CURRENT_BINARY_DIR} ${_protobuf_include_path}
+                                                      ${FIL}
             DEPENDS ${FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
                     ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
             COMMENT "Running gRPC++ protocol buffer compiler on ${FIL}"
-                    VERBATIM)
+            VERBATIM)
     endforeach ()
 
     set_source_files_properties(${${SRCS}} ${${HDRS}} PROPERTIES GENERATED TRUE)

@@ -55,10 +55,13 @@ if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
     execute_process(COMMAND git rev-parse --short HEAD
                     OUTPUT_VARIABLE GIT_HEAD_LOG
                     ERROR_VARIABLE GIT_HEAD_LOG)
-else ()
+else()
     set(GIT_HEAD_LOG "(unknown-git-commit)")
 endif ()
-string(REPLACE "\n" "" GIT_HEAD ${GIT_HEAD_LOG})
+string(REPLACE "\n"
+               ""
+               GIT_HEAD
+               ${GIT_HEAD_LOG})
 string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
@@ -81,17 +84,14 @@ add_library(google_cloud_cpp_common
             log.cc
             version.h)
 target_link_libraries(google_cloud_cpp_common
-                      PUBLIC
-                      Threads::Threads
-                      PRIVATE
-                      google_cloud_cpp_common_options)
+                      PUBLIC Threads::Threads
+                      PRIVATE google_cloud_cpp_common_options)
 target_include_directories(google_cloud_cpp_common
-                           PUBLIC
-                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_common PUBLIC
-                       ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_common
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
@@ -105,9 +105,7 @@ add_library(google_cloud_cpp_testing
             testing_util/init_google_mock.h
             testing_util/init_google_mock.cc)
 target_link_libraries(google_cloud_cpp_testing
-                      PUBLIC
-                      google_cloud_cpp_common
-                      gmock)
+                      PUBLIC google_cloud_cpp_common gmock)
 
 create_bazel_config(google_cloud_cpp_testing)
 
@@ -124,21 +122,26 @@ export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
                      "google_cloud_cpp_common_unit_tests")
 
 foreach (fname ${google_cloud_cpp_common_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-                          PRIVATE
-                          google_cloud_cpp_testing
-                          google_cloud_cpp_common
-                          gmock
-                          google_cloud_cpp_common_options)
+                          PRIVATE google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  google_cloud_cpp_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT google_cloud_cpp_common-targets DESTINATION
-               "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
+install(EXPORT google_cloud_cpp_common-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -148,7 +151,8 @@ install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY . DESTINATION include/google/cloud
-        FILES_MATCHING PATTERN "*.h")
+        FILES_MATCHING
+        PATTERN "*.h")
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/internal/version_info.h DESTINATION
               include/google/cloud/internal)
 
@@ -156,8 +160,9 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/internal/version_info.h DESTINATION
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
-set(GOOGLE_CLOUD_CPP_PC_NAME
-    "Google Cloud C++ Client Library Common Components")
+set(
+    GOOGLE_CLOUD_CPP_PC_NAME "Google Cloud C++ Client Library Common Components"
+    )
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")

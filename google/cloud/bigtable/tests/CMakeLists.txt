@@ -26,29 +26,33 @@ export_list_to_bazel("bigtable_client_integration_tests.bzl"
                      "bigtable_client_integration_tests")
 
 foreach (fname ${bigtable_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-                          PRIVATE
-                          bigtable_client_testing
-                          bigtable_client
-                          bigtable_protos
-                          google_cloud_cpp_testing
-                          google_cloud_cpp_common
-                          gmock
-                          gRPC::grpc++
-                          gRPC::grpc
-                          protobuf::libprotobuf
-                          bigtable_common_options)
+                          PRIVATE bigtable_client_testing
+                                  bigtable_client
+                                  bigtable_protos
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  gRPC::grpc++
+                                  gRPC::grpc
+                                  protobuf::libprotobuf
+                                  bigtable_common_options)
 endforeach ()
 
 add_executable(instance_admin_emulator instance_admin_emulator.cc)
 target_link_libraries(instance_admin_emulator
-                      PRIVATE
-                      bigtable_client
-                      bigtable_protos
-                      gRPC::grpc++
-                      gRPC::grpc
-                      protobuf::libprotobuf
-                      bigtable_common_options)
+                      PRIVATE bigtable_client
+                              bigtable_protos
+                              gRPC::grpc++
+                              gRPC::grpc
+                              protobuf::libprotobuf
+                              bigtable_common_options)

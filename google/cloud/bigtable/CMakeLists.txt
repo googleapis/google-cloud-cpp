@@ -99,12 +99,11 @@ target_link_libraries(bigtable_protos
                       gRPC::grpc
                       protobuf::libprotobuf)
 target_include_directories(bigtable_protos
-                           PUBLIC
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                           $<INSTALL_INTERFACE:include>)
-target_compile_options(bigtable_protos PUBLIC
-                       ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+target_compile_options(bigtable_protos
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
@@ -199,21 +198,18 @@ add_library(bigtable_client
             version.h
             version.cc)
 target_link_libraries(bigtable_client
-                      PUBLIC
-                      bigtable_protos
-                      google_cloud_cpp_common
-                      gRPC::grpc++
-                      gRPC::grpc
-                      protobuf::libprotobuf
-                      PRIVATE
-                      bigtable_common_options)
+                      PUBLIC bigtable_protos
+                             google_cloud_cpp_common
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE bigtable_common_options)
 target_include_directories(bigtable_client
-                           PUBLIC
-                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:include>)
-target_compile_options(bigtable_client PUBLIC
-                       ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+target_compile_options(bigtable_client
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)
@@ -242,15 +238,13 @@ add_library(bigtable_client_testing
             testing/table_test_fixture.h
             testing/table_test_fixture.cc)
 target_link_libraries(bigtable_client_testing
-                      PUBLIC
-                      bigtable_client
-                      bigtable_protos
-                      gmock
-                      gRPC::grpc++
-                      gRPC::grpc
-                      protobuf::libprotobuf
-                      PRIVATE
-                      bigtable_common_options)
+                      PUBLIC bigtable_client
+                             bigtable_protos
+                             gmock
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE bigtable_common_options)
 
 create_bazel_config(bigtable_client_testing)
 
@@ -307,21 +301,26 @@ export_list_to_bazel("bigtable_client_unit_tests.bzl"
 list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
 
 foreach (fname ${bigtable_client_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-                          PRIVATE
-                          bigtable_client_testing
-                          bigtable_client
-                          bigtable_protos
-                          google_cloud_cpp_testing
-                          google_cloud_cpp_common
-                          gmock
-                          gRPC::grpc++
-                          gRPC::grpc
-                          protobuf::libprotobuf
-                          bigtable_common_options)
+                          PRIVATE bigtable_client_testing
+                                  bigtable_client
+                                  bigtable_protos
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  gRPC::grpc++
+                                  gRPC::grpc
+                                  protobuf::libprotobuf
+                                  bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
@@ -359,15 +358,16 @@ install(TARGETS bigtable_protos bigtable_common_options
 # Install proto generated files into include/google.
 install(DIRECTORY ${CMAKE_BINARY_DIR}/google/cloud/bigtable/google/ DESTINATION
                   include/google
-        FILES_MATCHING PATTERN "*.h")
+        FILES_MATCHING
+        PATTERN "*.h")
 
 # The exports can only be installed if all the dependencies are installed. CMake
 # needs to know where the submodules will be installed from,
 if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
 
     # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT bigtable-targets DESTINATION
-                   "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
+    install(EXPORT bigtable-targets
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
 endif ()
 
 install(TARGETS bigtable_client
@@ -376,11 +376,10 @@ install(TARGETS bigtable_client
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY . DESTINATION include/google/cloud/bigtable
-        FILES_MATCHING PATTERN
-                       "*.h"
-                       PATTERN
-                       "testing/*"
-                       EXCLUDE)
+        FILES_MATCHING
+        PATTERN "*.h"
+        PATTERN "testing/*"
+        EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
               include/google/cloud/bigtable)
 
@@ -403,8 +402,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc" DESTINATION
 configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
                "bigtable_client-config-version.cmake" @ONLY)
-install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
-            DESTINATION
-            "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
+              DESTINATION
+              "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")

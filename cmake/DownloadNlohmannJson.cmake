@@ -18,8 +18,9 @@
 # that file.
 set(JSON_URL
     "https://github.com/nlohmann/json/releases/download/v3.1.2/json.hpp")
-set(JSON_SHA256
-    fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733)
+set(
+    JSON_SHA256 fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733
+    )
 message("JSON_URL = ${JSON_URL}")
 message("JSON_SHA256 = ${JSON_SHA256}")
 message("DEST = ${DEST}")

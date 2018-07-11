@@ -55,12 +55,11 @@ configure_file(version_info.h.in version_info.h)
 add_library(firestore_client field_path.h field_path.cc)
 target_link_libraries(firestore_client PUBLIC google_cloud_cpp_common)
 target_include_directories(firestore_client
-                           PUBLIC
-                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:include>)
-target_compile_options(firestore_client PUBLIC
-                       ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+target_compile_options(firestore_client
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(firestore::client ALIAS firestore_client)
 
 include(CreateBazelConfig)
@@ -75,16 +74,21 @@ export_list_to_bazel("firestore_client_unit_tests.bzl"
                      "firestore_client_unit_tests")
 
 foreach (fname ${firestore_client_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-                          PRIVATE
-                          firestore_client
-                          google_cloud_cpp_testing
-                          google_cloud_cpp_common
-                          gmock
-                          firestore_common_options)
+                          PRIVATE firestore_client
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  firestore_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
@@ -106,11 +110,10 @@ install(TARGETS firestore_client
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY . DESTINATION include/google/cloud/firestore
-        FILES_MATCHING PATTERN
-                       "*.h"
-                       PATTERN
-                       "testing/*"
-                       EXCLUDE)
+        FILES_MATCHING
+        PATTERN "*.h"
+        PATTERN "testing/*"
+        EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
               include/google/cloud/firestore)
 
@@ -133,8 +136,8 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc" DESTINATION
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
                "firestore_client-config-version.cmake" @ONLY)
-install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config-version.cmake"
-            DESTINATION
-            ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config-version.cmake"
+          DESTINATION
+          ${CMAKE_INSTALL_DATAROOTDIR}/cmake)

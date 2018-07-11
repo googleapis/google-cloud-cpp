@@ -46,24 +46,27 @@ if (NOT GOOGLE_CLOUD_CPP_GRPC_PROVIDER)
 endif ()
 
 # Create a library with the protos for the test.
-add_custom_command(OUTPUT "echo.pb.h" "echo.pb.cc"
-                   COMMAND "${PROTOBUF_PROTOC_EXECUTABLE}" ARGS
-                           --cpp_out=${CMAKE_CURRENT_BINARY_DIR}
-                           -I${CMAKE_CURRENT_SOURCE_DIR} echo.proto
-                   DEPENDS echo.proto "${PROTOBUF_PROTOC_EXECUTABLE}"
-                   COMMENT
-                       "Running (local) C++ protocol buffer compiler on ${FIL}"
-                       VERBATIM)
+add_custom_command(
+    OUTPUT "echo.pb.h" "echo.pb.cc"
+    COMMAND "${PROTOBUF_PROTOC_EXECUTABLE}"
+            ARGS
+            --cpp_out=${CMAKE_CURRENT_BINARY_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
+                                                  echo.proto
+    DEPENDS echo.proto "${PROTOBUF_PROTOC_EXECUTABLE}"
+    COMMENT "Running (local) C++ protocol buffer compiler on ${FIL}"
+    VERBATIM)
 add_custom_command(
     OUTPUT "echo.grpc.pb.h" "echo.grpc.pb.cc"
-    COMMAND "${PROTOBUF_PROTOC_EXECUTABLE}" ARGS
+    COMMAND "${PROTOBUF_PROTOC_EXECUTABLE}"
+            ARGS
             --plugin=protoc-gen-grpc=${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
             --grpc_out=${CMAKE_CURRENT_BINARY_DIR}
             --cpp_out=${CMAKE_CURRENT_BINARY_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
-            echo.proto
+                                                  echo.proto
     DEPENDS echo.proto "${PROTOBUF_PROTOC_EXECUTABLE}"
             "${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}"
-    COMMENT "Running (local) C++ protocol buffer compiler on ${FIL}" VERBATIM)
+    COMMENT "Running (local) C++ protocol buffer compiler on ${FIL}"
+    VERBATIM)
 add_library(grpc_round_robin_freeze_protos
             "echo.pb.h"
             "echo.pb.cc"
@@ -73,8 +76,8 @@ target_link_libraries(grpc_round_robin_freeze_protos
                       gRPC::grpc++
                       gRPC::grpc
                       protobuf::libprotobuf)
-target_include_directories(grpc_round_robin_freeze_protos PUBLIC
-                           "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(grpc_round_robin_freeze_protos
+                           PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 
 add_executable(grpc_round_robin_freeze_server server.cc)
 target_link_libraries(grpc_round_robin_freeze_server

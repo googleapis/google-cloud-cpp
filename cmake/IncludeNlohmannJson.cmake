@@ -46,5 +46,5 @@ add_dependencies(nlohmann_json nlohmann_json_project)
 target_include_directories(
     nlohmann_json
     INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/external/nlohmann_json/include>
-    $<INSTALL_INTERFACE:include>)
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/external/nlohmann_json/include>
+        $<INSTALL_INTERFACE:include>)

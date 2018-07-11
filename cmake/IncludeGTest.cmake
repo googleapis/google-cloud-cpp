@@ -23,7 +23,5 @@ add_library(gtest
             ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc)
 target_include_directories(
     gtest
-    PUBLIC
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-    PUBLIC
-    ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
+    PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)

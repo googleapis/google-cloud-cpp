@@ -41,20 +41,20 @@ function (set_library_properties_from_pkg_config _target _prefix)
         if (flag MATCHES "^-L(.*)")
             list(APPEND _search_paths ${CMAKE_MATCH_1})
             set(_find_opts HINTS ${_search_paths} NO_DEFAULT_PATH)
-            continue ()
+            continue()
         endif ()
         if (flag MATCHES "^-l(.*)")
             set(_pkg_search "${CMAKE_MATCH_1}")
-        else ()
-            continue ()
+        else()
+            continue()
         endif ()
 
         find_library(pkgcfg_lib_${_prefix}_${_pkg_search}
                      NAMES ${_pkg_search} ${_find_opts})
 
         # Sometimes the library is not found but it is not a problem, for
-        # example, protobuf links -lpthread, but that is not found here
-        # because we explicitly exclude the standard search paths.
+        # example, protobuf links -lpthread, but that is not found here because
+        # we explicitly exclude the standard search paths.
         if (pkgcfg_lib_${_prefix}_${_pkg_search})
             list(APPEND _libs "${pkgcfg_lib_${_prefix}_${_pkg_search}}")
         endif ()
