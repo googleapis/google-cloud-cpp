@@ -33,9 +33,14 @@ find google/cloud -name '*.h' -o -name '*.cc' -print0 \
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-find . \( -path ./.git -prune -o -path ./third_party -prune \
-          -o -path './cmake-build-*' -o -path ./build-output -prune \) \
-     -o \( -name 'CMakeLists.txt' -o -name '*.cmake' \) -print0 \
+find . \( -path ./.git \
+          -o -path ./third_party \
+          -o -path './cmake-build-*' \
+          -o -path ./build-output \
+       \) -prune \
+       -o \( -name 'CMakeLists.txt' \
+             -o -name '*.cmake' \
+          \) -print0 \
      | xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
