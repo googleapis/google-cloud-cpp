@@ -35,13 +35,13 @@ class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
   }
 
   bool IsExhausted() const override {
-    ++is_exhausted_count;
+    ++is_exhausted_call_count;
     return LimitedErrorCountRetryPolicy::IsExhausted();
   }
 
-  static int is_exhausted_count;
+  static int is_exhausted_call_count;
 };
-int ObservableRetryPolicy::is_exhausted_count;
+int ObservableRetryPolicy::is_exhausted_call_count;
 
 class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
  public:
@@ -52,30 +52,30 @@ class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
   }
 
   std::chrono::milliseconds OnCompletion() override {
-    ++on_completion_count;
+    ++on_completion_call_count;
     return ExponentialBackoffPolicy::OnCompletion();
   }
 
-  static int on_completion_count;
+  static int on_completion_call_count;
 };
 
 class ClientTest : public ::testing::Test {
  protected:
   void SetUp() override {
     mock = std::make_shared<testing::MockClient>();
-    ObservableRetryPolicy::is_exhausted_count = 0;
-    ObservableBackoffPolicy::on_completion_count = 0;
+    ObservableRetryPolicy::is_exhausted_call_count = 0;
+    ObservableBackoffPolicy::on_completion_call_count = 0;
   }
   void TearDown() override {
-    ObservableRetryPolicy::is_exhausted_count = 0;
-    ObservableBackoffPolicy::on_completion_count = 0;
+    ObservableRetryPolicy::is_exhausted_call_count = 0;
+    ObservableBackoffPolicy::on_completion_call_count = 0;
     mock.reset();
   }
 
   std::shared_ptr<testing::MockClient> mock;
 };
 
-int ObservableBackoffPolicy::on_completion_count;
+int ObservableBackoffPolicy::on_completion_call_count;
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
@@ -89,8 +89,8 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_count);
-  EXPECT_EQ(0, ObservableBackoffPolicy::on_completion_count);
+  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
+  EXPECT_EQ(0, ObservableBackoffPolicy::on_completion_call_count);
 }
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
@@ -104,8 +104,8 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_count);
-  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_count);
+  EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_call_count);
+  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
 }
 
 TEST_F(ClientTest, OverrideBothPolicies) {
@@ -120,8 +120,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_count);
-  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_count);
+  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
+  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
 }
 
 }  // namespace
