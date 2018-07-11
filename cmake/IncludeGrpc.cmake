@@ -59,11 +59,14 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     add_dependencies(protobuf::libprotobuf protobuf_project)
     set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
     set_library_properties_for_external_project(protobuf::libprotobuf z)
-    set_property(TARGET protobuf::libprotobuf APPEND PROPERTY
-            INTERFACE_LINK_LIBRARIES protobuf::libprotobuf Threads::Threads)
+    set_property(TARGET protobuf::libprotobuf
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
+                          Threads::Threads)
 
     add_library(c-ares::cares INTERFACE IMPORTED)
-    set_library_properties_for_external_project(c-ares::cares cares ALWAYS_SHARED)
+    set_library_properties_for_external_project(c-ares::cares cares
+                                                ALWAYS_SHARED)
     add_dependencies(c-ares::cares c_ares_project)
 
     find_package(OpenSSL REQUIRED)
@@ -71,33 +74,33 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     add_library(gRPC::gpr INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::gpr gpr)
     add_dependencies(gRPC::gpr grpc_project)
-    set_property(TARGET gRPC::gpr APPEND PROPERTY
-            INTERFACE_LINK_LIBRARIES c-ares::cares)
+    set_property(TARGET gRPC::gpr
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES c-ares::cares)
 
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::grpc grpc)
     add_dependencies(gRPC::grpc grpc_project)
-    set_property(TARGET gRPC::grpc APPEND PROPERTY
-            INTERFACE_LINK_LIBRARIES
-                gRPC::gpr
-                OpenSSL::SSL
-                OpenSSL::Crypto
-                protobuf::libprotobuf)
+    set_property(TARGET gRPC::grpc
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          gRPC::gpr
+                          OpenSSL::SSL
+                          OpenSSL::Crypto
+                          protobuf::libprotobuf)
 
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::grpc++ grpc++)
     add_dependencies(gRPC::grpc++ grpc_project)
-    set_property(TARGET gRPC::grpc++ APPEND PROPERTY
-            INTERFACE_LINK_LIBRARIES
-                gRPC::grpc
-                c-ares::cares)
+    set_property(TARGET gRPC::grpc++
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc c-ares::cares)
 
     # Discover the protobuf compiler and the gRPC plugin.
-    set_executable_name_for_external_project(
-            PROTOBUF_PROTOC_EXECUTABLE protoc)
+    set_executable_name_for_external_project(PROTOBUF_PROTOC_EXECUTABLE protoc)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    set_executable_name_for_external_project(
-            PROTOC_GRPCPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+    set_executable_name_for_external_project(PROTOC_GRPCPP_PLUGIN_EXECUTABLE
+                                             grpc_cpp_plugin)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
