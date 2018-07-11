@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/bucket_access_control.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,8 +21,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-/// @test Verify that we parse JSON objects into ObjectAccessControl objects.
-TEST(ObjectAccessControlTest, Parse) {
+/// @test Verify that we parse JSON objects into BucketAccessControl objects.
+TEST(BucketAccessControlTest, Parse) {
   std::string text = R"""({
       "bucket": "foo-bar",
       "domain": "example.com",
@@ -30,17 +30,15 @@ TEST(ObjectAccessControlTest, Parse) {
       "entity": "user-foobar",
       "entityId": "user-foobar-id-123",
       "etag": "XYZ=",
-      "generation": 42,
-      "id": "object-foo-bar-baz-acl-234",
-      "kind": "storage#objectAccessControl",
-      "object": "baz",
+      "id": "bucket-foo-bar-acl-234",
+      "kind": "storage#bucketAccessControl",
       "projectTeam": {
         "projectNumber": "3456789",
         "team": "a-team"
       },
       "role": "OWNER"
 })""";
-  auto actual = ObjectAccessControl::ParseFromString(text);
+  auto actual = BucketAccessControl::ParseFromString(text);
 
   EXPECT_EQ("foo-bar", actual.bucket());
   EXPECT_EQ("example.com", actual.domain());
@@ -48,17 +46,15 @@ TEST(ObjectAccessControlTest, Parse) {
   EXPECT_EQ("user-foobar", actual.entity());
   EXPECT_EQ("user-foobar-id-123", actual.entity_id());
   EXPECT_EQ("XYZ=", actual.etag());
-  EXPECT_EQ(42, actual.generation());
-  EXPECT_EQ("object-foo-bar-baz-acl-234", actual.id());
-  EXPECT_EQ("storage#objectAccessControl", actual.kind());
-  EXPECT_EQ("baz", actual.object());
+  EXPECT_EQ("bucket-foo-bar-acl-234", actual.id());
+  EXPECT_EQ("storage#bucketAccessControl", actual.kind());
   EXPECT_EQ("3456789", actual.project_team().project_number);
   EXPECT_EQ("a-team", actual.project_team().team);
   EXPECT_EQ("OWNER", actual.role());
 }
 
 /// @test Verify that the IOStream operator works as expected.
-TEST(ObjectAccessControlTest, IOStream) {
+TEST(BucketAccessControlTest, IOStream) {
   // The iostream operator is mostly there to support EXPECT_EQ() so it is
   // rarely called, and that breaks our code coverage metrics.
   std::string text = R"""({
@@ -68,10 +64,8 @@ TEST(ObjectAccessControlTest, IOStream) {
       "entity": "user-foobar",
       "entityId": "user-foobar-id-123",
       "etag": "XYZ=",
-      "generation": 42,
-      "id": "object-foo-bar-baz-acl-234",
-      "kind": "storage#objectAccessControl",
-      "object": "baz",
+      "id": "bucket-foo-bar-acl-234",
+      "kind": "storage#bucketAccessControl",
       "projectTeam": {
         "projectNumber": "3456789",
         "team": "a-team"
@@ -79,37 +73,36 @@ TEST(ObjectAccessControlTest, IOStream) {
       "role": "OWNER"
 })""";
 
-  auto meta = ObjectAccessControl::ParseFromString(text);
+  auto meta = BucketAccessControl::ParseFromString(text);
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
   using ::testing::HasSubstr;
-  EXPECT_THAT(actual, HasSubstr("ObjectAccessControl"));
+  EXPECT_THAT(actual, HasSubstr("BucketAccessControl"));
   EXPECT_THAT(actual, HasSubstr("bucket=foo-bar"));
-  EXPECT_THAT(actual, HasSubstr("object=baz"));
-  EXPECT_THAT(actual, HasSubstr("id=object-foo-bar-baz-acl-234"));
+  EXPECT_THAT(actual, HasSubstr("id=bucket-foo-bar-acl-234"));
 }
 
-/// @test Verify ObjectAccessControl::set_entity() works as expected.
-TEST(ObjectAccessControlTest, SetEntity) {
-  ObjectAccessControl tested;
+/// @test Verify BucketAccessControl::set_entity() works as expected.
+TEST(BucketAccessControlTest, SetEntity) {
+  BucketAccessControl tested;
 
   EXPECT_TRUE(tested.entity().empty());
   tested.set_entity("user-foo");
   EXPECT_EQ("user-foo", tested.entity());
 }
 
-/// @test Verify ObjectAccessControl::set_role() works as expected.
-TEST(ObjectAccessControlTest, SetRole) {
-  ObjectAccessControl tested;
+/// @test Verify BucketAccessControl::set_role() works as expected.
+TEST(BucketAccessControlTest, SetRole) {
+  BucketAccessControl tested;
 
   EXPECT_TRUE(tested.role().empty());
-  tested.set_role(ObjectAccessControl::ROLE_READER());
+  tested.set_role(BucketAccessControl::ROLE_READER());
   EXPECT_EQ("READER", tested.role());
 }
 
 /// @test Verify that comparison operators work as expected.
-TEST(ObjectAccessControlTest, Compare) {
+TEST(BucketAccessControlTest, Compare) {
   std::string text = R"""({
       "bucket": "foo-bar",
       "domain": "example.com",
@@ -117,21 +110,19 @@ TEST(ObjectAccessControlTest, Compare) {
       "entity": "user-foobar",
       "entityId": "user-foobar-id-123",
       "etag": "XYZ=",
-      "generation": 42,
-      "id": "object-foo-bar-baz-acl-234",
-      "kind": "storage#objectAccessControl",
-      "object": "baz",
+      "id": "bucket-foo-bar-acl-234",
+      "kind": "storage#bucketAccessControl",
       "projectTeam": {
         "projectNumber": "3456789",
         "team": "a-team"
       },
       "role": "OWNER"
 })""";
-  auto original = ObjectAccessControl::ParseFromString(text);
+  auto original = BucketAccessControl::ParseFromString(text);
   EXPECT_EQ(original, original);
 
   auto modified = original;
-  modified.set_role(ObjectAccessControl::ROLE_READER());
+  modified.set_role(BucketAccessControl::ROLE_READER());
   EXPECT_NE(original, modified);
 }
 
