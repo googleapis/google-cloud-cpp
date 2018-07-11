@@ -113,7 +113,6 @@ add_library(storage_client
             internal/binary_data_as_debug_string.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
-            internal/common_metadata.cc
             internal/credential_constants.h
             internal/curl_handle.h
             internal/curl_handle.cc

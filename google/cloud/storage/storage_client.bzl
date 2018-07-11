@@ -54,7 +54,6 @@ storage_client_SRCS = [
     "credentials.cc",
     "internal/access_control_common.cc",
     "internal/binary_data_as_debug_string.cc",
-    "internal/common_metadata.cc",
     "internal/curl_handle.cc",
     "internal/curl_request.cc",
     "internal/curl_request_builder.cc",

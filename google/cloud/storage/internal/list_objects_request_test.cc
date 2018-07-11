@@ -95,8 +95,8 @@ TEST(ListObjectsResponseTest, Parse) {
 )""";
   text += "[" + object1 + "," + object2 + "]}";
 
-  auto o1 = ObjectMetadata::ParseFromJson(object1);
-  auto o2 = ObjectMetadata::ParseFromJson(object2);
+  auto o1 = ObjectMetadata::ParseFromString(object1);
+  auto o2 = ObjectMetadata::ParseFromString(object2);
 
   auto actual =
       ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});

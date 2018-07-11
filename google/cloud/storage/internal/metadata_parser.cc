@@ -22,30 +22,15 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-CommonMetadata MetadataParser::ParseCommonMetadata(nl::json const& json) {
-  CommonMetadata result{};
-  result.etag_ = json.value("etag", "");
-  result.id_ = json.value("id", "");
-  result.kind_ = json.value("kind", "");
-  result.metageneration_ = ParseLongField(json, "metageneration");
-  result.name_ = json.value("name", "");
-  result.self_link_ = json.value("selfLink", "");
-  result.storage_class_ = json.value("storageClass", "");
-  result.time_created_ = ParseTimestampField(json, "timeCreated");
-  result.updated_ = ParseTimestampField(json, "updated");
-  return result;
-}
-
-std::chrono::system_clock::time_point MetadataParser::ParseTimestampField(
-    storage::internal::nl::json const& json, char const* field_name) {
+std::chrono::system_clock::time_point ParseTimestampField(
+    nl::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return std::chrono::system_clock::time_point{};
   }
-  return storage::internal::ParseRfc3339(json[field_name]);
+  return ParseRfc3339(json[field_name]);
 }
 
-std::int64_t MetadataParser::ParseLongField(
-    storage::internal::nl::json const& json, char const* field_name) {
+std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return 0;
   }
@@ -59,6 +44,24 @@ std::int64_t MetadataParser::ParseLongField(
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::int64_t, json=" << json;
+  google::cloud::internal::RaiseInvalidArgument(os.str());
+}
+
+std::uint64_t ParseUnsignedLongField(nl::json const& json,
+                                     char const* field_name) {
+  if (json.count(field_name) == 0) {
+    return 0;
+  }
+  auto const& f = json[field_name];
+  if (f.is_number()) {
+    return f.get<std::uint64_t>();
+  }
+  if (f.is_string()) {
+    return std::stoull(f.get_ref<std::string const&>());
+  }
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as an std::uint64_t, json=" << json;
   google::cloud::internal::RaiseInvalidArgument(os.str());
 }
 

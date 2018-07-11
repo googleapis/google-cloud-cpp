@@ -43,7 +43,7 @@ TEST(ListObjectsReaderTest, Basic) {
         {"selfLink", link},
         {"kind", "storage#object"},
     };
-    expected.emplace_back(gcs::ObjectMetadata::ParseFromJson(metadata.dump()));
+    expected.emplace_back(gcs::ObjectMetadata::ParseFromJson(metadata));
   }
 
   auto create_mock = [&expected, page_count](int i) {

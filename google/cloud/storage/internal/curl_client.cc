@@ -57,7 +57,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
         ObjectMetadata{});
   }
   return std::make_pair(Status(),
-                        ObjectMetadata::ParseFromJson(payload.payload));
+                        ObjectMetadata::ParseFromString(payload.payload));
 }
 
 std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(

@@ -25,8 +25,7 @@ ObjectAccessControl ObjectAccessControl::ParseFromJson(
   ObjectAccessControl result{};
   static_cast<internal::AccessControlCommon&>(result) =
       internal::AccessControlCommon::ParseFromJson(json);
-  result.generation_ =
-      internal::MetadataParser::ParseLongField(json, "generation");
+  result.generation_ = internal::ParseLongField(json, "generation");
   result.object_ = json.value("object", "");
   return result;
 }
@@ -34,7 +33,7 @@ ObjectAccessControl ObjectAccessControl::ParseFromJson(
 ObjectAccessControl ObjectAccessControl::ParseFromString(
     std::string const& payload) {
   auto json = internal::nl::json::parse(payload);
-  return ObjectAccessControl::ParseFromJson(json);
+  return ParseFromJson(json);
 }
 
 bool ObjectAccessControl::operator==(ObjectAccessControl const& rhs) const {
