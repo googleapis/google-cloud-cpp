@@ -16,9 +16,31 @@ include(GNUInstallDirs)
 
 function (set_library_properties_for_external_project _target _lib)
     cmake_parse_arguments(F_OPT "ALWAYS_SHARED" "" "" ${ARGN})
-    # This is the main disadvantage of external projects. We cannot use the
-    # project's cmake configuration file because they are not installed until
-    # the project is compiled, and this step
+    # This is the main disadvantage of external projects. The typicaly flow with
+    # CMake is:
+    # 1. Configure: cmake discovers where your libraries and dependencies are,
+    #    and it generates Makefiles (or Ninja files or DevStudio files) to
+    #    compile the code.
+    # 2. Compile: cmake compiles your code.
+    #
+    # With external projects the flow is the same, except that step 2 has
+    # additional sub-steps:
+    #
+    # 1. Configure: as above.
+    # 2. Compile:
+    #    2.1: Download any external projects that your code depends on.
+    #    2.2: Compile those external projects.
+    #    2.3: Install those external projects in the ${CMAKE_BINARY_DIR}/...
+    #    2.4: Compile your code.
+    #
+    # We cannot use an external project's cmake configuration file because they
+    # are created and installed until the project is compiled. However, the
+    # CMake configuration phase (step 1 above) is when these configuration files
+    # are needed.  So we have to manually create "IMPORTED" libraries with the
+    # right paths based on where the external dependencies will install them.
+    #
+    # Generally this is possible because we control how the external projects
+    # are compiled.
     if (WIN32)
         set(_libfullname "${CMAKE_STATIC_LIBRARY_PREFIX}${_lib}${CMAKE_LIB}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     elseif ("${BUILD_SHARED_LIBS}" OR "${F_OPT_ALWAYS_SHARED}")
@@ -30,10 +52,10 @@ function (set_library_properties_for_external_project _target _lib)
     # Some libraries always install themselves in the "lib/" directory, while
     # others use "lib64/" if the distributions uses that directory. We just have
     # to "know" how to handle these libraries, if the library was already
-    # installed were installed then we could use FindPackage() and the
-    # *-config.cmake file would have the right information. But the
-    # configuration for external libraries runs before the installation of the
-    # external libraries, so we cannot use FindPackage(). Sigh.
+    # installed then we could use FindPackage() and the *-config.cmake file
+    # would have the right information. But the configuration for external
+    # libraries runs before the installation of the external libraries, so we
+    # cannot use FindPackage(). Sigh.
     set(_libs_always_install_in_libdir "grpc++" "grpc" "gpr" "cares" "z")
 
     if (${_lib} IN_LIST _libs_always_install_in_libdir)
