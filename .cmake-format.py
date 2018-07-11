@@ -1,4 +1,4 @@
-# Copyright 2018 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -12,12 +12,5 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# While it is tempting create these targets using a function or a loop, we want
-# to keep this particular file as simple as possible, as it is intended to be
-# part of the examples.
-
-add_executable(storage_bucket_samples storage_bucket_samples.cc)
-target_link_libraries(storage_bucket_samples storage_client)
-
-add_executable(storage_object_samples storage_object_samples.cc)
-target_link_libraries(storage_object_samples storage_client)
+tab_size = 4
+separate_ctrl_name_with_space = True

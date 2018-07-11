@@ -41,6 +41,7 @@ RUN apt update && \
         make \
         python-gunicorn \
         python-httpbin \
+        python-pip \
         tar \
         wget \
         zlib1g-dev
@@ -55,6 +56,10 @@ RUN if grep -q 18.04 /etc/lsb-release; then \
       update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100; \
       /usr/bin/env GOPATH=/usr go get github.com/bazelbuild/buildtools/buildifier; \
     fi
+
+# Install cmake_format to automatically format the CMake list files.
+#     https://github.com/cheshirekow/cmake_format
+RUN pip install numpy cmake_format
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

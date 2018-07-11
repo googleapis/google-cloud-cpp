@@ -31,6 +31,18 @@ find google/cloud -name '*.h' -print0 \
 find google/cloud -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 sed -i 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g'
 
+# Apply cmake_format to all the CMake list files.
+#     https://github.com/cheshirekow/cmake_format
+find . \( -path ./.git \
+          -o -path ./third_party \
+          -o -path './cmake-build-*' \
+          -o -path ./build-output \
+       \) -prune \
+       -o \( -name 'CMakeLists.txt' \
+             -o -name '*.cmake' \
+          \) -print0 \
+     | xargs -0 cmake-format -i
+
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
