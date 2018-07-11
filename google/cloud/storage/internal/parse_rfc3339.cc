@@ -170,6 +170,8 @@ std::chrono::seconds ParseOffset(char const*& buffer,
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -185,11 +187,11 @@ std::chrono::system_clock::time_point ParseRfc3339(
     std::tm lcl;
 // The standard C++ function to convert time_t to a struct tm is not thread
 // safe (it holds global storage), use some OS specific stuff here:
-#if WIN32
+#if _WIN32
     gmtime_s(&lcl, &now);
 #else
     gmtime_r(&now, &lcl);
-#endif  // WIN32
+#endif  // _WIN32
     return std::chrono::seconds(mktime(&lcl) - now);
   }();
 
@@ -211,3 +213,5 @@ std::chrono::system_clock::time_point ParseRfc3339(
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

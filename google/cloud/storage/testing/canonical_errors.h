@@ -18,6 +18,8 @@
 #include "google/cloud/storage/status.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace storage {
 namespace testing {
 /// Some helper functions to generate canonical errors in the tests.
@@ -27,5 +29,7 @@ inline Status PermanentError() { return Status{404, std::string{"not found"}}; }
 }  // namespace canonical_errors
 }  // namespace testing
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_CANONICAL_ERRORS_H_

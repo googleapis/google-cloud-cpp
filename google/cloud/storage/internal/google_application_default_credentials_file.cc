@@ -35,6 +35,8 @@ std::string const& GoogleCredentialsSuffix() {
 }
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -49,11 +51,12 @@ std::string GoogleApplicationDefaultCredentialsFile() {
   }
   // There are probably more efficient ways to do this, but meh, the strings
   // are typically short, and this does not happen that often.
-  auto root = std::getenv(CREDENTIALS_HOME_VAR);
+  auto root = std::getenv(GoogleApplicationDefaultCredentialsHomeVariable());
   if (root == nullptr) {
     std::ostringstream os;
-    os << "The " << CREDENTIALS_HOME_VAR << " environment variable is not set."
-       << " Cannot determine default path for service account credentials.";
+    os << "The " << GoogleApplicationDefaultCredentialsHomeVariable()
+       << " environment variable is not set. Cannot determine the default"
+       << " path for service account credentials.";
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
   return root + GoogleCredentialsSuffix();
@@ -61,3 +64,5 @@ std::string GoogleApplicationDefaultCredentialsFile() {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

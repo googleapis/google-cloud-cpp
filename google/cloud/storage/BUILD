@@ -13,6 +13,7 @@
 # limitations under the License.
 
 package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
 genrule(
@@ -28,68 +29,94 @@ sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/0/' \
 
 cc_library(
     name = "libcurl",
-    hdrs = [],
     srcs = [],
+    hdrs = [],
     linkopts = [
-        # TODO() - will not work with MSVC.
+        # TODO(#666) - will not work with MSVC.
         "-lcurl",
+    ],
+)
+
+cc_library(
+    name = "libopenssl",
+    srcs = [],
+    hdrs = [],
+    linkopts = [
+        # TODO(#666) - will not work with MSVC.
+        "-lssl",
+    ],
+)
+
+cc_library(
+    name = "libcrypto",
+    srcs = [],
+    hdrs = [],
+    linkopts = [
+        # TODO(#666) - will not work with MSVC.
+        "-lcrypto",
     ],
 )
 
 genrule(
     name = "nlohmann_json_include_hierarchy",
-    srcs = [ "@com_github_nlohmann_json_single_header//file" ],
-    outs = [ "nlohmann/json.hpp", ],
+    srcs = ["@com_github_nlohmann_json_single_header//file"],
+    outs = ["nlohmann/json.hpp"],
     cmd = "cp $< $@ && echo GENDIR=$(GENDIR) @=$(@) S=$<",
 )
 
 cc_library(
     name = "nlohmann_json",
-    hdrs = [ ":nlohmann_json_include_hierarchy" ],
-    includes = [ "." ],
+    hdrs = [":nlohmann_json_include_hierarchy"],
+    includes = ["."],
     deps = [],
 )
 
-load(":storage_client.bzl", "storage_client_SRCS", "storage_client_HDRS")
+load(":storage_client.bzl", "storage_client_HDRS", "storage_client_SRCS")
+
 cc_library(
     name = "storage_client",
     srcs = storage_client_SRCS,
-    hdrs = storage_client_HDRS + [ "version_info.h" ],
+    hdrs = storage_client_HDRS + ["version_info.h"],
     deps = [
-        ":nlohmann_json",
+        ":libcrypto",
         ":libcurl",
+        ":libopenssl",
+        ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
     ],
 )
 
-load(":storage_client_testing.bzl", "storage_client_testing_SRCS", "storage_client_testing_HDRS")
+load(":storage_client_testing.bzl", "storage_client_testing_HDRS", "storage_client_testing_SRCS")
+
 cc_library(
     name = "storage_client_testing",
     srcs = storage_client_testing_SRCS,
     hdrs = storage_client_testing_HDRS,
     deps = [
-        ":storage_client",
-        ":nlohmann_json",
         ":libcurl",
+        ":nlohmann_json",
+        ":storage_client",
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
     ],
 )
 
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
+
 [cc_test(
-    name = "storage_client_" + test.replace('/', '_').replace('.cc', ''),
+    name = "storage_client_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    # TODO(#664 / #666) - use the right condition when porting Bazel builds
+    linkopts = ["-lpthread"],
     deps = [
-        ":storage_client_testing",
-        ":storage_client",
-        ":nlohmann_json",
         ":libcurl",
+        ":nlohmann_json",
+        ":storage_client",
+        ":storage_client_testing",
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
-    # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = [ "-lpthread" ],
 ) for test in storage_client_unit_tests]

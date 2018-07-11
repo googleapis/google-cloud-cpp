@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/raw_client.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -30,7 +32,7 @@ namespace internal {
  * TODO(#717) - document the CurlRequest interface as a concept.
  */
 template <typename HttpRequest = CurlRequest>
-class DefaultClient : public Client {
+class DefaultClient : public RawClient {
  public:
   explicit DefaultClient(std::shared_ptr<Credentials> credentials)
       : DefaultClient(ClientOptions(std::move(credentials))) {}
@@ -41,13 +43,15 @@ class DefaultClient : public Client {
         options_.endpoint() + "/upload/storage/" + options_.version();
   }
 
+  ClientOptions const& client_options() const override { return options_; }
+
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override {
     // Assume the bucket name is validated by the caller.
     HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name());
     request.AddParametersToHttpRequest(http_request);
     http_request.AddHeader(options_.credentials()->AuthorizationHeader());
-    http_request.PrepareRequest(std::string{});
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
@@ -70,7 +74,8 @@ class DefaultClient : public Client {
     http_request.AddHeader("Content-Type: application/octet-stream");
     http_request.AddHeader("Content-Length: " +
                            std::to_string(request.contents().size()));
-    http_request.PrepareRequest(std::move(request.contents()));
+    http_request.PrepareRequest(std::move(request.contents()),
+                                options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
     if (200 != payload.status_code) {
       return std::make_pair(
@@ -97,9 +102,9 @@ class DefaultClient : public Client {
     http_request.AddHeader("Cache-Control: no-transform");
     http_request.AddHeader("Range: bytes=" + std::to_string(request.begin()) +
                            '-' + std::to_string(request.end()));
-    http_request.PrepareRequest(std::string{});
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
     auto payload = http_request.MakeRequest();
-    if (200 != payload.status_code) {
+    if (payload.status_code >= 300) {
       return std::make_pair(
           Status{payload.status_code, std::move(payload.payload)},
           internal::ReadObjectRangeResponse{});
@@ -107,6 +112,44 @@ class DefaultClient : public Client {
     return std::make_pair(Status(),
                           internal::ReadObjectRangeResponse::FromHttpResponse(
                               std::move(payload)));
+  }
+
+  std::pair<Status, internal::ListObjectsResponse> ListObjects(
+      internal::ListObjectsRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddQueryParameter("pageToken", request.page_token());
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
+    auto payload = http_request.MakeRequest();
+    if (200 != payload.status_code) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          internal::ListObjectsResponse{});
+    }
+    return std::make_pair(
+        Status(),
+        internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
+  }
+
+  std::pair<Status, internal::EmptyResponse> DeleteObject(
+      internal::DeleteObjectRequest const& request) override {
+    // Assume the bucket name is validated by the caller.
+    HttpRequest http_request(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
+    request.AddParametersToHttpRequest(http_request);
+    http_request.AddHeader(options_.credentials()->AuthorizationHeader());
+    http_request.PrepareRequest(std::string{}, options_.enable_http_tracing());
+    http_request.SetMethod("DELETE");
+    auto payload = http_request.MakeRequest();
+    if (payload.status_code >= 300) {
+      return std::make_pair(
+          Status{payload.status_code, std::move(payload.payload)},
+          internal::EmptyResponse{});
+    }
+    return std::make_pair(Status(), internal::EmptyResponse{});
   }
 
  private:
@@ -118,5 +161,7 @@ class DefaultClient : public Client {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DEFAULT_CLIENT_H_

@@ -36,7 +36,7 @@ run_all_bucket_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly BUCKET_EXAMPLES_COMMANDS="get-metadata insert-object"
+  readonly BUCKET_EXAMPLES_COMMANDS="get-bucket-metadata list-objects"
 
   if [ ! -x storage_bucket_samples ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
@@ -48,16 +48,8 @@ run_all_bucket_examples() {
     log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         "storage_bucket_samples ${example} running"
-    case ${example} in
-        insert-object)
-            parameters="${object_name} a-short-string-to-put-in-the-object"
-            ;;
-        *)
-            parameters=""
-            ;;
-    esac
     ./storage_bucket_samples \
-        ${example} "${bucket_name}" ${parameters} >"${log}" 2>&1 </dev/null
+        ${example} "${bucket_name}" >"${log}" 2>&1 </dev/null
     if [ $? = 0 ]; then
       echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example}"
       continue
@@ -89,6 +81,73 @@ run_all_bucket_examples() {
 }
 
 ################################################
+# Run all Object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_object_examples() {
+  local bucket_name=$1
+  shift
+
+  # The list of commands in the storage_bucket_samples program that we will
+  # test. Currently get-metadata assumes that $bucket_name is already created.
+  readonly OBJECT_EXAMPLES_COMMANDS="insert-object read-object delete-object"
+
+  if [ ! -x storage_object_samples ]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " storage_object_samples is not compiled"
+    return
+  fi
+  local object_name="object-$(date +%s)"
+  for example in ${OBJECT_EXAMPLES_COMMANDS}; do
+    log="$(mktemp --tmpdir "storage_object_samples.XXXXXXXXXX.log")"
+    echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        "storage_object_samples ${example} running"
+    case ${example} in
+        insert-object)
+            parameters="${object_name} a-short-string-to-put-in-the-object"
+            ;;
+        *)
+            parameters="${object_name}"
+            ;;
+    esac
+    ./storage_object_samples \
+        ${example} "${bucket_name}" ${parameters} >"${log}" 2>&1 </dev/null
+    if [ $? = 0 ]; then
+      echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example}"
+      continue
+    else
+      echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example}"
+      echo
+      echo "================ [begin ${log}] ================"
+      cat "${log}"
+      echo "================ [end ${log}] ================"
+    fi
+    /bin/rm -f "${log}"
+  done
+
+  log="$(mktemp --tmpdir "storage_object_samples.XXXXXXXXXX.log")"
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+      "storage_object_samples with no command running"
+  ./storage_object_samples >"${log}" 2>&1 </dev/null
+  # Note the inverted test, this is supposed to exit with 1.
+  if [ $? != 0 ]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} (no command)"
+  else
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} (no command)"
+    echo
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+  fi
+  /bin/rm -f "${log}"
+}
+
+################################################
 # Run all the examples.
 # Globals:
 #   BUCKET_NAME: the name of the bucket to use in the examples.
@@ -103,6 +162,7 @@ run_all_storage_examples() {
       " Running Google Cloud Storage Examples"
   set +e
   run_all_bucket_examples "${BUCKET_NAME}"
+  run_all_object_examples "${BUCKET_NAME}"
   set -e
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"

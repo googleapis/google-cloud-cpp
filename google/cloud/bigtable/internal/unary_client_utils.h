@@ -172,15 +172,15 @@ struct UnaryClientUtils {
     typename CheckSignature<MemberFunction>::ResponseType response;
     do {
       grpc::ClientContext client_context;
-      rpc_policy.setup(client_context);
-      backoff_policy.setup(client_context);
-      metadata_update_policy.setup(client_context);
+      rpc_policy.Setup(client_context);
+      backoff_policy.Setup(client_context);
+      metadata_update_policy.Setup(client_context);
       // Call the pointer to member function.
       status = (client.*function)(&client_context, request, &response);
       if (status.ok()) {
         break;
       }
-      if (not rpc_policy.on_failure(status)) {
+      if (not rpc_policy.OnFailure(status)) {
         std::string full_message = error_message;
         full_message += "(" + metadata_update_policy.value() + ") ";
         full_message += status.error_message();
@@ -188,7 +188,7 @@ struct UnaryClientUtils {
                               status.error_details());
         break;
       }
-      auto delay = backoff_policy.on_completion(status);
+      auto delay = backoff_policy.OnCompletion(status);
       std::this_thread::sleep_for(delay);
     } while (retry_on_failure);
     return response;
@@ -232,8 +232,8 @@ struct UnaryClientUtils {
     grpc::ClientContext client_context;
 
     // Policies can set timeouts so allowing them to update context
-    rpc_policy->setup(client_context);
-    metadata_update_policy.setup(client_context);
+    rpc_policy->Setup(client_context);
+    metadata_update_policy.Setup(client_context);
     // Call the pointer to member function.
     status = (client.*function)(&client_context, request, &response);
 

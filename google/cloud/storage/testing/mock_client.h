@@ -15,20 +15,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
 namespace storage {
 namespace testing {
 
-class MockClient : public storage::Client {
+class MockClient : public google::cloud::storage::internal::RawClient {
  public:
   // The MOCK_* macros get confused if the return type is a compound template
   // with a comma, that is because Foo<T,R> looks like two arguments to the
   // preprocessor, but Foo<R> will look like a single argument.
   template <typename R>
-  using ResponseWrapper = std::pair<storage::Status, R>;
+  using ResponseWrapper = std::pair<google::cloud::storage::Status, R>;
 
+  MOCK_CONST_METHOD0(client_options, ClientOptions const&());
   MOCK_METHOD1(GetBucketMetadata,
                ResponseWrapper<storage::BucketMetadata>(
                    internal::GetBucketMetadataRequest const&));
@@ -38,8 +41,14 @@ class MockClient : public storage::Client {
   MOCK_METHOD1(ReadObjectRangeMedia,
                ResponseWrapper<internal::ReadObjectRangeResponse>(
                    internal::ReadObjectRangeRequest const&));
+  MOCK_METHOD1(ListObjects, ResponseWrapper<internal::ListObjectsResponse>(
+                                internal::ListObjectsRequest const&));
+  MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(
+                                 internal::DeleteObjectRequest const&));
 };
 }  // namespace testing
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_

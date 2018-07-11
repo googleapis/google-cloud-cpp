@@ -59,7 +59,6 @@ struct SafeGrpcRetry {
  * prototype to create new RPCRetryPolicy objects of the same
  * (dynamic) type and with the same initial state.
  *
- * TODO(#740) - fix the snake_case member function names.
  */
 class RPCRetryPolicy {
  public:
@@ -78,14 +77,14 @@ class RPCRetryPolicy {
   /**
    * Update the ClientContext for the next call.
    */
-  virtual void setup(grpc::ClientContext& context) const = 0;
+  virtual void Setup(grpc::ClientContext& context) const = 0;
 
   /**
    * Handle an RPC failure.
    *
    * @return true if the RPC operation should be retried.
    */
-  virtual bool on_failure(grpc::Status const& status) = 0;
+  virtual bool OnFailure(grpc::Status const& status) = 0;
 
   static bool IsPermanentFailure(grpc::Status const& status) {
     return SafeGrpcRetry::IsPermanentFailure(status);
@@ -104,8 +103,8 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
       : impl_(maximum_failures) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
-  void setup(grpc::ClientContext& context) const override;
-  bool on_failure(grpc::Status const& status) override;
+  void Setup(grpc::ClientContext& context) const override;
+  bool OnFailure(grpc::Status const& status) override;
 
  private:
   using Impl =
@@ -125,8 +124,8 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
       : impl_(maximum_duration) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
-  void setup(grpc::ClientContext& context) const override;
-  bool on_failure(grpc::Status const& status) override;
+  void Setup(grpc::ClientContext& context) const override;
+  bool OnFailure(grpc::Status const& status) override;
 
  private:
   using Impl = google::cloud::internal::LimitedTimeRetryPolicy<grpc::Status,

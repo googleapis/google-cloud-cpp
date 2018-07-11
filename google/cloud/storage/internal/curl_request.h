@@ -22,6 +22,8 @@
 #include <curl/curl.h>
 #include <map>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -58,8 +60,12 @@ class CurlRequest {
    * Make a request with the given payload.
    *
    * @param payload The contents of the request.
+   * @param enable_logging if true, log the traffic in plain text.
    */
-  void PrepareRequest(std::string payload);
+  void PrepareRequest(std::string payload, bool enable_logging);
+
+  /// Change the http method used for this request
+  void SetMethod(std::string const& method);
 
   /**
    * Make the prepared request.
@@ -95,6 +101,7 @@ class CurlRequest {
   CURL* curl_;
   curl_slist* headers_;
   std::string payload_;
+  std::string debug_buffer_;
 
   CurlBuffer response_payload_;
   CurlHeaders response_headers_;
@@ -103,5 +110,7 @@ class CurlRequest {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_

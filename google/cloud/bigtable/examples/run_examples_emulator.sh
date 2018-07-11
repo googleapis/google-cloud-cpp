@@ -31,16 +31,17 @@ readonly ZONE_ID="fake-zone"
 
 # The examples are noisy,
 for example in instance_admin table_admin data; do
-  LOG=$(mktemp --tmpdir "bigtable_examples_${example}_XXXXXXXXXX.log")
+  log=$(mktemp --tmpdir "bigtable_examples_${example}_XXXXXXXXXX.log")
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${example}"
-  run_all_${example}_examples "${PROJECT_ID}" "${ZONE_ID}" >${LOG} 2>&1 </dev/null
+  run_all_${example}_examples "${PROJECT_ID}" "${ZONE_ID}" >${log} 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example} examples"
   else
     echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example} examples"
     echo
-    echo "================ ${LOG} ================"
-    cat ${LOG}
-    echo "================ ${LOG} ================"
+    echo "================ ${log} ================"
+    cat ${log}
+    echo "================ ${log} ================"
   fi
+  /bin/rm "${log}"
 done

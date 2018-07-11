@@ -15,6 +15,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include <gmock/gmock.h>
 
+namespace storage = google::cloud::storage;
+
 /// @test Verify that we parse JSON objects into ObjectMetadata objects.
 TEST(ObjectMetadataTest, Parse) {
   std::string text = R"""({

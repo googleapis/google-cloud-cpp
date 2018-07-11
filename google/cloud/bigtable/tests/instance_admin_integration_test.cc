@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -205,8 +206,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateClusterTest) {
       instance_admin_->CreateInstance(instance_config).get();
   auto clusters_before = instance_admin_->ListClusters(id);
   bigtable::ClusterId cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
+  auto location = "us-central1-b";
   auto cluster_config =
       bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -283,8 +283,7 @@ TEST_F(InstanceAdminIntegrationTest, UpdateClusterTest) {
   auto clusters_before = instance_admin_->ListClusters(id);
 
   bigtable::ClusterId another_cluster_id(id + "-cl2");
-  auto location =
-      "projects/" + instance_admin_->project_id() + "/locations/us-central1-b";
+  auto location = "us-central1-b";
   auto cluster_config =
       bigtable::ClusterConfig(location, 3, bigtable::ClusterConfig::HDD);
   auto cluster_before =
@@ -391,8 +390,92 @@ TEST_F(InstanceAdminIntegrationTest, DeleteClustersTest) {
   EXPECT_EQ(1U, clusters_after.size());
 }
 
+/// @test Verify that AppProfile CRUD operations work as expected.
+TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto instance_config = IntegrationTestConfig(
+      instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto future = instance_admin_->CreateInstance(instance_config);
+  // Wait for instance creation
+  ASSERT_THAT(future.get().name(), HasSubstr(instance_id));
+
+  std::string id1 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string id2 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
+
+  // Simplify writing the rest of the test.
+  auto count_matching_profiles =
+      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
+        std::string suffix = "/appProfiles/" + id;
+        return std::count_if(
+            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
+              return std::string::npos != x.name().find(suffix);
+            });
+      };
+
+  EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
+
+  auto profile_1 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id1)));
+  auto profile_2 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id2)));
+
+  auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  auto detail_1 = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
+  EXPECT_EQ(detail_1.name(), profile_1.name());
+  EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_1.name(), HasSubstr(id1));
+
+  auto detail_2 = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  EXPECT_EQ(detail_2.name(), profile_2.name());
+  EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_2.name(), HasSubstr(id2));
+
+  auto profile_updated_future = instance_admin_->UpdateAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      bigtable::AppProfileUpdateConfig().set_description("new description"));
+
+  auto update_2 = profile_updated_future.get();
+  auto detail_2_after_update = instance_admin_->GetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  EXPECT_EQ("new description", update_2.description());
+  EXPECT_EQ("new description", detail_2_after_update.description());
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id1), true);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id2), false);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
+
+  instance_admin_->DeleteInstance(instance_id);
+}
+
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   if (argc != 2) {
     std::string const cmd = argv[0];

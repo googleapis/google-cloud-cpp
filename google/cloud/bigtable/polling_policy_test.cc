@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <thread>
@@ -37,43 +38,13 @@ auto const kLimitedTimeTolerance = 10_ms;
  * This eliminates some amount of code duplication in the following tests.
  */
 void CheckLimitedTime(bigtable::PollingPolicy& tested) {
-  auto start = std::chrono::system_clock::now();
-  // This is one of those tests that can get annoyingly flaky, it is based on
-  // time.  Basically we want to know that the policy will accept failures
-  // until around its prescribed deadline (50ms in this test).  Instead of
-  // measuring for *exactly* 50ms, we pass the test if:
-  //   - All calls to IsPermanentError() in the first 50ms - 10ms rejected.
-  //   - Calls to IsPermanentError() after 50ms + 10ms are passed.
-  //   - We do not care about the results from 40ms to 60ms.
-  // I know 10ms feels like a long time, but it is not on a loaded VM running
-  // the tests inside some container.
-  // There is one case observed in this which will cause the result fail.
-  //   - Due to server overload if there is a delay between "OnFailure" and
-  //       "now" statement execution then test case may fail. Due to this
-  //       reason we are checking the timestamp before OnFailure and with
-  //       now and both should satify the criteria of the value of "actual"
-  auto must_be_true_before =
-      start + kLimitedTimeTestPeriod - kLimitedTimeTolerance;
-  auto must_be_false_after =
-      start + kLimitedTimeTestPeriod + kLimitedTimeTolerance;
-  int true_counter = 0;
-  int false_counter = 0;
-  for (int i = 0; i != 100; ++i) {
-    auto new_start = std::chrono::system_clock::now();
-    auto actual = tested.OnFailure(
-        grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
-    auto now = std::chrono::system_clock::now();
-    if (new_start < must_be_true_before and now < must_be_true_before) {
-      EXPECT_TRUE(actual);
-      ++true_counter;
-    } else if (must_be_false_after < new_start and must_be_false_after < now) {
-      EXPECT_FALSE(actual);
-      ++false_counter;
-    }
-    std::this_thread::sleep_for(1_ms);
-  }
-  EXPECT_LE(0, true_counter);
-  EXPECT_LE(0, false_counter);
+  google::cloud::testing_util::CheckPredicateBecomesFalse(
+      [&tested] {
+        return tested.OnFailure(
+            grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
+      },
+      std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
+      kLimitedTimeTolerance);
 }
 
 }  // anonymous namespace

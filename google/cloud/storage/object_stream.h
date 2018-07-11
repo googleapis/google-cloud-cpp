@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <iostream>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -30,7 +32,7 @@ class ObjectReadStreamBuf : public std::basic_streambuf<char> {
     RepositionInputSequence();
   }
 
-  explicit ObjectReadStreamBuf(std::shared_ptr<Client> client,
+  explicit ObjectReadStreamBuf(std::shared_ptr<internal::RawClient> client,
                                internal::ReadObjectRangeRequest request)
       : std::basic_streambuf<char>(),
         client_(std::move(client)),
@@ -74,7 +76,7 @@ class ObjectReadStreamBuf : public std::basic_streambuf<char> {
   int_type RepositionInputSequence();
 
  private:
-  std::shared_ptr<Client> client_;
+  std::shared_ptr<internal::RawClient> client_;
   internal::ReadObjectRangeRequest request_;
   internal::ReadObjectRangeResponse response_;
 };
@@ -101,7 +103,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    * @param request an initialized request to read data. If no range is
    *     specified in this request then this reads the full object.
    */
-  ObjectReadStream(std::shared_ptr<Client> client,
+  ObjectReadStream(std::shared_ptr<internal::RawClient> client,
                    internal::ReadObjectRangeRequest request)
       : std::basic_istream<char>(&buf_),
         buf_(std::move(client), std::move(request)) {}
@@ -125,5 +127,7 @@ class ObjectReadStream : public std::basic_istream<char> {
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_

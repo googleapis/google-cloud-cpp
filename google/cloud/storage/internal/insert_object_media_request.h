@@ -18,6 +18,8 @@
 #include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -27,10 +29,10 @@ namespace internal {
  * TODO(#710) - add missing request parameters.
  */
 class InsertObjectMediaRequest
-    : private RequestParameters<Generation, IfGenerationMatch,
-                                IfGenerationNotMatch, IfMetaGenerationMatch,
-                                IfMetaGenerationNotMatch, Projection,
-                                UserProject> {
+    : public GenericRequest<InsertObjectMediaRequest, Generation,
+                            IfGenerationMatch, IfGenerationNotMatch,
+                            IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+                            Projection, UserProject> {
  public:
   InsertObjectMediaRequest() = default;
   explicit InsertObjectMediaRequest(std::string bucket_name,
@@ -56,54 +58,17 @@ class InsertObjectMediaRequest
     return *this;
   }
 
-  /**
-   * Set a single optional parameter.
-   *
-   * @tparam Parameter the type of the parameter.
-   * @param p the parameter value.
-   * @return a reference to this object for chaining.
-   */
-  template <typename Parameter>
-  InsertObjectMediaRequest& set_parameter(Parameter&& p) {
-    RequestParameters::set_parameter(std::forward<Parameter>(p));
-    return *this;
-  }
-
-  /**
-   * Change one or more parameters for the request.
-   *
-   * This is a shorthand to replace:
-   *
-   * @code
-   * request.set_parameter(m1).set_parameter(m2).set_parameter(m3)
-   * @endcode
-   *
-   * with:
-   *
-   * @code
-   * request.set_multiple_parameters(m1, m2, m3)
-   * @endcode
-
-   * @tparam Parameters the type of the parameters
-   * @param p the parameter values
-   * @return The object after all the parameters have been changed.
-   */
-  template <typename... Parameters>
-  InsertObjectMediaRequest& set_multiple_parameters(Parameters&&... p) {
-    RequestParameters::set_multiple_parameters(std::forward<Parameters>(p)...);
-    return *this;
-  }
-
-  /// Set any parameters in a HttpRequest object.
-  using RequestParameters::AddParametersToHttpRequest;
-
  private:
   std::string bucket_name_;
   std::string object_name_;
   std::string contents_;
 };
+
+std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_INSERT_OBJECT_MEDIA_REQUEST_H_

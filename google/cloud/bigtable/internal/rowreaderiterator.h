@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H_
 
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/internal/optional.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <iterator>
 
@@ -28,48 +29,11 @@ class RowReader;
 
 namespace internal {
 /**
- * A poor's man version of std::optional<Row>.
- *
- * This project needs to support C++11 and C++14, so std::optional<> is not
- * available.  We cannot use Abseil either, see #232 for the reasons.
- * So we implement a very minimal "OptionalRow" class that documents the intent
- * and we will remove it when possible.
+ * An optional row value.
  *
  * TODO(#277) - replace with absl::optional<> or std::optional<> when possible.
  */
-class OptionalRow {
- public:
-  OptionalRow() : row_(std::string(), {}), has_row_(false) {}
-
-  Row* get() { return &row_; }
-  Row const* get() const { return &row_; }
-
-  Row& value() {
-    if (not has_row_) {
-      google::cloud::internal::RaiseLogicError("access unset OptionalRow");
-    }
-    return row_;
-  }
-  Row const& value() const {
-    if (not has_row_) {
-      google::cloud::internal::RaiseLogicError("access unset OptionalRow");
-    }
-    return row_;
-  }
-
-  operator bool() const { return has_row_; }
-  bool has_value() const { return has_row_; }
-
-  void reset() { has_row_ = false; }
-  void emplace(Row&& row) {
-    has_row_ = true;
-    row_ = std::move(row);
-  }
-
- private:
-  Row row_;
-  bool has_row_;
-};
+using OptionalRow = google::cloud::internal::optional<Row>;
 
 /**
  * The input iterator used to scan the rows in a RowReader.
@@ -85,14 +49,18 @@ class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
     return tmp;
   }
 
-  Row const* operator->() const { return row_.get(); }
-  Row* operator->() { return row_.get(); }
+  Row const* operator->() const { return row_.operator->(); }
+  Row* operator->() { return row_.operator->(); }
 
-  Row const& operator*() const& { return row_.value(); }
-  Row& operator*() & { return row_.value(); }
-  Row const&& operator*() const&& { return std::move(row_.value()); }
-  Row&& operator*() && { return std::move(row_.value()); }
-
+  Row const& operator*() const& { return *row_; }
+  Row& operator*() & { return *row_; }
+#if !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 8)
+  // Exclude this function for gcc-4.8. While we do not support gcc-4.8, we have
+  // made an exception here because the TensorFlow folks need it.
+  Row const&& operator*() const&& { return *std::move(row_); }
+#endif  // !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 &&
+        // __GNUC_MINOR__ > 8)
+  Row&& operator*() && { return *std::move(row_); }
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
     return owner_ == that.owner_ and row_.has_value() == that.row_.has_value();

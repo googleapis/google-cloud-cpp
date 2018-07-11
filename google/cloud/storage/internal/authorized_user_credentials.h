@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
 
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include <chrono>
 #include <condition_variable>
@@ -23,25 +24,18 @@
 #include <mutex>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/// The endpoint to create an access token from.
-constexpr static char GOOGLE_OAUTH_REFRESH_ENDPOINT[] =
-    "https://accounts.google.com/o/oauth2/token";
-
-/// Start refreshing tokens as soon as only this percent of their TTL is left.
-constexpr static auto REFRESH_TIME_SLACK_PERCENT = 5;
-/// Minimum time before the token expiration to start refreshing tokens.
-constexpr static auto REFRESH_TIME_SLACK_MIN = std::chrono::seconds(10);
-
 /**
  * A C++ wrapper for Google's Authorized User Credentials.
  *
  * Takes a JSON object with the authorized user client id, secret, and access
  * token and uses Google's OAuth2 service to obtain an access token.
  *
- * @par Warning
+ * @warning
  * The current implementation is a placeholder to unblock development of the
  * Google Cloud Storage client libraries. There is substantial work needed
  * before this class is complete, in fact, we do not even have a complete set of
@@ -57,7 +51,7 @@ template <typename HttpRequestType = CurlRequest>
 class AuthorizedUserCredentials : public storage::Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents)
-      : AuthorizedUserCredentials(contents, GOOGLE_OAUTH_REFRESH_ENDPOINT) {}
+      : AuthorizedUserCredentials(contents, GoogleOAuthRefreshEndpoint()) {}
 
   explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string oauth_server)
@@ -70,7 +64,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     payload += requestor_.MakeEscapedString(credentials["client_secret"]).get();
     payload += "&refresh_token=";
     payload += requestor_.MakeEscapedString(credentials["refresh_token"]).get();
-    requestor_.PrepareRequest(std::move(payload));
+    requestor_.PrepareRequest(std::move(payload), false);
   }
 
   std::string AuthorizationHeader() override {
@@ -97,18 +91,14 @@ class AuthorizedUserCredentials : public storage::Credentials {
     header += access_token["access_token"].get_ref<std::string const&>();
     std::string new_id = access_token["id_token"];
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
-    auto slack = expires_in * REFRESH_TIME_SLACK_PERCENT / 100;
-    if (slack < REFRESH_TIME_SLACK_MIN) {
-      slack = REFRESH_TIME_SLACK_MIN;
-    }
-    auto new_expiration = std::chrono::system_clock::now() + expires_in - slack;
+    auto new_expiration = std::chrono::system_clock::now() + expires_in -
+                          GoogleOAuthTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;
     return true;
   }
 
- private:
   HttpRequestType requestor_;
   std::mutex mu_;
   std::condition_variable cv_;
@@ -119,5 +109,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_

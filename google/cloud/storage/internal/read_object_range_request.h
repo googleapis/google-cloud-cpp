@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -26,9 +28,10 @@ namespace internal {
  * Request a range of object data.
  */
 class ReadObjectRangeRequest
-    : private RequestParameters<Generation, IfGenerationMatch,
-                                IfGenerationNotMatch, IfMetaGenerationMatch,
-                                IfMetaGenerationNotMatch, UserProject> {
+    : public GenericRequest<ReadObjectRangeRequest, Generation,
+                            IfGenerationMatch, IfGenerationNotMatch,
+                            IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+                            UserProject> {
  public:
   ReadObjectRangeRequest() = default;
 
@@ -73,26 +76,14 @@ class ReadObjectRangeRequest
     return *this;
   }
 
-  template <typename Parameter>
-  ReadObjectRangeRequest& set_parameter(Parameter&& p) {
-    RequestParameters::set_parameter(std::forward<Parameter>(p));
-    return *this;
-  }
-
-  template <typename... Parameters>
-  ReadObjectRangeRequest& set_multiple_parameters(Parameters&&... p) {
-    RequestParameters::set_multiple_parameters(std::forward<Parameters>(p)...);
-    return *this;
-  }
-
-  using RequestParameters::AddParametersToHttpRequest;
-
  private:
   std::string bucket_name_;
   std::string object_name_;
   std::int64_t begin_;
   std::int64_t end_;
 };
+
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
 
 struct ReadObjectRangeResponse {
   std::string contents;
@@ -103,8 +94,11 @@ struct ReadObjectRangeResponse {
   static ReadObjectRangeResponse FromHttpResponse(HttpResponse&& response);
 };
 
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_READ_OBJECT_RANGE_REQUEST_H_

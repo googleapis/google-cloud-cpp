@@ -90,6 +90,18 @@ include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
+add_library(google_cloud_cpp_testing
+    testing_util/check_predicate_becomes_false.h
+    testing_util/environment_variable_restore.h
+    testing_util/environment_variable_restore.cc
+    testing_util/custom_google_mock_main.cc
+    testing_util/init_google_mock.h
+    testing_util/init_google_mock.cc)
+target_link_libraries(google_cloud_cpp_testing PUBLIC
+    google_cloud_cpp_common gmock)
+
+create_bazel_config(google_cloud_cpp_testing)
+
 set(google_cloud_cpp_common_unit_tests
     internal/backoff_policy_test.cc
     internal/optional_test.cc
@@ -107,7 +119,10 @@ foreach (fname ${google_cloud_cpp_common_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-        google_cloud_cpp_common gmock google_cloud_cpp_common_options)
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
+            gmock
+            google_cloud_cpp_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 

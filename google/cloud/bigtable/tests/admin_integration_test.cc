@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -258,7 +259,7 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Check for arguments validity
   if (argc != 3) {

@@ -20,6 +20,8 @@
 #include <cstdint>
 #include <string>
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
@@ -90,7 +92,19 @@ struct Generation : public WellKnownParameter<Generation, std::int64_t> {
   static char const* well_known_parameter_name() { return "generation"; }
 };
 
+struct Prefix : public WellKnownParameter<Prefix, std::string> {
+  using WellKnownParameter<Prefix, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "prefix"; }
+};
+
+struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
+  using WellKnownParameter<MaxResults, std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "maxResults"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H_

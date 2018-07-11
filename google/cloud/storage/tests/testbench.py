@@ -102,8 +102,26 @@ class GcsObject(object):
         self.generation = 0
         self.revisions = {}
 
-    def get_revision(self, revision):
-        return self.revisions.get(revision, None)
+    def get_revision(self, request):
+        generation = request.args.get('generation')
+        if generation is None:
+            return self.get_latest()
+        version = self.revisions.get(generation)
+        if version is None:
+            raise ErrorResponse('Precondition Failed: generation %s not found'
+                                % generation)
+
+    def del_revision(self, request):
+        generation = request.args.get('generation')
+        if generation is None:
+            generation = self.generation
+        self.revisions.pop(generation)
+        if len(self.revisions) == 0:
+            self.generation = None
+            return True
+        if generation == self.generation:
+            self.generation = sorted(self.revisions.keys())[-1]
+        return False
 
     def get_latest(self):
         return self.revisions.get(self.generation, None)
@@ -200,10 +218,65 @@ def buckets_get(bucket_name):
     })
 
 
+@gcs.route('/b/<bucket_name>/o')
+def buckets_list(bucket_name):
+    """Implement the 'Objects: list' API: return the objects in a bucket."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    result = {
+        'next_page_token': '',
+        'items': []
+    }
+    for name, o in GCS_OBJECTS.items():
+        if name.find(bucket_name + '/o') != 0:
+            continue
+        result['items'].append(o.get_latest().metadata)
+    return json.dumps(result)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>')
+def objects_get(bucket_name, object_name):
+    """Implement the 'Objects: get' API.  Read objects or their metadata."""
+    media = flask.request.args.get('alt', None)
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+
+    if media is not None:
+        if media != 'media':
+            raise ErrorResponse('Invalid alt=%s parameter' % media)
+        response = flask.make_response(revision.media)
+        length = len(revision.media)
+        response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+        return response
+
+    return json.dumps(revision.metadata)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
+def objects_delete(bucket_name, object_name):
+    """Implement the 'Objects: delete' API.  Delete objects."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    remove = gcs_object.del_revision(flask.request)
+    if remove:
+        GCS_OBJECTS.pop(object_path)
+
+    return json.dumps({})
+
+
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
 upload.debug = True
+
+
+@upload.errorhandler(ErrorResponse)
+def upload_error(error):
+    return error.as_response()
 
 
 @upload.route('/b/<bucket_name>/o', methods=['POST'])

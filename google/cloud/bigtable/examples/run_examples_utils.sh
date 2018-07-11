@@ -15,10 +15,6 @@
 
 set -eu
 
-readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
-readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
-readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
-
 function cleanup_instance {
   local project=$1
   local instance=$2
@@ -85,29 +81,60 @@ function run_all_instance_admin_examples {
 
   echo
   echo "Run create-instance example."
-  ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
+  ${setenv} ../examples/bigtable_samples_instance_admin create-instance \
+      "${project_id}" "${INSTANCE}" "${zone_id}"
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
   echo
   echo "Run list-instances example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-instances "${project_id}"
+  ${setenv} ../examples/bigtable_samples_instance_admin list-instances \
+      "${project_id}"
 
   echo
   echo "Run get-instance example."
-  ${setenv} ../examples/bigtable_samples_instance_admin get-instance "${project_id}" "${INSTANCE}"
+  ${setenv} ../examples/bigtable_samples_instance_admin get-instance \
+      "${project_id}" "${INSTANCE}"
 
   echo
   echo "Run list-clusters example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters "${project_id}" "${INSTANCE}"
+  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters \
+      "${project_id}" "${INSTANCE}"
 
   echo
   echo "Run list-all-clusters example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-all-clusters "${project_id}"
+  ${setenv} ../examples/bigtable_samples_instance_admin list-all-clusters \
+      "${project_id}"
 
   echo
   echo "Run create cluster example."
   ${setenv} ../examples/bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
+
+  echo
+  echo "Run create-app-profile example."
+  ${setenv} ../examples/bigtable_samples_instance_admin create-app-profile \
+      "${project_id}" "${INSTANCE}" "my-profile"
+
+  echo
+  echo "Run create-app-profile-cluster example."
+  ${setenv} ../examples/bigtable_samples_instance_admin \
+      create-app-profile-cluster "${project_id}" "${INSTANCE}" "profile-c2" \
+      "${INSTANCE}-c2"
+
+  echo
+  echo "Run list-app-profile example."
+  ${setenv} ../examples/bigtable_samples_instance_admin list-app-profiles \
+      "${project_id}" "${INSTANCE}"
+
+  echo
+  echo "Run get-app-profile example."
+  ${setenv} ../examples/bigtable_samples_instance_admin get-app-profile \
+      "${project_id}" "${INSTANCE}" "profile-c2"
+
+  echo
+  echo "Run delete-app-profile example."
+  ${setenv} ../examples/bigtable_samples_instance_admin delete-app-profile \
+      "${project_id}" "${INSTANCE}" "profile-c2"
 
   reset_trap
   echo

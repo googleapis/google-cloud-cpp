@@ -14,7 +14,9 @@
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include <algorithm>
+#include <cctype>
 #include <iostream>
+#include <string>
 
 namespace {
 class CurlInitializer {
@@ -27,20 +29,24 @@ CurlInitializer const CURL_INITIALIZER;
 
 extern "C" std::size_t WriteCallback(void* contents, std::size_t size,
                                      std::size_t nmemb, void* dest) {
-  auto* buffer = reinterpret_cast<storage::internal::CurlBuffer*>(dest);
+  auto* buffer =
+      reinterpret_cast<google::cloud::storage::internal::CurlBuffer*>(dest);
   buffer->Append(static_cast<char*>(contents), size * nmemb);
   return size * nmemb;
 }
 
 extern "C" std::size_t HeaderCallback(char* contents, std::size_t size,
                                       std::size_t nmemb, void* dest) {
-  auto* headers = reinterpret_cast<storage::internal::CurlHeaders*>(dest);
+  auto* headers =
+      reinterpret_cast<google::cloud::storage::internal::CurlHeaders*>(dest);
   headers->Append(contents, size * nmemb);
   return size * nmemb;
 }
 
 }  // anonymous namespace
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -74,8 +80,12 @@ void CurlHeaders::Append(char* data, std::size_t size) {
   if (static_cast<std::size_t>(separator - data) < size - 2) {
     header_value = std::string(separator + 2, data + size - 2);
   }
+  std::transform(header_name.begin(), header_name.end(), header_name.begin(),
+                 [](char x) { return std::tolower(x); });
   contents_.emplace(std::move(header_name), std::move(header_value));
 }
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google

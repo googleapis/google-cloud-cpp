@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
 
-namespace nl = storage::internal::nl;
+namespace storage = google::cloud::storage;
+namespace nl = google::cloud::storage::internal::nl;
 using testing::HasSubstr;
 
 namespace {
@@ -37,7 +39,7 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -51,7 +53,7 @@ TEST(CurlRequestTest, FailedGET) {
   // can't, but just documenting the assumptions in this test).
   storage::internal::CurlRequest request("https://localhost:0/");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(request.MakeRequest(), std::exception);
 #else
@@ -66,7 +68,7 @@ TEST(CurlRequestTest, RepeatedGET) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
 
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -103,7 +105,7 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("Content-Type: application/x-www-form-urlencoded");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(data);
+  request.PrepareRequest(data, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -118,7 +120,7 @@ TEST(CurlRequestTest, Handle404) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(404, response.status_code);
 }
@@ -129,7 +131,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(418, response.status_code);
   EXPECT_THAT(response.payload, HasSubstr("[ teapot ]"));
@@ -148,13 +150,13 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
-  EXPECT_EQ(1U, response.headers.count("X-Test-Empty"));
-  EXPECT_EQ("", response.headers.find("X-Test-Empty")->second);
-  EXPECT_LE(1U, response.headers.count("X-Test-Foo"));
-  EXPECT_EQ("bar", response.headers.find("X-Test-Foo")->second);
+  EXPECT_EQ(1U, response.headers.count("x-test-empty"));
+  EXPECT_EQ("", response.headers.find("x-test-empty")->second);
+  EXPECT_LE(1U, response.headers.count("x-test-foo"));
+  EXPECT_EQ("bar", response.headers.find("x-test-foo")->second);
 }
 
 /// @test Verify that the Projection parameter is included if set.
@@ -164,7 +166,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::Projection("full"));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -185,7 +187,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::UserProject("a-project"));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -206,7 +208,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfGenerationMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -227,7 +229,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -248,7 +250,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfMetaGenerationMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -269,7 +271,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
   request.AddHeader("charsets: utf-8");
   request.AddWellKnownParameter(storage::IfMetaGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -292,7 +294,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   request.AddWellKnownParameter(storage::IfMetaGenerationMatch(7));
   request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
 
-  request.PrepareRequest(std::string{});
+  request.PrepareRequest(std::string{}, false);
   auto response = request.MakeRequest();
   EXPECT_EQ(200, response.status_code);
   nl::json parsed = nl::json::parse(response.payload);
@@ -304,4 +306,50 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   EXPECT_EQ(0U, args.count("projection"));
   EXPECT_EQ(0U, args.count("ifGenerationMatch"));
   EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+}
+
+class MockLogBackend : public google::cloud::LogBackend {
+ public:
+  void Process(google::cloud::LogRecord const& lr) { ProcessWithOwnership(lr); }
+  MOCK_METHOD1(ProcessWithOwnership, void(google::cloud::LogRecord));
+};
+
+/// @test Verify that CurlRequest logs when requested.
+TEST(CurlRequestTest, Logging) {
+  // Prepare the Log subsystem to receive mock calls:
+  auto mock_logger = std::make_shared<MockLogBackend>();
+  google::cloud::LogSink::Instance().AddBackend(mock_logger);
+
+  using testing::_;
+  using testing::Invoke;
+
+  std::string log_messages;
+  EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))
+      .WillRepeatedly(Invoke([&log_messages](google::cloud::LogRecord lr) {
+        log_messages += lr.message;
+        log_messages += "\n";
+      }));
+
+  {
+    storage::internal::CurlRequest request(HttpBinEndpoint() + "/post?foo=bar");
+    request.AddHeader("Accept: application/json");
+    request.AddHeader("charsets: utf-8");
+    request.AddHeader("x-test-header: foo");
+
+    request.PrepareRequest(std::string{"this is some text"}, true);
+    auto response = request.MakeRequest();
+    EXPECT_EQ(200, response.status_code);
+  }
+
+  google::cloud::LogSink::Instance().ClearBackends();
+
+  // Verify the URL, and headers, and payload are logged.
+  EXPECT_THAT(log_messages, HasSubstr("/post?foo=bar"));
+  EXPECT_THAT(log_messages, HasSubstr("x-test-header: foo"));
+  EXPECT_THAT(log_messages, HasSubstr("this is some text"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Info)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Send Header)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Send Data)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Recv Header)"));
+  EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }

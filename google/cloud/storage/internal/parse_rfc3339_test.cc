@@ -16,6 +16,8 @@
 #include <gtest/gtest.h>
 #include <ctime>
 
+namespace storage = google::cloud::storage;
+
 TEST(ParseRfc3339Test, ParseEpoch) {
   auto timestamp = storage::internal::ParseRfc3339("1970-01-01T00:00:00Z");
   // The C++ 11, 14 and 17 standards do not guarantee that the system clock's

@@ -36,6 +36,8 @@
 #include <nlohmann/json.hpp>
 #undef nlohmann
 
+namespace google {
+namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -43,5 +45,7 @@ namespace nl = ::google_cloud_storage_internal_nlohmann_3_1_2;
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_NLJSON_H_

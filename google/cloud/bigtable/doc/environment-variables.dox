@@ -1,0 +1,20 @@
+/*!
+@page bigtable-environment-variables Environment Variables Used by the Google Cloud Bigtable C++ Client.
+
+The Cloud Bigtable C++ Client library introduces a single environment variable
+that affects its behavior. If `BIGTABLE_EMULATOR_HOST` is set, it specifies the
+endpoint (typically a `host:port` string) for the [Cloud Bigtable
+emulator](https://cloud.google.com/bigtable/docs/emulator) and configures the
+library to connect to the emulator by default.
+
+In addition, the library inherits all the [gRPC environment
+variables](https://grpc.io/grpc/cpp/md_doc_environment_variables.html).
+
+@see @link #google::cloud::bigtable::v0::ClientOptions `ClientOptions` @endlink
+    for more details of how `BIGTABLE_EMULATOR_HOST` is used.
+
+@see the [gRPC
+documentation](https://grpc.io/grpc/cpp/md_doc_environment_variables.html) for
+    additional environment variables controlling gRPC.
+
+*/

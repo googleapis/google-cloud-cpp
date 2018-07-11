@@ -12,8 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/bucket.h"
-#include <gtest/gtest.h>
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/testing_util/init_google_mock.h"
+#include <gmock/gmock.h>
+
+namespace storage = google::cloud::storage;
+using ::testing::HasSubstr;
 
 namespace {
 /// Store the project and instance captured from the command-line arguments.
@@ -40,10 +45,9 @@ class BucketIntegrationTest : public ::testing::Test {};
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  auto client = storage::CreateDefaultClient();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
 
-  auto metadata = bucket.GetMetadata();
+  auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.id());
   EXPECT_EQ("storage#bucket", metadata.kind());
@@ -51,110 +55,140 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  auto client = storage::CreateDefaultClient();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
 
-  auto metadata = bucket.GetMetadata();
+  auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.id());
   EXPECT_EQ("storage#bucket", metadata.kind());
 
-  auto metadata2 = bucket.GetMetadata(
-      storage::Projection("noAcl"),
+  auto metadata2 = client.GetBucketMetadata(
+      bucket_name, storage::Projection("noAcl"),
       storage::IfMetaGenerationMatch(metadata.metageneration()));
   EXPECT_EQ(metadata2, metadata);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  auto client = storage::CreateDefaultClient();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
 
-  auto metadata = bucket.GetMetadata();
+  auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.id());
   EXPECT_EQ("storage#bucket", metadata.kind());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(bucket.GetMetadata(storage::Projection("noAcl"),
-                                  storage::IfMetaGenerationNotMatch(
-                                      metadata.metageneration())),
-               std::exception);
+  EXPECT_THROW(
+      client.GetBucketMetadata(
+          bucket_name, storage::Projection("noAcl"),
+          storage::IfMetaGenerationNotMatch(metadata.metageneration())),
+      std::exception);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      bucket.GetMetadata(
-          storage::Projection("noAcl"),
+      client.GetBucketMetadata(
+          bucket_name, storage::Projection("noAcl"),
           storage::IfMetaGenerationNotMatch(metadata.metageneration())),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMedia) {
-  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
           std::chrono::system_clock::now().time_since_epoch().count());
 
-  auto metadata = bucket.InsertObject(object_name, "blah blah");
+  auto metadata = client.InsertObject(bucket_name, object_name, "blah blah");
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ("storage#object", metadata.kind());
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
-  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
           std::chrono::system_clock::now().time_since_epoch().count());
 
-  auto original = bucket.InsertObject(object_name, "blah blah",
+  auto original = client.InsertObject(bucket_name, object_name, "blah blah",
                                       storage::IfGenerationMatch(0));
   EXPECT_EQ(bucket_name, original.bucket());
   EXPECT_EQ(object_name, original.name());
   EXPECT_EQ("storage#object", original.kind());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(bucket.InsertObject(object_name, "blah blah",
+  EXPECT_THROW(client.InsertObject(bucket_name, object_name, "blah blah",
                                    storage::IfGenerationMatch(0)),
                std::exception);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(bucket.InsertObject(object_name, "blah blah",
-                                                storage::IfGenerationMatch(0)),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.InsertObject(bucket_name, object_name, "blah blah",
+                          storage::IfGenerationMatch(0)),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
-  auto client = storage::CreateDefaultClient();
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Bucket bucket(client, bucket_name);
+  storage::Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
           std::chrono::system_clock::now().time_since_epoch().count());
 
-  auto original = bucket.InsertObject(object_name, "blah blah",
+  auto original = client.InsertObject(bucket_name, object_name, "blah blah",
                                       storage::IfGenerationMatch(0));
   EXPECT_EQ(bucket_name, original.bucket());
   EXPECT_EQ(object_name, original.name());
   EXPECT_EQ("storage#object", original.kind());
 
-  auto metadata = bucket.InsertObject(object_name, "more blah blah",
-                                      storage::IfGenerationNotMatch(0));
+  auto metadata =
+      client.InsertObject(bucket_name, object_name, "more blah blah",
+                          storage::IfGenerationNotMatch(0));
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_NE(original.generation(), metadata.generation());
 }
 
+TEST_F(BucketIntegrationTest, ListObjects) {
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  storage::Client client;
+
+  auto gen = google::cloud::internal::MakeDefaultPRNG();
+  auto create_small_object = [&client, &bucket_name, &gen] {
+    auto object_name =
+        "object-" + google::cloud::internal::Sample(
+                        gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    auto meta = client.InsertObject(bucket_name, object_name, "blah blah",
+                                    storage::IfGenerationMatch(0));
+    return meta.name();
+  };
+
+  std::vector<std::string> expected(3);
+  std::generate_n(expected.begin(), expected.size(), create_small_object);
+
+  storage::ListObjectsReader reader = client.ListObjects(bucket_name);
+  std::vector<std::string> actual;
+  for (auto it = reader.begin(); it != reader.end(); ++it) {
+    auto const& meta = *it;
+    EXPECT_EQ(bucket_name, meta.bucket());
+    actual.push_back(meta.name());
+  }
+  // There may be a lot of other objects in the bucket, so we want to verify
+  // that any objects we created are found there, but cannot expect a perfect
+  // match.
+  for (auto const& name : expected) {
+    EXPECT_EQ(1, std::count(actual.begin(), actual.end(), name));
+  }
+}
+
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {

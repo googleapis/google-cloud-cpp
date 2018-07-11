@@ -12,11 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility=["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
-    name="storage_bucket_samples",
-    srcs=["storage_bucket_samples.cc"],
-    deps=["//google/cloud/storage:storage_client"],
+    name = "storage_bucket_samples",
+    srcs = ["storage_bucket_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
+    name = "storage_object_samples",
+    srcs = ["storage_object_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
 )

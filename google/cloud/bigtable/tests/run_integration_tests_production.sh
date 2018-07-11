@@ -15,9 +15,17 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
-source ${BINDIR}/integration_tests_utils.sh
+# Only run the data integration tests against production. The CI builds go over
+# the bigtable quota if we run all of them. The CI build environment defines
+# PROJECT_ID and INSTANCE_ID.
+echo
+echo "Running bigtable::Table integration test."
+./data_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
 
-# Run the integration tests assuming the CI scripts have setup the PROJECT_ID
-# and INSTANCE_ID environment variables.
-run_all_integration_tests "${PROJECT_ID}" "${INSTANCE_ID}"
+echo
+echo "Running bigtable::Filters integration tests."
+./filters_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+
+echo
+echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
+./mutations_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"

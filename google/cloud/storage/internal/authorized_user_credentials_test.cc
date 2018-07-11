@@ -17,17 +17,18 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
+#include <cstring>
 
+namespace storage = google::cloud::storage;
+using storage::internal::AuthorizedUserCredentials;
 using storage::testing::MockHttpRequest;
+using namespace ::testing;
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() { MockHttpRequest::Clear(); }
   void TearDown() { MockHttpRequest::Clear(); }
 };
-
-using namespace ::testing;
-using storage::internal::AuthorizedUserCredentials;
 
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {
@@ -39,9 +40,9 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
 
   auto handle =
-      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>()))
-      .WillOnce(Invoke([](std::string const& payload) {
+      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .WillOnce(Invoke([](std::string const& payload, bool) {
         auto npos = std::string::npos;
         EXPECT_NE(npos, payload.find("grant_type=refresh_token"));
         EXPECT_NE(npos, payload.find("client_id=a-client-id.example.com"));
@@ -81,8 +82,9 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 })""";
 
   auto handle =
-      MockHttpRequest::Handle(storage::internal::GOOGLE_OAUTH_REFRESH_ENDPOINT);
-  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>())).Times(1);
+      MockHttpRequest::Handle(storage::internal::GoogleOAuthRefreshEndpoint());
+  EXPECT_CALL(*handle, PrepareRequest(An<std::string const&>(), false))
+      .Times(1);
   EXPECT_CALL(*handle, MakeEscapedString(_))
       .WillRepeatedly(Invoke([](std::string const& x) {
         auto const size = x.size();

@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility=["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
-    name="install_integration_test",
-    srcs=[
+    name = "install_integration_test",
+    srcs = [
         "install_integration_test.cc",
     ],
-    deps=[
+    deps = [
         "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
     ],
 )
