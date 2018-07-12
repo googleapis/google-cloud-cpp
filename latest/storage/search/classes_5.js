@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['maxresults',['MaxResults',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1MaxResults.html',1,'google::cloud::storage::v']]]
+  ['listobjectsiterator',['ListObjectsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html',1,'google::cloud::storage::v']]],
+  ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html',1,'google::cloud::storage::v']]]
 ];
