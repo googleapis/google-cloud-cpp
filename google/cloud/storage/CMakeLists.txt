@@ -96,6 +96,8 @@ find_package(ZLIB REQUIRED)
 # the client library
 add_library(storage_client
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
+            bucket_access_control.h
+            bucket_access_control.cc
             bucket_metadata.h
             bucket_metadata.cc
             client.h
@@ -104,6 +106,8 @@ add_library(storage_client
             client_options.cc
             credentials.h
             credentials.cc
+            internal/access_control_common.h
+            internal/access_control_common.cc
             internal/authorized_user_credentials.h
             internal/binary_data_as_debug_string.h
             internal/binary_data_as_debug_string.cc
@@ -202,10 +206,12 @@ create_bazel_config(storage_client_testing)
 
 # List the unit tests, then setup the targets and dependencies.
 set(storage_client_unit_tests
+    bucket_access_control_test.cc
     bucket_metadata_test.cc
     bucket_test.cc
     client_test.cc
     credentials_test.cc
+    internal/access_control_common_test.cc
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
     internal/delete_object_request_test.cc

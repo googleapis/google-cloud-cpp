@@ -12,45 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/object_access_control.h"
-#include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/nljson.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-ObjectAccessControl ObjectAccessControl::ParseFromJson(
+BucketAccessControl BucketAccessControl::ParseFromJson(
     internal::nl::json const& json) {
-  ObjectAccessControl result{};
+  BucketAccessControl result{};
   static_cast<internal::AccessControlCommon&>(result) =
       internal::AccessControlCommon::ParseFromJson(json);
-  result.generation_ =
-      internal::MetadataParser::ParseLongField(json, "generation");
-  result.object_ = json.value("object", "");
   return result;
 }
 
-ObjectAccessControl ObjectAccessControl::ParseFromString(
+BucketAccessControl BucketAccessControl::ParseFromString(
     std::string const& payload) {
   auto json = internal::nl::json::parse(payload);
-  return ObjectAccessControl::ParseFromJson(json);
+  return BucketAccessControl::ParseFromJson(json);
 }
 
-bool ObjectAccessControl::operator==(ObjectAccessControl const& rhs) const {
-  // Start with id, generation, object, bucket, etag because they should fail
-  // early, then alphabetical for readability.
-  return object_ == rhs.object_ and generation_ == rhs.generation_ and
-         *static_cast<internal::AccessControlCommon const*>(this) == rhs;
+bool BucketAccessControl::operator==(BucketAccessControl const& rhs) const {
+  return *static_cast<internal::AccessControlCommon const*>(this) == rhs;
 }
 
-std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs) {
-  return os << "ObjectAccessControl={bucket=" << rhs.bucket()
+std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs) {
+  return os << "BucketAccessControl={bucket=" << rhs.bucket()
             << ", domain=" << rhs.domain() << ", email=" << rhs.email()
             << ", entity=" << rhs.entity() << ", entity_id=" << rhs.entity_id()
-            << ", etag=" << rhs.etag() << ", generation=" << rhs.generation()
-            << ", id=" << rhs.id() << ", kind=" << rhs.kind()
-            << ", object=" << rhs.object() << ", project_team.project_number="
+            << ", etag=" << rhs.etag() << ", id=" << rhs.id()
+            << ", kind=" << rhs.kind() << ", project_team.project_number="
             << rhs.project_team().project_number
             << ", project_team.team=" << rhs.project_team().team
             << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()

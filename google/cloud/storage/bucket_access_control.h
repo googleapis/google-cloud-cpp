@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_ACCESS_CONTROL_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_ACCESS_CONTROL_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H_
 
 #include "google/cloud/storage/internal/access_control_common.h"
 
@@ -22,20 +22,20 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * A wrapper for the objectAccessControl resource in Google Cloud Storage.
+ * A wrapper for the bucketAccessControl resource in Google Cloud Storage.
  *
  * @see
- * https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls for
+ * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls for
  * an authoritative source of field definitions.
  */
-class ObjectAccessControl : private internal::AccessControlCommon {
+class BucketAccessControl : private internal::AccessControlCommon {
  public:
-  ObjectAccessControl() = default;
+  BucketAccessControl() = default;
 
-  static ObjectAccessControl ParseFromJson(internal::nl::json const& json);
+  static BucketAccessControl ParseFromJson(internal::nl::json const& json);
 
   /// Parse from a string in JSON format.
-  static ObjectAccessControl ParseFromString(std::string const& payload);
+  static BucketAccessControl ParseFromString(std::string const& payload);
 
   using AccessControlCommon::ROLE_OWNER;
   using AccessControlCommon::ROLE_READER;
@@ -53,35 +53,28 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   using AccessControlCommon::project_team;
   using AccessControlCommon::self_link;
 
-  std::int64_t generation() const { return generation_; }
-  std::string const& object() const { return object_; }
-
   std::string const& entity() const { return AccessControlCommon::entity(); }
-  ObjectAccessControl& set_entity(std::string e) {
+  BucketAccessControl& set_entity(std::string e) {
     AccessControlCommon::set_entity(std::move(e));
     return *this;
   }
   std::string const& role() const { return AccessControlCommon::role(); }
-  ObjectAccessControl& set_role(std::string r) {
+  BucketAccessControl& set_role(std::string r) {
     AccessControlCommon::set_role(std::move(r));
     return *this;
   }
 
-  bool operator==(ObjectAccessControl const& rhs) const;
-  bool operator!=(ObjectAccessControl const& rhs) const {
+  bool operator==(BucketAccessControl const& rhs) const;
+  bool operator!=(BucketAccessControl const& rhs) const {
     return not(*this == rhs);
   }
-
- private:
-  std::int64_t generation_;
-  std::string object_;
 };
 
-std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs);
+std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_ACCESS_CONTROL_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H_
