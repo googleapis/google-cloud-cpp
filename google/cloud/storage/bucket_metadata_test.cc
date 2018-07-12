@@ -32,7 +32,7 @@ TEST(BucketMetadataTest, Parse) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto actual = BucketMetadata::ParseFromJson(text);
+  auto actual = BucketMetadata::ParseFromString(text);
 
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("foo-bar-baz", actual.id());
@@ -74,7 +74,7 @@ TEST(BucketMetadataTest, ParseWithLabels) {
         "baz": "qux"
       }
 })""";
-  auto actual = BucketMetadata::ParseFromJson(text);
+  auto actual = BucketMetadata::ParseFromString(text);
 
   EXPECT_EQ(2U, actual.label_count());
   EXPECT_TRUE(actual.has_label("foo"));
@@ -111,7 +111,7 @@ TEST(BucketMetadataTest, IOStream) {
       }
 })""";
 
-  auto meta = BucketMetadata::ParseFromJson(text);
+  auto meta = BucketMetadata::ParseFromString(text);
   std::ostringstream os;
   os << meta;
   auto actual = os.str();

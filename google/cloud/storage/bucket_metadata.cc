@@ -20,8 +20,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload);
+BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   BucketMetadata result{};
   static_cast<CommonMetadata&>(result) =
       internal::MetadataParser::ParseCommonMetadata(json);
@@ -34,6 +33,11 @@ BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
     }
   }
   return result;
+}
+
+BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload);
+  return ParseFromJson(json);
 }
 
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {

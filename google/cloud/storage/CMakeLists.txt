@@ -136,6 +136,8 @@ add_library(storage_client
             internal/http_response.h
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
+            internal/list_buckets_request.h
+            internal/list_buckets_request.cc
             internal/list_object_acl_request.h
             internal/list_object_acl_request.cc
             internal/list_objects_request.h
@@ -193,8 +195,8 @@ add_library(storage_client_testing
             testing/mock_http_request.h
             testing/mock_http_request.cc)
 target_link_libraries(storage_client_testing
-                      PUBLIC storage_client gmock
-                      PRIVATE nlohmann_json storage_common_options)
+                      PUBLIC storage_client nlohmann_json gmock
+                      PRIVATE storage_common_options)
 target_include_directories(storage_client_testing
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -221,6 +223,7 @@ set(storage_client_unit_tests
     internal/get_bucket_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
+    internal/list_buckets_request_test.cc
     internal/list_object_acl_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc

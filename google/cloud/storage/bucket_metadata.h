@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 
 #include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <map>
 
 namespace google {
@@ -35,7 +36,8 @@ class BucketMetadata : private internal::CommonMetadata {
  public:
   BucketMetadata() = default;
 
-  static BucketMetadata ParseFromJson(std::string const& payload);
+  static BucketMetadata ParseFromJson(internal::nl::json const& json);
+  static BucketMetadata ParseFromString(std::string const& payload);
 
   std::size_t label_count() const { return labels_.size(); }
   bool has_label(std::string const& key) const {

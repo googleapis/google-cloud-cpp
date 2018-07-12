@@ -12,6 +12,7 @@ storage_client_unit_tests = [
     "internal/get_bucket_metadata_request_test.cc",
     "internal/google_application_default_credentials_file_test.cc",
     "internal/insert_object_media_request_test.cc",
+    "internal/list_buckets_request_test.cc",
     "internal/list_object_acl_request_test.cc",
     "internal/list_objects_request_test.cc",
     "internal/logging_client_test.cc",

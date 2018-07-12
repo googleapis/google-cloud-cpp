@@ -34,7 +34,7 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
         BucketMetadata{});
   }
   return std::make_pair(Status(),
-                        BucketMetadata::ParseFromJson(payload.payload));
+                        BucketMetadata::ParseFromString(payload.payload));
 }
 
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(

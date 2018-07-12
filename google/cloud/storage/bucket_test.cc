@@ -57,7 +57,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = BucketMetadata::ParseFromJson(text);
+  auto expected = BucketMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
