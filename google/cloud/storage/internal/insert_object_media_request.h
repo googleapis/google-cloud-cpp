@@ -25,14 +25,12 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Request the metadata for a bucket.
- *
- * TODO(#710) - add missing request parameters.
  */
 class InsertObjectMediaRequest
-    : public GenericRequest<InsertObjectMediaRequest, Generation,
-                            IfGenerationMatch, IfGenerationNotMatch,
-                            IfMetaGenerationMatch, IfMetaGenerationNotMatch,
-                            Projection, UserProject> {
+    : public GenericRequest<
+          InsertObjectMediaRequest, ContentEncoding, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          KmsKeyName, PredefinedAcl, Projection, UserProject> {
  public:
   InsertObjectMediaRequest() = default;
   explicit InsertObjectMediaRequest(std::string bucket_name,

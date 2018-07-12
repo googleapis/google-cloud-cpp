@@ -102,6 +102,27 @@ struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
   static char const* well_known_parameter_name() { return "maxResults"; }
 };
 
+struct UploadType : public WellKnownParameter<UploadType, std::string> {
+  using WellKnownParameter<UploadType, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "uploadType"; }
+};
+
+struct ContentEncoding
+    : public WellKnownParameter<ContentEncoding, std::string> {
+  using WellKnownParameter<ContentEncoding, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "contentEncoding"; }
+};
+
+struct KmsKeyName : public WellKnownParameter<KmsKeyName, std::string> {
+  using WellKnownParameter<KmsKeyName, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "kmsKeyName"; }
+};
+
+struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
+  using WellKnownParameter<PredefinedAcl, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "predefinedAcl"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
