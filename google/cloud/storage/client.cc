@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/default_client.h"
+#include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include <sstream>
@@ -31,7 +31,7 @@ static_assert(std::is_copy_assignable<storage::Client>::value,
 
 Client::Client(ClientOptions options)
     : Client(std::shared_ptr<internal::RawClient>(
-          new internal::DefaultClient<>(std::move(options)))) {}
+          new internal::CurlClient(std::move(options)))) {}
 
 BucketMetadata Client::GetBucketMetadataImpl(
     internal::GetBucketMetadataRequest const& request) {
