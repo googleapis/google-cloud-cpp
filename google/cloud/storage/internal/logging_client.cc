@@ -55,6 +55,11 @@ ClientOptions const& LoggingClient::client_options() const {
   return client_->client_options();
 }
 
+std::pair<Status, ListBucketsResponse> LoggingClient::ListBuckets(
+    ListBucketsRequest const& request) {
+  return MakeCall(*client_, &RawClient::ListBuckets, request, __func__);
+}
+
 std::pair<Status, BucketMetadata> LoggingClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);

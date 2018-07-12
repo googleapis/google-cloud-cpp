@@ -20,6 +20,22 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
+    ListBucketsRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b");
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ListBucketsResponse{});
+  }
+  return std::make_pair(
+      Status(), ListBucketsResponse::FromHttpResponse(std::move(payload)));
+}
+
 std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
