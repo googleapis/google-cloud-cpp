@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/authorized_user_credentials.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
@@ -21,6 +22,7 @@
 
 namespace storage = google::cloud::storage;
 using storage::internal::AuthorizedUserCredentials;
+using storage::internal::GoogleOAuthRefreshEndpoint;
 using storage::testing::MockHttpRequest;
 using storage::testing::MockHttpRequestBuilder;
 using namespace ::testing;
@@ -110,8 +112,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
         request.mock = mock_request;
         return request;
       }));
-  EXPECT_CALL(*mock_builder,
-              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(Invoke([](std::string const& s) {

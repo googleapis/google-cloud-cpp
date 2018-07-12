@@ -56,7 +56,7 @@ class CurlRequestBuilder {
   /// Add request headers.
   CurlRequestBuilder& AddHeader(std::string const& header);
 
-  /// Add a parameter for a POST request.
+  /// Add a parameter for a request.
   CurlRequestBuilder& AddQueryParameter(std::string const& key,
                                         std::string const& value);
 

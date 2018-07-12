@@ -27,6 +27,7 @@ namespace storage {
 namespace testing {
 namespace {
 
+using storage::internal::GoogleOAuthRefreshEndpoint;
 using storage::internal::ServiceAccountCredentials;
 using ::testing::_;
 using ::testing::An;
@@ -111,8 +112,7 @@ TEST_F(ServiceAccountCredentialsTest,
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder,
-              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(
@@ -164,8 +164,7 @@ TEST_F(ServiceAccountCredentialsTest,
         return request;
       }));
   EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>())).Times(1);
-  EXPECT_CALL(*mock_builder,
-              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(
