@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/object_stream.h"
 
@@ -70,17 +71,12 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets
-   *
-   * TODO(#822) - return the full set of values with a Reader. To keep this PR
-   *   smaller we just return the first set of values as a std::vector<>.
-   *   A future PR will return a Reader similar to ListObjectsReader.
    */
   template <typename... Modifiers>
-  std::vector<BucketMetadata> ListBuckets(std::string const& project_id,
-                                          Modifiers&&... modifiers) {
-    internal::ListBucketsRequest request(project_id);
-    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
-    return raw_client_->ListBuckets(request).second.items;
+  ListBucketsReader ListBuckets(std::string const& project_id,
+                                Modifiers&&... modifiers) {
+    return ListBucketsReader(raw_client_, project_id,
+                             std::forward<Modifiers>(modifiers)...);
   }
 
   /**

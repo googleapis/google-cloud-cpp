@@ -25,6 +25,7 @@ storage_client_unit_tests = [
     "internal/retry_client_test.cc",
     "internal/read_object_range_request_test.cc",
     "internal/service_account_credentials_test.cc",
+    "list_buckets_reader_test.cc",
     "list_objects_reader_test.cc",
     "object_access_control_test.cc",
     "object_metadata_test.cc",
