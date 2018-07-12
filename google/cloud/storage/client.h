@@ -47,16 +47,12 @@ class Client {
   explicit Client(std::shared_ptr<Credentials> credentials)
       : Client(ClientOptions(std::move(credentials))) {}
 
-  /// Build a client with specific retry and backoff policies.
-  template <typename RetryPolicy, typename BackoffPolicy>
-  Client(std::shared_ptr<internal::RawClient> client, RetryPolicy retry_policy,
-         BackoffPolicy backoff_policy)
-      : raw_client_(new internal::RetryClient(std::move(client),
-                                              std::move(retry_policy),
-                                              std::move(backoff_policy))) {}
-
-  /// Build a client with an specific RawClient, with the default retry policy
-  explicit Client(std::shared_ptr<internal::RawClient> client);
+  /// Build a client and maybe override the retry and/or backoff policies.
+  template <typename... Policies>
+  explicit Client(std::shared_ptr<internal::RawClient> client,
+                  Policies&&... policies)
+      : raw_client_(new internal::RetryClient(
+            std::move(client), std::forward<Policies>(policies)...)) {}
 
   /// Build a client with an specific RawClient, without retry policies.
   struct NoRetry {};

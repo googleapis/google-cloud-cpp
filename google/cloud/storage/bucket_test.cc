@@ -24,7 +24,6 @@ namespace storage {
 using namespace testing::canonical_errors;
 namespace {
 using namespace ::testing;
-using ms = std::chrono::milliseconds;
 
 class BucketTest : public ::testing::Test {
  protected:
@@ -68,8 +67,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
             return std::make_pair(Status(), expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(ms(100), ms(500), 2)};
+                LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.GetBucketMetadata("foo-bar-baz");
   EXPECT_EQ(expected, actual);
@@ -77,8 +75,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
 
 TEST_F(BucketTest, GetMetadataTooManyFailures) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(ms(100), ms(500), 2)};
+                LimitedErrorCountRetryPolicy(2)};
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, GetBucketMetadata(_))
@@ -145,10 +142,8 @@ TEST_F(BucketTest, InsertObjectMedia) {
 }
 
 TEST_F(BucketTest, InsertObjectMediaTooManyFailures) {
-  using ms = std::chrono::milliseconds;
   Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(ms(100), ms(500), 2)};
+                LimitedErrorCountRetryPolicy(2)};
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, InsertObjectMedia(_))
