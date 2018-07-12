@@ -23,8 +23,7 @@ namespace internal {
 std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
-      request.bucket_name());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddParametersToHttpRequest(builder);
@@ -41,8 +40,8 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(upload_endpoint_ + "/b/" +
-      request.bucket_name() + "/o");
+  CurlRequestBuilder builder(upload_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddParametersToHttpRequest(builder);
@@ -50,7 +49,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.AddHeader("Content-Length: " +
-      std::to_string(request.contents().size()));
+                    std::to_string(request.contents().size()));
   auto payload = builder.BuildRequest(request.contents()).MakeRequest();
   if (200 != payload.status_code) {
     return std::make_pair(
@@ -65,9 +64,8 @@ std::pair<Status, internal::ReadObjectRangeResponse>
 CurlClient::ReadObjectRangeMedia(
     internal::ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
-      request.bucket_name() + "/o/" +
-      request.object_name());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   builder.AddQueryParameter("alt", "media");
@@ -78,23 +76,23 @@ CurlClient::ReadObjectRangeMedia(
   //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
   builder.AddHeader("Cache-Control: no-transform");
   builder.AddHeader("Range: bytes=" + std::to_string(request.begin()) + '-' +
-      std::to_string(request.end()));
+                    std::to_string(request.end()));
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
         internal::ReadObjectRangeResponse{});
   }
-  return std::make_pair(Status(),
-                        internal::ReadObjectRangeResponse::FromHttpResponse(
-                            std::move(payload)));
+  return std::make_pair(
+      Status(),
+      internal::ReadObjectRangeResponse::FromHttpResponse(std::move(payload)));
 }
 
 std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
     internal::ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
-      request.bucket_name() + "/o");
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o");
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddParametersToHttpRequest(builder);
@@ -113,9 +111,8 @@ std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
 std::pair<Status, internal::EmptyResponse> CurlClient::DeleteObject(
     internal::DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
-      request.bucket_name() + "/o/" +
-      request.object_name());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddParametersToHttpRequest(builder);
