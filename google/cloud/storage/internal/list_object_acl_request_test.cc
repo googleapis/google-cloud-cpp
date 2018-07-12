@@ -35,10 +35,11 @@ TEST(ListObjectAclRequestTest, Stream) {
   request.set_multiple_parameters(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
-  EXPECT_THAT(os.str(), HasSubstr("generation=7"));
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
-  EXPECT_THAT(os.str(), HasSubstr("my-object"));
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("generation=7"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("my-object"));
 }
 
 TEST(ListObjectAclResponseTest, Parse) {
@@ -82,11 +83,12 @@ TEST(ListObjectAclResponseTest, Stream) {
       ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
   std::ostringstream os;
   os << list;
-  EXPECT_THAT(os.str(), HasSubstr("entity=user-qux"));
-  EXPECT_THAT(os.str(), HasSubstr("entity=user-quux"));
-  EXPECT_THAT(os.str(), HasSubstr("object=baz"));
-  EXPECT_THAT(os.str(), HasSubstr("ListObjectAclResponse={"));
-  EXPECT_THAT(os.str(), HasSubstr("ObjectAccessControl={"));
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("entity=user-qux"));
+  EXPECT_THAT(str, HasSubstr("entity=user-quux"));
+  EXPECT_THAT(str, HasSubstr("object=baz"));
+  EXPECT_THAT(str, HasSubstr("ListObjectAclResponse={"));
+  EXPECT_THAT(str, HasSubstr("ObjectAccessControl={"));
 }
 
 }  // namespace
