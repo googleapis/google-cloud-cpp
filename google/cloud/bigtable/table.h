@@ -58,6 +58,10 @@ class Table {
    * snapshot APIs.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
+   *
+   * @par Examples
+   * @snippet bigtable_hello_app_profile.cc cbt namespace
+   * @snippet bigtable_hello_app_profile.cc read with app profile
    */
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id)

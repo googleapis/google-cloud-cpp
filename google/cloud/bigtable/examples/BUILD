@@ -23,6 +23,12 @@ cc_binary(
 )
 
 cc_binary(
+    name = "bigtable_hello_app_profile",
+    srcs = ["bigtable_hello_app_profile.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
     name = "bigtable_samples",
     srcs = ["bigtable_samples.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
