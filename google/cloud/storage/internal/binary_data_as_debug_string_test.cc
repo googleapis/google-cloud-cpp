@@ -57,6 +57,15 @@ TEST(BinaryDataAsDebugStringTest, NonPrintable) {
       actual);
 }
 
+TEST(BinaryDataAsDebugStringTest, Limit) {
+  auto actual = BinaryDataAsDebugString(
+      " 123456789 123456789 123456789 123456789", 40, 24);
+  EXPECT_EQ(
+      " 123456789 123456789 123 "
+      "203132333435363738392031323334353637383920313233\n",
+      actual);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

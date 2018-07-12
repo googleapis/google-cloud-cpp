@@ -20,7 +20,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::string BinaryDataAsDebugString(char const* data, std::size_t size) {
+std::string BinaryDataAsDebugString(char const* data, std::size_t size,
+                                    std::size_t max_output_bytes) {
   std::string result;
   std::size_t text_width = 24;
   std::string text_column(text_width, ' ');
@@ -35,8 +36,14 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size) {
     hex_column = std::string(2 * text_width, ' ');
   };
 
+  // Limit the output to the first `max_output_bytes`.
+  std::size_t n = size;
+  if (max_output_bytes > 0 and max_output_bytes < size) {
+    n = max_output_bytes;
+  }
+
   std::size_t count = 0;
-  for (char const* c = data; c != data + size; ++c) {
+  for (char const* c = data; c != data + n; ++c) {
     // std::isprint() actually takes an int argument, signed, without this
     // explicit conversion MSVC in Debug mode asserts an invalid argument, and
     // pops up a nice dialog box that breaks the CI builds.

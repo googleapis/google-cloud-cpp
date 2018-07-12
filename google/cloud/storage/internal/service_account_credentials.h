@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/credential_constants.h"
-#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include <chrono>
@@ -49,10 +49,11 @@ namespace internal {
  *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *   https://tools.ietf.org/html/rfc7523
  *
- * @tparam HttpRequestType a dependency injection point to make HTTP requests.
+ * @tparam HttpRequestBuilderType a dependency injection point. It makes it
+ *     possible to mock the libcurl wrappers.
  * @tparam ClockType a dependency injection point to fetch the current time.
  */
-template <typename HttpRequestType = CurlRequest,
+template <typename HttpRequestBuilderType = CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public storage::Credentials {
  public:
@@ -61,7 +62,7 @@ class ServiceAccountCredentials : public storage::Credentials {
 
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string oauth_server)
-      : requestor_(std::move(oauth_server)), expiration_time_(), clock_() {
+      : expiration_time_(), clock_() {
     auto credentials = nl::json::parse(content);
     // Below, we construct a JWT refresh request used to obtain an access token.
     // The structure of a JWT is defined in RFC 7519 (see
@@ -99,21 +100,23 @@ class ServiceAccountCredentials : public storage::Credentials {
         // Resulting access token should be expire after one hour.
         {"exp", expiration_time}};
 
+    HttpRequestBuilderType request_builder(std::move(oauth_server));
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
     std::string payload("grant_type=");
     payload +=
-        requestor_
+        request_builder
             .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
     payload += "&assertion=";
     payload += MakeJWTAssertion(assertion_header, assertion_payload,
                                 svc_acct_private_key_pem);
 
-    requestor_.AddHeader("Content-Type: application/x-www-form-urlencoded");
-    requestor_.PrepareRequest(std::move(payload), false);
+    request_builder.AddHeader(
+        "Content-Type: application/x-www-form-urlencoded");
+    request_ = request_builder.BuildRequest(std::move(payload));
   }
 
   std::string AuthorizationHeader() override {
@@ -142,7 +145,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
-    auto response = requestor_.MakeRequest();
+    auto response = request_.MakeRequest();
     if (200 != response.status_code) {
       return false;
     }
@@ -165,7 +168,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     return true;
   }
 
-  HttpRequestType requestor_;
+  typename HttpRequestBuilderType::RequestType request_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;
