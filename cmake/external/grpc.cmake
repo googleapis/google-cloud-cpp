@@ -32,7 +32,7 @@ if (NOT TARGET gprc_project)
         grpc_project
         DEPENDS c_ares_project protobuf_project
         EXCLUDE_FROM_ALL ON
-        PREFIX "external/gprc"
+        PREFIX "external/grpc"
         INSTALL_DIR "external"
         URL https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
         URL_HASH
