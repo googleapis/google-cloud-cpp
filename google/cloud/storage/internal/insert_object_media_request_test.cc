@@ -33,11 +33,18 @@ TEST(InsertObjectMediaRequestTest, OStreamBasic) {
 
 TEST(InsertObjectMediaRequestTest, OStreamParameter) {
   InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
-  request.set_multiple_parameters(IfGenerationMatch(0), Projection("full"));
+  request.set_multiple_parameters(
+      IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
+      KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"),
+      UploadType("multipart"));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("ifGenerationMatch=0"));
   EXPECT_THAT(os.str(), HasSubstr("projection=full"));
+  EXPECT_THAT(os.str(), HasSubstr("kmsKeyName=random-key"));
+  EXPECT_THAT(os.str(), HasSubstr("contentEncoding=media"));
+  EXPECT_THAT(os.str(), HasSubstr("predefinedAcl=authenticatedRead"));
+  EXPECT_THAT(os.str(), HasSubstr("uploadType=multipart"));
 }
 
 }  // namespace

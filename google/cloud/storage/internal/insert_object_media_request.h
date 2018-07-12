@@ -29,10 +29,11 @@ namespace internal {
  * TODO(#710) - add missing request parameters.
  */
 class InsertObjectMediaRequest
-    : public GenericRequest<InsertObjectMediaRequest, Generation,
-                            IfGenerationMatch, IfGenerationNotMatch,
+    : public GenericRequest<InsertObjectMediaRequest, ContentEncoding,
+                            Generation, IfGenerationMatch, IfGenerationNotMatch,
                             IfMetaGenerationMatch, IfMetaGenerationNotMatch,
-                            Projection, UserProject> {
+                            KmsKeyName, PredefinedAcl, Projection, UploadType,
+                            UserProject> {
  public:
   InsertObjectMediaRequest() = default;
   explicit InsertObjectMediaRequest(std::string bucket_name,
