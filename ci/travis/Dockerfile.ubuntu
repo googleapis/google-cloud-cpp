@@ -39,8 +39,6 @@ RUN apt update && \
         libtool \
         lsb-release \
         make \
-        python-gunicorn \
-        python-httpbin \
         python-pip \
         tar \
         wget \
@@ -63,6 +61,10 @@ RUN if grep -q 18.04 /etc/lsb-release; then \
 # "latest" version is updated, and we do not want the builds to break just
 # because some third party changed something.
 RUN pip install numpy cmake_format==0.4.0
+
+# Install Python packages used in the integration tests.
+RUN apt update && apt install -y apache2-dev
+RUN pip install flask httpbin mod_wsgi
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

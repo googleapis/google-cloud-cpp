@@ -198,6 +198,25 @@ class Client {
   }
 
   /**
+   * Write contents into an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include
+   *   `IfGenerationMatch`/`IfGenerationNotMatch`, `IfMetagenerationMatch`/
+   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   */
+  template <typename... Parameters>
+  ObjectWriteStream WriteObject(std::string const& bucket_name,
+                                std::string const& object_name,
+                                Parameters&&... parameters) {
+    internal::InsertObjectStreamingRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return ObjectWriteStream(raw_client_->WriteObject(request).second);
+  }
+
+  /**
    * Delete an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
@@ -289,6 +308,7 @@ class Client {
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
+
   ObjectMetadata InsertObjectMediaImpl(
       internal::InsertObjectMediaRequest const& request);
 

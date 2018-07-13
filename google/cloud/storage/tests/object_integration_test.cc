@@ -133,6 +133,44 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectIntegrationTest, StreamingWrite) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::string expected;
+
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()\t\n\r\v";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line();
+    os << random;
+    expected += random;
+  }
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  ASSERT_EQ(expected.size(), meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client.Read(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();

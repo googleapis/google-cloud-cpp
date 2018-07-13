@@ -128,8 +128,8 @@ add_library(storage_client
             internal/curl_wrappers.cc
             internal/curl_client.h
             internal/curl_client.cc
-            internal/object_acl_requests.h
-            internal/object_acl_requests.cc
+            internal/curl_streambuf.h
+            internal/curl_streambuf.cc
             internal/delete_object_request.h
             internal/delete_object_request.cc
             internal/empty_response.h
@@ -156,6 +156,10 @@ add_library(storage_client
             internal/metadata_parser.cc
             internal/nljson.h
             internal/openssl_util.h
+            internal/object_acl_requests.h
+            internal/object_acl_requests.cc
+            internal/object_streambuf.h
+            internal/object_streambuf.cc
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/raw_client.h
@@ -227,6 +231,7 @@ set(storage_client_unit_tests
     bucket_test.cc
     client_object_acl_test.cc
     client_test.cc
+    client_write_object_test.cc
     credentials_test.cc
     internal/access_control_common_test.cc
     internal/authorized_user_credentials_test.cc

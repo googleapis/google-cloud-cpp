@@ -24,7 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Request the metadata for a bucket.
+ * Insert an object with a simple std::string for its media.
  */
 class InsertObjectMediaRequest
     : public GenericObjectRequest<
@@ -51,6 +51,21 @@ class InsertObjectMediaRequest
 };
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
+
+/**
+ * Insert an object with streaming media.
+ */
+class InsertObjectStreamingRequest
+    : public GenericObjectRequest<
+          InsertObjectStreamingRequest, ContentEncoding, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          KmsKeyName, PredefinedAcl, Projection, UserProject> {
+ public:
+  using GenericObjectRequest::GenericObjectRequest;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         InsertObjectStreamingRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

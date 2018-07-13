@@ -28,9 +28,15 @@ namespace internal {
 
 CurlUploadRequest::CurlUploadRequest()
     : headers_(nullptr, &curl_slist_free_all),
-      multi_(nullptr, &curl_multi_cleanup) {}
+      multi_(nullptr, &curl_multi_cleanup),
+      closing_(false),
+      curl_closed_(false) {
+  buffer_.reserve(128 * 1024);
+  buffer_rdptr_ = buffer_.end();
+}
 
 void CurlUploadRequest::Flush() {
+  ValidateOpen(__func__);
   handle_.FlushDebug(__func__);
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
                  << ", curl.rdptr="
@@ -41,7 +47,12 @@ void CurlUploadRequest::Flush() {
 }
 
 HttpResponse CurlUploadRequest::Close() {
+  ValidateOpen(__func__);
   handle_.FlushDebug(__func__);
+  if (curl_closed_) {
+    google::cloud::internal::RaiseRuntimeError(
+        "Attempting to use closed stream");
+  }
   Flush();
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
@@ -59,6 +70,7 @@ HttpResponse CurlUploadRequest::Close() {
 }
 
 void CurlUploadRequest::NextBuffer(std::string& next_buffer) {
+  ValidateOpen(__func__);
   Flush();
   next_buffer.swap(buffer_);
   buffer_rdptr_ = buffer_.begin();
@@ -87,7 +99,9 @@ void CurlUploadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_UPLOAD, 1L);
   handle_.SetOption(CURLOPT_CUSTOMREQUEST, "POST");
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  HandleCurlMultiErrorCode(__func__, error);
+  if (error != CURLM_ADDED_ALREADY) {
+    HandleCurlMultiErrorCode(__func__, error);
+  }
 }
 
 std::size_t CurlUploadRequest::ReadCallback(char* ptr, std::size_t size,
@@ -136,9 +150,13 @@ int CurlUploadRequest::PerformWork() {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
     // the info queue until we get the message about our handle.
-    int remaining;
+    int remaining = 0;
     do {
       auto msg = curl_multi_info_read(multi_.get(), &remaining);
+      if (msg == nullptr) {
+        // Nothing to report, just terminate the search for terminated handles.
+        break;
+      }
       if (msg->easy_handle != handle_.handle_.get()) {
         // Raise an exception if the handle is not the right one. This should
         // never happen, but better to give some meaningful error in this case.
@@ -172,6 +190,15 @@ void CurlUploadRequest::HandleCurlMultiErrorCode(char const* where,
   std::ostringstream os;
   os << where << ": unexpected error code in curl_multi_perform, [" << result
      << "]=" << curl_multi_strerror(result);
+  google::cloud::internal::RaiseRuntimeError(os.str());
+}
+
+void CurlUploadRequest::ValidateOpen(char const* where) {
+  if (not closing_) {
+    return;
+  }
+  std::ostringstream os;
+  os << "Attempting to use closed CurlUploadRequest in " << where;
   google::cloud::internal::RaiseRuntimeError(os.str());
 }
 

@@ -112,6 +112,34 @@ void DeleteObject(gcs::Client client, int& argc, char* argv[]) {
 }
 //! [delete object]
 
+void WriteObject(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "write-object <bucket-name> <object-name> <object-size-in-bytes>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto desired_size = std::stol(ConsumeArg(argc, argv));
+
+  //! [write object]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name, int desired_size) {
+    std::string const text = "Lorem ipsum dolor sit amet";
+    auto stream = client.WriteObject(bucket_name, object_name);
+
+    auto approximate_size = 0;
+    int lineno = 0;
+    while (approximate_size < desired_size) {
+      stream << ++lineno << ": " << text << "\n";
+      approximate_size += text.size();
+    }
+    auto object_metadata = stream.Close();
+    std::cout << "The object metadata is:\n" << object_metadata << std::endl;
+  }
+  //! [write object]
+  (client, bucket_name, object_name, desired_size);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -121,6 +149,7 @@ int main(int argc, char* argv[]) try {
       {"insert-object", &InsertObject},
       {"get-object-metadata", &GetObjectMetadata},
       {"delete-object", &DeleteObject},
+      {"write-object", &WriteObject},
   };
 
   if (argc < 2) {
