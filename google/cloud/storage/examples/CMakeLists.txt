@@ -1,3 +1,4 @@
+# ~~~
 # Copyright 2018 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ~~~
 
 # While it is tempting create these targets using a function or a loop, we want
 # to keep this particular file as simple as possible, as it is intended to be

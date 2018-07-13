@@ -1,3 +1,4 @@
+# ~~~
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ~~~
 
 set(storage_client_integration_tests
     bucket_integration_test.cc
@@ -18,21 +20,26 @@ set(storage_client_integration_tests
     object_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
-        PRIVATE
-            storage_client
-            google_cloud_cpp_testing
-            google_cloud_cpp_common
-            gmock
-            CURL::CURL
-            Threads::Threads
-            nlohmann_json
-            storage_common_options)
+                          PRIVATE storage_client
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  gmock
+                                  CURL::CURL
+                                  Threads::Threads
+                                  nlohmann_json
+                                  storage_common_options)
 endforeach ()
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
-    "storage_client_integration_tests")
+                     "storage_client_integration_tests")

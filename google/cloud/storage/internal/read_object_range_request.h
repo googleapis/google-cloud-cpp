@@ -28,9 +28,10 @@ namespace internal {
  * Request a range of object data.
  */
 class ReadObjectRangeRequest
-    : private RequestParameters<Generation, IfGenerationMatch,
-                                IfGenerationNotMatch, IfMetaGenerationMatch,
-                                IfMetaGenerationNotMatch, UserProject> {
+    : public GenericRequest<ReadObjectRangeRequest, Generation,
+                            IfGenerationMatch, IfGenerationNotMatch,
+                            IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+                            UserProject> {
  public:
   ReadObjectRangeRequest() = default;
 
@@ -74,23 +75,6 @@ class ReadObjectRangeRequest
     end_ = v;
     return *this;
   }
-
-  template <typename Parameter>
-  ReadObjectRangeRequest& set_parameter(Parameter&& p) {
-    RequestParameters::set_parameter(std::forward<Parameter>(p));
-    return *this;
-  }
-
-  template <typename... Parameters>
-  ReadObjectRangeRequest& set_multiple_parameters(Parameters&&... p) {
-    RequestParameters::set_multiple_parameters(std::forward<Parameters>(p)...);
-    return *this;
-  }
-
-  using RequestParameters::AddParametersToHttpRequest;
-
-  /// Dump parameter values to a std::ostream
-  using RequestParameters::DumpParameters;
 
  private:
   std::string bucket_name_;

@@ -1,3 +1,4 @@
+# ~~~
 # Copyright 2018 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ~~~
 
 # While it is tempting create these targets using a function or a loop, we want
 # to keep this particular file as simple as possible, as it is intended to be
@@ -19,12 +21,17 @@
 add_executable(bigtable_hello_world bigtable_hello_world.cc)
 target_link_libraries(bigtable_hello_world bigtable_client)
 
+add_executable(bigtable_hello_app_profile bigtable_hello_app_profile.cc)
+target_link_libraries(bigtable_hello_app_profile bigtable_client)
+
 add_executable(bigtable_samples bigtable_samples.cc)
 target_link_libraries(bigtable_samples bigtable_client)
 
-add_executable(bigtable_samples_instance_admin bigtable_samples_instance_admin.cc)
+add_executable(bigtable_samples_instance_admin
+               bigtable_samples_instance_admin.cc)
 target_link_libraries(bigtable_samples_instance_admin bigtable_client)
 
-add_executable(bigtable_samples_instance_admin_ext bigtable_samples_instance_admin_ext.cc)
+add_executable(bigtable_samples_instance_admin_ext 
+               bigtable_samples_instance_admin_ext.cc)
 target_link_libraries(bigtable_samples_instance_admin_ext bigtable_client)
 

@@ -28,34 +28,49 @@ namespace internal {
  */
 class RetryClient : public RawClient {
  public:
-  RetryClient(std::shared_ptr<RawClient> client);
+  struct DefaultPolicies {};
+  explicit RetryClient(std::shared_ptr<RawClient> client,
+                       DefaultPolicies unused);
 
-  template <typename RetryPolicy, typename BackoffPolicy>
-  RetryClient(std::shared_ptr<RawClient> client, RetryPolicy retry_policy,
-              BackoffPolicy backoff_policy)
-      : client_(client),
-        retry_policy_(retry_policy.clone()),
-        backoff_policy_(backoff_policy.clone()) {}
+  template <typename... Policies>
+  explicit RetryClient(std::shared_ptr<RawClient> client,
+                       Policies&&... policies)
+      : RetryClient(std::move(client), DefaultPolicies{}) {
+    ApplyPolicies(std::forward<Policies>(policies)...);
+  }
+
   ~RetryClient() override = default;
 
   ClientOptions const& client_options() const override;
 
   std::pair<Status, BucketMetadata> GetBucketMetadata(
-      internal::GetBucketMetadataRequest const& request) override;
+      GetBucketMetadataRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
-      internal::InsertObjectMediaRequest const& request) override;
+      InsertObjectMediaRequest const& request) override;
 
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
-      internal::ReadObjectRangeRequest const&) override;
+      ReadObjectRangeRequest const&) override;
 
-  std::pair<Status, internal::ListObjectsResponse> ListObjects(
-      internal::ListObjectsRequest const&) override;
+  std::pair<Status, ListObjectsResponse> ListObjects(
+      ListObjectsRequest const&) override;
 
-  std::pair<Status, internal::EmptyResponse> DeleteObject(
-      internal::DeleteObjectRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteObject(
+      DeleteObjectRequest const&) override;
 
  private:
+  void Apply(RetryPolicy& policy) { retry_policy_ = policy.clone(); }
+
+  void Apply(BackoffPolicy& policy) { backoff_policy_ = policy.clone(); }
+
+  void ApplyPolicies() {}
+
+  template <typename P, typename... Policies>
+  void ApplyPolicies(P&& head, Policies&&... policies) {
+    Apply(head);
+    ApplyPolicies(std::forward<Policies>(policies)...);
+  }
+
   std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy> retry_policy_;
   std::shared_ptr<BackoffPolicy> backoff_policy_;

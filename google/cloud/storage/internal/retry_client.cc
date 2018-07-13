@@ -43,7 +43,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using namespace google::cloud::storage::internal::raw_client_wrapper_utils;
+using namespace raw_client_wrapper_utils;
 
 /**
  * Call a client operation with retries borrowing the RPC policies.
@@ -64,10 +64,8 @@ template <typename MemberFunction>
 static typename std::enable_if<
     CheckSignature<MemberFunction>::value,
     typename CheckSignature<MemberFunction>::ReturnType>::type
-MakeCall(google::cloud::storage::RetryPolicy& retry_policy,
-         google::cloud::storage::BackoffPolicy& backoff_policy,
-         google::cloud::storage::internal::RawClient& client,
-         MemberFunction function,
+MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+         RawClient& client, MemberFunction function,
          typename CheckSignature<MemberFunction>::RequestType const& request,
          char const* error_message) {
   google::cloud::storage::Status last_status;
@@ -96,22 +94,25 @@ MakeCall(google::cloud::storage::RetryPolicy& retry_policy,
 }
 }  // namespace
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client)
-    : RetryClient(
-          std::move(client),
-          google::cloud::internal::LimitedTimeRetryPolicy<Status, StatusTraits>(
-              STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD),
-          google::cloud::internal::ExponentialBackoffPolicy(
-              STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
-              STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
-              STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)) {}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client,
+                         DefaultPolicies unused)
+    : client_(std::move(client)) {
+  retry_policy_ =
+      LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
+          .clone();
+  backoff_policy_ =
+      ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
+                               STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
+                               STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
+          .clone();
+}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
 }
 
 std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
-    internal::GetBucketMetadataRequest const& request) {
+    GetBucketMetadataRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
@@ -119,7 +120,7 @@ std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
 }
 
 std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
-    internal::InsertObjectMediaRequest const& request) {
+    InsertObjectMediaRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
@@ -127,23 +128,23 @@ std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
 }
 
 std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
-    internal::ReadObjectRangeRequest const& request) {
+    ReadObjectRangeRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
                   &RawClient::ReadObjectRangeMedia, request, __func__);
 }
 
-std::pair<Status, internal::ListObjectsResponse> RetryClient::ListObjects(
-    internal::ListObjectsRequest const& request) {
+std::pair<Status, ListObjectsResponse> RetryClient::ListObjects(
+    ListObjectsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
                   &RawClient::ListObjects, request, __func__);
 }
 
-std::pair<Status, internal::EmptyResponse> RetryClient::DeleteObject(
-    internal::DeleteObjectRequest const& request) {
+std::pair<Status, EmptyResponse> RetryClient::DeleteObject(
+    DeleteObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,

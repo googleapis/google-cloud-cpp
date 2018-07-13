@@ -28,9 +28,9 @@ namespace internal {
  * Delete an object.
  */
 class DeleteObjectRequest
-    : private RequestParameters<Generation, IfGenerationMatch,
-                                IfGenerationNotMatch, IfMetaGenerationMatch,
-                                IfMetaGenerationNotMatch, UserProject> {
+    : public GenericRequest<DeleteObjectRequest, Generation, IfGenerationMatch,
+                            IfGenerationNotMatch, IfMetaGenerationMatch,
+                            IfMetaGenerationNotMatch, UserProject> {
  public:
   DeleteObjectRequest() = default;
   explicit DeleteObjectRequest(std::string bucket_name, std::string object_name)
@@ -48,48 +48,6 @@ class DeleteObjectRequest
     object_name_ = std::move(object_name);
     return *this;
   }
-  /**
-   * Set a single optional parameter.
-   *
-   * @tparam Parameter the type of the parameter.
-   * @param p the parameter value.
-   * @return a reference to this object for chaining.
-   */
-  template <typename Parameter>
-  DeleteObjectRequest& set_parameter(Parameter&& p) {
-    RequestParameters::set_parameter(std::forward<Parameter>(p));
-    return *this;
-  }
-
-  /**
-   * Change one or more parameters for the request.
-   *
-   * This is a shorthand to replace:
-   *
-   * @code
-   * request.set_parameter(m1).set_parameter(m2).set_parameter(m3)
-   * @endcode
-   *
-   * with:
-   *
-   * @code
-   * request.set_multiple_parameters(m1, m2, m3)
-   * @endcode
-
-   * @tparam Parameters the type of the parameters
-   * @param p the parameter values
-   * @return The object after all the parameters have been changed.
-   */
-  template <typename... Parameters>
-  DeleteObjectRequest& set_multiple_parameters(Parameters&&... p) {
-    RequestParameters::set_multiple_parameters(std::forward<Parameters>(p)...);
-    return *this;
-  }
-
-  using RequestParameters::AddParametersToHttpRequest;
-
-  /// Dump parameter values to a std::ostream
-  using RequestParameters::DumpParameters;
 
  private:
   std::string bucket_name_;
