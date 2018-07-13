@@ -45,4 +45,3 @@ cc_binary(
     srcs = ["bigtable_samples_instance_admin_ext.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
-
