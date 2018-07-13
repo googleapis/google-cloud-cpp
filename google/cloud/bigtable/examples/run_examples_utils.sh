@@ -145,8 +145,7 @@ function run_all_instance_admin_examples {
     ${setenv} ../examples/bigtable_samples_instance_admin run \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
-  cleanup_instance "${project_id}" "${INSTANCE}"
-  
+
   reset_trap
   echo
 }
