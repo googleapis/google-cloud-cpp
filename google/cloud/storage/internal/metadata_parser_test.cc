@@ -70,7 +70,7 @@ TEST(MetadataParserTest, ParseLongFieldFromString) {
 }
 
 /// @test Verify that we parse missing long values in JSON objects.
-TEST(MetadataParserTest, ParseMissinLongField) {
+TEST(MetadataParserTest, ParseMissingLongField) {
   std::string text = R"""({
       "counter": "42"
 })""";
@@ -131,7 +131,7 @@ TEST(MetadataParserTest, ParseUnsignedLongFieldFromString) {
 }
 
 /// @test Verify that we parse missing long values in JSON objects.
-TEST(MetadataParserTest, ParseMissinUnsignedLongField) {
+TEST(MetadataParserTest, ParseMissingUnsignedLongField) {
   std::string text = R"""({
       "size": "42"
 })""";

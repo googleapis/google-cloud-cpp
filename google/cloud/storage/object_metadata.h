@@ -106,9 +106,12 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool has_metadata(std::string const& key) const {
     return metadata_.end() != metadata_.find(key);
   }
+
   std::string const& metadata(std::string const& key) const {
     return metadata_.at(key);
   }
+
+  /// Delete a metadata entry. This is a no-op if the key does not exist.
   ObjectMetadata& delete_metadata(std::string const& key) {
     auto i = metadata_.find(key);
     if (i == metadata_.end()) {
@@ -117,6 +120,8 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     metadata_.erase(i);
     return *this;
   }
+
+  /// Insert or update the metadata entry.
   ObjectMetadata& upsert_metadata(std::string key, std::string value) {
     auto i = metadata_.lower_bound(key);
     if (i == metadata_.end() or i->first != key) {

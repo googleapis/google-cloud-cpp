@@ -39,7 +39,7 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   result.content_language_ = json.value("contentLanguage", "");
   result.content_type_ = json.value("contentType", "");
   result.crc32c_ = json.value("crc32c", "");
-  if (0 != json.count("customerEncryption")) {
+  if (json.count("customerEncryption") != 0) {
     auto field = json["customerEncryption"];
     result.customer_encryption_.encryption_algorithm =
         field.value("encryptionAlgorithm", "");
