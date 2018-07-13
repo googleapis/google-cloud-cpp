@@ -55,7 +55,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = storage::ObjectMetadata::ParseFromJson(text);
+  auto expected = storage::ObjectMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Invoke(
@@ -153,7 +153,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto expected = ObjectMetadata::ParseFromJson(text);
+  auto expected = ObjectMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, GetObjectMetadata(_))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))

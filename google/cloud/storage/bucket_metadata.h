@@ -32,12 +32,16 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * TODO(#537) - complete the implementation.
  */
-class BucketMetadata : private internal::CommonMetadata {
+class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
-  BucketMetadata() = default;
+  BucketMetadata() : project_number_(0) {}
 
   static BucketMetadata ParseFromJson(internal::nl::json const& json);
   static BucketMetadata ParseFromString(std::string const& payload);
+
+  using CommonMetadata::etag;
+  using CommonMetadata::id;
+  using CommonMetadata::kind;
 
   std::size_t label_count() const { return labels_.size(); }
   bool has_label(std::string const& key) const {
@@ -47,13 +51,11 @@ class BucketMetadata : private internal::CommonMetadata {
     return labels_.at(key);
   }
   std::string const& location() const { return location_; }
-  std::int64_t const& project_number() const { return project_number_; }
 
-  using CommonMetadata::etag;
-  using CommonMetadata::id;
-  using CommonMetadata::kind;
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
+  std::int64_t const& project_number() const { return project_number_; }
+
   using CommonMetadata::self_link;
   using CommonMetadata::storage_class;
   using CommonMetadata::time_created;

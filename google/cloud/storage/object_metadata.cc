@@ -20,38 +20,111 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-ObjectMetadata ObjectMetadata::ParseFromJson(std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload);
+ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   ObjectMetadata result{};
-  static_cast<CommonMetadata&>(result) =
-      internal::MetadataParser::ParseCommonMetadata(json);
+  static_cast<CommonMetadata<ObjectMetadata>&>(result) =
+      CommonMetadata<ObjectMetadata>::ParseFromJson(json);
+
+  if (json.count("acl") != 0) {
+    for (auto const& kv : json["acl"].items()) {
+      result.acl_.emplace_back(ObjectAccessControl::ParseFromJson(kv.value()));
+    }
+  }
+
   result.bucket_ = json.value("bucket", "");
-  result.generation_ =
-      internal::MetadataParser::ParseLongField(json, "generation");
+  result.cache_control_ = json.value("cacheControl", "");
+  result.component_count_ = internal::ParseLongField(json, "componentCount");
+  result.content_disposition_ = json.value("contentDisposition", "");
+  result.content_encoding_ = json.value("contentEncoding", "");
+  result.content_language_ = json.value("contentLanguage", "");
+  result.content_type_ = json.value("contentType", "");
+  result.crc32c_ = json.value("crc32c", "");
+  if (json.count("customerEncryption") != 0) {
+    auto field = json["customerEncryption"];
+    result.customer_encryption_.encryption_algorithm =
+        field.value("encryptionAlgorithm", "");
+    result.customer_encryption_.key_sha256 = field.value("keySha256", "");
+  }
+  result.generation_ = internal::ParseLongField(json, "generation");
+  result.kms_key_name_ = json.value("kmsKeyName", "");
+  result.md5_hash_ = json.value("md5Hash", "");
+  result.media_link_ = json.value("mediaLink", "");
   if (json.count("metadata") > 0) {
     for (auto const& kv : json["metadata"].items()) {
       result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
     }
   }
+  result.size_ = internal::ParseUnsignedLongField(json, "size");
+  result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
+  result.time_storage_class_updated_ =
+      internal::ParseTimestampField(json, "timeStorageClassUpdated");
   return result;
 }
 
+ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
+  auto json = internal::nl::json::parse(payload);
+  return ParseFromJson(json);
+}
+
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
-  return static_cast<internal::CommonMetadata const&>(*this) == rhs and
-         metadata_ == rhs.metadata_;
+  return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(*this) ==
+             rhs and
+         acl_ == rhs.acl_ and bucket_ == rhs.bucket_ and
+         cache_control_ == rhs.cache_control_ and
+         component_count_ == rhs.component_count_ and
+         content_disposition_ == rhs.content_disposition_ and
+         content_encoding_ == rhs.content_encoding_ and
+         content_language_ == rhs.content_language_ and
+         content_type_ == rhs.content_type_ and crc32c_ == rhs.crc32c_ and
+         customer_encryption_.encryption_algorithm ==
+             rhs.customer_encryption_.encryption_algorithm and
+         customer_encryption_.key_sha256 ==
+             rhs.customer_encryption_.key_sha256 and
+         generation_ == rhs.generation_ and
+         kms_key_name_ == rhs.kms_key_name_ and md5_hash_ == rhs.md5_hash_ and
+         media_link_ == rhs.media_link_ and metadata_ == rhs.metadata_ and
+         time_deleted_ == rhs.time_deleted_ and
+         time_storage_class_updated_ == rhs.time_storage_class_updated_ and
+         size_ == rhs.size_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
-  os << static_cast<internal::CommonMetadata const&>(rhs)
-     << ", bucket=" << rhs.bucket_ << ", generation_=" << rhs.generation_
-     << ", metadata={";
-  char const* sep = "metadata.";
+  os << "ObjectMetadata={name=" << rhs.name() << ", acl=[";
+  char const* sep = "";
+  for (auto const& acl : rhs.acl()) {
+    os << sep << acl;
+    sep = ", ";
+  }
+  os << ", bucket=" << rhs.bucket() << ", cache_control=" << rhs.cache_control()
+     << ", component_count=" << rhs.component_count()
+     << ", content_disposition=" << rhs.content_disposition()
+     << ", content_encoding=" << rhs.content_encoding()
+     << ", content_language=" << rhs.content_language()
+     << ", content_type=" << rhs.content_type() << ", crc32c=" << rhs.crc32c()
+     << ", customer_encryption.encryption_algorithm="
+     << rhs.customer_encryption().encryption_algorithm
+     << ", customer_encryption.key_sha256="
+     << rhs.customer_encryption().key_sha256 << ", etag=" << rhs.etag()
+     << ", generation=" << rhs.generation() << ", id=" << rhs.id()
+     << ", kind=" << rhs.kind() << ", kms_key_name=" << rhs.kms_key_name()
+     << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
+  sep = "metadata.";
   for (auto const& kv : rhs.metadata_) {
     os << sep << kv.first << "=" << kv.second;
     sep = ", metadata.";
   }
-  return os << "}";
+  os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
+     << ", owner.entity=" << rhs.owner().entity
+     << ", owner.entity_id=" << rhs.owner().entity_id
+     << ", self_link=" << rhs.self_link()
+     << ", storage_class=" << rhs.storage_class()
+     << ", time_created=" << rhs.time_created().time_since_epoch().count()
+     << ", time_deleted=" << rhs.time_deleted().time_since_epoch().count()
+     << ", time_storage_class_updated="
+     << rhs.time_storage_class_updated().time_since_epoch().count()
+     << ", updated=" << rhs.updated().time_since_epoch().count() << "}";
+  return os;
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -91,7 +91,7 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(
-          std::make_pair(Status(), ObjectMetadata::ParseFromJson(text))));
+          std::make_pair(Status(), ObjectMetadata::ParseFromString(text))));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -145,8 +145,8 @@ TEST_F(LoggingClientTest, ReadObjectRangeMedia) {
 
 TEST_F(LoggingClientTest, ListObjects) {
   std::vector<ObjectMetadata> items = {
-      ObjectMetadata::ParseFromJson(R""({"name": "response-object-o1"})""),
-      ObjectMetadata::ParseFromJson(R""({"name": "response-object-o2"})""),
+      ObjectMetadata::ParseFromString(R""({"name": "response-object-o1"})""),
+      ObjectMetadata::ParseFromString(R""({"name": "response-object-o2"})""),
   };
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))

@@ -35,9 +35,8 @@ ListObjectsResponse ListObjectsResponse::FromHttpResponse(
   ListObjectsResponse result;
   result.next_page_token = json.value("nextPageToken", "");
 
-  // TODO() - optimize parsing, change ParseFromJson to take json object.
   for (auto const& kv : json["items"].items()) {
-    result.items.emplace_back(ObjectMetadata::ParseFromJson(kv.value().dump()));
+    result.items.emplace_back(ObjectMetadata::ParseFromJson(kv.value()));
   }
 
   return result;
