@@ -29,10 +29,11 @@ TEST(GetObjectMetadataRequestTest, OStream) {
   request.set_multiple_parameters(Generation(1), IfMetaGenerationMatch(3));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
-  EXPECT_THAT(os.str(), HasSubstr("my-object"));
-  EXPECT_THAT(os.str(), HasSubstr("generation=1"));
-  EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationMatch=3"));
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("my-object"));
+  EXPECT_THAT(str, HasSubstr("generation=1"));
+  EXPECT_THAT(str, HasSubstr("ifMetagenerationMatch=3"));
 }
 
 }  // namespace

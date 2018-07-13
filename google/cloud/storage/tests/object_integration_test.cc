@@ -88,14 +88,14 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
       << "This is unexpected as the test generates a random object name.";
 
   // Create the object, but only if it does not exist already.
-  auto insert_meta = client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                                         gcs::IfGenerationMatch(0));
+  gcs::ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), gcs::IfGenerationMatch(0));
   objects = client.ListObjects(bucket_name);
 
   std::vector<gcs::ObjectMetadata> current_list(objects.begin(), objects.end());
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
-  auto get_meta = client.GetObjectMetadata(
+  gcs::ObjectMetadata get_meta = client.GetObjectMetadata(
       bucket_name, object_name, gcs::Generation(insert_meta.generation()));
   EXPECT_EQ(get_meta, insert_meta);
 
@@ -114,8 +114,8 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  auto meta = client.InsertObject(bucket_name, object_name, expected,
-                                  gcs::IfGenerationMatch(0));
+  gcs::ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, gcs::IfGenerationMatch(0));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
