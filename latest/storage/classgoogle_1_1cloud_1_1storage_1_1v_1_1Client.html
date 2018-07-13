@@ -109,6 +109,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#abd87fb73090a0dc45224f93ef8fb6cd4">InsertObject</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string contents, Modifiers &amp;&amp;... modifiers)</td></tr>
 <tr class="memdesc:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object given its name and media (contents).  <a href="#abd87fb73090a0dc45224f93ef8fb6cd4">More...</a><br /></td></tr>
 <tr class="separator:abd87fb73090a0dc45224f93ef8fb6cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7253cda31bbaf2921bfe5c4a8611ddbf"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:a7253cda31bbaf2921bfe5c4a8611ddbf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a7253cda31bbaf2921bfe5c4a8611ddbf">GetObjectMetadata</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Modifiers &amp;&amp;... modifiers)</td></tr>
+<tr class="memdesc:a7253cda31bbaf2921bfe5c4a8611ddbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the object metadata and return it.  <a href="#a7253cda31bbaf2921bfe5c4a8611ddbf">More...</a><br /></td></tr>
+<tr class="separator:a7253cda31bbaf2921bfe5c4a8611ddbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b4e411a7826728ab6413cb9ebce946a"><td class="memTemplParams" colspan="2">template&lt;typename... Parameters&gt; </td></tr>
 <tr class="memitem:a5b4e411a7826728ab6413cb9ebce946a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html">ListObjectsReader</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a5b4e411a7826728ab6413cb9ebce946a">ListObjects</a> (std::string const &amp;bucket_name, Parameters &amp;&amp;... parameters)</td></tr>
 <tr class="memdesc:a5b4e411a7826728ab6413cb9ebce946a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the objects in a bucket.  <a href="#a5b4e411a7826728ab6413cb9ebce946a">More...</a><br /></td></tr>
@@ -392,6 +396,67 @@ template&lt;typename... Modifiers&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a600b8a5bcb7807d3c3691a820dd25d63">GetBucketMetadata</a>(storage::Client client, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{<span class="stringliteral">&quot;get-bucket-metadata &lt;bucket-name&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> bucket_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> meta = client.GetBucketMetadata(bucket_name);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="a7253cda31bbaf2921bfe5c4a8611ddbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7253cda31bbaf2921bfe5c4a8611ddbf">&#9670;&nbsp;</a></span>GetObjectMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Modifiers&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html">ObjectMetadata</a> google::cloud::storage::v::Client::GetObjectMetadata </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Modifiers &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>modifiers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fetch the object metadata and return it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the bucket containing the object. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the object name. </td></tr>
+    <tr><td class="paramname">modifiers</td><td>a variadic list. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Generation.html">Generation</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationMatch.html">IfGenerationMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationNotMatch.html">IfGenerationNotMatch</a></code>, <code>IfMetagenerationMatch</code>, <code>IfMetagenerationNotMatch</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Projection.html">Projection</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the metadata cannot be fetched using the current policies.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::storage::Client client, std::string bucket_name,</div><div class="line">     std::string object_name) {</div><div class="line">    <span class="keyword">auto</span> meta = client.GetObjectMetadata(bucket_name, object_name);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
