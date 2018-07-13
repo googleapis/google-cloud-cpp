@@ -53,8 +53,12 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     find_program(CCACHE_FOUND ccache NAMES /usr/bin/ccache)
     if (CCACHE_FOUND)
         message(STATUS "ccache found: ${CCACHE_FOUND}")
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_FOUND}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CCACHE_FOUND}")
+
+        set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
+            "-DCMAKE_CXX_COMPILER_LAUNCHER=${CCACHE_FOUND}"
+            "-DCMAKE_CC_COMPILER_LAUNCHER=${CCACHE_FOUND}")
     endif ()
 endif ()
 

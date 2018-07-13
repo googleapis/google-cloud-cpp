@@ -19,11 +19,11 @@ find_package(Threads REQUIRED)
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
-set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "module"
+set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "external"
     CACHE STRING "How to find the gRPC library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
              PROPERTY STRINGS
-                      "module"
+                      "external"
                       "package"
                       "vcpkg"
                       "pkg-config")
@@ -50,44 +50,57 @@ set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
     /wd4838
     /wd4996)
 
-if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "module")
-    if (NOT GRPC_ROOT_DIR)
-        set(GRPC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/grpc)
-    endif ()
-    if (NOT EXISTS "${GRPC_ROOT_DIR}/CMakeLists.txt")
-        message(
-            ERROR
-            "GOOGLE_CLOUD_CPP_GRPC_PROVIDER is \"module\" but GRPC_ROOT_DIR is wrong"
-            )
-    endif ()
-    add_subdirectory(${GRPC_ROOT_DIR} third_party/grpc EXCLUDE_FROM_ALL)
-    add_library(gRPC::grpc++ ALIAS grpc++)
-    add_library(gRPC::grpc ALIAS grpc)
-    add_library(protobuf::libprotobuf ALIAS libprotobuf)
+if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
+    include(external/protobuf)
+    include(external/grpc)
 
-    # The necessary compiler options and definitions are not defined by the
-    # targets, we need to add them.
-    if (WIN32)
-        target_compile_definitions(libprotobuf PUBLIC
-                                   ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
-    endif (WIN32)
-    if (MSVC)
-        target_compile_options(libprotobuf
-                               PUBLIC ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
-    endif (MSVC)
+    include(ExternalProjectHelper)
+    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
+    add_dependencies(protobuf::libprotobuf protobuf_project)
+    set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
+    set_library_properties_for_external_project(protobuf::libprotobuf z)
+    set_property(TARGET protobuf::libprotobuf
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
+                          Threads::Threads)
 
-    # TODO(#286) - workaround build breakage for gRPC v1.10.x on Ubuntu:16.04.
-    include(CheckCXXCompilerFlag)
-    check_cxx_compiler_flag(-Wno-maybe-uninitialized
-                            __cxx_supports_wno_maybe_unitialized)
-    if (__cxx_supports_wno_maybe_unitialized)
-        target_compile_options(ssl PRIVATE -Wno-maybe-uninitialized)
-    endif ()
+    add_library(c-ares::cares INTERFACE IMPORTED)
+    set_library_properties_for_external_project(c-ares::cares cares
+                                                ALWAYS_SHARED)
+    add_dependencies(c-ares::cares c_ares_project)
 
-    # The binary name is different on some platforms, use CMake magic to get it.
-    set(PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protoc>)
+    find_package(OpenSSL REQUIRED)
+
+    add_library(gRPC::gpr INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::gpr gpr)
+    add_dependencies(gRPC::gpr grpc_project)
+    set_property(TARGET gRPC::gpr
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES c-ares::cares)
+
+    add_library(gRPC::grpc INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::grpc grpc)
+    add_dependencies(gRPC::grpc grpc_project)
+    set_property(TARGET gRPC::grpc
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          gRPC::gpr
+                          OpenSSL::SSL
+                          OpenSSL::Crypto
+                          protobuf::libprotobuf)
+
+    add_library(gRPC::grpc++ INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::grpc++ grpc++)
+    add_dependencies(gRPC::grpc++ grpc_project)
+    set_property(TARGET gRPC::grpc++
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc c-ares::cares)
+
+    # Discover the protobuf compiler and the gRPC plugin.
+    set_executable_name_for_external_project(PROTOBUF_PROTOC_EXECUTABLE protoc)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    set(PROTOC_GRPCPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
+    set_executable_name_for_external_project(PROTOC_GRPCPP_PLUGIN_EXECUTABLE
+                                             grpc_cpp_plugin)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
 
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
