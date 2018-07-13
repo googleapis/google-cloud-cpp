@@ -85,16 +85,16 @@ the Bigtable client library.
 #### Usage
 
 ```console
-$ ./bigtable_samples_instance_admin
+$ ./bigtable_samples_instance_admin_ext
 
-Usage: bigtable_samples_instance_admin <command> <project_id> [arguments]
+Usage: bigtable_samples_instance_admin_ext <command> <project_id> [arguments]
 
 Examples:
-  bigtable_samples_instance_admin run my-project my-instance my-cluster us-central1-f
-  bigtable_samples_instance_admin create-dev-instance my-project my-instance us-central1-f
-  bigtable_samples_instance_admin delete-instance my-project my-instance
-  bigtable_samples_instance_admin create-cluster my-project my-instance my-cluster us-central1-a
-  bigtable_samples_instance_admin delete-cluster my-project my-instance my-cluster
+  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster us-central1-f
+  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance us-central1-f
+  bigtable_samples_instance_admin_ext delete-instance my-project my-instance
+  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster us-central1-a
+  bigtable_samples_instance_admin_ext delete-cluster my-project my-instance my-cluster
 ```
 
 #### Run instance admin samples
@@ -106,8 +106,8 @@ $ export PROJECT_ID=... # Your Google Cloud Platform project ID
 $ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
 $ export CLUSTER_ID=... # Your Cloud Bigtable cluster ID
 $ export ZONE=... # Name of the zone where the example will create a new instance
-$ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
+$ ./bigtable_samples_instance_admin_ext run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
 ```
 
 [hello_world_code]: bigtable_hello_world.cc
-[instance_admin_code]: bigtable_samples_instance_admin.cc
+[instance_admin_code]: bigtable_samples_instance_admin_ext.cc

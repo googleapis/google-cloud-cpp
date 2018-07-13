@@ -16,46 +16,13 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
+#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
-#include <cctype>
 #include <iostream>
 #include <sstream>
 
 namespace {
-std::string FormatData(char const* data, std::size_t size) {
-  std::string result = "\n";
-  std::size_t text_width = 24;
-  std::string text_column(text_width, ' ');
-  std::string hex_column(2 * text_width, ' ');
-
-  auto flush = [&result, &text_column, &hex_column, text_width] {
-    result += text_column;
-    result += ' ';
-    result += hex_column;
-    result += '\n';
-    text_column = std::string(text_width, ' ');
-    hex_column = std::string(2 * text_width, ' ');
-  };
-
-  std::size_t count = 0;
-  for (char const* c = data; c != data + size; ++c) {
-    if (std::isprint(*c) != 0) {
-      text_column[count] = *c;
-    } else {
-      text_column[count] = '.';
-    }
-    snprintf(&hex_column[2 * count], 3, "%02x", *c);
-    ++count;
-    if (count == text_width) {
-      flush();
-      count = 0;
-    }
-  }
-  if (count != 0) {
-    flush();
-  }
-  return result;
-}
+using google::cloud::storage::internal::BinaryDataAsDebugString;
 
 extern "C" int DebugCallback(CURL* /*handle*/, curl_infotype type, char* data,
                              std::size_t size, void* userptr) {
@@ -71,10 +38,12 @@ extern "C" int DebugCallback(CURL* /*handle*/, curl_infotype type, char* data,
       *debug_buffer += ">> curl(Send Header): " + std::string(data, size);
       break;
     case CURLINFO_DATA_IN:
-      *debug_buffer += ">> curl(Recv Data): " + FormatData(data, size);
+      *debug_buffer +=
+          ">> curl(Recv Data):\n" + BinaryDataAsDebugString(data, size);
       break;
     case CURLINFO_DATA_OUT:
-      *debug_buffer += ">> curl(Send Data): " + FormatData(data, size);
+      *debug_buffer +=
+          ">> curl(Send Data):\n" + BinaryDataAsDebugString(data, size);
       break;
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
@@ -147,6 +116,10 @@ void CurlRequest::PrepareRequest(std::string payload, bool enable_logging) {
     curl_easy_setopt(curl_, CURLOPT_DEBUGDATA, &debug_buffer_);
     curl_easy_setopt(curl_, CURLOPT_DEBUGFUNCTION, DebugCallback);
   }
+}
+
+void CurlRequest::SetMethod(std::string const& method) {
+  curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
 }
 
 HttpResponse CurlRequest::MakeRequest() {

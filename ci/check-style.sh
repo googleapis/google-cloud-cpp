@@ -40,6 +40,13 @@ find . \( -path ./.git -prune -o -path ./third_party -prune \
      -o \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
 
+# Apply buildifier to fix the BUILD and .bzl formatting rules.
+#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
+find . \( -path ./.git -prune -o -path ./third_party -prune \
+          -o -path './cmake-build-*' -o -path ./build-output -prune \) \
+     -o \( -name BUILD -o -name '*.bzl' \) -print0 \
+     | xargs -0 buildifier -mode=fix
+
 # Replace any #include for grpc++/grpc++.h with grpcpp/grpcpp.h, and in general,
 # any include of grpc++/ files with grpcpp/.  The paths with grpc++ are
 # obsoleted by the gRPC team, so we should not use them in our code.

@@ -25,7 +25,6 @@ if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "module")
     # application.
     # TODO(#310) - the name of this target can easily conflict, consider changing it.
     add_library(gmock
-            ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc
             ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest-all.cc
             ${PROJECT_THIRD_PARTY_DIR}/googletest/googlemock/src/gmock-all.cc)
     target_include_directories(gmock
@@ -62,7 +61,7 @@ elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     __gtest_import_library(GMock::GMock GMOCK_LIBRARY "DEBUG")
     # TODO(#310) - the name of this target can easily conflict, consider changing it.
     add_library(gmock INTERFACE)
-    target_link_libraries(gmock INTERFACE GMock::GMock GTest::Main)
+    target_link_libraries(gmock INTERFACE GMock::GMock)
 
 elseif ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     find_package(Threads REQUIRED)

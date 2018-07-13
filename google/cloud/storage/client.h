@@ -155,6 +155,28 @@ class Client {
     return ObjectReadStream(raw_client_, request);
   }
 
+  /**
+   * Delete an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include
+   *   `Generation`, `IfGenerationMatch` / `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch` / `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc delete object
+   */
+  template <typename... Parameters>
+  void DeleteObject(std::string const& bucket_name,
+                    std::string const& object_name,
+                    Parameters&&... parameters) {
+    internal::DeleteObjectRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    raw_client_->DeleteObject(request);
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

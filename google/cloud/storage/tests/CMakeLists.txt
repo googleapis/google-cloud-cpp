@@ -24,6 +24,8 @@ foreach (fname ${storage_client_integration_tests})
     target_link_libraries(${target}
         PRIVATE
             storage_client
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
             gmock
             CURL::CURL
             Threads::Threads

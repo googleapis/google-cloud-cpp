@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUD_TESTING_CHECK_PREDICATE_BECOMES_FALSE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUD_TESTING_CHECK_PREDICATE_BECOMES_FALSE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHECK_PREDICATE_BECOMES_FALSE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHECK_PREDICATE_BECOMES_FALSE_H_
 
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace cloud_testing {
+namespace testing_util {
 /**
  * Verify that an assertion becomes false after some prescribed time.
  *
@@ -74,9 +74,9 @@ void CheckPredicateBecomesFalse(Predicate&& predicate,
   EXPECT_LE(0, false_count);
 }
 
-}  // namespace cloud_testing
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUD_TESTING_CHECK_PREDICATE_BECOMES_FALSE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHECK_PREDICATE_BECOMES_FALSE_H_

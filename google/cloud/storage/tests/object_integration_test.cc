@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace gcs = google::cloud::storage;
@@ -78,10 +79,12 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   auto stream = client.Read(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {

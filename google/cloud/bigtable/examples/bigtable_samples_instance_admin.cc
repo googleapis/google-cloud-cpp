@@ -333,193 +333,216 @@ void RunInstanceOperations(
 }
 //! [run instance operations]
 
-// This full example demonstrate various instance operations
-// by initially creating production instance
-void RunFullExample1(std::string project_id, int argc, char* argv[]) {
-  if (argc != 6) {
-    throw Usage{
-        "run-full-example-1: <project-id> <instance-id> <cluster-id-1> "
-        "<zone-1> <cluster-id-2> <zone-2>"};
+//! [create app profile]
+void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                      int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-app-profile: <project-id> <instance-id> <profile-id>"};
   }
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
-  google::cloud::bigtable::ClusterId cluster_id_1(ConsumeArg(argc, argv));
-  std::string const zone_1 = ConsumeArg(argc, argv);
-  google::cloud::bigtable::ClusterId cluster_id_2(ConsumeArg(argc, argv));
-  std::string const zone_2 = ConsumeArg(argc, argv);
-
-  // [START connect_instance_admin]
-  google::cloud::bigtable::InstanceAdmin instance_admin(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()));
-  // [END connect_instance_admin]
-
-  // [START bigtable_check_instance_exists]
-  std::cout << "\nCheck Instance exists: " << std::endl;
-  auto instances = instance_admin.ListInstances();
-  auto instance_name =
-      instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instanceExists =
-      instances.end() !=
-      std::find_if(
-          instances.begin(), instances.end(),
-          [&instance_name](google::bigtable::admin::v2::Instance const& i) {
-            return i.name() == instance_name;
-          });
-  // [END bigtable_check_instance_exists]
-
-  // Create instance if does not exists
-  if (not instanceExists) {
-    // [START bigtable_create_prod_instance]
-    std::cout << "\nCreating a PRODUCTION Instance: ";
-    google::cloud::bigtable::DisplayName display_name("Put description here");
-
-    // production instance needs at least 3 nodes
-    auto cluster_config = google::cloud::bigtable::ClusterConfig(
-        zone_1, 3, google::cloud::bigtable::ClusterConfig::HDD);
-    google::cloud::bigtable::InstanceConfig config(
-        google::cloud::bigtable::InstanceId(instance_id), display_name,
-        {{cluster_id_1.get(), cluster_config}});
-    config.set_type(google::cloud::bigtable::InstanceConfig::PRODUCTION);
-
-    auto instance_details = instance_admin.CreateInstance(config).get();
-    std::cout << " Done" << std::endl;
-    // [END bigtable_create_prod_instance]
-  } else {
-    std::cout << "\nInstance " << instance_id.get() << " already exists."
-              << std::endl;
-    return;
-  }
-
-  // [START bigtable_list_instance]
-  std::cout << "\nListing Instances: " << std::endl;
-  auto instances_after = instance_admin.ListInstances();
-  for (auto const& instance : instances_after) {
-    std::cout << instance.name() << std::endl;
-  }
-  // [END bigtable_list_instance]
-
-  // [START bigtable_get_instance]
-  std::cout << "\nGet Instance: " << std::endl;
-  auto instance = instance_admin.GetInstance(instance_id.get());
-  std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
-  std::cout << "GetInstance details : " << std::endl << instance_detail;
-  // [END bigtable_get_instance]
-
-  // [START bigtable_list_cluster]
-  std::cout << "\nListing Clusters: " << std::endl;
-  auto cluster_list = instance_admin.ListClusters(instance_id.get());
-  std::cout << "Cluster Name List: " << std::endl;
-  for (auto const& cluster : cluster_list) {
-    std::cout << "Cluster Name: " << cluster.name() << std::endl;
-  }
-  // [END bigtable_list_cluster]
-
-  // [START bigtable_create_cluster]
-  std::cout << "\nAdding Cluster: " << std::endl;
-  auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      zone_2, 3, google::cloud::bigtable::ClusterConfig::HDD);
-  auto cluster =
-      instance_admin.CreateCluster(cluster_config, instance_id, cluster_id_2);
-  std::cout << "Cluster Created " << cluster.get().name() << std::endl;
-  // [END bigtable_create_cluster]
-
-  // [START bigtable_delete_cluster]
-  std::cout << "\nDeleting Cluster: ";
-  instance_admin.DeleteCluster(instance_id, cluster_id_2);
-  std::cout << " Done" << std::endl;
-  // [END bigtable_delete_cluster]
-
-  // [START bigtable_delete_instance]
-  std::cout << "\nDeleting Instance: ";
-  instance_admin.DeleteInstance(instance_id.get());
-  std::cout << " Done" << std::endl;
-  // [END bigtable_delete_instance]
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto config =
+      google::cloud::bigtable::AppProfileConfig::MultiClusterUseAny(profile_id);
+  auto profile = instance_admin.CreateAppProfile(instance_id, config);
+  std::cout << "New profile created with name=" << profile.name() << std::endl;
 }
+//! [create app profile]
 
-// This full example demonstrate various instance operations
-// by initially creating development instance
-void RunFullExample2(std::string project_id, int argc, char* argv[]) {
+//! [create app profile cluster]
+void CreateAppProfileCluster(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "run-full-example-1: <project-id> <instance-id> <cluster-id> <zone>"};
+        "create-app-profile-cluster: <project-id> <instance-id> <profile-id>"
+        " <cluster-id>"};
   }
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  std::string const zone = ConsumeArg(argc, argv);
-
-  // Create an instance admin endpoint.
-  google::cloud::bigtable::InstanceAdmin instance_admin(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()));
-
-  std::cout << "\nCheck Instance exists: " << std::endl;
-  auto instances = instance_admin.ListInstances();
-  auto instance_name =
-      instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instanceExists =
-      instances.end() !=
-      std::find_if(
-          instances.begin(), instances.end(),
-          [&instance_name](google::bigtable::admin::v2::Instance const& i) {
-            return i.name() == instance_name;
-          });
-  // Create instance if does not exists
-  if (not instanceExists) {
-    // [START bigtable_create_dev_instance]
-    std::cout << "\nCreating a DEVELOPMENT Instance: ";
-    google::cloud::bigtable::DisplayName display_name("Put description here");
-
-    auto cluster_config = google::cloud::bigtable::ClusterConfig(
-        zone, 0, google::cloud::bigtable::ClusterConfig::HDD);
-    google::cloud::bigtable::InstanceConfig config(
-        google::cloud::bigtable::InstanceId(instance_id), display_name,
-        {{cluster_id.get(), cluster_config}});
-    config.set_type(google::cloud::bigtable::InstanceConfig::DEVELOPMENT);
-
-    auto future = instance_admin.CreateInstance(config).get();
-    std::cout << " Done" << std::endl;
-    // [END bigtable_create_dev_instance]
-  } else {
-    std::cout << "\nInstance " << instance_id.get() << " already exists."
-              << std::endl;
-    return;
-  }
-
-  std::cout << "\nListing Instances: " << std::endl;
-  auto instances_after = instance_admin.ListInstances();
-  for (auto const& instance : instances_after) {
-    std::cout << instance.name() << std::endl;
-  }
-
-  std::cout << "\nGet Instance: " << std::endl;
-  auto instance = instance_admin.GetInstance(instance_id.get());
-  std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
-  std::cout << "GetInstance details : " << std::endl << instance_detail;
-
-  std::cout << "\nListing Clusters: " << std::endl;
-  auto cluster_list = instance_admin.ListClusters(instance_id.get());
-  std::cout << "Cluster Name List: " << std::endl;
-  for (auto const& cluster : cluster_list) {
-    std::cout << "Cluster Name: " << cluster.name() << std::endl;
-  }
-
-  std::cout << "\nDeleting Instance: ";
-  instance_admin.DeleteInstance(instance_id.get());
-  std::cout << " Done" << std::endl;
+  auto config = google::cloud::bigtable::AppProfileConfig::SingleClusterRouting(
+      profile_id, cluster_id);
+  auto profile = instance_admin.CreateAppProfile(instance_id, config);
+  std::cout << "New profile created with name=" << profile.name() << std::endl;
 }
+//! [create app profile cluster]
 
+//! [get app profile]
+void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                   int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"get-app-profile: <project-id> <instance-id> <profile-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto profile = instance_admin.GetAppProfile(instance_id, profile_id);
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [get app profile]
+
+//! [update app profile description]
+void UpdateAppProfileDescription(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "update-app-profile-description: <project-id> <instance-id>"
+        " <profile-id> <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  std::string description = ConsumeArg(argc, argv);
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig().set_description(
+          description));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile description]
+
+//! [update app profile routing any]
+void UpdateAppProfileRoutingAny(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "update-app-profile-routing-any: <project-id> <instance-id>"
+        " <profile-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_multi_cluster_use_any()
+          .set_ignore_warnings(true));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile routing any]
+
+//! [update app profile routing]
+void UpdateAppProfileRoutingSingleCluster(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "update-app-profile-routing: <project-id> <instance-id> <profile-id>"
+        " <cluster-id>"};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
+  auto profile_future = instance_admin.UpdateAppProfile(
+      instance_id, profile_id,
+      google::cloud::bigtable::AppProfileUpdateConfig()
+          .set_single_cluster_routing(cluster_id)
+          .set_ignore_warnings(true));
+  auto profile = profile_future.get();
+  std::string detail;
+  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  std::cout << "Application Profile details=" << detail << std::endl;
+}
+//! [update app profile routing]
+
+//! [list app profiles]
+void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
+                     int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-app-profiles: <project-id> <instance-id>"};
+  }
+  std::string instance_id(ConsumeArg(argc, argv));
+  auto profiles = instance_admin.ListAppProfiles(instance_id);
+  std::cout << "The " << instance_id << " instance has " << profiles.size()
+            << " application profiles" << std::endl;
+  for (auto const& profile : profiles) {
+    std::string detail;
+    google::protobuf::TextFormat::PrintToString(profile, &detail);
+    std::cout << detail << std::endl;
+  }
+}
+//! [list app profiles]
+
+//! [delete app profile]
+void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
+                      int argc, char* argv[]) {
+  std::string basic_usage =
+      "delete-app-profile: <project-id> <instance-id> <profile-id>"
+      " [ignore-warnings (default: true)]";
+  if (argc < 3) {
+    throw Usage{basic_usage};
+  }
+  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
+  google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
+  bool ignore_warnings = true;
+  if (argc >= 2) {
+    std::string arg = ConsumeArg(argc, argv);
+    if (arg == "true") {
+      ignore_warnings = true;
+    } else if (arg == "false") {
+      ignore_warnings = false;
+    } else {
+      auto msg = basic_usage;
+      msg +=
+          "\ndelete-app-profile: ignore-warnings parameter must be either"
+          " 'true' or 'false'";
+      throw Usage{msg};
+    }
+  }
+  instance_admin.DeleteAppProfile(instance_id, profile_id, ignore_warnings);
+  std::cout << "Application Profile deleted" << std::endl;
+};
+//! [delete app profile]
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
+  using CommandType = std::function<void(google::cloud::bigtable::InstanceAdmin,
+                                         int, char* [])>;
+
+  std::map<std::string, CommandType> commands = {
+      {"create-instance", &CreateInstance},
+      {"update-instance", &UpdateInstance},
+      {"list-instances", &ListInstances},
+      {"get-instance", &GetInstance},
+      {"delete-instance", &DeleteInstance},
+      {"create-cluster", &CreateCluster},
+      {"list-clusters", &ListClusters},
+      {"list-all-clusters", &ListAllClusters},
+      {"update-cluster", &UpdateCluster},
+      {"get-cluster", &GetCluster},
+      {"delete-cluster", &DeleteCluster},
+      {"create-app-profile", &CreateAppProfile},
+      {"create-app-profile-cluster", &CreateAppProfileCluster},
+      {"get-app-profile", &GetAppProfile},
+      {"update-app-profile-description", &UpdateAppProfileDescription},
+      {"update-app-profile-routing-any", &UpdateAppProfileRoutingAny},
+      {"update-app-profile-routing", &UpdateAppProfileRoutingSingleCluster},
+      {"list-app-profiles", &ListAppProfiles},
+      {"delete-app-profile", &DeleteAppProfile},
+      {"run", &RunInstanceOperations},
+      {"create-dev-instance", &CreateDevInstance},
+  };
+
   if (argc < 3) {
-    PrintUsage(argc, argv, "Missing command");
+    PrintUsage(argc, argv, "Missing command and/or project-id");
     return 1;
   }
 
-  std::string const command = ConsumeArg(argc, argv);
+  std::string const command_name = ConsumeArg(argc, argv);
   std::string const project_id = ConsumeArg(argc, argv);
+
+  auto command = commands.find(command_name);
+  if (commands.end() == command) {
+    PrintUsage(argc, argv, "Unknown command: " + command_name);
+    return 1;
+  }
 
   // Create an instance admin endpoint.
   //! [connect instance admin]
@@ -528,40 +551,7 @@ int main(int argc, char* argv[]) try {
           project_id, google::cloud::bigtable::ClientOptions()));
   //! [connect instance admin]
 
-  if (command == "run") {
-    RunInstanceOperations(instance_admin, argc, argv);
-  } else if (command == "create-instance") {
-    CreateInstance(instance_admin, argc, argv);
-  } else if (command == "create-dev-instance") {
-    CreateDevInstance(instance_admin, argc, argv);
-  } else if (command == "update-instance") {
-    UpdateInstance(instance_admin, argc, argv);
-  } else if (command == "list-instances") {
-    ListInstances(instance_admin, argc, argv);
-  } else if (command == "get-instance") {
-    GetInstance(instance_admin, argc, argv);
-  } else if (command == "delete-instance") {
-    DeleteInstance(instance_admin, argc, argv);
-  } else if (command == "create-cluster") {
-    CreateCluster(instance_admin, argc, argv);
-  } else if (command == "list-clusters") {
-    ListClusters(instance_admin, argc, argv);
-  } else if (command == "list-all-clusters") {
-    ListAllClusters(instance_admin, argc, argv);
-  } else if (command == "update-cluster") {
-    UpdateCluster(instance_admin, argc, argv);
-  } else if (command == "get-cluster") {
-    GetCluster(instance_admin, argc, argv);
-  } else if (command == "delete-cluster") {
-    DeleteCluster(instance_admin, argc, argv);
-  } else if (command == "run-full-example-1") {
-    RunFullExample1(project_id, argc, argv);
-  } else if (command == "run-full-example-2") {
-    RunFullExample2(project_id, argc, argv);
-  } else {
-    std::string msg("Unknown_command: " + command);
-    PrintUsage(argc, argv, msg);
-  }
+  command->second(instance_admin, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

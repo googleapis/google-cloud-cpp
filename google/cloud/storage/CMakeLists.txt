@@ -101,6 +101,9 @@ add_library(storage_client
     credentials.h
     credentials.cc
     internal/authorized_user_credentials.h
+    internal/binary_data_as_debug_string.h
+    internal/binary_data_as_debug_string.cc
+    internal/raw_client_wrapper_utils.h
     internal/common_metadata.h
     internal/common_metadata.cc
     internal/credential_constants.h
@@ -109,13 +112,21 @@ add_library(storage_client
     internal/curl_wrappers.h
     internal/curl_wrappers.cc
     internal/default_client.h
+    internal/delete_object_request.h
+    internal/delete_object_request.cc
+    internal/empty_response.h
+    internal/empty_response.cc
     internal/get_bucket_metadata_request.h
+    internal/get_bucket_metadata_request.cc
     internal/google_application_default_credentials_file.h
     internal/google_application_default_credentials_file.cc
     internal/http_response.h
     internal/insert_object_media_request.h
+    internal/insert_object_media_request.cc
     internal/list_objects_request.h
     internal/list_objects_request.cc
+    internal/logging_client.h
+    internal/logging_client.cc
     internal/metadata_parser.h
     internal/metadata_parser.cc
     internal/nljson.h
@@ -123,7 +134,7 @@ add_library(storage_client
     internal/parse_rfc3339.h
     internal/parse_rfc3339.cc
     internal/raw_client.h
-        internal/read_object_range_request.h
+    internal/read_object_range_request.h
     internal/read_object_range_request.cc
     internal/request_parameters.h
     internal/retry_client.h
@@ -189,10 +200,16 @@ create_bazel_config(storage_client_testing)
 set(storage_client_unit_tests
     bucket_metadata_test.cc
     bucket_test.cc
+    credentials_test.cc
     internal/authorized_user_credentials_test.cc
+    internal/binary_data_as_debug_string_test.cc
     internal/default_client_test.cc
+    internal/delete_object_request_test.cc
+    internal/get_bucket_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
+    internal/insert_object_media_request_test.cc
     internal/list_objects_request_test.cc
+    internal/logging_client_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/parse_rfc3339_test.cc
@@ -202,7 +219,9 @@ set(storage_client_unit_tests
     list_objects_reader_test.cc
     object_metadata_test.cc
     object_stream_test.cc
+    object_test.cc
     retry_policy_test.cc
+    storage_client_options_test.cc
     link_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
@@ -212,7 +231,9 @@ foreach (fname ${storage_client_unit_tests})
     target_link_libraries(${target}
         PRIVATE
             storage_client_testing
+            google_cloud_cpp_testing
             storage_client
+            google_cloud_cpp_testing
             gmock
             CURL::CURL
             storage_common_options

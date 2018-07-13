@@ -25,13 +25,3 @@ add_library(gtest
 target_include_directories(gtest
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
         PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)
-
-# Compile the gtest_main library.  This library is rarely installed or
-# pre-compiled because it should be configured with the same flags as the
-# application.
-add_library(gtest_main
-        ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/src/gtest_main.cc)
-target_include_directories(gtest_main
-        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest/include
-        PUBLIC ${PROJECT_THIRD_PARTY_DIR}/googletest/googletest)
-add_dependencies(gtest_main gtest)

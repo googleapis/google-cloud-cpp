@@ -104,6 +104,8 @@ configure_file(version_info.h.in version_info.h)
 add_library(bigtable_client
         admin_client.h
         admin_client.cc
+        app_profile_config.h
+        app_profile_config.cc
         bigtable_strong_types.h
         ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
         cell.h
@@ -225,6 +227,7 @@ create_bazel_config(bigtable_client_testing)
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_client_unit_tests
         admin_client_test.cc
+        app_profile_config_test.cc
         cell_test.cc
         client_options_test.cc
         cluster_config_test.cc
@@ -276,7 +279,11 @@ foreach (fname ${bigtable_client_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(${target} PRIVATE
-            bigtable_client_testing bigtable_client bigtable_protos
+            bigtable_client_testing
+            bigtable_client
+            bigtable_protos
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
             gmock gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
             bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})

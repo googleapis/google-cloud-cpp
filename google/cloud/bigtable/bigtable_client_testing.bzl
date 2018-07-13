@@ -24,4 +24,3 @@ bigtable_client_testing_SRCS = [
     "testing/table_integration_test.cc",
     "testing/table_test_fixture.cc",
 ]
-

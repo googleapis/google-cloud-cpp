@@ -83,6 +83,19 @@ void ReadObject(gcs::Client client, int& argc, char* argv[]) {
 }
 //! [read object]
 
+//! [delete object]
+void DeleteObject(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{"delete-object <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  client.DeleteObject(bucket_name, object_name);
+  std::cout << "Deleted " << object_name << " in bucket " << bucket_name
+            << std::endl;
+}
+//! [delete object]
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -90,6 +103,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"read-object", &ReadObject},
       {"insert-object", &InsertObject},
+      {"delete-object", &DeleteObject},
   };
 
   if (argc < 2) {

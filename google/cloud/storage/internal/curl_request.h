@@ -64,6 +64,9 @@ class CurlRequest {
    */
   void PrepareRequest(std::string payload, bool enable_logging);
 
+  /// Change the http method used for this request
+  void SetMethod(std::string const& method);
+
   /**
    * Make the prepared request.
    *

@@ -28,31 +28,43 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Implements a minimal API to administer Cloud Bigtable instances.
+ * Implements the APIs to administer Cloud Bigtable instances.
  */
 class InstanceAdmin {
  public:
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    */
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
+  explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : impl_(std::move(client)) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
    * @param client the interface to create grpc stubs, report errors, etc.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *     - `PollingPolicy` for how long will the class wait for
+   *       `google.longrunning.Operation` to complete. This class combines both
+   *       the backoff policy for checking long running operations and the
+   *       retry policy.
+   *
+   * @see GenericPollingPolicy, ExponentialBackoffPolicy,
+   *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
-  InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
-                RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : impl_(std::move(client), std::move(retry_policy),
-              std::move(backoff_policy)) {}
+  template <typename... Policies>
+  explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
+                         Policies&&... policies)
+      : impl_(std::move(client), std::forward<Policies>(policies)...) {}
 
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return impl_.project_name(); }
@@ -217,6 +229,84 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
+  /**
+   * Create a new application profile.
+   *
+   * @param instance_id the instance for the new application profile.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create app profile
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc create app profile cluster
+   */
+  google::bigtable::admin::v2::AppProfile CreateAppProfile(
+      bigtable::InstanceId const& instance_id, AppProfileConfig config);
+
+  /**
+   * Fetch the detailed information about an existing application profile.
+   *
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @return The proto describing the application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get app profile
+   */
+  google::bigtable::admin::v2::AppProfile GetAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id);
+
+  /**
+   * Create a new application profile.
+   *
+   * @param instance_id the instance for the new application profile.
+   * @param profile_id the id (not the full name) of the profile to update.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile description
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing any
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc update app profile routing
+   */
+  std::future<google::bigtable::admin::v2::AppProfile> UpdateAppProfile(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
+
+  /**
+   * List the application profiles in an instance.
+   *
+   * @param instance_id the instance to list the profiles for.
+   * @return a std::vector with the protos describing any profiles.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list app profiles
+   */
+  std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      std::string const& instance_id);
+
+  /**
+   * Delete an existing application profile.
+   *
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @param ignore_warnings if true, ignore safety checks when deleting the
+   *     application profile.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc delete app profile
+   */
+  void DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                        bigtable::AppProfileId const& profile_id,
+                        bool ignore_warnings = false);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(
@@ -235,6 +325,11 @@ class InstanceAdmin {
   // Implement UpdateCluster() with a separate thread.
   google::bigtable::admin::v2::Cluster UpdateClusterImpl(
       ClusterConfig cluster_config);
+
+  /// Poll the result of UpdateAppProfile in a separate thread.
+  google::bigtable::admin::v2::AppProfile UpdateAppProfileImpl(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
 
  private:
   noex::InstanceAdmin impl_;

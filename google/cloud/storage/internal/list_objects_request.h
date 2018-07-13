@@ -87,10 +87,15 @@ class ListObjectsRequest
 
   using RequestParameters::AddParametersToHttpRequest;
 
+  /// Dump parameter values to a std::ostream
+  using RequestParameters::DumpParameters;
+
  private:
   std::string bucket_name_;
   std::string page_token_;
 };
+
+std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 
 struct ListObjectsResponse {
   static ListObjectsResponse FromHttpResponse(HttpResponse&& response);
@@ -98,6 +103,8 @@ struct ListObjectsResponse {
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
 };
+
+std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

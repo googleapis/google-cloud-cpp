@@ -38,6 +38,8 @@ class RetryClient : public RawClient {
         backoff_policy_(backoff_policy.clone()) {}
   ~RetryClient() override = default;
 
+  ClientOptions const& client_options() const override;
+
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       internal::GetBucketMetadataRequest const& request) override;
 
@@ -49,6 +51,9 @@ class RetryClient : public RawClient {
 
   std::pair<Status, internal::ListObjectsResponse> ListObjects(
       internal::ListObjectsRequest const&) override;
+
+  std::pair<Status, internal::EmptyResponse> DeleteObject(
+      internal::DeleteObjectRequest const&) override;
 
  private:
   std::shared_ptr<RawClient> client_;

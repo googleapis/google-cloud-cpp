@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/internal/default_client.h"
+#include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include <sstream>
 #include <thread>
@@ -28,8 +29,12 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-Client::Client(std::shared_ptr<internal::RawClient> client) {
-  raw_client_.reset(new internal::RetryClient(std::move(client)));
+Client::Client(std::shared_ptr<internal::RawClient> client)
+    : raw_client_(std::move(client)) {
+  if (raw_client_->client_options().enable_raw_client_tracing()) {
+    raw_client_.reset(new internal::LoggingClient(std::move(raw_client_)));
+  }
+  raw_client_.reset(new internal::RetryClient(std::move(raw_client_)));
 }
 
 Client::Client(ClientOptions options)

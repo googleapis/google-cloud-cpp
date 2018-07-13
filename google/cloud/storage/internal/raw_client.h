@@ -18,6 +18,8 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/delete_object_request.h"
+#include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
@@ -40,6 +42,8 @@ class RawClient {
  public:
   virtual ~RawClient() = default;
 
+  virtual ClientOptions const& client_options() const = 0;
+
   /**
    * Execute a request to fetch bucket metadata.
    *
@@ -56,6 +60,9 @@ class RawClient {
 
   virtual std::pair<Status, internal::ListObjectsResponse> ListObjects(
       internal::ListObjectsRequest const&) = 0;
+
+  virtual std::pair<Status, internal::EmptyResponse> DeleteObject(
+      internal::DeleteObjectRequest const&) = 0;
 };
 
 }  // namespace internal

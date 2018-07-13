@@ -6,4 +6,3 @@ firestore_client_HDRS = [
 firestore_client_SRCS = [
     "field_path.cc",
 ]
-

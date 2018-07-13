@@ -61,7 +61,7 @@ class Table {
    */
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id)
-      : impl_(std::move(client), app_profile_id, table_id) {}
+      : impl_(std::move(client), std::move(app_profile_id), table_id) {}
 
   /**
    * Constructor with explicit policies.
@@ -87,39 +87,34 @@ class Table {
    *     credentials, the project id, and the instance id.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   * @param retry_policy the value of the `RPCRetryPolicy`, for example, the
-   *     policy type may be `LimitedErrorCountRetryPolicy` which
-   *     tolerates a maximum number of errors, the value controls how many.
-   * @param backoff_policy the value of the `RPCBackoffPolicy`, for example, the
-   *     policy type may be `ExponentialBackoffPolicy` which will
-   *     double the wait period on each failure, up to a limit.  The value
-   *     controls the initial and maximum wait periods.
-   * @param idempotent_mutation_policy the value of the
-   *     `IdempotentMutationPolicy`. The policies implemented by this library
-   *     (`SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy`) are
-   *     stateless, but the application may implement stateful policies.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
    *
-   * @tparam IdempotentMutationPolicy which mutations are retried. Use
-   *     `SafeIdempotentMutationPolicy` to only retry idempotent operations, use
-   *     `AlwaysRetryMutationPolicy` to retry all operations.  Read the caveats
-   *     in the class defintion to understand the downsides of the latter. You
-   *     can also create your own policies that decide which mutations to retry.
-   * @tparam RPCBackoffPolicy how to backoff from a failed RPC.  Currently only
-   *     `ExponentialBackoffPolicy` is implemented. You can also create your
-   *     own policies that backoff using a different algorithm.
-   * @tparam RPCRetryPolicy for how long to retry failed RPCs. Use
-   *     `LimitedErrorCountRetryPolicy` to limit the number of failures allowed.
-   *     Use `LimitedTimeRetryPolicy` to bound the time for any request.  You
-   *     can also create your own policies that combine time and error counts.
+   *     - `IdempotentMutationPolicy` which mutations are retried. Use
+   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
+   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
+   *       caveats in the class definition to understand the downsides of the
+   *       latter. You can also create your own policies that decide which
+   *       mutations to retry.
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *
+   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
+   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
+   *     LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename IdempotentMutationPolicy>
+  template <typename... Policies>
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-        IdempotentMutationPolicy idempotent_mutation_policy)
-      : impl_(std::move(client), table_id, std::move(retry_policy),
-              std::move(backoff_policy),
-              std::move(idempotent_mutation_policy)) {}
+        Policies&&... policies)
+      : impl_(std::move(client), table_id,
+              std::forward<Policies>(policies)...) {}
 
   /**
    * Constructor with explicit policies.
@@ -147,40 +142,34 @@ class Table {
    * snapshot APIs.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   * @param retry_policy the value of the `RPCRetryPolicy`, for example, the
-   *     policy type may be `LimitedErrorCountRetryPolicy` which
-   *     tolerates a maximum number of errors, the value controls how many.
-   * @param backoff_policy the value of the `RPCBackoffPolicy`, for example, the
-   *     policy type may be `ExponentialBackoffPolicy` which will
-   *     double the wait period on each failure, up to a limit.  The value
-   *     controls the initial and maximum wait periods.
-   * @param idempotent_mutation_policy the value of the
-   *     `IdempotentMutationPolicy`. The policies implemented by this library
-   *     (`SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy`) are
-   *     stateless, but the application may implement stateful policies.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `IdempotentMutationPolicy` which mutations are retried. Use
+   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
+   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
+   *       caveats in the class definition to understand the downsides of the
+   *       latter. You can also create your own policies that decide which
+   *       mutations to retry.
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
    *
-   * @tparam IdempotentMutationPolicy which mutations are retried. Use
-   *     `SafeIdempotentMutationPolicy` to only retry idempotent operations, use
-   *     `AlwaysRetryMutationPolicy` to retry all operations.  Read the caveats
-   *     in the class defintion to understand the downsides of the latter. You
-   *     can also create your own policies that decide which mutations to retry.
-   * @tparam RPCBackoffPolicy how to backoff from a failed RPC.  Currently only
-   *     `ExponentialBackoffPolicy` is implemented. You can also create your
-   *     own policies that backoff using a different algorithm.
-   * @tparam RPCRetryPolicy for how long to retry failed RPCs. Use
-   *     `LimitedErrorCountRetryPolicy` to limit the number of failures allowed.
-   *     Use `LimitedTimeRetryPolicy` to bound the time for any request.  You
-   *     can also create your own policies that combine time and error counts.
+   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
+   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
+   *     LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename IdempotentMutationPolicy>
+  template <typename... Policies>
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
-        RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-        IdempotentMutationPolicy idempotent_mutation_policy)
+        Policies&&... policies)
       : impl_(std::move(client), app_profile_id, table_id,
-              std::move(retry_policy), std::move(backoff_policy),
-              std::move(idempotent_mutation_policy)) {}
+              std::forward<Policies>(policies)...) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
 

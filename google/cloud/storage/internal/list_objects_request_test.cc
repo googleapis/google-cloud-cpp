@@ -18,18 +18,38 @@
 namespace google {
 namespace cloud {
 namespace storage {
-namespace testing {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
 namespace {
 
-TEST(ReadObjectRangeRequest, Simple) {
-  internal::ListObjectsRequest request("my-bucket");
+TEST(ListObjectsRequestTest, Simple) {
+  ListObjectsRequest request("my-bucket");
 
   EXPECT_EQ("my-bucket", request.bucket_name());
 
   request.set_parameter(Prefix("foo/"));
 }
 
-TEST(ReadObjectRangeResponse, Parse) {
+using ::testing::HasSubstr;
+
+TEST(ListObjectsRequestTest, OStreamBasic) {
+  ListObjectsRequest request("my-bucket");
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
+}
+
+TEST(ListObjectsRequestTest, OStreamParameter) {
+  ListObjectsRequest request("my-bucket");
+  request.set_multiple_parameters(UserProject("my-project"),
+                                  Prefix("foo-bar-baz/"));
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
+  EXPECT_THAT(os.str(), HasSubstr("prefix=foo-bar-baz/"));
+}
+
+TEST(ListObjectsResponseTest, Parse) {
   std::string object1 = R"""({
       "bucket": "foo-bar",
       "etag": "XYZ=",
@@ -78,14 +98,15 @@ TEST(ReadObjectRangeResponse, Parse) {
   auto o1 = ObjectMetadata::ParseFromJson(object1);
   auto o2 = ObjectMetadata::ParseFromJson(object2);
 
-  auto actual = internal::ListObjectsResponse::FromHttpResponse(
-      internal::HttpResponse{200, text, {}});
+  auto actual =
+      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
   EXPECT_EQ("some-token-42", actual.next_page_token);
   EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
 }
 
 }  // namespace
-}  // namespace testing
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
