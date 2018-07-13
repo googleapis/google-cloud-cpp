@@ -67,7 +67,7 @@ for how to do this.  Then you can clone the code:
 C:\...> cd \Users\%USERNAME%\source
 C:\...> git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
 C:\...> cd google-cloud-cpp
-C:\...> git submodule --init --recursive
+C:\...> git submodule update --init
 ```
 
 And compile the code using:
