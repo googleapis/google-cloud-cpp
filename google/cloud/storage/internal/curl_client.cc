@@ -77,9 +77,8 @@ std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
                         ObjectMetadata::ParseFromString(payload.payload));
 }
 
-std::pair<Status, internal::ReadObjectRangeResponse>
-CurlClient::ReadObjectRangeMedia(
-    internal::ReadObjectRangeRequest const& request) {
+std::pair<Status, ReadObjectRangeResponse> CurlClient::ReadObjectRangeMedia(
+    ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
@@ -105,8 +104,8 @@ CurlClient::ReadObjectRangeMedia(
       internal::ReadObjectRangeResponse::FromHttpResponse(std::move(payload)));
 }
 
-std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
-    internal::ListObjectsRequest const& request) {
+std::pair<Status, ListObjectsResponse> CurlClient::ListObjects(
+    ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o");
@@ -125,8 +124,8 @@ std::pair<Status, internal::ListObjectsResponse> CurlClient::ListObjects(
       internal::ListObjectsResponse::FromHttpResponse(std::move(payload)));
 }
 
-std::pair<Status, internal::EmptyResponse> CurlClient::DeleteObject(
-    internal::DeleteObjectRequest const& request) {
+std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
+    DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
@@ -141,6 +140,24 @@ std::pair<Status, internal::EmptyResponse> CurlClient::DeleteObject(
         internal::EmptyResponse{});
   }
   return std::make_pair(Status(), internal::EmptyResponse{});
+}
+
+std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
+    ListObjectAclRequest const& request) {
+  // Assume the bucket name is validated by the caller.
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name() + "/acl");
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status(),
+        internal::ListObjectAclResponse::FromHttpResponse(std::move(payload)));
+  }
+  return std::make_pair(Status{payload.status_code, std::move(payload.payload)},
+                        internal::ListObjectAclResponse{});
 }
 
 }  // namespace internal
