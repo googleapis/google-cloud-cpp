@@ -10,6 +10,7 @@ storage_client_unit_tests = [
     "internal/binary_data_as_debug_string_test.cc",
     "internal/delete_object_request_test.cc",
     "internal/get_bucket_metadata_request_test.cc",
+    "internal/get_object_metadata_request_test.cc",
     "internal/google_application_default_credentials_file_test.cc",
     "internal/insert_object_media_request_test.cc",
     "internal/list_buckets_request_test.cc",

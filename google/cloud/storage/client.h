@@ -108,6 +108,32 @@ class Client {
   }
 
   /**
+   * Fetch the object metadata and return it.
+   *
+   * @param bucket_name the bucket containing the object.
+   * @param object_name the object name.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `Generation`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `Projection`,
+   *   and `UserProject`.
+   *
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc get object metadata
+   */
+  template <typename... Modifiers>
+  ObjectMetadata GetObjectMetadata(std::string const& bucket_name,
+                                   std::string const& object_name,
+                                   Modifiers&&... modifiers) {
+    internal::GetObjectMetadataRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
+    return raw_client_->GetObjectMetadata(request).second;
+  }
+
+  /**
    * List the objects in a bucket.
    *
    * @param bucket_name the name of the bucket to list.

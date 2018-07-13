@@ -95,7 +95,13 @@ run_all_object_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly OBJECT_EXAMPLES_COMMANDS="insert-object read-object delete-object"
+  readonly OBJECT_EXAMPLES_COMMANDS=$(cat <<_EOF_
+insert-object
+get-object-metadata
+read-object
+delete-object
+_EOF_
+)
 
   if [ ! -x storage_object_samples ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \

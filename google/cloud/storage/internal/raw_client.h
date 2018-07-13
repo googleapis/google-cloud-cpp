@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/delete_object_request.h"
 #include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
+#include "google/cloud/storage/internal/get_object_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
@@ -54,6 +55,9 @@ class RawClient {
 
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
+
+  virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
+      GetObjectMetadataRequest const& request) = 0;
 
   virtual std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       ReadObjectRangeRequest const&) = 0;
