@@ -144,7 +144,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * Reading from the stream will result in http requests to get more data
    * from the GCS object.
    *
-   * @param buf an initialized ObjectWriteStreamBuf to upload the data.
+   * @param buf an initialized ObjectWriteStreambuf to upload the data.
    */
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf)

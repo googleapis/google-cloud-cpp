@@ -47,6 +47,33 @@ MakeCall(RawClient& client, MemberFunction function,
                 << response.second << "}";
   return response;
 }
+
+/**
+ * Call a RawClient operation logging only the input.
+ *
+ * This is useful when the result is not something you can easily log, such as
+ * a pointer of some kind.
+ *
+ * @tparam MemberFunction the signature of the member function.
+ * @param client the storage::RawClient object to make the call through.
+ * @param function the pointer to the member function to call.
+ * @param request an initialized request parameter for the call.
+ * @param error_message include this message in any exception or error log.
+ * @return the result from making the call;
+ */
+template <typename MemberFunction>
+static typename std::enable_if<
+    CheckSignature<MemberFunction>::value,
+    typename CheckSignature<MemberFunction>::ReturnType>::type
+MakeCallNoResponseLogging(
+    google::cloud::storage::internal::RawClient& client,
+    MemberFunction function,
+    typename CheckSignature<MemberFunction>::RequestType const& request,
+    char const* context) {
+  GCP_LOG(INFO) << context << " << " << request;
+  auto response = (client.*function)(request);
+  return response;
+}
 }  // namespace
 
 LoggingClient::LoggingClient(std::shared_ptr<RawClient> client)
@@ -80,6 +107,12 @@ std::pair<Status, ReadObjectRangeResponse> LoggingClient::ReadObjectRangeMedia(
     ReadObjectRangeRequest const& request) {
   return MakeCall(*client_, &RawClient::ReadObjectRangeMedia, request,
                   __func__);
+}
+
+std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+LoggingClient::WriteObject(InsertObjectStreamingRequest const& request) {
+  return MakeCallNoResponseLogging(*client_, &RawClient::WriteObject, request,
+                                   __func__);
 }
 
 std::pair<Status, ListObjectsResponse> LoggingClient::ListObjects(

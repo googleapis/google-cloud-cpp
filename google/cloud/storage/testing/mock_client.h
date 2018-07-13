@@ -46,6 +46,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(ReadObjectRangeMedia,
                ResponseWrapper<internal::ReadObjectRangeResponse>(
                    internal::ReadObjectRangeRequest const&));
+  MOCK_METHOD1(WriteObject,
+               ResponseWrapper<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+                   internal::InsertObjectStreamingRequest const&));
   MOCK_METHOD1(ListObjects, ResponseWrapper<internal::ListObjectsResponse>(
                                 internal::ListObjectsRequest const&));
   MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(

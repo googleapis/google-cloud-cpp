@@ -87,7 +87,10 @@ class GcsObjectVersion(object):
         self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
-        self.media = request.data
+        if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
+            self.media = ''.join(request.environ.get('wsgi.input').readlines())
+        else:
+            self.media = request.data
         self.metadata = {
             'kind': 'storage#object',
             'id': self.object_id,
@@ -101,6 +104,7 @@ class GcsObjectVersion(object):
             'generation': generation,
             'location': 'US',
             'storageClass': 'STANDARD',
+            'size': len(self.media),
             'etag': 'XYZ='
         }
         self.insert_acl(
@@ -414,6 +418,8 @@ def objects_list(bucket_name):
     result = {'next_page_token': '', 'items': []}
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
+            continue
+        if o.get_latest() is None:
             continue
         result['items'].append(o.get_latest().metadata)
     return json.dumps(result)

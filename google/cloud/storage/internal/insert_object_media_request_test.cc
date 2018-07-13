@@ -23,28 +23,41 @@ namespace internal {
 namespace {
 using ::testing::HasSubstr;
 
-TEST(InsertObjectMediaRequestTest, OStreamBasic) {
-  InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
-  std::ostringstream os;
-  os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
-  EXPECT_THAT(os.str(), HasSubstr("my-object"));
-}
-
-TEST(InsertObjectMediaRequestTest, OStreamParameter) {
+TEST(InsertObjectMediaRequestTest, OStream) {
   InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
   request.set_multiple_parameters(
       IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
       KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("ifGenerationMatch=0"));
-  EXPECT_THAT(os.str(), HasSubstr("projection=full"));
-  EXPECT_THAT(os.str(), HasSubstr("kmsKeyName=random-key"));
-  EXPECT_THAT(os.str(), HasSubstr("contentEncoding=media"));
-  EXPECT_THAT(os.str(), HasSubstr("predefinedAcl=authenticatedRead"));
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("InsertObjectMediaRequest"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("my-object"));
+  EXPECT_THAT(str, HasSubstr("ifGenerationMatch=0"));
+  EXPECT_THAT(str, HasSubstr("projection=full"));
+  EXPECT_THAT(str, HasSubstr("kmsKeyName=random-key"));
+  EXPECT_THAT(str, HasSubstr("contentEncoding=media"));
+  EXPECT_THAT(str, HasSubstr("predefinedAcl=authenticatedRead"));
 }
 
+TEST(InsertObjectStreamingRequestTest, OStream) {
+  InsertObjectStreamingRequest request("my-bucket", "my-object");
+  request.set_multiple_parameters(
+      IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
+      KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"));
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("InsertObjectStreamingRequest"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("my-object"));
+  EXPECT_THAT(str, HasSubstr("ifGenerationMatch=0"));
+  EXPECT_THAT(str, HasSubstr("projection=full"));
+  EXPECT_THAT(str, HasSubstr("kmsKeyName=random-key"));
+  EXPECT_THAT(str, HasSubstr("contentEncoding=media"));
+  EXPECT_THAT(str, HasSubstr("predefinedAcl=authenticatedRead"));
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

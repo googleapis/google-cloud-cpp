@@ -151,6 +151,15 @@ std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
                   &RawClient::ReadObjectRangeMedia, request, __func__);
 }
 
+std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+RetryClient::WriteObject(
+    internal::InsertObjectStreamingRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::WriteObject, request, __func__);
+}
+
 std::pair<Status, ListObjectsResponse> RetryClient::ListObjects(
     ListObjectsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
