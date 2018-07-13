@@ -99,6 +99,97 @@ TEST_F(ObjectAccessControlsTest, ListObjectAclPermanentFailure) {
       "ListObjectAcl");
 }
 
+TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
+  auto expected = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "object": "test-object",
+          "entity": "user-test-user-1",
+          "role": "READER"
+      })""");
+
+  EXPECT_CALL(*mock, CreateObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Invoke([&expected](internal::CreateObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-object", r.object_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        EXPECT_EQ("READER", r.role());
+
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  ObjectAccessControl actual =
+      client.CreateObjectAcl("test-bucket", "test-object", "user-test-user-1",
+                             ObjectAccessControl::ROLE_READER());
+  // Compare just a few fields because the values for most of the fields are
+  // hard to predict when testing against the production environment.
+  EXPECT_EQ(expected.bucket(), actual.bucket());
+  EXPECT_EQ(expected.object(), actual.object());
+  EXPECT_EQ(expected.entity(), actual.entity());
+  EXPECT_EQ(expected.role(), actual.role());
+}
+
+TEST_F(ObjectAccessControlsTest, CreateObjectAclTooManyFailures) {
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*mock, CreateObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), ObjectAccessControl{})));
+  EXPECT_THROW(
+      try {
+        client.CreateObjectAcl("test-bucket", "test-object", "user-test-user",
+                               "READER");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
+        EXPECT_THAT(ex.what(), HasSubstr("CreateObjectAcl"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
+  // operation is called.
+  EXPECT_CALL(*mock, CreateObjectAcl(_))
+      .WillRepeatedly(
+          Return(std::make_pair(TransientError(), ObjectAccessControl{})));
+  EXPECT_DEATH_IF_SUPPORTED(client.CreateObjectAcl("test-bucket", "test-object",
+                                                   "user-test-user", "READER"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectAccessControlsTest, CreateObjectAclPermanentFailure) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_CALL(*mock, CreateObjectAcl(_))
+      .WillOnce(
+          Return(std::make_pair(PermanentError(), ObjectAccessControl{})));
+  EXPECT_THROW(
+      try {
+        client->CreateObjectAcl("test-bucket", "test-object", "user-test-user",
+                                "READER");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
+        EXPECT_THAT(ex.what(), HasSubstr("CreateObjectAcl"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
+  // operation is called.
+  EXPECT_CALL(*mock, CreateObjectAcl(_))
+      .WillRepeatedly(
+          Return(std::make_pair(PermanentError(), ObjectAccessControl{})));
+  EXPECT_DEATH_IF_SUPPORTED(
+      client->CreateObjectAcl("test-bucket", "test-object", "user-test-user",
+                              "READER"),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // namespace
 }  // namespace storage
 }  // namespace cloud

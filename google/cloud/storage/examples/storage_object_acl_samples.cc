@@ -65,6 +65,28 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name);
 }
 
+void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 5) {
+    throw Usage{
+        "create-object-acl <bucket-name> <object-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [create object acl] [START storage_create_file_acl]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name, std::string entity, std::string role) {
+    auto result =
+        client.CreateObjectAcl(bucket_name, object_name, entity, role);
+    std::cout << "Role " << result.role() << " granted to " << result.entity()
+              << " on " << result.object() << "\n"
+              << "Full attributes: " << result << std::endl;
+  }
+  //! [create object acl] [END storage_create_file_acl]
+  (std::move(client), bucket_name, object_name, entity, role);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -75,6 +97,7 @@ int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(gcs::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
+      {"create-object-acl", &CreateObjectAcl},
   };
   for (auto&& kv : commands) {
     try {

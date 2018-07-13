@@ -50,6 +50,11 @@ class ObjectIntegrationTest : public ::testing::Test {
            ".txt";
   }
 
+  std::string MakeEntityName() {
+    // We always use the viewers for the project because it is known to exist.
+    return "project-viewers-" + ObjectTestEnvironment::project_id();
+  }
+
   std::string LoremIpsum() const {
     return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -123,6 +128,43 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   auto stream = client.Read(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
+  gcs::Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  (void)client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                            gcs::IfGenerationMatch(0));
+
+  auto entity_name = MakeEntityName();
+  std::vector<gcs::ObjectAccessControl> initial_acl =
+      client.ListObjectAcl(bucket_name, object_name);
+
+  auto name_counter = [](std::string const& name,
+                         std::vector<gcs::ObjectAccessControl> const& list) {
+    auto name_matcher = [](std::string const& name) {
+      return [name](gcs::ObjectAccessControl const& m) {
+        return m.entity() == name;
+      };
+    };
+    return std::count_if(list.begin(), list.end(), name_matcher(name));
+  };
+  ASSERT_EQ(0, name_counter(entity_name, initial_acl))
+      << "Test aborted. The entity <" << entity_name << "> already exists."
+      << "This is unexpected as the test generates a random object name.";
+
+  auto result =
+      client.CreateObjectAcl(bucket_name, object_name, entity_name, "OWNER");
+  auto current_acl = client.ListObjectAcl(bucket_name, object_name);
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
 
   client.DeleteObject(bucket_name, object_name);
 }

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/create_object_acl_request.h"
 #include "google/cloud/storage/internal/delete_object_request.h"
 #include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
@@ -74,6 +75,8 @@ class RawClient {
 
   virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const&) = 0;
+  virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+      CreateObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

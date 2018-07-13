@@ -56,6 +56,9 @@ class LoggingClient : public RawClient {
   std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;
 
+  std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+      CreateObjectAclRequest const&) override;
+
  private:
   std::shared_ptr<RawClient> client_;
 };
