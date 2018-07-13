@@ -38,6 +38,17 @@ CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
   return request;
 }
 
+CurlUploadRequest CurlRequestBuilder::BuildUpload() {
+  CurlUploadRequest request;
+  request.url_ = std::move(url_);
+  request.headers_ = std::move(headers_);
+  request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.handle_ = std::move(handle_);
+  request.multi_.reset(curl_multi_init());
+  request.ResetOptions();
+  return request;
+}
+
 CurlRequestBuilder& CurlRequestBuilder::AddUserAgentPrefix(
     std::string const& prefix) {
   user_agent_prefix_ = prefix + user_agent_prefix_;

@@ -165,7 +165,7 @@ class CurlHandle {
 
  private:
   friend class CurlRequest;
-  friend class CurlUpload;
+  friend class CurlUploadRequest;
   friend class CurlDownload;
   friend class CurlRequestBuilder;
 

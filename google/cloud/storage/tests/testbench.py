@@ -43,6 +43,11 @@ class ErrorResponse(Exception):
         return response
 
 
+@httpbin.app.errorhandler(ErrorResponse)
+def httpbin_error(error):
+    return error.as_response()
+
+
 root = flask.Flask(__name__)
 root.debug = True
 
