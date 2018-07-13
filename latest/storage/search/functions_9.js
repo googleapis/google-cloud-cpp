@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['main',['main',['../storage__bucket__samples_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;storage_bucket_samples.cc'],['../storage__object__samples_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;storage_object_samples.cc']]],
-  ['metadata',['metadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a2dd2f3aeb55dce0ebbd4be46ee98902c',1,'google::cloud::storage::v::ObjectMetadata']]],
-  ['metadata_5fcount',['metadata_count',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a4a76216e4e3d6435f5e7c13faeb4cf05',1,'google::cloud::storage::v::ObjectMetadata']]]
+  ['label',['label',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a7916290a3e44091b02d66f50ecb7aff5',1,'google::cloud::storage::v::BucketMetadata']]],
+  ['label_5fcount',['label_count',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a018cb6a61a01ccd28a2df67770618484',1,'google::cloud::storage::v::BucketMetadata']]],
+  ['listobjectacl',['ListObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a85c4754440942509da07292c57216b5a',1,'google::cloud::storage::v::Client']]],
+  ['listobjects',['ListObjects',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a5b4e411a7826728ab6413cb9ebce946a',1,'google::cloud::storage::v::Client']]],
+  ['listobjectsiterator',['ListObjectsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a86c1f10e231e1e81a1fb72fe937c8482',1,'google::cloud::storage::v::ListObjectsIterator']]],
+  ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a65b8d3ce451decf4b22003cee1ddffdd',1,'google::cloud::storage::v::ListObjectsReader']]],
+  ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a14a8c476f868115203fb7fe471a8c3be',1,'google::cloud::storage::v::BucketMetadata']]]
 ];

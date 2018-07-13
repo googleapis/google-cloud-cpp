@@ -8,5 +8,5 @@ var searchData=
   ['bucket_5fmetadata_2ecc',['bucket_metadata.cc',['../bucket__metadata_8cc.html',1,'']]],
   ['bucket_5fmetadata_2eh',['bucket_metadata.h',['../bucket__metadata_8h.html',1,'']]],
   ['bucketaccesscontrol',['BucketAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html',1,'google::cloud::storage::v::BucketAccessControl'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#aee000fd29bbb6ecec5eaf807243d8cad',1,'google::cloud::storage::v::BucketAccessControl::BucketAccessControl()']]],
-  ['bucketmetadata',['BucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html',1,'google::cloud::storage::v::BucketMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a1e223a5283058cc0cdd8557a209ff1ba',1,'google::cloud::storage::v::BucketMetadata::BucketMetadata()']]]
+  ['bucketmetadata',['BucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html',1,'google::cloud::storage::v::BucketMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a5e15e66f49891ce9a7812506d33df20e',1,'google::cloud::storage::v::BucketMetadata::BucketMetadata()']]]
 ];
