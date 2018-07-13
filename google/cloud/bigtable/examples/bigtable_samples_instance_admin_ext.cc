@@ -234,7 +234,7 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
     auto cluster =
         instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
 
-    std::cout << "Cluster Created: " << cluster.get().name() << std::endl;
+    std::cout << "Cluster Created: " << cluster_id.get() << std::endl;
     // [END bigtable_create_cluster]
   } else {
     std::cout << "\nInstance " << instance_id.get() << " does not exists."

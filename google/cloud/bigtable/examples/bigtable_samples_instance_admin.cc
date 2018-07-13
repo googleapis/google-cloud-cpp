@@ -195,7 +195,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
-  std::cout << "Cluster Created " << cluster.get().name() << std::endl;
+  std::cout << "Cluster Created " << cluster_id.get() << std::endl;
 }
 //! [create cluster]
 
