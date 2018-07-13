@@ -63,7 +63,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
 std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                           "/o/" + request.object_name());
+                             "/o/" + request.object_name());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddParametersToHttpRequest(builder);
