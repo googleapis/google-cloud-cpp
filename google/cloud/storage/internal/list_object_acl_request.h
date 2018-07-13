@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LIST_OBJECT_ACL_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LIST_OBJECT_ACL_REQUEST_H_
 
+#include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/internal/request_parameters.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
@@ -30,29 +30,10 @@ namespace internal {
  * Delete an object.
  */
 class ListObjectAclRequest
-    : public GenericRequest<ListObjectAclRequest, Generation, UserProject> {
+    : public GenericObjectRequest<ListObjectAclRequest, Generation,
+                                  UserProject> {
  public:
-  ListObjectAclRequest() = default;
-  explicit ListObjectAclRequest(std::string bucket_name,
-                                std::string object_name)
-      : bucket_name_(std::move(bucket_name)),
-        object_name_(std::move(object_name)) {}
-
-  std::string const& bucket_name() const { return bucket_name_; }
-  ListObjectAclRequest& set_bucket_name(std::string bucket_name) {
-    bucket_name_ = std::move(bucket_name);
-    return *this;
-  }
-
-  std::string const& object_name() const { return object_name_; }
-  ListObjectAclRequest& set_object_name(std::string object_name) {
-    object_name_ = std::move(object_name);
-    return *this;
-  }
-
- private:
-  std::string bucket_name_;
-  std::string object_name_;
+  using GenericObjectRequest::GenericObjectRequest;
 };
 
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r);

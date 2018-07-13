@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DELETE_OBJECT_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_DELETE_OBJECT_REQUEST_H_
 
-#include "google/cloud/storage/internal/request_parameters.h"
+#include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
 
@@ -28,30 +28,12 @@ namespace internal {
  * Delete an object.
  */
 class DeleteObjectRequest
-    : public GenericRequest<DeleteObjectRequest, Generation, IfGenerationMatch,
-                            IfGenerationNotMatch, IfMetaGenerationMatch,
-                            IfMetaGenerationNotMatch, UserProject> {
+    : public GenericObjectRequest<DeleteObjectRequest, Generation,
+                                  IfGenerationMatch, IfGenerationNotMatch,
+                                  IfMetaGenerationMatch,
+                                  IfMetaGenerationNotMatch, UserProject> {
  public:
-  DeleteObjectRequest() = default;
-  explicit DeleteObjectRequest(std::string bucket_name, std::string object_name)
-      : bucket_name_(std::move(bucket_name)),
-        object_name_(std::move(object_name)) {}
-
-  std::string const& bucket_name() const { return bucket_name_; }
-  DeleteObjectRequest& set_bucket_name(std::string bucket_name) {
-    bucket_name_ = std::move(bucket_name);
-    return *this;
-  }
-
-  std::string const& object_name() const { return object_name_; }
-  DeleteObjectRequest& set_object_name(std::string object_name) {
-    object_name_ = std::move(object_name);
-    return *this;
-  }
-
- private:
-  std::string bucket_name_;
-  std::string object_name_;
+  using GenericObjectRequest::GenericObjectRequest;
 };
 
 std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r);
