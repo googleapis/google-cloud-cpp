@@ -18,8 +18,6 @@
 #include <typeindex>
 #include <typeinfo>
 
-namespace btproto = ::google::bigtable::admin::v2;
-
 namespace {
 struct Usage {
   std::string msg;
@@ -74,7 +72,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instanceExists =
+  bool instance_exists =
       instances.end() !=
       std::find_if(
           instances.begin(), instances.end(),
@@ -84,7 +82,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [END bigtable_check_instance_exists]
 
   // Create instance if does not exists
-  if (not instanceExists) {
+  if (not instance_exists) {
     // [START bigtable_create_prod_instance]
     std::cout << "\nCreating a PRODUCTION Instance: ";
     google::cloud::bigtable::DisplayName display_name("Sample Instance");
@@ -150,7 +148,7 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instanceExists =
+  bool instance_exists =
       instances.end() !=
       std::find_if(
           instances.begin(), instances.end(),
@@ -158,7 +156,7 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
             return i.name() == instance_name;
           });
   // Create instance if does not exists
-  if (not instanceExists) {
+  if (not instance_exists) {
     // [START bigtable_create_dev_instance]
     std::cout << "\nCreating a DEVELOPMENT Instance: ";
     google::cloud::bigtable::DisplayName display_name("Put description here");
@@ -220,14 +218,14 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instanceExists =
+  bool instance_exists =
       instances.end() !=
       std::find_if(
           instances.begin(), instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
-  if (instanceExists) {
+  if (instance_exists) {
     // [START bigtable_create_cluster]
     std::cout << "Adding Cluster to Instance: " << instance_id.get()
               << std::endl;

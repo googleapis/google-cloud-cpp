@@ -190,9 +190,9 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
   std::string const zone = ConsumeArg(argc, argv);
-  auto location = "us-central1-a";
+
   auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      location, 3, google::cloud::bigtable::ClusterConfig::HDD);
+      zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
   std::cout << "Cluster Created " << cluster.get().name() << std::endl;
@@ -498,7 +498,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   instance_admin.DeleteAppProfile(instance_id, profile_id, ignore_warnings);
   std::cout << "Application Profile deleted" << std::endl;
-};
+}
 //! [delete app profile]
 }  // anonymous namespace
 
