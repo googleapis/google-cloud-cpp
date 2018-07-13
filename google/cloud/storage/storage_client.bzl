@@ -18,6 +18,7 @@ storage_client_HDRS = [
     "internal/curl_client.h",
     "internal/delete_object_request.h",
     "internal/empty_response.h",
+    "internal/generic_object_request.h",
     "internal/get_bucket_metadata_request.h",
     "internal/google_application_default_credentials_file.h",
     "internal/http_response.h",

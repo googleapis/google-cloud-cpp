@@ -129,6 +129,7 @@ add_library(storage_client
             internal/delete_object_request.cc
             internal/empty_response.h
             internal/empty_response.cc
+            internal/generic_object_request.h
             internal/get_bucket_metadata_request.h
             internal/get_bucket_metadata_request.cc
             internal/google_application_default_credentials_file.h
