@@ -59,7 +59,10 @@ RUN if grep -q 18.04 /etc/lsb-release; then \
 
 # Install cmake_format to automatically format the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-RUN pip install numpy cmake_format
+# Pin this to an specific version because the formatting changes when the
+# "latest" version is updated, and we do not want the builds to break just
+# because some third party changed something.
+RUN pip install numpy cmake_format==0.4.0
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
