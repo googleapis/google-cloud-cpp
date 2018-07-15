@@ -82,7 +82,9 @@ run_program_examples() {
       cat "${log}"
       echo "================ [end ${log}] ================"
       if [ -f "testbench.log" ]; then
+        echo "================ [begin testbench.log ================"
         cat "testbench.log"
+        echo "================ [end testbench.log ================"
       fi
     fi
     /bin/rm -f "${log}"
@@ -122,48 +124,16 @@ run_all_bucket_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly BUCKET_EXAMPLES_COMMANDS="list-buckets get-bucket-metadata list-objects"
+  readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
+list-buckets
+get-bucket-metadata
+list-objects
+_EOF_
+)
 
-  if [ ! -x storage_bucket_samples ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " storage_bucket_samples is not compiled"
-    return
-  fi
-  local object_name="object-$(date +%s)"
-  for example in ${BUCKET_EXAMPLES_COMMANDS}; do
-    log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
-    echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        "storage_bucket_samples ${example} running"
-    ./storage_bucket_samples \
-        ${example} "${bucket_name}" >"${log}" 2>&1 </dev/null
-    if [ $? = 0 ]; then
-      echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example}"
-      continue
-    else
-      echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example}"
-      echo
-      echo "================ [begin ${log}] ================"
-      cat "${log}"
-      echo "================ [end ${log}] ================"
-    fi
-    /bin/rm -f "${log}"
-  done
-
-  log="$(mktemp --tmpdir "storage_bucket_samples_${example}.XXXXXXXXXX.log")"
-  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "storage_bucket_samples with no command running"
-  ./storage_bucket_samples >"${log}" 2>&1 </dev/null
-  # Note the inverted test, this is supposed to exit with 1.
-  if [ $? != 0 ]; then
-    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} (no command)"
-  else
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} (no command)"
-    echo
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-  fi
-  /bin/rm -f "${log}"
+  run_program_examples ./storage_bucket_samples \
+      "${BUCKET_EXAMPLES_COMMANDS}" \
+      "${bucket_name}"
 }
 
 ################################################
@@ -181,7 +151,7 @@ run_all_object_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly OBJECT_EXAMPLES_COMMANDS=$(cat <<_EOF_
+  readonly OBJECT_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 insert-object
 get-object-metadata
 read-object
@@ -189,54 +159,12 @@ delete-object
 _EOF_
 )
 
-  if [ ! -x storage_object_samples ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " storage_object_samples is not compiled"
-    return
-  fi
   local object_name="object-$(date +%s)"
-  for example in ${OBJECT_EXAMPLES_COMMANDS}; do
-    log="$(mktemp --tmpdir "storage_object_samples.XXXXXXXXXX.log")"
-    echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        "storage_object_samples ${example} running"
-    case ${example} in
-        insert-object)
-            parameters="${object_name} a-short-string-to-put-in-the-object"
-            ;;
-        *)
-            parameters="${object_name}"
-            ;;
-    esac
-    ./storage_object_samples \
-        ${example} "${bucket_name}" ${parameters} >"${log}" 2>&1 </dev/null
-    if [ $? = 0 ]; then
-      echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example}"
-      continue
-    else
-      echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example}"
-      echo
-      echo "================ [begin ${log}] ================"
-      cat "${log}"
-      echo "================ [end ${log}] ================"
-    fi
-    /bin/rm -f "${log}"
-  done
 
-  log="$(mktemp --tmpdir "storage_object_samples.XXXXXXXXXX.log")"
-  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "storage_object_samples with no command running"
-  ./storage_object_samples >"${log}" 2>&1 </dev/null
-  # Note the inverted test, this is supposed to exit with 1.
-  if [ $? != 0 ]; then
-    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} (no command)"
-  else
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} (no command)"
-    echo
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-  fi
-  /bin/rm -f "${log}"
+  run_program_examples ./storage_object_samples \
+      "${OBJECT_EXAMPLES_COMMANDS}" \
+      "${bucket_name}"
+      "${object_name}"
 }
 
 ################################################
@@ -271,7 +199,6 @@ _EOF_
       "${object_name}" \
       "some-contents-does-not-matter-what"
 
-  EXAMPLE_BASE_ARGUMENTS="${bucket_name} ${object_name}"
   run_program_examples ./storage_object_acl_samples \
       "${OBJECT_ACL_COMMANDS}" \
       "${bucket_name}" \
@@ -292,9 +219,9 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   set +e
-  run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_bucket_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
+  run_all_object_acl_examples "${BUCKET_NAME}"
   set -e
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
