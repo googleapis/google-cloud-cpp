@@ -5,8 +5,8 @@
 Install the dependencies needed for your distribution.  The best documentation
 are the Docker files used for the continuous integration builds.  For example,
 if you are planning to develop on Ubuntu open
-[Dockerfile.ubuntu](../ci/Dockerfile.ubuntu), there you will find the tools to
-install:
+[Dockerfile.ubuntu](../ci/travis/Dockerfile.ubuntu), there you will find the
+tools to install:
 
 ```Dockerfile
 RUN apt-get update && apt-get install -y \

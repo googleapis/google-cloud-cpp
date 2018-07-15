@@ -27,4 +27,4 @@ readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
-     -f "ci/Dockerfile.${DISTRO}" ci
+     -f "ci/travis/Dockerfile.${DISTRO}" ci
