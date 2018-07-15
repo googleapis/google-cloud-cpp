@@ -102,8 +102,8 @@ TEST_F(ServiceAccountCredentialsTest,
       .WillOnce(Invoke([mock_request](std::string payload) {
         EXPECT_THAT(payload, HasSubstr(kExpectedAssertionParam));
         // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload, HasSubstr(std::string("grant_type=") +
-                                       kGrantParamEscaped));
+        EXPECT_THAT(payload,
+                    HasSubstr(std::string("grant_type=") + kGrantParamEscaped));
         MockHttpRequest result;
         result.mock = mock_request;
         return result;
@@ -121,8 +121,7 @@ TEST_F(ServiceAccountCredentialsTest,
             auto t =
                 std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
             std::copy(kGrantParamEscaped,
-                      kGrantParamEscaped + sizeof(kGrantParamEscaped),
-                      t.get());
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
             return t;
           }));
 
@@ -173,8 +172,7 @@ TEST_F(ServiceAccountCredentialsTest,
             auto t =
                 std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
             std::copy(kGrantParamEscaped,
-                      kGrantParamEscaped + sizeof(kGrantParamEscaped),
-                      t.get());
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
             return t;
           }));
 
