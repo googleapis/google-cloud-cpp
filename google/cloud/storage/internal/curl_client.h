@@ -40,6 +40,8 @@ class CurlClient : public RawClient {
 
   ClientOptions const& client_options() const override { return options_; }
 
+  std::pair<Status, ListBucketsResponse> ListBuckets(
+      ListBucketsRequest const& request) override;
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override;
   std::pair<Status, ObjectMetadata> InsertObjectMedia(

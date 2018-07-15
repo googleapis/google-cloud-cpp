@@ -60,6 +60,30 @@ class Client {
       : raw_client_(std::move(client)) {}
 
   /**
+   * Fetch the list of buckets for a given project.
+   *
+   * @param project_id the project to query.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `MaxResults`, `Prefix`, `UserProject`, and `Projection`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets
+   *
+   * TODO(#822) - return the full set of values with a Reader. To keep this PR
+   *   smaller we just return the first set of values as a std::vector<>.
+   *   A future PR will return a Reader similar to ListObjectsReader.
+   */
+  template <typename... Modifiers>
+  std::vector<BucketMetadata> ListBuckets(std::string const& project_id,
+                                          Modifiers&&... modifiers) {
+    internal::ListBucketsRequest request(project_id);
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
+    return raw_client_->ListBuckets(request).second.items;
+  }
+
+  /**
    * Fetch the bucket metadata and return it.
    *
    * @param bucket_name query metadata information about this bucket.

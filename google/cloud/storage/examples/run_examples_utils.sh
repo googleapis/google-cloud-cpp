@@ -122,7 +122,7 @@ run_all_bucket_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly BUCKET_EXAMPLES_COMMANDS="get-bucket-metadata list-objects"
+  readonly BUCKET_EXAMPLES_COMMANDS="list-buckets get-bucket-metadata list-objects"
 
   if [ ! -x storage_bucket_samples ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \

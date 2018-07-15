@@ -32,6 +32,9 @@ class LoggingClient : public RawClient {
 
   ClientOptions const& client_options() const override;
 
+  std::pair<Status, ListBucketsResponse> ListBuckets(
+      ListBucketsRequest const& request) override;
+
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override;
 

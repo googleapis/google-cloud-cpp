@@ -169,8 +169,50 @@ class GcsObject(object):
                                                            request)
 
 
+class GcsBucket(object):
+    """Represent a GCS Bucket."""
+
+    def __init__(self, gcs_url, name):
+        self.name = name
+        self.metadata = {
+            'id': name,
+            'kind': 'storage#bucket',
+            'metageneration': 1,
+            'selfLink': gcs_url + name,
+            'projectNumber': '123456789',
+            'name': name,
+            'timeCreated': '2018-05-19T19:31:14Z',
+            'updated': '2018-05-19T19:31:24Z',
+            'location': 'US',
+            'storageClass': 'STANDARD',
+            'etag': 'XYZ=',
+            'labels': {
+                'foo': 'bar',
+                'baz': 'qux'
+            }
+        }
+
+    def check_preconditions(self, request):
+        """Verify that the preconditions in request are met."""
+
+        metageneration_match = request.args.get('ifMetagenerationMatch')
+        metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
+        metageneration = self.metadata.get('metageneration')
+
+        if metageneration_not_match is not None \
+                and int(metageneration_not_match) == metageneration:
+            raise ErrorResponse('Precondition Failed', status_code=412)
+
+        if metageneration_match is not None \
+                and int(metageneration_match) != metageneration:
+            raise ErrorResponse('Precondition Failed', status_code=412)
+
+
 # Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
 GCS_OBJECTS = dict()
+
+# Define the collection of Buckets indexed by <bucket_name>
+GCS_BUCKETS = dict()
 
 # Define the WSGI application to handle bucket requests.
 GCS_HANDLER_PATH = '/storage/v1'
@@ -187,6 +229,19 @@ def gcs_index():
 @gcs.errorhandler(ErrorResponse)
 def gcs_error(error):
     return error.as_response()
+
+
+@gcs.route('/b')
+def buckets_list():
+    """Implement the 'Buckets: list' API: return the Buckets in a project."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    result = {
+        'next_page_token': '',
+        'items': []
+    }
+    for name, b in GCS_BUCKETS.items():
+        result['items'].append(b.metadata)
+    return json.dumps(result)
 
 
 @gcs.route('/b/<bucket_name>')
@@ -220,7 +275,7 @@ def buckets_get(bucket_name):
 
 
 @gcs.route('/b/<bucket_name>/o')
-def buckets_list(bucket_name):
+def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
     result = {

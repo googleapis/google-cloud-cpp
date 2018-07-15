@@ -23,6 +23,7 @@
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/get_object_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
+#include "google/cloud/storage/internal/list_buckets_request.h"
 #include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
@@ -46,10 +47,12 @@ class RawClient {
 
   virtual ClientOptions const& client_options() const = 0;
 
+  virtual std::pair<Status, ListBucketsResponse> ListBuckets(
+      ListBucketsRequest const& request) = 0;
+
   /**
    * Execute a request to fetch bucket metadata.
    *
-   * TODO(#690) - consider checking that modifiers in a request are compatible.
    */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
