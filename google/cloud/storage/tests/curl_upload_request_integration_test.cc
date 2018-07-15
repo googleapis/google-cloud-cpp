@@ -42,30 +42,40 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   builder.AddHeader("Content-Type: application/octet-stream");
   CurlUploadRequest upload = builder.BuildUpload();
 
-  // Create some random data to upload
-  std::string msg;
+  // A small function to generate random data.
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /\\,;-+=";
-  for (std::size_t i = 0; i != 64; ++i) {
-    msg += google::cloud::internal::Sample(generator, 127, characters);
-    msg += "\n";
-  }
+  auto generate_random_data = [&generator] {
+    std::string data;
+    std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /\\,;-+=";
+    for (std::size_t i = 0; i != 64; ++i) {
+      data += google::cloud::internal::Sample(generator, 127, characters);
+      data += "\n";
+    }
+    return data;
+  };
 
-  std::string copy = msg;
-  auto expected_data = copy;
+  // First send a full copy of the random blob.
+  std::string current_message = generate_random_data();
+  // Accumulate the expected data.
+  auto expected_data = current_message;
+  upload.NextBuffer(current_message);
+  upload.Flush();
 
-  upload.NextBuffer(copy);
+  // Send a portion of the random blob, to test shorter messages.
+  current_message = generate_random_data().substr(0, 1000);
+  expected_data += current_message;
+  upload.NextBuffer(current_message);
   upload.Flush();
-  copy = msg.substr(0, 1000);
-  expected_data += copy;
-  upload.NextBuffer(copy);
-  upload.Flush();
-  copy = msg;
-  expected_data += copy;
-  upload.NextBuffer(copy);
-  copy = msg;
-  expected_data += copy;
-  upload.NextBuffer(copy);
+
+  // Test that sending messages without flushing works.
+  current_message = generate_random_data();
+  expected_data += current_message;
+  upload.NextBuffer(current_message);
+
+  // And test that closing after sending some data works.
+  current_message = generate_random_data();
+  expected_data += current_message;
+  upload.NextBuffer(current_message);
   auto response = upload.Close();
   EXPECT_EQ(200, response.status_code);
 

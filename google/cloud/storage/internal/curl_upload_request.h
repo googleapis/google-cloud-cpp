@@ -130,9 +130,9 @@ class CurlUploadRequest {
   std::string::iterator buffer_rdptr_;
   // Closing the handle happens in two steps.
   // 1. First the application (or higher-level class), calls Close(). This class
-  //    needs to flush the existing buffer, is done by repeated read callbacks
-  //    from libcurl. Once the buffer is flushed, this we need to tell libcurl
-  //    that the transfer is completed by returning 0 from the callback.
+  //    needs to flush the existing buffer, which is done by repeated read
+  //    callbacks from libcurl. Once the buffer is flushed, then we need to tell
+  //    libcurl that the transfer is completed by returning 0 from the callback.
   // 2. Once that callback returns 0, this class needs to know, so it can wait
   //    for any response.
   //

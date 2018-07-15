@@ -33,10 +33,20 @@ class CurlRequestBuilder {
 
   explicit CurlRequestBuilder(std::string base_url);
 
-  /// Create a http request with the given payload.
+  /**
+   * Create a http request with the given payload.
+   *
+   * This function invalidates the builder. The application should not use this
+   * builder once this function is called.
+   */
   CurlRequest BuildRequest(std::string payload);
 
-  /// Create a http request where the payload is provided dynamically.
+  /**
+   * Create a http request where the payload is provided dynamically.
+   *
+   * This function invalidates the builder. The application should not use this
+   * builder once this function is called.
+   */
   CurlUploadRequest BuildUpload();
 
   /// Add one of the well-known parameters as a query parameter
@@ -83,6 +93,8 @@ class CurlRequestBuilder {
   }
 
  private:
+  void ValidateBuilderState(char const* where) const;
+
   CurlHandle handle_;
   CurlHeaders headers_;
 
