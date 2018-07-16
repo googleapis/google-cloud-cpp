@@ -131,63 +131,60 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
 }
 
 TEST_F(ObjectAccessControlsTest, CreateObjectAclTooManyFailures) {
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_CALL(*mock, CreateObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
-      .WillOnce(
-          Return(std::make_pair(TransientError(), ObjectAccessControl{})));
-  EXPECT_THROW(
-      try {
-        client.CreateObjectAcl("test-bucket", "test-object", "user-test-user",
-                               "READER");
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
-        EXPECT_THAT(ex.what(), HasSubstr("CreateObjectAcl"));
-        throw;
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, CreateObjectAcl(_)),
+      [](Client& client) {
+        client.CreateObjectAcl("test-bucket-name", "test-object-name",
+                               "user-test-user-1", "READER");
       },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, CreateObjectAcl(_))
-      .WillRepeatedly(
-          Return(std::make_pair(TransientError(), ObjectAccessControl{})));
-  EXPECT_DEATH_IF_SUPPORTED(client.CreateObjectAcl("test-bucket", "test-object",
-                                                   "user-test-user", "READER"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      "CreateObjectAcl");
 }
 
 TEST_F(ObjectAccessControlsTest, CreateObjectAclPermanentFailure) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_CALL(*mock, CreateObjectAcl(_))
-      .WillOnce(
-          Return(std::make_pair(PermanentError(), ObjectAccessControl{})));
-  EXPECT_THROW(
-      try {
-        client->CreateObjectAcl("test-bucket", "test-object", "user-test-user",
-                                "READER");
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
-        EXPECT_THAT(ex.what(), HasSubstr("CreateObjectAcl"));
-        throw;
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, CreateObjectAcl(_)),
+      [](Client& client) {
+        client.CreateObjectAcl("test-bucket-name", "test-object-name",
+                               "user-test-user", "READER");
       },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, CreateObjectAcl(_))
-      .WillRepeatedly(
-          Return(std::make_pair(PermanentError(), ObjectAccessControl{})));
-  EXPECT_DEATH_IF_SUPPORTED(
-      client->CreateObjectAcl("test-bucket", "test-object", "user-test-user",
-                              "READER"),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      "CreateObjectAcl");
+}
+
+TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
+  EXPECT_CALL(*mock, DeleteObjectAcl(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::ObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-object", r.object_name());
+        EXPECT_EQ("user-test-user", r.entity());
+
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  client.DeleteObjectAcl("test-bucket", "test-object", "user-test-user");
+  SUCCEED();
+}
+
+TEST_F(ObjectAccessControlsTest, DeleteObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock, EXPECT_CALL(*mock, DeleteObjectAcl(_)),
+      [](Client& client) {
+        client.DeleteObjectAcl("test-bucket-name", "test-object-name",
+                               "user-test-user-1");
+      },
+      "DeleteObjectAcl");
+}
+
+TEST_F(ObjectAccessControlsTest, DeleteObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client, EXPECT_CALL(*mock, DeleteObjectAcl(_)),
+      [](Client& client) {
+        client.DeleteObjectAcl("test-bucket-name", "test-object-name",
+                               "user-test-user-1");
+      },
+      "DeleteObjectAcl");
 }
 
 }  // namespace

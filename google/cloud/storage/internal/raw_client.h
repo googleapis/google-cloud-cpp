@@ -27,6 +27,7 @@
 #include "google/cloud/storage/internal/list_buckets_request.h"
 #include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
@@ -77,6 +78,8 @@ class RawClient {
       ListObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
       CreateObjectAclRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteObjectAcl(
+      ObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

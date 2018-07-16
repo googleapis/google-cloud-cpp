@@ -87,6 +87,24 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name, entity, role);
 }
 
+void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 3) {
+    throw Usage{"delete-object-acl <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [delete object acl] [START storage_delete_file_acl]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name, std::string entity) {
+    client.DeleteObjectAcl(bucket_name, object_name, entity);
+    std::cout << "Deleted ACL entry for " << entity << " in object "
+              << object_name << " in bucket " << bucket_name << std::endl;
+  }
+  //! [delete object acl] [END storage_delete_file_acl]
+  (std::move(client), bucket_name, object_name, entity);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -98,6 +116,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},
+      {"delete-object-acl", &DeleteObjectAcl},
   };
   for (auto&& kv : commands) {
     try {
