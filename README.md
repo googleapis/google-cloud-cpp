@@ -119,7 +119,14 @@ sudo dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra c
 sudo apt update
 sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
 
-## missing steps
+# By default, Ubuntu 18.04 does not install the alternatives for clang-format
+# so we need to manually install those.
+sudo apt update
+sudo apt install -y clang-tidy clang-format clang-tools       
+sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100
+sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100
+sudo update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100
+/usr/bin/env GOPATH=/usr go get github.com/bazelbuild/buildtools/buildifier
 ```
 
 #### Ubuntu (Trusty)
