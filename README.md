@@ -35,6 +35,8 @@ APIs.
   - [Libraries](#libraries)
   - [Tests](#tests)
 - [Install Dependencies](#install-dependencies)
+  - [CentOS](#centos)
+  - [Fedora](#fedora)
   - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
   - [Ubuntu (Trusty)](#ubuntu-trusty)
   - [macOS (using brew)](#macos-using-brew)
@@ -86,25 +88,52 @@ against the latest version of the SDK on each commit and PR.
 
 ## Install Dependencies
 
+#### CentOS
+
+```bash
+# Extra Packages for Enterprise Linux used to install cmake3
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+yum install centos-release-scl
+yum-config-manager --enable rhel-server-rhscl-7-rpms
+
+yum makecache
+yum install -y devtoolset-7 c-ares-devel ccache cmake3 curl curl-devel git golang graphviz openssl-devel pkgconfig python python-pip python-gunicorn shtool unzip wget which zlib-devel
+
+pip install httpbin
+
+# Install cmake3 & ctest3 as cmake & ctest respectively.
+ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+```
+
 #### Fedora
 
 ```bash
-dnf makecache
-dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra cmake curl dia doxygen gcc-c++ git golang graphviz  lcov libcurl-devel libtool make ncurses-term openssl-devel pkgconfig python python-gunicorn python-httpbin shtool unzip wget  which zlib-devel
+sudo dnf makecache
+sudo dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra cmake curl dia doxygen gcc-c++ git golang graphviz  lcov libcurl-devel libtool make ncurses-term openssl-devel pkgconfig python python-gunicorn python-httpbin shtool unzip wget  which zlib-devel
 ```
 
 #### Ubuntu (Bionic Beaver)
 
 ```bash
-apt update
-apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+sudo apt update
+sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+
+## missing steps
 ```
 
 #### Ubuntu (Trusty)
 
 ```bash
-apt update
-apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+sudo apt update
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt update
+sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-3.8 100
+sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-3.8 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
 ```
 
 #### macOS (using brew)
@@ -116,7 +145,9 @@ brew install curl cmake
 #### Windows
 
 ```bash
-.\install-windows.ps1
+set PROVIDER=vcpkg
+set GENERATOR="Visual Studio 15 2017 Win64"
+powershell -exec bypass .\ci\install-windows.ps1
 ```
 ## Build
 
@@ -126,18 +157,16 @@ after cloning this repo:
 #### Linux and macOS
 
 ```bash
-git submodule init
 git submodule update --init --recursive
 cmake -H. -Bbuild-output
-cmake --build build-output
+
+# Adjust the number of threads used by modifying parameter for `-j 4`
+cmake --build build-output -- -j 4
+
+# Verify build by running tests
 (cd build-output && ctest --output-on-failure)
 ```
-You can speed up the build by replacing the
-`cmake --build build-output` step with:
 
-```bash
-cmake --build build-output -- -j $(nproc)
-```
 You will find compiled binaries in `build-output/` respective to their source paths.
 
 #### Windows
@@ -146,9 +175,14 @@ On Windows with MSVC use:
 
 ```bash
 cmake --build build-output -- /m
+
+# Verify build by running tests
+cd build-output
+ctest --output-on-failure
 ```
 
 You will find compiled binaries in `build-output\` respective to their source directories.
+
 
 ## Versioning
 
@@ -179,3 +213,4 @@ properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](LICENSE) for details.
+
