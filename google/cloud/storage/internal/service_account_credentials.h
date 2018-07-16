@@ -155,7 +155,6 @@ class ServiceAccountCredentials : public storage::Credentials {
         "Authorization: " +
         access_token["token_type"].get_ref<std::string const&>() + " " +
         access_token["access_token"].get_ref<std::string const&>();
-    std::string header = header_oss.str();
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
     auto new_expiration = std::chrono::system_clock::now() + expires_in -
                           GoogleOAuthTokenExpirationSlack();

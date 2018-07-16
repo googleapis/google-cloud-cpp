@@ -15,7 +15,10 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::storage;
+namespace google {
+namespace cloud {
+namespace storage {
+namespace {
 
 TEST(RetryPolicyTest, PermanentFailure) {
   // https://cloud.google.com/storage/docs/json_api/v1/status-codes
@@ -39,3 +42,8 @@ TEST(RetryPolicyTest, PermanentFailure) {
   EXPECT_FALSE(
       StatusTraits::IsPermanentFailure(Status(503, "service unavailable")));
 }
+
+}  // namespace
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
