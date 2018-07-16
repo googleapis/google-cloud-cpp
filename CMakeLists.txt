@@ -85,7 +85,3 @@ add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)
-
-# These are tests to reproduce problems in gRPC and other dependencies.
-add_subdirectory(tests/grpc-crash)
-add_subdirectory(tests/grpc-round-robin-freeze)
