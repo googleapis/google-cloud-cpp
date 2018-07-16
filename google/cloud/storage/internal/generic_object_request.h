@@ -22,7 +22,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/// Refactor common attributes for requests about objects.
+/// Common attributes for requests about objects.
 template <typename Derived, typename... Parameters>
 class GenericObjectRequest : public GenericRequest<Derived, Parameters...> {
  public:
