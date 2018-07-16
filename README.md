@@ -22,42 +22,30 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 This library supports the following Google Cloud Platform services with clients
 at an [Alpha](#versioning) quality level:
 
-- [Google Cloud Bigtable](google/cloud/bigtable)
+- [Google Cloud Bigtable](google/cloud/bigtable#google-cloud-bigtable)
 
 The libraries in this code base likely do not (yet) cover all the available
-APIs. See the [`googleapis` repo](https://github.com/googleapis/googleapis)
-for the full list of APIs callable using gRPC.
+APIs.
 
-## Quick Start
+## Table of Contents
 
-To build the available libraries and run the tests, run the following commands
-after cloning this repo:
+- [Requirements](#requirements)
+  - [Compiler](#compiler)
+  - [Build Tools](#build-tools)
+  - [Libraries](#libraries)
+  - [Tests](#tests)
+- [Install Dependencies](#install-dependencies)
+  - [CentOS](#centos)
+  - [Fedora](#fedora)
+  - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
+  - [Ubuntu (Trusty)](#ubuntu-trusty)
+  - [macOS (using brew)](#macos-using-brew)
+  - [Windows](#windows)
+- [Build](#build)
+  - [Linux and macOS](#linux-and-macos)
+  - [Windows](#windows-1)
 
-```bash
-git submodule init
-git submodule update --init --recursive
-cmake -H. -Bbuild-output
-cmake --build build-output
-(cd build-output && ctest --output-on-failure)
-```
-
-On Linux and macOS you can speed up the build by replacing the
-`cmake --build build-output` step with:
-
-```bash
-cmake --build build-output -- -j $(nproc)
-```
-
-On Windows with MSVC use:
-
-```bash
-cmake --build build-output -- /m
-```
-
-Consult the `README.md` file for each library for links to the examples and
-tutorials.
-
-## Build Dependencies
+## Requirements
 
 #### Compiler
 
@@ -81,7 +69,7 @@ of these tools we test with are:
 | CMake      | 3.5 |
 | Bazel      | 0.12.0 |
 
-#### Other Libraries
+#### Libraries
 
 The libraries also depends on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
@@ -92,21 +80,109 @@ versions of these dependencies:
 | gRPC    | v1.10.x |
 | libcurl | 7.47.0  |
 
-For Linux, the `ci/Dockerfile.*` files are a good reference on how to install
-all the necessary dependencies on each distribution. For Windows,
-consult [ci/install-windows.ps1](ci/install-windows.ps1).
+#### Tests
 
-On macOS, the following commands should install all the dependencies you need:
+Integration tests at times use the
+[Google Cloud SDK](https://cloud.google.com/sdk/). The integration tests run
+against the latest version of the SDK on each commit and PR.
+
+## Install Dependencies
+
+#### CentOS
+
+```bash
+# Extra Packages for Enterprise Linux used to install cmake3
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+yum install centos-release-scl
+yum-config-manager --enable rhel-server-rhscl-7-rpms
+
+yum makecache
+yum install -y devtoolset-7 c-ares-devel ccache cmake3 curl curl-devel git golang graphviz openssl-devel pkgconfig python python-pip python-gunicorn shtool unzip wget which zlib-devel
+
+pip install httpbin
+
+# Install cmake3 & ctest3 as cmake & ctest respectively.
+ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+```
+
+#### Fedora
+
+```bash
+sudo dnf makecache
+sudo dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra cmake curl dia doxygen gcc-c++ git golang graphviz  lcov libcurl-devel libtool make ncurses-term openssl-devel pkgconfig python python-gunicorn python-httpbin shtool unzip wget  which zlib-devel
+```
+
+#### Ubuntu (Bionic Beaver)
+
+```bash
+sudo apt update
+sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+
+## missing steps
+```
+
+#### Ubuntu (Trusty)
+
+```bash
+sudo apt update
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt update
+sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-3.8 100
+sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-3.8 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+```
+
+#### macOS (using brew)
 
 ```bash
 brew install curl cmake
 ```
 
-#### Other Dependencies
+#### Windows
 
-Some of the integration tests use the
-[Google Cloud SDK](https://cloud.google.com/sdk/). The integration tests run
-against the latest version of the SDK on each commit and PR.
+```bash
+set PROVIDER=vcpkg
+set GENERATOR="Visual Studio 15 2017 Win64"
+powershell -exec bypass .\ci\install-windows.ps1
+```
+## Build
+
+To build all available libraries and run the tests, run the following commands
+after cloning this repo:
+
+#### Linux and macOS
+
+```bash
+git submodule update --init --recursive
+cmake -H. -Bbuild-output
+
+# Adjust the number of threads used by modifying parameter for `-j 4`
+cmake --build build-output -- -j 4
+
+# Verify build by running tests
+(cd build-output && ctest --output-on-failure)
+```
+
+You will find compiled binaries in `build-output/` respective to their source paths.
+
+#### Windows
+
+On Windows with MSVC use:
+
+```bash
+cmake --build build-output -- /m
+
+# Verify build by running tests
+cd build-output
+ctest --output-on-failure
+```
+
+You will find compiled binaries in `build-output\` respective to their source directories.
+
 
 ## Versioning
 
@@ -137,3 +213,4 @@ properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](LICENSE) for details.
+
