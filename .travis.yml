@@ -46,7 +46,7 @@ matrix:
         - git submodule update --init
               third_party/googleapis
               third_party/googletest
-        - ci/install-retry.sh ci/install-linux.sh
+        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
@@ -54,8 +54,8 @@ matrix:
       compiler: clang
       env:
         CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl
-      install: ci/install-retry.sh ci/install-macosx.sh
-      script: ci/build-macosx.sh
+      install: ci/install-retry.sh ci/travis/install-macosx.sh
+      script: ci/travis/build-macosx.sh
       cache: ccache
       if: type != pull_request
     - # Compile on Travis' native environment with Bazel
@@ -63,8 +63,8 @@ matrix:
       compiler: gcc
       git:
         submodules: false
-      install: ci/install-retry.sh ci/install-bazel.sh
-      script: ci/build-bazel.sh
+      install: ci/install-retry.sh ci/travis/install-bazel.sh
+      script: ci/travis/build-bazel.sh
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
@@ -72,8 +72,8 @@ matrix:
         TEST_BAZEL_AS_DEPENDENCY=yes
       git:
         submodules: false
-      install: ci/install-retry.sh ci/install-bazel.sh
-      script: ci/build-bazel.sh
+      install: ci/install-retry.sh ci/travis/install-bazel.sh
+      script: ci/travis/build-bazel.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Install the google-cloud-cpp libraries and test that one can use the
       # installed versions.
@@ -92,7 +92,7 @@ matrix:
         - git submodule update --init
               third_party/googleapis
               third_party/googletest
-        - ci/install-retry.sh ci/install-linux.sh
+        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Verify that we can compile shared libraries, and verify that the ABI is
       # not changing, or rather, that if there are changes the changes are
@@ -115,7 +115,7 @@ matrix:
         - git submodule update --init
               third_party/googleapis
               third_party/googletest
-        - ci/install-linux.sh
+        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
@@ -187,18 +187,18 @@ matrix:
         DISTRO_VERSION=18.04
 
 script:
-  - ci/build-linux.sh
+  - ci/travis/build-linux.sh
 
 install:
-  - ci/install-retry.sh ci/install-linux.sh
+  - ci/install-retry.sh ci/travis/install-linux.sh
 
 after_success:
-  - ci/upload-codecov.sh
-  - ci/upload-docs.sh
-  - ci/dump-logs.sh
+  - ci/travis/upload-codecov.sh
+  - ci/travis/upload-docs.sh
+  - ci/travis/dump-logs.sh
 
 after_failure:
-  - ci/dump-logs.sh
+  - ci/travis/dump-logs.sh
 
 cache:
   directories:

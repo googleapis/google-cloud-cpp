@@ -72,4 +72,3 @@ RUN tar x -C /usr/local -f google-cloud-sdk-201.0.0-linux-x86_64.tar.gz
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components update || \
     echo "Ignoring update failure for Google Cloud SDK"
-

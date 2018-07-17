@@ -17,7 +17,7 @@
 set -eu
 
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/colors.sh"
+source "${BINDIR}/../colors.sh"
 
 export PATH=$PATH:$HOME/bin
 

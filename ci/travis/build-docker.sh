@@ -17,10 +17,10 @@
 set -eu
 
 readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/colors.sh"
+source "${BINDIR}/../colors.sh"
 
 # This script is supposed to run inside a Docker container, see
-# ci/build-linux.sh for the expected setup.  The /v directory is a volume
+# ci/travis/build-linux.sh for the expected setup.  The /v directory is a volume
 # pointing to a (clean-ish) checkout of google-cloud-cpp:
 (cd /v ; ./ci/check-style.sh)
 
@@ -253,7 +253,8 @@ scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
 then run:
 
-DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux CXX=clang++ CC=clang ./ci/build-linux.sh
+DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux \
+    CXX=clang++ CC=clang ./ci/travis/build-linux.sh
 
 The HTML output will be copied into the scan-build-output subdirectory.
 ${COLOR_RESET}
