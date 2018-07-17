@@ -16,19 +16,38 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_BUILDER_H_
 
 #include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl_upload_request.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+/**
+ * Implement the Builder pattern for CurlRequest, and CurlUploadRequest.
+ */
 class CurlRequestBuilder {
  public:
   using RequestType = CurlRequest;
+  using UploadType = CurlUploadRequest;
 
   explicit CurlRequestBuilder(std::string base_url);
 
+  /**
+   * Create a http request with the given payload.
+   *
+   * This function invalidates the builder. The application should not use this
+   * builder once this function is called.
+   */
   CurlRequest BuildRequest(std::string payload);
+
+  /**
+   * Create a http request where the payload is provided dynamically.
+   *
+   * This function invalidates the builder. The application should not use this
+   * builder once this function is called.
+   */
+  CurlUploadRequest BuildUpload();
 
   /// Add one of the well-known parameters as a query parameter
   template <typename P>
@@ -74,6 +93,8 @@ class CurlRequestBuilder {
   }
 
  private:
+  void ValidateBuilderState(char const* where) const;
+
   CurlHandle handle_;
   CurlHeaders headers_;
 

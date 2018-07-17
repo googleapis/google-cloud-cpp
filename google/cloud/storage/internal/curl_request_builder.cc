@@ -27,6 +27,7 @@ CurlRequestBuilder::CurlRequestBuilder(std::string base_url)
       logging_enabled_(false) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
+  ValidateBuilderState(__func__);
   CurlRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
@@ -38,13 +39,27 @@ CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
   return request;
 }
 
+CurlUploadRequest CurlRequestBuilder::BuildUpload() {
+  ValidateBuilderState(__func__);
+  CurlUploadRequest request;
+  request.url_ = std::move(url_);
+  request.headers_ = std::move(headers_);
+  request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.handle_ = std::move(handle_);
+  request.multi_.reset(curl_multi_init());
+  request.ResetOptions();
+  return request;
+}
+
 CurlRequestBuilder& CurlRequestBuilder::AddUserAgentPrefix(
     std::string const& prefix) {
+  ValidateBuilderState(__func__);
   user_agent_prefix_ = prefix + user_agent_prefix_;
   return *this;
 }
 
 CurlRequestBuilder& CurlRequestBuilder::AddHeader(std::string const& header) {
+  ValidateBuilderState(__func__);
   auto new_header = curl_slist_append(headers_.get(), header.c_str());
   (void)headers_.release();
   headers_.reset(new_header);
@@ -53,6 +68,7 @@ CurlRequestBuilder& CurlRequestBuilder::AddHeader(std::string const& header) {
 
 CurlRequestBuilder& CurlRequestBuilder::AddQueryParameter(
     std::string const& key, std::string const& value) {
+  ValidateBuilderState(__func__);
   std::string parameter = query_parameter_separator_;
   parameter += handle_.MakeEscapedString(key).get();
   parameter += "=";
@@ -63,16 +79,19 @@ CurlRequestBuilder& CurlRequestBuilder::AddQueryParameter(
 }
 
 CurlRequestBuilder& CurlRequestBuilder::SetMethod(std::string const& method) {
+  ValidateBuilderState(__func__);
   handle_.SetOption(CURLOPT_CUSTOMREQUEST, method.c_str());
   return *this;
 }
 
 CurlRequestBuilder& CurlRequestBuilder::SetDebugLogging(bool enabled) {
+  ValidateBuilderState(__func__);
   logging_enabled_ = enabled;
   return *this;
 }
 
 std::string CurlRequestBuilder::UserAgentSuffix() const {
+  ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
   static std::string const user_agent_suffix = [] {
     std::string agent = "gcs-c++/";
@@ -84,6 +103,13 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
   return user_agent_suffix;
 }
 
+void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
+  if (handle_.handle_.get() == nullptr) {
+    std::string msg = "Attempt to use invalidated CurlRequest in ";
+    msg += where;
+    google::cloud::internal::RaiseRuntimeError(msg);
+  }
+}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
