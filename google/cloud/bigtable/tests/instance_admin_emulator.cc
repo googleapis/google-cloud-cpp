@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
@@ -58,8 +59,9 @@ class InstanceAdminEmulator final
       // Add cluster into clusters_
       for (auto& kv : request->clusters()) {
         auto cluster = kv.second;
-        cluster.set_name(name + "/clusters/" + kv.first);
-        clusters_.emplace(name + "/clusters/" + kv.first, cluster);
+        auto cluster_name = name + "/clusters/" + kv.first;
+        cluster.set_name(cluster_name);
+        clusters_.emplace(std::move(cluster_name), std::move(cluster));
       }
 
       return grpc::Status::OK;
@@ -172,13 +174,11 @@ class InstanceAdminEmulator final
     }
     instances_.erase(i->first);
 
-    for (auto it = clusters_.begin(); it != clusters_.end();) {
-      if (std::string::npos == it->first.find(request->name())) {
-        ++it;
-        continue;
-      }
-      clusters_.erase(it++);
-    }
+    std::string prefix_successor =
+        bigtable::internal::PrefixRangeEnd(request->name());
+    auto begin = clusters_.lower_bound(request->name());
+    auto end = clusters_.upper_bound(prefix_successor);
+    clusters_.erase(begin, end);
 
     return grpc::Status::OK;
   }
