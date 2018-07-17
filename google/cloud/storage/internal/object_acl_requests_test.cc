@@ -21,6 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using ::testing::HasSubstr;
 
 TEST(ObjectAclRequestTest, Simple) {
   ObjectAclRequest request("my-bucket", "my-object", "user-test-user");
@@ -28,8 +29,6 @@ TEST(ObjectAclRequestTest, Simple) {
   EXPECT_EQ("my-object", request.object_name());
   EXPECT_EQ("user-test-user", request.entity());
 }
-
-using ::testing::HasSubstr;
 
 TEST(ObjectAclRequestTest, Stream) {
   ObjectAclRequest request("my-bucket", "my-object", "user-test-user");
