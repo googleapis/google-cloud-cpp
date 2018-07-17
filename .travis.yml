@@ -37,16 +37,6 @@ matrix:
         SCAN_BUILD=yes
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
-      # Because this build installs gRPC, we can skip that submodule, which
-      # saves us substantial time in the build, but requires some tweaking of
-      # the installation step.
-      git:
-        submodules: false
-      install:
-        - git submodule update --init
-              third_party/googleapis
-              third_party/googletest
-        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
@@ -54,15 +44,15 @@ matrix:
       compiler: clang
       env:
         CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl
-      install: ci/install-retry.sh ci/travis/install-macosx.sh
+      install:
+        - git submodule update --init
+        - ci/install-retry.sh ci/travis/install-macosx.sh
       script: ci/travis/build-macosx.sh
       cache: ccache
       if: type != pull_request
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
-      git:
-        submodules: false
       install: ci/install-retry.sh ci/travis/install-bazel.sh
       script: ci/travis/build-bazel.sh
     - # Compile on Travis' native environment with Bazel
@@ -70,8 +60,6 @@ matrix:
       compiler: gcc
       env:
         TEST_BAZEL_AS_DEPENDENCY=yes
-      git:
-        submodules: false
       install: ci/install-retry.sh ci/travis/install-bazel.sh
       script: ci/travis/build-bazel.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
@@ -83,16 +71,6 @@ matrix:
         TEST_INSTALL=yes
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-      # Because this build installs gRPC, we can skip that submodule, which
-      # saves us substantial time in the build, but requires some tweaking of
-      # the installation step.
-      git:
-        submodules: false
-      install:
-        - git submodule update --init
-              third_party/googleapis
-              third_party/googletest
-        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Verify that we can compile shared libraries, and verify that the ABI is
       # not changing, or rather, that if there are changes the changes are
@@ -106,16 +84,6 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-      # Because this build installs gRPC, we can skip that submodule, which
-      # saves us substantial time in the build, but requires some tweaking of
-      # the installation step.
-      git:
-        submodules: false
-      install:
-        - git submodule update --init
-              third_party/googleapis
-              third_party/googletest
-        - ci/install-retry.sh ci/travis/install-linux.sh
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
@@ -189,7 +157,16 @@ matrix:
 script:
   - ci/travis/build-linux.sh
 
+# We do not need to recursively extract the submodules. This saves some time in
+# the builds, the default install step then performs a lighter weight module
+# initialization than what Travis does by default.
+git:
+  submodules: false
+
 install:
+  # The git default is to recurse, override it because we do not need to and
+  # that saves time.
+  - git submodule update --init
   - ci/install-retry.sh ci/travis/install-linux.sh
 
 after_success:

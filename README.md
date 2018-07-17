@@ -164,7 +164,7 @@ after cloning this repo:
 #### Linux and macOS
 
 ```bash
-git submodule update --init --recursive
+git submodule update --init
 cmake -H. -Bbuild-output
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
