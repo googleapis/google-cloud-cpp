@@ -199,7 +199,8 @@ add_library(storage_client_testing
             testing/canonical_errors.h
             testing/mock_client.h
             testing/mock_http_request.h
-            testing/mock_http_request.cc)
+            testing/mock_http_request.cc
+            testing/retry_tests.h)
 target_link_libraries(storage_client_testing
                       PUBLIC storage_client nlohmann_json gmock
                       PRIVATE storage_common_options)
