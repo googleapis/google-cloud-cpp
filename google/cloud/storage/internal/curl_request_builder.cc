@@ -104,7 +104,7 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
-  if (not static_cast<bool>(handle_.handle_)) {
+  if (handle_.handle_.get() == nullptr) {
     std::string msg = "Attempt to use invalidated CurlRequest in ";
     msg += where;
     google::cloud::internal::RaiseRuntimeError(msg);
