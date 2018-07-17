@@ -38,6 +38,11 @@ build:results-local --auth_scope=https://www.googleapis.com/auth/cloud-source-to
 build:results-local --experimental_remote_spawn_cache
 _EOF_
 
+# Kokoro does guarantee that g++-4.9 will be installed, but the default compiler
+# might be g++-4.8. Set the compiler version explicitly:
+export CC=/usr/bin/gcc-4.9
+export CXX=/usr/bin/g++-4.9
+
 # First build and run the unit tests.
 readonly INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
 echo "Configure and start Bazel: " ${INVOCATION_ID}
