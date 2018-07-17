@@ -173,6 +173,20 @@ class GcsObjectVersion(object):
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
+    def get_acl(self, entity):
+        """
+        Get a single AccessControl entry from the Object revision.
+
+        :param entity:str the name of the entity.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        entity = self.canonical_entity_name(entity)
+        for acl in self.metadata.get('acl', []):
+            if acl.get('entity', '') == entity:
+                return acl
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
+
 
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
@@ -475,6 +489,21 @@ def objects_acl_delete(bucket_name, object_name, entity):
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
     return json.dumps({})
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
+def objects_acl_get(bucket_name, object_name, entity):
+    """Implement the 'ObjectAccessControls: get' API.
+
+      Get the access control configuration for a particular entity.
+      """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    acl = revision.get_acl(entity)
+    return json.dumps(acl)
 
 
 # Define the WSGI application to handle bucket requests.

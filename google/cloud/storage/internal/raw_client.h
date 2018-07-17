@@ -80,6 +80,8 @@ class RawClient {
       CreateObjectAclRequest const&) = 0;
   virtual std::pair<Status, EmptyResponse> DeleteObjectAcl(
       ObjectAclRequest const&) = 0;
+  virtual std::pair<Status, ObjectAccessControl> GetObjectAcl(
+      ObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

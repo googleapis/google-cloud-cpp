@@ -105,6 +105,25 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name, entity);
 }
 
+void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 4) {
+    throw Usage{"get-object-acl <bucket-name> <object-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [get object acl] [START storage_get_file_acl]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name, std::string entity) {
+    google::cloud::storage::ObjectAccessControl acl =
+        client.GetObjectAcl(bucket_name, object_name, entity);
+    std::cout << "ACL entry for " << entity << " in object " << object_name
+              << " in bucket " << bucket_name << " is " << acl << std::endl;
+  }
+  //! [get object acl] [END storage_get_file_acl]
+  (std::move(client), bucket_name, object_name, entity);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -117,6 +136,7 @@ int main(int argc, char* argv[]) try {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},
       {"delete-object-acl", &DeleteObjectAcl},
+      {"get-object-acl", &GetObjectAcl},
   };
   for (auto&& kv : commands) {
     try {

@@ -202,6 +202,7 @@ run_all_object_acl_examples() {
   readonly OBJECT_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-object-acl
 create-object-acl
+get-object-acl
 _EOF_
 )
 

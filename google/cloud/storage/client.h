@@ -286,6 +286,28 @@ class Client {
     raw_client_->DeleteObjectAcl(request);
   }
 
+  /**
+   * Get the value of an existing object ACL.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param entity the name of the entity added to the ACL.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc get object acl
+   */
+  template <typename... Parameters>
+  ObjectAccessControl GetObjectAcl(std::string const& bucket_name,
+                                   std::string const& object_name,
+                                   std::string const& entity,
+                                   Parameters&&... parameters) {
+    internal::ObjectAclRequest request(bucket_name, object_name, entity);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->GetObjectAcl(request).second;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
