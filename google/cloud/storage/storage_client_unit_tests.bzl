@@ -9,6 +9,7 @@ storage_client_unit_tests = [
     "internal/access_control_common_test.cc",
     "internal/authorized_user_credentials_test.cc",
     "internal/binary_data_as_debug_string_test.cc",
+    "internal/object_acl_requests_test.cc",
     "internal/delete_object_request_test.cc",
     "internal/get_bucket_metadata_request_test.cc",
     "internal/get_object_metadata_request_test.cc",

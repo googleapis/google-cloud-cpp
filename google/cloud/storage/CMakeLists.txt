@@ -124,6 +124,8 @@ add_library(storage_client
             internal/curl_wrappers.cc
             internal/curl_client.h
             internal/curl_client.cc
+            internal/object_acl_requests.h
+            internal/object_acl_requests.cc
             internal/delete_object_request.h
             internal/delete_object_request.cc
             internal/empty_response.h
@@ -222,6 +224,7 @@ set(storage_client_unit_tests
     internal/access_control_common_test.cc
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
+    internal/object_acl_requests_test.cc
     internal/delete_object_request_test.cc
     internal/get_bucket_metadata_request_test.cc
     internal/get_object_metadata_request_test.cc
