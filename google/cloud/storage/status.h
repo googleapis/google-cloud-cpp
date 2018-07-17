@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include <iostream>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -54,17 +55,8 @@ class Status {
   }
   bool operator!=(Status const& rhs) const { return not(*this == rhs); }
   bool operator<(Status const& rhs) const {
-    if (status_code() < rhs.status_code()) {
-      return true;
-    }
-    if (status_code() > rhs.status_code()) {
-      return false;
-    }
-    auto cmp = error_message().compare(rhs.error_message());
-    if (cmp == 0) {
-      return error_details() < rhs.error_details();
-    }
-    return cmp < 0;
+    return std::tie(status_code_, error_message_, error_details_) <
+           std::tie(rhs.status_code_, rhs.error_message_, rhs.error_details_);
   }
   bool operator>=(Status const& rhs) const { return not(*this < rhs); }
   bool operator>(Status const& rhs) const { return rhs < *this; }
