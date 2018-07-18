@@ -16,6 +16,7 @@ var searchData=
   ['contentencoding',['ContentEncoding',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1ContentEncoding.html',1,'google::cloud::storage::v']]],
   ['crc32c',['crc32c',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a4d0a71e1b0b030c6de084d406f044d42',1,'google::cloud::storage::v::ObjectMetadata']]],
   ['createinsecurecredentials',['CreateInsecureCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a4e593fe5951545d6a4c8fbdad8f99969',1,'google::cloud::storage::v']]],
+  ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a0247c6137007451bff8e1a99b8c532b4',1,'google::cloud::storage::v::Client']]],
   ['credentials',['Credentials',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Credentials.html',1,'google::cloud::storage::v::Credentials'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ad638f529f970534a6692b045dda1700b',1,'google::cloud::storage::v::ClientOptions::credentials()']]],
   ['credentials_2ecc',['credentials.cc',['../credentials_8cc.html',1,'']]],
   ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]],

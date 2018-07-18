@@ -133,6 +133,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a85c4754440942509da07292c57216b5a"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a85c4754440942509da07292c57216b5a">ListObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Parameters &amp;&amp;... parameters)</td></tr>
 <tr class="memdesc:a85c4754440942509da07292c57216b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the list of ObjectAccessControls for an object.  <a href="#a85c4754440942509da07292c57216b5a">More...</a><br /></td></tr>
 <tr class="separator:a85c4754440942509da07292c57216b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0247c6137007451bff8e1a99b8c532b4"><td class="memTemplParams" colspan="2">template&lt;typename... Parameters&gt; </td></tr>
+<tr class="memitem:a0247c6137007451bff8e1a99b8c532b4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a0247c6137007451bff8e1a99b8c532b4">CreateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, std::string const &amp;role, Parameters &amp;&amp;... parameters)</td></tr>
+<tr class="memdesc:a0247c6137007451bff8e1a99b8c532b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new entry in the object ACL.  <a href="#a0247c6137007451bff8e1a99b8c532b4">More...</a><br /></td></tr>
+<tr class="separator:a0247c6137007451bff8e1a99b8c532b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
@@ -298,6 +302,75 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0247c6137007451bff8e1a99b8c532b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0247c6137007451bff8e1a99b8c532b4">&#9670;&nbsp;</a></span>CreateObjectAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Parameters&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v::Client::CreateObjectAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>role</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Parameters &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a new entry in the object ACL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket that contains the object. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object. </td></tr>
+    <tr><td class="paramname">entity</td><td>the name of the entity added to the ACL. </td></tr>
+    <tr><td class="paramname">role</td><td>the role of the entity. </td></tr>
+    <tr><td class="paramname">parameters</td><td>a variadic list of optional parameters. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Generation.html">Generation</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::storage::Client client, std::string bucket_name,</div><div class="line">     std::string object_name, std::string entity, std::string role) {</div><div class="line">    <span class="keyword">auto</span> result =</div><div class="line">        client.CreateObjectAcl(bucket_name, object_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; granted to &quot;</span> &lt;&lt; result.entity()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on &quot;</span> &lt;&lt; result.object() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
 <a id="a756c436e78cb97d877e22b03a94555c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a756c436e78cb97d877e22b03a94555c7">&#9670;&nbsp;</a></span>DeleteObject()</h2>
 
