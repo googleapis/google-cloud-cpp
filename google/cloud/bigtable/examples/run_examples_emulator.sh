@@ -30,8 +30,8 @@ readonly PROJECT_ID="project-$(date +%s)"
 readonly ZONE_ID="fake-zone"
 
 # The examples are noisy,
+log="$(mktemp -t "bigtable_examples.XXXXXX")"
 for example in instance_admin table_admin data; do
-  log=$(mktemp --tmpdir "bigtable_examples_${example}_XXXXXXXXXX.log")
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${example}"
   run_all_${example}_examples "${PROJECT_ID}" "${ZONE_ID}" >${log} 2>&1 </dev/null
   if [ $? = 0 ]; then
