@@ -30,3 +30,7 @@ target_link_libraries(bigtable_samples bigtable_client)
 add_executable(bigtable_samples_instance_admin
                bigtable_samples_instance_admin.cc)
 target_link_libraries(bigtable_samples_instance_admin bigtable_client)
+
+add_executable(bigtable_samples_instance_admin_ext
+               bigtable_samples_instance_admin_ext.cc)
+target_link_libraries(bigtable_samples_instance_admin_ext bigtable_client)
