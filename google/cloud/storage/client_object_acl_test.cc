@@ -16,6 +16,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/retry_tests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -81,61 +82,21 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
 }
 
 TEST_F(ObjectAccessControlsTest, ListObjectAclTooManyFailures) {
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(ms(100), ms(500), 2)};
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_CALL(*mock, ListObjectAcl(_))
-      .WillOnce(Return(
-          std::make_pair(TransientError(), internal::ListObjectAclResponse{})))
-      .WillOnce(Return(
-          std::make_pair(TransientError(), internal::ListObjectAclResponse{})))
-      .WillOnce(Return(
-          std::make_pair(TransientError(), internal::ListObjectAclResponse{})));
-  EXPECT_THROW(
-      try {
-        client.ListObjectAcl("test-bucket", "test-object");
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
-        EXPECT_THAT(ex.what(), HasSubstr("ListObjectAcl"));
-        throw;
+  testing::TooManyFailuresTest<internal::ListObjectAclResponse>(
+      mock, EXPECT_CALL(*mock, ListObjectAcl(_)),
+      [](Client& client) {
+        client.ListObjectAcl("test-bucket-name", "test-object-name");
       },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, ListObjectAcl(_))
-      .WillRepeatedly(Return(
-          std::make_pair(TransientError(), internal::ListObjectAclResponse{})));
-  EXPECT_DEATH_IF_SUPPORTED(client.ListObjectAcl("test-bucket", "test-object"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      "ListObjectAcl");
 }
 
 TEST_F(ObjectAccessControlsTest, ListObjectAclPermanentFailure) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_CALL(*mock, ListObjectAcl(_))
-      .WillOnce(Return(
-          std::make_pair(PermanentError(), internal::ListObjectAclResponse{})));
-  EXPECT_THROW(
-      try {
-        client->ListObjectAcl("test-bucket", "test-object");
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
-        EXPECT_THAT(ex.what(), HasSubstr("ListObjectAcl"));
-        throw;
+  testing::PermanentFailureTest<internal::ListObjectAclResponse>(
+      *client, EXPECT_CALL(*mock, ListObjectAcl(_)),
+      [](Client& client) {
+        client.ListObjectAcl("test-bucket-name", "test-object-name");
       },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, ListObjectAcl(_))
-      .WillRepeatedly(Return(
-          std::make_pair(PermanentError(), internal::ListObjectAclResponse{})));
-  EXPECT_DEATH_IF_SUPPORTED(client->ListObjectAcl("test-bucket", "test-object"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      "ListObjectAcl");
 }
 
 }  // namespace
