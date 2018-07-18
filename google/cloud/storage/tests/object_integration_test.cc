@@ -168,6 +168,10 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   client.DeleteObject(bucket_name, object_name);
 }
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
@@ -184,11 +188,8 @@ int main(int argc, char* argv[]) {
   std::string const project_id = argv[1];
   std::string const bucket_name = argv[2];
   (void)::testing::AddGlobalTestEnvironment(
-      new ObjectTestEnvironment(project_id, bucket_name));
+      new google::cloud::storage::ObjectTestEnvironment(project_id,
+                                                        bucket_name));
 
   return RUN_ALL_TESTS();
 }
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
-}  // namespace cloud
-}  // namespace google
