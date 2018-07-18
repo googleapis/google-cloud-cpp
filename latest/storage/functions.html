@@ -75,7 +75,8 @@ $(function() {
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>begin()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#ac2095225e147d5bd7d5fd6b4c33d5e4c">google::cloud::storage::v::ListObjectsReader</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#a73f798cdc7c461bd293bd4b33ab63724">google::cloud::storage::v::ListBucketsReader</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#ac2095225e147d5bd7d5fd6b4c33d5e4c">google::cloud::storage::v::ListObjectsReader</a>
 </li>
 <li>bucket()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a50883269c367f9f671c7f79d6bdd3481">google::cloud::storage::v::ObjectMetadata</a>
@@ -151,7 +152,8 @@ $(function() {
 : <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1CustomerEncryption.html#af4ac5b3a2d144dec9231388d5ebead3e">google::cloud::storage::v::CustomerEncryption</a>
 </li>
 <li>end()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a9b91461ae582ba06a00452357584e39c">google::cloud::storage::v::ListObjectsReader</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#abf17da6bb5207fda6ade8c9f3a507609">google::cloud::storage::v::ListBucketsReader</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a9b91461ae582ba06a00452357584e39c">google::cloud::storage::v::ListObjectsReader</a>
 </li>
 <li>endpoint()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3bf3922c6b1238d7ec3b90a51f2778ad">google::cloud::storage::v::ClientOptions</a>
@@ -211,7 +213,8 @@ $(function() {
 : <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html#a26573668ddfed3d9813e5c6b7267b62b">google::cloud::storage::v::StatusTraits</a>
 </li>
 <li>iterator
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a30fee75f9296246446c3b4db099bdf5e">google::cloud::storage::v::ListObjectsReader</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#aacf7a96411121fce1250348b627702f8">google::cloud::storage::v::ListBucketsReader</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a30fee75f9296246446c3b4db099bdf5e">google::cloud::storage::v::ListObjectsReader</a>
 </li>
 </ul>
 
@@ -234,7 +237,15 @@ $(function() {
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a018cb6a61a01ccd28a2df67770618484">google::cloud::storage::v::BucketMetadata</a>
 </li>
 <li>ListBuckets()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#aeb9a112a1135a5a6a625e5def7c74404">google::cloud::storage::v::Client</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#ae41f67c8e5500ce10881c4dc33db98b1">google::cloud::storage::v::Client</a>
+</li>
+<li>ListBucketsIterator()
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a2a2336dbb1fbb6e342b871cd4852d7b0">google::cloud::storage::v::ListBucketsIterator</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#ae06e1a4082cb3a1b5538a39c1f4e5b24">google::cloud::storage::v::ListBucketsReader</a>
+</li>
+<li>ListBucketsReader
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#acfadae85d40a5b9073532aca6828359c">google::cloud::storage::v::ListBucketsIterator</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#a98dc8cbc9c180a397d4ea8dd875f6a75">google::cloud::storage::v::ListBucketsReader</a>
 </li>
 <li>ListObjectAcl()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a85c4754440942509da07292c57216b5a">google::cloud::storage::v::Client</a>
@@ -297,19 +308,23 @@ $(function() {
 <li>operator!=()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#ac47efd5e7f9674cf3098d7a89fc58a79">google::cloud::storage::v::BucketAccessControl</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a1e95249d29e82b47b676c3ab24be3d21">google::cloud::storage::v::BucketMetadata</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a2c4d53d5bf99849b50dfb7b59c7a818a">google::cloud::storage::v::ListBucketsIterator</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a14dc0bf7e33d0b565b591933510b0d4a">google::cloud::storage::v::ListObjectsIterator</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html#a4a7f676814afaf5d383cedca0e3ddb65">google::cloud::storage::v::ObjectAccessControl</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a1f1311d291bb199755d299209517152c">google::cloud::storage::v::ObjectMetadata</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#acf7e594453be29ec15815a2a529eb95f">google::cloud::storage::v::Status</a>
 </li>
 <li>operator*()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a06d47fda1bba7c1e184642ea95a8c8ab">google::cloud::storage::v::ListObjectsIterator</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a923bd8308352aa0718a8daeb4010fa3b">google::cloud::storage::v::ListBucketsIterator</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a06d47fda1bba7c1e184642ea95a8c8ab">google::cloud::storage::v::ListObjectsIterator</a>
 </li>
 <li>operator++()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a738cdb0ab1114d5884841952eb5d4622">google::cloud::storage::v::ListObjectsIterator</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a3da85d5af9b5e7d0bf811e6cf895fd13">google::cloud::storage::v::ListBucketsIterator</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a738cdb0ab1114d5884841952eb5d4622">google::cloud::storage::v::ListObjectsIterator</a>
 </li>
 <li>operator-&gt;()
-: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a747bd419b587707f30f8a65c4dab6dba">google::cloud::storage::v::ListObjectsIterator</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a7aa297fce9c1d3fac96af4cbc0650275">google::cloud::storage::v::ListBucketsIterator</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#a747bd419b587707f30f8a65c4dab6dba">google::cloud::storage::v::ListObjectsIterator</a>
 </li>
 <li>operator&lt;()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#abc7df93223c4762ae823b9d6e30e0368">google::cloud::storage::v::Status</a>
@@ -323,11 +338,12 @@ $(function() {
 </li>
 <li>operator=()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStream.html#a47e527604981c991b8e3b585f4de0f4e">google::cloud::storage::v::ObjectReadStream</a>
-, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html#a0bf150e2ec04a9354c840a04fcfd59af">google::cloud::storage::v::ObjectReadStreamBuf</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html#ad8636e487686e04bcd40be80d96b6f30">google::cloud::storage::v::ObjectReadStreamBuf</a>
 </li>
 <li>operator==()
 : <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#aa53de297ef5269ad2c6e923263c2677a">google::cloud::storage::v::BucketAccessControl</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#ad48b29859c38e13eb1b5f0d50ca459f0">google::cloud::storage::v::BucketMetadata</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsIterator.html#a39e97f06a8ce547eb6f153b2913b9eac">google::cloud::storage::v::ListBucketsIterator</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsIterator.html#acd54f34a0885775fa379622fdb866bce">google::cloud::storage::v::ListObjectsIterator</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html#aff79426622da8d42251b15541ac5cb8f">google::cloud::storage::v::ObjectAccessControl</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#abc083af620d2d90731916ebf1c1b3397">google::cloud::storage::v::ObjectMetadata</a>

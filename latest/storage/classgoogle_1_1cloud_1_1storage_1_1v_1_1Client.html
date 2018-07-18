@@ -101,10 +101,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a590d23c80a6bf4a41d32db64a1167f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f46b6cb7a15526f15c45d8e2901e284"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a6f46b6cb7a15526f15c45d8e2901e284">Client</a> (std::shared_ptr&lt; internal::RawClient &gt; client, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Client_1_1NoRetry.html">NoRetry</a>)</td></tr>
 <tr class="separator:a6f46b6cb7a15526f15c45d8e2901e284"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9a112a1135a5a6a625e5def7c74404"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
-<tr class="memitem:aeb9a112a1135a5a6a625e5def7c74404"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#aeb9a112a1135a5a6a625e5def7c74404">ListBuckets</a> (std::string const &amp;project_id, Modifiers &amp;&amp;... modifiers)</td></tr>
-<tr class="memdesc:aeb9a112a1135a5a6a625e5def7c74404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the list of buckets for a given project.  <a href="#aeb9a112a1135a5a6a625e5def7c74404">More...</a><br /></td></tr>
-<tr class="separator:aeb9a112a1135a5a6a625e5def7c74404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae41f67c8e5500ce10881c4dc33db98b1"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
+<tr class="memitem:ae41f67c8e5500ce10881c4dc33db98b1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html">ListBucketsReader</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#ae41f67c8e5500ce10881c4dc33db98b1">ListBuckets</a> (std::string const &amp;project_id, Modifiers &amp;&amp;... modifiers)</td></tr>
+<tr class="memdesc:ae41f67c8e5500ce10881c4dc33db98b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the list of buckets for a given project.  <a href="#ae41f67c8e5500ce10881c4dc33db98b1">More...</a><br /></td></tr>
+<tr class="separator:ae41f67c8e5500ce10881c4dc33db98b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a600b8a5bcb7807d3c3691a820dd25d63"><td class="memTemplParams" colspan="2">template&lt;typename... Modifiers&gt; </td></tr>
 <tr class="memitem:a600b8a5bcb7807d3c3691a820dd25d63"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a600b8a5bcb7807d3c3691a820dd25d63">GetBucketMetadata</a> (std::string const &amp;bucket_name, Modifiers &amp;&amp;... modifiers)</td></tr>
 <tr class="memdesc:a600b8a5bcb7807d3c3691a820dd25d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#a600b8a5bcb7807d3c3691a820dd25d63">More...</a><br /></td></tr>
@@ -536,8 +536,8 @@ template&lt;typename... Modifiers&gt; </div>
 
 </div>
 </div>
-<a id="aeb9a112a1135a5a6a625e5def7c74404"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb9a112a1135a5a6a625e5def7c74404">&#9670;&nbsp;</a></span>ListBuckets()</h2>
+<a id="ae41f67c8e5500ce10881c4dc33db98b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae41f67c8e5500ce10881c4dc33db98b1">&#9670;&nbsp;</a></span>ListBuckets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -548,7 +548,7 @@ template&lt;typename... Modifiers&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html">BucketMetadata</a>&gt; google::cloud::storage::v::Client::ListBuckets </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html">ListBucketsReader</a> google::cloud::storage::v::Client::ListBuckets </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>project_id</em>, </td>
@@ -586,7 +586,7 @@ template&lt;typename... Modifiers&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::storage::Client client, std::string project_id) {</div><div class="line">    <span class="keywordtype">int</span> count = 0;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp;&amp; meta : client.ListBuckets(project_id)) {</div><div class="line">      std::cout &lt;&lt; meta.name() &lt;&lt; std::endl;</div><div class="line">      ++count;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (count == 0) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;No buckets in project &quot;</span> &lt;&lt; project_id &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --> TODO(#822) - return the full set of values with a Reader. To keep this PR smaller we just return the first set of values as a std::vector&lt;&gt;. A future PR will return a Reader similar to <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html">ListObjectsReader</a>. </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::storage::Client client, std::string project_id) {</div><div class="line">    <span class="keywordtype">int</span> count = 0;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp;&amp; meta : client.ListBuckets(project_id)) {</div><div class="line">      std::cout &lt;&lt; meta.name() &lt;&lt; std::endl;</div><div class="line">      ++count;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (count == 0) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;No buckets in project &quot;</span> &lt;&lt; project_id &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
