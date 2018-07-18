@@ -17,8 +17,10 @@
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
-namespace gcs = google::cloud::storage;
-
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 /// Store the project and instance captured from the command-line arguments.
 class ObjectTestEnvironment : public ::testing::Environment {
@@ -73,18 +75,17 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectIntegrationTest, BasicCRUD) {
-  gcs::Client client;
+  Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
 
   auto objects = client.ListObjects(bucket_name);
-  std::vector<gcs::ObjectMetadata> initial_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> initial_list(objects.begin(), objects.end());
 
   auto name_counter = [](std::string const& name,
-                         std::vector<gcs::ObjectMetadata> const& list) {
-    auto name_matcher = [](std::string const& name) {
-      return [name](gcs::ObjectMetadata const& m) { return m.name() == name; };
-    };
-    return std::count_if(list.begin(), list.end(), name_matcher(name));
+                         std::vector<ObjectMetadata> const& list) {
+    return std::count_if(
+        list.begin(), list.end(),
+        [name](ObjectMetadata const& m) { return m.name() == name; });
   };
 
   auto object_name = MakeRandomObjectName();
@@ -93,15 +94,15 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
       << "This is unexpected as the test generates a random object name.";
 
   // Create the object, but only if it does not exist already.
-  gcs::ObjectMetadata insert_meta = client.InsertObject(
-      bucket_name, object_name, LoremIpsum(), gcs::IfGenerationMatch(0));
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   objects = client.ListObjects(bucket_name);
 
-  std::vector<gcs::ObjectMetadata> current_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> current_list(objects.begin(), objects.end());
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
-  gcs::ObjectMetadata get_meta = client.GetObjectMetadata(
-      bucket_name, object_name, gcs::Generation(insert_meta.generation()));
+  ObjectMetadata get_meta = client.GetObjectMetadata(
+      bucket_name, object_name, Generation(insert_meta.generation()));
   EXPECT_EQ(get_meta, insert_meta);
 
   client.DeleteObject(bucket_name, object_name);
@@ -112,15 +113,15 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  gcs::Client client;
+  Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  gcs::ObjectMetadata meta = client.InsertObject(
-      bucket_name, object_name, expected, gcs::IfGenerationMatch(0));
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -133,24 +134,23 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  gcs::Client client;
+  Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
   (void)client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                            gcs::IfGenerationMatch(0));
+                            IfGenerationMatch(0));
 
   auto entity_name = MakeEntityName();
-  std::vector<gcs::ObjectAccessControl> initial_acl =
+  std::vector<ObjectAccessControl> initial_acl =
       client.ListObjectAcl(bucket_name, object_name);
 
   auto name_counter = [](std::string const& name,
-                         std::vector<gcs::ObjectAccessControl> const& list) {
+                         std::vector<ObjectAccessControl> const& list) {
     auto name_matcher = [](std::string const& name) {
-      return [name](gcs::ObjectAccessControl const& m) {
-        return m.entity() == name;
-      };
+      return
+          [name](ObjectAccessControl const& m) { return m.entity() == name; };
     };
     return std::count_if(list.begin(), list.end(), name_matcher(name));
   };
@@ -158,7 +158,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
       << "Test aborted. The entity <" << entity_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
-  auto result =
+  ObjectAccessControl result =
       client.CreateObjectAcl(bucket_name, object_name, entity_name, "OWNER");
   auto current_acl = client.ListObjectAcl(bucket_name, object_name);
   // Search using the entity name returned by the request, because we use
@@ -188,3 +188,7 @@ int main(int argc, char* argv[]) {
 
   return RUN_ALL_TESTS();
 }
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
