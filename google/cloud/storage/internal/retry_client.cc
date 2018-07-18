@@ -175,6 +175,14 @@ std::pair<Status, ListObjectAclResponse> RetryClient::ListObjectAcl(
                   &RawClient::ListObjectAcl, request, __func__);
 }
 
+std::pair<Status, ObjectAccessControl> RetryClient::CreateObjectAcl(
+    CreateObjectAclRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::CreateObjectAcl, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

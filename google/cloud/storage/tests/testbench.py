@@ -94,6 +94,31 @@ class GcsObjectVersion(object):
             'storageClass': 'STANDARD',
             'etag': 'XYZ='
         }
+        self.insert_acl('project-owners-123456789', 'OWNER')
+        self.insert_acl('project-editors-123456789', 'OWNER')
+        self.insert_acl('project-viewers-123456789', 'READER')
+
+    def insert_acl(self, entity, role):
+        email = ''
+        entity_id = ''
+        if entity.startswith('user-'):
+            email = entity
+        # Replace or insert the entry
+        indexed = {entry.get('entity'): entry for entry in self.metadata.get('acl', [])}
+        indexed[entity] = {
+            'bucket': self.bucket_name,
+            'email': email,
+            'entity': entity,
+            'etag': self.metadata.get('etag', 'XYZ='),
+            'generation': self.generation,
+            'id': self.metadata.get('id', '') + '/' + entity,
+            'kind': 'storage#objectAccessControl',
+            'object': self.name,
+            'role': role,
+            'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
+        }
+        self.metadata['acl'] = indexed.values()
+        return indexed[entity]
 
 
 class GcsObject(object):
@@ -340,7 +365,25 @@ def objects_acl_list(bucket_name, object_name):
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
-    return json.dumps(revision.metadata.get('acl', []))
+    result = {
+        'items': revision.metadata.get('acl', []),
+    }
+    return json.dumps(result)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
+def objects_acl_create(bucket_name, object_name):
+    """Implement the 'ObjectAccessControls: create' API.
+
+     Create an Object Access Control.
+     """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    payload = json.loads(flask.request.data)
+    return json.dumps(revision.insert_acl(payload.get('entity', ''), payload.get('role', '')))
 
 
 # Define the WSGI application to handle bucket requests.

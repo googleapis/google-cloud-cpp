@@ -239,6 +239,31 @@ class Client {
     return raw_client_->ListObjectAcl(request).second.items;
   }
 
+  /**
+   * Create a new entry in the object ACL.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param entity the name of the entity added to the ACL.
+   * @param role the role of the entity.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc create object acl
+   */
+  template <typename... Parameters>
+  ObjectAccessControl CreateObjectAcl(std::string const& bucket_name,
+                                      std::string const& object_name,
+                                      std::string const& entity,
+                                      std::string const& role,
+                                      Parameters&&... parameters) {
+    internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
+                                             role);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->CreateObjectAcl(request).second;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

@@ -66,6 +66,8 @@ class RetryClient : public RawClient {
 
   std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;
+  std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+      CreateObjectAclRequest const&) override;
 
  private:
   void Apply(RetryPolicy& policy) { retry_policy_ = policy.clone(); }
