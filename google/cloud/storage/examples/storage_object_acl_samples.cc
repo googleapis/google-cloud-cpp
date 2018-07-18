@@ -88,8 +88,8 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 }
 
 void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 3) {
-    throw Usage{"delete-object-acl <bucket-name> <object-name>"};
+  if (argc < 4) {
+    throw Usage{"delete-object-acl <bucket-name> <object-name> <entity>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
