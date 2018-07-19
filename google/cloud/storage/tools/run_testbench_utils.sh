@@ -20,11 +20,13 @@ fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 TESTBENCH_PID=0
+TESTBENCH_DUMP_LOG=yes
 
 ################################################
 # Terminate the Google Cloud Storage test bench
 # Globals:
 #   TESTBENCH_PID: the process id for the test bench
+#   TESTBENCH_DUMP_LOG: if set to 'yes' the testbench log is dumped
 #   SHUTDOWN_ENDPOINT: sending a http POST to this endpoint shuts down
 #                      the test bench
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -39,7 +41,13 @@ kill_testbench() {
   curl -d "please shutdown" "${SHUTDOWN_ENDPOINT}"
   wait >/dev/null 2>&1
   echo "done."
+  if [ "${TESTBENCH_DUMP_LOG}" = "yes" ]; then
+    echo "================ [begin testbench.log] ================"
+    cat "testbench.log"
+    echo "================ [end testbench.log] ================"
+  fi
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."
+
 }
 
 ################################################

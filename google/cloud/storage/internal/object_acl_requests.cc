@@ -21,6 +21,22 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::ostream& operator<<(std::ostream& os, CreateObjectAclRequest const& r) {
+  os << "CreateObjectAclRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", entity=" << r.entity()
+     << ", role=" << r.role();
+  r.DumpParameters(os, ", ");
+  return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r) {
+  os << "UpdateObjectAclRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", entity=" << r.entity()
+     << ", role=" << r.role();
+  r.DumpParameters(os, ", ");
+  return os << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r) {
   os << "ObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity();

@@ -308,6 +308,33 @@ class Client {
     return raw_client_->GetObjectAcl(request).second;
   }
 
+  /**
+   * Update the value of an existing object ACL.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param acl the new ACL value. Note that only the writable values of the ACL
+   *   will be modified by the server.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc update object acl
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Parameters>
+  ObjectAccessControl UpdateObjectAcl(std::string const& bucket_name,
+                                      std::string const& object_name,
+                                      ObjectAccessControl const& acl,
+                                      Parameters&&... parameters) {
+    internal::UpdateObjectAclRequest request(bucket_name, object_name,
+                                             acl.entity(), acl.role());
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->UpdateObjectAcl(request).second;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

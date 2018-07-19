@@ -112,6 +112,11 @@ std::pair<Status, ObjectAccessControl> LoggingClient::GetObjectAcl(
   return MakeCall(*client_, &RawClient::GetObjectAcl, request, __func__);
 }
 
+std::pair<Status, ObjectAccessControl> LoggingClient::UpdateObjectAcl(
+    UpdateObjectAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::UpdateObjectAcl, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

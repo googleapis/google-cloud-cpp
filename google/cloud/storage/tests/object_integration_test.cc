@@ -170,6 +170,14 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   auto get_result = client.GetObjectAcl(bucket_name, object_name, entity_name);
   EXPECT_EQ(get_result, result);
 
+  ObjectAccessControl new_acl = get_result;
+  new_acl.set_role("READER");
+  auto updated_result =
+      client.UpdateObjectAcl(bucket_name, object_name, new_acl);
+  EXPECT_EQ(updated_result.role(), "READER");
+  get_result = client.GetObjectAcl(bucket_name, object_name, entity_name);
+  EXPECT_EQ(get_result, updated_result);
+
   // Remove an entity and verify it is no longer in the ACL.
   client.DeleteObjectAcl(bucket_name, object_name, entity_name);
   current_acl = client.ListObjectAcl(bucket_name, object_name);

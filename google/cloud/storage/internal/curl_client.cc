@@ -235,6 +235,29 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
                         ObjectAccessControl::ParseFromString(payload.payload));
 }
 
+std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
+    UpdateObjectAclRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name() + "/acl/" +
+                             request.entity());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  builder.SetMethod("PUT");
+  nl::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(object.dump()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectAccessControl{});
+  }
+  return std::make_pair(Status(),
+                        ObjectAccessControl::ParseFromString(payload.payload));
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
