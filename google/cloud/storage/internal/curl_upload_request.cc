@@ -99,13 +99,13 @@ void CurlUploadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_UPLOAD, 1L);
   handle_.SetOption(CURLOPT_CUSTOMREQUEST, "POST");
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-#if CURL_AT_LEAST_VERSION(7,32,1)
+#if LIBCURL_VERSION_NUM >= 0x073201
   if (error != CURLM_ADDED_ALREADY) {
     HandleCurlMultiErrorCode(__func__, error);
   }
 #else
   HandleCurlMultiErrorCode(__func__, error);
-#endif  // CURL_AT_LEAST_VERSION(7,32,1)
+#endif  // LIBCURL_VERSION_NUM >= 0x073201
 }
 
 std::size_t CurlUploadRequest::ReadCallback(char* ptr, std::size_t size,
