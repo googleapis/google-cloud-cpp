@@ -25,6 +25,7 @@ std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
   CurlRequestBuilder builder(storage_endpoint_ + "/b");
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  builder.AddQueryParameter("project", request.project_id());
   request.AddParametersToHttpRequest(builder);
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {

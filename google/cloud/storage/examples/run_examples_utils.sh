@@ -21,10 +21,14 @@ if [ -z "${PROJECT_ROOT+x}" ]; then
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
+# If an example fails, this is set to 1 and the program exits with failure.
+EXIT_STATUS=0
+
 ################################################
 # Run a list of examples in a given program
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   program_name: the name of the program to run.
 #   examples: a string with the list of examples to run, separated by commas
@@ -58,22 +62,31 @@ run_program_examples() {
     # Magic list of examples that need additional arguments.
     #
     case ${example} in
+        list-buckets)
+            arguments="${PROJECT_ID}"
+            ;;
         insert-object)
-            other_arguments="a-short-string-to-put-in-the-object"
+            arguments="${base_arguments} a-short-string-to-put-in-the-object"
+            ;;
+        create-object-acl)
+            arguments="${base_arguments} allAuthenticatedUsers READER"
+            ;;
+        get-object-acl)
+            arguments="${base_arguments} allAuthenticatedUsers"
             ;;
         *)
-            other_arguments=""
+            arguments="${base_arguments}"
             ;;
     esac
-    echo ${program_path} ${example} \
-        ${base_arguments} ${other_arguments} >"${log}"
-    ${program_path} ${example} \
-        ${base_arguments} ${other_arguments} >>"${log}" 2>&1 </dev/null
+    echo ${program_path} ${example} ${arguments} >"${log}"
+    set +e
+    ${program_path} ${example} ${arguments} >>"${log}" 2>&1 </dev/null
     if [ $? = 0 ]; then
       echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
           "${program_name} ${example}"
       continue
     else
+      EXIT_STATUS=1
       echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
           "${program_name} ${example}"
       echo
@@ -86,16 +99,19 @@ run_program_examples() {
         echo "================ [end testbench.log ================"
       fi
     fi
+    set -e
   done
 
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
       "${program_name} (no command) running"
+  set +e
   ${program_path} >"${log}" 2>&1 </dev/null
   # Note the inverted test, this is supposed to exit with 1.
   if [ $? != 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
         "${program_name}" "(no command)"
   else
+    EXIT_STATUS=1
     echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
         "${program_name}" "(no command)"
     echo
@@ -103,6 +119,7 @@ run_program_examples() {
     cat "${log}"
     echo "================ [end ${log}] ================"
   fi
+  set -e
   /bin/rm -f "${log}"
 }
 
@@ -110,6 +127,7 @@ run_program_examples() {
 # Run all Bucket examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   bucket_name: the name of the bucket to run the examples against.
 # Returns:
@@ -137,6 +155,7 @@ _EOF_
 # Run all Object examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   bucket_name: the name of the bucket to run the examples against.
 # Returns:
@@ -160,7 +179,7 @@ _EOF_
 
   run_program_examples ./storage_object_samples \
       "${OBJECT_EXAMPLES_COMMANDS}" \
-      "${bucket_name}"
+      "${bucket_name}" \
       "${object_name}"
 }
 
@@ -168,6 +187,7 @@ _EOF_
 # Run all Object examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   bucket_name: the name of the bucket to run the examples against.
 # Returns:
@@ -181,6 +201,7 @@ run_all_object_acl_examples() {
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly OBJECT_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-object-acl
+create-object-acl
 _EOF_
 )
 
@@ -191,10 +212,23 @@ _EOF_
         " storage_object_samples is not compiled"
     return
   fi
+  log="$(mktemp -t "storage_object_acl_setup.XXXXXX")"
+  set +e
   ./storage_object_samples insert-object \
       "${bucket_name}" \
       "${object_name}" \
-      "some-contents-does-not-matter-what"
+      "some-contents-does-not-matter-what" >${log} 2>&1
+  if [ $? != 0 ]; then
+    EXIT_STATUS=1
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        " cannot create test object"
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+    set -e
+    return
+  fi
+  set -e
 
   run_program_examples ./storage_object_acl_samples \
       "${OBJECT_ACL_COMMANDS}" \
@@ -207,6 +241,7 @@ _EOF_
 # Globals:
 #   BUCKET_NAME: the name of the bucket to use in the examples.
 #   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   None
 # Returns:
@@ -215,11 +250,10 @@ _EOF_
 run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
-  set +e
   run_all_bucket_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  set -e
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
+  exit ${EXIT_STATUS}
 }
