@@ -24,8 +24,8 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # Create most likely unique names for the project and bucket so multiple tests
 # can use the same testbench.
-readonly PROJECT_ID="fake-project-$(date +%s)"
-readonly BUCKET_NAME="fake-bucket-$(date +%s)"
+export PROJECT_ID="fake-project-$(date +%s)"
+export BUCKET_NAME="fake-bucket-$(date +%s)"
 
 echo
 echo "Running Storage integration tests against local servers."

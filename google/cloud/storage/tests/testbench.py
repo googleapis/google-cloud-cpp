@@ -19,6 +19,7 @@ import json
 import time
 import flask
 import httpbin
+import os
 from werkzeug import serving
 from werkzeug import wsgi
 
@@ -282,7 +283,7 @@ class GcsBucket(object):
         self.metadata = {
             'id': name,
             'kind': 'storage#bucket',
-            'metageneration': 1,
+            'metageneration': '4',
             'selfLink': gcs_url + name,
             'projectNumber': '123456789',
             'name': name,
@@ -348,6 +349,13 @@ def buckets_list():
     """Implement the 'Buckets: list' API: return the Buckets in a project."""
     base_url = flask.url_for('gcs_index', _external=True)
     result = {'next_page_token': '', 'items': []}
+    if len(GCS_BUCKETS) == 0:
+        # TODO(#821) - until we implement CreateBucket simply insert a bucket
+        # based on the BUCKET_NAME environment (this is set by our CI builds),
+        # to make the integration tests easy to write.
+        bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
+        bucket = GcsBucket(base_url, bucket_name)
+        GCS_BUCKETS[bucket_name] = bucket
     for name, b in GCS_BUCKETS.items():
         result['items'].append(b.metadata)
     return json.dumps(result)
@@ -365,23 +373,11 @@ def buckets_get(bucket_name):
         'ifMetagenerationNotMatch', None)
     if metageneration_not_match is not None and metageneration_not_match == '4':
         raise ErrorResponse('Precondition Failed', status_code=412)
-    return json.dumps({
-        'kind': 'storage#bucket',
-        'id': bucket_name,
-        'selfLink': base_url + bucket_name,
-        'projectNumber': '123456789',
-        'name': bucket_name,
-        'timeCreated': '2018-05-19T19:31:14Z',
-        'updated': '2018-05-19T19:31:24Z',
-        'metageneration': '4',
-        'location': 'US',
-        'storageClass': 'STANDARD',
-        'etag': 'XYZ=',
-        'labels': {
-            'foo': 'bar',
-            'baz': 'qux'
-        }
-    })
+    # TODO(#821) - until we implement Client::CreateBucket, simply insert every
+    # bucket that the application queries.
+    bucket = GcsBucket(base_url, bucket_name)
+    GCS_BUCKETS[bucket_name] = bucket
+    return json.dumps(bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o')
