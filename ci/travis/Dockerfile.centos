@@ -37,14 +37,13 @@ RUN yum makecache && yum install -y \
     pkgconfig \
     python \
     python-pip \
-    python-gunicorn \
     shtool \
     unzip \
     wget \
     which \
     zlib-devel
 
-RUN pip install httpbin
+RUN pip install httpbin flask
 
 # Install cmake3 + ctest3 as cmake + ctest.
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \
