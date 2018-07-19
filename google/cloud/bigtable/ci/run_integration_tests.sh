@@ -30,9 +30,16 @@ readonly BTDIR="google/cloud/bigtable"
 # of everybody's time. Use a (short) timeout to run the test and try 3 times.
 set +e
 success=""
+readonly TIMEOUT_CMD="$(which timeout)"
+if [ -n "${TIMEOUT_CMD}" ]; then
+  timeout="${TIMEOUT_CMD} 15s"
+else
+  timeout="env"
+fi
+
 for attempt in 1 2 3; do
   (cd "${BTDIR}/tests" && \
-   timeout 15s "${BINDIR}/../tests/run_integration_tests_emulator.sh")
+   ${timeout} "${BINDIR}/../tests/run_integration_tests_emulator.sh")
   if [ $? = 0 ]; then
     success="yes"
     break
@@ -53,8 +60,8 @@ set -e
 # embedded server.  The performance in the Travis and AppVeyor CI builds is not
 # consistent enough to use the results, but we want to detect crashes and ensure
 # the code at least is able to run as soon as possible.
+log="$(mktemp -t "bigtable_benchmarks.XXXXXX")"
 for benchmark in endurance apply_read_latency scan_throughput; do
-  log="$(mktemp --tmpdir "bigtable_benchmarks_${benchmark}.XXXXXXXXXX.log")"
   if [ ! -x "${BTDIR}/benchmarks/${benchmark}_benchmark" ]; then
     echo "${COLOR_YELLOW}[ SKIPPED  ]${COLOR_RESET} ${benchmark} benchmark"
     continue
@@ -71,3 +78,4 @@ for benchmark in endurance apply_read_latency scan_throughput; do
     echo "================ [end ${log}] ================"
   fi
 done
+/bin/rm -f "${log}"

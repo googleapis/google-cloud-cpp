@@ -50,9 +50,8 @@ run_program_examples() {
         " ${program_name} is not compiled"
     return
   fi
-  local object_name="object-$(date +%s)"
+  log="$(mktemp -t "storage_samples.XXXXXX")"
   for example in ${example_list}; do
-    log="$(mktemp --tmpdir "storage_samples.XXXXXXXXXX.log")"
     echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         "${program_name} ${example} running"
     #
@@ -87,10 +86,8 @@ run_program_examples() {
         echo "================ [end testbench.log ================"
       fi
     fi
-    /bin/rm -f "${log}"
   done
 
-  log="$(mktemp --tmpdir "storage_samples.XXXXXXXXXX.log")"
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
       "${program_name} (no command) running"
   ${program_path} >"${log}" 2>&1 </dev/null
