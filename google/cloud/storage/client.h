@@ -264,6 +264,28 @@ class Client {
     return raw_client_->CreateObjectAcl(request).second;
   }
 
+  /**
+   * Delete one access control entry in one object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param entity the name of the entity (user, team, group) to be removed from
+   *   the Object's ACL.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc delete object acl
+   */
+  template <typename... Parameters>
+  void DeleteObjectAcl(std::string const& bucket_name,
+                       std::string const& object_name,
+                       std::string const& entity, Parameters&&... parameters) {
+    internal::ObjectAclRequest request(bucket_name, object_name, entity);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    raw_client_->DeleteObjectAcl(request);
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

@@ -166,6 +166,11 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result.entity(), current_acl));
 
+  // Remove an entity and verify it is no longer in the ACL.
+  client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+  current_acl = client.ListObjectAcl(bucket_name, object_name);
+  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+
   client.DeleteObject(bucket_name, object_name);
 }
 }  // namespace STORAGE_CLIENT_NS

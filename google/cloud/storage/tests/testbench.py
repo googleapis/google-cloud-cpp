@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """A test bench for the Google Cloud Storage C++ Client Library."""
 
 import argparse
@@ -72,6 +71,15 @@ class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
     def __init__(self, gcs_url, bucket_name, name, generation, request):
+        """
+        Initialize a new object revision.
+
+        :param gcs_url:str the base URL for the GCS service.
+        :param bucket_name:str the name of the bucket that contains the object.
+        :param name:str the name of the object.
+        :param generation:int the generation number for this object.
+        :param request:flask.Request the contents of the HTTP request.
+        """
         self.bucket_name = bucket_name
         self.name = name
         self.generation = generation
@@ -98,13 +106,42 @@ class GcsObjectVersion(object):
         self.insert_acl('project-editors-123456789', 'OWNER')
         self.insert_acl('project-viewers-123456789', 'READER')
 
+    def canonical_entity_name(self, entity):
+        """
+        Convert entity names to their canonical form.
+
+        Some entities (notably project-<team>-) have more than one name, for
+        example the project-owners-<project_id> enntities are called
+        project-owners-<project_number> internally.  This function
+        :param entity:str convert this entity to its canonical name.
+        :return:str the name in canonical form.
+        """
+        if entity.startswith('project-owners-'):
+            return 'project-owners-123456789'
+        if entity.startswith('project-editors-'):
+            return 'project-editors-123456789'
+        if entity.startswith('project-viewers-'):
+            return 'project-viewers-123456789'
+        return entity
+
     def insert_acl(self, entity, role):
+        """
+        Insert (or update) a new AccessControl entry for this object.
+
+        :param entity:str the name of the entity to insert.
+        :param role:str the new role
+        :return:dict the dictionary representing the new AccessControl metadata.
+        """
+        entity = self.canonical_entity_name(entity)
         email = ''
         entity_id = ''
         if entity.startswith('user-'):
             email = entity
         # Replace or insert the entry
-        indexed = {entry.get('entity'): entry for entry in self.metadata.get('acl', [])}
+        indexed = {
+            entry.get('entity'): entry
+            for entry in self.metadata.get('acl', [])
+        }
         indexed[entity] = {
             'bucket': self.bucket_name,
             'email': email,
@@ -120,11 +157,32 @@ class GcsObjectVersion(object):
         self.metadata['acl'] = indexed.values()
         return indexed[entity]
 
+    def delete_acl(self, entity):
+        """
+        Delete a single AccessControl entry from the Object revision.
+
+        :param entity:str the name of the entity.
+        :return:None
+        """
+        entity = self.canonical_entity_name(entity)
+        indexed = {
+            acl.get('entity'): acl
+            for acl in self.metadata.get('acl', [])
+        }
+        indexed.pop(entity)
+        self.metadata['acl'] = indexed.values()
+
 
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
 
     def __init__(self, bucket_name, name):
+        """
+        Initialize a fake GCS Blob.
+
+        :param bucket_name:str the bucket that will contain the new object.
+        :param name:str the name of the new object.
+        """
         self.bucket_name = bucket_name
         self.name = name
         # Define the current generation for the object, will use this as a
@@ -133,16 +191,30 @@ class GcsObject(object):
         self.revisions = {}
 
     def get_revision(self, request):
+        """
+        Get the information about a particular object revision or raise.
+
+        :param request:flask.Request
+        :return:GcsObjectRevision the object revision.
+        :raises:ErrorResponse if the request contains an invalid generation
+            number.
+        """
         generation = request.args.get('generation')
         if generation is None:
             return self.get_latest()
         version = self.revisions.get(int(generation))
         if version is None:
-            raise ErrorResponse('Precondition Failed: generation %s not found'
-                                % generation)
+            raise ErrorResponse(
+                'Precondition Failed: generation %s not found' % generation)
         return version
 
     def del_revision(self, request):
+        """
+        Delete a version of a fake GCS Blob.
+
+        :param request:flask.Request the contents of the HTTP request.
+        :return: None
+        """
         generation = request.args.get('generation')
         if generation is None:
             generation = self.generation
@@ -190,13 +262,16 @@ class GcsObject(object):
                 raise ErrorResponse('Precondition Failed', status_code=412)
 
     def insert(self, gcs_url, request):
-        """Insert a new revision based on the give flask request."""
+        """
+        Insert a new revision based on the give flask request.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :return:None
+        """
         self.generation += 1
-        self.revisions[self.generation] = GcsObjectVersion(gcs_url,
-                                                           self.bucket_name,
-                                                           self.name,
-                                                           self.generation,
-                                                           request)
+        self.revisions[self.generation] = GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request)
 
 
 class GcsBucket(object):
@@ -223,7 +298,14 @@ class GcsBucket(object):
         }
 
     def check_preconditions(self, request):
-        """Verify that the preconditions in request are met."""
+        """
+        Verify that the preconditions in request are met.
+        :param request:flask.Request the contents of the HTTP request.
+        :return:None
+        :raises:ErrorResponse if the request does not pass the preconditions,
+            for example, the request has a `ifMetagenerationMatch` restriction
+            that is not met.
+        """
 
         metageneration_match = request.args.get('ifMetagenerationMatch')
         metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
@@ -265,10 +347,7 @@ def gcs_error(error):
 def buckets_list():
     """Implement the 'Buckets: list' API: return the Buckets in a project."""
     base_url = flask.url_for('gcs_index', _external=True)
-    result = {
-        'next_page_token': '',
-        'items': []
-    }
+    result = {'next_page_token': '', 'items': []}
     for name, b in GCS_BUCKETS.items():
         result['items'].append(b.metadata)
     return json.dumps(result)
@@ -278,7 +357,8 @@ def buckets_list():
 def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
-    metageneration_match = flask.request.args.get('ifMetagenerationMatch', None)
+    metageneration_match = flask.request.args.get('ifMetagenerationMatch',
+                                                  None)
     if metageneration_match is not None and metageneration_match != '4':
         raise ErrorResponse('Precondition Failed', status_code=412)
     metageneration_not_match = flask.request.args.get(
@@ -308,10 +388,7 @@ def buckets_get(bucket_name):
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
-    result = {
-        'next_page_token': '',
-        'items': []
-    }
+    result = {'next_page_token': '', 'items': []}
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
             continue
@@ -334,7 +411,8 @@ def objects_get(bucket_name, object_name):
             raise ErrorResponse('Invalid alt=%s parameter' % media)
         response = flask.make_response(revision.media)
         length = len(revision.media)
-        response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+        response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1,
+                                                               length)
         return response
 
     return json.dumps(revision.metadata)
@@ -383,7 +461,24 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return json.dumps(revision.insert_acl(payload.get('entity', ''), payload.get('role', '')))
+    return json.dumps(
+        revision.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
+def objects_acl_delete(bucket_name, object_name, entity):
+    """Implement the 'ObjectAccessControls: delete' API.
+
+      Delete an Object Access Control.
+      """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    revision.delete_acl(entity)
+    return json.dumps({})
 
 
 # Define the WSGI application to handle bucket requests.
@@ -400,8 +495,9 @@ def upload_error(error):
 @upload.route('/b/<bucket_name>/o', methods=['POST'])
 def objects_insert(bucket_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
-    gcs_url = flask.url_for('objects_insert', bucket_name=bucket_name,
-                            _external=True).replace('/upload/', '/')
+    gcs_url = flask.url_for(
+        'objects_insert', bucket_name=bucket_name, _external=True).replace(
+            '/upload/', '/')
     object_name = flask.request.args.get('name', None)
     if object_name is None:
         raise ErrorResponse('Name not set in Objects: insert', status_code=412)
@@ -421,25 +517,33 @@ def main():
     """Parse the arguments and run the test bench application."""
     parser = argparse.ArgumentParser(
         description='A testbench for the Google Cloud C++ Client Library')
-    parser.add_argument('--host', default='localhost',
-                        help='The listening port')
+    parser.add_argument(
+        '--host', default='localhost', help='The listening port')
     parser.add_argument('--port', help='The listening port')
     # By default we do not turn on the debugging. This typically runs inside a
     # Docker image, with a uid that has not entry in /etc/passwd, and the
     # werkzeug debugger crashes in that environment (as it should probably).
-    parser.add_argument('--debug', help='Use the WSGI debugger',
-                        default=False, action='store_true')
+    parser.add_argument(
+        '--debug',
+        help='Use the WSGI debugger',
+        default=False,
+        action='store_true')
     arguments = parser.parse_args()
 
     # Compose the different WSGI applications.
-    application = wsgi.DispatcherMiddleware(root, {
-        '/httpbin': httpbin.app,
-        GCS_HANDLER_PATH: gcs,
-        UPLOAD_HANDLER_PATH: upload,
-    })
-    serving.run_simple(arguments.host, int(arguments.port), application,
-                       use_reloader=True, use_debugger=arguments.debug,
-                       use_evalex=True)
+    application = wsgi.DispatcherMiddleware(
+        root, {
+            '/httpbin': httpbin.app,
+            GCS_HANDLER_PATH: gcs,
+            UPLOAD_HANDLER_PATH: upload,
+        })
+    serving.run_simple(
+        arguments.host,
+        int(arguments.port),
+        application,
+        use_reloader=True,
+        use_debugger=arguments.debug,
+        use_evalex=True)
 
 
 if __name__ == '__main__':
