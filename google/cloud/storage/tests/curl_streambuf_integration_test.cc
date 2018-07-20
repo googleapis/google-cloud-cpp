@@ -58,11 +58,29 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
     expected += random;
   }
   auto response = writer.CloseRaw();
-  ASSERT_EQ(200, response.status_code);
+  ASSERT_EQ(200, response.status_code)
+      << ", status_code=" << response.status_code
+      << ", payload=" << response.payload << ", headers={" << [&response] {
+           std::string result;
+           char const* sep = "";
+           for (auto&& kv : response.headers) {
+             result += sep;
+             result += kv.first;
+             result += "=";
+             result += kv.second;
+             sep = ", ";
+           }
+           result += "}";
+           return result;
+         }();
 
   internal::nl::json parsed = internal::nl::json::parse(response.payload);
 
   // Verify the server received the right data.
+  auto actual = parsed.value("data", "");
+  // A common failure mode is to get empty data, in that case printing the delta
+  // in EXPECT_EQ() is just distracting.
+  ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected, parsed.value("data", ""));
 }
 

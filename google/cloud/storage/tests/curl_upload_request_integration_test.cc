@@ -77,7 +77,21 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   expected_data += current_message;
   upload.NextBuffer(current_message);
   auto response = upload.Close();
-  EXPECT_EQ(200, response.status_code) << " payload=" << response.payload;
+  ASSERT_EQ(200, response.status_code)
+      << ", status_code=" << response.status_code
+      << ", payload=" << response.payload << ", headers={" << [&response] {
+           std::string result;
+           char const* sep = "";
+           for (auto&& kv : response.headers) {
+             result += sep;
+             result += kv.first;
+             result += "=";
+             result += kv.second;
+             sep = ", ";
+           }
+           result += "}";
+           return result;
+         }();
 
   nl::json parsed = nl::json::parse(response.payload);
   // headers contains the headers that the httpbin server received, use that
@@ -86,6 +100,10 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   EXPECT_EQ("100-continue", headers.value("Expect", "")) << parsed.dump(4);
 
   // Verify the server received the right data.
+  auto actual = parsed.value("data", "");
+  // A common failure mode is to get empty data, in that case printing the delta
+  // in EXPECT_EQ() is just distracting.
+  ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected_data, parsed.value("data", ""));
 }
 
