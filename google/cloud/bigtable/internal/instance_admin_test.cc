@@ -533,3 +533,243 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
+
+/// @test Verify that `bigtable::noex::InstanceAdmin::CreateAppProfile` works.
+TEST_F(InstanceAdminTest, CreateAppProfile) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  std::string expected_text = R"(
+      name: 'projects/my-project/instances/test-instance/appProfiles/my-profile'
+      etag: 'abc123='
+      multi_cluster_routing_use_any { }
+  )";
+
+  btproto::AppProfile expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, CreateAppProfile(_, _, _))
+      .WillOnce(
+          Invoke([&expected](grpc::ClientContext*,
+                             btproto::CreateAppProfileRequest const& request,
+                             btproto::AppProfile* response) {
+            auto const project_name =
+                "projects/" + kProjectId + "/instances/test-instance";
+            EXPECT_EQ(project_name, request.parent());
+            *response = expected;
+            return grpc::Status::OK;
+          }));
+
+  grpc::Status status;
+  auto actual =
+      tested.CreateAppProfile(bigtable::InstanceId("test-instance"),
+                              bigtable::AppProfileConfig::MultiClusterUseAny(
+                                  bigtable::AppProfileId("my-profile")),
+                              status);
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/// @test Verify that `bigtable::noex::InstanceAdmin::GetAppProfile` works.
+TEST_F(InstanceAdminTest, GetAppProfile) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  std::string expected_text = R"(
+      name: 'projects/my-project/instances/test-instance/appProfiles/my-profile'
+      etag: 'abc123='
+      multi_cluster_routing_use_any { }
+  )";
+
+  btproto::AppProfile expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, GetAppProfile(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke([&expected](grpc::ClientContext*,
+                                   btproto::GetAppProfileRequest const& request,
+                                   btproto::AppProfile* response) {
+        auto const profile_name =
+            "projects/" + kProjectId +
+            "/instances/test-instance/appProfiles/my-profile";
+        EXPECT_EQ(profile_name, request.name());
+        *response = expected;
+        return grpc::Status::OK;
+      }));
+
+  grpc::Status status;
+  auto actual =
+      tested.GetAppProfile(bigtable::InstanceId("test-instance"),
+                           bigtable::AppProfileId("my-profile"), status);
+
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/// @test Verify that `GetAppProfile` handles unrecoverable errors.
+TEST_F(InstanceAdminTest, GetAppProfileUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, GetAppProfile(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::AppProfileId profile_id("a-profile");
+  // After all the setup, make the actual call we want to test.
+  tested.GetAppProfile(instance_id, profile_id, status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
+auto create_list_app_profiles_lambda =
+    [](std::string expected_token, std::string const& returned_token,
+       std::string const& instance_id,
+       std::vector<std::string> app_profile_ids) {
+      return [expected_token, returned_token, instance_id, app_profile_ids](
+                 grpc::ClientContext* ctx,
+                 btproto::ListAppProfilesRequest const& request,
+                 btproto::ListAppProfilesResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + instance_id;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
+
+        EXPECT_NE(nullptr, response);
+        for (auto const& app_profile_id : app_profile_ids) {
+          auto& app_profile = *response->add_app_profiles();
+          auto name = instance_name;
+          name += "/appProfiles/";
+          name += app_profile_id;
+          app_profile.set_name(name);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
+
+/// @test Verify that `bigtable::InstanceAdmin::ListAppProfiles` works in the
+/// easy case.
+TEST_F(InstanceAdminTest, ListAppProfiles) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  std::string const& instance_id = "the-instance";
+  auto mock_list_app_profiles =
+      create_list_app_profiles_lambda("", "", instance_id, {"p0", "p1"});
+  EXPECT_CALL(*client_, ListAppProfiles(_, _, _))
+      .WillOnce(Invoke(mock_list_app_profiles));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListAppProfiles(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  std::string instance_name = tested.InstanceName(instance_id);
+  ASSERT_EQ(2UL, actual.size());
+  EXPECT_EQ(instance_name + "/appProfiles/p0", actual[0].name());
+  EXPECT_EQ(instance_name + "/appProfiles/p1", actual[1].name());
+}
+
+/**
+ * @test Verify that `bigtable::InstanceAdmin::ListAppProfiles` handles
+ * recoverable failures.
+ */
+TEST_F(InstanceAdminTest, ListAppProfilesRecoverableFailures) {
+  auto const instance_id = "the-instance";
+
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx,
+         btproto::ListAppProfilesRequest const& request,
+         btproto::ListAppProfilesResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
+  auto batch0 = create_list_app_profiles_lambda("", "token-001", instance_id,
+                                                {"p0", "p1"});
+  auto batch1 = create_list_app_profiles_lambda("token-001", "", instance_id,
+                                                {"p2", "p3"});
+  EXPECT_CALL(*client_, ListAppProfiles(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch0))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch1));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListAppProfiles(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  std::string instance_name = tested.InstanceName(instance_id);
+  ASSERT_EQ(4UL, actual.size());
+  EXPECT_EQ(instance_name + "/appProfiles/p0", actual[0].name());
+  EXPECT_EQ(instance_name + "/appProfiles/p1", actual[1].name());
+  EXPECT_EQ(instance_name + "/appProfiles/p2", actual[2].name());
+  EXPECT_EQ(instance_name + "/appProfiles/p3", actual[3].name());
+}
+
+/**
+ * @test Verify that `bigtable::InstanceAdmin::ListAppProfiles` handles
+ * unrecoverable failures.
+ */
+TEST_F(InstanceAdminTest, ListAppProfilesUnrecoverableFailures) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, ListAppProfiles(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  // We expect the InstanceAdmin to make a call to let the client know the
+  // request failed.
+  grpc::Status status;
+  tested.ListAppProfiles("the-instance", status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
+/// @test Verify that `bigtable::noex::InstanceAdmin::DeleteAppProfile` works.
+TEST_F(InstanceAdminTest, DeleteAppProfile) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, DeleteAppProfile(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          btproto::DeleteAppProfileRequest const& request,
+                          google::protobuf::Empty*) {
+        auto const profile_name =
+            "projects/" + kProjectId +
+            "/instances/test-instance/appProfiles/my-profile";
+        EXPECT_EQ(profile_name, request.name());
+        EXPECT_TRUE(request.ignore_warnings());
+        return grpc::Status::OK;
+      }));
+
+  grpc::Status status;
+  tested.DeleteAppProfile(bigtable::InstanceId("test-instance"),
+                          bigtable::AppProfileId("my-profile"), true, status);
+}
+
+/// @test Verify that `DeleteAppProfile` stops on any errors.
+TEST_F(InstanceAdminTest, DeleteAppProfileUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, DeleteAppProfile(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+  grpc::Status status;
+  bigtable::InstanceId instance_id("other-instance");
+  bigtable::AppProfileId profile_id("a-profile");
+  tested.DeleteAppProfile(instance_id, profile_id, false, status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
+}

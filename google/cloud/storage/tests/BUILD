@@ -12,21 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility=["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
-load(":storage_client_integration_tests.bzl",
-    "storage_client_integration_tests")
+load(
+    ":storage_client_integration_tests.bzl",
+    "storage_client_integration_tests",
+)
 
 [cc_binary(
-    name=test.replace('/', '_').replace('.cc', ''),
-    srcs=[test],
-    deps=[
-        "//google/cloud/storage:storage_client",
-        "//google/cloud:google_cloud_cpp_common",
-        "@com_google_googletest//:gtest",
-        "@com_google_googletest//:gtest_main",
-    ],
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = [ "-lpthread" ],
+    linkopts = ["-lpthread"],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/storage:storage_client",
+        "@com_google_googletest//:gtest",
+    ],
 ) for test in storage_client_integration_tests]

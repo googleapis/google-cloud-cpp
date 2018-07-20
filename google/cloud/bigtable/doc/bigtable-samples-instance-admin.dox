@@ -1,0 +1,60 @@
+/*!
+@page bigtable-samples-instance-admin Example: Instance Admin Samples
+
+This example is a very simple "Instance Admin" application, which illustrates how to:
+
+- Create a production instance and run basic instance admin operations.
+- Create a development instance.
+- Delete an instance.
+- Create a new cluster.
+- Delete a cluster.
+
+## Run the example
+
+This example uses the
+[Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/google-cloud-cpp)
+to communicate with Cloud Bigtable.
+
+To run the example program, follow the
+[instructions](https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/)
+for the example on GitHub.
+
+### Include the Necessary Headers
+
+The example uses the following headers:
+
+@snippet bigtable_samples_instance_admin.cc bigtable includes
+
+### Connect to the Cloud Bigtable instance admin endpoint.
+
+@snippet bigtable_samples_instance_admin.cc connect instance admin 
+
+### Create a production instance and run basic instance-operations.
+
+@snippet bigtable_samples_instance_admin.cc run instance operations
+
+### Create a Development Instance 
+
+@snippet bigtable_samples_instance_admin.cc create dev instance
+
+### Delete an instance
+
+@snippet bigtable_samples_instance_admin.cc delete instance
+
+### Create an additional cluster on an existing instance
+
+@snippet bigtable_samples_instance_admin.cc create cluster
+
+### Delete a cluster
+
+@snippet bigtable_samples_instance_admin.cc delete cluster
+
+### Put it all together
+
+Here is the full example
+
+@snippet bigtable_samples_instance_admin.cc all code
+
+@see `bigtable::v0::InstanceAdmin` for additional operations to get, list, update,
+and delete instances.
+*/

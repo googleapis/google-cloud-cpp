@@ -18,9 +18,16 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/create_object_acl_request.h"
+#include "google/cloud/storage/internal/delete_object_request.h"
+#include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_bucket_metadata_request.h"
+#include "google/cloud/storage/internal/get_object_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
+#include "google/cloud/storage/internal/list_buckets_request.h"
+#include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
@@ -40,22 +47,39 @@ class RawClient {
  public:
   virtual ~RawClient() = default;
 
+  virtual ClientOptions const& client_options() const = 0;
+
+  virtual std::pair<Status, ListBucketsResponse> ListBuckets(
+      ListBucketsRequest const& request) = 0;
+
   /**
    * Execute a request to fetch bucket metadata.
    *
-   * TODO(#690) - consider checking that modifiers in a request are compatible.
    */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
-      internal::GetBucketMetadataRequest const& request) = 0;
+      GetBucketMetadataRequest const& request) = 0;
 
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
-      internal::InsertObjectMediaRequest const&) = 0;
+      InsertObjectMediaRequest const&) = 0;
 
-  virtual std::pair<Status, internal::ReadObjectRangeResponse>
-  ReadObjectRangeMedia(internal::ReadObjectRangeRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
+      GetObjectMetadataRequest const& request) = 0;
 
-  virtual std::pair<Status, internal::ListObjectsResponse> ListObjects(
-      internal::ListObjectsRequest const&) = 0;
+  virtual std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
+      ReadObjectRangeRequest const&) = 0;
+
+  virtual std::pair<Status, ListObjectsResponse> ListObjects(
+      ListObjectsRequest const&) = 0;
+
+  virtual std::pair<Status, EmptyResponse> DeleteObject(
+      DeleteObjectRequest const&) = 0;
+
+  virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
+      ListObjectAclRequest const&) = 0;
+  virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+      CreateObjectAclRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteObjectAcl(
+      ObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

@@ -24,70 +24,100 @@ namespace cloud {
 namespace storage {
 namespace testing {
 /**
- * Mock an instance of `storage::internal::CurlRequest`.
+ * Wrap a googlemock mock into a move-assignable class.
  *
- * The mocking code is a bit strange.  The class under test creates a concrete
- * object, mostly because it seemed overly complex to have a factory and/or
- * pass the object as a pointer.  But mock classes do not play well with
- * copy or move constructors.  Sigh.  The "solution" is to create a concrete
- * class that delegate all calls to a dynamically created mock.
- */
-class MockHttpRequestHandle {
- public:
-  MOCK_METHOD1(AddHeader, void(std::string const&));
-  MOCK_METHOD2(AddQueryParameter, void(std::string const&, std::string const&));
-  MOCK_METHOD1(MakeEscapedString, std::unique_ptr<char[]>(std::string const&));
-  MOCK_METHOD2(PrepareRequest, void(std::string const&, bool));
-  MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
-
-  /**
-   * Setup the most common expectation for MakeEscapedString.
-   *
-   * In most tests, MakeEscapedString() is easier to mock with some minimal
-   * behavior rather explicit results for each input.  This function provides a
-   * simple way to setup that behavior.
-   */
-  void SetupMakeEscapedString();
-};
-
-/**
- * Mock `storage::internal::CurlRequest` including stack-allocated instances.
+ * We need a class that is move-assignable because the tested code assumes the
+ * object returned from MockHttpRequestBuilder::BuildRequest meets that
+ * requirement.  Unfortunately, googlemock classes do not meet that requirement.
+ * We use the PImpl idiom to wrap the class to meet the requirement.
  */
 class MockHttpRequest {
  public:
-  explicit MockHttpRequest(std::string url) : url_(std::move(url)) {
-    (void)Handle(url_);
+  MockHttpRequest() : mock(std::make_shared<Impl>()) {}
+
+  internal::HttpResponse MakeRequest() { return mock->MakeRequest(); }
+
+  struct Impl {
+    MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
+  };
+
+  std::shared_ptr<Impl> mock;
+};
+
+/**
+ * Mock a CurlRequestBuilder.
+ *
+ * The structure of this mock is unusual. The classes under test create a
+ * concrete instance of CurlRequestBuilder, mostly because (a) the class has
+ * template member functions, so we cannot use a pure interface and a factor,
+ * and (b) using a factory purely for testing seemed like overkill. Instead the
+ * mock is implemented using a modified version of the PImpl idiom
+ *
+ * @see https://en.cppreference.com/w/cpp/language/pimpl
+ */
+class MockHttpRequestBuilder {
+ public:
+  explicit MockHttpRequestBuilder(std::string url) {
+    mock->Constructor(std::move(url));
   }
 
-  static void Clear() { handles_.clear(); }
-
-  static std::shared_ptr<MockHttpRequestHandle> Handle(std::string const& url);
-
-  void AddHeader(std::string const& header);
-  void AddQueryParameter(std::string const& name, std::string const& value);
-  std::unique_ptr<char[]> MakeEscapedString(std::string const& x);
-  void PrepareRequest(std::string const& payload, bool enable_logging);
-  storage::internal::HttpResponse MakeRequest();
+  using RequestType = MockHttpRequest;
 
   template <typename P>
   void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
-      handles_[url_]->AddQueryParameter(p.parameter_name(), p.value());
+      mock->AddQueryParameter(p.parameter_name(), p.value());
     }
   }
 
   template <typename P>
   void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
-      handles_[url_]->AddQueryParameter(p.parameter_name(),
-                                        std::to_string(p.value()));
+      mock->AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
     }
   }
 
- private:
-  std::string url_;
-  static std::map<std::string, std::shared_ptr<MockHttpRequestHandle>> handles_;
+  MockHttpRequest BuildRequest(std::string payload) {
+    return mock->BuildRequest(std::move(payload));
+  }
+
+  void AddUserAgentPrefix(std::string const& prefix) {
+    mock->AddUserAgentPrefix(prefix);
+  }
+
+  void AddHeader(std::string const& header) { mock->AddHeader(header); }
+
+  void AddQueryParameter(std::string const& key, std::string const& value) {
+    mock->AddQueryParameter(key, value);
+  }
+
+  void SetMethod(std::string const& method) { mock->SetMethod(method); }
+
+  void SetDebugLogging(bool enable) { mock->SetDebugLogging(enable); }
+
+  std::string UserAgentSuffix() { return mock->UserAgentSuffix(); }
+
+  std::unique_ptr<char[]> MakeEscapedString(std::string const& tmp) {
+    return mock->MakeEscapedString(tmp);
+  }
+
+  struct Impl {
+    MOCK_METHOD1(Constructor, void(std::string));
+    MOCK_METHOD1(BuildRequest, MockHttpRequest(std::string));
+    MOCK_METHOD1(AddUserAgentPrefix, void(std::string const&));
+    MOCK_METHOD1(AddHeader, void(std::string const&));
+    MOCK_METHOD2(AddQueryParameter,
+                 void(std::string const&, std::string const&));
+    MOCK_METHOD1(SetMethod, void(std::string const&));
+    MOCK_METHOD1(SetDebugLogging, void(bool));
+    MOCK_CONST_METHOD0(UserAgentSuffix, std::string());
+    MOCK_METHOD1(MakeEscapedString,
+                 std::unique_ptr<char[]>(std::string const&));
+  };
+
+  static std::shared_ptr<Impl> mock;
 };
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud

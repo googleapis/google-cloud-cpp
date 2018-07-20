@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/object_stream.h"
 
@@ -47,21 +48,36 @@ class Client {
   explicit Client(std::shared_ptr<Credentials> credentials)
       : Client(ClientOptions(std::move(credentials))) {}
 
-  /// Build a client with specific retry and backoff policies.
-  template <typename RetryPolicy, typename BackoffPolicy>
-  Client(std::shared_ptr<internal::RawClient> client, RetryPolicy retry_policy,
-         BackoffPolicy backoff_policy)
-      : raw_client_(new internal::RetryClient(std::move(client),
-                                              std::move(retry_policy),
-                                              std::move(backoff_policy))) {}
-
-  /// Build a client with an specific RawClient, with the default retry policy
-  explicit Client(std::shared_ptr<internal::RawClient> client);
+  /// Build a client and maybe override the retry and/or backoff policies.
+  template <typename... Policies>
+  explicit Client(std::shared_ptr<internal::RawClient> client,
+                  Policies&&... policies)
+      : raw_client_(new internal::RetryClient(
+            std::move(client), std::forward<Policies>(policies)...)) {}
 
   /// Build a client with an specific RawClient, without retry policies.
   struct NoRetry {};
   explicit Client(std::shared_ptr<internal::RawClient> client, NoRetry)
       : raw_client_(std::move(client)) {}
+
+  /**
+   * Fetch the list of buckets for a given project.
+   *
+   * @param project_id the project to query.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `MaxResults`, `Prefix`, `UserProject`, and `Projection`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets
+   */
+  template <typename... Modifiers>
+  ListBucketsReader ListBuckets(std::string const& project_id,
+                                Modifiers&&... modifiers) {
+    return ListBucketsReader(raw_client_, project_id,
+                             std::forward<Modifiers>(modifiers)...);
+  }
 
   /**
    * Fetch the bucket metadata and return it.
@@ -112,6 +128,32 @@ class Client {
   }
 
   /**
+   * Fetch the object metadata and return it.
+   *
+   * @param bucket_name the bucket containing the object.
+   * @param object_name the object name.
+   * @param modifiers a variadic list. Valid types for this operation include
+   *   `Generation`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `Projection`,
+   *   and `UserProject`.
+   *
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc get object metadata
+   */
+  template <typename... Modifiers>
+  ObjectMetadata GetObjectMetadata(std::string const& bucket_name,
+                                   std::string const& object_name,
+                                   Modifiers&&... modifiers) {
+    internal::GetObjectMetadataRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Modifiers>(modifiers)...);
+    return raw_client_->GetObjectMetadata(request).second;
+  }
+
+  /**
    * List the objects in a bucket.
    *
    * @param bucket_name the name of the bucket to list.
@@ -153,6 +195,95 @@ class Client {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
     return ObjectReadStream(raw_client_, request);
+  }
+
+  /**
+   * Delete an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include
+   *   `Generation`, `IfGenerationMatch` / `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch` / `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc delete object
+   */
+  template <typename... Parameters>
+  void DeleteObject(std::string const& bucket_name,
+                    std::string const& object_name,
+                    Parameters&&... parameters) {
+    internal::DeleteObjectRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    raw_client_->DeleteObject(request);
+  }
+
+  /**
+   * Retrieve the list of ObjectAccessControls for an object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc list object acl
+   */
+  template <typename... Parameters>
+  std::vector<ObjectAccessControl> ListObjectAcl(std::string const& bucket_name,
+                                                 std::string const& object_name,
+                                                 Parameters&&... parameters) {
+    internal::ListObjectAclRequest request(bucket_name, object_name);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->ListObjectAcl(request).second.items;
+  }
+
+  /**
+   * Create a new entry in the object ACL.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param entity the name of the entity added to the ACL.
+   * @param role the role of the entity.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc create object acl
+   */
+  template <typename... Parameters>
+  ObjectAccessControl CreateObjectAcl(std::string const& bucket_name,
+                                      std::string const& object_name,
+                                      std::string const& entity,
+                                      std::string const& role,
+                                      Parameters&&... parameters) {
+    internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
+                                             role);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    return raw_client_->CreateObjectAcl(request).second;
+  }
+
+  /**
+   * Delete one access control entry in one object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be deleted.
+   * @param entity the name of the entity (user, team, group) to be removed from
+   *   the Object's ACL.
+   * @param parameters a variadic list of optional parameters. Valid types for
+   *   this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc delete object acl
+   */
+  template <typename... Parameters>
+  void DeleteObjectAcl(std::string const& bucket_name,
+                       std::string const& object_name,
+                       std::string const& entity, Parameters&&... parameters) {
+    internal::ObjectAclRequest request(bucket_name, object_name, entity);
+    request.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    raw_client_->DeleteObjectAcl(request);
   }
 
  private:

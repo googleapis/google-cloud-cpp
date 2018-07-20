@@ -43,7 +43,7 @@ namespace internal {
 struct OpenSslUtils {
  public:
   /**
-   * Encode a string using Base64.
+   * Encodes a string using Base64.
    */
   static std::string Base64Encode(std::string const& str) {
     auto bio_chain = MakeBioChainForBase64Transcoding();
@@ -82,7 +82,7 @@ struct OpenSslUtils {
   }
 
   /**
-   * Transform a string in-place, removing trailing occurrences of a character.
+   * Transforms a string in-place, removing trailing occurrences of a character.
    *
    * Warning: this was written with the intent of operating on a string
    * containing ASCII-encoded (8-bit) characters (e.g. removing trailing '='
@@ -102,8 +102,8 @@ struct OpenSslUtils {
       google::cloud::storage::internal::JwtSigningAlgorithms alg) {
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
-    auto func_name = __func__;  // Avoid using the lambda name instead.
-    auto handle_openssl_failure = [&func_name](std::string error_msg) -> void {
+    const char* func_name = __func__;  // Avoid using the lambda name instead.
+    auto handle_openssl_failure = [&func_name](const char* error_msg) -> void {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << func_name
                   << " (failed to sign string with PEM key): " << std::endl
@@ -185,7 +185,7 @@ struct OpenSslUtils {
   }
 
   /**
-   * Return a Base64-encoded version of the given a string, using the URL- and
+   * Returns a Base64-encoded version of the given a string, using the URL- and
    * filesystem-safe alphabet, making these adjustments:
    * -  Replace '+' with '-'
    * -  Replace '/' with '_'

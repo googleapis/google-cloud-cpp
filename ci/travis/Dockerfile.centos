@@ -1,0 +1,60 @@
+# Copyright 2017 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=7
+FROM centos:${DISTRO_VERSION}
+MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+
+# We need the "Extra Packages for Enterprise Linux" for cmake3
+RUN rpm -Uvh \
+    https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+RUN yum install -y centos-release-scl
+RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
+
+RUN yum makecache && yum install -y \
+    devtoolset-7 \
+    c-ares-devel \
+    ccache \
+    cmake3 \
+    curl \
+    curl-devel \
+    git \
+    golang \
+    graphviz \
+    openssl-devel \
+    pkgconfig \
+    python \
+    python-pip \
+    python-gunicorn \
+    shtool \
+    unzip \
+    wget \
+    which \
+    zlib-devel
+
+RUN pip install httpbin
+
+# Install cmake3 + ctest3 as cmake + ctest.
+RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \
+    ln -sf /usr/bin/ctest3 /usr/bin/ctest
+
+# Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
+# client.  They are used in the integration tests.
+WORKDIR /var/tmp/install/cbt-components
+RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-201.0.0-linux-x86_64.tar.gz
+RUN tar x -C /usr/local -f google-cloud-sdk-201.0.0-linux-x86_64.tar.gz
+RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components update || \
+    echo "Ignoring update failure for Google Cloud SDK"

@@ -15,7 +15,12 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::storage::internal;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+namespace {
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
 TEST(MetadataParserTest, ParseTimestampField) {
@@ -24,7 +29,7 @@ TEST(MetadataParserTest, ParseTimestampField) {
       "updated": "2018-05-19T19:31:24Z"
 })""";
   auto json_object = nl::json::parse(text);
-  auto actual = MetadataParser::ParseTimestampField(json_object, "timeCreated");
+  auto actual = ParseTimestampField(json_object, "timeCreated");
 
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
@@ -39,7 +44,7 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
       "updated": "2018-05-19T19:31:24Z"
 })""";
   auto json_object = nl::json::parse(text);
-  auto actual = MetadataParser::ParseTimestampField(json_object, "timeCreated");
+  auto actual = ParseTimestampField(json_object, "timeCreated");
 
   using std::chrono::duration_cast;
   EXPECT_EQ(
@@ -53,7 +58,7 @@ TEST(MetadataParserTest, ParseLongField) {
       "counter": 42
 })""";
   auto json_object = nl::json::parse(text);
-  auto actual = MetadataParser::ParseLongField(json_object, "counter");
+  auto actual = ParseLongField(json_object, "counter");
 
   EXPECT_EQ(42L, actual);
 }
@@ -64,19 +69,18 @@ TEST(MetadataParserTest, ParseLongFieldFromString) {
       "counter": "42"
 })""";
   auto json_object = nl::json::parse(text);
-  auto actual = MetadataParser::ParseLongField(json_object, "counter");
+  auto actual = ParseLongField(json_object, "counter");
 
   EXPECT_EQ(42L, actual);
 }
 
 /// @test Verify that we parse missing long values in JSON objects.
-TEST(MetadataParserTest, ParseMissinLongField) {
+TEST(MetadataParserTest, ParseMissingLongField) {
   std::string text = R"""({
       "counter": "42"
 })""";
   auto json_object = nl::json::parse(text);
-  auto actual =
-      MetadataParser::ParseLongField(json_object, "some-other-counter");
+  auto actual = ParseLongField(json_object, "some-other-counter");
 
   EXPECT_EQ(0L, actual);
 }
@@ -89,11 +93,9 @@ TEST(MetadataParserTest, ParseInvalidLongFieldValue) {
   auto json_object = nl::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(MetadataParser::ParseLongField(json_object, "counter"),
-               std::invalid_argument);
+  EXPECT_THROW(ParseLongField(json_object, "counter"), std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      MetadataParser::ParseLongField(json_object, "counter"), "");
+  EXPECT_DEATH_IF_SUPPORTED(ParseLongField(json_object, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -105,10 +107,78 @@ TEST(MetadataParserTest, ParseInvalidLongFieldType) {
   auto json_object = nl::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(MetadataParser::ParseLongField(json_object, "counter"),
-               std::invalid_argument);
+  EXPECT_THROW(ParseLongField(json_object, "counter"), std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      MetadataParser::ParseLongField(json_object, "counter"), "");
+  EXPECT_DEATH_IF_SUPPORTED(ParseLongField(json_object, "counter"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/// @test Verify that we parse long values in JSON objects.
+TEST(MetadataParserTest, ParseUnsignedLongField) {
+  std::string text = R"""({
+      "size": 42
+})""";
+  auto json_object = nl::json::parse(text);
+  auto actual = ParseUnsignedLongField(json_object, "size");
+
+  EXPECT_EQ(42UL, actual);
+}
+
+/// @test Verify that we parse long values in JSON objects.
+TEST(MetadataParserTest, ParseUnsignedLongFieldFromString) {
+  std::string text = R"""({
+      "size": "42"
+})""";
+  auto json_object = nl::json::parse(text);
+  auto actual = ParseUnsignedLongField(json_object, "size");
+
+  EXPECT_EQ(42UL, actual);
+}
+
+/// @test Verify that we parse missing long values in JSON objects.
+TEST(MetadataParserTest, ParseMissingUnsignedLongField) {
+  std::string text = R"""({
+      "size": "42"
+})""";
+  auto json_object = nl::json::parse(text);
+  auto actual = ParseUnsignedLongField(json_object, "some-other-size");
+
+  EXPECT_EQ(0UL, actual);
+}
+
+/// @test Verify that we raise an exception with invalid long fields.
+TEST(MetadataParserTest, ParseInvalidUnsignedLongFieldValue) {
+  std::string text = R"""({
+      "size": "not-a-number"
+})""";
+  auto json_object = nl::json::parse(text);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseUnsignedLongField(json_object, "size"),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseUnsignedLongField(json_object, "size"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that we raise an exception with invalid long fields.
+TEST(MetadataParserTest, ParseInvalidUnsignedLongFieldType) {
+  std::string text = R"""({
+      "size": [0, 1, 2]
+})""";
+  auto json_object = nl::json::parse(text);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseUnsignedLongField(json_object, "size"),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseUnsignedLongField(json_object, "size"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

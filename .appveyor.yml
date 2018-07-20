@@ -36,11 +36,11 @@ cache:
   - c:\projects\vcpkg\installed -> ci\install-windows.ps1
 
 install:
-  - git submodule update --init --recursive
-  - powershell -exec bypass ci\install-windows.ps1
+  - git submodule update --init
+  - powershell -exec bypass ci\appveyor\install-windows.ps1
 
 build_script:
-  - powershell -exec bypass ci\build-windows.ps1
+  - powershell -exec bypass ci\appveyor\build-windows.ps1
 
 test_script:
   - ps: cd build-output

@@ -13,128 +13,42 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request.h"
-#include "google/cloud/internal/build_info.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/log.h"
-#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
-#include "google/cloud/storage/internal/curl_wrappers.h"
 #include <iostream>
-#include <sstream>
-
-namespace {
-using google::cloud::storage::internal::BinaryDataAsDebugString;
-
-extern "C" int DebugCallback(CURL* /*handle*/, curl_infotype type, char* data,
-                             std::size_t size, void* userptr) {
-  auto debug_buffer = reinterpret_cast<std::string*>(userptr);
-  switch (type) {
-    case CURLINFO_TEXT:
-      *debug_buffer += "== curl(Info): " + std::string(data, size);
-      break;
-    case CURLINFO_HEADER_IN:
-      *debug_buffer += "<< curl(Recv Header): " + std::string(data, size);
-      break;
-    case CURLINFO_HEADER_OUT:
-      *debug_buffer += ">> curl(Send Header): " + std::string(data, size);
-      break;
-    case CURLINFO_DATA_IN:
-      *debug_buffer +=
-          ">> curl(Recv Data):\n" + BinaryDataAsDebugString(data, size);
-      break;
-    case CURLINFO_DATA_OUT:
-      *debug_buffer +=
-          ">> curl(Send Data):\n" + BinaryDataAsDebugString(data, size);
-      break;
-    case CURLINFO_SSL_DATA_IN:
-    case CURLINFO_SSL_DATA_OUT:
-      // Do not print SSL binary data because generally that is not useful.
-    case CURLINFO_END:
-      break;
-  }
-  return 0;
-}
-}  // namespace
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
-CurlRequest::CurlRequest(std::string base_url)
-    : url_(std::move(base_url)),
-      query_parameter_separator_("?"),
-      curl_(curl_easy_init()),
-      headers_(nullptr) {
-  if (curl_ == nullptr) {
-    google::cloud::internal::RaiseRuntimeError("Cannot initialize CURL handle");
-  }
-}
-
-CurlRequest::~CurlRequest() {
-  curl_slist_free_all(headers_);
-  curl_easy_cleanup(curl_);
-  if (not debug_buffer_.empty()) {
-    GCP_LOG(INFO) << "HTTP Trace\n" << debug_buffer_;
-  }
-}
-
-void CurlRequest::AddHeader(std::string const& header) {
-  headers_ = curl_slist_append(headers_, header.c_str());
-}
-
-void CurlRequest::AddQueryParameter(std::string const& key,
-                                    std::string const& value) {
-  std::string parameter = query_parameter_separator_;
-  parameter += MakeEscapedString(key).get();
-  parameter += "=";
-  parameter += MakeEscapedString(value).get();
-  query_parameter_separator_ = "&";
-  url_.append(parameter);
-}
-
-void CurlRequest::PrepareRequest(std::string payload, bool enable_logging) {
-  // Pre-compute and cache the user agent string:
-  static std::string const user_agent = [] {
-    std::string agent = "gcs-c++/";
-    agent += storage::version_string();
-    agent += ' ';
-    agent += curl_version();
-    return agent;
-  }();
-
-  curl_easy_setopt(curl_, CURLOPT_URL, url_.c_str());
-  curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, headers_);
-  curl_easy_setopt(curl_, CURLOPT_USERAGENT, user_agent.c_str());
-  payload_ = std::move(payload);
-  if (not payload_.empty()) {
-    curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, payload_.length());
-    curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, payload_.c_str());
-  }
-  if (enable_logging) {
-    curl_easy_setopt(curl_, CURLOPT_VERBOSE, 1);
-    curl_easy_setopt(curl_, CURLOPT_DEBUGDATA, &debug_buffer_);
-    curl_easy_setopt(curl_, CURLOPT_DEBUGFUNCTION, DebugCallback);
-  }
-}
+CurlRequest::CurlRequest() : headers_(nullptr, &curl_slist_free_all) {}
 
 HttpResponse CurlRequest::MakeRequest() {
-  response_payload_.Attach(curl_);
-  response_headers_.Attach(curl_);
+  handle_.EasyPerform();
+  handle_.FlushDebug(__func__);
+  long code = handle_.GetResponseCode();
+  return HttpResponse{code, std::move(response_payload_),
+                      std::move(received_headers_)};
+}
 
-  auto error = curl_easy_perform(curl_);
-  if (error != CURLE_OK) {
-    auto buffer = response_payload_.contents();
-    std::ostringstream os;
-    os << "Error while performing curl request, " << curl_easy_strerror(error)
-       << "[" << error << "]: " << buffer << std::endl;
-    google::cloud::internal::RaiseRuntimeError(os.str());
+void CurlRequest::ResetOptions() {
+  handle_.SetOption(CURLOPT_URL, url_.c_str());
+  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
+  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (not payload_.empty()) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
   }
-
-  long code;
-  curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &code);
-  return HttpResponse{code, response_payload_.contents(),
-                      response_headers_.contents()};
+  handle_.SetWriterCallback(
+      [this](void* ptr, std::size_t size, std::size_t nmemb) {
+        response_payload_.append(static_cast<char*>(ptr), size * nmemb);
+        return size * nmemb;
+      });
+  handle_.SetHeaderCallback([this](char* contents, std::size_t size,
+                                   std::size_t nitems) {
+    return CurlAppendHeaderData(
+        received_headers_, static_cast<char const*>(contents), size * nitems);
+  });
+  handle_.EnableLogging(logging_enabled_);
 }
 
 }  // namespace internal

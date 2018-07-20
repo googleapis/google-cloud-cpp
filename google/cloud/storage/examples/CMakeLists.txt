@@ -1,3 +1,4 @@
+# ~~~
 # Copyright 2018 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ~~~
 
 # While it is tempting create these targets using a function or a loop, we want
 # to keep this particular file as simple as possible, as it is intended to be
@@ -21,3 +23,6 @@ target_link_libraries(storage_bucket_samples storage_client)
 
 add_executable(storage_object_samples storage_object_samples.cc)
 target_link_libraries(storage_object_samples storage_client)
+
+add_executable(storage_object_acl_samples storage_object_acl_samples.cc)
+target_link_libraries(storage_object_acl_samples storage_client)

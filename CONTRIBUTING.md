@@ -83,7 +83,8 @@ verify and fix the format of your code using:
 
 ```console
 # Run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/build-linux.sh
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 \
+      CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/travis/build-linux.sh
 ```
 
 ### Updating CMakeLists.txt and/or BUILD files
@@ -141,7 +142,7 @@ intend to use, for example:
 
 ```console
 # Run from the google-cloud-cpp directory.
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 ./ci/install-linux.sh
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 ./ci/travis/install-linux.sh
 ```
 
 Once you create the image for a given combination of `DISTRO` and
@@ -149,7 +150,8 @@ Once you create the image for a given combination of `DISTRO` and
 
 ```console
 # Also run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/build-linux.sh
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 \
+      CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/travis/build-linux.sh
 ```
 
 You can set any of the following environment variables to control the build.

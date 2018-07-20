@@ -13,12 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/log.h"
+#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include <algorithm>
 #include <cctype>
 #include <iostream>
 #include <string>
 
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
 namespace {
+/// Automatically initialize (and cleanup) the libcurl library.
 class CurlInitializer {
  public:
   CurlInitializer() { curl_global_init(CURL_GLOBAL_ALL); }
@@ -27,51 +35,17 @@ class CurlInitializer {
 
 CurlInitializer const CURL_INITIALIZER;
 
-extern "C" std::size_t WriteCallback(void* contents, std::size_t size,
-                                     std::size_t nmemb, void* dest) {
-  auto* buffer =
-      reinterpret_cast<google::cloud::storage::internal::CurlBuffer*>(dest);
-  buffer->Append(static_cast<char*>(contents), size * nmemb);
-  return size * nmemb;
-}
+}  // namespace
 
-extern "C" std::size_t HeaderCallback(char* contents, std::size_t size,
-                                      std::size_t nmemb, void* dest) {
-  auto* headers =
-      reinterpret_cast<google::cloud::storage::internal::CurlHeaders*>(dest);
-  headers->Append(contents, size * nmemb);
-  return size * nmemb;
-}
-
-}  // anonymous namespace
-
-namespace google {
-namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
-namespace internal {
-void CurlBuffer::Attach(CURL* curl) {
-  curl_easy_setopt(curl, CURLOPT_WRITEDATA, this);
-  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-}
-
-void CurlBuffer::Append(char* data, std::size_t size) {
-  buffer_.append(data, size);
-}
-
-void CurlHeaders::Attach(CURL* curl) {
-  curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
-  curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, HeaderCallback);
-}
-
-void CurlHeaders::Append(char* data, std::size_t size) {
+std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
+                                 char const* data, std::size_t size) {
   if (size <= 2) {
     // Empty header (including the \r\n), ignore.
-    return;
+    return size;
   }
   if ('\r' != data[size - 2] or '\n' != data[size - 1]) {
     // Invalid header (should end in \r\n), ignore.
-    return;
+    return size;
   }
   auto separator = std::find(data, data + size, ':');
   std::string header_name = std::string(data, separator);
@@ -82,8 +56,10 @@ void CurlHeaders::Append(char* data, std::size_t size) {
   }
   std::transform(header_name.begin(), header_name.end(), header_name.begin(),
                  [](char x) { return std::tolower(x); });
-  contents_.emplace(std::move(header_name), std::move(header_value));
+  received_headers.emplace(std::move(header_name), std::move(header_value));
+  return size;
 }
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

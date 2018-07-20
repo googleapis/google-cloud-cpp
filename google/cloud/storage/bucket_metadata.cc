@@ -20,14 +20,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload);
+BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   BucketMetadata result{};
-  static_cast<CommonMetadata&>(result) =
-      internal::MetadataParser::ParseCommonMetadata(json);
+  static_cast<CommonMetadata<BucketMetadata>&>(result) =
+      CommonMetadata<BucketMetadata>::ParseFromJson(json);
   result.location_ = json.value("location", "");
-  result.project_number_ =
-      internal::MetadataParser::ParseLongField(json, "projectNumber");
+  result.project_number_ = internal::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
     for (auto const& kv : json["labels"].items()) {
       result.labels_.emplace(kv.key(), kv.value().get<std::string>());
@@ -36,23 +34,34 @@ BucketMetadata BucketMetadata::ParseFromJson(std::string const& payload) {
   return result;
 }
 
+BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload);
+  return ParseFromJson(json);
+}
+
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
-  return static_cast<internal::CommonMetadata const&>(*this) == rhs and
+  return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
+             rhs and
          project_number_ == rhs.project_number_ and
          location_ == rhs.location_ and labels_ == rhs.labels_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
-  os << static_cast<internal::CommonMetadata const&>(rhs)
-     << ", location=" << rhs.location()
-     << ", project_number=" << rhs.project_number() << ", labels={";
+  os << "BucketMetadata={name=" << rhs.name() << ", etag=" << rhs.etag()
+     << ", id=" << rhs.id() << ", kind=" << rhs.kind();
   char const* sep = "labels.";
   for (auto const& kv : rhs.labels_) {
     os << sep << kv.first << "=" << kv.second;
     sep = ", labels.";
   }
-  return os << "}";
+  os << ", location=" << rhs.location()
+     << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
+     << ", self_link=" << rhs.self_link()
+     << ", storage_class=" << rhs.storage_class()
+     << ", time_created=" << rhs.time_created().time_since_epoch().count()
+     << ", updated=" << rhs.updated().time_since_epoch().count() << "}";
+  return os;
 }
 
 constexpr char BucketMetadata::STORAGE_CLASS_STANDARD[];

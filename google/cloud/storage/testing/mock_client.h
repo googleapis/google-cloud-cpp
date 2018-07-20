@@ -31,17 +31,32 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   template <typename R>
   using ResponseWrapper = std::pair<google::cloud::storage::Status, R>;
 
+  MOCK_CONST_METHOD0(client_options, ClientOptions const&());
+  MOCK_METHOD1(ListBuckets, ResponseWrapper<internal::ListBucketsResponse>(
+                                internal::ListBucketsRequest const&));
   MOCK_METHOD1(GetBucketMetadata,
                ResponseWrapper<storage::BucketMetadata>(
                    internal::GetBucketMetadataRequest const&));
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::InsertObjectMediaRequest const&));
+  MOCK_METHOD1(GetObjectMetadata,
+               ResponseWrapper<storage::ObjectMetadata>(
+                   internal::GetObjectMetadataRequest const&));
   MOCK_METHOD1(ReadObjectRangeMedia,
                ResponseWrapper<internal::ReadObjectRangeResponse>(
                    internal::ReadObjectRangeRequest const&));
   MOCK_METHOD1(ListObjects, ResponseWrapper<internal::ListObjectsResponse>(
                                 internal::ListObjectsRequest const&));
+  MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(
+                                 internal::DeleteObjectRequest const&));
+
+  MOCK_METHOD1(ListObjectAcl, ResponseWrapper<internal::ListObjectAclResponse>(
+                                  internal::ListObjectAclRequest const&));
+  MOCK_METHOD1(CreateObjectAcl, ResponseWrapper<ObjectAccessControl>(
+                                    internal::CreateObjectAclRequest const&));
+  MOCK_METHOD1(DeleteObjectAcl, ResponseWrapper<internal::EmptyResponse>(
+                                    internal::ObjectAclRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

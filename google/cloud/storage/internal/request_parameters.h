@@ -26,7 +26,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 // Forward declare the template so we can specialize it first. Defining the
 // specialization first, which is the base class, should be more readable.
-template <typename Parameter, typename... Parameters>
+template <typename Derived, typename Parameter, typename... Parameters>
 class RequestParameterList;
 
 /**
@@ -38,10 +38,13 @@ class RequestParameterList;
  *
  * @tparam Parameter the parameter contained in this object.
  */
-template <typename Parameter>
-class RequestParameterList<Parameter> {
+template <typename Derived, typename Parameter>
+class RequestParameterList<Derived, Parameter> {
  public:
-  void set_parameter(Parameter&& p) { parameter_ = std::move(p); }
+  Derived& set_parameter(Parameter&& p) {
+    parameter_ = std::move(p);
+    return *static_cast<Derived*>(this);
+  }
 
   template <typename HttpRequest>
   void AddParametersToHttpRequest(HttpRequest& request) const {
@@ -64,25 +67,30 @@ class RequestParameterList<Parameter> {
  * This class is used in the implementation of `RequestParameters` see below for
  * more details.
  */
-template <typename Parameter, typename... Parameters>
-class RequestParameterList : public RequestParameterList<Parameters...> {
+template <typename Derived, typename Parameter, typename... Parameters>
+class RequestParameterList
+    : public RequestParameterList<Derived, Parameters...> {
  public:
-  using RequestParameterList<Parameters...>::set_parameter;
+  using RequestParameterList<Derived, Parameters...>::set_parameter;
 
-  void set_parameter(Parameter&& p) { parameter_ = std::move(p); }
+  Derived& set_parameter(Parameter&& p) {
+    parameter_ = std::move(p);
+    return *static_cast<Derived*>(this);
+  }
 
   template <typename HttpRequest>
   void AddParametersToHttpRequest(HttpRequest& request) const {
     request.AddWellKnownParameter(parameter_);
-    RequestParameterList<Parameters...>::AddParametersToHttpRequest(request);
+    RequestParameterList<Derived, Parameters...>::AddParametersToHttpRequest(
+        request);
   }
 
   void DumpParameters(std::ostream& os, char const* sep) const {
     if (parameter_.has_value()) {
       os << sep << parameter_.parameter_name() << "=" << parameter_.value();
-      RequestParameterList<Parameters...>::DumpParameters(os, ", ");
+      RequestParameterList<Derived, Parameters...>::DumpParameters(os, ", ");
     } else {
-      RequestParameterList<Parameters...>::DumpParameters(os, sep);
+      RequestParameterList<Derived, Parameters...>::DumpParameters(os, sep);
     }
   }
 
@@ -134,16 +142,17 @@ class RequestParameterList : public RequestParameterList<Parameters...> {
  * @tparam Parameters the list of parameters that the Request class will
  *     support.
  */
-template <typename... Parameters>
-class RequestParameters : public RequestParameterList<Parameters...> {
+template <typename Derived, typename... Parameters>
+class GenericRequest : public RequestParameterList<Derived, Parameters...> {
  public:
   template <typename H, typename... T>
-  void set_multiple_parameters(H&& h, T&&... tail) {
-    RequestParameterList<Parameters...>::set_parameter(std::forward<H>(h));
-    set_multiple_parameters(std::forward<T>(tail)...);
+  Derived& set_multiple_parameters(H&& h, T&&... tail) {
+    RequestParameterList<Derived, Parameters...>::set_parameter(
+        std::forward<H>(h));
+    return set_multiple_parameters(std::forward<T>(tail)...);
   }
 
-  void set_multiple_parameters() {}
+  Derived& set_multiple_parameters() { return *static_cast<Derived*>(this); }
 };
 
 }  // namespace internal

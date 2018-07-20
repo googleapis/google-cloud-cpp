@@ -5,15 +5,16 @@ referenced from the Doxygen landing page as "Hello World".
 
 ## Table of Contents
 
-- [Before you begin](#before-you-begin)  
-  - [Compile the Examples](#compile-the-examples)
+- [Before you begin](#before-you-begin)
+  - [Compile the Examples](#compile-the-examples)  
   - [Run the Examples](#run-the-examples)
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
 
 ## Before you begin
-### Compiling the Examples
+
+### Compile the Examples
 
 These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
@@ -73,9 +74,44 @@ After configuring gRPC, you can run the examples using:
 ```console
 $ export PROJECT_ID=... # Your Google Cloud Platform project ID
 $ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
-
 $ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
 ```
+
+### Administer Instances
+
+View the [example][instance_admin_code] to see sample usage of instance administration of
+the Bigtable client library.
+
+#### Usage
+
+```console
+$ ./bigtable_samples_instance_admin_ext
+
+Usage: bigtable_samples_instance_admin_ext <command> <project_id> [arguments]
+
+Examples:
+  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster us-central1-f
+  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance us-central1-f
+  bigtable_samples_instance_admin_ext delete-instance my-project my-instance
+  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster us-central1-a
+  bigtable_samples_instance_admin_ext delete-cluster my-project my-instance my-cluster
+```
+
+#### Run instance admin samples
+
+After configuring gRPC, you can run the examples using:
+
+```console
+$ export PROJECT_ID=... # Your Google Cloud Platform project ID
+$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
+$ export CLUSTER_ID=... # Your Cloud Bigtable cluster ID
+$ export ZONE=... # Name of the zone where the example will create a new instance
+$ ./bigtable_samples_instance_admin_ext run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
+```
+
+[hello_world_code]: bigtable_hello_world.cc
+[instance_admin_code]: bigtable_samples_instance_admin_ext.cc
+
 ### Table/Column family management
 
 This sample showcases the basic table / column family operations:

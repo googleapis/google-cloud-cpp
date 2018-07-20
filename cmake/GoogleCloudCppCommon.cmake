@@ -1,3 +1,4 @@
+# ~~~
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,18 +12,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ~~~
 
 # Find out the name of the subproject.
-get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT "${CMAKE_CURRENT_SOURCE_DIR}"
+                       NAME)
 
 # Find out what flags turn on all available warnings and turn those warnings
 # into errors.
 include(CheckCXXCompilerFlag)
 if (NOT MSVC)
-    CHECK_CXX_COMPILER_FLAG(-Wall GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WALL)
-    CHECK_CXX_COMPILER_FLAG(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
-else ()
-    CHECK_CXX_COMPILER_FLAG("/std:c++latest" GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CPP_LATEST)
+    check_cxx_compiler_flag(-Wall GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WALL)
+    check_cxx_compiler_flag(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
+else()
+    check_cxx_compiler_flag("/std:c++latest"
+                            GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CPP_LATEST)
 endif ()
 
 # If possible, enable a code coverage build type.
@@ -40,10 +44,14 @@ include(EnableCxxExceptions)
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
+# Add the gmock library if it does not exist.
+include(IncludeGMock)
+
 if (${CMAKE_VERSION} VERSION_LESS "3.9")
+
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
-else ()
+else()
     find_package(Doxygen)
     if (Doxygen_FOUND)
         set(DOXYGEN_RECURSIVE YES)
@@ -80,17 +88,20 @@ else ()
         set(DOXYGEN_DOT_TRANSPARENT YES)
         set(DOXYGEN_MACRO_EXPANSION YES)
         set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
-        set(DOXYGEN_HTML_TIMESTAMP )
+        set(DOXYGEN_HTML_TIMESTAMP)
         set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
 
-        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs ${CMAKE_CURRENT_SOURCE_DIR}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                COMMENT "Generate HTML documentation")
+        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+                         ${CMAKE_CURRENT_SOURCE_DIR}
+                         WORKING_DIRECTORY
+                         ${CMAKE_CURRENT_SOURCE_DIR}
+                         COMMENT
+                         "Generate HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
     endif ()
 endif ()
 
-function(google_cloud_cpp_add_common_options target)
+function (google_cloud_cpp_add_common_options target)
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CPP_LATEST)
         target_compile_options(${target} INTERFACE "/std:c++latest")
     endif ()
@@ -100,13 +111,11 @@ function(google_cloud_cpp_add_common_options target)
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
         target_compile_options(${target} INTERFACE "-Werror")
     endif ()
-endfunction()
+endfunction ()
 
 function (google_cloud_cpp_add_clang_tidy target)
     if (CLANG_TIDY_EXE AND GOOGLE_CLOUD_CPP_CLANG_TIDY)
-        set_target_properties(
-                ${target} PROPERTIES
-                CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
-        )
+        set_target_properties(${target}
+                              PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
     endif ()
 endfunction ()

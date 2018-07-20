@@ -46,46 +46,34 @@ class TableAdmin {
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
    * @param client the interface to create grpc stubs, report errors, etc.
    * @param instance_id the id of the instance, e.g., "my-instance", the full
    *   name (e.g. '/projects/my-project/instances/my-instance') is built using
    *   the project id in the @p client parameter.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy>
-  TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
-             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy)
-      : impl_(std::move(client), std::move(instance_id),
-              std::move(retry_policy), std::move(backoff_policy)) {}
-
-  /**
-   * Create a new TableAdmin using explicit policies to handle RPC errors.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *     - `PollingPolicy` for how long will the class wait for
+   *       `google.longrunning.Operation` to complete. This class combines both
+   *       the backoff policy for checking long running operations and the
+   *       retry policy.
    *
-   * @tparam RPCRetryPolicy control which operations to retry and for how long.
-   * @tparam RPCBackoffPolicy control how does the client backs off after an RPC
-   *     error.
-   * @tparam PollingPolicy provides parameters for asynchronous calls.
-   * @param client the interface to create grpc stubs, report errors, etc.
-   * @param instance_id the id of the instance, e.g., "my-instance", the full
-   *   name (e.g. '/projects/my-project/instances/my-instance') is built using
-   *   the project id in the @p client parameter.
-   * @param retry_policy the policy to handle RPC errors.
-   * @param backoff_policy the policy to control backoff after an error.
-   * @param polling_policy the policy to control the asynchronous call
-   * parameters
+   * @see GenericPollingPolicy, ExponentialBackoffPolicy,
+   *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
-  template <typename RPCRetryPolicy, typename RPCBackoffPolicy,
-            typename PollingPolicy>
+  template <typename... Policies>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
-             RPCRetryPolicy retry_policy, RPCBackoffPolicy backoff_policy,
-             PollingPolicy polling_policy)
+             Policies&&... policies)
       : impl_(std::move(client), std::move(instance_id),
-              std::move(retry_policy), std::move(backoff_policy),
-              std::move(polling_policy)) {}
+              std::forward<Policies>(policies)...) {}
 
   TableAdmin(TableAdmin const& table_admin) = default;
   TableAdmin& operator=(TableAdmin const& table_admin) = default;

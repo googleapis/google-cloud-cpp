@@ -189,9 +189,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       // Configure the Table to stop at 3 failures.
       bt::LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.
-      bt::ExponentialBackoffPolicy(10_us, 40_us),
-      // TODO(#66) - it is annoying to set a policy we do not care about.
-      bt::SafeIdempotentMutationPolicy());
+      bt::ExponentialBackoffPolicy(10_us, 40_us));
 
   // Setup the mocks to fail more than 3 times.
   auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();

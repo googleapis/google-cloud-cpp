@@ -12,23 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility=["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
-    name="bigtable_hello_world",
-    srcs=["bigtable_hello_world.cc"],
-    deps=["//google/cloud/bigtable:bigtable_client"],
+    name = "bigtable_hello_world",
+    srcs = ["bigtable_hello_world.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
 cc_binary(
-    name="bigtable_samples",
-    srcs=["bigtable_samples.cc"],
-    deps=["//google/cloud/bigtable:bigtable_client"],
+    name = "bigtable_hello_app_profile",
+    srcs = ["bigtable_hello_app_profile.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
 cc_binary(
-    name="bigtable_samples_instance_admin",
-    srcs=["bigtable_samples_instance_admin.cc"],
-    deps=["//google/cloud/bigtable:bigtable_client"],
+    name = "bigtable_samples",
+    srcs = ["bigtable_samples.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
+    name = "bigtable_samples_instance_admin",
+    srcs = ["bigtable_samples_instance_admin.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
+    name = "bigtable_samples_instance_admin_ext",
+    srcs = ["bigtable_samples_instance_admin_ext.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
 )

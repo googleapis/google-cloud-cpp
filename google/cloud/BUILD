@@ -13,6 +13,7 @@
 # limitations under the License.
 
 package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
 genrule(
@@ -39,22 +40,41 @@ sed -e 's/@GOOGLE_CLOUD_CPP_VERSION_MAJOR@/0/' \
 """,
 )
 
-load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_SRCS", "google_cloud_cpp_common_HDRS")
+load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_HDRS", "google_cloud_cpp_common_SRCS")
+
 cc_library(
     name = "google_cloud_cpp_common",
-    srcs = google_cloud_cpp_common_SRCS + [ "internal/build_info.cc" ],
-    hdrs = google_cloud_cpp_common_HDRS + [ "internal/version_info.h" ],
+    srcs = google_cloud_cpp_common_SRCS + ["internal/build_info.cc"],
+    hdrs = google_cloud_cpp_common_HDRS + ["internal/version_info.h"],
     deps = [],
 )
 
-load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_SRCS", "google_cloud_cpp_testing_HDRS")
+load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_HDRS", "google_cloud_cpp_testing_SRCS")
+
 cc_library(
     name = "google_cloud_cpp_testing",
     srcs = google_cloud_cpp_testing_SRCS,
     hdrs = google_cloud_cpp_testing_HDRS,
     deps = [
-      ":google_cloud_cpp_common",
-      "@com_google_googletest//:gtest",
-      "@com_google_googletest//:gtest_main",
+        ":google_cloud_cpp_common",
+        "@com_google_googletest//:gtest",
     ],
 )
+
+load(
+    ":google_cloud_cpp_common_unit_tests.bzl",
+    "google_cloud_cpp_common_unit_tests",
+)
+
+[cc_test(
+    name = "google_cloud_cpp_common_" + test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    # TODO(#664 / #666) - use the right condition when porting Bazel builds
+    linkopts = ["-lpthread"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_common_unit_tests]

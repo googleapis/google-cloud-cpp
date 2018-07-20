@@ -17,8 +17,15 @@
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::storage::internal;
-using google::cloud::testing_util::EnvironmentVariableRestore;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+namespace {
+using ::google::cloud::internal::SetEnv;
+using ::google::cloud::internal::UnsetEnv;
+using ::google::cloud::testing_util::EnvironmentVariableRestore;
 
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
@@ -43,17 +50,16 @@ class DefaultServiceAccountFileTest : public ::testing::Test {
 
 /// @test Verify that the application can override the default credentials.
 TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS",
-                                  "/foo/bar/baz");
+  SetEnv("GOOGLE_APPLICATION_CREDENTIALS", "/foo/bar/baz");
   auto actual = GoogleApplicationDefaultCredentialsFile();
   EXPECT_EQ("/foo/bar/baz", actual);
 }
 
 /// @test Verify that the file path works as expected when using HOME.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
+  UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
   char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
-  google::cloud::internal::SetEnv(home, "/foo/bar/baz");
+  SetEnv(home, "/foo/bar/baz");
   auto actual = GoogleApplicationDefaultCredentialsFile();
   using testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
@@ -62,9 +68,9 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
 /// @test Verify that the service account file path fails when HOME is not set.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", nullptr);
+  UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
   char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
-  google::cloud::internal::UnsetEnv(home);
+  UnsetEnv(home);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(GoogleApplicationDefaultCredentialsFile(), std::runtime_error);
 #else
@@ -72,3 +78,10 @@ TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

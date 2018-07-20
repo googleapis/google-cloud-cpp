@@ -12,27 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility=["//visibility:public"])
+package(default_visibility = ["//visibility:public"])
+
 licenses(["notice"])  # Apache 2.0
 
-load(":bigtable_client_integration_tests.bzl",
-    "bigtable_client_integration_tests")
+load(
+    ":bigtable_client_integration_tests.bzl",
+    "bigtable_client_integration_tests",
+)
 
 [cc_binary(
-    name=test.replace('/', '_').replace('.cc', ''),
-    srcs=[test],
-    deps=[
-      "//google/cloud/bigtable:bigtable_client_testing",
-      "//google/cloud/bigtable:bigtable_client",
-      "@com_google_googletest//:gtest",
-      "@com_google_googletest//:gtest_main",
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/bigtable:bigtable_client_testing",
+        "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_integration_tests]
 
 cc_binary(
     name = "instance_admin_emulator",
-    srcs = [ "instance_admin_emulator.cc" ],
+    srcs = ["instance_admin_emulator.cc"],
     deps = [
-      "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/bigtable:bigtable_client",
     ],
 )

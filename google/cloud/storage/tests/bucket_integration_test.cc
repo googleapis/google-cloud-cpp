@@ -14,12 +14,16 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
-namespace storage = google::cloud::storage;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace {
 using ::testing::HasSubstr;
 
-namespace {
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {
  public:
@@ -40,11 +44,32 @@ std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
 
 class BucketIntegrationTest : public ::testing::Test {};
-}  // anonymous namespace
+
+TEST_F(BucketIntegrationTest, BasicCRUD) {
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  auto project_id = BucketTestEnvironment::project_id();
+  Client client;
+
+  auto buckets = client.ListBuckets(project_id);
+  std::vector<BucketMetadata> initial_buckets(buckets.begin(), buckets.end());
+  // Since `bucket_name` should be available, we do not expect this list to be
+  // empty.
+  EXPECT_FALSE(initial_buckets.empty())
+      << "Unexpected empty list with project_id=" << project_id
+      << ", bucket_name=" << bucket_name;
+
+  auto name_counter = [](std::string const& name,
+                         std::vector<BucketMetadata> const& list) {
+    return std::count_if(
+        list.begin(), list.end(),
+        [&name](BucketMetadata const& m) { return m.name() == name; });
+  };
+  EXPECT_EQ(1U, name_counter(bucket_name, initial_buckets));
+}
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
@@ -54,7 +79,7 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
@@ -69,7 +94,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationMatch_Success) {
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(bucket_name, metadata.name());
@@ -94,7 +119,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
 TEST_F(BucketIntegrationTest, InsertObjectMedia) {
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
@@ -109,7 +134,7 @@ TEST_F(BucketIntegrationTest, InsertObjectMedia) {
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
@@ -135,7 +160,7 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
   // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
   auto object_name =
       std::string("the-test-object-") +
       std::to_string(
@@ -156,7 +181,7 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
 
 TEST_F(BucketIntegrationTest, ListObjects) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
-  storage::Client client;
+  Client client;
 
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto create_small_object = [&client, &bucket_name, &gen] {
@@ -171,7 +196,7 @@ TEST_F(BucketIntegrationTest, ListObjects) {
   std::vector<std::string> expected(3);
   std::generate_n(expected.begin(), expected.size(), create_small_object);
 
-  storage::ListObjectsReader reader = client.ListObjects(bucket_name);
+  ListObjectsReader reader = client.ListObjects(bucket_name);
   std::vector<std::string> actual;
   for (auto it = reader.begin(); it != reader.end(); ++it) {
     auto const& meta = *it;
@@ -185,9 +210,14 @@ TEST_F(BucketIntegrationTest, ListObjects) {
     EXPECT_EQ(1, std::count(actual.begin(), actual.end(), name));
   }
 }
+}  // namespace
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
 
 int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
   if (argc != 3) {
@@ -201,7 +231,8 @@ int main(int argc, char* argv[]) {
   std::string const project_id = argv[1];
   std::string const bucket_name = argv[2];
   (void)::testing::AddGlobalTestEnvironment(
-      new BucketTestEnvironment(project_id, bucket_name));
+      new google::cloud::storage::BucketTestEnvironment(project_id,
+                                                        bucket_name));
 
   return RUN_ALL_TESTS();
 }

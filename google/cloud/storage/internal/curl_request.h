@@ -15,57 +15,57 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
 
-#include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/well_known_parameters.h"
-#include <curl/curl.h>
-#include <map>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/// Hold a character string created by CURL use correct deleter.
-using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
-
 /**
- * Automatically manage the resources associated with a libcurl HTTP request.
+ * Make RPC-like requests using CURL.
  *
- * The Google Cloud Storage Client library using libcurl to make http requests.
- * However, libcurl is a fairly low-level C library, where the application is
- * expected to manage all resources manually.  This is a wrapper to prepare and
- * make synchronous HTTP requests.
+ * The Google Cloud Storage Client library using libcurl to make http requests,
+ * this class manages the resources and workflow to make a simple RPC-like
+ * request.
  */
 class CurlRequest {
  public:
-  explicit CurlRequest(std::string base_url);
-  ~CurlRequest();
+  CurlRequest();
 
-  /// Add request headers.
-  void AddHeader(std::string const& header);
+  ~CurlRequest() = default;
 
-  /// Add a parameter for a POST request.
-  void AddQueryParameter(std::string const& key, std::string const& value);
+  CurlRequest(CurlRequest&& rhs) noexcept(false)
+      : url_(std::move(rhs.url_)),
+        headers_(std::move(rhs.headers_)),
+        user_agent_(std::move(rhs.user_agent_)),
+        payload_(std::move(rhs.payload_)),
+        response_payload_(std::move(rhs.response_payload_)),
+        received_headers_(std::move(rhs.received_headers_)),
+        logging_enabled_(rhs.logging_enabled_),
+        handle_(std::move(rhs.handle_)) {
+    ResetOptions();
+  }
 
-  /// URL-escape a string.
-  CurlString MakeEscapedString(std::string const& s) {
-    return CurlString(
-        curl_easy_escape(curl_, s.data(), static_cast<int>(s.length())),
-        &curl_free);
+  CurlRequest& operator=(CurlRequest&& rhs) noexcept(false) {
+    url_ = std::move(rhs.url_);
+    headers_ = std::move(rhs.headers_);
+    user_agent_ = std::move(rhs.user_agent_);
+    payload_ = std::move(rhs.payload_);
+    response_payload_ = std::move(rhs.response_payload_);
+    received_headers_ = std::move(rhs.received_headers_);
+    logging_enabled_ = rhs.logging_enabled_;
+    handle_ = std::move(rhs.handle_);
+
+    ResetOptions();
+    return *this;
   }
 
   /**
-   * Make a request with the given payload.
-   *
-   * @param payload The contents of the request.
-   * @param enable_logging if true, log the traffic in plain text.
-   */
-  void PrepareRequest(std::string payload, bool enable_logging);
-
-  /**
    * Make the prepared request.
+   *
+   * This function can be called multiple times on the same request.
    *
    * @return The response HTTP error code and the response payload.
    *
@@ -73,35 +73,18 @@ class CurlRequest {
    */
   HttpResponse MakeRequest();
 
-  CurlRequest(CurlRequest const&) = delete;
-  CurlRequest& operator=(CurlRequest const&) = delete;
-  CurlRequest(CurlRequest&&) = default;
-  CurlRequest& operator=(CurlRequest&&) = default;
-
-  template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
-    if (p.has_value()) {
-      AddQueryParameter(p.parameter_name(), p.value());
-    }
-  }
-
-  template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
-    if (p.has_value()) {
-      AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
-    }
-  }
-
  private:
-  std::string url_;
-  char const* query_parameter_separator_;
-  CURL* curl_;
-  curl_slist* headers_;
-  std::string payload_;
-  std::string debug_buffer_;
+  friend class CurlRequestBuilder;
+  void ResetOptions();
 
-  CurlBuffer response_payload_;
-  CurlHeaders response_headers_;
+  std::string url_;
+  CurlHeaders headers_;
+  std::string user_agent_;
+  std::string payload_;
+  std::string response_payload_;
+  CurlReceivedHeaders received_headers_;
+  bool logging_enabled_;
+  CurlHandle handle_;
 };
 
 }  // namespace internal

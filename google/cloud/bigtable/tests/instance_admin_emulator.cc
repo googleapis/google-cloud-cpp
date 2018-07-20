@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/protobuf/text_format.h>
 #include <grpcpp/grpcpp.h>
 
 namespace btadmin = google::bigtable::admin::v2;
@@ -36,6 +38,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::CreateInstanceRequest const* request,
       google::longrunning::Operation* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
@@ -53,8 +59,9 @@ class InstanceAdminEmulator final
       // Add cluster into clusters_
       for (auto& kv : request->clusters()) {
         auto cluster = kv.second;
-        cluster.set_name(name + "/clusters/" + kv.first);
-        clusters_.emplace(name + "/clusters/" + kv.first, cluster);
+        auto cluster_name = name + "/clusters/" + kv.first;
+        cluster.set_name(cluster_name);
+        clusters_.emplace(std::move(cluster_name), std::move(cluster));
       }
 
       return grpc::Status::OK;
@@ -65,6 +72,10 @@ class InstanceAdminEmulator final
   grpc::Status GetInstance(grpc::ServerContext* context,
                            btadmin::GetInstanceRequest const* request,
                            btadmin::Instance* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
@@ -77,6 +88,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::ListInstancesRequest const* request,
       btadmin::ListInstancesResponse* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     std::string prefix = request->parent() + "/instances/";
     for (auto const& kv : instances_) {
       if (0 == kv.first.find(prefix)) {
@@ -89,6 +104,10 @@ class InstanceAdminEmulator final
   grpc::Status UpdateInstance(grpc::ServerContext* context,
                               btadmin::Instance const* request,
                               btadmin::Instance* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
 
@@ -96,6 +115,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::PartialUpdateInstanceRequest const* request,
       google::longrunning::Operation* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     std::string name = request->instance().name();
     auto it = instances_.find(name);
     if (it == instances_.end()) {
@@ -141,17 +164,21 @@ class InstanceAdminEmulator final
   grpc::Status DeleteInstance(grpc::ServerContext* context,
                               btadmin::DeleteInstanceRequest const* request,
                               google::protobuf::Empty* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
     }
     instances_.erase(i->first);
 
-    for (auto it : clusters_) {
-      if (it.first.find(request->name()) != std::string::npos) {
-        clusters_.erase(it.first);
-      }
-    }
+    std::string prefix_successor =
+        bigtable::internal::PrefixRangeEnd(request->name());
+    auto begin = clusters_.lower_bound(request->name());
+    auto end = clusters_.upper_bound(prefix_successor);
+    clusters_.erase(begin, end);
 
     return grpc::Status::OK;
   }
@@ -160,6 +187,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::CreateClusterRequest const* request,
       google::longrunning::Operation* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
     if (ins.second) {
@@ -179,6 +210,10 @@ class InstanceAdminEmulator final
   grpc::Status GetCluster(grpc::ServerContext* context,
                           btadmin::GetClusterRequest const* request,
                           btadmin::Cluster* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "cluster missing");
@@ -190,26 +225,38 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
-    // magical instance name "-" must return all clusters in the project
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    // We should only return the clusters for the project embedded in the
+    // request->parent() field. Do some simple (and naive) parsing, ignore
+    // malformed requests for now.
     auto project_path =
         request->parent().substr(0, request->parent().find("/instances"));
-    auto prefix = request->parent() + "/clusters/";
-    auto magical_instance_name_found =
-        (request->parent() == project_path + "/instances/-");
 
-    for (auto const& instance : instances_) {
-      if (std::string::npos == instance.first.find(project_path)) {
+    auto return_all_clusters = false;
+    // This is only used if we are returning the clusters for an specific
+    // instance.
+    std::string prefix;
+    // If the instance name is "-" then we are supposed to return all clusters,
+    // otherwise we just return the clusters for the given instance. Parse some
+    // more to figure out if all clusters should be returned.
+    if (request->parent() == project_path + "/instances/-") {
+      return_all_clusters = true;
+    } else {
+      prefix = request->parent() + "/clusters/";
+    }
+
+    for (auto const& cluster : clusters_) {
+      // Ignore clusters for other projects.
+      if (std::string::npos == cluster.first.find(project_path)) {
         continue;
       }
-      for (auto const& cluster : clusters_) {
-        // Search for the magical instance name "-" in a request
-        if (magical_instance_name_found) {
-          *response->add_clusters() = cluster.second;
-        } else {
-          if (std::string::npos != cluster.first.find(prefix)) {
-            *response->add_clusters() = cluster.second;
-          }
-        }
+      if (return_all_clusters) {
+        *response->add_clusters() = cluster.second;
+      } else if (std::string::npos != cluster.first.find(prefix)) {
+        *response->add_clusters() = cluster.second;
       }
     }
 
@@ -219,6 +266,10 @@ class InstanceAdminEmulator final
   grpc::Status UpdateCluster(
       grpc::ServerContext* context, btadmin::Cluster const* request,
       google::longrunning::Operation* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     std::string name = request->name();
     auto it = clusters_.find(name);
     if (it == clusters_.end()) {
@@ -237,6 +288,10 @@ class InstanceAdminEmulator final
   grpc::Status DeleteCluster(grpc::ServerContext* context,
                              btadmin::DeleteClusterRequest const* request,
                              google::protobuf::Empty* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "instance missing");
@@ -248,44 +303,127 @@ class InstanceAdminEmulator final
   grpc::Status CreateAppProfile(grpc::ServerContext* context,
                                 btadmin::CreateAppProfileRequest const* request,
                                 btadmin::AppProfile* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
+    auto ins = app_profiles_.emplace(name, request->app_profile());
+    if (ins.second) {
+      auto& profile = ins.first->second;
+      profile.set_name(std::move(name));
+      profile.set_etag("xyz" + std::to_string(++counter_));
+      *response = profile;
+      return grpc::Status::OK;
+    }
+    return grpc::Status(grpc::StatusCode::ALREADY_EXISTS,
+                        "duplicate app profile");
   }
 
   grpc::Status GetAppProfile(grpc::ServerContext* context,
                              btadmin::GetAppProfileRequest const* request,
                              btadmin::AppProfile* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    auto i = app_profiles_.find(request->name());
+    if (i == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+    *response = i->second;
+    return grpc::Status::OK;
   }
 
   grpc::Status ListAppProfiles(
       grpc::ServerContext* context,
       btadmin::ListAppProfilesRequest const* request,
       btadmin::ListAppProfilesResponse* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    auto const& parent = request->parent();
+    for (auto const& kv : app_profiles_) {
+      if (0 == kv.first.find(parent)) {
+        *response->add_app_profiles() = kv.second;
+      }
+    }
+    response->mutable_next_page_token()->clear();
+    return grpc::Status::OK;
   }
 
   grpc::Status UpdateAppProfile(
       grpc::ServerContext* context,
       btadmin::UpdateAppProfileRequest const* request,
       google::longrunning::Operation* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    std::string name = request->app_profile().name();
+    auto it = app_profiles_.find(name);
+    if (it == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+
+    btadmin::AppProfile& stored_app_profile = it->second;
+
+    for (int index = 0; index != request->update_mask().paths_size(); ++index) {
+      if ("description" == request->update_mask().paths(index)) {
+        stored_app_profile.set_description(
+            request->app_profile().description());
+      }
+      if ("multi_cluster_routing_policy_use_any" ==
+          request->update_mask().paths(index)) {
+        *stored_app_profile.mutable_multi_cluster_routing_use_any() =
+            request->app_profile().multi_cluster_routing_use_any();
+      }
+      if ("single_cluster_routing" == request->update_mask().paths(index)) {
+        *stored_app_profile.mutable_single_cluster_routing() =
+            request->app_profile().single_cluster_routing();
+      }
+    }
+    response->set_name("update-app-profile/" + name);
+    response->set_done(true);
+    auto contents = bigtable::internal::make_unique<google::protobuf::Any>();
+    contents->PackFrom(stored_app_profile);
+    response->set_allocated_response(contents.release());
+    return grpc::Status::OK;
   }
 
   grpc::Status DeleteAppProfile(grpc::ServerContext* context,
                                 btadmin::DeleteAppProfileRequest const* request,
                                 google::protobuf::Empty* response) override {
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
+    auto i = app_profiles_.find(request->name());
+    if (i == app_profiles_.end()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
+    }
+    app_profiles_.erase(i);
+    return grpc::Status::OK;
   }
 
   grpc::Status GetIamPolicy(grpc::ServerContext* context,
                             google::iam::v1::GetIamPolicyRequest const* request,
                             google::iam::v1::Policy* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
 
   grpc::Status SetIamPolicy(grpc::ServerContext* context,
                             google::iam::v1::SetIamPolicyRequest const* request,
                             google::iam::v1::Policy* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
 
@@ -293,6 +431,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       google::iam::v1::TestIamPermissionsRequest const* request,
       google::iam::v1::TestIamPermissionsResponse* response) override {
+    std::string request_text;
+    google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
+
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
 
@@ -300,6 +442,8 @@ class InstanceAdminEmulator final
   std::map<std::string, btadmin::Instance> instances_;
   std::map<std::string, btadmin::Cluster> clusters_;
   std::map<std::string, google::longrunning::Operation> pending_operations_;
+  std::map<std::string, btadmin::AppProfile> app_profiles_;
+  long counter_ = 0;
 };
 
 class LongRunningEmulator final

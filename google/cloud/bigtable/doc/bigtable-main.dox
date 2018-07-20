@@ -7,5 +7,7 @@ This page contains the reference guide to the Cloud Bigtable C++ Client Library.
 
 * @ref bigtable-hello-world "Hello World Example"
 
+* @ref bigtable-samples-instance-admin "Instance Admin Example"
+
 * @ref bigtable-samples "Table Admin Example"
 */

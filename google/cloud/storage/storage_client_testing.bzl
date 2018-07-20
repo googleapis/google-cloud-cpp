@@ -3,9 +3,9 @@ storage_client_testing_HDRS = [
     "testing/canonical_errors.h",
     "testing/mock_client.h",
     "testing/mock_http_request.h",
+    "testing/retry_tests.h",
 ]
 
 storage_client_testing_SRCS = [
     "testing/mock_http_request.cc",
 ]
-
