@@ -94,6 +94,22 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::RepositionInputSequence() {
   setg(data, data, data + response_.contents.size());
   return traits_type::to_int_type(*data);
 }
+
+ObjectMetadata ObjectWriteStream::Close() {
+  if (not IsOpen()) {
+    google::cloud::internal::RaiseRuntimeError(
+        "Attempting to Close() closed ObjectWriteStream");
+  }
+  auto response = buf_->Close();
+  if (response.status_code >= 300) {
+    std::ostringstream os;
+    os << "Error in " << __func__ << ": "
+       << Status(response.status_code, response.payload);
+    google::cloud::internal::RaiseRuntimeError(os.str());
+  }
+  return ObjectMetadata::ParseFromString(response.payload);
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

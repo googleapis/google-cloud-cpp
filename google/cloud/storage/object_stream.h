@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_
 
+#include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include <iostream>
 #include <string>
@@ -123,6 +124,55 @@ class ObjectReadStream : public std::basic_istream<char> {
 
  private:
   ObjectReadStreamBuf buf_;
+};
+
+/**
+ * A `std::basic_istream<char>` to read from a GCS Object.
+ */
+class ObjectWriteStream : public std::basic_ostream<char> {
+ public:
+  /**
+   * Creates a stream not associated with any buffer.
+   *
+   * Attempts to use this stream will result in failures.
+   */
+  ObjectWriteStream() : std::basic_ostream<char>(nullptr), buf_() {}
+
+  /**
+   * Creates a stream associated with the give request.
+   *
+   * Reading from the stream will result in http requests to get more data
+   * from the GCS object.
+   *
+   * @param buf an initialized ObjectWriteStreamBuf to upload the data.
+   */
+  explicit ObjectWriteStream(
+      std::unique_ptr<internal::ObjectWriteStreamBuf> buf)
+      : std::basic_ostream<char>(buf.get()), buf_(std::move(buf)) {}
+
+  ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
+      : std::basic_ostream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {}
+
+  ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
+    buf_ = std::move(rhs.buf_);
+    rdbuf(buf_.get());
+    return *this;
+  }
+
+  ObjectWriteStream(ObjectWriteStream const&) = delete;
+  ObjectWriteStream& operator=(ObjectWriteStream const&) = delete;
+
+  ~ObjectWriteStream() {
+    if (IsOpen()) {
+      Close();
+    }
+  }
+
+  bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
+  ObjectMetadata Close();
+
+ private:
+  std::unique_ptr<internal::ObjectWriteStreamBuf> buf_;
 };
 
 }  // namespace STORAGE_CLIENT_NS

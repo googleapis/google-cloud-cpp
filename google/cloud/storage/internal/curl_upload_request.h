@@ -45,6 +45,8 @@ class CurlUploadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        buffer_(std::move(rhs.buffer_)),
+        buffer_rdptr_(std::move(rhs.buffer_rdptr_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_) {
     ResetOptions();
@@ -56,9 +58,15 @@ class CurlUploadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    buffer_ = std::move(rhs.buffer_);
+    buffer_rdptr_ = std::move(rhs.buffer_rdptr_);
+    closing_ = rhs.closing_;
+    curl_closed_ = rhs.curl_closed_;
     ResetOptions();
     return *this;
   }
+
+  bool IsOpen() const { return not closing_; }
 
   /// Block until the current buffer has been transferred.
   void Flush();
@@ -115,6 +123,9 @@ class CurlUploadRequest {
 
   /// Simplify handling of errors in the curl_multi_* API.
   void HandleCurlMultiErrorCode(char const* where, CURLMcode result);
+
+  /// Raise an exception if the application tries to use a closed request.
+  void ValidateOpen(char const* where);
 
   std::string url_;
   CurlHeaders headers_;
