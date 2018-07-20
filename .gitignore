@@ -15,3 +15,6 @@ cmake-build-*/
 
 # This is a staging directory used to upload the documents to gihub.io
 github-io-staging/
+
+google/cloud/storage/tests/__pycache__/
+google/cloud/storage/tests/testbench.pyc
