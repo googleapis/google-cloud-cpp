@@ -23,7 +23,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using namespace ::testing;
+using ::testing::_;
+using ::testing::HasSubstr;
+using ::testing::Invoke;
+using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:

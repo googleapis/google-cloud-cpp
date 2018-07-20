@@ -22,10 +22,13 @@
 namespace google {
 namespace cloud {
 namespace storage {
-using namespace testing::canonical_errors;
 namespace {
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
-using namespace ::testing;
+using testing::canonical_errors::TransientError;
 
 /**
  * Test the ObjectAccessControls-related functions in storage::Client.

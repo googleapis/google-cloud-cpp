@@ -22,9 +22,13 @@
 namespace google {
 namespace cloud {
 namespace storage {
-using namespace testing::canonical_errors;
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-using namespace ::testing;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using testing::canonical_errors::TransientError;
 
 /**
  * Test the functions in Storage::Client related to 'Buckets: *'.
@@ -96,6 +100,7 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
 }
 
 }  // namespace
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -18,17 +18,24 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
-namespace gcs = google::cloud::storage;
-using gcs::internal::ListObjectsRequest;
-using gcs::internal::ListObjectsResponse;
-using gcs::testing::MockClient;
-using namespace gcs::testing::canonical_errors;
-using namespace ::testing;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace {
+namespace nl = internal::nl;
+using internal::ListObjectsRequest;
+using internal::ListObjectsResponse;
+using ::testing::_;
+using ::testing::ContainerEq;
+using ::testing::Invoke;
+using testing::MockClient;
+using ::testing::Return;
 
 TEST(ListObjectsReaderTest, Basic) {
   // Create a synthetic list of ObjectMetadata elements, each request will
   // return 2 of them.
-  std::vector<gcs::ObjectMetadata> expected;
+  std::vector<ObjectMetadata> expected;
 
   int page_count = 3;
   for (int i = 0; i != 2 * page_count; ++i) {
@@ -36,14 +43,14 @@ TEST(ListObjectsReaderTest, Basic) {
     std::string name = id;
     std::string link =
         "https://www.googleapis.com/storage/v1/b/foo-bar/" + id + "/1";
-    gcs::internal::nl::json metadata{
+    nl::json metadata{
         {"bucket", "foo-bar"},
         {"id", id},
         {"name", name},
         {"selfLink", link},
         {"kind", "storage#object"},
     };
-    expected.emplace_back(gcs::ObjectMetadata::ParseFromJson(metadata));
+    expected.emplace_back(ObjectMetadata::ParseFromJson(metadata));
   }
 
   auto create_mock = [&expected, page_count](int i) {
@@ -56,7 +63,7 @@ TEST(ListObjectsReaderTest, Basic) {
       response.items.push_back(expected[2 * i + 1]);
     }
     return [response](ListObjectsRequest const&) {
-      return std::make_pair(gcs::Status(), response);
+      return std::make_pair(Status(), response);
     };
   };
 
@@ -66,8 +73,8 @@ TEST(ListObjectsReaderTest, Basic) {
       .WillOnce(Invoke(create_mock(1)))
       .WillOnce(Invoke(create_mock(2)));
 
-  gcs::ListObjectsReader reader(mock, "foo-bar-baz", gcs::Prefix("dir/"));
-  std::vector<gcs::ObjectMetadata> actual;
+  ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
+  std::vector<ObjectMetadata> actual;
   for (auto&& object : reader) {
     actual.push_back(object);
   }
@@ -77,9 +84,15 @@ TEST(ListObjectsReaderTest, Basic) {
 TEST(ListObjectsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Return(std::make_pair(gcs::Status(), ListObjectsResponse())));
+      .WillOnce(Return(std::make_pair(Status(), ListObjectsResponse())));
 
-  gcs::ListObjectsReader reader(mock, "foo-bar-baz", gcs::Prefix("dir/"));
+  ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(0U, count);
 }
+
+}  // namespace
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
