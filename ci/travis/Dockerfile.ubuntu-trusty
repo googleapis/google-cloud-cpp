@@ -39,8 +39,6 @@ RUN apt update && apt install -y software-properties-common && \
         libtool \
         lsb-release \
         make \
-        python-dev \
-        python-pip \
         tar \
         wget \
         zlib1g-dev \
@@ -50,7 +48,9 @@ RUN apt update && apt install -y software-properties-common && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100 && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
 
-RUN pip install gunicorn httpbin
+# Install Python packages used in the integration tests.
+RUN apt update && apt install -y apache2-dev python-dev python-pip
+RUN pip install flask httpbin
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
