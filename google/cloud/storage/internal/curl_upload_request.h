@@ -51,6 +51,7 @@ class CurlUploadRequest {
         curl_closed_(rhs.curl_closed_) {
     ResetOptions();
   }
+
   CurlUploadRequest& operator=(CurlUploadRequest&& rhs) noexcept {
     url_ = std::move(rhs.url_);
     headers_ = std::move(rhs.headers_);
@@ -83,8 +84,11 @@ class CurlUploadRequest {
   void NextBuffer(std::string& next_buffer);
 
  private:
-  /// Reset any options in the internal CURL handle.
   friend class CurlRequestBuilder;
+  /// Set the underlying CurlHandle options initially.
+  void SetOptions();
+
+  /// Reset the underlying CurlHandle options after a move operation.
   void ResetOptions();
 
   /// Called by libcurl to transfer some of the data out of the internal buffer.

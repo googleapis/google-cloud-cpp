@@ -47,7 +47,7 @@ CurlUploadRequest CurlRequestBuilder::BuildUpload() {
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.handle_ = std::move(handle_);
   request.multi_.reset(curl_multi_init());
-  request.ResetOptions();
+  request.SetOptions();
   return request;
 }
 
