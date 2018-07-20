@@ -44,9 +44,9 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
   auto generate_random_line = [&generator] {
     std::string const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "abcdefghijklmnopqrstuvwxyz"
-            "0123456789"
-            ".,/;:'[{]}=+-_}]`~!@#$%^&*()\t\n\r\v";
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()\t\n\r\v";
     return google::cloud::internal::Sample(generator, 200, characters);
   };
 
