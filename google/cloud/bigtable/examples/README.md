@@ -11,6 +11,7 @@ referenced from the Doxygen landing page as "Hello World".
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
+  - [Administer Tables] (#Table/Column family management)
 
 ## Before you begin
 
