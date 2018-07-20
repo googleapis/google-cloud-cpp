@@ -20,12 +20,20 @@
 #include <gmock/gmock.h>
 #include <cstring>
 
-namespace storage = google::cloud::storage;
-using storage::internal::AuthorizedUserCredentials;
-using storage::internal::GoogleOAuthRefreshEndpoint;
-using storage::testing::MockHttpRequest;
-using storage::testing::MockHttpRequestBuilder;
-using namespace ::testing;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+namespace {
+using ::google::cloud::storage::testing::MockHttpRequest;
+using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::testing::_;
+using ::testing::An;
+using ::testing::HasSubstr;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::StrEq;
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
@@ -46,7 +54,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   EXPECT_CALL(*mock_request, MakeRequest())
-      .WillOnce(Return(storage::internal::HttpResponse{200, response, {}}));
+      .WillOnce(Return(HttpResponse{200, response, {}}));
 
   auto mock_builder = MockHttpRequestBuilder::mock;
   EXPECT_CALL(*mock_builder,
@@ -101,8 +109,8 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   EXPECT_CALL(*mock_request, MakeRequest())
-      .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
-      .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
+      .WillOnce(Return(HttpResponse{200, r1, {}}))
+      .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock;
@@ -136,3 +144,10 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
   EXPECT_EQ("Authorization: Type access-token-r2",
             credentials.AuthorizationHeader());
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

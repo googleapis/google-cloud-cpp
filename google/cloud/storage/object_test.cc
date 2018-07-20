@@ -22,10 +22,14 @@
 namespace google {
 namespace cloud {
 namespace storage {
-using namespace testing::canonical_errors;
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-using namespace ::testing;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
+using testing::canonical_errors::TransientError;
 
 /**
  * Test the functions in Storage::Client related to 'Objects: *'.
@@ -187,6 +191,7 @@ TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
 }
 
 }  // namespace
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

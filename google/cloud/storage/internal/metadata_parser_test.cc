@@ -15,7 +15,12 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::storage::internal;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+namespace {
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
 TEST(MetadataParserTest, ParseTimestampField) {
@@ -170,3 +175,10 @@ TEST(MetadataParserTest, ParseInvalidUnsignedLongFieldType) {
   EXPECT_DEATH_IF_SUPPORTED(ParseUnsignedLongField(json_object, "size"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

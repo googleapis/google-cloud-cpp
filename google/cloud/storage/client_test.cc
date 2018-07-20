@@ -22,9 +22,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-using namespace testing::canonical_errors;
 namespace {
-using namespace ::testing;
+using ::testing::_;
+using ::testing::Return;
+using testing::canonical_errors::TransientError;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:

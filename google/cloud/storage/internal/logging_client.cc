@@ -21,8 +21,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
 namespace {
-using namespace raw_client_wrapper_utils;
+using raw_client_wrapper_utils::CheckSignature;
 /**
  * Call a RawClient operation logging both the input and the result.
  *
