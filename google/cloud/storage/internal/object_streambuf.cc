@@ -12,30 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/insert_object_media_request.h"
-#include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/object_streambuf.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
-  os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
-  os << ", contents=\n"
-     << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
-  return os << "}";
+HttpResponse ObjectWriteStreamBuf::Close() {
+  pubsync();
+  return DoClose();
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         InsertObjectStreamingRequest const& r) {
-  os << "InsertObjectStreamingRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
-  return os << "}";
-}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

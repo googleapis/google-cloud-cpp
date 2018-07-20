@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/read_object_range_request.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
@@ -68,6 +69,9 @@ class RawClient {
   virtual std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       ReadObjectRangeRequest const&) = 0;
 
+  virtual std::pair<Status, std::unique_ptr<ObjectWriteStreamBuf>> WriteObject(
+      InsertObjectStreamingRequest const&) = 0;
+
   virtual std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) = 0;
 
@@ -83,7 +87,6 @@ class RawClient {
 };
 
 }  // namespace internal
-
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

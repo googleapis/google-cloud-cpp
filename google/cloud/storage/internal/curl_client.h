@@ -50,6 +50,8 @@ class CurlClient : public RawClient {
       GetObjectMetadataRequest const& request) override;
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       ReadObjectRangeRequest const& request) override;
+  std::pair<Status, std::unique_ptr<ObjectWriteStreamBuf>> WriteObject(
+      InsertObjectStreamingRequest const&) override;
   std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const& request) override;
   std::pair<Status, EmptyResponse> DeleteObject(

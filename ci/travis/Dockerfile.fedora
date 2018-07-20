@@ -39,13 +39,13 @@ RUN dnf makecache && dnf install -y \
     openssl-devel \
     pkgconfig \
     python \
-    python-gunicorn \
-    python-httpbin \
     shtool \
     unzip \
     wget \
     which \
     zlib-devel
+
+RUN pip install httpbin flask
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

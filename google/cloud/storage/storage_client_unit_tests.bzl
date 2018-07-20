@@ -5,6 +5,7 @@ storage_client_unit_tests = [
     "bucket_test.cc",
     "client_object_acl_test.cc",
     "client_test.cc",
+    "client_write_object_test.cc",
     "credentials_test.cc",
     "internal/access_control_common_test.cc",
     "internal/authorized_user_credentials_test.cc",
