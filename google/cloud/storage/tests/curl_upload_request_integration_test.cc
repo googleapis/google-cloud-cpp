@@ -77,7 +77,7 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   expected_data += current_message;
   upload.NextBuffer(current_message);
   auto response = upload.Close();
-  EXPECT_EQ(200, response.status_code);
+  EXPECT_EQ(200, response.status_code) << " payload=" << response.payload;
 
   nl::json parsed = nl::json::parse(response.payload);
   // headers contains the headers that the httpbin server received, use that

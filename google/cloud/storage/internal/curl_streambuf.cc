@@ -20,15 +20,15 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlStreamBuf::CurlStreamBuf(CurlUploadRequest&& upload,
+CurlStreambuf::CurlStreambuf(CurlUploadRequest&& upload,
                              std::size_t max_buffer_size)
     : upload_(std::move(upload)), max_buffer_size_(max_buffer_size) {
   current_ios_buffer_.reserve(max_buffer_size);
 }
 
-bool CurlStreamBuf::IsOpen() const { return upload_.IsOpen(); }
+bool CurlStreambuf::IsOpen() const { return upload_.IsOpen(); }
 
-CurlStreamBuf::int_type CurlStreamBuf::overflow(int_type ch) {
+CurlStreambuf::int_type CurlStreambuf::overflow(int_type ch) {
   Validate(__func__);
   SwapBuffers();
   if (not traits_type::eq_int_type(ch, traits_type::eof())) {
@@ -38,7 +38,7 @@ CurlStreamBuf::int_type CurlStreamBuf::overflow(int_type ch) {
   return 0;
 }
 
-int CurlStreamBuf::sync() {
+int CurlStreambuf::sync() {
   // The default destructor calls sync(), for already closed streams this should
   // be a no-op.
   if (not IsOpen()) {
@@ -49,7 +49,7 @@ int CurlStreamBuf::sync() {
   return 0;
 }
 
-std::streamsize CurlStreamBuf::xsputn(char const* s, std::streamsize count) {
+std::streamsize CurlStreambuf::xsputn(char const* s, std::streamsize count) {
   Validate(__func__);
   current_ios_buffer_.append(s, static_cast<std::size_t>(count));
   pbump(static_cast<int>(count));
@@ -59,14 +59,14 @@ std::streamsize CurlStreamBuf::xsputn(char const* s, std::streamsize count) {
   return count;
 }
 
-HttpResponse CurlStreamBuf::DoClose() {
+HttpResponse CurlStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
   Validate(__func__);
   SwapBuffers();
   return upload_.Close();
 }
 
-void CurlStreamBuf::Validate(char const* where) const {
+void CurlStreambuf::Validate(char const* where) const {
   if (upload_.IsOpen()) {
     return;
   }
@@ -75,7 +75,7 @@ void CurlStreamBuf::Validate(char const* where) const {
   google::cloud::internal::RaiseRuntimeError(msg);
 }
 
-void CurlStreamBuf::SwapBuffers() {
+void CurlStreambuf::SwapBuffers() {
   // Shorten the buffer to the actual used size.
   current_ios_buffer_.resize(pptr() - pbase());
   // Push the buffer to the libcurl wrapper to be written as needed

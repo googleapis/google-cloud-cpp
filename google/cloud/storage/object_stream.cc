@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/log.h"
 #include <sstream>
 #include <thread>
 
@@ -95,12 +96,34 @@ ObjectReadStreamBuf::int_type ObjectReadStreamBuf::RepositionInputSequence() {
   return traits_type::to_int_type(*data);
 }
 
-ObjectMetadata ObjectWriteStream::Close() {
+ObjectWriteStream::~ObjectWriteStream() {
+  if (not IsOpen()) {
+    return;
+  }
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  try {
+    Close();
+  } catch (std::exception const& ex) {
+    GCP_LOG(INFO) << "Ignored exception while trying to close stream: "
+                  << ex.what();
+  } catch (...) {
+    GCP_LOG(INFO) << "Ignored unknown exception while trying to close stream";
+  }
+#else
+  Close();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+internal::HttpResponse ObjectWriteStream::CloseRaw() {
   if (not IsOpen()) {
     google::cloud::internal::RaiseRuntimeError(
         "Attempting to Close() closed ObjectWriteStream");
   }
-  auto response = buf_->Close();
+  return buf_->Close();
+}
+
+ObjectMetadata ObjectWriteStream::Close() {
+  auto response = CloseRaw();
   if (response.status_code >= 300) {
     std::ostringstream os;
     os << "Error in " << __func__ << ": "

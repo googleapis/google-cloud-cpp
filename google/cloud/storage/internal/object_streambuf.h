@@ -26,15 +26,15 @@ namespace internal {
 /**
  * A `std::basic_streambuf` that writes to a GCS Object.
  */
-class ObjectWriteStreamBuf : public std::basic_streambuf<char> {
+class ObjectWriteStreambuf : public std::basic_streambuf<char> {
  public:
-  ObjectWriteStreamBuf() : std::basic_streambuf<char>() {}
-  ~ObjectWriteStreamBuf() override = default;
+  ObjectWriteStreambuf() : std::basic_streambuf<char>() {}
+  ~ObjectWriteStreambuf() override = default;
 
-  ObjectWriteStreamBuf(ObjectWriteStreamBuf&& rhs) noexcept = delete;
-  ObjectWriteStreamBuf& operator=(ObjectWriteStreamBuf&& rhs) noexcept = delete;
-  ObjectWriteStreamBuf(ObjectWriteStreamBuf const&) = delete;
-  ObjectWriteStreamBuf& operator=(ObjectWriteStreamBuf const&) = delete;
+  ObjectWriteStreambuf(ObjectWriteStreambuf&& rhs) noexcept = delete;
+  ObjectWriteStreambuf& operator=(ObjectWriteStreambuf&& rhs) noexcept = delete;
+  ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
+  ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
   HttpResponse Close();
   virtual bool IsOpen() const = 0;

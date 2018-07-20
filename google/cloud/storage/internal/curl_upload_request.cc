@@ -49,10 +49,6 @@ void CurlUploadRequest::Flush() {
 HttpResponse CurlUploadRequest::Close() {
   ValidateOpen(__func__);
   handle_.FlushDebug(__func__);
-  if (curl_closed_) {
-    google::cloud::internal::RaiseRuntimeError(
-        "Attempting to use closed stream");
-  }
   Flush();
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.

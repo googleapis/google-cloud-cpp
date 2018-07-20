@@ -147,7 +147,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * @param buf an initialized ObjectWriteStreamBuf to upload the data.
    */
   explicit ObjectWriteStream(
-      std::unique_ptr<internal::ObjectWriteStreamBuf> buf)
+      std::unique_ptr<internal::ObjectWriteStreambuf> buf)
       : std::basic_ostream<char>(buf.get()), buf_(std::move(buf)) {}
 
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
@@ -162,17 +162,20 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   ObjectWriteStream(ObjectWriteStream const&) = delete;
   ObjectWriteStream& operator=(ObjectWriteStream const&) = delete;
 
-  ~ObjectWriteStream() {
-    if (IsOpen()) {
-      Close();
-    }
-  }
+  /// Closes the stream (if necessary).
+  ~ObjectWriteStream();
 
+  /// Return true while the stream is open.
   bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
+
+  /// Close the stream and return the metadata of the created object.
   ObjectMetadata Close();
 
+  /// Close the stream and return the (unparsed) result, useful for testing.
+  internal::HttpResponse CloseRaw();
+
  private:
-  std::unique_ptr<internal::ObjectWriteStreamBuf> buf_;
+  std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
 };
 
 }  // namespace STORAGE_CLIENT_NS

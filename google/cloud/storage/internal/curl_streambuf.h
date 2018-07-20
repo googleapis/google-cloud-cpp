@@ -26,12 +26,12 @@ namespace internal {
 /**
  * Implement a wrapper for libcurl-based streaming uploads.
  */
-class CurlStreamBuf : public ObjectWriteStreamBuf {
+class CurlStreambuf : public ObjectWriteStreambuf {
  public:
-  explicit CurlStreamBuf(CurlUploadRequest&& upload,
+  explicit CurlStreambuf(CurlUploadRequest&& upload,
                          std::size_t max_buffer_size = 64 * 1024);
 
-  ~CurlStreamBuf() override = default;
+  ~CurlStreambuf() override = default;
 
   bool IsOpen() const override;
 

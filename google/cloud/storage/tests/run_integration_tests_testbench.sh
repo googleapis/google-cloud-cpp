@@ -35,6 +35,14 @@ echo
 echo "Running storage::internal::CurlRequest integration test."
 ./curl_request_integration_test
 
+#echo
+#echo "Running storage::internal::CurlRequestUpload integration test."
+#./curl_upload_request_integration_test
+#
+#echo
+#echo "Running storage::internal::CurlStreambuf integration test."
+#./curl_streambuf_integration_test
+
 echo
 echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
