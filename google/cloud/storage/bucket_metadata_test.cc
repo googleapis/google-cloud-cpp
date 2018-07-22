@@ -57,6 +57,9 @@ BucketMetadata CreateBucketMetadataForTest() {
         "etag": "AYX="
       }
       ],
+      "billing": {
+        "requesterPays": false
+      },
       "etag": "XYZ=",
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -155,6 +158,16 @@ TEST(BucketMetadataTest, SetAcl) {
   copy.set_acl(std::move(acl));
   EXPECT_NE(expected, copy);
   EXPECT_EQ("READER", copy.acl().at(0).role());
+}
+
+/// @test Verify we can change the billing configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetBilling) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  auto billing = copy.billing();
+  billing.requester_pays = not billing.requester_pays;
+  copy.set_billing(billing);
+  EXPECT_NE(expected, copy);
 }
 
 }  // namespace

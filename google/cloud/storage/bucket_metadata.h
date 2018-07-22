@@ -24,6 +24,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+struct BucketBilling {
+  bool requester_pays;
+};
+
 /**
  * Represents a Google Cloud Storage Bucket Metadata object.
  *
@@ -42,12 +46,32 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
+  //@{
+  /**
+   * @name Get and set Bucket Access Control Lists.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists
+   */
   std::vector<BucketAccessControl> const& acl() const { return acl_; }
   std::vector<BucketAccessControl>& mutable_acl() { return acl_; }
   BucketMetadata& set_acl(std::vector<BucketAccessControl> acl) {
     acl_ = std::move(acl);
     return *this;
   }
+  //@}
+
+  //@{
+  /**
+   * @name Get and set billing configuration for the Bucket.
+   *
+   * @see https://cloud.google.com/storage/docs/requester-pays
+   */
+  BucketBilling const& billing() const { return billing_; }
+  BucketMetadata& set_billing(BucketBilling const& v) {
+    billing_ = v;
+    return *this;
+  }
+  //@}
 
   using CommonMetadata::etag;
   using CommonMetadata::id;
@@ -86,6 +110,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
+  BucketBilling billing_;
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;

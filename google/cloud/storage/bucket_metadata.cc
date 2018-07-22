@@ -49,6 +49,7 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
              rhs and
          acl_ == rhs.acl_ and
+         billing_.requester_pays == rhs.billing_.requester_pays and
          project_number_ == rhs.project_number_ and
          location_ == rhs.location_ and labels_ == rhs.labels_;
 }
@@ -61,8 +62,12 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
     os << sep << acl;
     sep = ", ";
   }
-  os << "], etag=" << rhs.etag()
-     << ", id=" << rhs.id() << ", kind=" << rhs.kind();
+  auto prev = os.flags();
+  os << "], billing.requesterPays=" << std::boolalpha
+     << rhs.billing().requester_pays;
+  os.flags(prev);
+  os << ", etag=" << rhs.etag() << ", id=" << rhs.id()
+     << ", kind=" << rhs.kind();
   for (auto const& kv : rhs.labels_) {
     os << ", labels." << kv.first << "=" << kv.second;
   }
