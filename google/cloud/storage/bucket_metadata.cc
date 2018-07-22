@@ -24,6 +24,12 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   BucketMetadata result{};
   static_cast<CommonMetadata<BucketMetadata>&>(result) =
       CommonMetadata<BucketMetadata>::ParseFromJson(json);
+
+  if (json.count("acl") != 0) {
+    for (auto const& kv : json["acl"].items()) {
+      result.acl_.emplace_back(BucketAccessControl::ParseFromJson(kv.value()));
+    }
+  }
   result.location_ = json.value("location", "");
   result.project_number_ = internal::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
@@ -42,18 +48,23 @@ BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
              rhs and
+         acl_ == rhs.acl_ and
          project_number_ == rhs.project_number_ and
          location_ == rhs.location_ and labels_ == rhs.labels_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
-  os << "BucketMetadata={name=" << rhs.name() << ", etag=" << rhs.etag()
+  os << "BucketMetadata={name=" << rhs.name() << ", acl=[";
+  char const* sep = "";
+  for (auto const& acl : rhs.acl()) {
+    os << sep << acl;
+    sep = ", ";
+  }
+  os << "], etag=" << rhs.etag()
      << ", id=" << rhs.id() << ", kind=" << rhs.kind();
-  char const* sep = "labels.";
   for (auto const& kv : rhs.labels_) {
-    os << sep << kv.first << "=" << kv.second;
-    sep = ", labels.";
+    os << ", labels." << kv.first << "=" << kv.second;
   }
   os << ", location=" << rhs.location()
      << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()

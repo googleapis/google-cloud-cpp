@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 
+#include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <map>
@@ -39,6 +40,15 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   static BucketMetadata ParseFromJson(internal::nl::json const& json);
   static BucketMetadata ParseFromString(std::string const& payload);
 
+  // Please keep these in alphabetical order, that make it easier to verify we
+  // have actually implemented all of them.
+  std::vector<BucketAccessControl> const& acl() const { return acl_; }
+  std::vector<BucketAccessControl>& mutable_acl() { return acl_; }
+  BucketMetadata& set_acl(std::vector<BucketAccessControl> acl) {
+    acl_ = std::move(acl);
+    return *this;
+  }
+
   using CommonMetadata::etag;
   using CommonMetadata::id;
   using CommonMetadata::kind;
@@ -62,7 +72,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   using CommonMetadata::updated;
 
   bool operator==(BucketMetadata const& rhs) const;
-  bool operator!=(BucketMetadata const& rhs) { return not(*this == rhs); }
+  bool operator!=(BucketMetadata const& rhs) const { return not(*this == rhs); }
 
   constexpr static char STORAGE_CLASS_STANDARD[] = "STANDARD";
   constexpr static char STORAGE_CLASS_MULTI_REGIONAL[] = "MULTI_REGIONAL";
@@ -75,6 +85,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  private:
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
+  std::vector<BucketAccessControl> acl_;
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;
