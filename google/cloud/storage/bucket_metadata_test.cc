@@ -70,6 +70,21 @@ BucketMetadata CreateBucketMetadataForTest() {
         "origin": ["another-example.com"],
         "responseHeader": ["Content-Type"]
       }],
+      "defaultObjectAcl": [{
+        "kind": "storage#objectAccessControl",
+        "id": "default-acl-id-0",
+        "bucket": "test-bucket",
+        "entity": "user-test-user-3",
+        "role": "OWNER",
+        "email": "test-user-1@example.com",
+        "entityId": "user-test-user-1-id-123",
+        "domain": "example.com",
+        "projectTeam": {
+          "projectNumber": "123456789",
+          "team": "owners"
+        },
+        "etag": "AYX="
+      }],
       "etag": "XYZ=",
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -106,6 +121,8 @@ TEST(BucketMetadataTest, Parse) {
       7200, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}
   };
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
+  EXPECT_EQ(1U, actual.default_acl().size());
+  EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -154,6 +171,7 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("bucket=test-bucket"));
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
   EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
+  EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.
@@ -210,6 +228,33 @@ TEST(BucketMetadataTest, SetCors) {
   copy.set_cors(std::move(cors));
   EXPECT_NE(expected, copy);
   EXPECT_EQ("Content-Encoding", copy.cors().at(0).response_header.back());
+}
+
+/// @test Verify we can make changes to one DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, MutableDefaultObjectAcl) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_EQ("OWNER", expected.default_acl().at(0).role());
+  auto copy = expected;
+  EXPECT_EQ(expected, copy);
+  copy.mutable_default_acl().at(0).set_role(BucketAccessControl::ROLE_READER());
+  EXPECT_EQ("READER", copy.default_acl().at(0).role());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, SetDefaultObjectAcl) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_FALSE(expected.default_acl().empty());
+  auto copy = expected;
+  auto default_acl = expected.default_acl();
+  auto access = default_acl.at(0);
+  access.set_entity("allAuthenticatedUsers");
+  access.set_role("READER");
+  default_acl.push_back(access);
+  copy.set_default_acl(std::move(default_acl));
+  EXPECT_EQ(2U, copy.default_acl().size());
+  EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
+  EXPECT_NE(expected, copy);
 }
 
 }  // namespace

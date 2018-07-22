@@ -18,6 +18,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/object_access_control.h"
 #include <map>
 #include <tuple>
 
@@ -160,6 +161,29 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
+  //@{
+  /**
+   * @name Get and set the Default Object Access Control Lists.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#default for
+   *     general information of default ACLs.
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   *     for information on how to set the default ACLs.
+   */
+  std::vector<ObjectAccessControl> const& default_acl() const {
+    return default_acl_;
+  }
+  std::vector<ObjectAccessControl>& mutable_default_acl() {
+    return default_acl_;
+  }
+  BucketMetadata& set_default_acl(std::vector<ObjectAccessControl> acl) {
+    default_acl_ = std::move(acl);
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::etag;
   using CommonMetadata::id;
   using CommonMetadata::kind;
@@ -199,6 +223,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::vector<BucketAccessControl> acl_;
   BucketBilling billing_;
   std::vector<CorsEntry> cors_;
+  std::vector<ObjectAccessControl> default_acl_;
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;

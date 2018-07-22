@@ -78,6 +78,12 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
       result.cors_.emplace_back(ParseCors(kv.value()));
     }
   }
+  if (json.count("defaultObjectAcl")) {
+    for (auto const& kv : json["defaultObjectAcl"].items()) {
+      result.default_acl_.emplace_back(
+          ObjectAccessControl::ParseFromJson(kv.value()));
+    }
+  }
   result.location_ = json.value("location", "");
   result.project_number_ = internal::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
@@ -98,7 +104,8 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
              rhs and
          acl_ == rhs.acl_ and
          billing_.requester_pays == rhs.billing_.requester_pays and
-         cors_ == rhs.cors_ and project_number_ == rhs.project_number_ and
+         cors_ == rhs.cors_ and default_acl_ == rhs.default_acl_ and
+         project_number_ == rhs.project_number_ and
          location_ == rhs.location_ and labels_ == rhs.labels_;
 }
 
@@ -118,6 +125,12 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   sep = "";
   for (auto const& cors : rhs.cors()) {
     os << sep << cors;
+    sep = ", ";
+  }
+  os << "], default_acl=[";
+  sep = "";
+  for (auto const& acl : rhs.default_acl()) {
+    os << sep << acl;
     sep = ", ";
   }
   os << "], etag=" << rhs.etag() << ", id=" << rhs.id()
