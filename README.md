@@ -95,7 +95,7 @@ against the latest version of the SDK on each commit and PR.
 #### CentOS
 
 The default compiler on CentOS has poor support for C++11. We need to upgrade
-the compiler and other development tools. In this instructions we use g++-7 via
+the compiler and other development tools. In this instructions, we use g++-7 via
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
@@ -166,8 +166,8 @@ The default compiler on Ubuntu-14.04 (Trusty Tahr) has poor support for C++11.
 In addition, gRPC requires a newer version of OpenSSL than the one included
 in the system.
 
-It is possible to workaround these limitations on a *fresh* installation of
-Ubuntu-14.04, but there are known [issues][issue-913] working on a system where
+It is possible to work around these limitations on a *fresh* installation of
+Ubuntu-14.04, but there are [known issues][issue-913] working on a system where
 these libraries are already installed.
 
 [issue-913]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/913
