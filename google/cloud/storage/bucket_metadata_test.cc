@@ -113,13 +113,11 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2U, actual.cors().size());
-  auto expected_cors_0 = CorsEntry{
-    3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}
-  };
+  auto expected_cors_0 =
+      CorsEntry{3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}};
   EXPECT_EQ(expected_cors_0, actual.cors().at(0));
   auto expected_cors_1 = CorsEntry{
-      7200, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}
-  };
+      7200, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}};
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_EQ(1U, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
@@ -149,12 +147,11 @@ TEST(BucketMetadataTest, Parse) {
   auto magic_timestamp = 1526758274L;
   using std::chrono::duration_cast;
   EXPECT_EQ(magic_timestamp, duration_cast<std::chrono::seconds>(
-                             actual.time_created().time_since_epoch())
-                             .count());
+                                 actual.time_created().time_since_epoch())
+                                 .count());
   EXPECT_EQ(magic_timestamp + 10, duration_cast<std::chrono::seconds>(
-                             actual.updated().time_since_epoch())
-                             .count());
-
+                                      actual.updated().time_since_epoch())
+                                      .count());
 }
 
 /// @test Verify that the IOStream operator works as expected.
