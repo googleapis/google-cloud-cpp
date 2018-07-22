@@ -58,8 +58,18 @@ BucketMetadata CreateBucketMetadataForTest() {
       }
       ],
       "billing": {
-        "requesterPays": false
+        "requesterPays": true
       },
+      "cors": [{
+        "maxAgeSeconds": 3600,
+        "method": ["GET", "HEAD"],
+        "origin": ["cross-origin-example.com"]
+      }, {
+        "maxAgeSeconds": 7200,
+        "method": ["GET", "HEAD"],
+        "origin": ["another-example.com"],
+        "responseHeader": ["Content-Type"]
+      }],
       "etag": "XYZ=",
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -86,6 +96,16 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(2U, actual.acl().size());
   EXPECT_EQ("acl-id-0", actual.acl().at(0).id());
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
+  EXPECT_TRUE(actual.billing().requester_pays);
+  EXPECT_EQ(2U, actual.cors().size());
+  auto expected_cors_0 = CorsEntry{
+    3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}
+  };
+  EXPECT_EQ(expected_cors_0, actual.cors().at(0));
+  auto expected_cors_1 = CorsEntry{
+      7200, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}
+  };
+  EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -168,6 +188,28 @@ TEST(BucketMetadataTest, SetBilling) {
   billing.requester_pays = not billing.requester_pays;
   copy.set_billing(billing);
   EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can make changes to one CORS entry in BucketMetadata.
+TEST(BucketMetadataTest, MutableCors) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_EQ(expected, copy);
+  copy.mutable_cors().at(0).max_age_seconds *= 3;
+  EXPECT_NE(expected, copy);
+  EXPECT_EQ(3600, expected.cors().at(0).max_age_seconds);
+  EXPECT_EQ(3 * 3600, copy.cors().at(0).max_age_seconds);
+}
+
+/// @test Verify we can change the full CORS configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetCors) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  auto cors = copy.cors();
+  cors.at(0).response_header.emplace_back("Content-Encoding");
+  copy.set_cors(std::move(cors));
+  EXPECT_NE(expected, copy);
+  EXPECT_EQ("Content-Encoding", copy.cors().at(0).response_header.back());
 }
 
 }  // namespace

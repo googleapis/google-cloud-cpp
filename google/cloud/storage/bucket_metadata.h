@@ -19,14 +19,80 @@
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <map>
+#include <tuple>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+/**
+ * The billing configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/requester-pays for general
+ *     information on "Requester Pays" billing.
+ */
 struct BucketBilling {
   bool requester_pays;
 };
+
+/**
+ * An entry in the CORS list.
+ *
+ * CORS (Cross-Origin Resource Sharing) is a mechanism to enable client-side
+ * cross-origin requests. An entry in the configuration has a maximum age and a
+ * list of allowed origin and methods, as well as a list of returned response
+ * headers.
+ *
+ * @see https://en.wikipedia.org/wiki/Cross-origin_resource_sharing for general
+ *     information on CORS.
+ *
+ * @see https://cloud.google.com/storage/docs/cross-origin for general
+ *     information about CORS in the context of Google Cloud Storage.
+ *
+ * @see https://cloud.google.com/storage/docs/configuring-cors for information
+ *     on how to set and troubleshoot CORS settings.
+ */
+struct CorsEntry {
+  std::int64_t max_age_seconds;
+  std::vector<std::string> method;
+  std::vector<std::string> origin;
+  std::vector<std::string> response_header;
+};
+
+//@{
+/// @name Comparison operators for CorsEntry.
+inline bool operator==(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::tie(lhs.max_age_seconds, lhs.method, lhs.origin,
+                  lhs.response_header) == std::tie(rhs.max_age_seconds,
+                                                   rhs.method, rhs.origin,
+                                                   rhs.response_header);
+}
+
+inline bool operator!=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return not(lhs == rhs);
+}
+
+inline bool operator<(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::tie(lhs.max_age_seconds, lhs.method, lhs.origin,
+                  lhs.response_header) < std::tie(rhs.max_age_seconds,
+                                                  rhs.method, rhs.origin,
+                                                  rhs.response_header);
+}
+
+inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return not(lhs < rhs);
+}
+
+inline bool operator>(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return rhs < lhs;
+}
+
+inline bool operator<=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return rhs >= lhs;
+}
+//@}
+
+std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 
 /**
  * Represents a Google Cloud Storage Bucket Metadata object.
@@ -73,6 +139,27 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
+  //@{
+  /**
+   * @name Get and set CORS configuration for the Bucket.
+   *
+   * @see https://en.wikipedia.org/wiki/Cross-origin_resource_sharing for
+   *     general information on CORS.
+   *
+   * @see https://cloud.google.com/storage/docs/cross-origin for general
+   *     information about CORS in the context of Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/storage/docs/configuring-cors for information
+   *     on how to set and troubleshoot CORS settings.
+   */
+  std::vector<CorsEntry> const& cors() const { return cors_; }
+  std::vector<CorsEntry>& mutable_cors() { return cors_; }
+  BucketMetadata& set_cors(std::vector<CorsEntry> cors) {
+    cors_ = std::move(cors);
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::etag;
   using CommonMetadata::id;
   using CommonMetadata::kind;
@@ -111,6 +198,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
   BucketBilling billing_;
+  std::vector<CorsEntry> cors_;
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;
