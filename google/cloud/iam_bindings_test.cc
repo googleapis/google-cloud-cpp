@@ -127,10 +127,10 @@ TEST(IamBindingsTest, RemoveMembersTest) {
   auto temp_binding = iam_bindings.bindings();
   bool has_removed_member = false;
 
-  for (auto it: temp_binding[role]) {
+  for (auto it : temp_binding[role]) {
     if (it == *member_list.begin()) {
-        has_removed_member = true;
-        break;
+      has_removed_member = true;
+      break;
     }
   }
 
