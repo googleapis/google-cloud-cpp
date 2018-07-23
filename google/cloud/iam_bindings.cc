@@ -61,7 +61,7 @@ void IamBindings::RemoveMembers(google::cloud::IamBinding const& iam_binding) {
   }
 
   auto& binding_members = it->second;
-  for (auto member: members) {
+  for (auto member : members) {
     auto member_loc = binding_members.find(member);
     if (member_loc != binding_members.end()) {
       binding_members.erase(member_loc);
@@ -77,7 +77,7 @@ void IamBindings::RemoveMembers(std::string const& role,
   }
 
   auto& binding_members = it->second;
-  for (auto member: members) {
+  for (auto member : members) {
     auto member_loc = binding_members.find(member);
     if (member_loc != binding_members.end()) {
       binding_members.erase(member_loc);

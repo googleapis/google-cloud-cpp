@@ -49,37 +49,29 @@ class IamBindings {
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  iterator begin() {
-    return bindings_.begin();
-  };
+  iterator begin() { return bindings_.begin(); };
 
   /**
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  iterator end() {
-    return bindings_.end();
-  };
+  iterator end() { return bindings_.end(); };
 
   /**
    * Returns whether the Bindings container is empty.
    *
    * @return bool whether the container is empty or not.
    */
-  bool empty() {
-    return bindings_.empty();
-  }
+  bool empty() { return bindings_.empty(); }
 
   /**
    * Return number of Bindings in container.
    *
    * @return int the size of the container.
    */
-  int size() {
-    return (int)bindings_.size();
-  }
+  int size() { return (int)bindings_.size(); }
 
-  std::map<std::string, std::set<std::string> > const& bindings() const {
+  std::map<std::string, std::set<std::string>> const& bindings() const {
     return bindings_;
   };
 
@@ -142,7 +134,7 @@ class IamBindings {
                      std::set<std::string> const& members);
 
  private:
-  std::map<std::string, std::set<std::string> > bindings_;
+  std::map<std::string, std::set<std::string>> bindings_;
 };
 
 }  // namespace cloud
