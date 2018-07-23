@@ -393,14 +393,6 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   bool operator==(BucketMetadata const& rhs) const;
   bool operator!=(BucketMetadata const& rhs) const { return not(*this == rhs); }
 
-  constexpr static char STORAGE_CLASS_STANDARD[] = "STANDARD";
-  constexpr static char STORAGE_CLASS_MULTI_REGIONAL[] = "MULTI_REGIONAL";
-  constexpr static char STORAGE_CLASS_REGIONAL[] = "REGIONAL";
-  constexpr static char STORAGE_CLASS_NEARLINE[] = "NEARLINE";
-  constexpr static char STORAGE_CLASS_COLDLINE[] = "COLDLINE";
-  constexpr static char STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY[] =
-      "DURABLE_REDUCED_AVAILABILITY";
-
  private:
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.

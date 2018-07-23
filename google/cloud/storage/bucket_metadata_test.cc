@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -174,7 +175,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
-  EXPECT_EQ(BucketMetadata::STORAGE_CLASS_STANDARD, actual.storage_class());
+  EXPECT_EQ(storage_class::Standard(), actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   auto magic_timestamp = 1526758274L;
   using std::chrono::duration_cast;

@@ -33,6 +33,7 @@ storage_client_unit_tests = [
     "object_metadata_test.cc",
     "object_test.cc",
     "retry_policy_test.cc",
+    "storage_class_test.cc",
     "storage_client_options_test.cc",
     "link_test.cc",
 ]
