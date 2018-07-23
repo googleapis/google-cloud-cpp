@@ -112,15 +112,16 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
-  //! [get object acl] [START storage_get_file_acl]
-  [](google::cloud::storage::Client client, std::string bucket_name,
-     std::string object_name, std::string entity) {
-    google::cloud::storage::ObjectAccessControl acl =
+  //! [get object acl] [START storage_print_file_acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity) {
+    gcs::ObjectAccessControl acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
     std::cout << "ACL entry for " << entity << " in object " << object_name
               << " in bucket " << bucket_name << " is " << acl << std::endl;
   }
-  //! [get object acl] [END storage_get_file_acl]
+  //! [get object acl] [END storage_print_file_acl]
   (std::move(client), bucket_name, object_name, entity);
 }
 
@@ -131,7 +132,7 @@ int main(int argc, char* argv[]) try {
   gcs::Client client;
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
+  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},
