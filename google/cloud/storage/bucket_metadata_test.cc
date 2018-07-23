@@ -86,6 +86,9 @@ BucketMetadata CreateBucketMetadataForTest() {
         },
         "etag": "AYX="
       }],
+      "encryption": {
+        "defaultKmsKeyName": "/a/key/name/should/go/here"
+      },
       "etag": "XYZ=",
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -137,6 +140,8 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_EQ(1U, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
+  EXPECT_EQ("/a/key/name/should/go/here",
+            actual.encryption().default_kms_key_name);
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -277,6 +282,15 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   copy.set_default_acl(std::move(default_acl));
   EXPECT_EQ(2U, copy.default_acl().size());
   EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, SetEncryption) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_encryption(BucketEncryption{"/another/fake/key/name"});
+  EXPECT_EQ("/another/fake/key/name", copy.encryption().default_kms_key_name);
   EXPECT_NE(expected, copy);
 }
 

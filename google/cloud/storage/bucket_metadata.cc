@@ -93,6 +93,10 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
           ObjectAccessControl::ParseFromJson(kv.value()));
     }
   }
+  if (json.count("encryption") != 0) {
+    result.encryption_.default_kms_key_name =
+        json["encryption"].value("defaultKmsKeyName", "");
+  }
   result.location_ = json.value("location", "");
   result.project_number_ = internal::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
@@ -128,6 +132,8 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
          acl_ == rhs.acl_ and
          billing_.requester_pays == rhs.billing_.requester_pays and
          cors_ == rhs.cors_ and default_acl_ == rhs.default_acl_ and
+         encryption_.default_kms_key_name ==
+             rhs.encryption_.default_kms_key_name and
          project_number_ == rhs.project_number_ and
          location_ == rhs.location_ and labels_ == rhs.labels_ and
          versioning_ == rhs.versioning_ and website_ == rhs.website();
@@ -166,8 +172,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
   os << "]";
 
-  os << ", etag=" << rhs.etag() << ", id=" << rhs.id()
-     << ", kind=" << rhs.kind();
+  os << "], encryption.default_kms_key_name="
+     << rhs.encryption().default_kms_key_name << ", etag=" << rhs.etag()
+     << ", id=" << rhs.id() << ", kind=" << rhs.kind();
 
   for (auto const& kv : rhs.labels_) {
     os << ", labels." << kv.first << "=" << kv.second;
