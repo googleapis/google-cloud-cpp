@@ -104,6 +104,18 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     e.default_kms_key_name = json["encryption"].value("defaultKmsKeyName", "");
     result.encryption_ = std::move(e);
   }
+
+  if (json.count("lifecycle") != 0) {
+    auto lifecycle = json["lifecycle"];
+    BucketLifecycle value;
+    if (lifecycle.count("rule") != 0) {
+      for (auto const& kv : lifecycle["rule"].items()) {
+        value.rule.emplace_back(LifecycleRule::ParseFromJson(kv.value()));
+      }
+    }
+    result.lifecycle_ = std::move(value);
+  }
+
   result.location_ = json.value("location", "");
 
   if (json.count("logging") != 0) {
@@ -150,9 +162,9 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
          cors_ == rhs.cors_ and default_acl_ == rhs.default_acl_ and
          encryption_ == rhs.encryption_ and
          project_number_ == rhs.project_number_ and
-         location_ == rhs.location_ and logging_ == rhs.logging_ and
-         labels_ == rhs.labels_ and versioning_ == rhs.versioning_ and
-         website_ == rhs.website_;
+         lifecycle_ == rhs.lifecycle_ and location_ == rhs.location_ and
+         logging_ == rhs.logging_ and labels_ == rhs.labels_ and
+         versioning_ == rhs.versioning_ and website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -200,6 +212,16 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   for (auto const& kv : rhs.labels_) {
     os << ", labels." << kv.first << "=" << kv.second;
+  }
+
+  if (rhs.has_lifecycle()) {
+    os << ", lifecycle.rule=[";
+    sep = "";
+    for (auto const& r : rhs.lifecycle().rule) {
+      os << sep << r;
+      sep = ", ";
+    }
+    os << "]";
   }
 
   os << ", location=" << rhs.location();

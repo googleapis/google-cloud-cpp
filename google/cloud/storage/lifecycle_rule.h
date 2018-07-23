@@ -45,6 +45,26 @@ inline bool operator<(LifecycleRuleAction const& lhs,
          std::tie(lhs.type, lhs.storage_class);
 }
 
+inline bool operator!=(LifecycleRuleAction const& lhs,
+                       LifecycleRuleAction const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(LifecycleRuleAction const& lhs,
+                      LifecycleRuleAction const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(LifecycleRuleAction const& lhs,
+                       LifecycleRuleAction const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(LifecycleRuleAction const& lhs,
+                       LifecycleRuleAction const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
 std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs);
 
 /// Implement a wrapper for Lifecycle Conditions.
@@ -66,9 +86,32 @@ inline bool operator==(LifecycleRuleCondition const& lhs,
          lhs.num_newer_versions == rhs.num_newer_versions;
 }
 
+inline bool operator<(LifecycleRuleCondition const& lhs,
+                      LifecycleRuleCondition const& rhs) {
+  return std::tie(lhs.age, lhs.created_before, lhs.is_live,
+                  lhs.matches_storage_class, lhs.num_newer_versions) <
+         std::tie(rhs.age, rhs.created_before, rhs.is_live,
+                  rhs.matches_storage_class, rhs.num_newer_versions);
+}
+
 inline bool operator!=(LifecycleRuleCondition const& lhs,
                        LifecycleRuleCondition const& rhs) {
-  return not(lhs == rhs);
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(LifecycleRuleCondition const& lhs,
+                      LifecycleRuleCondition const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(LifecycleRuleCondition const& lhs,
+                       LifecycleRuleCondition const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(LifecycleRuleCondition const& lhs,
+                       LifecycleRuleCondition const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
 }
 
 std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs);
@@ -81,6 +124,41 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs);
  */
 class LifecycleRule {
  public:
+  explicit LifecycleRule(LifecycleRuleCondition condition,
+                         LifecycleRuleAction action)
+      : action_(std::move(action)), condition_(std::move(condition)) {}
+
+  static LifecycleRule ParseFromJson(internal::nl::json const& json);
+  static LifecycleRule ParseFromString(std::string const& text);
+
+  LifecycleRuleAction const& action() const { return action_; }
+  LifecycleRuleCondition const& condition() const { return condition_; }
+
+  bool operator==(LifecycleRule const& rhs) const {
+    return std::tie(condition_, action_) ==
+           std::tie(rhs.condition_, rhs.action_);
+  }
+  bool operator<(LifecycleRule const& rhs) const {
+    return std::tie(action_, condition_) <
+           std::tie(rhs.action_, rhs.condition_);
+  }
+
+  bool operator!=(LifecycleRule const& rhs) const {
+    return std::rel_ops::operator!=(*this, rhs);
+  }
+
+  bool operator>(LifecycleRule const& rhs) const {
+    return std::rel_ops::operator>(*this, rhs);
+  }
+
+  bool operator<=(LifecycleRule const& rhs) const {
+    return std::rel_ops::operator<=(*this, rhs);
+  }
+
+  bool operator>=(LifecycleRule const& rhs) const {
+    return std::rel_ops::operator>=(*this, rhs);
+  }
+
   //@{
   /**
    * @name Create different types of LifecycleRule actions.
@@ -215,6 +293,8 @@ class LifecycleRule {
   }
 
  private:
+  LifecycleRule() = default;
+
   static void MergeConditions(LifecycleRuleCondition& result,
                               LifecycleRuleCondition const& rhs);
 
@@ -225,7 +305,12 @@ class LifecycleRule {
     MergeConditions(result, head);
     MergeConditions(result, std::forward<Condition>(tail)...);
   }
+
+  LifecycleRuleAction action_;
+  LifecycleRuleCondition condition_;
 };
+
+std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs);
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

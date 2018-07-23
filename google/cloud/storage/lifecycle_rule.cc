@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/lifecycle_rule.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include <algorithm>
 #include <iostream>
 
@@ -91,6 +92,45 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
   return os << "}";
 }
 
+LifecycleRule LifecycleRule::ParseFromJson(internal::nl::json const& json) {
+  LifecycleRule result;
+  if (json.count("action") != 0) {
+    result.action_.type = json["action"].value("type", "");
+    result.action_.storage_class = json["action"].value("storageClass", "");
+  }
+  if (json.count("condition") != 0) {
+    auto condition = json["condition"];
+    if (condition.count("age") != 0) {
+      result.condition_.age.emplace(internal::ParseIntField(condition, "age"));
+    }
+    if (condition.count("createdBefore") != 0) {
+      result.condition_.created_before.emplace(
+          internal::ParseRfc3339(condition.value("createdBefore", "")));
+    }
+    if (condition.count("isLive") != 0) {
+      result.condition_.is_live.emplace(
+          internal::ParseBoolField(condition, "isLive"));
+    }
+    if (condition.count("matchesStorageClass") != 0) {
+      std::vector<std::string> matches;
+      for (auto const& kv : condition["matchesStorageClass"].items()) {
+        matches.emplace_back(kv.value().get<std::string>());
+      }
+      result.condition_.matches_storage_class.emplace(std::move(matches));
+    }
+    if (condition.count("numNewerVersions") != 0) {
+      result.condition_.num_newer_versions.emplace(
+          internal::ParseIntField(condition, "numNewerVersions"));
+    }
+  }
+  return result;
+}
+
+LifecycleRule LifecycleRule::ParseFromString(std::string const& text) {
+  auto json = internal::nl::json::parse(text);
+  return ParseFromJson(json);
+}
+
 void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
                                     LifecycleRuleCondition const& rhs) {
   if (rhs.age.has_value()) {
@@ -147,6 +187,11 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
       result.num_newer_versions.emplace(std::forward<std::int32_t>(tmp));
     }
   }
+}
+
+std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs) {
+  return os << "LifecycleRule={condition=" << rhs.condition()
+            << ", action=" << rhs.action() << "}";
 }
 
 }  // namespace STORAGE_CLIENT_NS

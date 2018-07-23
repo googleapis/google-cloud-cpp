@@ -19,6 +19,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
 #include <tuple>
@@ -122,6 +123,43 @@ inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
 //@}
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
+
+/**
+ * The Object Lifecycle configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
+ *     information on object lifecycle rules.
+ */
+struct BucketLifecycle {
+  std::vector<LifecycleRule> rule;
+};
+
+//@{
+/// @name Comparison operators for BucketLifecycle.
+inline bool operator==(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return lhs.rule == rhs.rule;
+}
+
+inline bool operator<(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return lhs.rule < rhs.rule;
+}
+
+inline bool operator!=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+//@}
 
 /*
  * The Logging configuration for a Bucket.
@@ -407,6 +445,30 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+
+  //@{
+  /**
+   * @name Accessors and modifiers for object lifecycle rules.
+   *
+   * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
+   *     information on object lifecycle rules.
+   */
+  bool has_lifecycle() const { return lifecycle_.has_value(); }
+  BucketLifecycle const& lifecycle() const { return *lifecycle_; }
+  google::cloud::internal::optional<BucketLifecycle> const&
+  lifecycle_as_optional() const {
+    return lifecycle_;
+  }
+  BucketMetadata& set_lifecycle(BucketLifecycle v) {
+    lifecycle_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_lifecycle() {
+    lifecycle_.reset();
+    return *this;
+  }
+  //@}
+
   std::string const& location() const { return location_; }
 
   //@{
@@ -485,6 +547,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::vector<ObjectAccessControl> default_acl_;
   google::cloud::internal::optional<BucketEncryption> encryption_;
   std::map<std::string, std::string> labels_;
+  google::cloud::internal::optional<BucketLifecycle> lifecycle_;
   std::string location_;
   google::cloud::internal::optional<BucketLogging> logging_;
   std::int64_t project_number_;
