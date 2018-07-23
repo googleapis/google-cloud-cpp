@@ -16,23 +16,31 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDING_H_
 
 #include "google/cloud/version.h"
-#include <vector>
+#include <set>
 
 namespace google {
 namespace cloud {
 
+/**
+ * Represents a Binding which associates a `member` with a particular `role`
+ * which can be used for Identity and Access management for Cloud Platform
+ * Resources.
+ *
+ * For more information about a Binding please refer to:
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding
+ */
 class IamBinding {
  public:
 
-  IamBinding(std::string role, std::vector<std::string> members)
+  IamBinding(std::string role, std::set<std::string> members)
       : role_(std::move(role)), members_(std::move(members)) {}
 
   std::string const& role() const { return role_; };
-  std::vector<std::string> const& members() const { return members_; };
+  std::set<std::string> const& members() const { return members_; };
 
  private:
   std::string role_;
-  std::vector<std::string> members_;
+  std::set<std::string> members_;
 };
 
 }  // namespace cloud

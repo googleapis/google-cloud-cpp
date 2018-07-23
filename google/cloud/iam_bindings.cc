@@ -21,72 +21,64 @@ namespace cloud {
 void IamBindings::add_member(std::string const& role,
                              std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].push_back(member);
+    bindings_[role].insert(std::move(member));
   } else {
-    std::vector<std::string> members;
-    members.push_back(member);
-    bindings_[role] = members;
+    std::set<std::string> members;
+    members.insert(std::move(member));
+    bindings_.insert({std::move(role), std::move(members)});
   }
 }
 
 void IamBindings::add_members(google::cloud::IamBinding iam_binding) {
-  std::string role = iam_binding.role();
-  std::vector<std::string> members = iam_binding.members();
+  std::string role(std::move(iam_binding.role()));
+  std::set<std::string> members = iam_binding.members();
 
   if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(std::end(bindings_[role]), std::begin(members),
-                           std::end(members));
+    bindings_[role].insert(members.begin(), members.end());
   } else {
-    bindings_[role] = members;
+    bindings_.insert({std::move(role), std::move(members)});
   }
 }
 
 void IamBindings::add_members(std::string const& role,
-                              std::vector<std::string> const& members) {
+                              std::set<std::string> const& members) {
   if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(std::end(bindings_[role]), std::begin(members),
-                           std::end(members));
+    bindings_[role].insert(members.begin(), members.end());
   } else {
-    bindings_[role] = members;
+    bindings_.insert({std::move(role), std::move(members)});
   }
 }
 
 void IamBindings::remove_member(std::string const& role,
                                 std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
-    auto it = std::find(bindings_[role].begin(), bindings_[role].end(), member);
+    auto it = bindings_[role].find(member);
     if (it != bindings_[role].end()) bindings_[role].erase(it);
   }
 }
 
 void IamBindings::remove_members(google::cloud::IamBinding iam_binding) {
-  std::string role = iam_binding.role();
-  std::vector<std::string> members = iam_binding.members();
+  std::string role(std::move(iam_binding.role()));
+  std::set<std::string> members = iam_binding.members();
 
   if (bindings_.find(role) != bindings_.end()) {
-    std::vector<std::string> binding_members = bindings_[role];
-    std::vector<std::string> new_members(binding_members.size());
-    std::sort(binding_members.begin(), binding_members.end());
-    std::sort(members.begin(), members.end());
-    auto it = std::set_difference(binding_members.begin(),
-                                  binding_members.end(), members.begin(),
-                                  members.end(), new_members.begin());
-    new_members.resize(it - new_members.begin());
+    std::set<std::string> binding_members = bindings_[role];
+    std::set<std::string> new_members;
+    std::set_difference(binding_members.begin(), binding_members.end(),
+                        members.begin(), members.end(),
+                        std::inserter(new_members, new_members.end()));
     bindings_[role] = new_members;
   }
 }
 
 void IamBindings::remove_members(std::string const& role,
-                                 std::vector<std::string> members) {
+                                 std::set<std::string> const& members) {
   if (bindings_.find(role) != bindings_.end()) {
-    std::vector<std::string> binding_members = bindings_[role];
-    std::vector<std::string> new_members(binding_members.size());
-    std::sort(binding_members.begin(), binding_members.end());
-    std::sort(members.begin(), members.end());
-    auto it = std::set_difference(binding_members.begin(),
-                                  binding_members.end(), members.begin(),
-                                  members.end(), new_members.begin());
-    new_members.resize(it - new_members.begin());
+    std::set<std::string> binding_members = bindings_[role];
+    std::set<std::string> new_members;
+    std::set_difference(binding_members.begin(), binding_members.end(),
+                        members.begin(), members.end(),
+                        std::inserter(new_members, new_members.end()));
     bindings_[role] = new_members;
   }
 }
