@@ -31,7 +31,6 @@ namespace cloud {
  */
 class IamBinding {
  public:
-
   IamBinding(std::string role, std::set<std::string> members)
       : role_(std::move(role)), members_(std::move(members)) {}
 
