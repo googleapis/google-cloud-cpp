@@ -21,6 +21,7 @@
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
 #include <tuple>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,27 +70,11 @@ inline bool operator==(CorsEntry const& lhs, CorsEntry const& rhs) {
                                                    rhs.response_header);
 }
 
-inline bool operator!=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return not(lhs == rhs);
-}
-
 inline bool operator<(CorsEntry const& lhs, CorsEntry const& rhs) {
   return std::tie(lhs.max_age_seconds, lhs.method, lhs.origin,
                   lhs.response_header) < std::tie(rhs.max_age_seconds,
                                                   rhs.method, rhs.origin,
                                                   rhs.response_header);
-}
-
-inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return not(lhs < rhs);
-}
-
-inline bool operator>(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return rhs < lhs;
-}
-
-inline bool operator<=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return rhs >= lhs;
 }
 //@}
 
