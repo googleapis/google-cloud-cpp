@@ -19,19 +19,18 @@
 namespace google {
 namespace cloud {
 
-void IamBindings::add_member(std::string const& role,
-                             std::string const& member) {
+void IamBindings::AddMember(std::string const& role, std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(std::move(member));
+    bindings_[role].insert(member);
   } else {
     std::set<std::string> members;
-    members.insert(std::move(member));
-    bindings_.insert({std::move(role), std::move(members)});
+    members.insert(member);
+    bindings_.insert({role, members});
   }
 }
 
-void IamBindings::add_members(google::cloud::IamBinding iam_binding) {
-  std::string role(std::move(iam_binding.role()));
+void IamBindings::AddMembers(google::cloud::IamBinding const& iam_binding) {
+  std::string role(iam_binding.role());
   std::set<std::string> members = iam_binding.members();
 
   if (bindings_.find(role) != bindings_.end()) {
@@ -41,26 +40,26 @@ void IamBindings::add_members(google::cloud::IamBinding iam_binding) {
   }
 }
 
-void IamBindings::add_members(std::string const& role,
-                              std::set<std::string> const& members) {
+void IamBindings::AddMembers(std::string const& role,
+                             std::set<std::string> const& members) {
   if (bindings_.find(role) != bindings_.end()) {
     bindings_[role].insert(members.begin(), members.end());
   } else {
-    bindings_.insert({std::move(role), std::move(members)});
+    bindings_.insert({role, members});
   }
 }
 
-void IamBindings::remove_member(std::string const& role,
-                                std::string const& member) {
+void IamBindings::RemoveMember(std::string const& role,
+                               std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
     auto it = bindings_[role].find(member);
-    if (it != bindings_[role].end()) bindings_[role].erase(it);
+    if (it != bindings_[role].end()) { bindings_[role].erase(it); }
   }
 }
 
-void IamBindings::remove_members(google::cloud::IamBinding iam_binding) {
-  std::string role(std::move(iam_binding.role()));
-  std::set<std::string> members = iam_binding.members();
+void IamBindings::RemoveMembers(google::cloud::IamBinding const& iam_binding) {
+  std::string const& role(iam_binding.role());
+  std::set<std::string> const& members = iam_binding.members();
 
   if (bindings_.find(role) != bindings_.end()) {
     std::set<std::string> binding_members = bindings_[role];
@@ -72,8 +71,8 @@ void IamBindings::remove_members(google::cloud::IamBinding iam_binding) {
   }
 }
 
-void IamBindings::remove_members(std::string const& role,
-                                 std::set<std::string> const& members) {
+void IamBindings::RemoveMembers(std::string const& role,
+                                std::set<std::string> const& members) {
   if (bindings_.find(role) != bindings_.end()) {
     std::set<std::string> binding_members = bindings_[role];
     std::set<std::string> new_members;

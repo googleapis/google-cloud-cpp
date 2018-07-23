@@ -72,7 +72,7 @@ class IamBindings {
    * @param member specifies the identity requesting access for a cloud
    * platform resource.
    */
-  void add_member(std::string const& role, std::string const& member);
+  void AddMember(std::string const& role, std::string const& member);
 
   /**
    * Adds a new key-value pair of role and members to the container if there is
@@ -81,7 +81,7 @@ class IamBindings {
    *
    * @param binding binding representing a set of members and role for them.
    */
-  void add_members(google::cloud::IamBinding binding);
+  void AddMembers(google::cloud::IamBinding const& iam_binding);
 
   /**
    * Adds a new key-value pair of role and members to the container if there no
@@ -91,8 +91,8 @@ class IamBindings {
    * @param role role of the member set to be added.
    * @param members a set of member which are needed to be added.
    */
-  void add_members(std::string const& role,
-                   std::set<std::string> const& members);
+  void AddMembers(std::string const& role,
+                  std::set<std::string> const& members);
 
   /**
    * Removes the given member from the given role's member set if there exists
@@ -102,15 +102,15 @@ class IamBindings {
    * @param member specifies the identity requesting access for a cloud
    * platform resource.
    */
-  void remove_member(std::string const& role, std::string const& member);
+  void RemoveMember(std::string const& role, std::string const& member);
 
   /**
    * Removes the given binding's member from the given binding's role's member
    * set if there exists one in container.
    *
-   * @param binding binding representing a set of members and role for them.
+   * @param iam_binding binding representing a set of members and role for them.
    */
-  void remove_members(google::cloud::IamBinding binding);
+  void RemoveMembers(google::cloud::IamBinding const& iam_binding);
 
   /**
    * Removes the given members from given role's member set if there exists one
@@ -119,8 +119,8 @@ class IamBindings {
    * @param role role of the member set to be removed.
    * @param members a set of members which are needed to be removed.
    */
-  void remove_members(std::string const& role,
-                      std::set<std::string> const& members);
+  void RemoveMembers(std::string const& role,
+                     std::set<std::string> const& members);
 
  private:
   std::map<std::string, std::set<std::string> > bindings_;
