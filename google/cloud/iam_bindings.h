@@ -35,7 +35,7 @@ namespace cloud {
 class IamBindings {
  public:
   IamBindings(std::vector<IamBinding> bindings) {
-    for (auto it : bindings) {
+    for (auto& it : bindings) {
       bindings_.insert({std::move(it.role()), std::move(it.members())});
     }
   }
@@ -44,11 +44,12 @@ class IamBindings {
     bindings_.insert({std::move(role), std::move(members)});
   }
 
+  using iterator = std::map<std::string, std::set<std::string>>::iterator;
   /**
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  std::map<std::string, std::set<std::string> >::iterator begin() {
+  iterator begin() {
     return bindings_.begin();
   };
 
@@ -56,9 +57,27 @@ class IamBindings {
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  std::map<std::string, std::set<std::string> >::iterator end() {
+  iterator end() {
     return bindings_.end();
   };
+
+  /**
+   * Returns whether the Bindings container is empty.
+   *
+   * @return bool whether the container is empty or not.
+   */
+  bool empty() {
+    return bindings_.empty();
+  }
+
+  /**
+   * Return number of Bindings in container.
+   *
+   * @return int the size of the container.
+   */
+  int size() {
+    return (int)bindings_.size();
+  }
 
   std::map<std::string, std::set<std::string> > const& bindings() const {
     return bindings_;

@@ -21,42 +21,33 @@ namespace cloud {
 
 void IamBindings::AddMember(std::string const& role,
                             std::string const& member) {
-  if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(member);
-  } else {
-    std::set<std::string> members;
-    members.insert(member);
-    bindings_.insert({role, members});
-  }
+  bindings_[role].insert(member);
 }
 
 void IamBindings::AddMembers(google::cloud::IamBinding const& iam_binding) {
   std::string role(iam_binding.role());
   std::set<std::string> members = iam_binding.members();
 
-  if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(members.begin(), members.end());
-  } else {
-    bindings_.insert({std::move(role), std::move(members)});
-  }
+  bindings_[role].insert(members.begin(), members.end());
 }
 
 void IamBindings::AddMembers(std::string const& role,
                              std::set<std::string> const& members) {
-  if (bindings_.find(role) != bindings_.end()) {
-    bindings_[role].insert(members.begin(), members.end());
-  } else {
-    bindings_.insert({role, members});
-  }
+  bindings_[role].insert(members.begin(), members.end());
 }
 
 void IamBindings::RemoveMember(std::string const& role,
                                std::string const& member) {
-  if (bindings_.find(role) != bindings_.end()) {
-    auto it = bindings_[role].find(member);
-    if (it != bindings_[role].end()) {
-      bindings_[role].erase(it);
-    }
+  auto it = bindings_.find(role);
+  if (it == bindings_.end()) {
+    return;
+  }
+
+  auto& members = it->second;
+  auto member_loc = members.find(member);
+
+  if (member_loc != members.end()) {
+    members.erase(member_loc);
   }
 }
 
@@ -64,25 +55,33 @@ void IamBindings::RemoveMembers(google::cloud::IamBinding const& iam_binding) {
   std::string const& role(iam_binding.role());
   std::set<std::string> const& members = iam_binding.members();
 
-  if (bindings_.find(role) != bindings_.end()) {
-    std::set<std::string> binding_members = bindings_[role];
-    std::set<std::string> new_members;
-    std::set_difference(binding_members.begin(), binding_members.end(),
-                        members.begin(), members.end(),
-                        std::inserter(new_members, new_members.end()));
-    bindings_[role] = new_members;
+  auto it = bindings_.find(role);
+  if (it == bindings_.end()) {
+    return;
+  }
+
+  auto& binding_members = it->second;
+  for (auto member: members) {
+    auto member_loc = binding_members.find(member);
+    if (member_loc != binding_members.end()) {
+      binding_members.erase(member_loc);
+    }
   }
 }
 
 void IamBindings::RemoveMembers(std::string const& role,
                                 std::set<std::string> const& members) {
-  if (bindings_.find(role) != bindings_.end()) {
-    std::set<std::string> binding_members = bindings_[role];
-    std::set<std::string> new_members;
-    std::set_difference(binding_members.begin(), binding_members.end(),
-                        members.begin(), members.end(),
-                        std::inserter(new_members, new_members.end()));
-    bindings_[role] = new_members;
+  auto it = bindings_.find(role);
+  if (it == bindings_.end()) {
+    return;
+  }
+
+  auto& binding_members = it->second;
+  for (auto member: members) {
+    auto member_loc = binding_members.find(member);
+    if (member_loc != binding_members.end()) {
+      binding_members.erase(member_loc);
+    }
   }
 }
 
