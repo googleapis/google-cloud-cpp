@@ -14,6 +14,7 @@
 
 #include "google/cloud/iam_bindings.h"
 #include <algorithm>
+#include <iterator>
 
 namespace google {
 namespace cloud {
