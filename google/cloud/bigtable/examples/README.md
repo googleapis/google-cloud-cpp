@@ -11,7 +11,7 @@ referenced from the Doxygen landing page as "Hello World".
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
-  - [Administer Tables] (#Table/Column family management)
+  - [Administer Tables](#administer-tables)
 
 ## Before you begin
 
@@ -113,7 +113,7 @@ $ ./bigtable_samples_instance_admin_ext run ${PROJECT_ID} ${INSTANCE_ID} ${CLUST
 [hello_world_code]: bigtable_hello_world.cc
 [instance_admin_code]: bigtable_samples_instance_admin_ext.cc
 
-### Table/Column family management
+### Administer Tables
 
 This sample showcases the basic table / column family operations:
 
