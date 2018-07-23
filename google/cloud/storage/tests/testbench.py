@@ -103,9 +103,12 @@ class GcsObjectVersion(object):
             'storageClass': 'STANDARD',
             'etag': 'XYZ='
         }
-        self.insert_acl('project-owners-123456789', 'OWNER')
-        self.insert_acl('project-editors-123456789', 'OWNER')
-        self.insert_acl('project-viewers-123456789', 'READER')
+        self.insert_acl(
+            self.canonical_entity_name('project-owners-123456789'), 'OWNER')
+        self.insert_acl(
+            self.canonical_entity_name('project-editors-123456789'), 'OWNER')
+        self.insert_acl(
+            self.canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def canonical_entity_name(self, entity):
         """
@@ -118,12 +121,12 @@ class GcsObjectVersion(object):
         :return:str the name in canonical form.
         """
         if entity.startswith('project-owners-'):
-            return 'project-owners-123456789'
+            entity = 'project-owners-123456789'
         if entity.startswith('project-editors-'):
-            return 'project-editors-123456789'
+            entity = 'project-editors-123456789'
         if entity.startswith('project-viewers-'):
-            return 'project-viewers-123456789'
-        return entity
+            entity = 'project-viewers-123456789'
+        return entity.lower()
 
     def insert_acl(self, entity, role):
         """
