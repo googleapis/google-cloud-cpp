@@ -143,7 +143,7 @@ class GcsObjectVersion(object):
             email = entity
         # Replace or insert the entry
         indexed = {
-            entry.get('entity'): entry
+            entry.get('entity').lower(): entry
             for entry in self.metadata.get('acl', [])
         }
         indexed[entity] = {
@@ -170,7 +170,7 @@ class GcsObjectVersion(object):
         """
         entity = self.canonical_entity_name(entity)
         indexed = {
-            acl.get('entity'): acl
+            acl.get('entity').lower(): acl
             for acl in self.metadata.get('acl', [])
         }
         indexed.pop(entity)
@@ -185,7 +185,7 @@ class GcsObjectVersion(object):
         """
         entity = self.canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
-            if acl.get('entity', '') == entity:
+            if acl.get('entity', '').lower() == entity:
                 return acl
         raise ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
