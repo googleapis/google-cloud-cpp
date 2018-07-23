@@ -150,9 +150,10 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
+    *request.add_rules() = rule.as_proto_move();
     // Add if any additional rule is present
-    std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
-        rule, std::forward<Args>(rules)...};
+    std::initializer_list<bigtable::ReadModifyWriteRule>&& rule_list{
+        std::forward<Args>(rules)...};
     for (auto args_rule : rule_list) {
       *request.add_rules() = args_rule.as_proto_move();
     }
