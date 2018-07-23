@@ -134,7 +134,8 @@ class Table {
 
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
-                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+                         bigtable::ReadModifyWriteRule&& rule,
+                         Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
     bigtable::internal::SetCommonTableOperationRequest<
@@ -149,12 +150,9 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
-    // TODO(#336) - optimize this code by not copying the parameter pack.
-    // Add first default rule
-    *request.add_rules() = rule.as_proto_move();
     // Add if any additional rule is present
     std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
-        std::forward<Args>(rules)...};
+        rule, std::forward<Args>(rules)...};
     for (auto args_rule : rule_list) {
       *request.add_rules() = args_rule.as_proto_move();
     }
