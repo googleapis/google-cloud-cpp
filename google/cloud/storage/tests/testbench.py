@@ -103,9 +103,12 @@ class GcsObjectVersion(object):
             'storageClass': 'STANDARD',
             'etag': 'XYZ='
         }
-        self.insert_acl('project-owners-123456789', 'OWNER')
-        self.insert_acl('project-editors-123456789', 'OWNER')
-        self.insert_acl('project-viewers-123456789', 'READER')
+        self.insert_acl(
+            self.canonical_entity_name('project-owners-123456789'), 'OWNER')
+        self.insert_acl(
+            self.canonical_entity_name('project-editors-123456789'), 'OWNER')
+        self.insert_acl(
+            self.canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def canonical_entity_name(self, entity):
         """
@@ -118,12 +121,12 @@ class GcsObjectVersion(object):
         :return:str the name in canonical form.
         """
         if entity.startswith('project-owners-'):
-            return 'project-owners-123456789'
+            entity = 'project-owners-123456789'
         if entity.startswith('project-editors-'):
-            return 'project-editors-123456789'
+            entity = 'project-editors-123456789'
         if entity.startswith('project-viewers-'):
-            return 'project-viewers-123456789'
-        return entity
+            entity = 'project-viewers-123456789'
+        return entity.lower()
 
     def insert_acl(self, entity, role):
         """
@@ -140,7 +143,7 @@ class GcsObjectVersion(object):
             email = entity
         # Replace or insert the entry
         indexed = {
-            entry.get('entity'): entry
+            entry.get('entity').lower(): entry
             for entry in self.metadata.get('acl', [])
         }
         indexed[entity] = {
@@ -167,11 +170,25 @@ class GcsObjectVersion(object):
         """
         entity = self.canonical_entity_name(entity)
         indexed = {
-            acl.get('entity'): acl
+            acl.get('entity').lower(): acl
             for acl in self.metadata.get('acl', [])
         }
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
+
+    def get_acl(self, entity):
+        """
+        Get a single AccessControl entry from the Object revision.
+
+        :param entity:str the name of the entity.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        entity = self.canonical_entity_name(entity)
+        for acl in self.metadata.get('acl', []):
+            if acl.get('entity', '').lower() == entity:
+                return acl
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
 
 class GcsObject(object):
@@ -475,6 +492,21 @@ def objects_acl_delete(bucket_name, object_name, entity):
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
     return json.dumps({})
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
+def objects_acl_get(bucket_name, object_name, entity):
+    """Implement the 'ObjectAccessControls: get' API.
+
+      Get the access control configuration for a particular entity.
+      """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    acl = revision.get_acl(entity)
+    return json.dumps(acl)
 
 
 # Define the WSGI application to handle bucket requests.

@@ -190,6 +190,50 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAclPermanentFailure) {
       "DeleteObjectAcl");
 }
 
+TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
+  auto expected = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "object": "test-object",
+          "entity": "user-test-user-1",
+          "role": "READER"
+      })""");
+
+  EXPECT_CALL(*mock, GetObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Invoke([&expected](internal::ObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-object", r.object_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  ObjectAccessControl actual =
+      client.GetObjectAcl("test-bucket", "test-object", "user-test-user-1");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectAccessControlsTest, GetObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, GetObjectAcl(_)),
+      [](Client& client) {
+        client.GetObjectAcl("test-bucket-name", "test-object-name",
+                            "user-test-user-1");
+      },
+      "GetObjectAcl");
+}
+
+TEST_F(ObjectAccessControlsTest, GetObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, GetObjectAcl(_)),
+      [](Client& client) {
+        client.GetObjectAcl("test-bucket-name", "test-object-name",
+                            "user-test-user");
+      },
+      "GetObjectAcl");
+}
+
 }  // namespace
 }  // namespace storage
 }  // namespace cloud

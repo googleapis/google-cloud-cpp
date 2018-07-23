@@ -160,11 +160,15 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   ObjectAccessControl result =
       client.CreateObjectAcl(bucket_name, object_name, entity_name, "OWNER");
+  EXPECT_EQ("OWNER", result.role());
   auto current_acl = client.ListObjectAcl(bucket_name, object_name);
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+
+  auto get_result = client.GetObjectAcl(bucket_name, object_name, entity_name);
+  EXPECT_EQ(get_result, result);
 
   // Remove an entity and verify it is no longer in the ACL.
   client.DeleteObjectAcl(bucket_name, object_name, entity_name);
