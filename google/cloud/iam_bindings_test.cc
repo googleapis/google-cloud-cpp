@@ -171,11 +171,11 @@ TEST(IamBindingsTest, RemoveMembersTestIamBindingParam) {
   bool has_removed_member = false;
 
   for (auto it : temp_binding[role]) {
-  if (it == *member_list.begin()) {
-  has_removed_member = true;
-  break;
+    if (it == *member_list.begin()) {
+      has_removed_member = true;
+      break;
+    }
   }
-}
 
-EXPECT_FALSE(has_removed_member);
+  EXPECT_FALSE(has_removed_member);
 }

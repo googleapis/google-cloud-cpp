@@ -19,7 +19,8 @@
 namespace google {
 namespace cloud {
 
-void IamBindings::AddMember(std::string const& role, std::string const& member) {
+void IamBindings::AddMember(std::string const& role,
+                            std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
     bindings_[role].insert(member);
   } else {
@@ -53,7 +54,9 @@ void IamBindings::RemoveMember(std::string const& role,
                                std::string const& member) {
   if (bindings_.find(role) != bindings_.end()) {
     auto it = bindings_[role].find(member);
-    if (it != bindings_[role].end()) { bindings_[role].erase(it); }
+    if (it != bindings_[role].end()) {
+      bindings_[role].erase(it);
+    }
   }
 }
 
