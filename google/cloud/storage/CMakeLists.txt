@@ -170,6 +170,8 @@ add_library(storage_client
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_credentials.h
+            lifecycle_rule.h
+            lifecycle_rule.cc
             list_buckets_reader.h
             list_buckets_reader.cc
             list_objects_reader.h
@@ -255,6 +257,7 @@ set(storage_client_unit_tests
     internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
     internal/service_account_credentials_test.cc
+    lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
     object_access_control_test.cc

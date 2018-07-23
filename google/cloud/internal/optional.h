@@ -206,7 +206,10 @@ class optional {
     }
     return **this == *rhs;
   }
-  bool operator!=(optional const& rhs) const { return not(*this == rhs); }
+
+  bool operator!=(optional const& rhs) const {
+    return std::rel_ops::operator!=(*this, rhs);
+  }
 
   bool operator<(optional const& rhs) const {
     if (has_value()) {
@@ -221,9 +224,18 @@ class optional {
     // not have a value.
     return rhs.has_value();
   }
-  bool operator>(optional const& rhs) const { return rhs < *this; }
-  bool operator>=(optional const& rhs) const { return not(*this < rhs); }
-  bool operator<=(optional const& rhs) const { return not(rhs < *this); }
+
+  bool operator>(optional const& rhs) const {
+    return std::rel_ops::operator>(*this, rhs);
+  }
+
+  bool operator>=(optional const& rhs) const {
+    return std::rel_ops::operator>=(*this, rhs);
+  }
+
+  bool operator<=(optional const& rhs) const {
+    return std::rel_ops::operator<=(*this, rhs);
+  }
 
  private:
   void check_access() const {
