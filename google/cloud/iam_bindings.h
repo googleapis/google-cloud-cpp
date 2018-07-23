@@ -79,7 +79,7 @@ class IamBindings {
    * none for the role of given binding else appends members of given binding
    * to the associated role's key-value entry.
    *
-   * @param binding binding representing a set of members and role for them.
+   * @param iam_binding binding representing a set of members and role for them.
    */
   void AddMembers(google::cloud::IamBinding const& iam_binding);
 
