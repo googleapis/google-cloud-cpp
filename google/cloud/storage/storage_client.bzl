@@ -38,6 +38,7 @@ storage_client_HDRS = [
     "internal/object_acl_requests.h",
     "internal/object_streambuf.h",
     "internal/parse_rfc3339.h",
+    "internal/patch_builder.h",
     "internal/raw_client.h",
     "internal/read_object_range_request.h",
     "internal/retry_client.h",
