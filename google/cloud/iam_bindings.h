@@ -44,36 +44,37 @@ class IamBindings {
     bindings_.insert({std::move(role), std::move(members)});
   }
 
-  using iterator = std::map<std::string, std::set<std::string>>::iterator;
+  using iterator = std::map<std::string, std::set<std::string>>::const_iterator;
+
   /**
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  iterator begin() { return bindings_.begin(); };
+  iterator begin() { return bindings_.begin(); }
 
   /**
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  iterator end() { return bindings_.end(); };
+  iterator end() { return bindings_.end(); }
 
   /**
    * Returns whether the Bindings container is empty.
    *
    * @return bool whether the container is empty or not.
    */
-  bool empty() { return bindings_.empty(); }
+  bool empty() const { return bindings_.empty(); }
 
   /**
    * Return number of Bindings in container.
    *
    * @return int the size of the container.
    */
-  int size() { return (int)bindings_.size(); }
+  std::size_t size() const { return (int)bindings_.size(); }
 
   std::map<std::string, std::set<std::string>> const& bindings() const {
     return bindings_;
-  };
+  }
 
   /**
    * Adds a new member if a binding exists with given role otherwise inserts
