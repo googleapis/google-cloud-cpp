@@ -94,9 +94,9 @@ against the latest version of the SDK on each commit and PR.
 
 #### CentOS
 
-The default compiler on CentOS has poor support for C++11. We need to upgrade
-the compiler and other development tools. In this instructions, we use g++-7 via
-[Software Collections](https://www.softwarecollections.org/).
+The default compiler on CentOS doesn't fully support C++11. We need to upgrade
+the compiler and other development tools. In this instructions, we use `g++-7`
+via [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
 # Extra Packages for Enterprise Linux used to install cmake3
@@ -136,7 +136,7 @@ sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel make
 #### OpenSuSE (Leap)
 
 The stock compiler on OpenSuSE (Leap) has poor support for C++11, we recommend
-updating to GCC-5 using:
+updating to `g++-5` using:
 
 ```bash
 sudo zypper refresh
@@ -162,11 +162,11 @@ sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev
 
 #### Ubuntu (Trusty Tahr)
 
-The default compiler on Ubuntu-14.04 (Trusty Tahr) has poor support for C++11.
+The default compiler on Ubuntu-14.04 (Trusty Tahr) doesn't fully support C++11.
 In addition, gRPC requires a newer version of OpenSSL than the one included
 in the system.
 
-It is possible to work around these limitations on a *fresh* installation of
+It is possible to work around these limitations on a *new* installation of
 Ubuntu-14.04, but there are [known issues][issue-913] working on a system where
 these libraries are already installed.
 
