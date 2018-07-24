@@ -69,6 +69,9 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library
 add_library(google_cloud_cpp_common
+            iam_binding.h
+            iam_bindings.h
+            iam_bindings.cc
             internal/backoff_policy.h
             internal/backoff_policy.cc
             internal/build_info.h
@@ -112,6 +115,7 @@ target_link_libraries(google_cloud_cpp_testing
 create_bazel_config(google_cloud_cpp_testing)
 
 set(google_cloud_cpp_common_unit_tests
+    iam_bindings_test.cc
     internal/backoff_policy_test.cc
     internal/optional_test.cc
     internal/random_test.cc
