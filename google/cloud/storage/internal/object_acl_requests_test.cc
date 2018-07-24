@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/curl_request_builder.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -65,6 +66,69 @@ TEST(ObjectAclRequestTest, Stream) {
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("my-object"));
   EXPECT_THAT(str, HasSubstr("user-test-user"));
+}
+
+ObjectAccessControl CreateObjectAccessControlForTest() {
+  std::string text = R"""({
+      "bucket": "foo-bar",
+      "domain": "example.com",
+      "email": "foobar@example.com",
+      "entity": "user-foobar",
+      "entityId": "user-foobar-id-123",
+      "etag": "XYZ=",
+      "generation": 42,
+      "id": "object-foo-bar-baz-acl-234",
+      "kind": "storage#objectAccessControl",
+      "object": "baz",
+      "projectTeam": {
+        "projectNumber": "3456789",
+        "team": "a-team"
+      },
+      "role": "OWNER"
+})""";
+  return ObjectAccessControl::ParseFromString(text);
+}
+
+TEST(PatchObjectAclRequestTest, ReadModifyWrite) {
+  ObjectAccessControl original = CreateObjectAccessControlForTest();
+  ObjectAccessControl new_acl =
+      CreateObjectAccessControlForTest().set_role("READER");
+
+  PatchObjectAclRequest request("my-bucket", "my-object", "user-test-user",
+                                original, new_acl);
+  nl::json expected = {
+      {"role", "READER"},
+  };
+  nl::json actual = nl::json::parse(request.payload());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(PatchObjectAclRequestTest, Patch) {
+  PatchObjectAclRequest request(
+      "my-bucket", "my-object", "user-test-user",
+      ObjectAccessControlPatchBuilder().set_role("READER").delete_entity());
+  nl::json expected = {{"role", "READER"}, {"entity", nullptr}};
+  nl::json actual = nl::json::parse(request.payload());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(PatchObjectAclRequestTest, PatchStream) {
+  ObjectAccessControl original = CreateObjectAccessControlForTest();
+  ObjectAccessControl new_acl =
+      CreateObjectAccessControlForTest().set_role("READER");
+
+  PatchObjectAclRequest request("my-bucket", "my-object", "user-test-user",
+                                original, new_acl);
+  request.set_multiple_options(UserProject("my-project"), Generation(7));
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("generation=7"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("my-object"));
+  EXPECT_THAT(str, HasSubstr("user-test-user"));
+  EXPECT_THAT(str, HasSubstr(request.payload()));
 }
 
 }  // namespace

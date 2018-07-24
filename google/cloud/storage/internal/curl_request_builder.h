@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/curl_upload_request.h"
+#include "google/cloud/storage/well_known_headers.h"
 
 namespace google {
 namespace cloud {
@@ -72,6 +73,18 @@ class CurlRequestBuilder {
   CurlRequestBuilder& AddOption(WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
       AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
+    }
+    return *this;
+  }
+
+  /// Add one of the well-known headers to the request.
+  template <typename P>
+  CurlRequestBuilder& AddModifier(WellKnownHeader<P, std::string> const& p) {
+    if (p.has_value()) {
+      std::string header = p.header_name();
+      header += ": ";
+      header += p.value();
+      AddHeader(header);
     }
     return *this;
   }

@@ -180,11 +180,12 @@ add_library(storage_client
             object_metadata.cc
             object_stream.h
             object_stream.cc
-            well_known_parameters.h
             retry_policy.h
             status.h
             version.h
-            version.cc)
+            version.cc
+            well_known_headers.h
+            well_known_parameters.h)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
                              nlohmann_json

@@ -48,10 +48,11 @@ storage_client_HDRS = [
     "object_access_control.h",
     "object_metadata.h",
     "object_stream.h",
-    "well_known_parameters.h",
     "retry_policy.h",
     "status.h",
     "version.h",
+    "well_known_headers.h",
+    "well_known_parameters.h",
 ]
 
 storage_client_SRCS = [
