@@ -135,12 +135,13 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
   //! [update object acl] [START storage_update_file_acl]
-  [](google::cloud::storage::Client client, std::string bucket_name,
-     std::string object_name, std::string entity, std::string role) {
-    google::cloud::storage::ObjectAccessControl current_acl =
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity, std::string role) {
+    gcs::ObjectAccessControl current_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
     current_acl.set_role(role);
-    google::cloud::storage::ObjectAccessControl acl =
+    gcs::ObjectAccessControl acl =
         client.UpdateObjectAcl(bucket_name, object_name, current_acl);
     std::cout << "ACL entry for " << entity << " in object " << object_name
               << " in bucket " << bucket_name << " is now " << acl << std::endl;
