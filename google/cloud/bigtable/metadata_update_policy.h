@@ -33,12 +33,14 @@ inline namespace BIGTABLE_CLIENT_NS {
  *     Table::Apply.
  *    "name=" : this is used when table|_id is known only in the RPC call, e.g.
  *     TableAdmin::GetTable.
+ *     "resource=" : this is used to set IAM policies for bigtable resource.
  *
  */
 class MetadataParamTypes final {
  public:
   static MetadataParamTypes const PARENT;
   static MetadataParamTypes const NAME;
+  static MetadataParamTypes const RESOURCE;
   static MetadataParamTypes const TABLE_NAME;
 
   bool operator==(MetadataParamTypes const& that) const {

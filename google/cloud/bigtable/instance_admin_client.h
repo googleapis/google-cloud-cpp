@@ -148,6 +148,21 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
       google::protobuf::Empty* response) = 0;
+
+  virtual grpc::Status GetIamPolicy(
+      grpc::ClientContext* context,
+      google::iam::v1::GetIamPolicyRequest const& request,
+      google::iam::v1::Policy* response) = 0;
+
+  virtual grpc::Status SetIamPolicy(
+      grpc::ClientContext* context,
+      google::iam::v1::SetIamPolicyRequest const& request,
+      google::iam::v1::Policy* response) = 0;
+
+  virtual grpc::Status TestIamPermissions(
+      grpc::ClientContext* context,
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      google::iam::v1::TestIamPermissionsResponse* response) = 0;
   //@}
 
   //@{

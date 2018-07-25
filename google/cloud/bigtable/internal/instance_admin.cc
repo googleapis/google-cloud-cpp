@@ -234,6 +234,86 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteAppProfile", status);
 }
 
+::google::iam::v1::Policy InstanceAdmin::GetIamPolicy(
+    std::string const& resource, grpc::Status& status) {
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(resource);
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
+                               metadata_update_policy,
+                               &InstanceAdminClient::GetIamPolicy, request,
+                               "InstanceAdmin::GetIamPolicy", status, true);
+}
+
+::google::iam::v1::Policy InstanceAdmin::SetIamPolicy(
+    std::string const& resource, std::int32_t const& version,
+    google::cloud::IamBindings const& iam_bindings, std::string const& etag,
+    grpc::Status& status) {
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  ::google::iam::v1::Policy policy;
+  policy.set_version(version);
+  policy.set_etag(etag);
+  auto role_bindings = iam_bindings.bindings();
+  for (auto& binding : role_bindings) {
+    auto binding_to_be_added = policy.add_bindings();
+    binding_to_be_added->set_role(binding.first);
+    for (auto& member : binding.second) {
+      binding_to_be_added->add_members(member);
+    }
+  }
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(std::move(resource));
+  request.set_allocated_policy(&policy);
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
+                               metadata_update_policy,
+                               &InstanceAdminClient::SetIamPolicy, request,
+                               "InstanceAdmin::SetIamPolicy", status, true);
+}
+
+std::vector<std::string> InstanceAdmin::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions,
+    grpc::Status& status) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = rpc_retry_policy_->clone();
+  auto backoff_policy = rpc_backoff_policy_->clone();
+
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  request.set_resource(resource);
+
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto response = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::TestIamPermissions, request,
+      "InstanceAdmin::TestIamPermissions", status, true);
+
+  std::vector<std::string> resource_permissions;
+
+  for (auto& permission : *response.mutable_permissions()) {
+    resource_permissions.push_back(permission);
+  }
+
+  return resource_permissions;
+}
+
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

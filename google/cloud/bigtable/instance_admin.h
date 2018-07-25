@@ -307,6 +307,42 @@ class InstanceAdmin {
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings = false);
 
+  /**
+   * Gets the policy for specified resource.
+   *
+   * @param resource name of the resource for which the policy is being
+   *  requested.
+   * @return Policy for the specified resource.
+   */
+  ::google::iam::v1::Policy GetIamPolicy(std::string const& resource);
+
+  /**
+   * Sets policy for specified resource with given bindings and etag.
+   *
+   * @param resource name of the resource for which the policy is being set.
+   * @param version version of policy.
+   * @param iam_bindings IamBindings object containing role and members.
+   * @param etag etag for the policy
+   * @return Policy object for the resource.
+   */
+  ::google::iam::v1::Policy SetIamPolicy(
+      std::string const& resource, std::int32_t const& version,
+      google::cloud::IamBindings const& iam_bindings, std::string const& etag);
+
+  /**
+   * Returns a permission sert that the caller has on the specified instance
+   * resource. If the resource doesn't exist it will return an empty set of
+   * permissions.
+   *
+   * @param resource name of the resource for which the detail is being
+   *  requested.
+   * @param perimissions set of permissions to check for the resource.
+   * @return
+   */
+  std::vector<std::string> TestIamPermissions(
+      std::string const& resource,
+      std::vector<std::string> const& perimissions);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   google::bigtable::admin::v2::Instance CreateInstanceImpl(

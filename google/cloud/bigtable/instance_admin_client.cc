@@ -169,6 +169,25 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
     return impl_.Stub()->DeleteAppProfile(context, request, response);
   }
 
+  grpc::Status GetIamPolicy(grpc::ClientContext* context,
+                            google::iam::v1::GetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response) override {
+    return impl_.Stub()->GetIamPolicy(context, request, response);
+  }
+
+  grpc::Status SetIamPolicy(grpc::ClientContext* context,
+                            google::iam::v1::SetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response) override {
+    return impl_.Stub()->SetIamPolicy(context, request, response);
+  }
+
+  grpc::Status TestIamPermissions(
+      grpc::ClientContext* context,
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      google::iam::v1::TestIamPermissionsResponse* response) override {
+    return impl_.Stub()->TestIamPermissions(context, request, response);
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;

@@ -88,6 +88,17 @@ auto create_cluster = []() {
   };
 };
 
+auto create_policy = []() {
+  return [](grpc::ClientContext* ctx,
+            ::google::iam::v1::GetIamPolicyRequest const& request,
+            ::google::iam::v1::Policy* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_version(3);
+    response->set_etag("random-tag");
+    return grpc::Status::OK;
+  };
+};
+
 // A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
