@@ -36,11 +36,15 @@ APIs.
   - [Tests](#tests)
 - [Install Dependencies](#install-dependencies)
   - [CentOS](#centos)
+  - [Debian (Stretch)](#debian-stretch)
   - [Fedora](#fedora)
+  - [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
+  - [OpenSuSE (Leap)](#opensuse-leap)
   - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
-  - [Ubuntu (Trusty)](#ubuntu-trusty)
+  - [Ubuntu (Xenial Xerus)](#ubuntu-xenial-xerus)
+  - [Ubuntu (Trusty)](#ubuntu-trusty-tahr)
   - [macOS (using brew)](#macos-using-brew)
-  - [Windows](#windows)
+  - [Windows](#windows-using-vcpkg)
 - [Build](#build)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows-1)
@@ -90,6 +94,10 @@ against the latest version of the SDK on each commit and PR.
 
 #### CentOS
 
+The default compiler on CentOS doesn't fully support C++11. We need to upgrade
+the compiler and other development tools. In these instructions, we use `g++-7`
+via [Software Collections](https://www.softwarecollections.org/).
+
 ```bash
 # Extra Packages for Enterprise Linux used to install cmake3
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -98,49 +106,97 @@ yum install centos-release-scl
 yum-config-manager --enable rhel-server-rhscl-7-rpms
 
 yum makecache
-yum install -y devtoolset-7 c-ares-devel ccache cmake3 curl curl-devel git golang graphviz openssl-devel pkgconfig python python-pip python-gunicorn shtool unzip wget which zlib-devel
-
-pip install httpbin
+yum install -y devtoolset-7 cmake3 curl-devel git openssl-devel
 
 # Install cmake3 & ctest3 as cmake & ctest respectively.
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+```
+
+#### Debian (Stretch)
+
+```bash
+sudo apt update
+sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
 ```
 
 #### Fedora
 
 ```bash
 sudo dnf makecache
-sudo dnf install autoconf automake c-ares-devel ccache clang clang-tools-extra cmake curl dia doxygen gcc-c++ git golang graphviz  lcov libcurl-devel libtool make ncurses-term openssl-devel pkgconfig python python-gunicorn python-httpbin shtool unzip wget  which zlib-devel
+sudo dnf install -y clang cmake gcc-c++ git libcurl-devel make openssl-devel
+```
+
+#### OpenSuSE (Tumbleweed)
+
+```bash
+sudo zypper refresh
+sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel make
+```
+
+#### OpenSuSE (Leap)
+
+The stock compiler on OpenSuSE (Leap) has poor support for C++11, we recommend
+updating to `g++-5` using:
+
+```bash
+sudo zypper refresh
+sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel make
+sudo zypper install gcc5 gcc5-c++
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 ```
 
 #### Ubuntu (Bionic Beaver)
 
 ```bash
 sudo apt update
-sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
-
-# By default, Ubuntu 18.04 does not install the alternatives for clang-format
-# so we need to manually install those.
-sudo apt update
-sudo apt install -y clang-tidy clang-format clang-tools       
-sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100
-sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100
-sudo update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100
-/usr/bin/env GOPATH=/usr go get github.com/bazelbuild/buildtools/buildifier
+sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
 ```
 
-#### Ubuntu (Trusty)
+#### Ubuntu (Xenial Xerus)
+
+```bash
+sudo apt update
+sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
+```
+
+#### Ubuntu (Trusty Tahr)
+
+The default compiler on Ubuntu-14.04 (Trusty Tahr) doesn't fully support C++11.
+In addition, gRPC requires a newer version of OpenSSL than the one included
+in the system.
+
+It is possible to work around these limitations on a *new* installation of
+Ubuntu-14.04, but there are [known issues][issue-913] working on a system where
+these libraries are already installed.
+
+[issue-913]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/913
+
+Nevertheless, the following steps are known to work:
 
 ```bash
 sudo apt update
 sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt update
-sudo apt install abi-compliance-checker abi-dumper automake build-essential ccache clang clang-format cmake curl doxygen  gawk git gcc g++ golang cmake libcurl4-openssl-dev libssl-dev libtool lsb-release make python-gunicorn python-httpbin tar wget zlib1g-dev
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-3.8 100
-sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-3.8 100
+sudo apt install -y cmake3 git gcc-4.9 g++-4.9 make wget zlib1g-dev
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+cd /var/tmp/
+sudo wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
+sudo tar xf openssl-1.0.2n.tar.gz
+cd /var/tmp/openssl-1.0.2n
+sudo ./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64 shared
+sudo make -j $(nproc)
+sudo make install
+
+cd /var/tmp/
+sudo wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
+sudo tar xf curl-7.61.0.tar.gz
+cd /var/tmp/curl-7.61.0
+sudo ./configure
+sudo make -j $(nproc)
+sudo make install
 ```
 
 #### macOS (using brew)
@@ -149,7 +205,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
 brew install curl cmake
 ```
 
-#### Windows
+#### Windows (using vcpkg)
 
 ```bash
 set PROVIDER=vcpkg
@@ -188,8 +244,8 @@ cd build-output
 ctest --output-on-failure
 ```
 
-You will find compiled binaries in `build-output\` respective to their source directories.
-
+You will find compiled binaries in `build-output\` respective to their
+source directories.
 
 ## Versioning
 

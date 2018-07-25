@@ -1,0 +1,40 @@
+# Copyright 2018 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=tumbleweed
+FROM opensuse:${DISTRO_VERSION}
+MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+
+# Please keep the formatting in these commands, it is optimized to cut & paste
+# into the README.md file.
+RUN zypper refresh
+RUN zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
+
+RUN source /etc/os-release ; if [ "${NAME}" = "openSUSE Leap" ]; then \
+    zypper refresh && zypper install -y gcc5 gcc5-c++; \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100; \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100; \
+  fi
+
+ARG CXX=g++
+ARG CC=gcc
+
+WORKDIR /var/tmp/
+RUN git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+WORKDIR /var/tmp/google-cloud-cpp
+RUN git submodule update --init
+RUN cmake -H. -Bbuild-output
+RUN cmake --build build-output -- -j $(nproc)
+WORKDIR /var/tmp/google-cloud-cpp/build-output
+RUN ctest --output-on-failure
