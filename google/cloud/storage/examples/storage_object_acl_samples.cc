@@ -125,6 +125,31 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name, entity);
 }
 
+void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
+  if (argc < 5) {
+    throw Usage{
+        "update-object-acl <bucket-name> <object-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [update object acl] [START storage_update_file_acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity, std::string role) {
+    gcs::ObjectAccessControl current_acl =
+        client.GetObjectAcl(bucket_name, object_name, entity);
+    current_acl.set_role(role);
+    gcs::ObjectAccessControl acl =
+        client.UpdateObjectAcl(bucket_name, object_name, current_acl);
+    std::cout << "ACL entry for " << entity << " in object " << object_name
+              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+  }
+  //! [update object acl] [END storage_update_file_acl]
+  (std::move(client), bucket_name, object_name, entity, role);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -138,6 +163,7 @@ int main(int argc, char* argv[]) try {
       {"create-object-acl", &CreateObjectAcl},
       {"delete-object-acl", &DeleteObjectAcl},
       {"get-object-acl", &GetObjectAcl},
+      {"update-object-acl", &UpdateObjectAcl},
   };
   for (auto&& kv : commands) {
     try {

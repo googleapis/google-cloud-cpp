@@ -26,6 +26,60 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+/**
+ * Generic ObjectAccessControl change.
+ */
+template <typename Derived>
+class GenericChangeObjectAclRequest
+    : public GenericObjectRequest<Derived, Generation, UserProject> {
+ public:
+  GenericChangeObjectAclRequest() = default;
+
+  explicit GenericChangeObjectAclRequest(std::string bucket, std::string object,
+                                         std::string entity, std::string role)
+      : GenericObjectRequest<Derived, Generation, UserProject>(
+            std::move(bucket), std::move(object)),
+        entity_(std::move(entity)),
+        role_(std::move(role)) {}
+
+  std::string const& entity() const { return entity_; }
+  GenericChangeObjectAclRequest& set_entity(std::string v) {
+    entity_ = std::move(v);
+    return *this;
+  }
+  std::string const& role() const { return role_; }
+  GenericChangeObjectAclRequest& set_role(std::string v) {
+    role_ = std::move(v);
+    return *this;
+  }
+
+ private:
+  std::string entity_;
+  std::string role_;
+};
+
+/**
+ * Create an ObjectAccessControl entry.
+ */
+class CreateObjectAclRequest
+    : public GenericChangeObjectAclRequest<CreateObjectAclRequest> {
+ public:
+  using GenericChangeObjectAclRequest::GenericChangeObjectAclRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, CreateObjectAclRequest const& r);
+
+/**
+ * Update an ObjectAccessControl entry.
+ */
+class UpdateObjectAclRequest
+    : public GenericChangeObjectAclRequest<UpdateObjectAclRequest> {
+ public:
+  using GenericChangeObjectAclRequest::GenericChangeObjectAclRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r);
+
 /// A request type for `ObjectAccessControl: {get,delete,patch,update}`
 class ObjectAclRequest
     : public GenericObjectRequest<ObjectAclRequest, Generation, UserProject> {

@@ -190,6 +190,16 @@ class GcsObjectVersion(object):
         raise ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
 
+    def update_acl(self, entity, role):
+        """
+        Update a single AccessControl entry in this Object revision.
+
+        :param entity:str the name of the entity.
+        :param role:str the new role for the entity.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        return self.insert_acl(entity, role)
+
 
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
@@ -506,6 +516,22 @@ def objects_acl_get(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.get_acl(entity)
+    return json.dumps(acl)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
+def objects_acl_update(bucket_name, object_name, entity):
+    """Implement the 'ObjectAccessControls: update' API.
+
+      Update the access control configuration for a particular entity.
+      """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    payload = json.loads(flask.request.data)
+    acl = revision.update_acl(entity, payload.get('role', ''))
     return json.dumps(acl)
 
 

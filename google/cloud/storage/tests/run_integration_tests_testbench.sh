@@ -47,4 +47,8 @@ echo
 echo "Running storage::internal::CurlRequest integration test."
 ./curl_request_integration_test
 
+# The tests were successful, so disable dumping of test bench log during
+# shutdown.
+TESTBENCH_DUMP_LOG=no
+
 exit 0

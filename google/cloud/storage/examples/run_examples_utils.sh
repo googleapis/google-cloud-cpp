@@ -74,6 +74,12 @@ run_program_examples() {
         get-object-acl)
             arguments="${base_arguments} allAuthenticatedUsers"
             ;;
+        update-object-acl)
+            arguments="${base_arguments} allAuthenticatedUsers OWNER"
+            ;;
+        delete-object-acl)
+            arguments="${base_arguments} allAuthenticatedUsers"
+            ;;
         *)
             arguments="${base_arguments}"
             ;;
@@ -203,6 +209,8 @@ run_all_object_acl_examples() {
 list-object-acl
 create-object-acl
 get-object-acl
+update-object-acl
+delete-object-acl
 _EOF_
 )
 
@@ -235,6 +243,19 @@ _EOF_
       "${OBJECT_ACL_COMMANDS}" \
       "${bucket_name}" \
       "${object_name}"
+
+  ./storage_object_samples delete-object \
+      "${bucket_name}" \
+      "${object_name}" >${log} 2>&1
+  if [ $? != 0 ]; then
+    EXIT_STATUS=1
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        " cannot delete test object"
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+  fi
+  set -e
 }
 
 ################################################
@@ -256,5 +277,8 @@ run_all_storage_examples() {
   run_all_object_acl_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
+  if [ "${EXIT_STATUS}" = "0" ]; then
+    TESTBENCH_DUMP_LOG=no
+  fi
   exit ${EXIT_STATUS}
 }
