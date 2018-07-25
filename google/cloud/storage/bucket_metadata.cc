@@ -120,33 +120,44 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   // TODO(#536) - convert back to JSON for a nicer format.
-  os << "BucketMetadata={name=" << rhs.name() << ", acl=[";
+  os << "BucketMetadata={name=" << rhs.name();
+
+  os << ", acl=[";
   char const* sep = "";
   for (auto const& acl : rhs.acl()) {
     os << sep << acl;
     sep = ", ";
   }
+  os << "]";
+
   auto prev = os.flags();
-  os << "], billing.requesterPays=" << std::boolalpha
+  os << ", billing.requesterPays=" << std::boolalpha
      << rhs.billing().requester_pays;
   os.flags(prev);
+
   os << ", cors=[";
   sep = "";
   for (auto const& cors : rhs.cors()) {
     os << sep << cors;
     sep = ", ";
   }
-  os << "], default_acl=[";
+  os << "]";
+
+  os << ", default_acl=[";
   sep = "";
   for (auto const& acl : rhs.default_acl()) {
     os << sep << acl;
     sep = ", ";
   }
-  os << "], etag=" << rhs.etag() << ", id=" << rhs.id()
+  os << "]";
+
+  os << ", etag=" << rhs.etag() << ", id=" << rhs.id()
      << ", kind=" << rhs.kind();
+
   for (auto const& kv : rhs.labels_) {
     os << ", labels." << kv.first << "=" << kv.second;
   }
+
   os << ", location=" << rhs.location()
      << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
      << ", self_link=" << rhs.self_link()
