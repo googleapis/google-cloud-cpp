@@ -29,7 +29,7 @@ namespace internal {
 class CurlStreambuf : public ObjectWriteStreambuf {
  public:
   explicit CurlStreambuf(CurlUploadRequest&& upload,
-                         std::size_t max_buffer_size = 64 * 1024);
+                         std::size_t max_buffer_size);
 
   ~CurlStreambuf() override = default;
 
@@ -42,7 +42,7 @@ class CurlStreambuf : public ObjectWriteStreambuf {
   HttpResponse DoClose() override;
 
  private:
-  /// Raise an eception if the stream is closed.
+  /// Raise an exception if the stream is closed.
   void Validate(char const* where) const;
 
   /// Flush the libcurl buffer and swap it with the iostream buffer.

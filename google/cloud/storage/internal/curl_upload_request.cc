@@ -26,12 +26,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlUploadRequest::CurlUploadRequest()
+CurlUploadRequest::CurlUploadRequest(std::size_t initial_buffer_size)
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
       closing_(false),
       curl_closed_(false) {
-  buffer_.reserve(128 * 1024);
+  buffer_.reserve(initial_buffer_size);
   buffer_rdptr_ = buffer_.end();
 }
 

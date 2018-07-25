@@ -84,6 +84,8 @@ class CurlRequestBuilder {
 
   CurlRequestBuilder& SetDebugLogging(bool enabled);
 
+  CurlRequestBuilder& SetInitialBufferSize(std::size_t size);
+
   /// Get the user-agent suffix.
   std::string UserAgentSuffix() const;
 
@@ -104,6 +106,8 @@ class CurlRequestBuilder {
   std::string user_agent_prefix_;
 
   bool logging_enabled_;
+
+  std::size_t initial_buffer_size_;
 };
 
 }  // namespace internal

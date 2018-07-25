@@ -36,7 +36,7 @@ namespace internal {
  */
 class CurlUploadRequest {
  public:
-  CurlUploadRequest();
+  explicit CurlUploadRequest(std::size_t initial_buffer_size);
 
   CurlUploadRequest(CurlUploadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
@@ -46,7 +46,7 @@ class CurlUploadRequest {
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
         buffer_(std::move(rhs.buffer_)),
-        buffer_rdptr_(std::move(rhs.buffer_rdptr_)),
+        buffer_rdptr_(rhs.buffer_rdptr_),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_) {
     ResetOptions();
@@ -60,7 +60,7 @@ class CurlUploadRequest {
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
     buffer_ = std::move(rhs.buffer_);
-    buffer_rdptr_ = std::move(rhs.buffer_rdptr_);
+    buffer_rdptr_ = rhs.buffer_rdptr_;
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
     ResetOptions();
