@@ -20,6 +20,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using google::cloud::internal::make_optional;
+using google::cloud::internal::optional;
 
 BucketMetadata CreateBucketMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
@@ -65,7 +67,6 @@ BucketMetadata CreateBucketMetadataForTest() {
         "method": ["GET", "HEAD"],
         "origin": ["cross-origin-example.com"]
       }, {
-        "maxAgeSeconds": 7200,
         "method": ["GET", "HEAD"],
         "origin": ["another-example.com"],
         "responseHeader": ["Content-Type"]
@@ -113,11 +114,15 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2U, actual.cors().size());
-  auto expected_cors_0 =
-      CorsEntry{3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}};
+  auto expected_cors_0 = CorsEntry{make_optional<std::int64_t>(3600),
+                                   {"GET", "HEAD"},
+                                   {"cross-origin-example.com"},
+                                   {}};
   EXPECT_EQ(expected_cors_0, actual.cors().at(0));
-  auto expected_cors_1 = CorsEntry{
-      7200, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}};
+  auto expected_cors_1 = CorsEntry{optional<std::int64_t>(),
+                                   {"GET", "HEAD"},
+                                   {"another-example.com"},
+                                   {"Content-Type"}};
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_EQ(1U, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
@@ -210,10 +215,10 @@ TEST(BucketMetadataTest, MutableCors) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   EXPECT_EQ(expected, copy);
-  copy.mutable_cors().at(0).max_age_seconds *= 3;
+  copy.mutable_cors().at(0).max_age_seconds = 3 * 3600;
   EXPECT_NE(expected, copy);
-  EXPECT_EQ(3600, expected.cors().at(0).max_age_seconds);
-  EXPECT_EQ(3 * 3600, copy.cors().at(0).max_age_seconds);
+  EXPECT_EQ(3600, *expected.cors().at(0).max_age_seconds);
+  EXPECT_EQ(3 * 3600, *copy.cors().at(0).max_age_seconds);
 }
 
 /// @test Verify we can change the full CORS configuration in BucketMetadata.

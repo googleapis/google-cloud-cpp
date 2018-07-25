@@ -33,7 +33,9 @@ CorsEntry ParseCors(internal::nl::json const& json) {
     return list;
   };
   CorsEntry result;
-  result.max_age_seconds = internal::ParseLongField(json, "maxAgeSeconds");
+  if (json.count("maxAgeSeconds") != 0) {
+    result.max_age_seconds = internal::ParseLongField(json, "maxAgeSeconds");
+  }
   result.method = parse_string_list(json, "method");
   result.origin = parse_string_list(json, "origin");
   result.response_header = parse_string_list(json, "responseHeader");
@@ -54,10 +56,15 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
                              return a;
                            });
   };
-  return os << "CorsEntry={" << rhs.max_age_seconds << ", method=["
-            << join(", ", rhs.method) << "], origin=[" << join(", ", rhs.origin)
-            << "], response_header=[" << join(", ", rhs.response_header)
-            << "]}";
+  os << "CorsEntry={";
+  char const* sep = "";
+  if (rhs.max_age_seconds.has_value()) {
+    os << "max_age_seconds=" << *rhs.max_age_seconds;
+    sep = ", ";
+  }
+  return os << sep << "method=[" << join(", ", rhs.method) << "], origin=["
+            << join(", ", rhs.origin) << "], response_header=["
+            << join(", ", rhs.response_header) << "]}";
 }
 
 BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {

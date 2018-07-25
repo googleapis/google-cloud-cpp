@@ -191,6 +191,23 @@ TEST(OptionalTest, MoveAssignment_NoValue_Value) {
   EXPECT_EQ(0, Observable::copy_constructor);
 }
 
+TEST(OptionalTest, MoveAssignment_NoValue_T) {
+  Observable other("foo");
+  OptionalObservable assigned;
+  EXPECT_FALSE(assigned.has_value());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(assigned.has_value());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other.str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
 TEST(OptionalTest, MoveAssignment_Value_NoValue) {
   OptionalObservable other;
   OptionalObservable assigned(Observable("bar"));
@@ -227,6 +244,23 @@ TEST(OptionalTest, MoveAssignment_Value_Value) {
   EXPECT_EQ("moved-out", other->str());
 }
 
+TEST(OptionalTest, MoveAssignment_Value_T) {
+  Observable other("foo");
+  OptionalObservable assigned(Observable("bar"));
+  EXPECT_TRUE(assigned.has_value());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(assigned.has_value());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(1, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other.str());
+}
+
 TEST(OptionalTest, CopyAssignment_NoValue_NoValue) {
   OptionalObservable other;
   OptionalObservable assigned;
@@ -256,6 +290,23 @@ TEST(OptionalTest, CopyAssignment_NoValue_Value) {
   EXPECT_TRUE(assigned.has_value());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other->str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::copy_constructor);
+}
+
+TEST(OptionalTest, CopyAssignment_NoValue_T) {
+  Observable other("foo");
+  OptionalObservable assigned;
+  EXPECT_FALSE(assigned.has_value());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(assigned.has_value());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other.str());
   EXPECT_EQ(0, Observable::destructor);
   EXPECT_EQ(0, Observable::move_assignment);
   EXPECT_EQ(0, Observable::copy_assignment);
@@ -297,6 +348,23 @@ TEST(OptionalTest, CopyAssignment_Value_Value) {
   EXPECT_EQ(0, Observable::copy_constructor);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other->str());
+}
+
+TEST(OptionalTest, CopyAssignment_Value_T) {
+  Observable other("foo");
+  OptionalObservable assigned(Observable("bar"));
+  EXPECT_TRUE(assigned.has_value());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(assigned.has_value());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(1, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other.str());
 }
 
 TEST(OptionalTest, MoveValue) {

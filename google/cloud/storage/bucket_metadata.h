@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 
+#include "google/cloud/internal/optional.h"
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -34,6 +35,8 @@ inline namespace STORAGE_CLIENT_NS {
  *     information on "Requester Pays" billing.
  */
 struct BucketBilling {
+  BucketBilling() : requester_pays(false) {}
+
   bool requester_pays;
 };
 
@@ -55,7 +58,7 @@ struct BucketBilling {
  *     on how to set and troubleshoot CORS settings.
  */
 struct CorsEntry {
-  std::int64_t max_age_seconds;
+  google::cloud::internal::optional<std::int64_t> max_age_seconds;
   std::vector<std::string> method;
   std::vector<std::string> origin;
   std::vector<std::string> response_header;
@@ -91,7 +94,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  */
 class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
-  BucketMetadata() : billing_(BucketBilling{false}), project_number_(0) {}
+  BucketMetadata() : project_number_(0) {}
 
   static BucketMetadata ParseFromJson(internal::nl::json const& json);
   static BucketMetadata ParseFromString(std::string const& payload);
