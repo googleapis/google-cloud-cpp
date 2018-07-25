@@ -52,128 +52,102 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
       duration_cast<std::chrono::seconds>(actual.time_since_epoch()).count());
 }
 
-/// @test Verify that we parse long values in JSON objects.
-TEST(MetadataParserTest, ParseLongField) {
-  std::string text = R"""({
-      "counter": 42
-})""";
+template <typename Integer>
+void CheckParseNormal(
+    std::function<Integer(nl::json const&, char const*)> tested) {
+  std::string text = R"""({ "field": 42 })""";
   auto json_object = nl::json::parse(text);
-  auto actual = ParseLongField(json_object, "counter");
-
-  EXPECT_EQ(42L, actual);
+  auto actual = tested(json_object, "field");
+  EXPECT_EQ(Integer(42), actual);
 }
 
-/// @test Verify that we parse long values in JSON objects.
-TEST(MetadataParserTest, ParseLongFieldFromString) {
-  std::string text = R"""({
-      "counter": "42"
-})""";
-  auto json_object = nl::json::parse(text);
-  auto actual = ParseLongField(json_object, "counter");
-
-  EXPECT_EQ(42L, actual);
+/// @test Verify Parse*Field can parse regular values.
+TEST(MetadataParserTest, ParseIntegralFieldNormal) {
+  CheckParseNormal<std::int32_t>(&ParseIntField);
+  CheckParseNormal<std::uint32_t>(&ParseUnsignedIntField);
+  CheckParseNormal<std::int64_t>(&ParseLongField);
+  CheckParseNormal<std::uint64_t>(&ParseUnsignedLongField);
 }
 
-/// @test Verify that we parse missing long values in JSON objects.
-TEST(MetadataParserTest, ParseMissingLongField) {
-  std::string text = R"""({
-      "counter": "42"
-})""";
+template <typename Integer>
+void CheckParseFromString(
+    std::function<Integer(nl::json const&, char const*)> tested) {
+  std::string text = R"""({ "field": "1234" })""";
   auto json_object = nl::json::parse(text);
-  auto actual = ParseLongField(json_object, "some-other-counter");
-
-  EXPECT_EQ(0L, actual);
+  auto actual = tested(json_object, "field");
+  EXPECT_EQ(Integer(1234), actual);
 }
 
-/// @test Verify that we raise an exception with invalid long fields.
-TEST(MetadataParserTest, ParseInvalidLongFieldValue) {
-  std::string text = R"""({
-      "counter": "not-a-number"
-})""";
-  auto json_object = nl::json::parse(text);
+/// @test Verify Parse*Field can parse string values.
+TEST(MetadataParserTest, ParseIntegralFieldString) {
+  CheckParseFromString<std::int32_t>(&ParseIntField);
+  CheckParseFromString<std::uint32_t>(&ParseUnsignedIntField);
+  CheckParseFromString<std::int64_t>(&ParseLongField);
+  CheckParseFromString<std::uint64_t>(&ParseUnsignedLongField);
+}
 
+template <typename Integer>
+void CheckParseMissing(
+    std::function<Integer(nl::json const&, char const*)> tested) {
+  std::string text = R"""({ "field": "1234" })""";
+  auto json_object = nl::json::parse(text);
+  auto actual = tested(json_object, "some-other-field");
+  EXPECT_EQ(Integer(0), actual);
+}
+
+/// @test Verify Parse*Field can parse string values.
+TEST(MetadataParserTest, ParseIntegralFieldMissing) {
+  CheckParseMissing<std::int32_t>(&ParseIntField);
+  CheckParseMissing<std::uint32_t>(&ParseUnsignedIntField);
+  CheckParseMissing<std::int64_t>(&ParseLongField);
+  CheckParseMissing<std::uint64_t>(&ParseUnsignedLongField);
+}
+
+template <typename Integer>
+void CheckParseInvalid(
+    std::function<Integer(nl::json const&, char const*)> tested) {
+  std::string text = R"""({ "field_name": "not-a-number" })""";
+  auto json_object = nl::json::parse(text);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseLongField(json_object, "counter"), std::invalid_argument);
+  EXPECT_THROW(tested(json_object, "field_name"), std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(ParseLongField(json_object, "counter"), "");
+  EXPECT_DEATH_IF_SUPPORTED(tested(json_object, "field_name"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-/// @test Verify that we raise an exception with invalid long fields.
-TEST(MetadataParserTest, ParseInvalidLongFieldType) {
-  std::string text = R"""({
-      "counter": [0, 1, 2]
-})""";
-  auto json_object = nl::json::parse(text);
+/// @test Verify Parse*Field detects invalid values.
+TEST(MetadataParserTest, ParseIntegralFieldInvalid) {
+  CheckParseInvalid<std::int32_t>(&ParseIntField);
+  CheckParseInvalid<std::uint32_t>(&ParseUnsignedIntField);
+  CheckParseInvalid<std::int64_t>(&ParseLongField);
+  CheckParseInvalid<std::uint64_t>(&ParseUnsignedLongField);
+}
 
+template <typename Integer>
+void CheckParseInvalidFieldType(
+    std::function<Integer(nl::json const&, char const*)> tested) {
+  std::string text = R"""({ "field_name": [0, 1, 2] })""";
+  auto json_object = nl::json::parse(text);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseLongField(json_object, "counter"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseLongField(json_object, "counter"), "");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/// @test Verify that we parse long values in JSON objects.
-TEST(MetadataParserTest, ParseUnsignedLongField) {
-  std::string text = R"""({
-      "size": 42
-})""";
-  auto json_object = nl::json::parse(text);
-  auto actual = ParseUnsignedLongField(json_object, "size");
-
-  EXPECT_EQ(42UL, actual);
-}
-
-/// @test Verify that we parse long values in JSON objects.
-TEST(MetadataParserTest, ParseUnsignedLongFieldFromString) {
-  std::string text = R"""({
-      "size": "42"
-})""";
-  auto json_object = nl::json::parse(text);
-  auto actual = ParseUnsignedLongField(json_object, "size");
-
-  EXPECT_EQ(42UL, actual);
-}
-
-/// @test Verify that we parse missing long values in JSON objects.
-TEST(MetadataParserTest, ParseMissingUnsignedLongField) {
-  std::string text = R"""({
-      "size": "42"
-})""";
-  auto json_object = nl::json::parse(text);
-  auto actual = ParseUnsignedLongField(json_object, "some-other-size");
-
-  EXPECT_EQ(0UL, actual);
-}
-
-/// @test Verify that we raise an exception with invalid long fields.
-TEST(MetadataParserTest, ParseInvalidUnsignedLongFieldValue) {
-  std::string text = R"""({
-      "size": "not-a-number"
-})""";
-  auto json_object = nl::json::parse(text);
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseUnsignedLongField(json_object, "size"),
+  EXPECT_THROW(try { tested(json_object, "field_name"); } catch (
+                   std::exception const& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr("json="));
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr("<field_name>"));
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr("[0,1,2]"));
+    throw;
+  },
                std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(ParseUnsignedLongField(json_object, "size"), "");
+  EXPECT_DEATH_IF_SUPPORTED(tested(json_object, "field_name"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-/// @test Verify that we raise an exception with invalid long fields.
-TEST(MetadataParserTest, ParseInvalidUnsignedLongFieldType) {
-  std::string text = R"""({
-      "size": [0, 1, 2]
-})""";
-  auto json_object = nl::json::parse(text);
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseUnsignedLongField(json_object, "size"),
-               std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseUnsignedLongField(json_object, "size"), "");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+/// @test Verify Parse*Field detects invalid field types.
+TEST(MetadataParserTest, ParseIntegralFieldInvalidFieldType) {
+  CheckParseInvalidFieldType<std::int32_t>(&ParseIntField);
+  CheckParseInvalidFieldType<std::uint32_t>(&ParseUnsignedIntField);
+  CheckParseInvalidFieldType<std::int64_t>(&ParseLongField);
+  CheckParseInvalidFieldType<std::uint64_t>(&ParseUnsignedLongField);
 }
 
 }  // namespace

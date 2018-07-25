@@ -22,12 +22,62 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::chrono::system_clock::time_point ParseTimestampField(
-    nl::json const& json, char const* field_name) {
+bool ParseBoolField(nl::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
-    return std::chrono::system_clock::time_point{};
+    return false;
   }
-  return ParseRfc3339(json[field_name]);
+  auto const& f = json[field_name];
+  if (f.is_boolean()) {
+    return f.get<bool>();
+  }
+  if (f.is_string()) {
+    auto v = f.get<std::string>();
+    if (v == "true") {
+      return true;
+    }
+    if (v == "false") {
+      return false;
+    }
+  }
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as a boolean, json=" << json;
+  google::cloud::internal::RaiseInvalidArgument(os.str());
+}
+
+std::int32_t ParseIntField(nl::json const& json, char const* field_name) {
+  if (json.count(field_name) == 0) {
+    return 0;
+  }
+  auto const& f = json[field_name];
+  if (f.is_number()) {
+    return f.get<std::int32_t>();
+  }
+  if (f.is_string()) {
+    return std::stol(f.get_ref<std::string const&>());
+  }
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as an std::int32_t, json=" << json;
+  google::cloud::internal::RaiseInvalidArgument(os.str());
+}
+
+std::uint32_t ParseUnsignedIntField(nl::json const& json,
+                                    char const* field_name) {
+  if (json.count(field_name) == 0) {
+    return 0;
+  }
+  auto const& f = json[field_name];
+  if (f.is_number()) {
+    return f.get<std::uint32_t>();
+  }
+  if (f.is_string()) {
+    return std::stoul(f.get_ref<std::string const&>());
+  }
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as an std::uint32_t, json=" << json;
+  google::cloud::internal::RaiseInvalidArgument(os.str());
 }
 
 std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
@@ -63,6 +113,14 @@ std::uint64_t ParseUnsignedLongField(nl::json const& json,
   os << "Error parsing field <" << field_name
      << "> as an std::uint64_t, json=" << json;
   google::cloud::internal::RaiseInvalidArgument(os.str());
+}
+
+std::chrono::system_clock::time_point ParseTimestampField(
+    nl::json const& json, char const* field_name) {
+  if (json.count(field_name) == 0) {
+    return std::chrono::system_clock::time_point{};
+  }
+  return ParseRfc3339(json[field_name]);
 }
 
 }  // namespace internal

@@ -24,6 +24,25 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
+ * Parse a boolean field, even if it is represented by a string type in the JSON
+ * object.
+ */
+bool ParseBoolField(nl::json const& json, char const* field_name);
+
+/**
+ * Parse an integer field, even if it is represented by a string type in the
+ * JSON object.
+ */
+std::int32_t ParseIntField(nl::json const& json, char const* field_name);
+
+/**
+ * Parse an unsigned integer field, even if it is represented by a string type
+ * in the JSON object.
+ */
+std::uint32_t ParseUnsignedIntField(nl::json const& json,
+                                    char const* field_name);
+
+/**
  * Parse a long integer field, even if it is represented by a string type in
  * the JSON object.
  */
