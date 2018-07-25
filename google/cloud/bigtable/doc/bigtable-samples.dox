@@ -1,0 +1,59 @@
+/*!
+@page bigtable-samples Example: Table Admin Samples
+
+This example is a very simple "Table Admin" application, which illustrates how to:
+
+- Create a table and run basic table admin operations.
+- Create a table.
+- List tables.
+- Retrieve table metadata.
+- Modify the existing tables.
+- Delete all the rows.
+- Delete a table.
+
+## Run the example
+
+This example uses the
+[Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/google-cloud-cpp)
+to communicate with Cloud Bigtable.
+
+To run the example program, follow the
+[instructions](https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/)
+for the example on GitHub.
+
+### Include the Necessary Headers
+
+The example uses the following headers:
+
+@snippet bigtable_samples.cc bigtable includes
+
+### Create a new table in the instance.
+
+@snippet bigtable_samples.cc create table
+
+### Return all the tables in the instance.
+
+@snippet bigtable_samples.cc list tables
+
+### Get information about a single table.
+
+@snippet bigtable_samples.cc get table
+
+### Modify the schema for an existing table.
+
+@snippet bigtable_samples.cc modify table
+
+### Delete all the rows in a table.
+
+@snippet bigtable_samples.cc drop all rows
+
+### Delete a table.
+
+@snippet bigtable_samples.cc delete table
+
+### Put it all together
+
+Here is the full example
+
+@snippet bigtable_samples.cc all code
+*/

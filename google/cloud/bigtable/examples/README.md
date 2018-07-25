@@ -11,6 +11,7 @@ referenced from the Doxygen landing page as "Hello World".
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
+  - [Administer Tables](#administer-tables)
 
 ## Before you begin
 
@@ -111,3 +112,45 @@ $ ./bigtable_samples_instance_admin_ext run ${PROJECT_ID} ${INSTANCE_ID} ${CLUST
 
 [hello_world_code]: bigtable_hello_world.cc
 [instance_admin_code]: bigtable_samples_instance_admin_ext.cc
+
+### Administer Tables
+
+This sample showcases the basic table / column family operations:
+
+- Create a table
+- List tables in the current project
+- Retrieve table metadata
+- List table column families and GC rules
+- Update a column family GC rule
+- Delete all the rows
+- Delete a table
+
+#### Usage
+
+```console
+$ ./bigtable_samples
+
+Usage: bigtable_samples <command> <project_id> <instance_id> <table_id> [arguments]
+
+Examples:
+  bigtable_samples run my-project my-instance my-table 
+  bigtable_samples create-table my-project my-instance my-table
+  bigtable_samples list-tables my-project my-instance
+  bigtable_samples get-table my-project my-instance my-table
+  bigtable_samples modify-table my-project my-instance my-table
+  bigtable_samples drop-all-rows my-project my-instance my-table
+  bigtable_samples delete-table my-project my-instance my-table  
+```
+#### Run admin table samples
+After configuring gRPC, you can run the examples using:
+
+```console
+$ export PROJECT_ID=... # Your Google Cloud Platform project ID
+$ export INSTANCE_ID=... # Cloud Bigtable instance ID
+$ export TABLE_ID=... # Cloud Bigtable table ID
+$ ./bigtable_samples run ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
+```
+
+[hello_world_code]: bigtable_hello_world.cc
+[instance_admin_code]: bigtable_samples_instance_admin.cc
+[table_admin_code]: bigtable_samples.cc
