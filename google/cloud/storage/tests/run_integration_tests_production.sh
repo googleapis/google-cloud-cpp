@@ -18,11 +18,6 @@ set -eu
 
 # The CI environment must provide PROJECT_ID and BUCKET_NAME.
 
-
-echo
-echo "Running storage::internal::CurlRequest integration test."
-./curl_request_integration_test
-
 echo
 echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
