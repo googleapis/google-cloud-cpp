@@ -36,7 +36,7 @@ namespace internal {
  */
 class CurlUploadRequest {
  public:
-  CurlUploadRequest();
+  explicit CurlUploadRequest(std::size_t initial_buffer_size);
 
   CurlUploadRequest(CurlUploadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
@@ -45,10 +45,13 @@ class CurlUploadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        buffer_(std::move(rhs.buffer_)),
+        buffer_rdptr_(rhs.buffer_rdptr_),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_) {
     ResetOptions();
   }
+
   CurlUploadRequest& operator=(CurlUploadRequest&& rhs) noexcept {
     url_ = std::move(rhs.url_);
     headers_ = std::move(rhs.headers_);
@@ -56,9 +59,15 @@ class CurlUploadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    buffer_ = std::move(rhs.buffer_);
+    buffer_rdptr_ = rhs.buffer_rdptr_;
+    closing_ = rhs.closing_;
+    curl_closed_ = rhs.curl_closed_;
     ResetOptions();
     return *this;
   }
+
+  bool IsOpen() const { return not closing_; }
 
   /// Block until the current buffer has been transferred.
   void Flush();
@@ -75,8 +84,11 @@ class CurlUploadRequest {
   void NextBuffer(std::string& next_buffer);
 
  private:
-  /// Reset any options in the internal CURL handle.
   friend class CurlRequestBuilder;
+  /// Set the underlying CurlHandle options initially.
+  void SetOptions();
+
+  /// Reset the underlying CurlHandle options after a move operation.
   void ResetOptions();
 
   /// Called by libcurl to transfer some of the data out of the internal buffer.
@@ -115,6 +127,9 @@ class CurlUploadRequest {
 
   /// Simplify handling of errors in the curl_multi_* API.
   void HandleCurlMultiErrorCode(char const* where, CURLMcode result);
+
+  /// Raise an exception if the application tries to use a closed request.
+  void ValidateOpen(char const* where);
 
   std::string url_;
   CurlHeaders headers_;

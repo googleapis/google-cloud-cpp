@@ -20,11 +20,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE (128 * 1024)
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
+
 CurlRequestBuilder::CurlRequestBuilder(std::string base_url)
     : headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
-      logging_enabled_(false) {}
+      logging_enabled_(false),
+      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
   ValidateBuilderState(__func__);
@@ -41,13 +46,13 @@ CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
 
 CurlUploadRequest CurlRequestBuilder::BuildUpload() {
   ValidateBuilderState(__func__);
-  CurlUploadRequest request;
+  CurlUploadRequest request(initial_buffer_size_);
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.handle_ = std::move(handle_);
   request.multi_.reset(curl_multi_init());
-  request.ResetOptions();
+  request.SetOptions();
   return request;
 }
 
@@ -87,6 +92,12 @@ CurlRequestBuilder& CurlRequestBuilder::SetMethod(std::string const& method) {
 CurlRequestBuilder& CurlRequestBuilder::SetDebugLogging(bool enabled) {
   ValidateBuilderState(__func__);
   logging_enabled_ = enabled;
+  return *this;
+}
+
+CurlRequestBuilder& CurlRequestBuilder::SetInitialBufferSize(std::size_t size) {
+  ValidateBuilderState(__func__);
+  initial_buffer_size_ = size;
   return *this;
 }
 

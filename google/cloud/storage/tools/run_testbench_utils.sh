@@ -39,6 +39,7 @@ kill_testbench() {
   echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
   echo -n "Killing testbench server [${TESTBENCH_PID}] ... "
   curl -d "please shutdown" "${SHUTDOWN_ENDPOINT}"
+  kill "${TESTBENCH_PID}"
   wait >/dev/null 2>&1
   echo "done."
   if [ "${TESTBENCH_DUMP_LOG}" = "yes" ]; then
@@ -74,7 +75,9 @@ start_testbench() {
   # free; when using in manual tests, you can set EMULATOR_PORT.
   readonly PORT=${TESTBENCH_PORT:-8000}
 
-  "${PROJECT_ROOT}/google/cloud/storage/tests/testbench.py" --port ${PORT} \
+  gunicorn --bind 0.0.0.0:${PORT} \
+      --pythonpath "${PROJECT_ROOT}/google/cloud/storage/tests" \
+      testbench:application \
       >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 

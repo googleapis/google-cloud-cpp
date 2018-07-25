@@ -567,6 +567,13 @@ def objects_insert(bucket_name):
     return json.dumps(current_version.metadata)
 
 
+application = wsgi.DispatcherMiddleware(
+    root, {
+        '/httpbin': httpbin.app,
+        GCS_HANDLER_PATH: gcs,
+        UPLOAD_HANDLER_PATH: upload,
+    })
+
 def main():
     """Parse the arguments and run the test bench application."""
     parser = argparse.ArgumentParser(
@@ -585,12 +592,6 @@ def main():
     arguments = parser.parse_args()
 
     # Compose the different WSGI applications.
-    application = wsgi.DispatcherMiddleware(
-        root, {
-            '/httpbin': httpbin.app,
-            GCS_HANDLER_PATH: gcs,
-            UPLOAD_HANDLER_PATH: upload,
-        })
     serving.run_simple(
         arguments.host,
         int(arguments.port),
