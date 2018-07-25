@@ -90,6 +90,8 @@ class RawClient {
       ObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) = 0;
+  virtual std::pair<Status, ObjectAccessControl> PatchObjectAcl(
+      PatchObjectAclRequest const&) = 0;
 };
 
 }  // namespace internal

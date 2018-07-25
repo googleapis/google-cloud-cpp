@@ -153,6 +153,55 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name, entity, role);
 }
 
+void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
+  if (argc != 5) {
+    throw Usage{"patch-object-acl <bucket-name> <object-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [patch object acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity, std::string role) {
+    gcs::ObjectAccessControl original_acl =
+        client.GetObjectAcl(bucket_name, object_name, entity);
+    auto new_acl = original_acl;
+    new_acl.set_role(role);
+    gcs::ObjectAccessControl acl =
+        client.PatchObjectAcl(bucket_name, object_name, entity, original_acl,
+                              new_acl, gcs::IfMatchEtag(original_acl.etag()));
+    std::cout << "ACL entry for " << entity << " in object " << object_name
+              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+  }
+  //! [patch object acl]
+  (std::move(client), bucket_name, object_name, entity, role);
+}
+
+void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "patch-object-acl-no-read <bucket-name> <object-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [patch object acl no-read]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity, std::string role) {
+    gcs::ObjectAccessControl acl = client.PatchObjectAcl(
+        bucket_name, object_name, entity,
+        gcs::ObjectAccessControlPatchBuilder().set_role(role));
+    std::cout << "ACL entry for " << entity << " in object " << object_name
+              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+  }
+  //! [patch object acl no-read]
+  (std::move(client), bucket_name, object_name, entity, role);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -167,6 +216,8 @@ int main(int argc, char* argv[]) try {
       {"delete-object-acl", &DeleteObjectAcl},
       {"get-object-acl", &GetObjectAcl},
       {"update-object-acl", &UpdateObjectAcl},
+      {"patch-object-acl", &PatchObjectAcl},
+      {"patch-object-acl-no-read", &PatchObjectAclNoRead},
   };
   for (auto&& kv : commands) {
     try {
