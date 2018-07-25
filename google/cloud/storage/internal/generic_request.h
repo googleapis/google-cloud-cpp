@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REQUEST_PARAMETERS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REQUEST_PARAMETERS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
 
 #include "google/cloud/storage/version.h"
 #include <iostream>
@@ -26,39 +26,39 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 // Forward declare the template so we can specialize it first. Defining the
 // specialization first, which is the base class, should be more readable.
-template <typename Derived, typename Parameter, typename... Parameters>
-class RequestParameterList;
+template <typename Derived, typename Modifier, typename... Modifiers>
+class GenericRequestBase;
 
 /**
  * Refactor common functions that manipulate list of parameters in a request.
  *
  * This class is used in the implementation of `RequestParameters`, it is the
- * base class for a hierarchy of `RequestParameterList<Parameters...>` when the
+ * base class for a hierarchy of `GenericRequestBase<Parameters...>` when the
  * list has a single parameter.
  *
- * @tparam Parameter the parameter contained in this object.
+ * @tparam Modifier the parameter contained in this object.
  */
-template <typename Derived, typename Parameter>
-class RequestParameterList<Derived, Parameter> {
+template <typename Derived, typename Modifier>
+class GenericRequestBase<Derived, Modifier> {
  public:
-  Derived& set_parameter(Parameter&& p) {
-    parameter_ = std::move(p);
+  Derived& set_modifier(Modifier&& p) {
+    modifier_ = std::move(p);
     return *static_cast<Derived*>(this);
   }
 
   template <typename HttpRequest>
-  void AddParametersToHttpRequest(HttpRequest& request) const {
-    request.AddWellKnownParameter(parameter_);
+  void AddModifiersToHttpRequest(HttpRequest& request) const {
+    request.AddModifier(modifier_);
   }
 
-  void DumpParameters(std::ostream& os, char const* sep) const {
-    if (parameter_.has_value()) {
-      os << sep << parameter_.parameter_name() << "=" << parameter_.value();
+  void DumpModifiers(std::ostream& os, char const* sep) const {
+    if (modifier_.has_value()) {
+      os << sep << modifier_;
     }
   }
 
  private:
-  Parameter parameter_;
+  Modifier modifier_;
 };
 
 /**
@@ -67,35 +67,34 @@ class RequestParameterList<Derived, Parameter> {
  * This class is used in the implementation of `RequestParameters` see below for
  * more details.
  */
-template <typename Derived, typename Parameter, typename... Parameters>
-class RequestParameterList
-    : public RequestParameterList<Derived, Parameters...> {
+template <typename Derived, typename Modifier, typename... Modifiers>
+class GenericRequestBase : public GenericRequestBase<Derived, Modifiers...> {
  public:
-  using RequestParameterList<Derived, Parameters...>::set_parameter;
+  using GenericRequestBase<Derived, Modifiers...>::set_modifier;
 
-  Derived& set_parameter(Parameter&& p) {
-    parameter_ = std::move(p);
+  Derived& set_modifier(Modifier&& p) {
+    modifier_ = std::move(p);
     return *static_cast<Derived*>(this);
   }
 
   template <typename HttpRequest>
-  void AddParametersToHttpRequest(HttpRequest& request) const {
-    request.AddWellKnownParameter(parameter_);
-    RequestParameterList<Derived, Parameters...>::AddParametersToHttpRequest(
+  void AddModifiersToHttpRequest(HttpRequest& request) const {
+    request.AddModifier(modifier_);
+    GenericRequestBase<Derived, Modifiers...>::AddModifiersToHttpRequest(
         request);
   }
 
-  void DumpParameters(std::ostream& os, char const* sep) const {
-    if (parameter_.has_value()) {
-      os << sep << parameter_.parameter_name() << "=" << parameter_.value();
-      RequestParameterList<Derived, Parameters...>::DumpParameters(os, ", ");
+  void DumpModifiers(std::ostream& os, char const* sep) const {
+    if (modifier_.has_value()) {
+      os << sep << modifier_;
+      GenericRequestBase<Derived, Modifiers...>::DumpModifiers(os, ", ");
     } else {
-      RequestParameterList<Derived, Parameters...>::DumpParameters(os, sep);
+      GenericRequestBase<Derived, Modifiers...>::DumpModifiers(os, sep);
     }
   }
 
  private:
-  Parameter parameter_;
+  Modifier modifier_;
 };
 
 /**
@@ -111,7 +110,7 @@ class RequestParameterList
  * 1) Make this class a (private) base class of `FooRequest`, with the list of
  *    optional parameters it will support:
  * @code
- * class FooRequest : private internal::RequestParameters<UserProject, P1, P2>
+ * class FooRequest : private internal::RequestModifiers<UserProject, P1, P2>
  * @endcode
  *
  * 2) Define a generic function to set a parameter:
@@ -120,7 +119,7 @@ class RequestParameterList
  * {
  *   template <typename Parameter>
  *   FooRequest& set_parameter(Parameter&& p) {
- *     RequestParameters::set_parameter(p);
+ *     RequestModifiers::set_parameter(p);
  *     return *this;
  *   }
  * @endcode
@@ -132,27 +131,26 @@ class RequestParameterList
  * @code
  * class FooRequest // some things ommitted
  * {
- *   template <typename... Parameters>
- *   FooRequest& set_multiple_parameters(Parameters&&... p) {
- *     RequestParameters::set_multiple_parameters(std::forward<Parameter>(p)...);
+ *   template <typename... Modifiers>
+ *   FooRequest& set_multiple_modifiers(Modifiers&&... p) {
+ *     RequestModifiers::set_multiple_modifiers(std::forward<Parameter>(p)...);
  *     return *this;
  *   }
  * @endcode
  *
- * @tparam Parameters the list of parameters that the Request class will
+ * @tparam Modifiers the list of parameters that the Request class will
  *     support.
  */
-template <typename Derived, typename... Parameters>
-class GenericRequest : public RequestParameterList<Derived, Parameters...> {
+template <typename Derived, typename... Modifiers>
+class GenericRequest : public GenericRequestBase<Derived, Modifiers...> {
  public:
   template <typename H, typename... T>
-  Derived& set_multiple_parameters(H&& h, T&&... tail) {
-    RequestParameterList<Derived, Parameters...>::set_parameter(
-        std::forward<H>(h));
-    return set_multiple_parameters(std::forward<T>(tail)...);
+  Derived& set_multiple_modifiers(H&& h, T&&... tail) {
+    GenericRequestBase<Derived, Modifiers...>::set_modifier(std::forward<H>(h));
+    return set_multiple_modifiers(std::forward<T>(tail)...);
   }
 
-  Derived& set_multiple_parameters() { return *static_cast<Derived*>(this); }
+  Derived& set_multiple_modifiers() { return *static_cast<Derived*>(this); }
 };
 
 }  // namespace internal
@@ -161,4 +159,4 @@ class GenericRequest : public RequestParameterList<Derived, Parameters...> {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REQUEST_PARAMETERS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_

@@ -25,7 +25,7 @@ using ::testing::HasSubstr;
 
 TEST(InsertObjectMediaRequestTest, OStream) {
   InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
-  request.set_multiple_parameters(
+  request.set_multiple_modifiers(
       IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
       KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"));
   std::ostringstream os;
@@ -43,7 +43,7 @@ TEST(InsertObjectMediaRequestTest, OStream) {
 
 TEST(InsertObjectStreamingRequestTest, OStream) {
   InsertObjectStreamingRequest request("my-bucket", "my-object");
-  request.set_multiple_parameters(
+  request.set_multiple_modifiers(
       IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
       KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"));
   std::ostringstream os;

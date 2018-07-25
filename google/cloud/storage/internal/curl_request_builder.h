@@ -60,8 +60,7 @@ class CurlRequestBuilder {
 
   /// Add one of the well-known parameters as a query parameter
   template <typename P>
-  CurlRequestBuilder& AddWellKnownParameter(
-      WellKnownParameter<P, std::string> const& p) {
+  CurlRequestBuilder& AddModifier(WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
       AddQueryParameter(p.parameter_name(), p.value());
     }
@@ -70,7 +69,7 @@ class CurlRequestBuilder {
 
   /// Add one of the well-known parameters as a query parameter
   template <typename P>
-  CurlRequestBuilder& AddWellKnownParameter(
+  CurlRequestBuilder& AddModifier(
       WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
       AddQueryParameter(p.parameter_name(), std::to_string(p.value()));

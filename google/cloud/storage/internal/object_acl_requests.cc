@@ -25,7 +25,7 @@ std::ostream& operator<<(std::ostream& os, CreateObjectAclRequest const& r) {
   os << "CreateObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity()
      << ", role=" << r.role();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 
@@ -33,14 +33,14 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r) {
   os << "UpdateObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity()
      << ", role=" << r.role();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r) {
   os << "ObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 

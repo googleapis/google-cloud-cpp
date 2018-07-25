@@ -32,7 +32,7 @@ using ::testing::HasSubstr;
 
 TEST(ListObjectAclRequestTest, Stream) {
   ListObjectAclRequest request("my-bucket", "my-object");
-  request.set_multiple_parameters(UserProject("my-project"), Generation(7));
+  request.set_multiple_modifiers(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
   auto str = os.str();

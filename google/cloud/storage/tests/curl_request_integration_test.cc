@@ -162,7 +162,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::Projection("full"));
+  request.AddModifier(storage::Projection("full"));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -182,7 +182,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::UserProject("a-project"));
+  request.AddModifier(storage::UserProject("a-project"));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -202,7 +202,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::IfGenerationMatch(42));
+  request.AddModifier(storage::IfGenerationMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -222,7 +222,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
+  request.AddModifier(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -242,7 +242,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::IfMetaGenerationMatch(42));
+  request.AddModifier(storage::IfMetaGenerationMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -262,7 +262,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::IfMetaGenerationNotMatch(42));
+  request.AddModifier(storage::IfMetaGenerationNotMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -282,9 +282,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddWellKnownParameter(storage::UserProject("user-project-id"));
-  request.AddWellKnownParameter(storage::IfMetaGenerationMatch(7));
-  request.AddWellKnownParameter(storage::IfGenerationNotMatch(42));
+  request.AddModifier(storage::UserProject("user-project-id"));
+  request.AddModifier(storage::IfMetaGenerationMatch(7));
+  request.AddModifier(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);

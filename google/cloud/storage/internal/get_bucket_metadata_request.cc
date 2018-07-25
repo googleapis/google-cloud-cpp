@@ -22,7 +22,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r) {
   os << "GetBucketMetadataRequest={bucket_name=" << r.bucket_name();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 

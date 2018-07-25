@@ -23,7 +23,7 @@ namespace internal {
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   os << ", contents=\n"
      << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
   return os << "}";
@@ -33,7 +33,7 @@ std::ostream& operator<<(std::ostream& os,
                          InsertObjectStreamingRequest const& r) {
   os << "InsertObjectStreamingRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 }  // namespace internal

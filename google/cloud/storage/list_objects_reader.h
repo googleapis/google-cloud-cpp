@@ -81,7 +81,7 @@ class ListObjectsReader {
         request_(std::move(bucket_name)),
         next_page_token_(),
         on_last_page_(false) {
-    request_.set_multiple_parameters(std::forward<Parameters>(parameters)...);
+    request_.set_multiple_modifiers(std::forward<Parameters>(parameters)...);
     current_ = current_objects_.begin();
   }
 

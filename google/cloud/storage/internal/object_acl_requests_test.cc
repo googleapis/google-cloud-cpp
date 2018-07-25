@@ -35,7 +35,7 @@ TEST(CreateObjectAclRequestTest, Simple) {
 TEST(CreateObjectAclRequestTest, Stream) {
   CreateObjectAclRequest request("my-bucket", "my-object", "user-testuser",
                                  "READER");
-  request.set_multiple_parameters(UserProject("my-project"), Generation(7));
+  request.set_multiple_modifiers(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -56,7 +56,7 @@ TEST(ObjectAclRequestTest, Simple) {
 
 TEST(ObjectAclRequestTest, Stream) {
   ObjectAclRequest request("my-bucket", "my-object", "user-test-user");
-  request.set_multiple_parameters(UserProject("my-project"), Generation(7));
+  request.set_multiple_modifiers(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
   auto str = os.str();

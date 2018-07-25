@@ -23,7 +23,7 @@ namespace internal {
 std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   os << "GetObjectMetadataRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
+  r.DumpModifiers(os, ", ");
   return os << "}";
 }
 
