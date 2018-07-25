@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['status',['Status',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html',1,'google::cloud::storage::v']]],
-  ['statustraits',['StatusTraits',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html',1,'google::cloud::storage::v']]]
+  ['status',['Status',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html',1,'google::cloud::storage::v0']]],
+  ['statustraits',['StatusTraits',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusTraits.html',1,'google::cloud::storage::v0']]]
 ];

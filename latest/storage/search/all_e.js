@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['read',['Read',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a27b0de4068bf87afdde534750f5f2c3f',1,'google::cloud::storage::v::Client']]],
+  ['read',['Read',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0fb7523930bc8e127ccedf30d4038325',1,'google::cloud::storage::v0::Client']]],
   ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]],
-  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#ac40b51e7f769f9d328e5a24715c46f23',1,'google::cloud::storage::v']]],
-  ['role',['role',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#a0990c828543a87ce2b68895986e5fbc4',1,'google::cloud::storage::v::BucketAccessControl::role()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html#a94894f32ba10e0e02d19687328971496',1,'google::cloud::storage::v::ObjectAccessControl::role()']]]
+  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a89b2c258bf4be827c64887cd2fd59c92',1,'google::cloud::storage::v0']]],
+  ['role',['role',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a7f84a580740e9ddc570772cedfaba8a3',1,'google::cloud::storage::v0::BucketAccessControl::role()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html#a9fbce1a4c27b156cd526c64d6771f8a9',1,'google::cloud::storage::v0::ObjectAccessControl::role()']]]
 ];

@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationMatch.html',1,'google::cloud::storage::v']]],
-  ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v']]],
-  ['ifmetagenerationmatch',['IfMetaGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfMetaGenerationMatch.html',1,'google::cloud::storage::v']]],
-  ['ifmetagenerationnotmatch',['IfMetaGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1IfMetaGenerationNotMatch.html',1,'google::cloud::storage::v']]],
-  ['insecurecredentials',['InsecureCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1InsecureCredentials.html',1,'google::cloud::storage::v::InsecureCredentials'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1InsecureCredentials.html#a7cd5c422f49551b0d0061a5d7e1af049',1,'google::cloud::storage::v::InsecureCredentials::InsecureCredentials()']]],
-  ['insertobject',['InsertObject',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#abd87fb73090a0dc45224f93ef8fb6cd4',1,'google::cloud::storage::v::Client']]],
-  ['isopen',['IsOpen',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStreamBuf.html#a8cd4fcea136f74d8b80e66281c937061',1,'google::cloud::storage::v::ObjectReadStreamBuf::IsOpen()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectReadStream.html#a96c56c6629e10157cace8aa6366dab4b',1,'google::cloud::storage::v::ObjectReadStream::IsOpen()']]],
-  ['ispermanentfailure',['IsPermanentFailure',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1StatusTraits.html#a26573668ddfed3d9813e5c6b7267b62b',1,'google::cloud::storage::v::StatusTraits']]],
-  ['iterator',['iterator',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#aacf7a96411121fce1250348b627702f8',1,'google::cloud::storage::v::ListBucketsReader::iterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a30fee75f9296246446c3b4db099bdf5e',1,'google::cloud::storage::v::ListObjectsReader::iterator()']]]
+  ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationMatch.html',1,'google::cloud::storage::v0']]],
+  ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v0']]],
+  ['ifmetagenerationmatch',['IfMetaGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetaGenerationMatch.html',1,'google::cloud::storage::v0']]],
+  ['ifmetagenerationnotmatch',['IfMetaGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetaGenerationNotMatch.html',1,'google::cloud::storage::v0']]],
+  ['insecurecredentials',['InsecureCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1InsecureCredentials.html',1,'google::cloud::storage::v0::InsecureCredentials'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1InsecureCredentials.html#a748f9e6ee6ca90596a05bbc33f4fa4e0',1,'google::cloud::storage::v0::InsecureCredentials::InsecureCredentials()']]],
+  ['insertobject',['InsertObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af22bd7d79c4e95b04000db0b054ec9e0',1,'google::cloud::storage::v0::Client']]],
+  ['isopen',['IsOpen',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStreamBuf.html#a9ba666449cdb1e9913b9f970e3099377',1,'google::cloud::storage::v0::ObjectReadStreamBuf::IsOpen()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#acd290c5d85766311f8fecef517518d7c',1,'google::cloud::storage::v0::ObjectReadStream::IsOpen()']]],
+  ['ispermanentfailure',['IsPermanentFailure',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusTraits.html#ae318895a36e234a28f07fe0983365b0f',1,'google::cloud::storage::v0::StatusTraits']]],
+  ['iterator',['iterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ab31328af451b194cb24b08844579daac',1,'google::cloud::storage::v0::ListBucketsReader::iterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#acebd53d13f76ad782c4c76a34ff0f369',1,'google::cloud::storage::v0::ListObjectsReader::iterator()']]]
 ];

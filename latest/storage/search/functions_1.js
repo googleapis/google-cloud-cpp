@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['begin',['begin',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#a73f798cdc7c461bd293bd4b33ab63724',1,'google::cloud::storage::v::ListBucketsReader::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#ac2095225e147d5bd7d5fd6b4c33d5e4c',1,'google::cloud::storage::v::ListObjectsReader::begin()']]],
-  ['bucket',['bucket',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectMetadata.html#a50883269c367f9f671c7f79d6bdd3481',1,'google::cloud::storage::v::ObjectMetadata']]],
-  ['bucketaccesscontrol',['BucketAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#aee000fd29bbb6ecec5eaf807243d8cad',1,'google::cloud::storage::v::BucketAccessControl']]],
-  ['bucketmetadata',['BucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketMetadata.html#a5e15e66f49891ce9a7812506d33df20e',1,'google::cloud::storage::v::BucketMetadata']]]
+  ['begin',['begin',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a6bad7171015ee092d9a124b39139c167',1,'google::cloud::storage::v0::ListBucketsReader::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a6444af24857f5dbcdaafe9a14e76c3ab',1,'google::cloud::storage::v0::ListObjectsReader::begin()']]],
+  ['bucket',['bucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa9c2ef62d0d321c53625bfb21efc216e',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['bucketaccesscontrol',['BucketAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#aaf43b55a2cbd225e7a1ef42e759598bb',1,'google::cloud::storage::v0::BucketAccessControl']]],
+  ['bucketmetadata',['BucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#acc89a140d787c96f0d3207e101275b0e',1,'google::cloud::storage::v0::BucketMetadata']]]
 ];

@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['enable_5fhttp_5ftracing',['enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#ac7993622ea71d6cc1959c6e66b7ec70b',1,'google::cloud::storage::v::ClientOptions']]],
-  ['enable_5fraw_5fclient_5ftracing',['enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#acc433a2e17460e09b8e202728b0448ed',1,'google::cloud::storage::v::ClientOptions']]],
-  ['encryption_5falgorithm',['encryption_algorithm',['../structgoogle_1_1cloud_1_1storage_1_1v_1_1CustomerEncryption.html#af4ac5b3a2d144dec9231388d5ebead3e',1,'google::cloud::storage::v::CustomerEncryption']]],
-  ['end',['end',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListBucketsReader.html#abf17da6bb5207fda6ade8c9f3a507609',1,'google::cloud::storage::v::ListBucketsReader::end()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ListObjectsReader.html#a9b91461ae582ba06a00452357584e39c',1,'google::cloud::storage::v::ListObjectsReader::end()']]],
-  ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ClientOptions.html#a3bf3922c6b1238d7ec3b90a51f2778ad',1,'google::cloud::storage::v::ClientOptions']]],
-  ['entity',['entity',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1BucketAccessControl.html#a3a1901b95601fbcc353264450117ccb9',1,'google::cloud::storage::v::BucketAccessControl::entity()'],['../classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html#a39e51ff469063b5cc494ee1d8d79bd59',1,'google::cloud::storage::v::ObjectAccessControl::entity()']]],
-  ['error_5fdetails',['error_details',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#a050fc42d4bc954e2fbc8583b01b6ade3',1,'google::cloud::storage::v::Status']]],
-  ['error_5fmessage',['error_message',['../classgoogle_1_1cloud_1_1storage_1_1v_1_1Status.html#a1edddf830bd840f8aff8c9eb40c9f343',1,'google::cloud::storage::v::Status']]],
-  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v.html#a60cb09490057caa9e94c57bcbe29c430',1,'google::cloud::storage::v']]]
+  ['enable_5fhttp_5ftracing',['enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#aa1a26e0476ca5585823cc1f90032cfb4',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['enable_5fraw_5fclient_5ftracing',['enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a056cbe14d839d03e78104c778a514889',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['encryption_5falgorithm',['encryption_algorithm',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html#aba57c3a0e4c10d6c31948d1adfa73acb',1,'google::cloud::storage::v0::CustomerEncryption']]],
+  ['end',['end',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#aafeb095023c09d6ecfd720e3783f6c4a',1,'google::cloud::storage::v0::ListBucketsReader::end()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#ac139d7662a1244591decfacf8159f1b2',1,'google::cloud::storage::v0::ListObjectsReader::end()']]],
+  ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a2c1f7f1dd4a7d1bd7168786178ee673c',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['entity',['entity',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#ac479460f610e62b3feb01f0c0ff333e8',1,'google::cloud::storage::v0::BucketAccessControl::entity()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html#a02a401136ef47802b7f5188690bd82ea',1,'google::cloud::storage::v0::ObjectAccessControl::entity()']]],
+  ['error_5fdetails',['error_details',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a34970fcb5fbd560f8f8265e384dd962b',1,'google::cloud::storage::v0::Status']]],
+  ['error_5fmessage',['error_message',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a47beef28fe82234204cc8f94c0b84f44',1,'google::cloud::storage::v0::Status']]],
+  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6271071b268ae795cb94cb628a4fc24c',1,'google::cloud::storage::v0']]]
 ];
