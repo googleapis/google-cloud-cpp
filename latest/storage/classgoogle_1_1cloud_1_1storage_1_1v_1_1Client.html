@@ -145,6 +145,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a838dddf31eea5c097e7d0b274c9184be"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#a838dddf31eea5c097e7d0b274c9184be">GetObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, Parameters &amp;&amp;... parameters)</td></tr>
 <tr class="memdesc:a838dddf31eea5c097e7d0b274c9184be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of an existing object ACL.  <a href="#a838dddf31eea5c097e7d0b274c9184be">More...</a><br /></td></tr>
 <tr class="separator:a838dddf31eea5c097e7d0b274c9184be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd62811bce2eba1bbb5fff69b1d2367d"><td class="memTemplParams" colspan="2">template&lt;typename... Parameters&gt; </td></tr>
+<tr class="memitem:afd62811bce2eba1bbb5fff69b1d2367d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html#afd62811bce2eba1bbb5fff69b1d2367d">UpdateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;acl, Parameters &amp;&amp;... parameters)</td></tr>
+<tr class="memdesc:afd62811bce2eba1bbb5fff69b1d2367d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the value of an existing object ACL.  <a href="#afd62811bce2eba1bbb5fff69b1d2367d">More...</a><br /></td></tr>
+<tr class="separator:afd62811bce2eba1bbb5fff69b1d2367d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
@@ -956,6 +960,69 @@ template&lt;typename... Parameters&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> ReadObject(gcs::Client client, <span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{</div><div class="line">        <span class="stringliteral">&quot;insert-object &lt;bucket-name&gt; &lt;object-name&gt; &lt;object-contents (string)&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> bucket_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> object_name = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> stream = client.Read(bucket_name, object_name);</div><div class="line">  <span class="keywordtype">int</span> count = 0;</div><div class="line">  <span class="keywordflow">while</span> (not stream.eof()) {</div><div class="line">    std::string line;</div><div class="line">    std::getline(stream, line, <span class="charliteral">&#39;\n&#39;</span>);</div><div class="line">    ++count;</div><div class="line">  }</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The object has &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot; lines&quot;</span> &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="afd62811bce2eba1bbb5fff69b1d2367d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd62811bce2eba1bbb5fff69b1d2367d">&#9670;&nbsp;</a></span>UpdateObjectAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Parameters&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v::Client::UpdateObjectAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;&#160;</td>
+          <td class="paramname"><em>acl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Parameters &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the value of an existing object ACL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket that contains the object. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object. </td></tr>
+    <tr><td class="paramname">acl</td><td>the new ACL value. Note that only the writable values of the ACL will be modified by the server. </td></tr>
+    <tr><td class="paramname">parameters</td><td>a variadic list of optional parameters. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1Generation.html">Generation</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl current_acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    current_acl.set_role(role);</div><div class="line">    gcs::ObjectAccessControl acl =</div><div class="line">        client.UpdateObjectAcl(bucket_name, object_name, current_acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls">https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls</a> for additional details on what fields are writeable. </dd></dl>
 
 </div>
 </div>
