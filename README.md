@@ -42,9 +42,9 @@ APIs.
   - [OpenSuSE (Leap)](#opensuse-leap)
   - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
   - [Ubuntu (Xenial Xerus)](#ubuntu-xenial-xerus)
-  - [Ubuntu (Trusty)](#ubuntu-trusty)
+  - [Ubuntu (Trusty)](#ubuntu-trusty-tahr)
   - [macOS (using brew)](#macos-using-brew)
-  - [Windows](#windows)
+  - [Windows](#windows-using-vcpkg)
 - [Build](#build)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows-1)
@@ -95,7 +95,7 @@ against the latest version of the SDK on each commit and PR.
 #### CentOS
 
 The default compiler on CentOS doesn't fully support C++11. We need to upgrade
-the compiler and other development tools. In this instructions, we use `g++-7`
+the compiler and other development tools. In these instructions, we use `g++-7`
 via [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
@@ -205,7 +205,7 @@ sudo make install
 brew install curl cmake
 ```
 
-#### Windows
+#### Windows (using vcpkg)
 
 ```bash
 set PROVIDER=vcpkg
