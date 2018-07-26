@@ -184,7 +184,7 @@ class PatchBuilder {
     return *this;
   }
 
-  template<typename T>
+  template <typename T>
   PatchBuilder& SetArrayField(char const* field_name, std::vector<T> const& v) {
     patch_[field_name] = v;
     return *this;
