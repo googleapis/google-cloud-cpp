@@ -95,6 +95,10 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "metageneration": "4",
       "name": "test-bucket",
+      "owner": {
+        "entity": "project-owners-123456789",
+        "entityId": "test-owner-id-123"
+      },
       "projectNumber": "123456789",
       "location": "US",
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
@@ -144,6 +148,8 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("US", actual.location());
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
+  EXPECT_EQ("project-owners-123456789", actual.owner().entity);
+  EXPECT_EQ("test-owner-id-123", actual.owner().entity_id);
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
@@ -174,6 +180,8 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
   EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
+  EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
+  EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.

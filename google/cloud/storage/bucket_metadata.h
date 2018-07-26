@@ -187,6 +187,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
+  using CommonMetadata::owner;
+
   std::int64_t const& project_number() const { return project_number_; }
 
   using CommonMetadata::self_link;

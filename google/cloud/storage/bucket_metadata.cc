@@ -160,6 +160,8 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   os << ", location=" << rhs.location()
      << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
+     << ", owner.entity=" << rhs.owner().entity
+     << ", owner.entity_id=" << rhs.owner().entity_id
      << ", self_link=" << rhs.self_link()
      << ", storage_class=" << rhs.storage_class()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
