@@ -143,12 +143,12 @@ std::pair<Status, ObjectMetadata> RetryClient::GetObjectMetadata(
                   &RawClient::GetObjectMetadata, request, __func__);
 }
 
-std::pair<Status, ReadObjectRangeResponse> RetryClient::ReadObjectRangeMedia(
+std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> RetryClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
-                  &RawClient::ReadObjectRangeMedia, request, __func__);
+                  &RawClient::ReadObject, request, __func__);
 }
 
 std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>

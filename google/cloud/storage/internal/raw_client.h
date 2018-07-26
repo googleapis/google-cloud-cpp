@@ -65,9 +65,8 @@ class RawClient {
   virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
 
-  virtual std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
+  virtual std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) = 0;
-
   virtual std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) = 0;
 

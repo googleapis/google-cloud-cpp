@@ -30,29 +30,54 @@ namespace internal {
 CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
+      closing_(false),
       curl_closed_(false),
       initial_buffer_size_(initial_buffer_size) {
   buffer_.reserve(initial_buffer_size);
 }
 
+HttpResponse CurlDownloadRequest::Close() {
+  // Set the the closing_ flag to trigger a return 0 from the next read
+  // callback, see the comments in the header file for more details.
+  closing_ = true;
+  // Block until that callback is made.
+  Wait([this] { return curl_closed_; });
+
+  // Now remove the handle from the CURLM* interface and wait for the response.
+  auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+  RaiseOnError(__func__, error);
+
+  long http_code = handle_.GetResponseCode();
+  return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+}
+
 HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
-  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size();
   Wait([this] {
     return curl_closed_ or buffer_.size() >= initial_buffer_size_;
   });
+  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
+                 << ", closing=" << closing_ << ", closed=" << curl_closed_;
   if (curl_closed_) {
     // Remove the handle from the CURLM* interface and wait for the response.
     auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
     RaiseOnError(__func__, error);
 
-    buffer.swap(buffer_);
+    buffer_.swap(buffer);
+    buffer_.clear();
     long http_code = handle_.GetResponseCode();
+    GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
+                   << ", closing=" << closing_ << ", closed=" << curl_closed_
+                   << ", code=" << http_code;
     return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
   }
   buffer_.swap(buffer);
+  buffer_.clear();
   buffer_.reserve(initial_buffer_size_);
   handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
+                 << ", closing=" << closing_ << ", closed=" << curl_closed_
+                 << ", code=100";
   return HttpResponse{100, {}, {}};
 }
 
@@ -91,11 +116,18 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
   handle_.FlushDebug(__func__);
   GCP_LOG(DEBUG) << __func__ << "() size=" << size << ", nmemb=" << nmemb
                  << ", buffer.size=" << buffer_.size();
-
-  buffer_.append(static_cast<char const*>(ptr), size * nmemb);
-  if (buffer_.size() > 128 * 1024) {
+  // This transfer is closing, just return zero, that will make libcurl finish
+  // any pending work, and will return the handle_ pointer from
+  // curl_multi_info_read() in PerformWork(). That is the point where
+  // `curl_closed_` is set.
+  if (closing_) {
+    return 0;
+  }
+  if (buffer_.size() >= initial_buffer_size_) {
     return CURL_READFUNC_PAUSE;
   }
+
+  buffer_.append(static_cast<char const*>(ptr), size * nmemb);
   return size * nmemb;
 }
 

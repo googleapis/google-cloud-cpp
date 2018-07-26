@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STREAMBUF_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STREAMBUF_H_
 
+#include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_upload_request.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 
@@ -23,6 +24,28 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+/**
+ * Implement a wrapper for libcurl-based streaming downloads.
+ */
+class CurlReadStreambuf : public ObjectReadStreambuf {
+ public:
+  explicit CurlReadStreambuf(CurlDownloadRequest&& download,
+                             std::size_t initial_buffer_size);
+
+  ~CurlReadStreambuf() override = default;
+
+  HttpResponse Close() override;
+  bool IsOpen() const override;
+
+ protected:
+  int_type underflow() override;
+
+ private:
+  CurlDownloadRequest download_;
+  std::string current_ios_buffer_;
+  std::size_t target_buffer_size_;
+};
+
 /**
  * Implement a wrapper for libcurl-based streaming uploads.
  */

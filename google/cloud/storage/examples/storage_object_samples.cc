@@ -80,24 +80,27 @@ void GetObjectMetadata(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name);
 }
 
-//! [read object]
 void ReadObject(gcs::Client client, int& argc, char* argv[]) {
   if (argc < 2) {
-    throw Usage{
-        "insert-object <bucket-name> <object-name> <object-contents (string)>"};
+    throw Usage{"read-object <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  auto stream = client.Read(bucket_name, object_name);
-  int count = 0;
-  while (not stream.eof()) {
-    std::string line;
-    std::getline(stream, line, '\n');
-    ++count;
+  //! [read object] [START download_file]
+  [](google::cloud::storage::Client client, std::string bucket_name,
+     std::string object_name) {
+    auto stream = client.ReadObject(bucket_name, object_name);
+    int count = 0;
+    while (not stream.eof()) {
+      std::string line;
+      std::getline(stream, line, '\n');
+      ++count;
+    }
+    std::cout << "The object has " << count << " lines" << std::endl;
   }
-  std::cout << "The object has " << count << " lines" << std::endl;
+  //! [read object] [END download_file]
+  (std::move(client), bucket_name, object_name);
 }
-//! [read object]
 
 //! [delete object]
 void DeleteObject(gcs::Client client, int& argc, char* argv[]) {

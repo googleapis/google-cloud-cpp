@@ -103,10 +103,10 @@ std::pair<Status, ObjectMetadata> LoggingClient::GetObjectMetadata(
   return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
 }
 
-std::pair<Status, ReadObjectRangeResponse> LoggingClient::ReadObjectRangeMedia(
-    ReadObjectRangeRequest const& request) {
-  return MakeCall(*client_, &RawClient::ReadObjectRangeMedia, request,
-                  __func__);
+std::pair<Status, std::unique_ptr<ObjectReadStreambuf>>
+LoggingClient::ReadObject(ReadObjectRangeRequest const& request) {
+  return MakeCallNoResponseLogging(*client_, &RawClient::ReadObject, request,
+                                   __func__);
 }
 
 std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>

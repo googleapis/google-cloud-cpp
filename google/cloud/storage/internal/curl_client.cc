@@ -95,7 +95,7 @@ std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
                         ObjectMetadata::ParseFromString(payload.payload));
 }
 
-std::pair<Status, ReadObjectRangeResponse> CurlClient::ReadObjectRangeMedia(
+std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -103,23 +103,11 @@ std::pair<Status, ReadObjectRangeResponse> CurlClient::ReadObjectRangeMedia(
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   builder.AddQueryParameter("alt", "media");
-  // For the moment, we are using range reads to read the objects (see #727)
-  // disable decompression because range reads do not work in that case:
-  //   https://cloud.google.com/storage/docs/transcoding#range
-  // and
-  //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
-  builder.AddHeader("Cache-Control: no-transform");
-  builder.AddHeader("Range: bytes=" + std::to_string(request.begin()) + '-' +
-                    std::to_string(request.end()));
-  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
-  if (payload.status_code >= 300) {
-    return std::make_pair(
-        Status{payload.status_code, std::move(payload.payload)},
-        internal::ReadObjectRangeResponse{});
-  }
-  return std::make_pair(
-      Status(),
-      internal::ReadObjectRangeResponse::FromHttpResponse(std::move(payload)));
+  // TODO(#937) - use client options to configure buffer size.
+  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
+      builder.BuildDownloadRequest(std::string{}), 128 * 1024));
+  return std::make_pair(Status(),
+                        std::unique_ptr<ObjectReadStreambuf>(std::move(buf)));
 }
 
 std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
@@ -132,6 +120,7 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Type: application/octet-stream");
+  // TODO(#937) - use client options to configure buffer size.
   std::unique_ptr<internal::CurlStreambuf> buf(
       new internal::CurlStreambuf(builder.BuildUpload(), 128 * 1024));
   return std::make_pair(
