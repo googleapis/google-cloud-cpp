@@ -96,7 +96,8 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
     os << sep << acl;
     sep = ", ";
   }
-  os << ", bucket=" << rhs.bucket() << ", cache_control=" << rhs.cache_control()
+  os << "], bucket=" << rhs.bucket()
+     << ", cache_control=" << rhs.cache_control()
      << ", component_count=" << rhs.component_count()
      << ", content_disposition=" << rhs.content_disposition()
      << ", content_encoding=" << rhs.content_encoding()

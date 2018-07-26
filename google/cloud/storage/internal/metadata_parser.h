@@ -26,6 +26,9 @@ namespace internal {
 /**
  * Parse a boolean field, even if it is represented by a string type in the JSON
  * object.
+ *
+ * @return the value of @p field_name in @p json, or `false` if the field is not
+ * present.
  */
 bool ParseBoolField(nl::json const& json, char const* field_name);
 
@@ -45,18 +48,27 @@ std::uint32_t ParseUnsignedIntField(nl::json const& json,
 /**
  * Parse a long integer field, even if it is represented by a string type in
  * the JSON object.
+ *
+ * @return the value of @p field_name in @p json, or `0` if the field is not
+ * present.
  */
 std::int64_t ParseLongField(nl::json const& json, char const* field_name);
 
 /**
  * Parse an unsigned long integer field, even if it is represented by a string
  * type in the JSON object.
+ *
+ * @return the value of @p field_name in @p json, or `0` if the field is not
+ * present.
  */
 std::uint64_t ParseUnsignedLongField(nl::json const& json,
                                      char const* field_name);
 
 /**
  * Parse a RFC 3339 timestamp.
+ *
+ * @return the value of @p field_name in @p json, or the epoch if the field is
+ * not present.
  */
 std::chrono::system_clock::time_point ParseTimestampField(
     nl::json const& json, char const* field_name);

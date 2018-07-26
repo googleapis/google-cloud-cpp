@@ -72,7 +72,7 @@ class optional {
   }
   ~optional() { reset(); }
 
-  optional<T>& operator=(optional<T> const& rhs) noexcept {
+  optional& operator=(optional<T> const& rhs) {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
@@ -93,7 +93,7 @@ class optional {
     return *this;
   }
 
-  optional<T>& operator=(optional<T>&& rhs) noexcept {
+  optional& operator=(optional<T>&& rhs) noexcept {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
@@ -110,6 +110,27 @@ class optional {
       return *this;
     }
     **this = std::move(*rhs);
+    has_value_ = true;
+    return *this;
+  }
+
+  // Disable this assignment if U==optional<T>. Well, really if U is a
+  // cv-qualified version of optional<T>, so we need to apply std::decay<> to
+  // it first.
+  template <typename U = T>
+  typename std::enable_if<
+      not std::is_same<optional, typename std::decay<U>::type>::value,
+      optional>::type&
+  operator=(U&& rhs) {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not has_value_) {
+      new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(rhs));
+      has_value_ = true;
+      return *this;
+    }
+    **this = std::forward<U>(rhs);
     has_value_ = true;
     return *this;
   }
@@ -176,6 +197,34 @@ class optional {
     return **this;
   }
 
+  bool operator==(optional const& rhs) const {
+    if (has_value() != rhs.has_value()) {
+      return false;
+    }
+    if (not has_value()) {
+      return true;
+    }
+    return **this == *rhs;
+  }
+  bool operator!=(optional const& rhs) const { return not(*this == rhs); }
+
+  bool operator<(optional const& rhs) const {
+    if (has_value()) {
+      if (not rhs.has_value()) {
+        return false;
+      }
+      // Both have a value, compare them
+      return **this < *rhs;
+    }
+    // If both do not have a value, then they are equal, so this returns false.
+    // If rhs has a value then it compares larger than *this because *this does
+    // not have a value.
+    return rhs.has_value();
+  }
+  bool operator>(optional const& rhs) const { return rhs < *this; }
+  bool operator>=(optional const& rhs) const { return not(*this < rhs); }
+  bool operator<=(optional const& rhs) const { return not(rhs < *this); }
+
  private:
   void check_access() const {
     if (has_value_) {
@@ -184,7 +233,6 @@ class optional {
     google::cloud::internal::RaiseLogicError("access unset optional");
   }
 
- private:
   // We use std::aligned_storage<T> because T may not have a default
   // constructor, if we used 'T' here we could not default initialize this class
   // either.
@@ -192,6 +240,11 @@ class optional {
   typename aligned_storage_t::type buffer_;
   bool has_value_;
 };
+
+template <typename T>
+optional<T> make_optional(T&& t) {
+  return optional<T>(std::forward<T>(t));
+}
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

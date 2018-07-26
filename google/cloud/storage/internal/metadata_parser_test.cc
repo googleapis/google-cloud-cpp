@@ -21,6 +21,65 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+/// @test Verify that we parse boolean values in JSON objects.
+TEST(MetadataParserTest, ParseBoolField) {
+  std::string text = R"""({
+      "flag1": true,
+      "flag2": false
+})""";
+  auto json_object = nl::json::parse(text);
+  EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
+  EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
+}
+
+/// @test Verify that we parse boolean values in JSON objects.
+TEST(MetadataParserTest, ParseBoolFieldFromString) {
+  std::string text = R"""({
+      "flag1": "true",
+      "flag2": "false"
+})""";
+  auto json_object = nl::json::parse(text);
+  EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
+  EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
+}
+
+/// @test Verify that we parse missing boolean values in JSON objects.
+TEST(MetadataParserTest, ParseMissingBoolField) {
+  std::string text = R"""({
+      "flag": true
+})""";
+  auto json_object = nl::json::parse(text);
+  auto actual = ParseBoolField(json_object, "some-other-flag");
+  EXPECT_FALSE(actual);
+}
+
+/// @test Verify that we raise an exception with invalid boolean fields.
+TEST(MetadataParserTest, ParseInvalidBoolFieldValue) {
+  std::string text = R"""({
+      "flag": "not-a-boolean"
+})""";
+  auto json_object = nl::json::parse(text);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseBoolField(json_object, "flag"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that we raise an exception with invalid boolean fields.
+TEST(MetadataParserTest, ParseInvalidBoolFieldType) {
+  std::string text = R"""({
+      "flag": [0, 1, 2]
+})""";
+  auto json_object = nl::json::parse(text);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseBoolField(json_object, "flag"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
 TEST(MetadataParserTest, ParseTimestampField) {
