@@ -100,6 +100,14 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
       result.labels_.emplace(kv.key(), kv.value().get<std::string>());
     }
   }
+
+  if (json.count("versioning") != 0) {
+    auto versioning = json["versioning"];
+    if (versioning.count("enabled") != 0) {
+      result.versioning_.emplace(
+          BucketVersioning{internal::ParseBoolField(versioning, "enabled")});
+    }
+  }
   return result;
 }
 
@@ -115,7 +123,8 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
          billing_.requester_pays == rhs.billing_.requester_pays and
          cors_ == rhs.cors_ and default_acl_ == rhs.default_acl_ and
          project_number_ == rhs.project_number_ and
-         location_ == rhs.location_ and labels_ == rhs.labels_;
+         location_ == rhs.location_ and labels_ == rhs.labels_ and
+         versioning_ == rhs.versioning_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -130,10 +139,10 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
   os << "]";
 
-  auto prev = os.flags();
+  auto previous_flags = os.flags();
   os << ", billing.requesterPays=" << std::boolalpha
      << rhs.billing().requester_pays;
-  os.flags(prev);
+  os.flags(previous_flags);
 
   os << ", cors=[";
   sep = "";
@@ -165,7 +174,15 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
      << ", self_link=" << rhs.self_link()
      << ", storage_class=" << rhs.storage_class()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
-     << ", updated=" << rhs.updated().time_since_epoch().count() << "}";
+     << ", updated=" << rhs.updated().time_since_epoch().count();
+
+  if (rhs.versioning().has_value()) {
+    previous_flags = os.flags();
+    os << ", versioning.enabled=" << std::boolalpha << rhs.versioning()->enabled
+       << "}";
+    os.flags(previous_flags);
+  }
+
   return os;
 }
 
