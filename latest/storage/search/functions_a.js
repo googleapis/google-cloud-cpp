@@ -5,5 +5,7 @@ var searchData=
   ['media_5flink',['media_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab57b60606791394a12f82d2f9ecf4a83',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['metadata',['metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a3d00d25f1eaa7147592b38140c760718',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['metadata_5fcount',['metadata_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a2d09ce43b8847d35eb7ae9c48543bc81',1,'google::cloud::storage::v0::ObjectMetadata']]],
-  ['mutable_5facl',['mutable_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#abd732268b8ef32c067c551312a650079',1,'google::cloud::storage::v0::ObjectMetadata']]]
+  ['mutable_5facl',['mutable_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ab28f91ae752d10d1f8569630d6f08394',1,'google::cloud::storage::v0::BucketMetadata::mutable_acl()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#abd732268b8ef32c067c551312a650079',1,'google::cloud::storage::v0::ObjectMetadata::mutable_acl()']]],
+  ['mutable_5fcors',['mutable_cors',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aac4871e507965daa28d36d5f60046704',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['mutable_5fdefault_5facl',['mutable_default_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a038b002ea8f9ae19339b9449bbd6e30a',1,'google::cloud::storage::v0::BucketMetadata']]]
 ];

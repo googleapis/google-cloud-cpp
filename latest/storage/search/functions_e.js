@@ -1,12 +1,15 @@
 var searchData=
 [
-  ['set_5facl',['set_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#af45cf4734d99b2e34db381de2f3d8672',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['set_5facl',['set_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2155f3bab626434f6954ed30919f4e37',1,'google::cloud::storage::v0::BucketMetadata::set_acl()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#af45cf4734d99b2e34db381de2f3d8672',1,'google::cloud::storage::v0::ObjectMetadata::set_acl()']]],
+  ['set_5fbilling',['set_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5b90231c6ac2b2e5a704c8d271e0ecc3',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fcache_5fcontrol',['set_cache_control',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ae2e2cd66575c689bf9f3c5d35e352b20',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5fdisposition',['set_content_disposition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a9d534229a05e36cc2e9d3d65b674a278',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5fencoding',['set_content_encoding',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a0f43cda6640bf7eb1875053c4c282b17',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5flanguage',['set_content_language',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a99cf068a428b87cbf8e30ed95a033d2e',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5ftype',['set_content_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4fd4c61f7934527862fed49052484f1a',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['set_5fcors',['set_cors',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2b7cb7e2a2b937426e5f8faedc2594f1',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fcredentials',['set_credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a116c0e067dcd8e0831a258bfd360ca15',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['set_5fdefault_5facl',['set_default_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a8d1cf53b9d5bbbd13f9c5adc89c97f55',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fenable_5fhttp_5ftracing',['set_enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#abab5fc0f882e1f1ce3a20f1a3ad8351b',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5fenable_5fraw_5fclient_5ftracing',['set_enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a0ddd7a1b1a62823b35f52dcb383e4077',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5fendpoint',['set_endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a9007526539f9321655fd18ca368b759f',1,'google::cloud::storage::v0::ClientOptions']]],
