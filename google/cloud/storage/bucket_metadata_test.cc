@@ -104,6 +104,10 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "projectNumber": "123456789",
       "location": "US",
+      "logging": {
+        "logBucket": "test-log-bucket",
+        "logPrefix": "test-log-prefix"
+      },
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -160,6 +164,9 @@ TEST(BucketMetadataTest, Parse) {
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 
   EXPECT_EQ("US", actual.location());
+
+  EXPECT_EQ("test-log-bucket", actual.logging().log_bucket);
+  EXPECT_EQ("test-log-prefix", actual.logging().log_prefix);
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
   EXPECT_EQ("project-owners-123456789", actual.owner().entity);
@@ -200,6 +207,8 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual,
               HasSubstr("projects/test-project-name/locations/us-central1/"
                         "keyRings/test-keyring-name/cryptoKeys/test-key-name"));
+  EXPECT_THAT(actual, HasSubstr("test-log-bucket"));
+  EXPECT_THAT(actual, HasSubstr("test-log-prefix"));
   EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
   EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -299,6 +308,16 @@ TEST(BucketMetadataTest, SetEncryption) {
       "test-keyring-name/cryptoKeys/another-test-key-name";
   copy.set_encryption(BucketEncryption{fake_key_name});
   EXPECT_EQ(fake_key_name, copy.encryption().default_kms_key_name);
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the Logging configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetLogging) {
+  auto expected = CreateBucketMetadataForTest();
+  BucketLogging new_logging{"another-test-bucket", "another-test-prefix"};
+  auto copy = expected;
+  copy.set_logging(new_logging);
+  EXPECT_EQ(new_logging, copy.logging());
   EXPECT_NE(expected, copy);
 }
 

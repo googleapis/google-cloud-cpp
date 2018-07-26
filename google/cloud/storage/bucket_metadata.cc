@@ -67,6 +67,11 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
             << join(", ", rhs.response_header) << "]}";
 }
 
+std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
+  return os << "BucketLogging={log_bucket=" << rhs.log_bucket
+            << ", log_prefix=" << rhs.log_prefix << "}";
+}
+
 BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   BucketMetadata result{};
   static_cast<CommonMetadata<BucketMetadata>&>(result) =
@@ -98,6 +103,12 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
         json["encryption"].value("defaultKmsKeyName", "");
   }
   result.location_ = json.value("location", "");
+
+  if (json.count("logging") != 0) {
+    auto logging = json["logging"];
+    result.logging_.log_bucket = logging.value("logBucket", "");
+    result.logging_.log_prefix = logging.value("logPrefix", "");
+  }
   result.project_number_ = internal::ParseLongField(json, "projectNumber");
   if (json.count("labels") > 0) {
     for (auto const& kv : json["labels"].items()) {
@@ -135,8 +146,9 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
          encryption_.default_kms_key_name ==
              rhs.encryption_.default_kms_key_name and
          project_number_ == rhs.project_number_ and
-         location_ == rhs.location_ and labels_ == rhs.labels_ and
-         versioning_ == rhs.versioning_ and website_ == rhs.website();
+         location_ == rhs.location_ and logging_ == rhs.logging_ and
+         labels_ == rhs.labels_ and versioning_ == rhs.versioning_ and
+         website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -180,7 +192,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
     os << ", labels." << kv.first << "=" << kv.second;
   }
 
-  os << ", location=" << rhs.location()
+  os << ", location=" << rhs.location() << ", logging=" << rhs.logging()
      << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
      << ", owner.entity=" << rhs.owner().entity
      << ", owner.entity_id=" << rhs.owner().entity_id
