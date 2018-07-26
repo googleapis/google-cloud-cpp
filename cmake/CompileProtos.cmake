@@ -58,11 +58,11 @@ function (PROTOBUF_GENERATE_CPP SRCS HDRS)
         list(APPEND ${HDRS} ${HDR})
         add_custom_command(
             OUTPUT ${SRC} ${HDR}
-            COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+            COMMAND $<TARGET_FILE:protoc>
                     ARGS
                     --cpp_out ${CMAKE_CURRENT_BINARY_DIR}
                               ${_protobuf_include_path} ${FIL}
-            DEPENDS ${FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
+            DEPENDS ${FIL} protoc
             COMMENT "Running C++ protocol buffer compiler on ${FIL}"
             VERBATIM)
     endforeach ()
@@ -144,14 +144,13 @@ function (GRPC_GENERATE_CPP_BASE SRCS HDRS MHDRS WITH_MOCK)
         add_custom_command(
             OUTPUT "${SRC}" "${HDR}"
             COMMAND
-                ${PROTOBUF_PROTOC_EXECUTABLE}
+                protoc
                 ARGS
-                --plugin=protoc-gen-grpc=${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
+                --plugin=protoc-gen-grpc=$<TARGET_FILE:grpc_cpp_plugin>
                 --grpc_out=${GRPC_OUT_EXTRA}${CMAKE_CURRENT_BINARY_DIR}
                 --cpp_out=${CMAKE_CURRENT_BINARY_DIR} ${_protobuf_include_path}
                                                       ${FIL}
-            DEPENDS ${FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
-                    ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE}
+            DEPENDS ${FIL} protoc grpc_cpp_plugin
             COMMENT "Running gRPC++ protocol buffer compiler on ${FIL}"
             VERBATIM)
     endforeach ()

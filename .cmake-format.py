@@ -21,6 +21,7 @@ additional_commands = {
         ],
         "kwargs": {
             "BUILD_COMMAND": "+",
+            "BUILD_BYPRODUCTS": "+",
             "COMMAND": "+",
             "CONFIGURE_COMMAND": "+",
             "DEPENDS": "+",

@@ -97,12 +97,13 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
                  PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc c-ares::cares)
 
     # Discover the protobuf compiler and the gRPC plugin.
-    set_executable_name_for_external_project(PROTOBUF_PROTOC_EXECUTABLE protoc)
-    mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    set_executable_name_for_external_project(PROTOC_GRPCPP_PLUGIN_EXECUTABLE
-                                             grpc_cpp_plugin)
-    mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
+    add_executable(protoc IMPORTED)
+    add_dependencies(protoc protobuf_project)
+    set_executable_name_for_external_project(protoc protoc)
 
+    add_executable(grpc_cpp_plugin IMPORTED)
+    add_dependencies(grpc_cpp_plugin grpc_project)
+    set_executable_name_for_external_project(grpc_cpp_plugin grpc_cpp_plugin)
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
@@ -141,6 +142,10 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
+    add_executable(protoc IMPORTED)
+    set_property(TARGET protoc
+                 PROPERTY IMPORTED_LOCATION ${PROTOBUF_PROTOC_EXECUTABLE})
+
     find_program(
         PROTOC_GRPCPP_PLUGIN_EXECUTABLE
         NAMES grpc_cpp_plugin
@@ -149,6 +154,10 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
+    add_executable(grpc_cpp_plugin IMPORTED)
+    set_property(TARGET grpc_cpp_plugin
+                 PROPERTY IMPORTED_LOCATION ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE})
+
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
 
     # Use pkg-config to find the libraries.
@@ -188,6 +197,10 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
+    add_executable(protoc IMPORTED)
+    set_property(TARGET protoc
+                 PROPERTY IMPORTED_LOCATION ${PROTOBUF_PROTOC_EXECUTABLE})
+
     find_program(
         PROTOC_GRPCPP_PLUGIN_EXECUTABLE
         NAMES grpc_cpp_plugin
@@ -196,4 +209,9 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
+    add_executable(grpc_cpp_plugin ${PROTOC_GRPC_PLUGIN_EXECUTABLE})
+    set_property(TARGET grpc_cpp_plugin
+                 PROPERTY IMPORTED_LOCATION
+                          ${PROTOC_GRPCPP_CPP_PLUGIN_EXECUTABLE})
+
 endif ()

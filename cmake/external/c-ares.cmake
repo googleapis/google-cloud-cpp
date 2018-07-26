@@ -49,6 +49,9 @@ if (NOT TARGET c_ares_project)
                         Release
                         --target
                         install
+        BUILD_BYPRODUCTS
+            <INSTALL_DIR>/lib/libcares${CMAKE_SHARED_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/lib/libcares${CMAKE_STATIC_LIBRARY_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
