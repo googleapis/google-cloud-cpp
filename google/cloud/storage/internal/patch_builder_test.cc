@@ -129,6 +129,66 @@ TEST(PatchBuilderTest, RemoveField) {
   nl::json actual = nl::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
+
+TEST(PatchBuilderTest, SetStringField) {
+  PatchBuilder builder;
+  builder.SetStringField("some-field", "new-value");
+  builder.SetStringField("empty-field", "");
+  nl::json expected{
+      {"some-field", "new-value"},
+      {"empty-field", ""},
+  };
+  nl::json actual = nl::json::parse(builder.ToString());
+  EXPECT_EQ(expected, actual) << builder.ToString();
+}
+
+TEST(PatchBuilderTest, SetBoolField) {
+  PatchBuilder builder;
+  builder.SetBoolField("true-field", true);
+  builder.SetBoolField("false-field", false);
+  nl::json expected{
+      {"true-field", true},
+      {"false-field", false},
+  };
+  nl::json actual = nl::json::parse(builder.ToString());
+  EXPECT_EQ(expected, actual) << builder.ToString();
+}
+
+TEST(PatchBuilderTest, SetIntField) {
+  PatchBuilder builder;
+  builder.SetIntField("field-32-7", std::int32_t(7));
+  builder.SetIntField("field-32-0", std::int32_t(0));
+  builder.SetIntField("field-u32-7", std::uint32_t(7));
+  builder.SetIntField("field-u32-0", std::uint32_t(0));
+  builder.SetIntField("field-64-7", std::int64_t(7));
+  builder.SetIntField("field-64-0", std::int64_t(0));
+  builder.SetIntField("field-u64-7", std::uint64_t(7));
+  builder.SetIntField("field-u64-0", std::uint64_t(0));
+  nl::json expected{
+      {"field-32-7", std::int32_t(7)},   {"field-32-0", std::int32_t(0)},
+      {"field-u32-7", std::uint32_t(7)}, {"field-u32-0", std::uint32_t(0)},
+      {"field-64-7", std::int64_t(7)},   {"field-64-0", std::int64_t(0)},
+      {"field-u64-7", std::uint64_t(7)}, {"field-u64-0", std::uint64_t(0)},
+  };
+  nl::json actual = nl::json::parse(builder.ToString());
+  EXPECT_EQ(expected, actual) << builder.ToString();
+}
+
+TEST(PatchBuilderTest, SetArrayField) {
+  PatchBuilder builder;
+  builder.SetArrayField("field-a", std::vector<std::string>{});
+  builder.SetArrayField("field-b", std::vector<std::string>{"foo", "bar"});
+  builder.SetArrayField("field-c", std::vector<std::int32_t>{2, 3, 5, 7});
+  builder.SetArrayField("field-d", std::vector<bool>{false, true, true});
+  nl::json expected{
+      {"field-a", std::vector<std::string>{}},
+      {"field-b", std::vector<std::string>{"foo", "bar"}},
+      {"field-c", std::vector<int>{2, 3, 5, 7}},
+      {"field-d", std::vector<bool>{false, true, true}},
+  };
+  nl::json actual = nl::json::parse(builder.ToString());
+  EXPECT_EQ(expected, actual) << builder.ToString();
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

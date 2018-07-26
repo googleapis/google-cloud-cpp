@@ -42,6 +42,13 @@ class PatchBuilder {
  public:
   PatchBuilder() = default;
 
+  /// Return the patch as a string.
+  std::string ToString() const { return patch_.dump(); }
+
+  //@{
+  /// @name Calculate the delta between the original (`lhs`) and the new (`rhs`)
+  /// values and set the patch instructions accordingly.
+
   /// Add a string field, treat empty strings as `null`.
   PatchBuilder& AddStringField(char const* field_name, std::string const& lhs,
                                std::string const& rhs) {
@@ -66,10 +73,6 @@ class PatchBuilder {
     return *this;
   }
 
-  //@{
-  /**
-   * @name Add patches for integral fields.
-   */
   PatchBuilder& AddIntField(char const* field_name, std::int32_t lhs,
                             std::int32_t rhs, std::int32_t null_value = 0) {
     return AddIntegerField(field_name, lhs, rhs, null_value);
@@ -86,7 +89,6 @@ class PatchBuilder {
                             std::uint64_t rhs, std::uint64_t null_value = 0) {
     return AddIntegerField(field_name, lhs, rhs, null_value);
   }
-  //@}
 
   /**
    * Add a patch for a field of type @p T represented by C++ optionals.
@@ -135,6 +137,7 @@ class PatchBuilder {
     patch_[field_name] = rhs;
     return *this;
   }
+  //@}
 
   /// Add a patch for @p field_name.
   PatchBuilder& AddSubPatch(char const* field_name,
@@ -149,8 +152,44 @@ class PatchBuilder {
     return *this;
   }
 
-  /// Return the patch as a string.
-  std::string ToString() const { return patch_.dump(); }
+  //@{
+  /// @name Create a patch that sets fields to the given value.
+  PatchBuilder& SetStringField(char const* field_name, std::string const& v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  PatchBuilder& SetBoolField(char const* field_name, bool v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  PatchBuilder& SetIntField(char const* field_name, std::int32_t v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  PatchBuilder& SetIntField(char const* field_name, std::uint32_t v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  PatchBuilder& SetIntField(char const* field_name, std::int64_t v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  PatchBuilder& SetIntField(char const* field_name, std::uint64_t v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+
+  template<typename T>
+  PatchBuilder& SetArrayField(char const* field_name, std::vector<T> const& v) {
+    patch_[field_name] = v;
+    return *this;
+  }
+  //@}
 
  private:
   /// Refactor the patch fields.
