@@ -309,7 +309,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 }
 
 /// @test Verify that IAM Policy APIs work as expected.
-TEST_F(InstanceAdminIntegrationTest, SetGetIamPolicyTest) {
+TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
   std::string id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
@@ -332,6 +332,10 @@ TEST_F(InstanceAdminIntegrationTest, SetGetIamPolicyTest) {
 
   EXPECT_EQ(initial_policy.version(), fetched_policy.version());
   EXPECT_EQ(initial_policy.etag(), fetched_policy.etag());
+
+  auto permission_set = instance_admin_->TestIamPermissions(id, {"writer", "owner"});
+
+  EXPECT_EQ(1U, permission_set.size());
 }
 
 int main(int argc, char* argv[]) {
