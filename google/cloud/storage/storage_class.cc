@@ -12,33 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STORAGE_CLASS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STORAGE_CLASS_H_
-
-#include "google/cloud/storage/version.h"
+#include "google/cloud/storage/storage_class.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-/**
- * Define functions with the well-know storage classes.
- *
- * This functions are provided to avoid typos when setting or comparing storage
- * classes.
- */
 namespace storage_class {
-std::string const& Standard();
-std::string const& MultiRegional();
-std::string const& Regional();
-std::string const& Nearline();
-std::string const& Coldline();
-std::string const& DurableReducedAvailability();
+std::string const& Standard() {
+  static std::string const kStorageClass = "STANDARD";
+  return kStorageClass;
+}
+
+std::string const& MultiRegional() {
+  static std::string const kStorageClass = "MULTI_REGIONAL";
+  return kStorageClass;
+}
+
+std::string const& Regional() {
+  static std::string const kStorageClass = "REGIONAL";
+  return kStorageClass;
+}
+
+std::string const& Nearline() {
+  static std::string const kStorageClass = "NEARLINE";
+  return kStorageClass;
+}
+
+std::string const& Coldline() {
+  static std::string const kStorageClass = "COLDLINE";
+  return kStorageClass;
+}
+
+std::string const& DurableReducedAvailability() {
+  static std::string const kStorageClass = "DURABLE_REDUCED_AVAILABILITY";
+  return kStorageClass;
+}
 
 }  // namespace storage_class
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STORAGE_CLASS_H_
