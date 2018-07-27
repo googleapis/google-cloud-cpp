@@ -855,8 +855,7 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
-  auto policy =
-      tested.SetIamPolicy(resource, iam_bindings, "test-tag", status);
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag", status);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(1U, policy.bindings.size());
@@ -900,8 +899,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
-  auto policy =
-      tested.SetIamPolicy(resource, iam_bindings, "test-tag", status);
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag", status);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(1U, policy.bindings.size());

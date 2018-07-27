@@ -144,11 +144,11 @@ class InstanceAdmin {
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings, grpc::Status& status);
 
-  google::cloud::IamPolicy GetIamPolicy(std::string const& resource,
+  google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id,
                                         grpc::Status& status);
 
   google::cloud::IamPolicy SetIamPolicy(
-      std::string const& resource,
+      std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings, std::string const& etag,
       grpc::Status& status);
 

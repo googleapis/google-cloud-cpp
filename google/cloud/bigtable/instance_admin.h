@@ -316,7 +316,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc get iam policy
    */
-  google::cloud::IamPolicy GetIamPolicy(std::string const& resource);
+  google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id);
 
   /**
    * Sets the IAM policy for an instance.
@@ -328,7 +328,10 @@ class InstanceAdmin {
    * @param instance_id which instance to set the IAM policy for.
    * @param iam_bindings IamBindings object containing role and members.
    * @param etag the expected ETag value for the current policy.
-   * @return Policy object for the resource.
+   * @return Policy the current IAM bindings for the instance.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc set iam policy
    */
   google::cloud::IamPolicy SetIamPolicy(
       std::string const& instance_id,
@@ -340,6 +343,9 @@ class InstanceAdmin {
    *
    * @param instance_id the ID of the instance to query.
    * @param permissions set of permissions to check for the resource.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc test iam permissions
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
