@@ -84,6 +84,86 @@ inline bool operator<(CorsEntry const& lhs, CorsEntry const& rhs) {
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 
 /**
+ * The versioning configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/requester-pays for general
+ *     information on "Requester Pays" billing.
+ */
+struct BucketVersioning {
+  BucketVersioning() : enabled(true) {}
+  explicit BucketVersioning(bool flag) : enabled(flag) {}
+
+  bool enabled;
+};
+
+inline bool operator==(BucketVersioning const& lhs,
+                       BucketVersioning const& rhs) {
+  return lhs.enabled == rhs.enabled;
+}
+
+inline bool operator<(BucketVersioning const& lhs,
+                      BucketVersioning const& rhs) {
+  return lhs.enabled < rhs.enabled;
+}
+
+inline bool operator!=(BucketVersioning const& lhs,
+                       BucketVersioning const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketVersioning const& lhs,
+                      BucketVersioning const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketVersioning const& lhs,
+                       BucketVersioning const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketVersioning const& lhs,
+                       BucketVersioning const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+/**
+ * The website configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/static-website for information on
+ *     how to configure Buckets to serve as a static website.
+ */
+struct BucketWebsite {
+  std::string main_page_suffix;
+  std::string not_found_page;
+};
+
+inline bool operator==(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::tie(lhs.main_page_suffix, lhs.not_found_page) ==
+         std::tie(rhs.main_page_suffix, rhs.not_found_page);
+}
+
+inline bool operator<(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::tie(lhs.main_page_suffix, lhs.not_found_page) <
+         std::tie(rhs.main_page_suffix, rhs.not_found_page);
+}
+
+inline bool operator!=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+/**
  * Represents a Google Cloud Storage Bucket Metadata object.
  *
  * @warning This is an incomplete implementation to validate the design. It does
@@ -187,12 +267,42 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
+  using CommonMetadata::owner;
+
   std::int64_t const& project_number() const { return project_number_; }
 
   using CommonMetadata::self_link;
   using CommonMetadata::storage_class;
   using CommonMetadata::time_created;
   using CommonMetadata::updated;
+
+  google::cloud::internal::optional<BucketVersioning> const& versioning()
+      const {
+    return versioning_;
+  }
+  BucketMetadata& enable_versioning() {
+    versioning_.emplace(BucketVersioning{true});
+    return *this;
+  }
+  BucketMetadata& disable_versioning() {
+    versioning_.emplace(BucketVersioning{false});
+    return *this;
+  }
+  BucketMetadata& clear_versioning() {
+    versioning_.reset();
+    return *this;
+  }
+  BucketMetadata& set_versioning(
+      google::cloud::internal::optional<BucketVersioning> v) {
+    versioning_ = std::move(v);
+    return *this;
+  }
+
+  BucketWebsite const& website() const { return website_; }
+  BucketMetadata& set_website(BucketWebsite v) {
+    website_ = std::move(v);
+    return *this;
+  }
 
   bool operator==(BucketMetadata const& rhs) const;
   bool operator!=(BucketMetadata const& rhs) const { return not(*this == rhs); }
@@ -215,6 +325,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;
+  google::cloud::internal::optional<BucketVersioning> versioning_;
+  BucketWebsite website_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

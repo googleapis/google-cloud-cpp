@@ -95,12 +95,23 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "metageneration": "4",
       "name": "test-bucket",
+      "owner": {
+        "entity": "project-owners-123456789",
+        "entityId": "test-owner-id-123"
+      },
       "projectNumber": "123456789",
       "location": "US",
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
-      "updated": "2018-05-19T19:31:24Z"
+      "updated": "2018-05-19T19:31:24Z",
+      "versioning": {
+        "enabled": true
+      },
+      "website": {
+        "mainPageSuffix": "index.html",
+        "notFoundPage": "404.html"
+      }
 })""";
   return BucketMetadata::ParseFromString(text);
 }
@@ -144,6 +155,8 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("US", actual.location());
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
+  EXPECT_EQ("project-owners-123456789", actual.owner().entity);
+  EXPECT_EQ("test-owner-id-123", actual.owner().entity_id);
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
@@ -157,6 +170,9 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(magic_timestamp + 10, duration_cast<std::chrono::seconds>(
                                       actual.updated().time_since_epoch())
                                       .count());
+
+  EXPECT_EQ("index.html", actual.website().main_page_suffix);
+  EXPECT_EQ("404.html", actual.website().not_found_page);
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -174,6 +190,11 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
   EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
+  EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
+  EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
+  EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
+  EXPECT_THAT(actual, HasSubstr("index.html"));
+  EXPECT_THAT(actual, HasSubstr("404.html"));
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.
@@ -257,6 +278,63 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   EXPECT_EQ(2U, copy.default_acl().size());
   EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
   EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can clear the versioning field in BucketMetadata.
+TEST(BucketMetadataTest, ClearVersioning) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.versioning().has_value());
+  auto copy = expected;
+  copy.clear_versioning();
+  EXPECT_FALSE(copy.versioning().has_value());
+  EXPECT_NE(copy, expected);
+}
+
+/// @test Verify we can set the versioning field in BucketMetadata.
+TEST(BucketMetadataTest, DisableVersioning) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.versioning().has_value());
+  EXPECT_TRUE(expected.versioning()->enabled);
+  auto copy = expected;
+  copy.disable_versioning();
+  EXPECT_TRUE(copy.versioning().has_value());
+  EXPECT_FALSE(copy.versioning()->enabled);
+  EXPECT_NE(copy, expected);
+}
+
+/// @test Verify we can set the versioning field in BucketMetadata.
+TEST(BucketMetadataTest, EnableVersioning) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.versioning().has_value());
+  EXPECT_TRUE(expected.versioning()->enabled);
+  auto copy = expected;
+  copy.clear_versioning();
+  copy.enable_versioning();
+  EXPECT_TRUE(copy.versioning().has_value());
+  EXPECT_TRUE(copy.versioning()->enabled);
+  EXPECT_EQ(copy, expected);
+}
+
+/// @test Verify we can set the versioning field in BucketMetadata.
+TEST(BucketMetadataTest, SetVersioning) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.versioning().has_value());
+  EXPECT_TRUE(expected.versioning()->enabled);
+  auto copy = expected;
+  copy.set_versioning(optional<BucketVersioning>(BucketVersioning{false}));
+  EXPECT_TRUE(copy.versioning().has_value());
+  EXPECT_FALSE(copy.versioning()->enabled);
+  EXPECT_NE(copy, expected);
+}
+
+/// @test Verify we can set the website field in BucketMetadata.
+TEST(BucketMetadataTest, SetWebsite) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_website(BucketWebsite{"main.html", "not-found.html"});
+  EXPECT_EQ("main.html", copy.website().main_page_suffix);
+  EXPECT_EQ("not-found.html", copy.website().not_found_page);
+  EXPECT_NE(copy, expected);
 }
 
 }  // namespace
