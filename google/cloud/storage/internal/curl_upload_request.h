@@ -126,7 +126,7 @@ class CurlUploadRequest {
   void WaitForHandles();
 
   /// Simplify handling of errors in the curl_multi_* API.
-  void HandleCurlMultiErrorCode(char const* where, CURLMcode result);
+  void RaiseOnError(char const* where, CURLMcode result);
 
   /// Raise an exception if the application tries to use a closed request.
   void ValidateOpen(char const* where);

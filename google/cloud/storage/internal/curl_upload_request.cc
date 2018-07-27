@@ -58,7 +58,7 @@ HttpResponse CurlUploadRequest::Close() {
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  HandleCurlMultiErrorCode(__func__, error);
+  RaiseOnError(__func__, error);
 
   long http_code = handle_.GetResponseCode();
   return HttpResponse{http_code, std::move(response_payload_),
@@ -75,7 +75,7 @@ void CurlUploadRequest::NextBuffer(std::string& next_buffer) {
 void CurlUploadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  HandleCurlMultiErrorCode(__func__, error);
+  RaiseOnError(__func__, error);
 }
 
 void CurlUploadRequest::ResetOptions() {
@@ -143,7 +143,7 @@ int CurlUploadRequest::PerformWork() {
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
   // Raise an exception if the result is unexpected, otherwise return.
-  HandleCurlMultiErrorCode(__func__, result);
+  RaiseOnError(__func__, result);
   if (running_handles == 0) {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
@@ -177,11 +177,10 @@ int CurlUploadRequest::PerformWork() {
 
 void CurlUploadRequest::WaitForHandles() {
   CURLMcode result = curl_multi_wait(multi_.get(), nullptr, 0, 0, nullptr);
-  HandleCurlMultiErrorCode(__func__, result);
+  RaiseOnError(__func__, result);
 }
 
-void CurlUploadRequest::HandleCurlMultiErrorCode(char const* where,
-                                                 CURLMcode result) {
+void CurlUploadRequest::RaiseOnError(char const* where, CURLMcode result) {
   if (result == CURLM_OK) {
     return;
   }

@@ -66,8 +66,13 @@ class CurlDownloadRequest {
   }
 
   /**
-   * Get some more data into @p buffer.
+   * Wait for additional data or the end of the transfer.
    *
+   * This operation blocks until `initial_buffer_size` data has been received or
+   * the transfer is completed.
+   *
+   * @param buffer the location to return the new data. Note that the contents
+   *     of this parameter are completely replaced with the new data.
    * @returns 100-Continue if the transfer is not yet completed.
    */
   HttpResponse GetMore(std::string& buffer);
@@ -112,7 +117,7 @@ class CurlDownloadRequest {
   void WaitForHandles();
 
   /// Simplify handling of errors in the curl_multi_* API.
-  void HandleCurlMultiErrorCode(char const* where, CURLMcode result);
+  void RaiseOnError(char const* where, CURLMcode result);
 
   std::string url_;
   CurlHeaders headers_;
