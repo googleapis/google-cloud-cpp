@@ -115,30 +115,30 @@ void DeleteObject(gcs::Client client, int& argc, char* argv[]) {
 void WriteObject(gcs::Client client, int& argc, char* argv[]) {
   if (argc < 3) {
     throw Usage{
-        "write-object <bucket-name> <object-name> <target-object-size>"};
+        "write-object <bucket-name> <object-name> <target-object-line-count>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  auto desired_size = std::stol(ConsumeArg(argc, argv));
+  auto desired_line_count = std::stol(ConsumeArg(argc, argv));
 
   //! [write object]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
-     long desired_size) {
+     long desired_line_count) {
     std::string const text = "Lorem ipsum dolor sit amet";
     auto stream = client.WriteObject(bucket_name, object_name);
 
-    auto approximate_size = 0;
-    int lineno = 0;
-    while (approximate_size < desired_size) {
-      stream << ++lineno << ": " << text << "\n";
-      approximate_size += text.size();
+    for (int lineno = 0; lineno != desired_line_count; ++lineno) {
+      // Add 1 to the counter, because it is conventional to number lines
+      // starting at 1.
+      stream << (lineno + 1) << ": " << text << "\n";
     }
+
     gcs::ObjectMetadata meta = stream.Close();
-    std::cout << "The actual object size is: " << meta.size() << std::endl;
+    std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object]
-  (std::move(client), bucket_name, object_name, desired_size);
+  (std::move(client), bucket_name, object_name, desired_line_count);
 }
 
 }  // anonymous namespace

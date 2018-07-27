@@ -88,7 +88,7 @@ class GcsObjectVersion(object):
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
-            self.media = ''.join(request.environ.get('wsgi.input').readlines())
+            self.media = request.environ.get('wsgi.input').read()
         else:
             self.media = request.data
         self.metadata = {
