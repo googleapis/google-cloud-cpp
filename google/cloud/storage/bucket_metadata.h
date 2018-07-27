@@ -112,12 +112,12 @@ struct BucketLogging {
 
 inline bool operator==(BucketLogging const& lhs, BucketLogging const& rhs) {
   return std::tie(lhs.log_bucket, lhs.log_prefix) ==
-      std::tie(rhs.log_bucket, rhs.log_prefix);
+         std::tie(rhs.log_bucket, rhs.log_prefix);
 }
 
 inline bool operator<(BucketLogging const& lhs, BucketLogging const& rhs) {
   return std::tie(lhs.log_bucket, lhs.log_prefix) <
-      std::tie(rhs.log_bucket, rhs.log_prefix);
+         std::tie(rhs.log_bucket, rhs.log_prefix);
 }
 
 inline bool operator!=(BucketLogging const& lhs, BucketLogging const& rhs) {
