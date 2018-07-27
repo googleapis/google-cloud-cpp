@@ -99,6 +99,45 @@ inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 
+/*
+ * The Logging configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/access-logs for general
+ *     information about using access logs with Google Cloud Storage.
+ */
+struct BucketLogging {
+  std::string log_bucket;
+  std::string log_prefix;
+};
+
+inline bool operator==(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::tie(lhs.log_bucket, lhs.log_prefix) ==
+         std::tie(rhs.log_bucket, rhs.log_prefix);
+}
+
+inline bool operator<(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::tie(lhs.log_bucket, lhs.log_prefix) <
+         std::tie(rhs.log_bucket, rhs.log_prefix);
+}
+
+inline bool operator!=(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketLogging const& lhs, BucketLogging const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs);
+
 /**
  * A simple wrapper for the encryption field in `storage#bucket`.
  */
@@ -306,6 +345,12 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   std::string const& location() const { return location_; }
 
+  BucketLogging const& logging() const { return logging_; }
+  BucketMetadata& set_logging(BucketLogging v) {
+    logging_ = v;
+    return *this;
+  }
+
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
   using CommonMetadata::owner;
@@ -366,6 +411,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   BucketEncryption encryption_;
   std::map<std::string, std::string> labels_;
   std::string location_;
+  BucketLogging logging_;
   std::int64_t project_number_;
   google::cloud::internal::optional<BucketVersioning> versioning_;
   BucketWebsite website_;
