@@ -263,10 +263,10 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   policy.set_etag(etag);
   auto role_bindings = iam_bindings.bindings();
   for (auto& binding : role_bindings) {
-    auto binding_to_be_added = policy.add_bindings();
-    binding_to_be_added->set_role(binding.first);
+    auto new_binding = policy.add_bindings();
+    new_binding->set_role(binding.first);
     for (auto& member : binding.second) {
-      binding_to_be_added->add_members(member);
+      new_binding->add_members(member);
     }
   }
 

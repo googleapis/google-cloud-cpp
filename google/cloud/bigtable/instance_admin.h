@@ -307,6 +307,8 @@ class InstanceAdmin {
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings = false);
 
+
+  // TODO(936): Implement Policy wrapper and use that as response.
   /**
    * Gets the policy for specified resource.
    *
@@ -330,7 +332,7 @@ class InstanceAdmin {
       google::cloud::IamBindings const& iam_bindings, std::string const& etag);
 
   /**
-   * Returns a permission sert that the caller has on the specified instance
+   * Returns a permission set that the caller has on the specified instance
    * resource. If the resource doesn't exist it will return an empty set of
    * permissions.
    *
