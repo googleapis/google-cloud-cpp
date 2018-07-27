@@ -341,7 +341,7 @@ class InstanceAdmin {
    */
   std::vector<std::string> TestIamPermissions(
       std::string const& resource,
-      std::vector<std::string> const& perimissions);
+      std::vector<std::string> const& permissions);
 
  private:
   /// Implement CreateInstance() with a separate thread.

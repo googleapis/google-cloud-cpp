@@ -1823,7 +1823,7 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
   tested.GetIamPolicy(resource);
 }
 
-/// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy/
+/// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
   using ::testing::_;
   using ::testing::Return;
@@ -1971,6 +1971,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
 TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
   using ::testing::_;
   using ::testing::Return;
+
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
@@ -1986,7 +1987,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       tested.TestIamPermissions(resource, {"reader", "writer", "owner"}),
-      "exceptions are diabled");
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

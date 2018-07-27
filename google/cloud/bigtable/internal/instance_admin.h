@@ -153,7 +153,7 @@ class InstanceAdmin {
       grpc::Status& status);
 
   std::vector<std::string> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& perimissions,
+      std::string const& resource, std::vector<std::string> const& permissions,
       grpc::Status& status);
   //@}
 
