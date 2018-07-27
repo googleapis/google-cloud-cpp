@@ -26,7 +26,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 // Forward declare the template so we can specialize it first. Defining the
 // specialization first, which is the base class, should be more readable.
-template <typename Derived, typename Modifier, typename... Modifiers>
+template <typename Derived, typename Option, typename... Options>
 class GenericRequestBase;
 
 /**
@@ -36,29 +36,29 @@ class GenericRequestBase;
  * base class for a hierarchy of `GenericRequestBase<Parameters...>` when the
  * list has a single parameter.
  *
- * @tparam Modifier the parameter contained in this object.
+ * @tparam Option the type of the option contained in this object.
  */
-template <typename Derived, typename Modifier>
-class GenericRequestBase<Derived, Modifier> {
+template <typename Derived, typename Option>
+class GenericRequestBase<Derived, Option> {
  public:
-  Derived& set_modifier(Modifier&& p) {
-    modifier_ = std::move(p);
+  Derived& set_option(Option&& p) {
+    option_ = std::move(p);
     return *static_cast<Derived*>(this);
   }
 
   template <typename HttpRequest>
-  void AddModifiersToHttpRequest(HttpRequest& request) const {
-    request.AddModifier(modifier_);
+  void AddOptionsToHttpRequest(HttpRequest& request) const {
+    request.AddOption(option_);
   }
 
-  void DumpModifiers(std::ostream& os, char const* sep) const {
-    if (modifier_.has_value()) {
-      os << sep << modifier_;
+  void DumpOptions(std::ostream& os, char const* sep) const {
+    if (option_.has_value()) {
+      os << sep << option_;
     }
   }
 
  private:
-  Modifier modifier_;
+  Option option_;
 };
 
 /**
@@ -67,34 +67,33 @@ class GenericRequestBase<Derived, Modifier> {
  * This class is used in the implementation of `RequestParameters` see below for
  * more details.
  */
-template <typename Derived, typename Modifier, typename... Modifiers>
-class GenericRequestBase : public GenericRequestBase<Derived, Modifiers...> {
+template <typename Derived, typename Option, typename... Options>
+class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  public:
-  using GenericRequestBase<Derived, Modifiers...>::set_modifier;
+  using GenericRequestBase<Derived, Options...>::set_option;
 
-  Derived& set_modifier(Modifier&& p) {
-    modifier_ = std::move(p);
+  Derived& set_option(Option&& p) {
+    option_ = std::move(p);
     return *static_cast<Derived*>(this);
   }
 
   template <typename HttpRequest>
-  void AddModifiersToHttpRequest(HttpRequest& request) const {
-    request.AddModifier(modifier_);
-    GenericRequestBase<Derived, Modifiers...>::AddModifiersToHttpRequest(
-        request);
+  void AddOptionsToHttpRequest(HttpRequest& request) const {
+    request.AddOption(option_);
+    GenericRequestBase<Derived, Options...>::AddOptionsToHttpRequest(request);
   }
 
-  void DumpModifiers(std::ostream& os, char const* sep) const {
-    if (modifier_.has_value()) {
-      os << sep << modifier_;
-      GenericRequestBase<Derived, Modifiers...>::DumpModifiers(os, ", ");
+  void DumpOptions(std::ostream& os, char const* sep) const {
+    if (option_.has_value()) {
+      os << sep << option_;
+      GenericRequestBase<Derived, Options...>::DumpOptions(os, ", ");
     } else {
-      GenericRequestBase<Derived, Modifiers...>::DumpModifiers(os, sep);
+      GenericRequestBase<Derived, Options...>::DumpOptions(os, sep);
     }
   }
 
  private:
-  Modifier modifier_;
+  Option option_;
 };
 
 /**
@@ -110,7 +109,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Modifiers...> {
  * 1) Make this class a (private) base class of `FooRequest`, with the list of
  *    optional parameters it will support:
  * @code
- * class FooRequest : private internal::RequestModifiers<UserProject, P1, P2>
+ * class FooRequest : private internal::RequestOptions<UserProject, P1, P2>
  * @endcode
  *
  * 2) Define a generic function to set a parameter:
@@ -119,7 +118,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Modifiers...> {
  * {
  *   template <typename Parameter>
  *   FooRequest& set_parameter(Parameter&& p) {
- *     RequestModifiers::set_parameter(p);
+ *     RequestOptions::set_parameter(p);
  *     return *this;
  *   }
  * @endcode
@@ -131,26 +130,25 @@ class GenericRequestBase : public GenericRequestBase<Derived, Modifiers...> {
  * @code
  * class FooRequest // some things ommitted
  * {
- *   template <typename... Modifiers>
- *   FooRequest& set_multiple_modifiers(Modifiers&&... p) {
- *     RequestModifiers::set_multiple_modifiers(std::forward<Parameter>(p)...);
+ *   template <typename... Options>
+ *   FooRequest& set_multiple_options(Options&&... p) {
+ *     RequestOptions::set_multiple_options(std::forward<Parameter>(p)...);
  *     return *this;
  *   }
  * @endcode
  *
- * @tparam Modifiers the list of parameters that the Request class will
- *     support.
+ * @tparam Options the list of options that the Request class will support.
  */
-template <typename Derived, typename... Modifiers>
-class GenericRequest : public GenericRequestBase<Derived, Modifiers...> {
+template <typename Derived, typename... Options>
+class GenericRequest : public GenericRequestBase<Derived, Options...> {
  public:
   template <typename H, typename... T>
-  Derived& set_multiple_modifiers(H&& h, T&&... tail) {
-    GenericRequestBase<Derived, Modifiers...>::set_modifier(std::forward<H>(h));
-    return set_multiple_modifiers(std::forward<T>(tail)...);
+  Derived& set_multiple_options(H&& h, T&&... tail) {
+    GenericRequestBase<Derived, Options...>::set_option(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
   }
 
-  Derived& set_multiple_modifiers() { return *static_cast<Derived*>(this); }
+  Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
 };
 
 }  // namespace internal

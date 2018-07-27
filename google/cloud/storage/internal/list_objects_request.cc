@@ -24,7 +24,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
   os << "ListObjectsRequest={bucket_name=" << r.bucket_name();
-  r.DumpModifiers(os, ", ");
+  r.DumpOptions(os, ", ");
   return os << "}";
 }
 

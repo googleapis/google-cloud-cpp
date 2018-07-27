@@ -24,7 +24,7 @@ namespace internal {
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r) {
   os << "ListObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
-  r.DumpModifiers(os, ", ");
+  r.DumpOptions(os, ", ");
   return os << "}";
 }
 

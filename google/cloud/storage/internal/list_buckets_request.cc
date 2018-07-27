@@ -24,7 +24,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
   os << "ListBucketsRequest={project_id=" << r.project_id();
-  r.DumpModifiers(os, ", ");
+  r.DumpOptions(os, ", ");
   return os << "}";
 }
 

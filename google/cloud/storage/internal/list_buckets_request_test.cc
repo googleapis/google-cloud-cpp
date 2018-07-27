@@ -27,15 +27,15 @@ TEST(ListBucketsRequestTest, Simple) {
   EXPECT_EQ("my-project", request.project_id());
   request.set_project_id("another-project");
   EXPECT_EQ("another-project", request.project_id());
-  request.set_modifier(Prefix("foo-"));
+  request.set_option(Prefix("foo-"));
 }
 
 using ::testing::HasSubstr;
 
 TEST(ListBucketsRequestTest, OStream) {
   ListBucketsRequest request("project-to-list");
-  request.set_multiple_modifiers(UserProject("project-to-bill"),
-                                 Prefix("foo-bar-baz"));
+  request.set_multiple_options(UserProject("project-to-bill"),
+                               Prefix("foo-bar-baz"));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("ListBucketsRequest"));

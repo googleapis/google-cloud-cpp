@@ -27,7 +27,7 @@ TEST(ListObjectsRequestTest, Simple) {
 
   EXPECT_EQ("my-bucket", request.bucket_name());
 
-  request.set_modifier(Prefix("foo/"));
+  request.set_option(Prefix("foo/"));
 }
 
 using ::testing::HasSubstr;
@@ -41,8 +41,8 @@ TEST(ListObjectsRequestTest, OStreamBasic) {
 
 TEST(ListObjectsRequestTest, OStreamParameter) {
   ListObjectsRequest request("my-bucket");
-  request.set_multiple_modifiers(UserProject("my-project"),
-                                 Prefix("foo-bar-baz/"));
+  request.set_multiple_options(UserProject("my-project"),
+                               Prefix("foo-bar-baz/"));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));

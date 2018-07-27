@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", begin=" << r.begin()
      << ", end=" << r.end();
-  r.DumpModifiers(os, ", ");
+  r.DumpOptions(os, ", ");
   return os << "}";
 }
 

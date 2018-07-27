@@ -64,8 +64,8 @@ class Client {
    * Fetch the list of buckets for a given project.
    *
    * @param project_id the project to query.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `MaxResults`, `Prefix`,
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `UserProject`, and `Projection`.
    *
    * @throw std::runtime_error if the operation fails.
@@ -73,21 +73,20 @@ class Client {
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ListBucketsReader ListBuckets(std::string const& project_id,
-                                Modifiers&&... modifiers) {
+                                Options&&... options) {
     return ListBucketsReader(raw_client_, project_id,
-                             std::forward<Modifiers>(modifiers)...);
+                             std::forward<Options>(options)...);
   }
 
   /**
    * Fetch the bucket metadata and return it.
    *
    * @param bucket_name query metadata information about this bucket.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include
-   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
    * current policies.
@@ -95,11 +94,11 @@ class Client {
    * @par Example
    * @snippet storage_bucket_samples.cc get bucket metadata
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   BucketMetadata GetBucketMetadata(std::string const& bucket_name,
-                                   Modifiers&&... modifiers) {
+                                   Options&&... options) {
     internal::GetBucketMetadataRequest request(bucket_name);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return GetBucketMetadataImpl(request);
   }
 
@@ -109,10 +108,9 @@ class Client {
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
    * @param contents the contents (media) for the new object.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include
-   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
    *
    * @throw std::runtime_error if the operation cannot be completed using the
    *   current policies.
@@ -120,13 +118,13 @@ class Client {
    * @par Example
    * @snippet storage_object_samples.cc insert object
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectMetadata InsertObject(std::string const& bucket_name,
                               std::string const& object_name,
-                              std::string contents, Modifiers&&... modifiers) {
+                              std::string contents, Options&&... options) {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return InsertObjectMediaImpl(request);
   }
 
@@ -135,8 +133,8 @@ class Client {
    *
    * @param bucket_name the bucket containing the object.
    * @param object_name the object name.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`,
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
@@ -147,12 +145,12 @@ class Client {
    * @par Example
    * @snippet storage_object_samples.cc get object metadata
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectMetadata GetObjectMetadata(std::string const& bucket_name,
                                    std::string const& object_name,
-                                   Modifiers&&... modifiers) {
+                                   Options&&... options) {
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectMetadata(request).second;
   }
 
@@ -160,8 +158,8 @@ class Client {
    * List the objects in a bucket.
    *
    * @param bucket_name the name of the bucket to list.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`.
    *
@@ -171,11 +169,11 @@ class Client {
    * @par Example
    * @snippet storage_bucket_samples.cc list objects
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
-                                Modifiers&&... modifiers) {
+                                Options&&... options) {
     return ListObjectsReader(raw_client_, bucket_name,
-                             std::forward<Modifiers>(modifiers)...);
+                             std::forward<Options>(options)...);
   }
 
   /**
@@ -183,20 +181,19 @@ class Client {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_samples.cc read object
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectReadStream Read(std::string const& bucket_name,
-                        std::string const& object_name,
-                        Modifiers&&... modifiers) {
+                        std::string const& object_name, Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return ObjectReadStream(raw_client_, request);
   }
 
@@ -205,17 +202,17 @@ class Client {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
-   * @param parameters a variadic list of optional parameters. Valid types for
-   *   this operation include
-   *   `IfGenerationMatch`/`IfGenerationNotMatch`, `IfMetagenerationMatch`/
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `IfGenerationMatch`,
+   *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
    */
-  template <typename... Parameters>
+  template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
                                 std::string const& object_name,
-                                Parameters&&... parameters) {
+                                Options&&... options) {
     internal::InsertObjectStreamingRequest request(bucket_name, object_name);
-    request.set_multiple_modifiers(std::forward<Parameters>(parameters)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return ObjectWriteStream(raw_client_->WriteObject(request).second);
   }
 
@@ -224,19 +221,19 @@ class Client {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`,
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_samples.cc delete object
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   void DeleteObject(std::string const& bucket_name,
-                    std::string const& object_name, Modifiers&&... modifiers) {
+                    std::string const& object_name, Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteObject(request);
   }
 
@@ -245,19 +242,18 @@ class Client {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`, and
-   *     `UserProject`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc list object acl
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   std::vector<ObjectAccessControl> ListObjectAcl(std::string const& bucket_name,
                                                  std::string const& object_name,
-                                                 Modifiers&&... modifiers) {
+                                                 Options&&... options) {
     internal::ListObjectAclRequest request(bucket_name, object_name);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ListObjectAcl(request).second.items;
   }
 
@@ -268,22 +264,21 @@ class Client {
    * @param object_name the name of the object.
    * @param entity the name of the entity added to the ACL.
    * @param role the role of the entity.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`, and
-   *     `UserProject`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc create object acl
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectAccessControl CreateObjectAcl(std::string const& bucket_name,
                                       std::string const& object_name,
                                       std::string const& entity,
                                       std::string const& role,
-                                      Modifiers&&... modifiers) {
+                                      Options&&... options) {
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CreateObjectAcl(request).second;
   }
 
@@ -294,19 +289,18 @@ class Client {
    * @param object_name the name of the object to be deleted.
    * @param entity the name of the entity (user, team, group) to be removed from
    *   the Object's ACL.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`, and
-   *     `UserProject`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc delete object acl
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   void DeleteObjectAcl(std::string const& bucket_name,
                        std::string const& object_name,
-                       std::string const& entity, Modifiers&&... modifiers) {
+                       std::string const& entity, Options&&... options) {
     internal::ObjectAclRequest request(bucket_name, object_name, entity);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteObjectAcl(request);
   }
 
@@ -316,20 +310,19 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
    * @param entity the name of the entity added to the ACL.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`, and
-   *     `UserProject`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc get object acl
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectAccessControl GetObjectAcl(std::string const& bucket_name,
                                    std::string const& object_name,
                                    std::string const& entity,
-                                   Modifiers&&... modifiers) {
+                                   Options&&... options) {
     internal::ObjectAclRequest request(bucket_name, object_name, entity);
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectAcl(request).second;
   }
 
@@ -340,9 +333,8 @@ class Client {
    * @param object_name the name of the object.
    * @param acl the new ACL value. Note that only the writable values of the ACL
    *   will be modified by the server.
-   * @param modifiers a list of optional query parameters and/or request
-   *     headers. Valid types for this operation include `Generation`, and
-   *     `UserProject`.
+   * @param options a list of optional query parameters and/or request
+   *     Valid types for this operation include `Generation`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc update object acl
@@ -350,14 +342,14 @@ class Client {
    * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
    *     for additional details on what fields are writeable.
    */
-  template <typename... Modifiers>
+  template <typename... Options>
   ObjectAccessControl UpdateObjectAcl(std::string const& bucket_name,
                                       std::string const& object_name,
                                       ObjectAccessControl const& acl,
-                                      Modifiers&&... modifiers) {
+                                      Options&&... options) {
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
-    request.set_multiple_modifiers(std::forward<Modifiers>(modifiers)...);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->UpdateObjectAcl(request).second;
   }
 
