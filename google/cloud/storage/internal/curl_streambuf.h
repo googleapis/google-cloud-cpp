@@ -30,7 +30,7 @@ namespace internal {
 class CurlReadStreambuf : public ObjectReadStreambuf {
  public:
   explicit CurlReadStreambuf(CurlDownloadRequest&& download,
-                             std::size_t initial_buffer_size);
+                             std::size_t target_buffer_size);
 
   ~CurlReadStreambuf() override = default;
 

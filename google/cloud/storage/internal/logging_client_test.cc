@@ -30,7 +30,11 @@ using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
-  void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
+  // Cannot use `override` here because if we do the build breaks: the compiler
+  // on macOS then expects *all* overriden functions to have it, and the
+  // MOCK_METHOD1() macro does not use override.
+  void Process(LogRecord const& lr) { ProcessWithOwnership(lr); }
+
   MOCK_METHOD1(ProcessWithOwnership, void(LogRecord));
   // For the purposes of testing we just need one of the member functions.
 };
