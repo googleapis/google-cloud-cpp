@@ -142,6 +142,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a405ab15fc80b10576823529d88aaf0b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a405ab15fc80b10576823529d88aaf0b1">DeleteAppProfile</a> (bigtable::InstanceId const &amp;instance_id, bigtable::AppProfileId const &amp;profile_id, bool ignore_warnings=false)</td></tr>
 <tr class="memdesc:a405ab15fc80b10576823529d88aaf0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete an existing application profile.  <a href="#a405ab15fc80b10576823529d88aaf0b1">More...</a><br /></td></tr>
 <tr class="separator:a405ab15fc80b10576823529d88aaf0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="memItemLeft" align="right" valign="top">::google::iam::v1::Policy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ae8a345bf4cd5f45c39b162c02be6ce9a">GetIamPolicy</a> (std::string const &amp;resource)</td></tr>
+<tr class="memdesc:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the policy for specified resource.  <a href="#ae8a345bf4cd5f45c39b162c02be6ce9a">More...</a><br /></td></tr>
+<tr class="separator:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcfd7deb3da53d807e533dec40c6f167"><td class="memItemLeft" align="right" valign="top">::google::iam::v1::Policy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#abcfd7deb3da53d807e533dec40c6f167">SetIamPolicy</a> (std::string const &amp;resource, std::int32_t const &amp;<a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aa2da4afcc2ccb4d08ca243c17b7b20f9">version</a>, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag)</td></tr>
+<tr class="memdesc:abcfd7deb3da53d807e533dec40c6f167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets policy for specified resource with given bindings and etag.  <a href="#abcfd7deb3da53d807e533dec40c6f167">More...</a><br /></td></tr>
+<tr class="separator:abcfd7deb3da53d807e533dec40c6f167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1222469d9b71a34697ab8a402fcd01a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ad1222469d9b71a34697ab8a402fcd01a">TestIamPermissions</a> (std::string const &amp;resource, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
+<tr class="memdesc:ad1222469d9b71a34697ab8a402fcd01a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified instance resource.  <a href="#ad1222469d9b71a34697ab8a402fcd01a">More...</a><br /></td></tr>
+<tr class="separator:ad1222469d9b71a34697ab8a402fcd01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the APIs to administer Cloud Bigtable instances. </p>
@@ -540,6 +549,33 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<a id="ae8a345bf4cd5f45c39b162c02be6ce9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a345bf4cd5f45c39b162c02be6ce9a">&#9670;&nbsp;</a></span>GetIamPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::iam::v1::Policy google::cloud::bigtable::v0::InstanceAdmin::GetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>resource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the policy for specified resource. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">resource</td><td>name of the resource for which the policy is being requested. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Policy for the specified resource. </dd></dl>
+
+</div>
+</div>
 <a id="a1e296313e4e8dc77f2651f322784c38a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e296313e4e8dc77f2651f322784c38a">&#9670;&nbsp;</a></span>GetInstance()</h2>
 
@@ -729,6 +765,97 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>The full name (<code>projects/&lt;project_id&gt;</code>) of the project. </p>
+
+</div>
+</div>
+<a id="abcfd7deb3da53d807e533dec40c6f167"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcfd7deb3da53d807e533dec40c6f167">&#9670;&nbsp;</a></span>SetIamPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::iam::v1::Policy google::cloud::bigtable::v0::InstanceAdmin::SetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>resource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::int32_t const &amp;&#160;</td>
+          <td class="paramname"><em>version</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::cloud::IamBindings const &amp;&#160;</td>
+          <td class="paramname"><em>iam_bindings</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>etag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets policy for specified resource with given bindings and etag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">resource</td><td>name of the resource for which the policy is being set. </td></tr>
+    <tr><td class="paramname">version</td><td>version of policy. </td></tr>
+    <tr><td class="paramname">iam_bindings</td><td>IamBindings object containing role and members. </td></tr>
+    <tr><td class="paramname">etag</td><td>etag for the policy </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Policy object for the resource. </dd></dl>
+
+</div>
+</div>
+<a id="ad1222469d9b71a34697ab8a402fcd01a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1222469d9b71a34697ab8a402fcd01a">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; google::cloud::bigtable::v0::InstanceAdmin::TestIamPermissions </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>resource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>permissions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a permission set that the caller has on the specified instance resource. </p>
+<p>If the resource doesn't exist it will return an empty set of permissions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">resource</td><td>name of the resource for which the detail is being requested. </td></tr>
+    <tr><td class="paramname">permissions</td><td>set of permissions to check for the resource. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>

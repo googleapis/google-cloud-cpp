@@ -125,6 +125,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a948454d0b835bdd2c7746d071d35bd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae1cb9d28ecb4b7b8505b27f7cdb09ab"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#aae1cb9d28ecb4b7b8505b27f7cdb09ab">DeleteAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteAppProfileRequest const &amp;request, google::protobuf::Empty *response)=0</td></tr>
 <tr class="separator:aae1cb9d28ecb4b7b8505b27f7cdb09ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add577aeb49b4fb367d974f939402afbc"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#add577aeb49b4fb367d974f939402afbc">GetIamPolicy</a> (grpc::ClientContext *context, google::iam::v1::GetIamPolicyRequest const &amp;request, google::iam::v1::Policy *response)=0</td></tr>
+<tr class="separator:add577aeb49b4fb367d974f939402afbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cdfe9c4ed1b18bf96b7e37e82169faf"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a8cdfe9c4ed1b18bf96b7e37e82169faf">SetIamPolicy</a> (grpc::ClientContext *context, google::iam::v1::SetIamPolicyRequest const &amp;request, google::iam::v1::Policy *response)=0</td></tr>
+<tr class="separator:a8cdfe9c4ed1b18bf96b7e37e82169faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ade5023f94bdcd5e12e0ca914aff3f9b3">TestIamPermissions</a> (grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, google::iam::v1::TestIamPermissionsResponse *response)=0</td></tr>
+<tr class="separator:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
 <tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -530,6 +536,48 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="add577aeb49b4fb367d974f939402afbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add577aeb49b4fb367d974f939402afbc">&#9670;&nbsp;</a></span>GetIamPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::GetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::GetIamPolicyRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::Policy *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a2faf462c57142700ff3f2ec302daa6c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2faf462c57142700ff3f2ec302daa6c1">&#9670;&nbsp;</a></span>GetInstance()</h2>
 
@@ -792,6 +840,90 @@ Friends</h2></td></tr>
 
 <p>Reset and create a new Stub(). </p>
 <p>Currently this is only used in testing. In the future, we expect this, or a similar member function, will be needed to handle errors that require a new connection, or an explicit refresh of the credentials. </p>
+
+</div>
+</div>
+<a id="a8cdfe9c4ed1b18bf96b7e37e82169faf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cdfe9c4ed1b18bf96b7e37e82169faf">&#9670;&nbsp;</a></span>SetIamPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::SetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::SetIamPolicyRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::Policy *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade5023f94bdcd5e12e0ca914aff3f9b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade5023f94bdcd5e12e0ca914aff3f9b3">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual grpc::Status google::cloud::bigtable::v0::InstanceAdminClient::TestIamPermissions </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::TestIamPermissionsRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::TestIamPermissionsResponse *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
