@@ -519,16 +519,47 @@ void GetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
     std::cout << "]\n";
   }
-  std::cout << "ETag=" << policy.etag << std::endl;
 }
 //! [get iam policy]
+
+//! [set iam policy]
+void SetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
+                  int argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "set-iam-policy: <project-id> <instance-id>"
+        " <permission> <new-member>\n"
+        "    Example: set-iam-policy my-project my-instance"
+        " roles/bigtable.user user:my-user@example.com"};
+  }
+  std::string instance_id = ConsumeArg(argc, argv);
+  std::string role = ConsumeArg(argc, argv);
+  std::string member = ConsumeArg(argc, argv);
+  auto current = instance_admin.GetIamPolicy(instance_id);
+  auto bindings = current.bindings;
+  bindings.AddMember(role, member);
+  auto policy =
+      instance_admin.SetIamPolicy(instance_id, bindings, current.etag);
+  std::cout << "The IAM Policy for " << instance_id << " is\n";
+  for (auto const& kv : policy.bindings) {
+    std::cout << "role " << kv.first << " includes [";
+    char const* sep = "";
+    for (auto const& m : kv.second) {
+      std::cout << sep << m;
+      sep = ", ";
+    }
+    std::cout << "]\n";
+  }
+}
+//! [set iam policy]
 
 //! [test iam permissions]
 void TestIamPermissions(google::cloud::bigtable::InstanceAdmin instance_admin,
                         int argc, char* argv[]) {
   if (argc < 2) {
-    throw Usage{"test-iam-permissions: <project-id> <resource-id>"
-                " [permission ...]"};
+    throw Usage{
+        "test-iam-permissions: <project-id> <resource-id>"
+        " [permission ...]"};
   }
   std::string resource = ConsumeArg(argc, argv);
   std::vector<std::string> permissions;
@@ -573,6 +604,7 @@ int main(int argc, char* argv[]) try {
       {"list-app-profiles", &ListAppProfiles},
       {"delete-app-profile", &DeleteAppProfile},
       {"get-iam-policy", &GetIamPolicy},
+      {"set-iam-policy", &SetIamPolicy},
       {"test-iam-permissions", &TestIamPermissions},
       {"run", &RunInstanceOperations},
       {"create-dev-instance", &CreateDevInstance},

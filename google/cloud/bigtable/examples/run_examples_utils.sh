@@ -142,6 +142,11 @@ function run_all_instance_admin_examples {
       "${project_id}" "${INSTANCE}"
 
   echo
+  echo "Run set-iam-policy example."
+  ${setenv} ../examples/bigtable_samples_instance_admin set-iam-policy \
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
+
+  echo
   echo "Run test-iam-permissions example."
   ${setenv} ../examples/bigtable_samples_instance_admin test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
