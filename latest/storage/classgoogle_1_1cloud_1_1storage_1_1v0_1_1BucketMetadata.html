@@ -134,7 +134,7 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get and set the Default Object Access Control Lists.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/lists#default">https://cloud.google.com/storage/docs/access-control/lists#default</a> for general information of default ACLs.</dd>
 <dd>
-<a href="https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects">https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects</a> for information on how to set the default ACLs. </dd></dl>
+<a href="https://cloud.google.com/storage/docs/encryption/customer-managed-keys">https://cloud.google.com/storage/docs/encryption/customer-managed-keys</a> for information on Customer-Managed Encryption Keys. </dd></dl>
 </div></td></tr>
 <tr class="memitem:a243c7eeb31e604009d243b3625ce7727"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a243c7eeb31e604009d243b3625ce7727">default_acl</a> () const</td></tr>
 <tr class="separator:a243c7eeb31e604009d243b3625ce7727"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,6 +142,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a038b002ea8f9ae19339b9449bbd6e30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d1cf53b9d5bbbd13f9c5adc89c97f55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a8d1cf53b9d5bbbd13f9c5adc89c97f55">set_default_acl</a> (std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aed4959f9a931b84bb43df40728c80e88">acl</a>)</td></tr>
 <tr class="separator:a8d1cf53b9d5bbbd13f9c5adc89c97f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70cfce9ef47ea8af8a6b8eeb854fab32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a70cfce9ef47ea8af8a6b8eeb854fab32">encryption</a> () const</td></tr>
+<tr class="separator:a70cfce9ef47ea8af8a6b8eeb854fab32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676b7876b13a8ef799b594bdb4ed9767"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a676b7876b13a8ef799b594bdb4ed9767">set_encryption</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a> v)</td></tr>
+<tr class="separator:a676b7876b13a8ef799b594bdb4ed9767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -365,6 +369,31 @@ Friends</h2></td></tr>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a70cfce9ef47ea8af8a6b8eeb854fab32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70cfce9ef47ea8af8a6b8eeb854fab32">&#9670;&nbsp;</a></span>encryption()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a> const&amp; google::cloud::storage::v0::BucketMetadata::encryption </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -766,6 +795,32 @@ Friends</h2></td></tr>
           <td>(</td>
           <td class="paramtype">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td>
           <td class="paramname"><em>acl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a676b7876b13a8ef799b594bdb4ed9767"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676b7876b13a8ef799b594bdb4ed9767">&#9670;&nbsp;</a></span>set_encryption()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::set_encryption </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a>&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

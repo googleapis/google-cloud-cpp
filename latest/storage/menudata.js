@@ -12,7 +12,11 @@ var menudata={children:[
 {text:"o",url:"namespacemembers.html#index_o"},
 {text:"r",url:"namespacemembers.html#index_r"},
 {text:"v",url:"namespacemembers.html#index_v"}]},
-{text:"Functions",url:"namespacemembers_func.html"},
+{text:"Functions",url:"namespacemembers_func.html",children:[
+{text:"c",url:"namespacemembers_func.html#index_c"},
+{text:"g",url:"namespacemembers_func.html#index_g"},
+{text:"o",url:"namespacemembers_func.html#index_o"},
+{text:"v",url:"namespacemembers_func.html#index_v"}]},
 {text:"Typedefs",url:"namespacemembers_type.html"}]}]},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
