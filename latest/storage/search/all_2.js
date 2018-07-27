@@ -1,6 +1,7 @@
 var searchData=
 [
   ['cache_5fcontrol',['cache_control',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#acf21ced74caa2374d5fb40d5cde3fc13',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['clear_5fversioning',['clear_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a51a79f6cd910639ec6a8c31671032e06',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['client',['Client',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html',1,'google::cloud::storage::v0::Client'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a5a5f7b80848da9a8463b88b2c0bfc2fa',1,'google::cloud::storage::v0::Client::Client(ClientOptions options)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa3fc3328a25160496e288df15b679dfb',1,'google::cloud::storage::v0::Client::Client()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#add595b4bee131989f0b57d28fdf5fd21',1,'google::cloud::storage::v0::Client::Client(std::shared_ptr&lt; Credentials &gt; credentials)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2c77a6ddf5c5724f3da8828d9946ab26',1,'google::cloud::storage::v0::Client::Client(std::shared_ptr&lt; internal::RawClient &gt; client, Policies &amp;&amp;... policies)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a2b99a77d66eb00174d2b266f7460e3',1,'google::cloud::storage::v0::Client::Client(std::shared_ptr&lt; internal::RawClient &gt; client, NoRetry)']]],
   ['client_2ecc',['client.cc',['../client_8cc.html',1,'']]],
   ['client_2eh',['client.h',['../client_8h.html',1,'']]],
