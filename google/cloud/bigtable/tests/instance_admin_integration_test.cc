@@ -330,8 +330,8 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
 
   auto fetched_policy = instance_admin_->GetIamPolicy(id);
 
-  EXPECT_EQ(initial_policy.version(), fetched_policy.version());
-  EXPECT_EQ(initial_policy.etag(), fetched_policy.etag());
+  EXPECT_EQ(initial_policy.version, fetched_policy.version);
+  EXPECT_EQ(initial_policy.etag, fetched_policy.etag);
 
   auto permission_set =
       instance_admin_->TestIamPermissions(id, {"writer", "owner"});

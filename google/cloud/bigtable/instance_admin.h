@@ -315,7 +315,7 @@ class InstanceAdmin {
    *  requested.
    * @return Policy for the specified resource.
    */
-  ::google::iam::v1::Policy GetIamPolicy(std::string const& resource);
+  google::cloud::IamPolicy GetIamPolicy(std::string const& resource);
 
   /**
    * Sets policy for specified resource with given bindings and etag.
@@ -326,7 +326,7 @@ class InstanceAdmin {
    * @param etag etag for the policy
    * @return Policy object for the resource.
    */
-  ::google::iam::v1::Policy SetIamPolicy(
+  google::cloud::IamPolicy SetIamPolicy(
       std::string const& resource, std::int32_t const& version,
       google::cloud::IamBindings const& iam_bindings, std::string const& etag);
 

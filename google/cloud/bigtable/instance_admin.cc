@@ -321,7 +321,7 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
   return result;
 }
 
-::google::iam::v1::Policy InstanceAdmin::GetIamPolicy(
+google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
     std::string const& resource) {
   grpc::Status status;
   auto result = impl_.GetIamPolicy(resource, status);
@@ -332,7 +332,7 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
   return result;
 }
 
-::google::iam::v1::Policy InstanceAdmin::SetIamPolicy(
+google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
     std::string const& resource, std::int32_t const& version,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;

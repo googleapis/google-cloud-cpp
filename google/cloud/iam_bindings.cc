@@ -19,10 +19,8 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-
-void IamBindings::AddMember(std::string const& role,
-                            std::string const& member) {
-  bindings_[role].insert(member);
+void IamBindings::AddMember(std::string const& role, std::string member) {
+  bindings_[role].emplace(std::move(member));
 }
 
 void IamBindings::AddMembers(google::cloud::IamBinding const& iam_binding) {

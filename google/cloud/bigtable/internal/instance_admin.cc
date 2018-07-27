@@ -234,7 +234,22 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteAppProfile", status);
 }
 
-::google::iam::v1::Policy InstanceAdmin::GetIamPolicy(
+namespace {
+google::cloud::IamPolicy ProtoToWrapper(google::iam::v1::Policy proto) {
+  google::cloud::IamPolicy result;
+  result.version = proto.version();
+  result.etag = std::move(*proto.mutable_etag());
+  for (auto& binding : *proto.mutable_bindings()) {
+    for (auto& member : *binding.mutable_members()) {
+      result.bindings.AddMember(binding.role(), std::move(member));
+    }
+  }
+
+  return result;
+}
+}  // namespace
+
+google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
     std::string const& resource, grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
@@ -245,13 +260,15 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
 
-  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
-                               metadata_update_policy,
-                               &InstanceAdminClient::GetIamPolicy, request,
-                               "InstanceAdmin::GetIamPolicy", status, true);
+  auto proto = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::GetIamPolicy, request,
+      "InstanceAdmin::GetIamPolicy", status, true);
+
+  return ProtoToWrapper(std::move(proto));
 }
 
-::google::iam::v1::Policy InstanceAdmin::SetIamPolicy(
+google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
     std::string const& resource, std::int32_t const& version,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag,
     grpc::Status& status) {
@@ -277,10 +294,11 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
 
-  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
-                               metadata_update_policy,
-                               &InstanceAdminClient::SetIamPolicy, request,
-                               "InstanceAdmin::SetIamPolicy", status, true);
+  auto proto = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::SetIamPolicy, request,
+      "InstanceAdmin::SetIamPolicy", status, true);
+  return ProtoToWrapper(std::move(proto));
 }
 
 std::vector<std::string> InstanceAdmin::TestIamPermissions(

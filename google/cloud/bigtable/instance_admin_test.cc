@@ -1881,9 +1881,9 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag");
 
-  EXPECT_EQ(1, policy.bindings_size());
-  EXPECT_EQ("test-tag", policy.etag());
-  EXPECT_EQ(2, policy.version());
+  EXPECT_EQ(1U, policy.bindings.size());
+  EXPECT_EQ("test-tag", policy.etag);
+  EXPECT_EQ(2, policy.version);
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy.
@@ -1934,9 +1934,9 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag");
 
-  EXPECT_EQ(1, policy.bindings_size());
-  EXPECT_EQ("test-tag", policy.etag());
-  EXPECT_EQ(2, policy.version());
+  EXPECT_EQ(1U, policy.bindings.size());
+  EXPECT_EQ("test-tag", policy.etag);
+  EXPECT_EQ(2, policy.version);
 }
 
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.

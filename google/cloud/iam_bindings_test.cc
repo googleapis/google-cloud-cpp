@@ -185,4 +185,3 @@ TEST(IamBindingsTest, RemoveMembersTestIamBindingParam) {
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-

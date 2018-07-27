@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-
 /**
  * Represents a Binding which associates a `member` with a particular `role`
  * which can be used for Identity and Access management for Cloud Platform
