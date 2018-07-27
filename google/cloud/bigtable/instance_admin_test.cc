@@ -1831,7 +1831,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "other-resource";
@@ -1894,7 +1894,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "test-resource";
@@ -1974,7 +1974,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(
+      .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "other-resource";

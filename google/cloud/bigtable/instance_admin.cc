@@ -336,7 +336,8 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
     std::string const& resource, std::int32_t const& version,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;
-  auto result = impl_.SetIamPolicy(resource, version, iam_bindings, etag, status);
+  auto result =
+      impl_.SetIamPolicy(resource, version, iam_bindings, etag, status);
 
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());
