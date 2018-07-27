@@ -37,14 +37,7 @@ class ObjectReadStream : public std::basic_istream<char> {
   ObjectReadStream() : std::basic_istream<char>(nullptr), buf_() {}
 
   /**
-   * Creates a stream associated with the given request.
-   *
-   * Reading from the stream will result in http requests to get more data
-   * from the GCS object.
-   *
-   * @param client how to contact the GCS servers.
-   * @param request an initialized request to read data. If no range is
-   *     specified in this request then this reads the full object.
+   * Creates a stream associated with the given `streambuf`.
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
       : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {}
