@@ -52,6 +52,22 @@ CurlUploadRequest CurlRequestBuilder::BuildUpload() {
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.handle_ = std::move(handle_);
   request.multi_.reset(curl_multi_init());
+  request.logging_enabled_ = logging_enabled_;
+  request.SetOptions();
+  return request;
+}
+
+CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
+    std::string payload) {
+  ValidateBuilderState(__func__);
+  CurlDownloadRequest request(initial_buffer_size_);
+  request.url_ = std::move(url_);
+  request.headers_ = std::move(headers_);
+  request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.payload_ = std::move(payload);
+  request.handle_ = std::move(handle_);
+  request.multi_.reset(curl_multi_init());
+  request.logging_enabled_ = logging_enabled_;
   request.SetOptions();
   return request;
 }

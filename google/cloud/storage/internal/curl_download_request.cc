@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_upload_request.h"
+#include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include <curl/multi.h>
 #include <algorithm>
+#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -26,70 +27,56 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlUploadRequest::CurlUploadRequest(std::size_t initial_buffer_size)
+CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
-      closing_(false),
-      curl_closed_(false) {
+      curl_closed_(false),
+      initial_buffer_size_(initial_buffer_size) {
   buffer_.reserve(initial_buffer_size);
-  buffer_rdptr_ = buffer_.end();
 }
 
-void CurlUploadRequest::Flush() {
-  ValidateOpen(__func__);
+HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
-  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
-                 << ", curl.rdptr="
-                 << std::distance(buffer_.begin(), buffer_rdptr_)
-                 << ", curl.end="
-                 << std::distance(buffer_.begin(), buffer_.end());
-  Wait([this] { return buffer_rdptr_ == buffer_.end(); });
+  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size();
+  Wait([this] {
+    return curl_closed_ or buffer_.size() >= initial_buffer_size_;
+  });
+  if (curl_closed_) {
+    // Remove the handle from the CURLM* interface and wait for the response.
+    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+    RaiseOnError(__func__, error);
+
+    buffer.swap(buffer_);
+    long http_code = handle_.GetResponseCode();
+    return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+  }
+  buffer_.swap(buffer);
+  buffer_.reserve(initial_buffer_size_);
+  handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  return HttpResponse{100, {}, {}};
 }
 
-HttpResponse CurlUploadRequest::Close() {
-  ValidateOpen(__func__);
-  handle_.FlushDebug(__func__);
-  Flush();
-  // Set the the closing_ flag to trigger a return 0 from the next read
-  // callback, see the comments in the header file for more details.
-  closing_ = true;
-  // Block until that callback is made.
-  Wait([this] { return curl_closed_; });
-
-  // Now remove the handle from the CURLM* interface and wait for the response.
-  auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  RaiseOnError(__func__, error);
-
-  long http_code = handle_.GetResponseCode();
-  return HttpResponse{http_code, std::move(response_payload_),
-                      std::move(received_headers_)};
-}
-
-void CurlUploadRequest::NextBuffer(std::string& next_buffer) {
-  ValidateOpen(__func__);
-  Flush();
-  next_buffer.swap(buffer_);
-  buffer_rdptr_ = buffer_.begin();
-}
-
-void CurlUploadRequest::SetOptions() {
+void CurlDownloadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
   RaiseOnError(__func__, error);
 }
 
-void CurlUploadRequest::ResetOptions() {
+void CurlDownloadRequest::ResetOptions() {
+  if (curl_closed_) {
+    // Once closed, we do not want to reset the request.
+    return;
+  }
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (not payload_.empty()) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
+  }
   handle_.SetWriterCallback(
       [this](void* ptr, std::size_t size, std::size_t nmemb) {
-        this->response_payload_.append(static_cast<char*>(ptr), size * nmemb);
-        return size * nmemb;
-      });
-  handle_.SetReaderCallback(
-      [this](char* ptr, std::size_t size, std::size_t nmemb) {
-        return this->ReadCallback(ptr, size, nmemb);
+        return this->WriteCallback(ptr, size, nmemb);
       });
   handle_.SetHeaderCallback([this](char* contents, std::size_t size,
                                    std::size_t nitems) {
@@ -97,40 +84,22 @@ void CurlUploadRequest::ResetOptions() {
         received_headers_, static_cast<char const*>(contents), size * nitems);
   });
   handle_.EnableLogging(logging_enabled_);
-
-  handle_.SetOption(CURLOPT_UPLOAD, 1L);
-  handle_.SetOption(CURLOPT_CUSTOMREQUEST, "POST");
 }
 
-std::size_t CurlUploadRequest::ReadCallback(char* ptr, std::size_t size,
-                                            std::size_t nmemb) {
+std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
+                                               std::size_t nmemb) {
   handle_.FlushDebug(__func__);
-
-  std::size_t available =
-      static_cast<std::size_t>(std::distance(buffer_rdptr_, buffer_.end()));
-  if (available >= size * nmemb) {
-    available = size * nmemb;
-  }
   GCP_LOG(DEBUG) << __func__ << "() size=" << size << ", nmemb=" << nmemb
-                 << ", buffer.size=" << buffer_.size()
-                 << ", available=" << available << ", closed=" << closing_;
-  // This transfer is closing, just return zero, that will make libcurl finish
-  // any pending work, and will return the handle_ pointer from
-  // curl_multi_info_read() in PerformWork(). That is the point where
-  // `curl_closed_` is set.
-  if (closing_) {
-    return 0;
-  }
+                 << ", buffer.size=" << buffer_.size();
 
-  if (available == 0) {
+  buffer_.append(static_cast<char const*>(ptr), size * nmemb);
+  if (buffer_.size() > 128 * 1024) {
     return CURL_READFUNC_PAUSE;
   }
-  std::copy(buffer_rdptr_, buffer_rdptr_ + available, ptr);
-  buffer_rdptr_ += available;
-  return available;
+  return size * nmemb;
 }
 
-int CurlUploadRequest::PerformWork() {
+int CurlDownloadRequest::PerformWork() {
   // Block while there is work to do, apparently newer versions of libcurl do
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
@@ -148,13 +117,9 @@ int CurlUploadRequest::PerformWork() {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
     // the info queue until we get the message about our handle.
-    int remaining = 0;
+    int remaining;
     do {
       auto msg = curl_multi_info_read(multi_.get(), &remaining);
-      if (msg == nullptr) {
-        // Nothing to report, just terminate the search for terminated handles.
-        break;
-      }
       if (msg->easy_handle != handle_.handle_.get()) {
         // Raise an exception if the handle is not the right one. This should
         // never happen, but better to give some meaningful error in this case.
@@ -175,27 +140,18 @@ int CurlUploadRequest::PerformWork() {
   return running_handles;
 }
 
-void CurlUploadRequest::WaitForHandles() {
+void CurlDownloadRequest::WaitForHandles() {
   CURLMcode result = curl_multi_wait(multi_.get(), nullptr, 0, 0, nullptr);
   RaiseOnError(__func__, result);
 }
 
-void CurlUploadRequest::RaiseOnError(char const* where, CURLMcode result) {
+void CurlDownloadRequest::RaiseOnError(char const* where, CURLMcode result) {
   if (result == CURLM_OK) {
     return;
   }
   std::ostringstream os;
   os << where << ": unexpected error code in curl_multi_perform, [" << result
      << "]=" << curl_multi_strerror(result);
-  google::cloud::internal::RaiseRuntimeError(os.str());
-}
-
-void CurlUploadRequest::ValidateOpen(char const* where) {
-  if (not closing_) {
-    return;
-  }
-  std::ostringstream os;
-  os << "Attempting to use closed CurlUploadRequest in " << where;
   google::cloud::internal::RaiseRuntimeError(os.str());
 }
 

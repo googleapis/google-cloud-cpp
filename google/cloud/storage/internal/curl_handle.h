@@ -158,15 +158,22 @@ class CurlHandle {
     return code;
   }
 
+  void EasyPause(int bitmask) {
+    auto e = curl_easy_pause(handle_.get(), bitmask);
+    if (e != CURLE_OK) {
+      RaiseError(e, __func__);
+    }
+  }
+
   void EnableLogging(bool enabled);
 
   /// Flush any debug data using GCP_LOG().
   void FlushDebug(char const* where);
 
  private:
+  friend class CurlDownloadRequest;
   friend class CurlRequest;
   friend class CurlUploadRequest;
-  friend class CurlDownload;
   friend class CurlRequestBuilder;
 
   [[noreturn]] void RaiseError(CURLcode e, char const* where);

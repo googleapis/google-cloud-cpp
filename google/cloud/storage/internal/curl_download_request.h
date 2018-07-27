@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_UPLOAD_REQUEST_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_UPLOAD_REQUEST_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
 
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Make streaming upload requests using libcurl.
+ * Make streaming download requests using libcurl.
  *
  * This class manages the resources and workflow to make requests where the
  * payload is streamed, and the total size is not known. Under the hood this
@@ -34,54 +34,48 @@ namespace internal {
  * @see `CurlRequest` for simpler transfers where the size of the payload is
  *     known and relatively small.
  */
-class CurlUploadRequest {
+class CurlDownloadRequest {
  public:
-  explicit CurlUploadRequest(std::size_t initial_buffer_size);
+  explicit CurlDownloadRequest(std::size_t initial_buffer_size);
 
-  CurlUploadRequest(CurlUploadRequest&& rhs) noexcept(false)
+  CurlDownloadRequest(CurlDownloadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
         headers_(std::move(rhs.headers_)),
+        payload_(std::move(rhs.payload_)),
         user_agent_(std::move(rhs.user_agent_)),
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
-        buffer_(std::move(rhs.buffer_)),
-        buffer_rdptr_(rhs.buffer_rdptr_),
-        closing_(rhs.closing_),
-        curl_closed_(rhs.curl_closed_) {
+        curl_closed_(rhs.curl_closed_),
+        initial_buffer_size_(rhs.initial_buffer_size_) {
     ResetOptions();
   }
 
-  CurlUploadRequest& operator=(CurlUploadRequest&& rhs) noexcept {
+  CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) noexcept {
     url_ = std::move(rhs.url_);
     headers_ = std::move(rhs.headers_);
+    payload_ = std::move(rhs.payload_);
     user_agent_ = std::move(rhs.user_agent_);
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
-    buffer_ = std::move(rhs.buffer_);
-    buffer_rdptr_ = rhs.buffer_rdptr_;
-    closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
+    initial_buffer_size_ = rhs.initial_buffer_size_;
     ResetOptions();
     return *this;
   }
 
-  bool IsOpen() const { return not closing_; }
-
-  /// Block until the current buffer has been transferred.
-  void Flush();
-
-  /// Close the transfer and wait for the server's response.
-  HttpResponse Close();
-
   /**
-   * Flush the current buffer and swap the current buffer with @p next_buffer.
+   * Wait for additional data or the end of the transfer.
    *
-   * Swapping the buffer permits double buffering in users of this class, and
-   * avoid copies between the layers of abstraction.
+   * This operation blocks until `initial_buffer_size` data has been received or
+   * the transfer is completed.
+   *
+   * @param buffer the location to return the new data. Note that the contents
+   *     of this parameter are completely replaced with the new data.
+   * @returns 100-Continue if the transfer is not yet completed.
    */
-  void NextBuffer(std::string& next_buffer);
+  HttpResponse GetMore(std::string& buffer);
 
  private:
   friend class CurlRequestBuilder;
@@ -91,8 +85,8 @@ class CurlUploadRequest {
   /// Reset the underlying CurlHandle options after a move operation.
   void ResetOptions();
 
-  /// Called by libcurl to transfer some of the data out of the internal buffer.
-  std::size_t ReadCallback(char* ptr, std::size_t size, std::size_t nmemb);
+  /// Called by libcurl to show that more data is available in the download.
+  std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);
 
   /// Wait until a condition is met.
   template <typename Predicate>
@@ -103,10 +97,7 @@ class CurlUploadRequest {
     while (not predicate()) {
       handle_.FlushDebug(__func__);
       GCP_LOG(DEBUG) << __func__ << "() predicate is false"
-                     << ", curl.size=" << buffer_.size() << ", curl.rdptr="
-                     << std::distance(buffer_.begin(), buffer_rdptr_)
-                     << ", curl.end="
-                     << std::distance(buffer_.begin(), buffer_.end());
+                     << ", curl.size=" << buffer_.size();
       auto running_handles = PerformWork();
       // Only wait if there are CURL handles with pending work *and* the
       // predicate is not satisfied. Note that if the predicate is ill-defined
@@ -128,13 +119,10 @@ class CurlUploadRequest {
   /// Simplify handling of errors in the curl_multi_* API.
   void RaiseOnError(char const* where, CURLMcode result);
 
-  /// Raise an exception if the application tries to use a closed request.
-  void ValidateOpen(char const* where);
-
   std::string url_;
   CurlHeaders headers_;
+  std::string payload_;
   std::string user_agent_;
-  std::string response_payload_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
   CurlHandle handle_;
@@ -142,19 +130,10 @@ class CurlUploadRequest {
   CurlMulti multi_;
 
   std::string buffer_;
-  std::string::iterator buffer_rdptr_;
-  // Closing the handle happens in two steps.
-  // 1. First the application (or higher-level class), calls Close(). This class
-  //    needs to flush the existing buffer, which is done by repeated read
-  //    callbacks from libcurl. Once the buffer is flushed, then we need to tell
-  //    libcurl that the transfer is completed by returning 0 from the callback.
-  // 2. Once that callback returns 0, this class needs to know, so it can wait
-  //    for any response.
-  //
-  // The closing_ flag is set when we enter step 1.
-  bool closing_;
-  // The curl_closed_ flag is set when we enter step 2.
+  // The curl_closed_ flag is set if the transfer is done.
   bool curl_closed_;
+
+  std::size_t initial_buffer_size_;
 };
 
 }  // namespace internal
@@ -163,4 +142,4 @@ class CurlUploadRequest {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_UPLOAD_REQUEST_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
