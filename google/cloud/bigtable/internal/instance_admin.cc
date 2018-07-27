@@ -250,12 +250,12 @@ google::cloud::IamPolicy ProtoToWrapper(google::iam::v1::Policy proto) {
 }  // namespace
 
 google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
-    std::string const& resource, grpc::Status& status) {
+    std::string const& instance_id, grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
 
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
@@ -269,14 +269,13 @@ google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
 }
 
 google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
-    std::string const& resource, std::int32_t const& version,
+    std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag,
     grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::Policy policy;
-  policy.set_version(version);
   policy.set_etag(etag);
   auto role_bindings = iam_bindings.bindings();
   for (auto& binding : role_bindings) {
@@ -288,7 +287,7 @@ google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
   }
 
   ::google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
   *request.mutable_policy() = std::move(policy);
 
   MetadataUpdatePolicy metadata_update_policy(project_name(),
@@ -302,14 +301,14 @@ google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
 }
 
 std::vector<std::string> InstanceAdmin::TestIamPermissions(
-    std::string const& resource, std::vector<std::string> const& permissions,
+    std::string const& instance_id, std::vector<std::string> const& permissions,
     grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::TestIamPermissionsRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
 
   for (auto& permission : permissions) {
     request.add_permissions(permission);

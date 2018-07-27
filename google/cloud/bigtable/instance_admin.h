@@ -307,41 +307,46 @@ class InstanceAdmin {
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings = false);
 
-  // TODO(936): Implement Policy wrapper and use that as response.
   /**
-   * Gets the policy for specified resource.
+   * Gets the policy for @p instance_id.
    *
-   * @param resource name of the resource for which the policy is being
-   *  requested.
-   * @return Policy for the specified resource.
+   * @param instance_id the instance to query.
+   * @return Policy the full IAM policy for the instance.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc get iam policy
    */
   google::cloud::IamPolicy GetIamPolicy(std::string const& resource);
 
   /**
-   * Sets policy for specified resource with given bindings and etag.
+   * Sets the IAM policy for an instance.
    *
-   * @param resource name of the resource for which the policy is being set.
-   * @param version version of policy.
+   * Applications can provide the @p etag to implement optimistic concurrency
+   * control. If @p etag is not empty, the server will reject calls where the
+   * provided ETag does not match the ETag value stored in the server.
+   *
+   * @param instance_id which instance to set the IAM policy for.
    * @param iam_bindings IamBindings object containing role and members.
-   * @param etag etag for the policy
+   * @param etag the expected ETag value for the current policy.
    * @return Policy object for the resource.
    */
   google::cloud::IamPolicy SetIamPolicy(
-      std::string const& resource, std::int32_t const& version,
-      google::cloud::IamBindings const& iam_bindings, std::string const& etag);
+      std::string const& instance_id,
+      google::cloud::IamBindings const& iam_bindings,
+      std::string const& etag = std::string{});
 
   /**
-   * Returns a permission set that the caller has on the specified instance
-   * resource. If the resource doesn't exist it will return an empty set of
-   * permissions.
+   * Returns a permission set that the caller has on the specified instance.
    *
-   * @param resource name of the resource for which the detail is being
-   *  requested.
+   * @param instance_id the ID of the instance to query.
    * @param permissions set of permissions to check for the resource.
-   * @return
+   *
+   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
+   *     valid permissions on Google Cloud Bigtable.
    */
   std::vector<std::string> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string const& instance_id,
+      std::vector<std::string> const& permissions);
 
  private:
   /// Implement CreateInstance() with a separate thread.

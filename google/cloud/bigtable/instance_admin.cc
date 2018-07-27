@@ -322,9 +322,9 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
 }
 
 google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
-    std::string const& resource) {
+    std::string const& instance_id) {
   grpc::Status status;
-  auto result = impl_.GetIamPolicy(resource, status);
+  auto result = impl_.GetIamPolicy(instance_id, status);
 
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());
@@ -333,11 +333,10 @@ google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
 }
 
 google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
-    std::string const& resource, std::int32_t const& version,
+    std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;
-  auto result =
-      impl_.SetIamPolicy(resource, version, iam_bindings, etag, status);
+  auto result = impl_.SetIamPolicy(instance_id, iam_bindings, etag, status);
 
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());
@@ -346,9 +345,10 @@ google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
 }
 
 std::vector<std::string> InstanceAdmin::TestIamPermissions(
-    std::string const& resource, std::vector<std::string> const& permissions) {
+    std::string const& instance_id,
+    std::vector<std::string> const& permissions) {
   grpc::Status status;
-  auto result = impl_.TestIamPermissions(resource, permissions, status);
+  auto result = impl_.TestIamPermissions(instance_id, permissions, status);
 
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());

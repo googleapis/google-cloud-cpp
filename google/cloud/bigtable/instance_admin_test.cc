@@ -1879,11 +1879,10 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
-  auto policy = tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag");
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
 
   EXPECT_EQ(1U, policy.bindings.size());
   EXPECT_EQ("test-tag", policy.etag);
-  EXPECT_EQ(2, policy.version);
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy.
@@ -1901,11 +1900,11 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag"),
+  EXPECT_THROW(tested.SetIamPolicy(resource, iam_bindings, "test-tag"),
                std::exception);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag"),
+      tested.SetIamPolicy(resource, iam_bindings, "test-tag"),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -1932,11 +1931,10 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
-  auto policy = tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag");
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
 
   EXPECT_EQ(1U, policy.bindings.size());
   EXPECT_EQ("test-tag", policy.etag);
-  EXPECT_EQ(2, policy.version);
 }
 
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.

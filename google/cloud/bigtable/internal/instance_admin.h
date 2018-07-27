@@ -148,13 +148,13 @@ class InstanceAdmin {
                                         grpc::Status& status);
 
   google::cloud::IamPolicy SetIamPolicy(
-      std::string const& resource, std::int32_t const& version,
+      std::string const& resource,
       google::cloud::IamBindings const& iam_bindings, std::string const& etag,
       grpc::Status& status);
 
   std::vector<std::string> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      grpc::Status& status);
+      std::string const& instance_id,
+      std::vector<std::string> const& permissions, grpc::Status& status);
   //@}
 
   template <typename ResultType>
