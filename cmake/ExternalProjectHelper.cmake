@@ -97,8 +97,11 @@ function (set_library_properties_for_external_project _target _lib)
                  PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${_includepath}")
 endfunction ()
 
-function (set_executable_name_for_external_project VAR _exe)
-    set(${VAR}
-        "${PROJECT_BINARY_DIR}/external/bin/${_exe}${CMAKE_EXECUTABLE_SUFFIX}"
-        PARENT_SCOPE)
+function (set_executable_name_for_external_project _target _exe)
+    set_property(
+        TARGET ${_target}
+        PROPERTY
+            IMPORTED_LOCATION
+            "${PROJECT_BINARY_DIR}/external/bin/${_exe}${CMAKE_EXECUTABLE_SUFFIX}"
+        )
 endfunction ()

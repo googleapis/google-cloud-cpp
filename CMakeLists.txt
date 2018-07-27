@@ -79,7 +79,7 @@ add_custom_target(doxygen-docs)
 # There are a number of targets we cannot, or do not care to compile with the
 # static analyzer enabled. Either because the build times are too long, or
 # because the code is an external dependency, or generated code, or all of
-# above. These targets are added as depedencies of `skip-scanbuild-targets` and
+# above. These targets are added as dependencies of `skip-scanbuild-targets` and
 # compiled with, obviously, scan-build disabled.
 add_custom_target(skip-scanbuild-targets)
 

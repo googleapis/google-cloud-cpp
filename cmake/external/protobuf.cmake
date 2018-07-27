@@ -61,6 +61,10 @@ if (NOT TARGET protobuf_project)
                         --target
                         install
         COMMAND ${CMAKE_COMMAND} --build Release --target install
+        BUILD_BYPRODUCTS
+            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_STATIC_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_SHARED_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
