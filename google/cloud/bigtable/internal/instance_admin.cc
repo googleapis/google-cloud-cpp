@@ -272,7 +272,7 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
 
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(std::move(resource));
-  request.set_allocated_policy(&policy);
+  *request.mutable_policy() = std::move(policy);
 
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
