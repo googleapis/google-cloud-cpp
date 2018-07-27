@@ -336,7 +336,7 @@ class InstanceAdmin {
    *
    * @param resource name of the resource for which the detail is being
    *  requested.
-   * @param perimissions set of permissions to check for the resource.
+   * @param permissions set of permissions to check for the resource.
    * @return
    */
   std::vector<std::string> TestIamPermissions(
