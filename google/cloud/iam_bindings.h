@@ -23,6 +23,7 @@
 
 namespace google {
 namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Represents a container for providing users with a handful of operation to
@@ -138,6 +139,7 @@ class IamBindings {
   std::map<std::string, std::set<std::string>> bindings_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

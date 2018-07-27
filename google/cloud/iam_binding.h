@@ -20,6 +20,7 @@
 
 namespace google {
 namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Represents a Binding which associates a `member` with a particular `role`
@@ -42,6 +43,7 @@ class IamBinding {
   std::set<std::string> members_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

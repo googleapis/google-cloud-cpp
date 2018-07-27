@@ -18,6 +18,7 @@
 
 namespace google {
 namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 void IamBindings::AddMember(std::string const& role,
                             std::string const& member) {
@@ -85,5 +86,6 @@ void IamBindings::RemoveMembers(std::string const& role,
   }
 }
 
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
