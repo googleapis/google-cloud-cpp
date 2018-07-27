@@ -308,6 +308,32 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
                        instance_details.name() + "/clusters/" + id + "-cl2"));
 }
 
+/// @test Verify that IAM Policy APIs work as expected.
+TEST_F(InstanceAdminIntegrationTest, SetGetIamPolicyTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  // create instance prerequisites for cluster operations
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  std::string resource = id;
+  auto iam_bindings = google::cloud::IamBindings(
+      "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
+
+  auto initial_policy =
+      instance_admin_->SetIamPolicy(id, 1, iam_bindings, "test-tag");
+
+  auto fetched_policy = instance_admin_->GetIamPolicy(id);
+
+  EXPECT_EQ(initial_policy.version(), fetched_policy.version());
+  EXPECT_EQ(initial_policy.etag(), fetched_policy.etag());
+}
+
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 

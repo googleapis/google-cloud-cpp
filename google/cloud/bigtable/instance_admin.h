@@ -340,8 +340,7 @@ class InstanceAdmin {
    * @return
    */
   std::vector<std::string> TestIamPermissions(
-      std::string const& resource,
-      std::vector<std::string> const& permissions);
+      std::string const& resource, std::vector<std::string> const& permissions);
 
  private:
   /// Implement CreateInstance() with a separate thread.
