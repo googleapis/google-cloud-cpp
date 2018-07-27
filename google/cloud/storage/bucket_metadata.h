@@ -79,9 +79,32 @@ inline bool operator<(CorsEntry const& lhs, CorsEntry const& rhs) {
                                                   rhs.method, rhs.origin,
                                                   rhs.response_header);
 }
+
+inline bool operator!=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 //@}
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
+
+/**
+ * A simple wrapper for the encryption field in `storage#bucket`.
+ */
+struct BucketEncryption {
+  std::string default_kms_key_name;
+};
 
 /**
  * The versioning configuration for a Bucket.
@@ -252,6 +275,24 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
+  //@{
+  /**
+   * @name Get and set the Default Object Access Control Lists.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#default for
+   *     general information of default ACLs.
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/encryption/customer-managed-keys
+   *     for information on Customer-Managed Encryption Keys.
+   */
+  BucketEncryption const& encryption() const { return encryption_; }
+  BucketMetadata& set_encryption(BucketEncryption v) {
+    encryption_ = std::move(v);
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::etag;
   using CommonMetadata::id;
   using CommonMetadata::kind;
@@ -322,6 +363,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   BucketBilling billing_;
   std::vector<CorsEntry> cors_;
   std::vector<ObjectAccessControl> default_acl_;
+  BucketEncryption encryption_;
   std::map<std::string, std::string> labels_;
   std::string location_;
   std::int64_t project_number_;

@@ -86,6 +86,9 @@ BucketMetadata CreateBucketMetadataForTest() {
         },
         "etag": "AYX="
       }],
+      "encryption": {
+        "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name"
+      },
       "etag": "XYZ=",
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -137,6 +140,10 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_EQ(1U, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
+  EXPECT_EQ(
+      "projects/test-project-name/locations/us-central1/keyRings/"
+      "test-keyring-name/cryptoKeys/test-key-name",
+      actual.encryption().default_kms_key_name);
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -190,6 +197,9 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
   EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
+  EXPECT_THAT(actual,
+              HasSubstr("projects/test-project-name/locations/us-central1/"
+                        "keyRings/test-keyring-name/cryptoKeys/test-key-name"));
   EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
   EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -277,6 +287,18 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   copy.set_default_acl(std::move(default_acl));
   EXPECT_EQ(2U, copy.default_acl().size());
   EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, SetEncryption) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  std::string fake_key_name =
+      "projects/test-project-name/locations/us-central1/keyRings/"
+      "test-keyring-name/cryptoKeys/another-test-key-name";
+  copy.set_encryption(BucketEncryption{fake_key_name});
+  EXPECT_EQ(fake_key_name, copy.encryption().default_kms_key_name);
   EXPECT_NE(expected, copy);
 }
 
