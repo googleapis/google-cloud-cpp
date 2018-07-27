@@ -20,33 +20,33 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace storage_class {
 std::string const& Standard() {
-  static std::string const kStorageClass = "STANDARD";
-  return kStorageClass;
+  static std::string const value = "STANDARD";
+  return value;
 }
 
 std::string const& MultiRegional() {
-  static std::string const kStorageClass = "MULTI_REGIONAL";
-  return kStorageClass;
+  static std::string const value = "MULTI_REGIONAL";
+  return value;
 }
 
 std::string const& Regional() {
-  static std::string const kStorageClass = "REGIONAL";
-  return kStorageClass;
+  static std::string const value = "REGIONAL";
+  return value;
 }
 
 std::string const& Nearline() {
-  static std::string const kStorageClass = "NEARLINE";
-  return kStorageClass;
+  static std::string const value = "NEARLINE";
+  return value;
 }
 
 std::string const& Coldline() {
-  static std::string const kStorageClass = "COLDLINE";
-  return kStorageClass;
+  static std::string const value = "COLDLINE";
+  return value;
 }
 
 std::string const& DurableReducedAvailability() {
-  static std::string const kStorageClass = "DURABLE_REDUCED_AVAILABILITY";
-  return kStorageClass;
+  static std::string const value = "DURABLE_REDUCED_AVAILABILITY";
+  return value;
 }
 
 }  // namespace storage_class
