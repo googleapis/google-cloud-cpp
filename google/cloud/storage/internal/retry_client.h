@@ -58,6 +58,9 @@ class RetryClient : public RawClient {
   std::pair<Status, ReadObjectRangeResponse> ReadObjectRangeMedia(
       ReadObjectRangeRequest const&) override;
 
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
+      InsertObjectStreamingRequest const&) override;
+
   std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) override;
 

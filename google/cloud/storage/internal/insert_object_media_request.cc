@@ -28,6 +28,14 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
      << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
   return os << "}";
 }
+
+std::ostream& operator<<(std::ostream& os,
+                         InsertObjectStreamingRequest const& r) {
+  os << "InsertObjectStreamingRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpParameters(os, ", ");
+  return os << "}";
+}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

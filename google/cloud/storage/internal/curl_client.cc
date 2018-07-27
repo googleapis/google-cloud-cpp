@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/curl_streambuf.h"
 
 namespace google {
 namespace cloud {
@@ -119,6 +120,23 @@ std::pair<Status, ReadObjectRangeResponse> CurlClient::ReadObjectRangeMedia(
   return std::make_pair(
       Status(),
       internal::ReadObjectRangeResponse::FromHttpResponse(std::move(payload)));
+}
+
+std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
+  auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
+  CurlRequestBuilder builder(url);
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddParametersToHttpRequest(builder);
+  builder.AddQueryParameter("uploadType", "media");
+  builder.AddQueryParameter("name", request.object_name());
+  builder.AddHeader("Content-Type: application/octet-stream");
+  std::unique_ptr<internal::CurlStreambuf> buf(
+      new internal::CurlStreambuf(builder.BuildUpload(), 128 * 1024));
+  return std::make_pair(
+      Status(),
+      std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
 }
 
 std::pair<Status, ListObjectsResponse> CurlClient::ListObjects(

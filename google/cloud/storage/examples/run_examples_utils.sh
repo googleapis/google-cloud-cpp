@@ -68,6 +68,9 @@ run_program_examples() {
         insert-object)
             arguments="${base_arguments} a-short-string-to-put-in-the-object"
             ;;
+        write-object)
+            arguments="${base_arguments} 100000"
+            ;;
         create-object-acl)
             arguments="${base_arguments} allAuthenticatedUsers READER"
             ;;
@@ -177,6 +180,7 @@ run_all_object_examples() {
 insert-object
 get-object-metadata
 read-object
+write-object
 delete-object
 _EOF_
 )
