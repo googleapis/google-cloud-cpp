@@ -23,6 +23,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 MetadataParamTypes const MetadataParamTypes::PARENT("parent");
 MetadataParamTypes const MetadataParamTypes::NAME("name");
+MetadataParamTypes const MetadataParamTypes::RESOURCE("resource");
 MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(

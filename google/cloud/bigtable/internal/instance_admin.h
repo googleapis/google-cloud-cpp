@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/iam_bindings.h"
 #include <memory>
 #include <sstream>
 #include <thread>
@@ -142,6 +143,18 @@ class InstanceAdmin {
   void DeleteAppProfile(bigtable::InstanceId const& instance_id,
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings, grpc::Status& status);
+
+  ::google::iam::v1::Policy GetIamPolicy(std::string const& resource,
+                                         grpc::Status& status);
+
+  ::google::iam::v1::Policy SetIamPolicy(
+      std::string const& resource, std::int32_t const& version,
+      google::cloud::IamBindings const& iam_bindings, std::string const& etag,
+      grpc::Status& status);
+
+  std::vector<std::string> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      grpc::Status& status);
   //@}
 
   template <typename ResultType>

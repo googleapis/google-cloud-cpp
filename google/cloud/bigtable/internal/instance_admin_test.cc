@@ -88,6 +88,27 @@ auto create_cluster = []() {
   };
 };
 
+auto create_policy = []() {
+  return [](grpc::ClientContext* ctx,
+            ::google::iam::v1::GetIamPolicyRequest const& request,
+            ::google::iam::v1::Policy* response) {
+    EXPECT_NE(nullptr, response);
+    response->set_version(3);
+    response->set_etag("random-tag");
+    return grpc::Status::OK;
+  };
+};
+
+auto create_policy_with_params = []() {
+  return [](grpc::ClientContext* ctx,
+            ::google::iam::v1::SetIamPolicyRequest const& request,
+            ::google::iam::v1::Policy* response) {
+    EXPECT_NE(nullptr, response);
+    *response = request.policy();
+    return grpc::Status::OK;
+  };
+};
+
 // A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
@@ -772,4 +793,198 @@ TEST_F(InstanceAdminTest, DeleteAppProfileUnrecoverableError) {
   tested.DeleteAppProfile(instance_id, profile_id, false, status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
+}
+
+/// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
+TEST_F(InstanceAdminTest, GetIamPolicy) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_policy = create_policy();
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  grpc::Status status;
+  std::string resource = "test-resource";
+  tested.GetIamPolicy(resource, status);
+
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy/
+TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  grpc::Status status;
+  std::string resource = "other-resource";
+  tested.GetIamPolicy(resource, status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("err!"));
+}
+
+/// @test Verify recoverable errors for InstanceAdmin::GetIamPolicy.
+TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
+  namespace iamproto = ::google::iam::v1;
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, iamproto::GetIamPolicyRequest const& request,
+         iamproto::Policy* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
+  auto mock_policy = create_policy();
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  grpc::Status status;
+  std::string resource = "test-resource";
+  tested.GetIamPolicy(resource, status);
+  EXPECT_TRUE(status.ok());
+}
+
+/// @test Verify positive scenario for InstanceAdmin::SetIamPolicy.
+TEST_F(InstanceAdminTest, SetIamPolicy) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto mock_policy = create_policy_with_params();
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  grpc::Status status;
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  auto policy =
+      tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag", status);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, policy.bindings_size());
+  EXPECT_EQ("test-tag", policy.etag());
+  EXPECT_EQ(2, policy.version());
+}
+
+/// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy/
+TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  grpc::Status status;
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag", status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("err!"));
+}
+
+/// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy.
+TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
+  namespace iamproto = ::google::iam::v1;
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx, iamproto::SetIamPolicyRequest const& request,
+         iamproto::Policy* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
+  auto mock_policy = create_policy_with_params();
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  grpc::Status status;
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  auto policy =
+      tested.SetIamPolicy(resource, 2, iam_bindings, "test-tag", status);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, policy.bindings_size());
+  EXPECT_EQ("test-tag", policy.etag());
+  EXPECT_EQ(2, policy.version());
+}
+
+/// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
+TEST_F(InstanceAdminTest, TestIamPermissions) {
+  namespace iamproto = ::google::iam::v1;
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  auto mock_permission_set =
+      [](grpc::ClientContext* ctx,
+         iamproto::TestIamPermissionsRequest const& request,
+         iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(Invoke(mock_permission_set));
+
+  grpc::Status status;
+  std::string resource = "the-resource";
+  auto permission_set = tested.TestIamPermissions(
+      resource, {"reader", "writer", "owner"}, status);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(2U, permission_set.size());
+}
+
+/// @test Test for unrecoverable errors for InstanceAdmin::TestIamPermissions.
+TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  grpc::Status status;
+  std::string resource = "other-resource";
+  tested.TestIamPermissions(resource, {"reader", "writer", "owner"}, status);
+
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("err!"));
+}
+
+/// @test Test for recoverable errors for InstanceAdmin::TestIamPermissions.
+TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
+  namespace iamproto = ::google::iam::v1;
+  bigtable::noex::InstanceAdmin tested(client_);
+
+  auto mock_recoverable_failure =
+      [](grpc::ClientContext* ctx,
+         iamproto::TestIamPermissionsRequest const& request,
+         iamproto::TestIamPermissionsResponse* response) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
+
+  auto mock_permission_set =
+      [](grpc::ClientContext* ctx,
+         iamproto::TestIamPermissionsRequest const& request,
+         iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_permission_set));
+
+  grpc::Status status;
+  std::string resource = "the-resource";
+  auto permission_set = tested.TestIamPermissions(
+      resource, {"writer", "reader", "owner"}, status);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(2U, permission_set.size());
 }

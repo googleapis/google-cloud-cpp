@@ -414,7 +414,14 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "request=" << request_text << std::endl;
 
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto it = policies_.find(request->resource());
+    if (it == policies_.end()) {
+      *response = google::iam::v1::Policy();
+    } else {
+      *response = it->second;
+    }
+
+    return grpc::Status::OK;
   }
 
   grpc::Status SetIamPolicy(grpc::ServerContext* context,
@@ -424,7 +431,11 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "request=" << request_text << std::endl;
 
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto policy = request->policy();
+    *response = policy;
+    policies_[request->resource()] = policy;
+
+    return grpc::Status::OK;
   }
 
   grpc::Status TestIamPermissions(
@@ -433,9 +444,15 @@ class InstanceAdminEmulator final
       google::iam::v1::TestIamPermissionsResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
 
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
+    auto it = policies_.find(request->resource());
+    if (it != policies_.end()) {
+      std::string const& permissions = "writer";
+      response->add_permissions(permissions);
+      return grpc::Status::OK;
+    }
+
+    return grpc::Status(grpc::StatusCode::NOT_FOUND, "resource doesn't exists");
   }
 
  private:
@@ -443,6 +460,7 @@ class InstanceAdminEmulator final
   std::map<std::string, btadmin::Cluster> clusters_;
   std::map<std::string, google::longrunning::Operation> pending_operations_;
   std::map<std::string, btadmin::AppProfile> app_profiles_;
+  std::map<std::string, google::iam::v1::Policy> policies_;
   long counter_ = 0;
 };
 

@@ -321,6 +321,42 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
   return result;
 }
 
+::google::iam::v1::Policy InstanceAdmin::GetIamPolicy(
+    std::string const& resource) {
+  grpc::Status status;
+  auto result = impl_.GetIamPolicy(resource, status);
+
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
+::google::iam::v1::Policy InstanceAdmin::SetIamPolicy(
+    std::string const& resource, std::int32_t const& version,
+    google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
+  grpc::Status status;
+  auto result =
+      impl_.SetIamPolicy(resource, version, iam_bindings, etag, status);
+
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status, status.error_message());
+  }
+  return result;
+}
+
+std::vector<std::string> InstanceAdmin::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions) {
+  grpc::Status status;
+  auto result = impl_.TestIamPermissions(resource, permissions, status);
+
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status, status.error_message());
+  }
+
+  return result;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
