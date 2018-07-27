@@ -307,7 +307,6 @@ class InstanceAdmin {
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings = false);
 
-
   // TODO(936): Implement Policy wrapper and use that as response.
   /**
    * Gets the policy for specified resource.
