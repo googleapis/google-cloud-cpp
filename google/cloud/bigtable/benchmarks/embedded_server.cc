@@ -73,10 +73,8 @@ class BigtableImpl final : public btproto::Bigtable::Service {
   }
 
   grpc::Status ReadRows(
-      grpc::ServerContext* context,
-      google::bigtable::v2::ReadRowsRequest const* request,
-      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>* writer)
-      override {
+      grpc::ServerContext* context, btproto::ReadRowsRequest const* request,
+      grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
     ++read_rows_count_;
     std::int64_t rows_limit = 10000;
     if (request->rows_limit() != 0) {

@@ -18,8 +18,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace btproto = ::google::bigtable::v2;
-
 RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   // Special case: "all rows", return the argument range.
   if (row_set_.row_keys().empty() and row_set_.row_ranges().empty()) {
