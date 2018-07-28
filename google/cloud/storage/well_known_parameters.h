@@ -44,6 +44,15 @@ class WellKnownParameter {
   google::cloud::internal::optional<T> value_;
 };
 
+template <typename P, typename T>
+std::ostream& operator<<(std::ostream& os,
+                         WellKnownParameter<P, T> const& rhs) {
+  if (rhs.has_value()) {
+    return os << rhs.parameter_name() << "=" << rhs.value();
+  }
+  return os << rhs.parameter_name() << "=<not set>";
+}
+
 struct Projection : public WellKnownParameter<Projection, std::string> {
   using WellKnownParameter<Projection, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "projection"; }

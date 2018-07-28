@@ -33,8 +33,8 @@ TEST(GetBucketMetadataRequestTest, OStreamBasic) {
 
 TEST(GetBucketMetadataRequestTest, OStreamParameter) {
   GetBucketMetadataRequest request("my-bucket");
-  request.set_multiple_parameters(IfMetaGenerationNotMatch(7),
-                                  UserProject("my-project"));
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));

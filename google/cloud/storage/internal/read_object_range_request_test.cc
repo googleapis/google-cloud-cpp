@@ -38,9 +38,9 @@ TEST(ReadObjectRangeRequestTest, Simple) {
   EXPECT_EQ(0, request.begin());
   EXPECT_EQ(1024, request.end());
 
-  request.set_parameter(storage::UserProject("my-project"));
-  request.set_multiple_parameters(storage::IfGenerationMatch(7),
-                                  storage::UserProject("my-project"));
+  request.set_option(storage::UserProject("my-project"));
+  request.set_multiple_options(storage::IfGenerationMatch(7),
+                               storage::UserProject("my-project"));
 }
 
 using ::testing::HasSubstr;
@@ -58,7 +58,7 @@ TEST(ReadObjectRangeRequestTest, OStreamBasic) {
 
 TEST(ReadObjectRangeRequestTest, OStreamParameter) {
   ReadObjectRangeRequest request("my-bucket", "my-object");
-  request.set_multiple_parameters(Generation(3));
+  request.set_multiple_options(Generation(3));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("generation=3"));

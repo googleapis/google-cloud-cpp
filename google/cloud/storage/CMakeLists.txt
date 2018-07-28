@@ -135,6 +135,7 @@ add_library(storage_client
             internal/empty_response.h
             internal/empty_response.cc
             internal/generic_object_request.h
+            internal/generic_request.h
             internal/get_bucket_metadata_request.h
             internal/get_bucket_metadata_request.cc
             internal/get_object_metadata_request.h
@@ -165,7 +166,6 @@ add_library(storage_client
             internal/raw_client.h
             internal/read_object_range_request.h
             internal/read_object_range_request.cc
-            internal/request_parameters.h
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_credentials.h

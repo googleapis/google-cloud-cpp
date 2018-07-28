@@ -26,7 +26,7 @@ using ::testing::Not;
 
 TEST(GetObjectMetadataRequestTest, OStream) {
   GetObjectMetadataRequest request("my-bucket", "my-object");
-  request.set_multiple_parameters(Generation(1), IfMetaGenerationMatch(3));
+  request.set_multiple_options(Generation(1), IfMetaGenerationMatch(3));
   std::ostringstream os;
   os << request;
   auto str = os.str();

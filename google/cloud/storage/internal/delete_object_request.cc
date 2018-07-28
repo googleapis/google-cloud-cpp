@@ -23,7 +23,7 @@ namespace internal {
 std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r) {
   os << "DeleteObjectRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
-  r.DumpParameters(os, ", ");
+  r.DumpOptions(os, ", ");
   return os << "}";
 }
 

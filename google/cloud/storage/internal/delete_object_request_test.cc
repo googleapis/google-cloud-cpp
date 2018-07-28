@@ -26,8 +26,8 @@ using ::testing::Not;
 
 TEST(DeleteObjectRequestTest, OStream) {
   DeleteObjectRequest request("my-bucket", "my-object");
-  request.set_multiple_parameters(IfMetaGenerationNotMatch(7),
-                                  UserProject("my-project"));
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
