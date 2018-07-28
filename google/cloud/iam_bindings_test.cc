@@ -15,17 +15,19 @@
 #include "google/cloud/iam_bindings.h"
 #include <gmock/gmock.h>
 
-namespace cloud = google::cloud;
-
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace {
 TEST(IamBindingsTest, DefaultConstructor) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
 
   EXPECT_EQ(1U, iam_bindings.bindings().size());
   EXPECT_EQ("writer", iam_bindings.bindings().begin()->first);
@@ -36,11 +38,11 @@ TEST(IamBindingsTest, AddMemberTestRoleExists) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
 
   iam_bindings.AddMember(role, "jkl@gmail.com");
 
@@ -51,11 +53,11 @@ TEST(IamBindingsTest, AddMemberTestNewRole) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
 
   std::string new_role = "reader";
   iam_bindings.AddMember(new_role, "jkl@gmail.com");
@@ -67,11 +69,11 @@ TEST(IamBindingsTest, AddMembersTestRoleExists) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
   std::set<std::string> new_members = {"jkl@gmail.com", "pqr@gmail.com"};
   iam_bindings.AddMembers(role, new_members);
 
@@ -82,14 +84,14 @@ TEST(IamBindingsTest, AddMembersTestIamBindingParma) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
 
   std::set<std::string> new_members = {"jkl@gmail.com", "pqr@gmail.com"};
-  auto iam_binding_for_addition = cloud::IamBinding(role, new_members);
+  auto iam_binding_for_addition = IamBinding(role, new_members);
   iam_bindings.AddMembers(iam_binding_for_addition);
 
   EXPECT_EQ(4U, iam_bindings.bindings().begin()->second.size());
@@ -99,11 +101,11 @@ TEST(IamBindingsTest, AddMembersTestNewRole) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
 
   std::string new_role = "reader";
   std::set<std::string> new_members = {"jkl@gmail.com", "pqr@gmail.com"};
@@ -116,11 +118,11 @@ TEST(IamBindingsTest, RemoveMemberTest) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
   iam_bindings.RemoveMember(role, "abc@gmail.com");
 
   auto temp_binding = iam_bindings.bindings();
@@ -133,11 +135,11 @@ TEST(IamBindingsTest, RemoveMembersTest) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
   std::set<std::string> member_list = {"abc@gmail.com"};
   iam_bindings.RemoveMembers(role, member_list);
 
@@ -158,13 +160,13 @@ TEST(IamBindingsTest, RemoveMembersTestIamBindingParam) {
   std::string role = "writer";
   std::set<std::string> members = {"abc@gmail.com", "xyz@gmail.com"};
 
-  auto iam_binding = cloud::IamBinding(role, members);
+  auto iam_binding = IamBinding(role, members);
 
-  std::vector<cloud::IamBinding> bindings_vector = {iam_binding};
+  std::vector<IamBinding> bindings_vector = {iam_binding};
 
-  auto iam_bindings = cloud::IamBindings(bindings_vector);
+  auto iam_bindings = IamBindings(bindings_vector);
   std::set<std::string> member_list = {"abc@gmail.com"};
-  auto iam_binding_for_removal = cloud::IamBinding(role, member_list);
+  auto iam_binding_for_removal = IamBinding(role, member_list);
   iam_bindings.RemoveMembers(iam_binding_for_removal);
 
   auto temp_binding = iam_bindings.bindings();
@@ -179,3 +181,7 @@ TEST(IamBindingsTest, RemoveMembersTestIamBindingParam) {
 
   EXPECT_FALSE(has_removed_member);
 }
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

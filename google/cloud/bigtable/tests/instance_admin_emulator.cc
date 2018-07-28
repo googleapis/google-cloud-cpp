@@ -444,11 +444,13 @@ class InstanceAdminEmulator final
       google::iam::v1::TestIamPermissionsResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
+    std::cout << __func__ << "request=" << request_text << std::endl;
 
-    auto it = policies_.find(request->resource());
-    if (it != policies_.end()) {
-      std::string const& permissions = "writer";
-      response->add_permissions(permissions);
+    auto it = instances_.find(request->resource());
+    if (it != instances_.end()) {
+      for (auto const& p : request->permissions()) {
+        response->add_permissions(p);
+      }
       return grpc::Status::OK;
     }
 

@@ -2,6 +2,7 @@
 google_cloud_cpp_common_HDRS = [
     "iam_binding.h",
     "iam_bindings.h",
+    "iam_policy.h",
     "internal/backoff_policy.h",
     "internal/build_info.h",
     "internal/optional.h",

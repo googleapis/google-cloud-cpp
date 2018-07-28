@@ -326,17 +326,17 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
       "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
 
   auto initial_policy =
-      instance_admin_->SetIamPolicy(id, 1, iam_bindings, "test-tag");
+      instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
 
   auto fetched_policy = instance_admin_->GetIamPolicy(id);
 
-  EXPECT_EQ(initial_policy.version(), fetched_policy.version());
-  EXPECT_EQ(initial_policy.etag(), fetched_policy.etag());
+  EXPECT_EQ(initial_policy.version, fetched_policy.version);
+  EXPECT_EQ(initial_policy.etag, fetched_policy.etag);
 
-  auto permission_set =
-      instance_admin_->TestIamPermissions(id, {"writer", "owner"});
+  auto permission_set = instance_admin_->TestIamPermissions(
+      id, {"bigtable.tables.list", "bigtable.tables.delete"});
 
-  EXPECT_EQ(1U, permission_set.size());
+  EXPECT_EQ(2U, permission_set.size());
 }
 
 int main(int argc, char* argv[]) {

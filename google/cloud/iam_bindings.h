@@ -23,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Represents a container for providing users with a handful of operation to
  * users which they can use to add and remove members to Binding which is used
@@ -34,7 +34,9 @@ namespace cloud {
  */
 class IamBindings {
  public:
-  IamBindings(std::vector<IamBinding> bindings) {
+  IamBindings() = default;
+
+  explicit IamBindings(std::vector<IamBinding> bindings) {
     for (auto& it : bindings) {
       bindings_.insert({std::move(it.role()), std::move(it.members())});
     }
@@ -70,7 +72,7 @@ class IamBindings {
    *
    * @return int the size of the container.
    */
-  std::size_t size() const { return (int)bindings_.size(); }
+  std::size_t size() const { return bindings_.size(); }
 
   std::map<std::string, std::set<std::string>> const& bindings() const {
     return bindings_;
@@ -84,7 +86,7 @@ class IamBindings {
    * @param member specifies the identity requesting access for a cloud
    * platform resource.
    */
-  void AddMember(std::string const& role, std::string const& member);
+  void AddMember(std::string const& role, std::string member);
 
   /**
    * Adds a new key-value pair of role and members to the container if there is
@@ -138,6 +140,7 @@ class IamBindings {
   std::map<std::string, std::set<std::string>> bindings_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -234,32 +234,48 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteAppProfile", status);
 }
 
-::google::iam::v1::Policy InstanceAdmin::GetIamPolicy(
-    std::string const& resource, grpc::Status& status) {
+namespace {
+google::cloud::IamPolicy ProtoToWrapper(google::iam::v1::Policy proto) {
+  google::cloud::IamPolicy result;
+  result.version = proto.version();
+  result.etag = std::move(*proto.mutable_etag());
+  for (auto& binding : *proto.mutable_bindings()) {
+    for (auto& member : *binding.mutable_members()) {
+      result.bindings.AddMember(binding.role(), std::move(member));
+    }
+  }
+
+  return result;
+}
+}  // namespace
+
+google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
+    std::string const& instance_id, grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
 
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
 
-  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
-                               metadata_update_policy,
-                               &InstanceAdminClient::GetIamPolicy, request,
-                               "InstanceAdmin::GetIamPolicy", status, true);
+  auto proto = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::GetIamPolicy, request,
+      "InstanceAdmin::GetIamPolicy", status, true);
+
+  return ProtoToWrapper(std::move(proto));
 }
 
-::google::iam::v1::Policy InstanceAdmin::SetIamPolicy(
-    std::string const& resource, std::int32_t const& version,
+google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
+    std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag,
     grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::Policy policy;
-  policy.set_version(version);
   policy.set_etag(etag);
   auto role_bindings = iam_bindings.bindings();
   for (auto& binding : role_bindings) {
@@ -271,27 +287,28 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   }
 
   ::google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
   *request.mutable_policy() = std::move(policy);
 
   MetadataUpdatePolicy metadata_update_policy(project_name(),
                                               MetadataParamTypes::RESOURCE);
 
-  return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
-                               metadata_update_policy,
-                               &InstanceAdminClient::SetIamPolicy, request,
-                               "InstanceAdmin::SetIamPolicy", status, true);
+  auto proto = ClientUtils::MakeCall(
+      *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::SetIamPolicy, request,
+      "InstanceAdmin::SetIamPolicy", status, true);
+  return ProtoToWrapper(std::move(proto));
 }
 
 std::vector<std::string> InstanceAdmin::TestIamPermissions(
-    std::string const& resource, std::vector<std::string> const& permissions,
+    std::string const& instance_id, std::vector<std::string> const& permissions,
     grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   ::google::iam::v1::TestIamPermissionsRequest request;
-  request.set_resource(resource);
+  request.set_resource(InstanceName(instance_id));
 
   for (auto& permission : permissions) {
     request.add_permissions(permission);

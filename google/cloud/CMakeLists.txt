@@ -72,6 +72,7 @@ add_library(google_cloud_cpp_common
             iam_binding.h
             iam_bindings.h
             iam_bindings.cc
+            iam_policy.h
             internal/backoff_policy.h
             internal/backoff_policy.cc
             internal/build_info.h
