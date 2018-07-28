@@ -17,7 +17,7 @@
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 TEST(TableConfig, Simple) {
@@ -52,7 +52,7 @@ table {
 initial_splits { key: 'foo' }
 initial_splits { key: 'qux' }
 )""";
-  btproto::CreateTableRequest expected;
+  btadmin::CreateTableRequest expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 

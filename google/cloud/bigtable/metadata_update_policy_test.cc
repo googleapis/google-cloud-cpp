@@ -21,8 +21,6 @@
 #include <map>
 #include <thread>
 
-namespace btproto = google::bigtable::v2;
-namespace adminproto = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 namespace {

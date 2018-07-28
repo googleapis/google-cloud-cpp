@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <sstream>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {
@@ -27,8 +27,8 @@ static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
-::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
-    std::string table_id, TableConfig config) {
+btadmin::Table TableAdmin::CreateTable(std::string table_id,
+                                       TableConfig config) {
   grpc::Status status;
   auto result =
       impl_.CreateTable(std::move(table_id), std::move(config), status);
@@ -38,8 +38,7 @@ static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
   return result;
 }
 
-std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
-    ::google::bigtable::admin::v2::Table::View view) {
+std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.ListTables(view, status);
   if (not status.ok()) {
@@ -48,9 +47,8 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   return result;
 }
 
-::google::bigtable::admin::v2::Table TableAdmin::GetTable(
-    std::string const& table_id,
-    ::google::bigtable::admin::v2::Table::View view) {
+btadmin::Table TableAdmin::GetTable(std::string const& table_id,
+                                    btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.GetTable(table_id, status, view);
   if (not status.ok()) {
@@ -67,7 +65,7 @@ void TableAdmin::DeleteTable(std::string const& table_id) {
   }
 }
 
-::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
+btadmin::Table TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {
   grpc::Status status;
@@ -96,7 +94,7 @@ void TableAdmin::DropAllRows(std::string const& table_id) {
   }
 }
 
-::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+btadmin::Snapshot TableAdmin::GetSnapshot(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;

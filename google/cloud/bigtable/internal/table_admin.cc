@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <sstream>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {
@@ -32,8 +32,8 @@ static_assert(std::is_copy_assignable<bigtable::noex::TableAdmin>::value,
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
 
-::google::bigtable::admin::v2::Table TableAdmin::CreateTable(
-    std::string table_id, TableConfig config, grpc::Status& status) {
+btadmin::Table TableAdmin::CreateTable(std::string table_id, TableConfig config,
+                                       grpc::Status& status) {
   auto request = config.as_proto_move();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
@@ -44,17 +44,17 @@ using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
       &AdminClient::CreateTable, request, "CreateTable", status);
 }
 
-std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
-    ::google::bigtable::admin::v2::Table::View view, grpc::Status& status) {
+std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view,
+                                                   grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Table> result;
+  std::vector<btadmin::Table> result;
   std::string page_token;
   do {
-    btproto::ListTablesRequest request;
+    btadmin::ListTablesRequest request;
     request.set_page_token(std::move(page_token));
     request.set_parent(instance_name());
     request.set_view(view);
@@ -74,10 +74,10 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
   return result;
 }
 
-::google::bigtable::admin::v2::Table TableAdmin::GetTable(
-    std::string const& table_id, grpc::Status& status,
-    ::google::bigtable::admin::v2::Table::View view) {
-  btproto::GetTableRequest request;
+btadmin::Table TableAdmin::GetTable(std::string const& table_id,
+                                    grpc::Status& status,
+                                    btadmin::Table::View view) {
+  btadmin::GetTableRequest request;
   request.set_name(TableName(table_id));
   request.set_view(view);
 
@@ -91,7 +91,7 @@ std::vector<::google::bigtable::admin::v2::Table> TableAdmin::ListTables(
 
 void TableAdmin::DeleteTable(std::string const& table_id,
                              grpc::Status& status) {
-  btproto::DeleteTableRequest request;
+  btadmin::DeleteTableRequest request;
   request.set_name(TableName(table_id));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
@@ -102,10 +102,10 @@ void TableAdmin::DeleteTable(std::string const& table_id,
       &AdminClient::DeleteTable, request, "DeleteTable", status);
 }
 
-::google::bigtable::admin::v2::Table TableAdmin::ModifyColumnFamilies(
+btadmin::Table TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications, grpc::Status& status) {
-  btproto::ModifyColumnFamiliesRequest request;
+  btadmin::ModifyColumnFamiliesRequest request;
   request.set_name(TableName(table_id));
   for (auto& m : modifications) {
     *request.add_modifications() = m.as_proto_move();
@@ -121,7 +121,7 @@ void TableAdmin::DeleteTable(std::string const& table_id,
 void TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                   std::string row_key_prefix,
                                   grpc::Status& status) {
-  btproto::DropRowRangeRequest request;
+  btadmin::DropRowRangeRequest request;
   request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
   MetadataUpdatePolicy metadata_update_policy(
@@ -133,7 +133,7 @@ void TableAdmin::DropRowsByPrefix(std::string const& table_id,
 
 void TableAdmin::DropAllRows(std::string const& table_id,
                              grpc::Status& status) {
-  btproto::DropRowRangeRequest request;
+  btadmin::DropRowRangeRequest request;
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
   MetadataUpdatePolicy metadata_update_policy(
@@ -147,10 +147,10 @@ std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
 
-::google::bigtable::admin::v2::Snapshot TableAdmin::GetSnapshot(
+btadmin::Snapshot TableAdmin::GetSnapshot(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, grpc::Status& status) {
-  btproto::GetSnapshotRequest request;
+  btadmin::GetSnapshotRequest request;
   request.set_name(SnapshotName(cluster_id, snapshot_id));
 
   MetadataUpdatePolicy metadata_update_policy(
@@ -163,7 +163,7 @@ std::string TableAdmin::InstanceName() const {
 
 std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
                                                  grpc::Status& status) {
-  btproto::GenerateConsistencyTokenRequest request;
+  btadmin::GenerateConsistencyTokenRequest request;
   request.set_name(TableName(table_id));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
@@ -179,7 +179,7 @@ std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
 bool TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token, grpc::Status& status) {
-  btproto::CheckConsistencyRequest request;
+  btadmin::CheckConsistencyRequest request;
   request.set_name(TableName(table_id.get()));
   request.set_consistency_token(consistency_token.get());
   MetadataUpdatePolicy metadata_update_policy(
@@ -195,7 +195,7 @@ bool TableAdmin::CheckConsistency(
 bool TableAdmin::WaitForConsistencyCheckHelper(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token, grpc::Status& status) {
-  btproto::CheckConsistencyRequest request;
+  btadmin::CheckConsistencyRequest request;
   request.set_name(TableName(table_id.get()));
   request.set_consistency_token(consistency_token.get());
   MetadataUpdatePolicy metadata_update_policy(
@@ -223,7 +223,7 @@ bool TableAdmin::WaitForConsistencyCheckHelper(
 void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id,
                                 grpc::Status& status) {
-  btproto::DeleteSnapshotRequest request;
+  btadmin::DeleteSnapshotRequest request;
   request.set_name(SnapshotName(cluster_id, snapshot_id));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
@@ -246,7 +246,7 @@ void TableAdmin::ListSnapshotsImpl(
       instance_name(), MetadataParamTypes::PARENT, cluster_id);
   std::string page_token;
   do {
-    btproto::ListSnapshotsRequest request;
+    btadmin::ListSnapshotsRequest request;
     request.set_parent(ClusterName(cluster_id));
     request.set_page_size(0);
     request.set_page_token(page_token);
