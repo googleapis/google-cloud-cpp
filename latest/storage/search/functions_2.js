@@ -14,7 +14,7 @@ var searchData=
   ['cors',['cors',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a9df467448efc7f652fb78a2f27514f3a',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['crc32c',['crc32c',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a018b732e33a7dde44671f40137318180',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['createinsecurecredentials',['CreateInsecureCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a851db5698c3bbebcfbd62dbc18e9c1a7',1,'google::cloud::storage::v0']]],
-  ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a1697e25a85205df71a1fd12ecf1d0b3d',1,'google::cloud::storage::v0::Client']]],
+  ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac904a4ac065a12f7cab583457b3bb636',1,'google::cloud::storage::v0::Client']]],
   ['credentials',['credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a13cf2d9979726b861aa436d5d625e1cc',1,'google::cloud::storage::v0::ClientOptions']]],
   ['customer_5fencryption',['customer_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a806a95b1455e9eb20f35e8f2e706ae77',1,'google::cloud::storage::v0::ObjectMetadata']]]
 ];

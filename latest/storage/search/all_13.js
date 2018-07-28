@@ -17,5 +17,5 @@ var searchData=
   ['wellknownparameter_3c_20projection_2c_20std_3a_3astring_20_3e',['WellKnownParameter&lt; Projection, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html',1,'google::cloud::storage::v0']]],
   ['wellknownparameter_3c_20uploadtype_2c_20std_3a_3astring_20_3e',['WellKnownParameter&lt; UploadType, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html',1,'google::cloud::storage::v0']]],
   ['wellknownparameter_3c_20userproject_2c_20std_3a_3astring_20_3e',['WellKnownParameter&lt; UserProject, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html',1,'google::cloud::storage::v0']]],
-  ['writeobject',['WriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aff9ffd1ecd34a75390a33d1b9873afae',1,'google::cloud::storage::v0::Client']]]
+  ['writeobject',['WriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad55de30092d0f5159a6f6a7b55d5e38f',1,'google::cloud::storage::v0::Client']]]
 ];
