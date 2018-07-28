@@ -142,15 +142,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a405ab15fc80b10576823529d88aaf0b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a405ab15fc80b10576823529d88aaf0b1">DeleteAppProfile</a> (bigtable::InstanceId const &amp;instance_id, bigtable::AppProfileId const &amp;profile_id, bool ignore_warnings=false)</td></tr>
 <tr class="memdesc:a405ab15fc80b10576823529d88aaf0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete an existing application profile.  <a href="#a405ab15fc80b10576823529d88aaf0b1">More...</a><br /></td></tr>
 <tr class="separator:a405ab15fc80b10576823529d88aaf0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="memItemLeft" align="right" valign="top">::google::iam::v1::Policy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ae8a345bf4cd5f45c39b162c02be6ce9a">GetIamPolicy</a> (std::string const &amp;resource)</td></tr>
-<tr class="memdesc:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the policy for specified resource.  <a href="#ae8a345bf4cd5f45c39b162c02be6ce9a">More...</a><br /></td></tr>
-<tr class="separator:ae8a345bf4cd5f45c39b162c02be6ce9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcfd7deb3da53d807e533dec40c6f167"><td class="memItemLeft" align="right" valign="top">::google::iam::v1::Policy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#abcfd7deb3da53d807e533dec40c6f167">SetIamPolicy</a> (std::string const &amp;resource, std::int32_t const &amp;<a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aa2da4afcc2ccb4d08ca243c17b7b20f9">version</a>, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag)</td></tr>
-<tr class="memdesc:abcfd7deb3da53d807e533dec40c6f167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets policy for specified resource with given bindings and etag.  <a href="#abcfd7deb3da53d807e533dec40c6f167">More...</a><br /></td></tr>
-<tr class="separator:abcfd7deb3da53d807e533dec40c6f167"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1222469d9b71a34697ab8a402fcd01a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ad1222469d9b71a34697ab8a402fcd01a">TestIamPermissions</a> (std::string const &amp;resource, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
-<tr class="memdesc:ad1222469d9b71a34697ab8a402fcd01a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified instance resource.  <a href="#ad1222469d9b71a34697ab8a402fcd01a">More...</a><br /></td></tr>
-<tr class="separator:ad1222469d9b71a34697ab8a402fcd01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe939c66d1d763f21c85b6b52e8cb69"><td class="memItemLeft" align="right" valign="top">google::cloud::IamPolicy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#aabe939c66d1d763f21c85b6b52e8cb69">GetIamPolicy</a> (std::string const &amp;instance_id)</td></tr>
+<tr class="memdesc:aabe939c66d1d763f21c85b6b52e8cb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the policy for <code>instance_id</code>.  <a href="#aabe939c66d1d763f21c85b6b52e8cb69">More...</a><br /></td></tr>
+<tr class="separator:aabe939c66d1d763f21c85b6b52e8cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862d30ef534202c6e7515df83e0b63fd"><td class="memItemLeft" align="right" valign="top">google::cloud::IamPolicy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a862d30ef534202c6e7515df83e0b63fd">SetIamPolicy</a> (std::string const &amp;instance_id, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag=std::string{})</td></tr>
+<tr class="memdesc:a862d30ef534202c6e7515df83e0b63fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for an instance.  <a href="#a862d30ef534202c6e7515df83e0b63fd">More...</a><br /></td></tr>
+<tr class="separator:a862d30ef534202c6e7515df83e0b63fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf000ff192d2b5615cec2ad6f4445fb1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#acf000ff192d2b5615cec2ad6f4445fb1">TestIamPermissions</a> (std::string const &amp;instance_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
+<tr class="memdesc:acf000ff192d2b5615cec2ad6f4445fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified instance.  <a href="#acf000ff192d2b5615cec2ad6f4445fb1">More...</a><br /></td></tr>
+<tr class="separator:acf000ff192d2b5615cec2ad6f4445fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the APIs to administer Cloud Bigtable instances. </p>
@@ -549,30 +549,31 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
-<a id="ae8a345bf4cd5f45c39b162c02be6ce9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8a345bf4cd5f45c39b162c02be6ce9a">&#9670;&nbsp;</a></span>GetIamPolicy()</h2>
+<a id="aabe939c66d1d763f21c85b6b52e8cb69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabe939c66d1d763f21c85b6b52e8cb69">&#9670;&nbsp;</a></span>GetIamPolicy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">google::iam::v1::Policy google::cloud::bigtable::v0::InstanceAdmin::GetIamPolicy </td>
+          <td class="memname">google::cloud::IamPolicy google::cloud::bigtable::v0::InstanceAdmin::GetIamPolicy </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>resource</em></td><td>)</td>
+          <td class="paramname"><em>instance_id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the policy for specified resource. </p>
+<p>Gets the policy for <code>instance_id</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">resource</td><td>name of the resource for which the policy is being requested. </td></tr>
+    <tr><td class="paramname">instance_id</td><td>the instance to query. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Policy for the specified resource. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Policy the full IAM policy for the instance.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#aabe939c66d1d763f21c85b6b52e8cb69">GetIamPolicy</a>(google::cloud::bigtable::InstanceAdmin instance_admin,</div><div class="line">                  <span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc != 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{<span class="stringliteral">&quot;get-iam-policy: &lt;project-id&gt; &lt;instance-id&gt;&quot;</span>};</div><div class="line">  }</div><div class="line">  std::string instance_id = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> policy = instance_admin.GetIamPolicy(instance_id);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; kv : policy.bindings) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;role &quot;</span> &lt;&lt; kv.first &lt;&lt; <span class="stringliteral">&quot; includes [&quot;</span>;</div><div class="line">    <span class="keywordtype">char</span> <span class="keyword">const</span>* sep = <span class="stringliteral">&quot;&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; member : kv.second) {</div><div class="line">      std::cout &lt;&lt; sep &lt;&lt; member;</div><div class="line">      sep = <span class="stringliteral">&quot;, &quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -768,23 +769,17 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
-<a id="abcfd7deb3da53d807e533dec40c6f167"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcfd7deb3da53d807e533dec40c6f167">&#9670;&nbsp;</a></span>SetIamPolicy()</h2>
+<a id="a862d30ef534202c6e7515df83e0b63fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862d30ef534202c6e7515df83e0b63fd">&#9670;&nbsp;</a></span>SetIamPolicy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">google::iam::v1::Policy google::cloud::bigtable::v0::InstanceAdmin::SetIamPolicy </td>
+          <td class="memname">google::cloud::IamPolicy google::cloud::bigtable::v0::InstanceAdmin::SetIamPolicy </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>resource</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t const &amp;&#160;</td>
-          <td class="paramname"><em>version</em>, </td>
+          <td class="paramname"><em>instance_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -796,7 +791,7 @@ template&lt;typename... Policies&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>etag</em>&#160;</td>
+          <td class="paramname"><em>etag</em> = <code>std::string{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -806,22 +801,23 @@ template&lt;typename... Policies&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Sets policy for specified resource with given bindings and etag. </p>
+<p>Sets the IAM policy for an instance. </p>
+<p>Applications can provide the <code>etag</code> to implement optimistic concurrency control. If <code>etag</code> is not empty, the server will reject calls where the provided ETag does not match the ETag value stored in the server.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">resource</td><td>name of the resource for which the policy is being set. </td></tr>
-    <tr><td class="paramname">version</td><td>version of policy. </td></tr>
+    <tr><td class="paramname">instance_id</td><td>which instance to set the IAM policy for. </td></tr>
     <tr><td class="paramname">iam_bindings</td><td>IamBindings object containing role and members. </td></tr>
-    <tr><td class="paramname">etag</td><td>etag for the policy </td></tr>
+    <tr><td class="paramname">etag</td><td>the expected ETag value for the current policy. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Policy object for the resource. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Policy the current IAM bindings for the instance.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a862d30ef534202c6e7515df83e0b63fd">SetIamPolicy</a>(google::cloud::bigtable::InstanceAdmin instance_admin,</div><div class="line">                  <span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc != 4) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{</div><div class="line">        <span class="stringliteral">&quot;set-iam-policy: &lt;project-id&gt; &lt;instance-id&gt;&quot;</span></div><div class="line">        <span class="stringliteral">&quot; &lt;permission&gt; &lt;new-member&gt;\n&quot;</span></div><div class="line">        <span class="stringliteral">&quot;    Example: set-iam-policy my-project my-instance&quot;</span></div><div class="line">        <span class="stringliteral">&quot; roles/bigtable.user user:my-user@example.com&quot;</span>};</div><div class="line">  }</div><div class="line">  std::string instance_id = ConsumeArg(argc, argv);</div><div class="line">  std::string role = ConsumeArg(argc, argv);</div><div class="line">  std::string member = ConsumeArg(argc, argv);</div><div class="line">  <span class="keyword">auto</span> current = instance_admin.GetIamPolicy(instance_id);</div><div class="line">  <span class="keyword">auto</span> bindings = current.bindings;</div><div class="line">  bindings.AddMember(role, member);</div><div class="line">  <span class="keyword">auto</span> policy =</div><div class="line">      instance_admin.SetIamPolicy(instance_id, bindings, current.etag);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; kv : policy.bindings) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;role &quot;</span> &lt;&lt; kv.first &lt;&lt; <span class="stringliteral">&quot; includes [&quot;</span>;</div><div class="line">    <span class="keywordtype">char</span> <span class="keyword">const</span>* sep = <span class="stringliteral">&quot;&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; m : kv.second) {</div><div class="line">      std::cout &lt;&lt; sep &lt;&lt; m;</div><div class="line">      sep = <span class="stringliteral">&quot;, &quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
-<a id="ad1222469d9b71a34697ab8a402fcd01a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1222469d9b71a34697ab8a402fcd01a">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
+<a id="acf000ff192d2b5615cec2ad6f4445fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf000ff192d2b5615cec2ad6f4445fb1">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -830,7 +826,7 @@ template&lt;typename... Policies&gt; </div>
           <td class="memname">std::vector&lt; std::string &gt; google::cloud::bigtable::v0::InstanceAdmin::TestIamPermissions </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>resource</em>, </td>
+          <td class="paramname"><em>instance_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -846,16 +842,16 @@ template&lt;typename... Policies&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a permission set that the caller has on the specified instance resource. </p>
-<p>If the resource doesn't exist it will return an empty set of permissions.</p>
+<p>Returns a permission set that the caller has on the specified instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">resource</td><td>name of the resource for which the detail is being requested. </td></tr>
-    <tr><td class="paramname">permissions</td><td>set of permissions to check for the resource. </td></tr>
+    <tr><td class="paramname">instance_id</td><td>the ID of the instance to query. </td></tr>
+    <tr><td class="paramname">permissions</td><td>set of permissions to check for the resource.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#acf000ff192d2b5615cec2ad6f4445fb1">TestIamPermissions</a>(google::cloud::bigtable::InstanceAdmin instance_admin,</div><div class="line">                        <span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div><div class="line">  <span class="keywordflow">if</span> (argc &lt; 2) {</div><div class="line">    <span class="keywordflow">throw</span> Usage{</div><div class="line">        <span class="stringliteral">&quot;test-iam-permissions: &lt;project-id&gt; &lt;resource-id&gt;&quot;</span></div><div class="line">        <span class="stringliteral">&quot; [permission ...]&quot;</span>};</div><div class="line">  }</div><div class="line">  std::string resource = ConsumeArg(argc, argv);</div><div class="line">  std::vector&lt;std::string&gt; permissions;</div><div class="line">  <span class="keywordflow">while</span> (argc &gt; 1) {</div><div class="line">    permissions.push_back(ConsumeArg(argc, argv));</div><div class="line">  }</div><div class="line">  <span class="keyword">auto</span> result = instance_admin.TestIamPermissions(resource, permissions);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The current user has the following permissions [&quot;</span>;</div><div class="line">  <span class="keywordtype">char</span> <span class="keyword">const</span>* sep = <span class="stringliteral">&quot;&quot;</span>;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; p : result) {</div><div class="line">    std::cout &lt;&lt; sep &lt;&lt; p;</div><div class="line">    sep = <span class="stringliteral">&quot;, &quot;</span>;</div><div class="line">  }</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;]&quot;</span> &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
 
 </div>
 </div>
