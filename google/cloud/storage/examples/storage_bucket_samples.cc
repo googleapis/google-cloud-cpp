@@ -18,8 +18,6 @@
 #include <map>
 #include <sstream>
 
-namespace storage = google::cloud::storage;
-
 namespace {
 struct Usage {
   std::string msg;
@@ -35,19 +33,19 @@ char const* ConsumeArg(int& argc, char* argv[]) {
   return result;
 }
 
+std::string command_usage;
+
 void PrintUsage(int argc, char* argv[], std::string const& msg) {
-  std::string const cmd = argc > 1 ? argv[0] : "unknown";
+  std::string const cmd = argv[0];
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Examples:\n";
-  for (auto const& example : {"get-bucket-metadata <bucket-name>"}) {
-    std::cerr << "  " << program << " " << example << "\n";
-  }
-  std::cerr << std::flush;
+            << "Commands:\n"
+            << command_usage << std::endl;
 }
 
-void ListBuckets(storage::Client client, int& argc, char* argv[]) {
+void ListBuckets(google::cloud::storage::Client client, int& argc,
+                 char* argv[]) {
   if (argc != 1) {
     throw Usage{"list-buckets"};
   }
@@ -67,7 +65,8 @@ void ListBuckets(storage::Client client, int& argc, char* argv[]) {
   (std::move(client));
 }
 
-void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
+void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
   if (argc != 2) {
     throw Usage{"list-buckets-for-project <project-id>"};
   }
@@ -89,40 +88,46 @@ void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
   (std::move(client), project_id);
 }
 
-//! [get bucket metadata]
-void GetBucketMetadata(storage::Client client, int& argc, char* argv[]) {
+void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
   if (argc < 2) {
     throw Usage{"get-bucket-metadata <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  auto meta = client.GetBucketMetadata(bucket_name);
-  std::cout << "The metadata is " << meta << std::endl;
-}
-//! [get bucket metadata]
-
-//! [list objects]
-void ListObjects(storage::Client client, int& argc, char* argv[]) {
-  if (argc < 2) {
-    throw Usage{"list-objects <bucket-name>"};
+  //! [get bucket metadata] [START storage_get_bucket_metadata]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    auto meta = client.GetBucketMetadata(bucket_name);
+    std::cout << "The metadata is " << meta << std::endl;
   }
-  auto bucket_name = ConsumeArg(argc, argv);
-  for (auto const& meta : client.ListObjects(bucket_name)) {
-    std::cout << "bucket_name=" << meta.bucket()
-              << ", object_name=" << meta.name() << std::endl;
-  }
+  //! [get bucket metadata] [END storage_get_bucket_metadata]
+  (std::move(client), bucket_name);
 }
-//! [list objects]
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(storage::Client, int&, char* [])>;
+  // Create a client to communicate with Google Cloud Storage.
+  //! [create client]
+  google::cloud::storage::Client client;
+  //! [create client]
+
+  using CommandType =
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
       {"get-bucket-metadata", &GetBucketMetadata},
-      {"list-objects", &ListObjects},
   };
+  for (auto&& kv : commands) {
+    try {
+      int fake_argc = 1;
+      kv.second(client, fake_argc, argv);
+    } catch (Usage const& u) {
+      command_usage += "    ";
+      command_usage += u.msg;
+      command_usage += "\n";
+    }
+  }
 
   if (argc < 2) {
     PrintUsage(argc, argv, "Missing command");
@@ -135,11 +140,6 @@ int main(int argc, char* argv[]) try {
     PrintUsage(argc, argv, "Unknown command: " + command);
     return 1;
   }
-
-  // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
-  storage::Client client;
-  //! [create client]
 
   it->second(client, argc, argv);
 

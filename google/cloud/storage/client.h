@@ -198,7 +198,7 @@ class Client {
    *   current policies.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list objects
+   * @snippet storage_object_samples.cc list objects
    */
   template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
