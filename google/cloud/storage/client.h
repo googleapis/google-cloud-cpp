@@ -71,17 +71,48 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list buckets
+   * @snippet storage_bucket_samples.cc list buckets project
    */
   template <typename... Options>
-  ListBucketsReader ListBuckets(std::string const& project_id,
-                                Options&&... options) {
+  ListBucketsReader ListBucketsForProject(std::string const& project_id,
+                                          Options&&... options) {
     return ListBucketsReader(raw_client_, project_id,
                              std::forward<Options>(options)...);
   }
 
   /**
-   * Fetch the bucket metadata and return it.c
+   * Fetch the list of buckets for the default project.
+   *
+   * The default project is configured in the `ClientOptions` used to construct
+   * this object. If the application does not set the project id in the
+   * `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is used. If
+   * neither the environment variable is set, nor a value is set explicitly by
+   * the application this function raises an exception.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
+   *     `UserProject`, and `Projection`.
+   *
+   * @throw std::logic_error if the function is called without a default
+   *     project id set.
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets
+   */
+  template <typename... Options>
+  ListBucketsReader ListBuckets(Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    if (project_id.empty()) {
+      std::string msg = "Default project id not set in ";
+      msg += __func__;
+      google::cloud::internal::RaiseLogicError(msg);
+    }
+    return ListBucketsForProject(project_id, std::forward<Options>(options)...);
+  }
+
+  /**
+   * Fetch the bucket metadata and return it.
    *
    * @param bucket_name query metadata information about this bucket.
    * @param options a list of optional query parameters and/or request headers.

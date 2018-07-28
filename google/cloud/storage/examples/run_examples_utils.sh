@@ -63,6 +63,10 @@ run_program_examples() {
     #
     case ${example} in
         list-buckets)
+            arguments=""
+            export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+            ;;
+        list-buckets-for-project)
             arguments="${PROJECT_ID}"
             ;;
         insert-object)
@@ -150,6 +154,7 @@ run_all_bucket_examples() {
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-buckets
+list-buckets-for-project
 get-bucket-metadata
 list-objects
 _EOF_

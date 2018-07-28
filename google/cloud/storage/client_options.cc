@@ -75,6 +75,11 @@ void ClientOptions::SetupFromEnvironment() {
       set_enable_raw_client_tracing(true);
     }
   }
+
+  char const* project_id = std::getenv("GOOGLE_CLOUD_PROJECT");
+  if (project_id != nullptr) {
+    project_id_ = project_id;
+  }
 }
 
 }  // namespace STORAGE_CLIENT_NS

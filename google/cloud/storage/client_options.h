@@ -71,6 +71,12 @@ class ClientOptions {
     return *this;
   }
 
+  std::string const& project_id() const { return project_id_; }
+  ClientOptions& set_project_id(std::string v) {
+    project_id_ = std::move(v);
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -80,6 +86,7 @@ class ClientOptions {
   std::string version_;
   bool enable_http_tracing_;
   bool enable_raw_client_tracing_;
+  std::string project_id_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
