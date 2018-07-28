@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H_
 
+#include "google/cloud/internal/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,6 +36,32 @@ struct ProjectTeam {
   std::string team;
 };
 
+inline bool operator==(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::tie(lhs.project_number, lhs.team) ==
+         std::tie(lhs.project_number, lhs.team);
+}
+
+inline bool operator<(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::tie(lhs.project_number, lhs.team) <
+         std::tie(lhs.project_number, lhs.team);
+}
+
+inline bool operator!=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
 namespace internal {
 /**
  * Refactor common code to both BucketAccessControl and ObjectAccessControl.
@@ -45,11 +73,6 @@ namespace internal {
 class AccessControlCommon {
  public:
   AccessControlCommon() = default;
-
-  static AccessControlCommon ParseFromJson(nl::json const& json);
-
-  /// Parse from a string in JSON format.
-  static AccessControlCommon ParseFromString(std::string const& payload);
 
   //@{
   /**
@@ -79,25 +102,36 @@ class AccessControlCommon {
   std::string const& bucket() const { return bucket_; }
   std::string const& domain() const { return domain_; }
   std::string const& email() const { return email_; }
+
   std::string const& entity() const { return entity_; }
-  AccessControlCommon& set_entity(std::string e) {
-    entity_ = std::move(e);
-    return *this;
-  }
+  void set_entity(std::string e) { entity_ = std::move(e); }
+
   std::string const& entity_id() const { return entity_id_; }
   std::string const& etag() const { return etag_; }
   std::string const& id() const { return id_; }
   std::string const& kind() const { return kind_; }
-  ProjectTeam const& project_team() const { return project_team_; }
+
+  bool has_project_team() const { return project_team_.has_value(); }
+  ProjectTeam const& project_team() const { return *project_team_; }
+
   std::string const& role() const { return role_; }
-  AccessControlCommon& set_role(std::string r) {
-    role_ = std::move(r);
-    return *this;
-  }
+  void set_role(std::string r) { role_ = std::move(r); }
+
   std::string const& self_link() const { return self_link_; }
 
-  bool operator==(AccessControlCommon const& rhs) const;
+  bool operator==(AccessControlCommon const& rhs) const {
+    // Start with id, bucket, etag because they should fail early, then
+    // alphabetical for readability.
+    return id_ == rhs.id_ and bucket_ == rhs.bucket_ and etag_ == rhs.etag_ and
+           domain_ == rhs.domain_ and email_ == rhs.email_ and
+           entity_ == rhs.entity_ and entity_id_ == rhs.entity_id_ and
+           kind_ == rhs.kind_ and project_team_ == rhs.project_team_ and
+           role_ == rhs.role_ and self_link_ == rhs.self_link_;
+  }
   bool operator!=(AccessControlCommon const& rhs) { return not(*this == rhs); }
+
+ protected:
+  static void ParseFromJson(AccessControlCommon& result, nl::json const& json);
 
  private:
   std::string bucket_;
@@ -108,12 +142,10 @@ class AccessControlCommon {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  ProjectTeam project_team_;
+  google::cloud::internal::optional<ProjectTeam> project_team_;
   std::string role_;
   std::string self_link_;
 };
-
-std::ostream& operator<<(std::ostream& os, AccessControlCommon const& rhs);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
