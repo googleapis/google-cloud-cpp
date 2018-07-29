@@ -280,8 +280,8 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
 TEST_F(InstanceAdminTest, CreateInstance) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
@@ -339,8 +339,8 @@ TEST_F(InstanceAdminTest, CreateInstance) {
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
 TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -383,8 +383,8 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
 TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
@@ -481,8 +481,8 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
 
 /// @test Polling in `bigtable::InstanceAdmin::CreateInstance` returns failure.
 TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
@@ -564,8 +564,8 @@ TEST_F(InstanceAdminTest, UpdateInstancePollUnrecoverableFailure) {
 
 /// @test Polling in `bigtable::InstanceAdmin::UpdateInstance` returns failure.
 TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
@@ -644,8 +644,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollUnrecoverableFailure) {
 
 /// @test Polling in `bigtable::InstanceAdmin::UpdateCluster` returns failure.
 TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
@@ -688,8 +688,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
 TEST_F(InstanceAdminTest, UpdateInstance) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
@@ -762,8 +762,8 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
 TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -811,8 +811,8 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateInstance`.
 TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
@@ -1110,8 +1110,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateCluster` works.
 TEST_F(InstanceAdminTest, CreateCluster) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateCluster(_, _, _))
@@ -1167,8 +1167,8 @@ TEST_F(InstanceAdminTest, CreateCluster) {
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateCluster` works.
 TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -1211,8 +1211,8 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateCluster`.
 TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateCluster(_, _, _))
@@ -1273,8 +1273,8 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
 TEST_F(InstanceAdminTest, UpdateCluster) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
@@ -1339,8 +1339,8 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
 TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -1388,8 +1388,8 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateCluster`.
 TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
@@ -1451,8 +1451,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfile) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
@@ -1522,8 +1522,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
@@ -1572,9 +1572,9 @@ TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
+  using ::testing::_;
   using ::testing::Invoke;
   using ::testing::Return;
-  using ::testing::_;
   bigtable::InstanceAdmin tested(client_);
 
   std::string expected_text = R"(
@@ -1630,10 +1630,10 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
+  using ::testing::_;
   using ::testing::HasSubstr;
   using ::testing::Invoke;
   using ::testing::Return;
-  using ::testing::_;
   bigtable::InstanceAdmin tested(client_,
                                  bigtable::LimitedErrorCountRetryPolicy(3));
 
@@ -1658,10 +1658,10 @@ TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
+  using ::testing::_;
   using ::testing::HasSubstr;
   using ::testing::Invoke;
   using ::testing::Return;
-  using ::testing::_;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
@@ -1686,8 +1686,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateAppProfile`.
 TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
@@ -1749,8 +1749,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
 
 /// @test Operation failures in `bigtable::InstanceAdmin::UpdateAppProfile`.
 TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
@@ -1812,8 +1812,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicy) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_policy();
@@ -1825,8 +1825,8 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
 
 /// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
-  using ::testing::Return;
   using ::testing::_;
+  using ::testing::Return;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -1846,8 +1846,8 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
 
 /// @test Verify recoverable errors for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -1869,8 +1869,8 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
 
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy.
 TEST_F(InstanceAdminTest, SetIamPolicy) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_policy_with_params();
@@ -1887,8 +1887,8 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy.
 TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
-  using ::testing::Return;
   using ::testing::_;
+  using ::testing::Return;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -1911,8 +1911,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
 
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy.
 TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -1939,8 +1939,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
 
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
 TEST_F(InstanceAdminTest, TestIamPermissions) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
@@ -1967,8 +1967,8 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
 
 /// @test Test for unrecoverable errors for InstanceAdmin::TestIamPermissions.
 TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
-  using ::testing::Return;
   using ::testing::_;
+  using ::testing::Return;
 
   bigtable::InstanceAdmin tested(client_);
 
@@ -1991,8 +1991,8 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
 
 /// @test Test for recoverable errors for InstanceAdmin::TestIamPermissions.
 TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 

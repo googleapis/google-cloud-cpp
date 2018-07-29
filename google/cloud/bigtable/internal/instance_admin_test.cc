@@ -557,8 +557,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
 
 /// @test Verify that `bigtable::noex::InstanceAdmin::CreateAppProfile` works.
 TEST_F(InstanceAdminTest, CreateAppProfile) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::noex::InstanceAdmin tested(client_);
 
@@ -598,8 +598,8 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 
 /// @test Verify that `bigtable::noex::InstanceAdmin::GetAppProfile` works.
 TEST_F(InstanceAdminTest, GetAppProfile) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::noex::InstanceAdmin tested(client_);
 
@@ -759,8 +759,8 @@ TEST_F(InstanceAdminTest, ListAppProfilesUnrecoverableFailures) {
 
 /// @test Verify that `bigtable::noex::InstanceAdmin::DeleteAppProfile` works.
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::noex::InstanceAdmin tested(client_);
 
