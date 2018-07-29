@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * The Google Cloud Storage Client.
  *
- * @warning this implementation is incomplete, we are still prototyping.
+ * @warning this implementation is incomplete.
  */
 class Client {
  public:
@@ -52,12 +52,12 @@ class Client {
   template <typename... Policies>
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
-      : raw_client_(new internal::RetryClient(
-            std::move(client), std::forward<Policies>(policies)...)) {}
+      : raw_client_(
+            Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
 
-  /// Build a client with an specific RawClient, without retry policies.
-  struct NoRetry {};
-  explicit Client(std::shared_ptr<internal::RawClient> client, NoRetry)
+  /// Build a client with an specific RawClient, without decorations.
+  struct NoDecorations {};
+  explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
 
   /**
@@ -353,12 +353,25 @@ class Client {
     return raw_client_->UpdateObjectAcl(request).second;
   }
 
+  std::shared_ptr<internal::RawClient> raw_client() const {
+    return raw_client_;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
 
   ObjectMetadata InsertObjectMediaImpl(
       internal::InsertObjectMediaRequest const& request);
+
+  template <typename... Policies>
+  std::shared_ptr<internal::RawClient> Decorate(
+      std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
+    auto logging = std::make_shared<internal::LoggingClient>(std::move(client));
+    auto retry = std::make_shared<internal::RetryClient>(
+        std::move(logging), std::forward<Policies>(policies)...);
+    return retry;
+  }
 
  private:
   std::shared_ptr<internal::RawClient> raw_client_;
