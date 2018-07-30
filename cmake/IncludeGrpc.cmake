@@ -104,9 +104,16 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     add_executable(grpc_cpp_plugin IMPORTED)
     add_dependencies(grpc_cpp_plugin grpc_project)
     set_executable_name_for_external_project(grpc_cpp_plugin grpc_cpp_plugin)
+
+    list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_BINARY_DIR}/external/include")
+
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
+
+    if (NOT TARGET protobuf::libprotobuf)
+      message(FATAL_ERROR "Expected protobuf::libprotobuf target created by FindProtobuf")
+    endif ()
 
     if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
         message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
@@ -158,6 +165,12 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     set_property(TARGET grpc_cpp_plugin
                  PROPERTY IMPORTED_LOCATION ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE})
 
+    if ("${Protobuf_IMPORT_DIRS}" STREQUAL "")
+        list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_INCLUDE_DIRS})
+    else ()
+        list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_IMPORT_DIRS})
+    endif ()
+
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
 
     # Use pkg-config to find the libraries.
@@ -173,6 +186,7 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     set_property(TARGET protobuf::libprotobuf
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
+    list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_INCLUDE_DIRS})
 
     pkg_check_modules(gRPC REQUIRED grpc>=1.9)
     add_library(gRPC::grpc INTERFACE IMPORTED)
