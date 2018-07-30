@@ -112,7 +112,9 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(gRPC REQUIRED gRPC>=1.9)
 
     if (NOT TARGET protobuf::libprotobuf)
-      message(FATAL_ERROR "Expected protobuf::libprotobuf target created by FindProtobuf")
+        message(
+            FATAL_ERROR
+                "Expected protobuf::libprotobuf target created by FindProtobuf")
     endif ()
 
     if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -167,7 +169,7 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
 
     if ("${Protobuf_IMPORT_DIRS}" STREQUAL "")
         list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_INCLUDE_DIRS})
-    else ()
+    else()
         list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_IMPORT_DIRS})
     endif ()
 
