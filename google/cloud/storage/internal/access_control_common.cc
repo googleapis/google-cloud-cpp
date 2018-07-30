@@ -20,8 +20,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-AccessControlCommon AccessControlCommon::ParseFromJson(nl::json const& json) {
-  AccessControlCommon result{};
+void AccessControlCommon::ParseFromJson(AccessControlCommon& result,
+                                        nl::json const& json) {
   result.bucket_ = json.value("bucket", "");
   result.domain_ = json.value("domain", "");
   result.email_ = json.value("email", "");
@@ -34,28 +34,11 @@ AccessControlCommon AccessControlCommon::ParseFromJson(nl::json const& json) {
   result.self_link_ = json.value("selfLink", "");
   if (json.count("projectTeam") != 0U) {
     auto tmp = json["projectTeam"];
-    result.project_team_.project_number = tmp.value("projectNumber", "");
-    result.project_team_.team = tmp.value("team", "");
+    ProjectTeam p;
+    p.project_number = tmp.value("projectNumber", "");
+    p.team = tmp.value("team", "");
+    result.project_team_ = std::move(p);
   }
-  return result;
-}
-
-AccessControlCommon AccessControlCommon::ParseFromString(
-    std::string const& payload) {
-  auto json = nl::json::parse(payload);
-  return AccessControlCommon::ParseFromJson(json);
-}
-
-bool AccessControlCommon::operator==(AccessControlCommon const& rhs) const {
-  // Start with id, bucket, etag because they should fail early, then
-  // alphabetical for readability.
-  return id_ == rhs.id_ and bucket_ == rhs.bucket_ and etag_ == rhs.etag_ and
-         domain_ == rhs.domain_ and email_ == rhs.email_ and
-         entity_ == rhs.entity_ and entity_id_ == rhs.entity_id_ and
-         kind_ == rhs.kind_ and
-         project_team_.project_number == rhs.project_team_.project_number and
-         project_team_.team == rhs.project_team_.team and role_ == rhs.role_ and
-         self_link_ == rhs.self_link_;
 }
 
 }  // namespace internal

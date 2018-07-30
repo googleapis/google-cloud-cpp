@@ -22,8 +22,7 @@ inline namespace STORAGE_CLIENT_NS {
 BucketAccessControl BucketAccessControl::ParseFromJson(
     internal::nl::json const& json) {
   BucketAccessControl result{};
-  static_cast<internal::AccessControlCommon&>(result) =
-      internal::AccessControlCommon::ParseFromJson(json);
+  AccessControlCommon::ParseFromJson(result, json);
   return result;
 }
 
@@ -38,14 +37,18 @@ bool BucketAccessControl::operator==(BucketAccessControl const& rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs) {
-  return os << "BucketAccessControl={bucket=" << rhs.bucket()
-            << ", domain=" << rhs.domain() << ", email=" << rhs.email()
-            << ", entity=" << rhs.entity() << ", entity_id=" << rhs.entity_id()
-            << ", etag=" << rhs.etag() << ", id=" << rhs.id()
-            << ", kind=" << rhs.kind() << ", project_team.project_number="
-            << rhs.project_team().project_number
-            << ", project_team.team=" << rhs.project_team().team
-            << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()
+  os << "BucketAccessControl={bucket=" << rhs.bucket()
+     << ", domain=" << rhs.domain() << ", email=" << rhs.email()
+     << ", entity=" << rhs.entity() << ", entity_id=" << rhs.entity_id()
+     << ", etag=" << rhs.etag() << ", id=" << rhs.id()
+     << ", kind=" << rhs.kind();
+
+  if (rhs.has_project_team()) {
+    os << ", project_team.project_number=" << rhs.project_team().project_number
+       << ", project_team.team=" << rhs.project_team().team;
+  }
+
+  return os << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()
             << "}";
 }
 }  // namespace STORAGE_CLIENT_NS

@@ -46,26 +46,30 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   using AccessControlCommon::bucket;
   using AccessControlCommon::domain;
   using AccessControlCommon::email;
+
+  using AccessControlCommon::entity;
+  ObjectAccessControl& set_entity(std::string v) {
+    AccessControlCommon::set_entity(std::move(v));
+    return *this;
+  }
+
   using AccessControlCommon::entity_id;
   using AccessControlCommon::etag;
+  using AccessControlCommon::has_project_team;
   using AccessControlCommon::id;
   using AccessControlCommon::kind;
   using AccessControlCommon::project_team;
+
+  using AccessControlCommon::role;
+  ObjectAccessControl& set_role(std::string v) {
+    AccessControlCommon::set_role(std::move(v));
+    return *this;
+  }
+
   using AccessControlCommon::self_link;
 
   std::int64_t generation() const { return generation_; }
   std::string const& object() const { return object_; }
-
-  std::string const& entity() const { return AccessControlCommon::entity(); }
-  ObjectAccessControl& set_entity(std::string e) {
-    AccessControlCommon::set_entity(std::move(e));
-    return *this;
-  }
-  std::string const& role() const { return AccessControlCommon::role(); }
-  ObjectAccessControl& set_role(std::string r) {
-    AccessControlCommon::set_role(std::move(r));
-    return *this;
-  }
 
   bool operator==(ObjectAccessControl const& rhs) const;
   bool operator!=(ObjectAccessControl const& rhs) const {

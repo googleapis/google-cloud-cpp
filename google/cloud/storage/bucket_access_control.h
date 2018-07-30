@@ -46,23 +46,27 @@ class BucketAccessControl : private internal::AccessControlCommon {
   using AccessControlCommon::bucket;
   using AccessControlCommon::domain;
   using AccessControlCommon::email;
+
+  using AccessControlCommon::entity;
+  BucketAccessControl& set_entity(std::string v) {
+    AccessControlCommon::set_entity(std::move(v));
+    return *this;
+  }
+
   using AccessControlCommon::entity_id;
   using AccessControlCommon::etag;
+  using AccessControlCommon::has_project_team;
   using AccessControlCommon::id;
   using AccessControlCommon::kind;
   using AccessControlCommon::project_team;
-  using AccessControlCommon::self_link;
 
-  std::string const& entity() const { return AccessControlCommon::entity(); }
-  BucketAccessControl& set_entity(std::string e) {
-    AccessControlCommon::set_entity(std::move(e));
+  using AccessControlCommon::role;
+  BucketAccessControl& set_role(std::string v) {
+    AccessControlCommon::set_role(std::move(v));
     return *this;
   }
-  std::string const& role() const { return AccessControlCommon::role(); }
-  BucketAccessControl& set_role(std::string r) {
-    AccessControlCommon::set_role(std::move(r));
-    return *this;
-  }
+
+  using AccessControlCommon::self_link;
 
   bool operator==(BucketAccessControl const& rhs) const;
   bool operator!=(BucketAccessControl const& rhs) const {

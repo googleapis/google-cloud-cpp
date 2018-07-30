@@ -23,8 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 ObjectAccessControl ObjectAccessControl::ParseFromJson(
     internal::nl::json const& json) {
   ObjectAccessControl result{};
-  static_cast<internal::AccessControlCommon&>(result) =
-      internal::AccessControlCommon::ParseFromJson(json);
+  AccessControlCommon::ParseFromJson(result, json);
   result.generation_ = internal::ParseLongField(json, "generation");
   result.object_ = json.value("object", "");
   return result;
@@ -44,15 +43,19 @@ bool ObjectAccessControl::operator==(ObjectAccessControl const& rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs) {
-  return os << "ObjectAccessControl={bucket=" << rhs.bucket()
-            << ", domain=" << rhs.domain() << ", email=" << rhs.email()
-            << ", entity=" << rhs.entity() << ", entity_id=" << rhs.entity_id()
-            << ", etag=" << rhs.etag() << ", generation=" << rhs.generation()
-            << ", id=" << rhs.id() << ", kind=" << rhs.kind()
-            << ", object=" << rhs.object() << ", project_team.project_number="
-            << rhs.project_team().project_number
-            << ", project_team.team=" << rhs.project_team().team
-            << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()
+  os << "ObjectAccessControl={bucket=" << rhs.bucket()
+     << ", domain=" << rhs.domain() << ", email=" << rhs.email()
+     << ", entity=" << rhs.entity() << ", entity_id=" << rhs.entity_id()
+     << ", etag=" << rhs.etag() << ", generation=" << rhs.generation()
+     << ", id=" << rhs.id() << ", kind=" << rhs.kind()
+     << ", object=" << rhs.object();
+
+  if (rhs.has_project_team()) {
+    os << ", project_team.project_number=" << rhs.project_team().project_number
+       << ", project_team.team=" << rhs.project_team().team;
+  }
+
+  return os << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()
             << "}";
 }
 }  // namespace STORAGE_CLIENT_NS
