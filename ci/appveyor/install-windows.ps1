@@ -37,7 +37,6 @@ if ($env:PROVIDER -eq "module") {
 cd ..
 if (Test-Path vcpkg\.git) {
     cd vcpkg
-    git pull
 } elseif (Test-Path vcpkg\installed) {
     move vcpkg vcpkg-tmp
     git clone https://github.com/Microsoft/vcpkg
@@ -50,6 +49,12 @@ if (Test-Path vcpkg\.git) {
 if ($LastExitCode) {
     throw "git setup failed with exit code $LastExitCode"
 }
+
+# Pin to a particular version because later versions include protobuf-3.6.0,
+# which suffers from:
+#   https://github.com/google/protobuf/issues/4773
+# TODO(#946) - update the Windows builds to use the right vcpkg version.
+git checkout 8d389323a75c49c09647a1f87184b1a0ef4fbbf6
 
 # Build the tool each time, it is fast to do so.
 powershell -exec bypass scripts\bootstrap.ps1
