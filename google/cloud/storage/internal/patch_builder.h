@@ -28,7 +28,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Prepare a patch for the '*: patch' APIs in google cloud storage.
+ * Prepare a patch for the '<Resource Type>: patch' APIs in Google Cloud
+ * Storage.
  *
  * There are multiple APIs in Google Cloud Storage that receive patches. The
  * format for these patches is described in:
@@ -65,7 +66,7 @@ class PatchBuilder {
    * Add a boolean field to the patch.
    *
    * There is no `bool` value used to represent `null`, if you want to delete
-   * boolean fields using the `optional<bool>` overload.
+   * boolean fields use the `optional<bool>` overload.
    */
   PatchBuilder& AddBoolField(char const* field_name, bool lhs, bool rhs) {
     if (lhs == rhs) return *this;
