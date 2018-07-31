@@ -23,6 +23,7 @@ storage_client_unit_tests = [
     "internal/nljson_test.cc",
     "internal/object_acl_requests_test.cc",
     "internal/parse_rfc3339_test.cc",
+    "internal/patch_builder_test.cc",
     "internal/retry_client_test.cc",
     "internal/read_object_range_request_test.cc",
     "internal/service_account_credentials_test.cc",
