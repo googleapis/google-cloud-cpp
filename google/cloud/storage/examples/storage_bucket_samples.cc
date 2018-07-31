@@ -71,7 +71,7 @@ void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
     throw Usage{"list-buckets-for-project <project-id>"};
   }
   auto project_id = ConsumeArg(argc, argv);
-  //! [list buckets project]
+  //! [list buckets for project]
   [](google::cloud::storage::Client client, std::string project_id) {
     int count = 0;
     for (auto&& meta : client.ListBucketsForProject(project_id)) {
@@ -82,7 +82,7 @@ void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
       std::cout << "No buckets in project " << project_id << std::endl;
     }
   }
-  //! [list buckets project]
+  //! [list buckets for project]
   (std::move(client), project_id);
 }
 

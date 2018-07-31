@@ -71,7 +71,7 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list buckets project
+   * @snippet storage_bucket_samples.cc list buckets for project
    */
   template <typename... Options>
   ListBucketsReader ListBucketsForProject(std::string const& project_id,
