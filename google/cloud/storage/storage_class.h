@@ -24,16 +24,39 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * Define functions with the well-know storage classes.
  *
- * This functions are provided to avoid typos when setting or comparing storage
+ * These functions are provided to avoid typos when setting or comparing storage
  * classes.
  */
 namespace storage_class {
-std::string const& Standard();
-std::string const& MultiRegional();
-std::string const& Regional();
-std::string const& Nearline();
-std::string const& Coldline();
-std::string const& DurableReducedAvailability();
+char const* Standard() {
+  static constexpr char kStorageClass[] = "STANDARD";
+  return kStorageClass;
+}
+
+char const* MultiRegional() {
+  static constexpr char kStorageClass[] = "MULTI_REGIONAL";
+  return kStorageClass;
+}
+
+char const* Regional() {
+  static constexpr char kStorageClass[] = "REGIONAL";
+  return kStorageClass;
+}
+
+char const* Nearline() {
+  static constexpr char kStorageClass[] = "NEARLINE";
+  return kStorageClass;
+}
+
+char const* Coldline() {
+  static constexpr char kStorageClass[] = "COLDLINE";
+  return kStorageClass;
+}
+
+char const* DurableReducedAvailability() {
+  static constexpr char kStorageClass[] = "DURABLE_REDUCED_AVAILABILITY";
+  return kStorageClass;
+}
 
 }  // namespace storage_class
 }  // namespace STORAGE_CLIENT_NS

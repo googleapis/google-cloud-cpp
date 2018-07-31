@@ -92,6 +92,5 @@ storage_client_SRCS = [
     "object_access_control.cc",
     "object_metadata.cc",
     "object_stream.cc",
-    "storage_class.cc",
     "version.cc",
 ]

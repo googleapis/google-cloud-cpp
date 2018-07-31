@@ -184,7 +184,6 @@ add_library(storage_client
             retry_policy.h
             status.h
             storage_class.h
-            storage_class.cc
             version.h
             version.cc)
 target_link_libraries(storage_client
