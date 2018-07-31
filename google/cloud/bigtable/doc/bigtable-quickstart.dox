@@ -1,0 +1,23 @@
+/*!
+@page bigtable-quickstart Example: C++ Quickstart Application
+
+Quickstart is a sample program demonstrating use of the Cloud Bigtable client
+library to read a row from an existing table.
+
+## Running the example
+
+This example uses the
+[Cloud Bigtable C++ Client Library](https://GoogleCloudPlatform.github.io/google-cloud-cpp)
+to communicate with Cloud Bigtable.
+
+To run the example program, follow the
+[instructions](https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/bigtable/examples/)
+for the example on GitHub.
+
+## The Code
+
+Here is the full example
+
+@snippet bigtable_quickstart.cc all code
+
+*/

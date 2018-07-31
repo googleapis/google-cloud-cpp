@@ -24,6 +24,9 @@ target_link_libraries(bigtable_hello_world bigtable_client)
 add_executable(bigtable_hello_app_profile bigtable_hello_app_profile.cc)
 target_link_libraries(bigtable_hello_app_profile bigtable_client)
 
+add_executable(bigtable_quickstart bigtable_quickstart.cc)
+target_link_libraries(bigtable_quickstart bigtable_client)
+
 add_executable(bigtable_samples bigtable_samples.cc)
 target_link_libraries(bigtable_samples bigtable_client)
 
