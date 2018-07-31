@@ -71,7 +71,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto contents = ConsumeArg(argc, argv);
-  //! [insert object] [START upload_file]
+  //! [insert object] [START storage_upload_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string contents) {
@@ -79,7 +79,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
         client.InsertObject(bucket_name, object_name, std::move(contents));
     std::cout << "The new object metadata is " << meta << std::endl;
   }
-  //! [insert object] [END upload_file]
+  //! [insert object] [END storage_upload_file]
   (std::move(client), bucket_name, object_name, contents);
 }
 
