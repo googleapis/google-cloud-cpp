@@ -111,6 +111,8 @@ add_library(storage_client
             internal/authorized_user_credentials.h
             internal/binary_data_as_debug_string.h
             internal/binary_data_as_debug_string.cc
+            internal/bucket_acl_requests.h
+            internal/bucket_acl_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
             internal/credential_constants.h
@@ -237,6 +239,7 @@ set(storage_client_unit_tests
     internal/access_control_common_test.cc
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
+    internal/bucket_acl_requests_test.cc
     internal/delete_object_request_test.cc
     internal/get_bucket_metadata_request_test.cc
     internal/get_object_metadata_request_test.cc
