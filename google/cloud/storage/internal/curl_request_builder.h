@@ -79,7 +79,7 @@ class CurlRequestBuilder {
 
   /// Add one of the well-known headers to the request.
   template <typename P>
-  CurlRequestBuilder& AddModifier(WellKnownHeader<P, std::string> const& p) {
+  CurlRequestBuilder& AddOption(WellKnownHeader<P, std::string> const& p) {
     if (p.has_value()) {
       std::string header = p.header_name();
       header += ": ";
