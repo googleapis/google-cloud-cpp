@@ -35,6 +35,14 @@ bool CurlReadStreambuf::IsOpen() const { return download_.IsOpen(); }
 HttpResponse CurlReadStreambuf::Close() { return download_.Close(); }
 
 CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
+  if (not IsOpen()) {
+    current_ios_buffer_.clear();
+    current_ios_buffer_.push_back('\0');
+    char* data = &current_ios_buffer_[0];
+    setg(data, data + 1, data + 1);
+    return traits_type::eof();
+  }
+
   current_ios_buffer_.reserve(target_buffer_size_);
   auto response = download_.GetMore(current_ios_buffer_);
   if (response.status_code >= 300) {
