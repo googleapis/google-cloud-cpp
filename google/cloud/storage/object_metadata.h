@@ -31,6 +31,38 @@ struct CustomerEncryption {
   std::string key_sha256;
 };
 
+inline bool operator==(CustomerEncryption const& lhs,
+                       CustomerEncryption const& rhs) {
+  return std::tie(lhs.encryption_algorithm, lhs.key_sha256) ==
+         std::tie(rhs.encryption_algorithm, lhs.key_sha256);
+}
+
+inline bool operator<(CustomerEncryption const& lhs,
+                      CustomerEncryption const& rhs) {
+  return std::tie(lhs.encryption_algorithm, lhs.key_sha256) <
+         std::tie(rhs.encryption_algorithm, lhs.key_sha256);
+}
+
+inline bool operator!=(CustomerEncryption const& lhs,
+                       CustomerEncryption const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(CustomerEncryption const& lhs,
+                      CustomerEncryption const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(CustomerEncryption const& lhs,
+                       CustomerEncryption const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(CustomerEncryption const& lhs,
+                       CustomerEncryption const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
 /**
  * Represents the metadata for a Google Cloud Storage Object.
  */
@@ -85,8 +117,12 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   }
 
   std::string const& crc32c() const { return crc32c_; }
+
+  bool has_customer_encryption() const {
+    return customer_encryption_.has_value();
+  }
   CustomerEncryption const& customer_encryption() const {
-    return customer_encryption_;
+    return customer_encryption_.value();
   }
 
   using CommonMetadata::etag;
@@ -167,7 +203,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
-  CustomerEncryption customer_encryption_;
+  google::cloud::internal::optional<CustomerEncryption> customer_encryption_;
   std::int64_t generation_;
   std::string kms_key_name_;
   std::string md5_hash_;

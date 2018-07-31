@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H_
 
+#include "google/cloud/internal/optional.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <chrono>
@@ -31,6 +32,32 @@ struct Owner {
   std::string entity_id;
 };
 
+inline bool operator==(Owner const& lhs, Owner const& rhs) {
+  return std::tie(lhs.entity, lhs.entity_id) ==
+         std::tie(rhs.entity, rhs.entity_id);
+}
+
+inline bool operator<(Owner const& lhs, Owner const& rhs) {
+  return std::tie(lhs.entity, lhs.entity_id) <
+         std::tie(rhs.entity, rhs.entity_id);
+}
+
+inline bool operator!=(Owner const& lhs, Owner const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(Owner const& lhs, Owner const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(Owner const& lhs, Owner const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(Owner const& lhs, Owner const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
 namespace internal {
 /**
  * Refactor common functionality in BucketMetadata and ObjectMetadata.
@@ -43,7 +70,7 @@ namespace internal {
 template <typename Derived>
 class CommonMetadata {
  public:
-  CommonMetadata() : metageneration_(0) {}
+  CommonMetadata() : metageneration_(0), owner_() {}
 
   static CommonMetadata<Derived> ParseFromJson(internal::nl::json const& json) {
     CommonMetadata<Derived> result{};
@@ -53,8 +80,10 @@ class CommonMetadata {
     result.metageneration_ = ParseLongField(json, "metageneration");
     result.name_ = json.value("name", "");
     if (json.count("owner") != 0) {
-      result.owner_.entity = json["owner"].value("entity", "");
-      result.owner_.entity_id = json["owner"].value("entityId", "");
+      Owner o;
+      o.entity = json["owner"].value("entity", "");
+      o.entity_id = json["owner"].value("entityId", "");
+      result.owner_ = std::move(o);
     }
     result.self_link_ = json.value("selfLink", "");
     result.storage_class_ = json.value("storageClass", "");
@@ -78,7 +107,9 @@ class CommonMetadata {
     return *static_cast<Derived*>(this);
   }
 
-  Owner const& owner() const { return owner_; }
+  bool has_owner() const { return owner_.has_value(); }
+  Owner const& owner() const { return owner_.value(); }
+
   std::string const& self_link() const { return self_link_; }
 
   std::string const& storage_class() const { return storage_class_; }
@@ -112,7 +143,7 @@ class CommonMetadata {
   std::string kind_;
   std::int64_t metageneration_;
   std::string name_;
-  Owner owner_;
+  google::cloud::internal::optional<Owner> owner_;
   std::string self_link_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;
