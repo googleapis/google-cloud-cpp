@@ -97,7 +97,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
   //! [get bucket metadata] [START storage_get_bucket_metadata]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    auto meta = client.GetBucketMetadata(bucket_name);
+    gcs::BucketMetadata meta = client.GetBucketMetadata(bucket_name);
     std::cout << "The metadata is " << meta << std::endl;
   }
   //! [get bucket metadata] [END storage_get_bucket_metadata]

@@ -53,7 +53,7 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    for (auto const& meta : client.ListObjects(bucket_name)) {
+    for (gcs::ObjectMetadata const& meta : client.ListObjects(bucket_name)) {
       std::cout << "bucket_name=" << meta.bucket()
                 << ", object_name=" << meta.name() << std::endl;
     }
@@ -75,7 +75,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string contents) {
-    auto meta =
+    gcs::ObjectMetadata meta =
         client.InsertObject(bucket_name, object_name, std::move(contents));
     std::cout << "The new object metadata is " << meta << std::endl;
   }
@@ -111,7 +111,7 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
   //! [read object]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    auto stream = client.ReadObject(bucket_name, object_name);
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
     int count = 0;
     while (not stream.eof()) {
       std::string line;
@@ -157,7 +157,8 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      long desired_line_count) {
     std::string const text = "Lorem ipsum dolor sit amet";
-    auto stream = client.WriteObject(bucket_name, object_name);
+    gcs::ObjectWriteStream stream =
+        client.WriteObject(bucket_name, object_name);
 
     for (int lineno = 0; lineno != desired_line_count; ++lineno) {
       // Add 1 to the counter, because it is conventional to number lines
