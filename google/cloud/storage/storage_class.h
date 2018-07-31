@@ -28,32 +28,32 @@ inline namespace STORAGE_CLIENT_NS {
  * classes.
  */
 namespace storage_class {
-char const* Standard() {
+inline char const* Standard() {
   static constexpr char kStorageClass[] = "STANDARD";
   return kStorageClass;
 }
 
-char const* MultiRegional() {
+inline char const* MultiRegional() {
   static constexpr char kStorageClass[] = "MULTI_REGIONAL";
   return kStorageClass;
 }
 
-char const* Regional() {
+inline char const* Regional() {
   static constexpr char kStorageClass[] = "REGIONAL";
   return kStorageClass;
 }
 
-char const* Nearline() {
+inline char const* Nearline() {
   static constexpr char kStorageClass[] = "NEARLINE";
   return kStorageClass;
 }
 
-char const* Coldline() {
+inline char const* Coldline() {
   static constexpr char kStorageClass[] = "COLDLINE";
   return kStorageClass;
 }
 
-char const* DurableReducedAvailability() {
+inline char const* DurableReducedAvailability() {
   static constexpr char kStorageClass[] = "DURABLE_REDUCED_AVAILABILITY";
   return kStorageClass;
 }
