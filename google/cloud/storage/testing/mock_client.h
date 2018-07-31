@@ -54,6 +54,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(
                                  internal::DeleteObjectRequest const&));
 
+  MOCK_METHOD1(ListBucketAcl, ResponseWrapper<internal::ListBucketAclResponse>(
+                                  internal::ListBucketAclRequest const&));
+
   MOCK_METHOD1(ListObjectAcl, ResponseWrapper<internal::ListObjectAclResponse>(
                                   internal::ListObjectAclRequest const&));
   MOCK_METHOD1(CreateObjectAcl, ResponseWrapper<ObjectAccessControl>(

@@ -55,7 +55,6 @@ struct ListBucketAclResponse {
 
 std::ostream& operator<<(std::ostream& os, ListBucketAclResponse const& r);
 
-
 /// A request type for `BucketAccessControl: {create,get,delete,patch,update}`
 template <typename Derived>
 class GenericBucketAclRequest

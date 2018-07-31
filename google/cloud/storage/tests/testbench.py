@@ -68,6 +68,25 @@ def shutdown():
     return 'Server shutting down...'
 
 
+def canonical_entity_name(entity):
+    """
+    Convert entity names to their canonical form.
+
+    Some entities (notably project-<team>-) have more than one name, for
+    example the project-owners-<project_id> entities are called
+    project-owners-<project_number> internally.  This function
+    :param entity:str convert this entity to its canonical name.
+    :return:str the name in canonical form.
+    """
+    if entity.startswith('project-owners-'):
+        entity = 'project-owners-123456789'
+    if entity.startswith('project-editors-'):
+        entity = 'project-editors-123456789'
+    if entity.startswith('project-viewers-'):
+        entity = 'project-viewers-123456789'
+    return entity.lower()
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -108,29 +127,11 @@ class GcsObjectVersion(object):
             'etag': 'XYZ='
         }
         self.insert_acl(
-            self.canonical_entity_name('project-owners-123456789'), 'OWNER')
+            canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_acl(
-            self.canonical_entity_name('project-editors-123456789'), 'OWNER')
+            canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_acl(
-            self.canonical_entity_name('project-viewers-123456789'), 'READER')
-
-    def canonical_entity_name(self, entity):
-        """
-        Convert entity names to their canonical form.
-
-        Some entities (notably project-<team>-) have more than one name, for
-        example the project-owners-<project_id> enntities are called
-        project-owners-<project_number> internally.  This function
-        :param entity:str convert this entity to its canonical name.
-        :return:str the name in canonical form.
-        """
-        if entity.startswith('project-owners-'):
-            entity = 'project-owners-123456789'
-        if entity.startswith('project-editors-'):
-            entity = 'project-editors-123456789'
-        if entity.startswith('project-viewers-'):
-            entity = 'project-viewers-123456789'
-        return entity.lower()
+            canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def insert_acl(self, entity, role):
         """
@@ -140,7 +141,7 @@ class GcsObjectVersion(object):
         :param role:str the new role
         :return:dict the dictionary representing the new AccessControl metadata.
         """
-        entity = self.canonical_entity_name(entity)
+        entity = canonical_entity_name(entity)
         email = ''
         entity_id = ''
         if entity.startswith('user-'):
@@ -172,7 +173,7 @@ class GcsObjectVersion(object):
         :param entity:str the name of the entity.
         :return:None
         """
-        entity = self.canonical_entity_name(entity)
+        entity = canonical_entity_name(entity)
         indexed = {
             acl.get('entity').lower(): acl
             for acl in self.metadata.get('acl', [])
@@ -187,7 +188,7 @@ class GcsObjectVersion(object):
         :param entity:str the name of the entity.
         :return:dict with the contents of the ObjectAccessControl.
         """
-        entity = self.canonical_entity_name(entity)
+        entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
@@ -328,6 +329,12 @@ class GcsBucket(object):
                 'baz': 'qux'
             }
         }
+        self.insert_acl(
+            canonical_entity_name('project-owners-123456789'), 'OWNER')
+        self.insert_acl(
+            canonical_entity_name('project-editors-123456789'), 'OWNER')
+        self.insert_acl(
+            canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def check_preconditions(self, request):
         """
@@ -350,6 +357,76 @@ class GcsBucket(object):
         if metageneration_match is not None \
                 and int(metageneration_match) != metageneration:
             raise ErrorResponse('Precondition Failed', status_code=412)
+
+    def insert_acl(self, entity, role):
+        """
+        Insert (or update) a new AccessControl entry for this object.
+
+        :param entity:str the name of the entity to insert.
+        :param role:str the new role
+        :return:dict the dictionary representing the new AccessControl metadata.
+        """
+        entity = canonical_entity_name(entity)
+        email = ''
+        entity_id = ''
+        if entity.startswith('user-'):
+            email = entity
+        # Replace or insert the entry
+        indexed = {
+            entry.get('entity').lower(): entry
+            for entry in self.metadata.get('acl', [])
+        }
+        indexed[entity] = {
+            'bucket': self.name,
+            'email': email,
+            'entity': entity,
+            'etag': self.metadata.get('etag', 'XYZ='),
+            'id': self.metadata.get('id', '') + '/' + entity,
+            'kind': 'storage#bucketAccessControl',
+            'role': role,
+            'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
+        }
+        self.metadata['acl'] = indexed.values()
+        return indexed[entity]
+
+    def delete_acl(self, entity):
+        """
+        Delete a single AccessControl entry from the Object revision.
+
+        :param entity:str the name of the entity.
+        :return:None
+        """
+        entity = canonical_entity_name(entity)
+        indexed = {
+            acl.get('entity').lower(): acl
+            for acl in self.metadata.get('acl', [])
+        }
+        indexed.pop(entity)
+        self.metadata['acl'] = indexed.values()
+
+    def get_acl(self, entity):
+        """
+        Get a single AccessControl entry from the Object revision.
+
+        :param entity:str the name of the entity.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        entity = canonical_entity_name(entity)
+        for acl in self.metadata.get('acl', []):
+            if acl.get('entity', '').lower() == entity:
+                return acl
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
+
+    def update_acl(self, entity, role):
+        """
+        Update a single AccessControl entry in this Object revision.
+
+        :param entity:str the name of the entity.
+        :param role:str the new role for the entity.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        return self.insert_acl(entity, role)
 
 
 # Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
@@ -409,6 +486,68 @@ def buckets_get(bucket_name):
     bucket = GcsBucket(base_url, bucket_name)
     GCS_BUCKETS[bucket_name] = bucket
     return json.dumps(bucket.metadata)
+
+
+@gcs.route('/b/<bucket_name>/acl')
+def bucket_acl_list(bucket_name):
+    """Implement the 'BucketAccessControls: list' API.
+
+     List Bucket Access Controls.
+     """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
+    result = {
+        'items': gcs_bucket.metadata.get('acl', []),
+    }
+    return json.dumps(result)
+
+
+@gcs.route('/b/<bucket_name>/acl', methods=['POST'])
+def bucket_acl_create(bucket_name):
+    """Implement the 'BucketAccessControls: create' API.
+
+     Create a Bucket Access Control.
+     """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    payload = json.loads(flask.request.data)
+    return json.dumps(
+        gcs_bucket.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
+
+
+@gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
+def bucket_acl_delete(bucket_name, entity):
+    """Implement the 'BucketAccessControls: delete' API.
+
+      Delete a Bucket Access Control.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.delete_acl(entity)
+    return json.dumps({})
+
+
+@gcs.route('/b/<bucket_name>/acl/<entity>')
+def bucket_acl_get(bucket_name, entity):
+    """Implement the 'BucketAccessControls: get' API.
+
+      Get the access control configuration for a particular entity.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    acl = gcs_bucket.get_acl(entity)
+    return json.dumps(acl)
+
+
+@gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PUT'])
+def bucket_acl_update(bucket_name, entity):
+    """Implement the 'BucketAccessControls: update' API.
+
+      Update the access control configuration for a particular entity.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
+    payload = json.loads(flask.request.data)
+    acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
+    return json.dumps(acl)
 
 
 @gcs.route('/b/<bucket_name>/o')

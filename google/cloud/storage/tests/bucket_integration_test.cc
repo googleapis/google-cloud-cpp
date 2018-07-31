@@ -43,7 +43,13 @@ class BucketTestEnvironment : public ::testing::Environment {
 std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
 
-class BucketIntegrationTest : public ::testing::Test {};
+class BucketIntegrationTest : public ::testing::Test {
+ protected:
+  std::string MakeEntityName() {
+    // We always use the viewers for the project because it is known to exist.
+    return "project-viewers-" + BucketTestEnvironment::project_id();
+  }
+};
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
@@ -210,6 +216,19 @@ TEST_F(BucketIntegrationTest, ListObjects) {
     EXPECT_EQ(1, std::count(actual.begin(), actual.end(), name));
   }
 }
+
+TEST_F(BucketIntegrationTest, AccessControlCRUD) {
+  Client client;
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+
+  auto entity_name = MakeEntityName();
+  std::vector<BucketAccessControl> initial_acl =
+      client.ListBucketAcl(bucket_name);
+
+  // TODO(#829) - make stronger assertions once we can modify the ACL.
+  EXPECT_FALSE(initial_acl.empty());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

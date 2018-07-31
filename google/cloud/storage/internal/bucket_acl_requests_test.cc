@@ -64,7 +64,6 @@ TEST(BucketAclResponseTest, Simple) {
   EXPECT_THAT(str, HasSubstr("BucketAccessControl={"));
 }
 
-
 TEST(BucketAclRequestTest, Get) {
   GetBucketAclRequest request("my-bucket", "user-test-user");
   request.set_multiple_options(UserProject("my-project"), Generation(7));
