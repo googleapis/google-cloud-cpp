@@ -66,7 +66,7 @@ for file in $(find google/cloud -name '*.h' -o -name '*.cc' -print); do
   if cmp "${file}" "${file}.tmp"; then
       rm -f "${file}.tmp"
   else
-      mv "${file}.tmp" "${file}"
+      mv -f "${file}.tmp" "${file}"
   fi
 done
 
