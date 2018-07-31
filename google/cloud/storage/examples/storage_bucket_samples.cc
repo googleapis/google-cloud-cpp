@@ -52,9 +52,10 @@ void ListBuckets(storage::Client client, int& argc, char* argv[]) {
     throw Usage{"list-buckets"};
   }
   //! [list buckets] [START storage_list_buckets]
-  [](google::cloud::storage::Client client) {
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client) {
     int count = 0;
-    for (auto&& meta : client.ListBuckets()) {
+    for (gcs::BucketMetadata const& meta : client.ListBuckets()) {
       std::cout << meta.name() << std::endl;
       ++count;
     }
@@ -72,9 +73,11 @@ void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
   }
   auto project_id = ConsumeArg(argc, argv);
   //! [list buckets for project]
-  [](google::cloud::storage::Client client, std::string project_id) {
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string project_id) {
     int count = 0;
-    for (auto&& meta : client.ListBucketsForProject(project_id)) {
+    for (gcs::BucketMetadata const& meta :
+         client.ListBucketsForProject(project_id)) {
       std::cout << meta.name() << std::endl;
       ++count;
     }
