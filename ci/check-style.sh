@@ -28,9 +28,6 @@ readonly BINDIR="$(dirname $0)"
 find google/cloud -name '*.h' -print0 \
   | xargs -0 awk -f ${BINDIR}/check-include-guards.gawk
 
-find google/cloud -name '*.h' -o -name '*.cc' -print0 \
-    | xargs -0 sed -i 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g'
-
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 find . \( -path ./.git \
@@ -52,26 +49,33 @@ find . \( -path ./.git -prune -o -path ./third_party -prune \
      -o \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
 
+# Apply several transformations that cannot be enforced by clang-format:
+#     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
+#       are obsoleted by the gRPC team, so we should not use them in our code.
+#     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
+#       `grpc::` namespace do not exist inside google.
+for file in $(find google/cloud -name '*.h' -o -name '*.cc' -print); do
+  # We used to run run `sed -i` to apply these changes, but that touches the
+  # files even if there are no changes applied, forcing a rebuild each time.
+  # So we first apply the change to a temporary file, and replace the original
+  # only if something changed.
+  sed -e 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \
+      -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
+      -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
+      "${file}" > "${file}.tmp"
+  if cmp "${file}" "${file}.tmp"; then
+      rm -f "${file}.tmp"
+  else
+      mv -f "${file}.tmp" "${file}"
+  fi
+done
+
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 find . \( -path ./.git -prune -o -path ./third_party -prune \
           -o -path './cmake-build-*' -o -path ./build-output -prune \) \
      -o \( -name BUILD -o -name '*.bzl' \) -print0 \
      | xargs -0 buildifier -mode=fix
-
-# Replace any #include for grpc++/grpc++.h with grpcpp/grpcpp.h, and in general,
-# any include of grpc++/ files with grpcpp/.  The paths with grpc++ are
-# obsoleted by the gRPC team, so we should not use them in our code.
-find . \( -path ./.git -prune -o -path ./third_party -prune \
-          -o -path './cmake-build-*' -o -path ./build-output -prune \
-          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
-     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
-     |  xargs -0 sed -i 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;'
-find . \( -path ./.git -prune -o -path ./third_party -prune \
-          -o -path './cmake-build-*' -o -path ./build-output -prune \
-          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
-     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
-     |  xargs -0 sed -i 's;#include <grpc\\+\\+/;#include <grpcpp/;'
 
 # Report any differences created by running clang-format.
 git diff --ignore-submodules=all --color --exit-code .
