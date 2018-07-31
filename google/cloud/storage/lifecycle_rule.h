@@ -189,11 +189,11 @@ class LifecycleRule {
    *
    * @par Example
    *
-   * @begincode
+   * @code
    * // Affect objects that are in the MULTI_REGIONAL storage class, have at
    * // least 2 new versions, are at least 7 days old, and are alive.
    * LifecycleRuleCondition condition = LifecycleRule::ConditionConjunction(
-   *     LifecyleRule::NumNewerVersions(2),
+   *     LifecycleRule::NumNewerVersions(2),
    *     LifecycleRule::MatchesStorageClassMultiRegional(),
    *     LifecycleRule::MaxAge(7), LifecycleRule::IsLive(true));
    * @endcode
