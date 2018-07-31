@@ -48,14 +48,36 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 }
 
 void ListBuckets(storage::Client client, int& argc, char* argv[]) {
-  if (argc < 2) {
-    throw Usage{"list-buckets <project-id>"};
+  if (argc != 1) {
+    throw Usage{"list-buckets"};
+  }
+  //! [list buckets] [START storage_list_buckets]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client) {
+    int count = 0;
+    for (gcs::BucketMetadata const& meta : client.ListBuckets()) {
+      std::cout << meta.name() << std::endl;
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No buckets in default project" << std::endl;
+    }
+  }
+  //! [list buckets] [END storage_list_buckets]
+  (std::move(client));
+}
+
+void ListBucketsForProject(storage::Client client, int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-buckets-for-project <project-id>"};
   }
   auto project_id = ConsumeArg(argc, argv);
-  //! [list buckets] [START storage_list_buckets]
-  [](google::cloud::storage::Client client, std::string project_id) {
+  //! [list buckets for project]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string project_id) {
     int count = 0;
-    for (auto&& meta : client.ListBuckets(project_id)) {
+    for (gcs::BucketMetadata const& meta :
+         client.ListBucketsForProject(project_id)) {
       std::cout << meta.name() << std::endl;
       ++count;
     }
@@ -63,7 +85,7 @@ void ListBuckets(storage::Client client, int& argc, char* argv[]) {
       std::cout << "No buckets in project " << project_id << std::endl;
     }
   }
-  //! [list buckets] [END storage_list_buckets]
+  //! [list buckets for project]
   (std::move(client), project_id);
 }
 
@@ -97,6 +119,7 @@ int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
+      {"list-buckets-for-project", &ListBucketsForProject},
       {"get-bucket-metadata", &GetBucketMetadata},
       {"list-objects", &ListObjects},
   };

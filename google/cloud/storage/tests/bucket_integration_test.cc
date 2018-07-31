@@ -50,7 +50,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   auto project_id = BucketTestEnvironment::project_id();
   Client client;
 
-  auto buckets = client.ListBuckets(project_id);
+  auto buckets = client.ListBucketsForProject(project_id);
   std::vector<BucketMetadata> initial_buckets(buckets.begin(), buckets.end());
   // Since `bucket_name` should be available, we do not expect this list to be
   // empty.

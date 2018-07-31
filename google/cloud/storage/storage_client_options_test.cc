@@ -93,6 +93,24 @@ TEST_F(ClientOptionsTest, SetCredentials) {
   EXPECT_FALSE(creds.get() == other.get());
 }
 
+TEST_F(ClientOptionsTest, ProjectIdFromEnvironment) {
+  google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
+  ClientOptions options(CreateInsecureCredentials());
+  EXPECT_EQ("test-project-id", options.project_id());
+}
+
+TEST_F(ClientOptionsTest, ProjectIdFromEnvironmentNotSet) {
+  google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_PROJECT");
+  ClientOptions options(CreateInsecureCredentials());
+  EXPECT_EQ("", options.project_id());
+}
+
+TEST_F(ClientOptionsTest, SetProjectId) {
+  ClientOptions options(CreateInsecureCredentials());
+  options.set_project_id("test-project-id");
+  EXPECT_EQ("test-project-id", options.project_id());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
