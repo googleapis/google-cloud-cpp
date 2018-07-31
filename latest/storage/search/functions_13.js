@@ -1,7 +1,6 @@
 var searchData=
 [
   ['_7ecredentials',['~Credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Credentials.html#aac2ace118345d3af4e99db3831e052f9',1,'google::cloud::storage::v0::Credentials']]],
-  ['_7eobjectreadstream',['~ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#a670a052d61ece1c3e6c3978296a5be9c',1,'google::cloud::storage::v0::ObjectReadStream']]],
-  ['_7eobjectreadstreambuf',['~ObjectReadStreamBuf',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStreamBuf.html#a11c0142545afb9e745a4df00a09372ac',1,'google::cloud::storage::v0::ObjectReadStreamBuf']]],
-  ['_7eobjectwritestream',['~ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a272efac6c126819af559ff6902fb36bc',1,'google::cloud::storage::v0::ObjectWriteStream']]]
+  ['_7eobjectreadstream',['~ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#ab09dae38448f78e4f4d91a9f3e2b6b55',1,'google::cloud::storage::v0::ObjectReadStream']]],
+  ['_7eobjectwritestream',['~ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a2b6320a46fe89dd55d7385bc8d995b0f',1,'google::cloud::storage::v0::ObjectWriteStream']]]
 ];
