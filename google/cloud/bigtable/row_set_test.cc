@@ -16,7 +16,6 @@
 
 #include <gmock/gmock.h>
 
-namespace btproto = ::google::bigtable::v2;
 namespace bigtable = google::cloud::bigtable;
 
 TEST(RowSetTest, DefaultConstructor) {

@@ -22,7 +22,7 @@
 #include <vector>
 
 namespace {
-namespace admin_proto = google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
@@ -42,11 +42,11 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
   void TearDown() {}
 
   int CountMatchingTables(std::string const& table_id,
-                          std::vector<admin_proto::Table> const& tables) {
+                          std::vector<btadmin::Table> const& tables) {
     std::string table_name =
         table_admin_->instance_name() + "/tables/" + table_id;
     auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](admin_proto::Table const& t) {
+                               [&table_name](btadmin::Table const& t) {
                                  return table_name == t.name();
                                });
     return static_cast<int>(count);
@@ -62,7 +62,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
 
   // Get the current list of tables.
   auto previous_table_list =
-      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
 
   int const TABLE_COUNT = 5;
   for (int index = 0; index < TABLE_COUNT; ++index) {
@@ -75,8 +75,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
 
     expected_table_list.emplace_back(table_id);
   }
-  auto current_table_list =
-      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_EQ(1, CountMatchingTables(table_id, current_table_list));
@@ -84,7 +83,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
   for (auto const& table_id : expected_table_list) {
     DeleteTable(table_id);
   }
-  current_table_list = table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_EQ(0, CountMatchingTables(table_id, current_table_list));
@@ -172,7 +171,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 
   // verify new table id in current table list
   auto previous_table_list =
-      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   auto previous_count = CountMatchingTables(table_id, previous_table_list);
   ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                << " This is unexpected, as the table ids are"
@@ -193,9 +192,8 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
       << "): " << table->table_name() << " != " << table_result.name();
 
   // get table
-  auto table_detailed =
-      table_admin_->GetTable(table_id, admin_proto::Table::FULL);
-  auto count_matching_families = [](admin_proto::Table const& table,
+  auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
+  auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {
     int count = 0;
     for (auto const& kv : table.column_families()) {
@@ -228,8 +226,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   // delete table
   DeleteTable(table_id);
   // List to verify it is no longer there
-  auto current_table_list =
-      table_admin_->ListTables(admin_proto::Table::NAME_ONLY);
+  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   auto table_count = CountMatchingTables(table_id, current_table_list);
   EXPECT_EQ(0, table_count);
 }

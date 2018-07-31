@@ -22,7 +22,7 @@
 #include <sstream>
 
 namespace btproto = google::bigtable::v2;
-namespace adminproto = google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {
@@ -73,10 +73,8 @@ class BigtableImpl final : public btproto::Bigtable::Service {
   }
 
   grpc::Status ReadRows(
-      grpc::ServerContext* context,
-      google::bigtable::v2::ReadRowsRequest const* request,
-      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>* writer)
-      override {
+      grpc::ServerContext* context, btproto::ReadRowsRequest const* request,
+      grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
     ++read_rows_count_;
     std::int64_t rows_limit = 10000;
     if (request->rows_limit() != 0) {
@@ -133,23 +131,21 @@ class BigtableImpl final : public btproto::Bigtable::Service {
  * Implement the `google.bigtable.admin.v2.BigtableTableAdmin` interface for the
  * benchmarks.
  */
-class TableAdminImpl final : public adminproto::BigtableTableAdmin::Service {
+class TableAdminImpl final : public btadmin::BigtableTableAdmin::Service {
  public:
   TableAdminImpl() : create_table_count_(0), delete_table_count_(0) {}
 
-  grpc::Status CreateTable(
-      grpc::ServerContext* context,
-      google::bigtable::admin::v2::CreateTableRequest const* request,
-      google::bigtable::admin::v2::Table* response) override {
+  grpc::Status CreateTable(grpc::ServerContext* context,
+                           btadmin::CreateTableRequest const* request,
+                           btadmin::Table* response) override {
     ++create_table_count_;
     response->set_name(request->parent() + "/tables/" + request->table_id());
     return grpc::Status::OK;
   }
 
-  grpc::Status DeleteTable(
-      grpc::ServerContext* context,
-      google::bigtable::admin::v2::DeleteTableRequest const* request,
-      ::google::protobuf::Empty* response) override {
+  grpc::Status DeleteTable(grpc::ServerContext* context,
+                           btadmin::DeleteTableRequest const* request,
+                           ::google::protobuf::Empty* response) override {
     ++delete_table_count_;
     return grpc::Status::OK;
   }

@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
-namespace admin_proto = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {

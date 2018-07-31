@@ -22,7 +22,7 @@
 #include <gmock/gmock.h>
 
 namespace {
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockAdminClient;
@@ -51,19 +51,19 @@ auto create_list_tables_lambda = [](std::string expected_token,
                                     std::vector<std::string> table_names) {
   return
       [expected_token, returned_token, table_names](
-          grpc::ClientContext* ctx, btproto::ListTablesRequest const& request,
-          btproto::ListTablesResponse* response) {
+          grpc::ClientContext* ctx, btadmin::ListTablesRequest const& request,
+          btadmin::ListTablesResponse* response) {
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + kInstanceId;
         EXPECT_EQ(instance_name, request.parent());
-        EXPECT_EQ(btproto::Table::FULL, request.view());
+        EXPECT_EQ(btadmin::Table::FULL, request.view());
         EXPECT_EQ(expected_token, request.page_token());
 
         EXPECT_NE(nullptr, response);
         for (auto const& table_name : table_names) {
           auto& table = *response->add_tables();
           table.set_name(instance_name + "/tables/" + table_name);
-          table.set_granularity(btproto::Table::MILLIS);
+          table.set_granularity(btadmin::Table::MILLIS);
         }
         // Return the right token.
         response->set_next_page_token(returned_token);
@@ -77,8 +77,8 @@ auto create_list_snapshots_lambda =
        std::vector<std::string> snapshot_names) {
       return [expected_token, returned_token, snapshot_names](
                  grpc::ClientContext* ctx,
-                 btproto::ListSnapshotsRequest const& request,
-                 btproto::ListSnapshotsResponse* response) {
+                 btadmin::ListSnapshotsRequest const& request,
+                 btadmin::ListSnapshotsResponse* response) {
         auto cluster_name =
             "projects/" + kProjectId + "/instances/" + kInstanceId;
         cluster_name += "/clusters/" + kClusterId;
@@ -153,7 +153,7 @@ TEST_F(TableAdminTest, ListTables) {
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  auto actual = tested.ListTables(btproto::Table::FULL, status);
+  auto actual = tested.ListTables(btadmin::Table::FULL, status);
   EXPECT_TRUE(status.ok());
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(2UL, actual.size());
@@ -167,8 +167,8 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btproto::ListTablesRequest const& request,
-                                     btproto::ListTablesResponse* response) {
+                                     btadmin::ListTablesRequest const& request,
+                                     btadmin::ListTablesResponse* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
@@ -182,7 +182,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  auto actual = tested.ListTables(btproto::Table::FULL, status);
+  auto actual = tested.ListTables(btadmin::Table::FULL, status);
   EXPECT_TRUE(status.ok());
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(4UL, actual.size());
@@ -206,7 +206,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   grpc::Status status;
-  tested.ListTables(btproto::Table::FULL, status);
+  tested.ListTables(btadmin::Table::FULL, status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
 }
@@ -223,8 +223,8 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btproto::ListTablesRequest const& request,
-                                     btproto::ListTablesResponse* response) {
+                                     btadmin::ListTablesRequest const& request,
+                                     btadmin::ListTablesResponse* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables(_, _, _))
@@ -232,7 +232,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   grpc::Status status;
 
   // After all the setup, make the actual call we want to test.
-  tested.ListTables(btproto::Table::FULL, status);
+  tested.ListTables(btadmin::Table::FULL, status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
@@ -263,7 +263,7 @@ table_id: 'new-table'
     initial_splits { key: 'p' }
     )""";
   auto mock_create_table =
-      MockRpcFactory<btproto::CreateTableRequest, btproto::Table>::Create(
+      MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
           expected_text);
   EXPECT_CALL(*client_, CreateTable(_, _, _))
       .WillOnce(Invoke(mock_create_table));
@@ -363,7 +363,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
 view: SCHEMA_VIEW
     )""";
-  auto mock = MockRpcFactory<btproto::GetTableRequest, btproto::Table>::Create(
+  auto mock = MockRpcFactory<btadmin::GetTableRequest, btadmin::Table>::Create(
       expected_text);
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillOnce(
@@ -427,7 +427,7 @@ TEST_F(TableAdminTest, DeleteTable) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
     )""";
   auto mock =
-      MockRpcFactory<btproto::DeleteTableRequest, Empty>::Create(expected_text);
+      MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(expected_text);
   EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
 
   grpc::Status status;
@@ -476,8 +476,8 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
         update { gc_rule { max_age { seconds: 86400 }}}
     }
     )""";
-  auto mock = MockRpcFactory<btproto::ModifyColumnFamiliesRequest,
-                             btproto::Table>::Create(expected_text);
+  auto mock = MockRpcFactory<btadmin::ModifyColumnFamiliesRequest,
+                             btadmin::Table>::Create(expected_text);
   EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -526,7 +526,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
 row_key_prefix: 'foobar'
     )""";
-  auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
@@ -564,7 +564,7 @@ TEST_F(TableAdminTest, DropAllRows) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
 delete_all_data_from_table: true
     )""";
-  auto mock = MockRpcFactory<btproto::DropRowRangeRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
@@ -607,8 +607,8 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
 name: 'projects/the-project/instances/the-instance/tables/the-table'
     )""";
   auto mock = MockRpcFactory<
-      btproto::GenerateConsistencyTokenRequest,
-      btproto::GenerateConsistencyTokenResponse>::Create(expected_text);
+      btadmin::GenerateConsistencyTokenRequest,
+      btadmin::GenerateConsistencyTokenResponse>::Create(expected_text);
   EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
@@ -651,8 +651,8 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
 consistency_token: 'test-token'
     )""";
   auto mock =
-      MockRpcFactory<btproto::CheckConsistencyRequest,
-                     btproto::CheckConsistencyResponse>::Create(expected_text);
+      MockRpcFactory<btadmin::CheckConsistencyRequest,
+                     btadmin::CheckConsistencyResponse>::Create(expected_text);
   EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
@@ -697,7 +697,7 @@ TEST_F(TableAdminTest, GetSnapshotSimple) {
 name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
     )""";
   auto mock =
-      MockRpcFactory<btproto::GetSnapshotRequest, btproto::Snapshot>::Create(
+      MockRpcFactory<btadmin::GetSnapshotRequest, btadmin::Snapshot>::Create(
           expected_text);
   EXPECT_CALL(*client_, GetSnapshot(_, _, _))
       .WillOnce(
@@ -762,7 +762,7 @@ TEST_F(TableAdminTest, DeleteSnapshotSimple) {
   std::string expected_text = R"""(
 name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
     )""";
-  auto mock = MockRpcFactory<btproto::DeleteSnapshotRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DeleteSnapshotRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteSnapshot(_, _, _)).WillOnce(Invoke(mock));
 
@@ -836,12 +836,11 @@ TEST_F(TableAdminTest, ListSnapshots_SimpleList) {
 
   bigtable::ClusterId cluster_id("the-cluster");
   grpc::Status status;
-  std::list<::google::bigtable::admin::v2::Snapshot> actual_snapshots =
+  std::list<btadmin::Snapshot> actual_snapshots =
       tested.ListSnapshots<std::list>(status, cluster_id);
   ASSERT_EQ(2UL, actual_snapshots.size());
   std::string instance_name = tested.instance_name();
-  std::list<::google::bigtable::admin::v2::Snapshot>::iterator it =
-      actual_snapshots.begin();
+  std::list<btadmin::Snapshot>::iterator it = actual_snapshots.begin();
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0", it->name());
   it++;
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s1", it->name());
@@ -858,8 +857,8 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListSnapshotsRequest const& request,
-         btproto::ListSnapshotsResponse* response) {
+      [](grpc::ClientContext* ctx, btadmin::ListSnapshotsRequest const& request,
+         btadmin::ListSnapshotsResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
 

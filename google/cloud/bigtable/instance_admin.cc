@@ -20,7 +20,7 @@
 #include <google/protobuf/text_format.h>
 #include <type_traits>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {
@@ -29,7 +29,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
-std::vector<btproto::Instance> InstanceAdmin::ListInstances() {
+std::vector<btadmin::Instance> InstanceAdmin::ListInstances() {
   grpc::Status status;
   auto result = impl_.ListInstances(status);
   if (not status.ok()) {
@@ -78,7 +78,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btproto::Instance>(
+  auto result = impl_.PollLongRunningOperation<btadmin::Instance>(
       operation, "InstanceAdmin::CreateInstance", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
@@ -117,7 +117,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btproto::Instance>(
+  auto result = impl_.PollLongRunningOperation<btadmin::Instance>(
       operation, "InstanceAdmin::UpdateInstance", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
@@ -126,7 +126,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
   return result;
 }
 
-btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
+btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);
   if (not status.ok()) {
@@ -143,7 +143,7 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   }
 }
 
-btproto::Cluster InstanceAdmin::GetCluster(
+btadmin::Cluster InstanceAdmin::GetCluster(
     bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
@@ -154,11 +154,11 @@ btproto::Cluster InstanceAdmin::GetCluster(
   return result;
 }
 
-std::vector<btproto::Cluster> InstanceAdmin::ListClusters() {
+std::vector<btadmin::Cluster> InstanceAdmin::ListClusters() {
   return ListClusters("-");
 }
 
-std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
+std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListClusters(instance_id, status);
@@ -198,7 +198,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btproto::Cluster>(
+  auto result = impl_.PollLongRunningOperation<btadmin::Cluster>(
       operation, "InstanceAdmin::UpdateCluster", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
@@ -215,7 +215,7 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
   }
 }
 
-btproto::AppProfile InstanceAdmin::CreateAppProfile(
+btadmin::AppProfile InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config) {
   grpc::Status status;
   auto result = impl_.CreateAppProfile(instance_id, std::move(config), status);
@@ -225,7 +225,7 @@ btproto::AppProfile InstanceAdmin::CreateAppProfile(
   return result;
 }
 
-btproto::AppProfile InstanceAdmin::GetAppProfile(
+btadmin::AppProfile InstanceAdmin::GetAppProfile(
     bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
@@ -236,7 +236,7 @@ btproto::AppProfile InstanceAdmin::GetAppProfile(
   return result;
 }
 
-std::future<btproto::AppProfile> InstanceAdmin::UpdateAppProfile(
+std::future<btadmin::AppProfile> InstanceAdmin::UpdateAppProfile(
     bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config) {
   return std::async(std::launch::async, &InstanceAdmin::UpdateAppProfileImpl,
@@ -244,7 +244,7 @@ std::future<btproto::AppProfile> InstanceAdmin::UpdateAppProfile(
                     std::move(config));
 }
 
-std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
+std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListAppProfiles(instance_id, status);
@@ -276,7 +276,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
   auto cluster = cluster_config.as_proto_move();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
 
-  btproto::CreateClusterRequest request;
+  btadmin::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
   request.set_parent(project_name() + "/instances/" + instance_id.get());
   request.set_cluster_id(cluster_id.get());
@@ -294,7 +294,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btproto::Cluster>(
+  auto result = impl_.PollLongRunningOperation<btadmin::Cluster>(
       operation, "InstanceAdmin::CreateCluster", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
@@ -303,7 +303,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
   return result;
 }
 
-btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
+btadmin::AppProfile InstanceAdmin::UpdateAppProfileImpl(
     bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config) {
   grpc::Status status;
@@ -313,7 +313,7 @@ btproto::AppProfile InstanceAdmin::UpdateAppProfileImpl(
     internal::RaiseRpcError(status, status.error_message());
   }
 
-  auto result = impl_.PollLongRunningOperation<btproto::AppProfile>(
+  auto result = impl_.PollLongRunningOperation<btadmin::AppProfile>(
       operation, "InstanceAdmin::UpdateAppProfileImpl", status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());

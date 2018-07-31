@@ -16,7 +16,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 TEST(InstanceUpdateConfigTest, Constructor) {
@@ -35,7 +35,7 @@ TEST(InstanceUpdateConfigTest, Constructor) {
       }
   )";
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
   bigtable::InstanceUpdateConfig config(std::move(instance));
@@ -62,7 +62,7 @@ TEST(InstanceUpdateConfigTest, UpdateMask) {
       }
   )";
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
   bigtable::InstanceUpdateConfig config(std::move(instance));
@@ -88,7 +88,7 @@ TEST(InstanceUpdateConfigTest, SetLabels) {
       type: PRODUCTION
   )";
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
   bigtable::InstanceUpdateConfig config(std::move(instance));

@@ -19,7 +19,7 @@
 #include <gmock/gmock.h>
 
 namespace {
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
@@ -46,8 +46,8 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
              grpc::ClientContext* ctx,
-             btproto::ListInstancesRequest const& request,
-             btproto::ListInstancesResponse* response) {
+             btadmin::ListInstancesRequest const& request,
+             btadmin::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -69,8 +69,8 @@ auto create_instance = [](std::string expected_token,
                           std::string returned_token) {
   return
       [expected_token, returned_token](
-          grpc::ClientContext* ctx, btproto::GetInstanceRequest const& request,
-          btproto::Instance* response) {
+          grpc::ClientContext* ctx, btadmin::GetInstanceRequest const& request,
+          btadmin::Instance* response) {
         EXPECT_NE(nullptr, response);
         response->set_name(request.name());
         return grpc::Status::OK;
@@ -80,8 +80,8 @@ auto create_instance = [](std::string expected_token,
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return [](grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
-            btproto::Cluster* response) {
+  return [](grpc::ClientContext* ctx, btadmin::GetClusterRequest const& request,
+            btadmin::Cluster* response) {
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
     return grpc::Status::OK;
@@ -116,8 +116,8 @@ auto create_list_clusters_lambda =
        std::string instance_id, std::vector<std::string> cluster_ids) {
       return [expected_token, returned_token, instance_id, cluster_ids](
                  grpc::ClientContext* ctx,
-                 btproto::ListClustersRequest const& request,
-                 btproto::ListClustersResponse* response) {
+                 btadmin::ListClustersRequest const& request,
+                 btadmin::ListClustersResponse* response) {
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + instance_id;
         EXPECT_EQ(instance_name, request.parent());
@@ -245,8 +245,8 @@ TEST_F(InstanceAdminTest, ListInstances) {
 TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-         btproto::ListInstancesResponse* response) {
+      [](grpc::ClientContext* ctx, btadmin::ListInstancesRequest const& request,
+         btadmin::ListInstancesResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
@@ -308,8 +308,8 @@ TEST_F(InstanceAdminTest, GetInstance) {
 TEST_F(InstanceAdminTest, GetInstanceRecoverableFailures) {
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btproto::GetInstanceRequest const& request,
-                                     btproto::Instance* response) {
+                                     btadmin::GetInstanceRequest const& request,
+                                     btadmin::Instance* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -348,7 +348,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance'
       )""";
-  auto mock = MockRpcFactory<btproto::DeleteInstanceRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DeleteInstanceRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
@@ -408,8 +408,8 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
 
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-         btproto::ListClustersResponse* response) {
+      [](grpc::ClientContext* ctx, btadmin::ListClustersRequest const& request,
+         btadmin::ListClustersResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
   auto batch0 =
@@ -488,8 +488,8 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
 TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btproto::GetClusterRequest const& request,
-                                     btproto::Cluster* response) {
+                                     btadmin::GetClusterRequest const& request,
+                                     btadmin::Cluster* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -515,7 +515,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
       )""";
-  auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DeleteClusterRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
   grpc::Status status;
@@ -568,14 +568,14 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
       multi_cluster_routing_use_any { }
   )";
 
-  btproto::AppProfile expected;
+  btadmin::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, CreateAppProfile(_, _, _))
       .WillOnce(
           Invoke([&expected](grpc::ClientContext*,
-                             btproto::CreateAppProfileRequest const& request,
-                             btproto::AppProfile* response) {
+                             btadmin::CreateAppProfileRequest const& request,
+                             btadmin::AppProfile* response) {
             auto const project_name =
                 "projects/" + kProjectId + "/instances/test-instance";
             EXPECT_EQ(project_name, request.parent());
@@ -609,7 +609,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
       multi_cluster_routing_use_any { }
   )";
 
-  btproto::AppProfile expected;
+  btadmin::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetAppProfile(_, _, _))
@@ -618,8 +618,8 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke([&expected](grpc::ClientContext*,
-                                   btproto::GetAppProfileRequest const& request,
-                                   btproto::AppProfile* response) {
+                                   btadmin::GetAppProfileRequest const& request,
+                                   btadmin::AppProfile* response) {
         auto const profile_name =
             "projects/" + kProjectId +
             "/instances/test-instance/appProfiles/my-profile";
@@ -660,8 +660,8 @@ auto create_list_app_profiles_lambda =
        std::vector<std::string> app_profile_ids) {
       return [expected_token, returned_token, instance_id, app_profile_ids](
                  grpc::ClientContext* ctx,
-                 btproto::ListAppProfilesRequest const& request,
-                 btproto::ListAppProfilesResponse* response) {
+                 btadmin::ListAppProfilesRequest const& request,
+                 btadmin::ListAppProfilesResponse* response) {
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + instance_id;
         EXPECT_EQ(instance_name, request.parent());
@@ -711,8 +711,8 @@ TEST_F(InstanceAdminTest, ListAppProfilesRecoverableFailures) {
   bigtable::noex::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
       [](grpc::ClientContext* ctx,
-         btproto::ListAppProfilesRequest const& request,
-         btproto::ListAppProfilesResponse* response) {
+         btadmin::ListAppProfilesRequest const& request,
+         btadmin::ListAppProfilesResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
   auto batch0 = create_list_app_profiles_lambda("", "token-001", instance_id,
@@ -766,7 +766,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 
   EXPECT_CALL(*client_, DeleteAppProfile(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::DeleteAppProfileRequest const& request,
+                          btadmin::DeleteAppProfileRequest const& request,
                           google::protobuf::Empty*) {
         auto const profile_name =
             "projects/" + kProjectId +

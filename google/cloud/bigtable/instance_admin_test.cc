@@ -21,7 +21,7 @@
 #include <gmock/gmock.h>
 
 namespace {
-namespace btproto = google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
@@ -48,8 +48,8 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
              grpc::ClientContext* ctx,
-             btproto::ListInstancesRequest const& request,
-             btproto::ListInstancesResponse* response) {
+             btadmin::ListInstancesRequest const& request,
+             btadmin::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
     EXPECT_EQ(expected_token, request.page_token());
@@ -68,8 +68,8 @@ auto create_list_instances_lambda = [](std::string expected_token,
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return [](grpc::ClientContext* ctx, btproto::GetClusterRequest const& request,
-            btproto::Cluster* response) {
+  return [](grpc::ClientContext* ctx, btadmin::GetClusterRequest const& request,
+            btadmin::Cluster* response) {
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
     return grpc::Status::OK;
@@ -104,8 +104,8 @@ auto create_list_clusters_lambda =
        std::string instance_id, std::vector<std::string> cluster_ids) {
       return [expected_token, returned_token, instance_id, cluster_ids](
                  grpc::ClientContext* ctx,
-                 btproto::ListClustersRequest const& request,
-                 btproto::ListClustersResponse* response) {
+                 btadmin::ListClustersRequest const& request,
+                 btadmin::ListClustersResponse* response) {
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + instance_id;
         EXPECT_EQ(instance_name, request.parent());
@@ -235,8 +235,8 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListInstancesRequest const& request,
-         btproto::ListInstancesResponse* response) {
+      [](grpc::ClientContext* ctx, btadmin::ListInstancesRequest const& request,
+         btadmin::ListInstancesResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
@@ -286,7 +286,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateInstanceRequest const& request,
+                          btadmin::CreateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name = "projects/" + kProjectId;
         EXPECT_EQ(project_name, request.parent());
@@ -299,7 +299,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
       state: READY
       type: PRODUCTION
   )";
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
@@ -350,13 +350,13 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
       state: READY
       type: PRODUCTION
   )";
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
       .WillOnce(
           Invoke([&expected](grpc::ClientContext*,
-                             btproto::CreateInstanceRequest const& request,
+                             btadmin::CreateInstanceRequest const& request,
                              google::longrunning::Operation* response) {
             auto const project_name = "projects/" + kProjectId;
             EXPECT_EQ(project_name, request.parent());
@@ -389,7 +389,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateInstanceRequest const& request,
+                          btadmin::CreateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name = "projects/" + kProjectId;
         EXPECT_EQ(project_name, request.parent());
@@ -402,7 +402,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
       state: READY
       type: PRODUCTION
   )";
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
@@ -462,7 +462,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateInstanceRequest const& request,
+                          btadmin::CreateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name = "projects/" + kProjectId;
         EXPECT_EQ(project_name, request.parent());
@@ -487,7 +487,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateInstanceRequest const& request,
+                          btadmin::CreateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name = "projects/" + kProjectId;
         EXPECT_EQ(project_name, request.parent());
@@ -534,7 +534,7 @@ TEST_F(InstanceAdminTest, UpdateInstanceRequestFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -547,7 +547,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollUnrecoverableFailure) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::PartialUpdateInstanceRequest const& request,
+                          btadmin::PartialUpdateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         return grpc::Status::OK;
       }));
@@ -556,7 +556,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollUnrecoverableFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -570,7 +570,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::PartialUpdateInstanceRequest const& request,
+                          btadmin::PartialUpdateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         return grpc::Status::OK;
       }));
@@ -600,7 +600,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
             return grpc::Status::OK;
           }));
 
-  btproto::Instance instance;
+  btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -615,7 +615,7 @@ TEST_F(InstanceAdminTest, UpdateClusterRequestFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  btproto::Cluster cluster;
+  btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -627,7 +627,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollUnrecoverableFailure) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         return grpc::Status::OK;
       }));
@@ -636,7 +636,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollUnrecoverableFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  btproto::Cluster cluster;
+  btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -649,7 +649,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         return grpc::Status::OK;
       }));
@@ -679,7 +679,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
             return grpc::Status::OK;
           }));
 
-  btproto::Cluster cluster;
+  btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
   EXPECT_THROW(future.get(), bigtable::GRpcError);
@@ -694,7 +694,7 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
 
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::PartialUpdateInstanceRequest const& request,
+                          btadmin::PartialUpdateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const instance_name =
             "projects/my-project/instances/test-instance";
@@ -717,11 +717,11 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
       }
   )";
 
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Instance expected_copy;
+  btadmin::Instance expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
@@ -773,11 +773,11 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
       state: READY
       type: PRODUCTION
   )";
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Instance expected_copy;
+  btadmin::Instance expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
@@ -785,7 +785,7 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke(
           [&expected_copy](grpc::ClientContext*,
-                           btproto::PartialUpdateInstanceRequest const& request,
+                           btadmin::PartialUpdateInstanceRequest const& request,
                            google::longrunning::Operation* response) {
             auto const instance_name =
                 "projects/my-project/instances/test-instance";
@@ -817,7 +817,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateInstance(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::PartialUpdateInstanceRequest const& request,
+                          btadmin::PartialUpdateInstanceRequest const& request,
                           google::longrunning::Operation* response) {
         auto const instance_name =
             "projects/my-project/instances/test-instance";
@@ -831,11 +831,11 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
       state: READY
       type: PRODUCTION
   )";
-  btproto::Instance expected;
+  btadmin::Instance expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Instance expected_copy;
+  btadmin::Instance expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::InstanceUpdateConfig instance_update_config(std::move(expected));
@@ -880,7 +880,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance'
       )""";
-  auto mock = MockRpcFactory<btproto::DeleteInstanceRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DeleteInstanceRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(Invoke(mock));
   // After all the setup, make the actual call we want to test.
@@ -946,8 +946,8 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btproto::ListClustersRequest const& request,
-         btproto::ListClustersResponse* response) {
+      [](grpc::ClientContext* ctx, btadmin::ListClustersRequest const& request,
+         btadmin::ListClustersResponse* response) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
   std::string const& instance_id = "the-instance";
@@ -1034,8 +1034,8 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btproto::GetClusterRequest const& request,
-                                     btproto::Cluster* response) {
+                                     btadmin::GetClusterRequest const& request,
+                                     btadmin::Cluster* response) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -1062,7 +1062,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
       )""";
-  auto mock = MockRpcFactory<btproto::DeleteClusterRequest, Empty>::Create(
+  auto mock = MockRpcFactory<btadmin::DeleteClusterRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
   bigtable::InstanceId instance_id("the-instance");
@@ -1116,7 +1116,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateCluster(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateClusterRequest const& request,
+                          btadmin::CreateClusterRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name =
             "projects/" + kProjectId + "/instances/test-instance";
@@ -1136,7 +1136,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
     operation->set_done(false);
     return grpc::Status::OK;
   };
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
@@ -1177,12 +1177,12 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
       location: 'projects/my-project/locations/fake-zone'
       default_storage_type: SSD
   )";
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, CreateCluster(_, _, _))
       .WillOnce(Invoke([&expected](grpc::ClientContext*,
-                                   btproto::CreateClusterRequest const& request,
+                                   btadmin::CreateClusterRequest const& request,
                                    google::longrunning::Operation* response) {
         auto const project_name =
             "projects/" + kProjectId + "/instances/test-instance";
@@ -1217,7 +1217,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, CreateCluster(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::CreateClusterRequest const& request,
+                          btadmin::CreateClusterRequest const& request,
                           google::longrunning::Operation* response) {
         auto const project_name =
             "projects/" + kProjectId + "/instances/test-instance";
@@ -1237,7 +1237,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
          google::longrunning::Operation*) {
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
       };
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
   EXPECT_CALL(*client_, GetOperation(_, _, _))
@@ -1278,7 +1278,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         auto const cluster_name =
             "projects/my-project/instances/test-instance/clusters/test-cluster";
@@ -1294,11 +1294,11 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
       default_storage_type: SSD
   )";
 
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btadmin::Cluster expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::ClusterConfig cluster_config(std::move(expected));
@@ -1351,18 +1351,18 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
       serve_nodes: 0
       default_storage_type: SSD
   )";
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btadmin::Cluster expected_copy;
   expected_copy.CopyFrom(expected);
   bigtable::ClusterConfig cluster_config(std::move(expected));
 
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
       .WillOnce(Invoke([&expected_copy](
                            grpc::ClientContext*,
-                           btproto::Cluster const& request,
+                           btadmin::Cluster const& request,
                            google::longrunning::Operation* response) {
         auto const cluster_name =
             "projects/my-project/instances/test-instance/clusters/test-cluster";
@@ -1393,7 +1393,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         auto const cluster_name =
             "projects/my-project/instances/test-instance/clusters/test-cluster";
@@ -1408,11 +1408,11 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
       serve_nodes: 0
       default_storage_type: SSD
   )";
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btadmin::Cluster expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::ClusterConfig cluster_config(std::move(expected));
@@ -1457,7 +1457,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
 
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
       .WillOnce(Invoke([](grpc::ClientContext*,
-                          btproto::UpdateAppProfileRequest const& request,
+                          btadmin::UpdateAppProfileRequest const& request,
                           google::longrunning::Operation* response) {
         auto const expected_profile_name =
             "projects/the-project/instances/test-instance/appProfiles/"
@@ -1474,11 +1474,11 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
       }
   )";
 
-  btproto::AppProfile expected;
+  btadmin::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::AppProfile expected_copy;
+  btadmin::AppProfile expected_copy;
   expected_copy.CopyFrom(expected);
 
   EXPECT_CALL(*client_, GetOperation(_, _, _))
@@ -1533,17 +1533,17 @@ TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
       multi_cluster_routing_use_any {
       }
   )";
-  btproto::AppProfile expected;
+  btadmin::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::AppProfile expected_copy;
+  btadmin::AppProfile expected_copy;
   expected_copy.CopyFrom(expected);
 
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
       .WillOnce(Invoke(
           [&expected_copy](grpc::ClientContext*,
-                           btproto::UpdateAppProfileRequest const& request,
+                           btadmin::UpdateAppProfileRequest const& request,
                            google::longrunning::Operation* response) {
             auto const expected_profile_name =
                 "projects/the-project/instances/test-instance/appProfiles/"
@@ -1584,11 +1584,11 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
       multi_cluster_routing_use_any {
       }
   )";
-  btproto::AppProfile expected;
+  btadmin::AppProfile expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::AppProfile expected_copy;
+  btadmin::AppProfile expected_copy;
   expected_copy.CopyFrom(expected);
 
   EXPECT_CALL(*client_, UpdateAppProfile(_, _, _))
@@ -1600,7 +1600,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(
           [&expected_copy](grpc::ClientContext*,
-                           btproto::UpdateAppProfileRequest const& request,
+                           btadmin::UpdateAppProfileRequest const& request,
                            google::longrunning::Operation* response) {
             auto const expected_profile_name =
                 "projects/the-project/instances/test-instance/appProfiles/"
@@ -1691,7 +1691,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         auto const cluster_name =
             "projects/my-project/instances/test-instance/clusters/test-cluster";
@@ -1706,11 +1706,11 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
       serve_nodes: 0
       default_storage_type: SSD
   )";
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btadmin::Cluster expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::ClusterConfig cluster_config(std::move(expected));
@@ -1754,7 +1754,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, UpdateCluster(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*, btproto::Cluster const& request,
+      .WillOnce(Invoke([](grpc::ClientContext*, btadmin::Cluster const& request,
                           google::longrunning::Operation* response) {
         auto const cluster_name =
             "projects/my-project/instances/test-instance/clusters/test-cluster";
@@ -1769,11 +1769,11 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
       serve_nodes: 0
       default_storage_type: SSD
   )";
-  btproto::Cluster expected;
+  btadmin::Cluster expected;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  btproto::Cluster expected_copy;
+  btadmin::Cluster expected_copy;
   expected_copy.CopyFrom(expected);
 
   bigtable::ClusterConfig cluster_config(std::move(expected));
