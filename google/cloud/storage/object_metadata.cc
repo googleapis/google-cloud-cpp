@@ -118,7 +118,7 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
      << ", owner.entity=" << rhs.owner().entity
      << ", owner.entity_id=" << rhs.owner().entity_id
-     << ", self_link=" << rhs.self_link()
+     << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
      << ", time_deleted=" << rhs.time_deleted().time_since_epoch().count()

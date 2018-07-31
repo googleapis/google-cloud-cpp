@@ -91,7 +91,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "entityId": "user-qux-id-123"
       },
       "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
-      "size": 1024,
+      "size": 102400,
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
       "timeDeleted": "2018-05-19T19:32:24Z",
@@ -133,6 +133,7 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("user-qux-id-123", actual.owner().entity_id);
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
+  EXPECT_EQ(102400U, actual.size());
   EXPECT_EQ("STANDARD", actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   auto magic_timestamp = 1526758274L;
@@ -166,6 +167,7 @@ TEST(ObjectMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("acl-id-0"));
   EXPECT_THAT(actual, HasSubstr("name=baz"));
   EXPECT_THAT(actual, HasSubstr("metadata.foo=bar"));
+  EXPECT_THAT(actual, HasSubstr("size=102400"));
 }
 
 /// @test Verify we can make changes to one Acl in ObjectMetadata.

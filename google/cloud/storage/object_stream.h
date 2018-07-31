@@ -25,64 +25,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * A `std::basic_streambuf` to read from a GCS Object.
- */
-class ObjectReadStreamBuf : public std::basic_streambuf<char> {
- public:
-  ObjectReadStreamBuf() : std::basic_streambuf<char>(), response_{} {
-    RepositionInputSequence();
-  }
-
-  explicit ObjectReadStreamBuf(std::shared_ptr<internal::RawClient> client,
-                               internal::ReadObjectRangeRequest request)
-      : std::basic_streambuf<char>(),
-        client_(std::move(client)),
-        request_(std::move(request)),
-        response_{} {
-    RepositionInputSequence();
-  }
-
-  ObjectReadStreamBuf(ObjectReadStreamBuf&& rhs) noexcept
-      : std::basic_streambuf<char>(),
-        client_(std::move(rhs.client_)),
-        request_(std::move(rhs.request_)),
-        response_(std::move(rhs.response_)) {
-    RepositionInputSequence();
-  }
-
-  ObjectReadStreamBuf& operator=(ObjectReadStreamBuf&& rhs) noexcept {
-    client_ = std::move(rhs.client_);
-    request_ = std::move(rhs.request_);
-    response_ = std::move(rhs.response_);
-    RepositionInputSequence();
-    return *this;
-  }
-
-  ObjectReadStreamBuf(ObjectReadStreamBuf const&) = delete;
-  ObjectReadStreamBuf& operator=(ObjectReadStreamBuf const&) = delete;
-  ~ObjectReadStreamBuf() override = default;
-
-  bool IsOpen() const { return static_cast<bool>(client_); }
-  void Close() { client_.reset(); }
-
- protected:
-  /// Stream: How many more characters?
-  std::streamsize showmanyc() override;
-
-  /// Read more data.
-  int_type underflow() override;
-
- private:
-  /// Update the iostream buffer based on buffer_.
-  int_type RepositionInputSequence();
-
- private:
-  std::shared_ptr<internal::RawClient> client_;
-  internal::ReadObjectRangeRequest request_;
-  internal::ReadObjectRangeResponse response_;
-};
-
-/**
  * A `std::basic_istream<char>` to read from a GCS Object.
  */
 class ObjectReadStream : public std::basic_istream<char> {
@@ -92,38 +34,34 @@ class ObjectReadStream : public std::basic_istream<char> {
    *
    * Attempts to use this stream will result in failures.
    */
-  ObjectReadStream() : std::basic_istream<char>(&buf_), buf_() {}
+  ObjectReadStream() : std::basic_istream<char>(nullptr), buf_() {}
 
   /**
-   * Creates a stream associated with the give request.
-   *
-   * Reading from the stream will result in http requests to get more data
-   * from the GCS object.
-   *
-   * @param client how to contact the GCS servers.
-   * @param request an initialized request to read data. If no range is
-   *     specified in this request then this reads the full object.
+   * Creates a stream associated with the given `streambuf`.
    */
-  ObjectReadStream(std::shared_ptr<internal::RawClient> client,
-                   internal::ReadObjectRangeRequest request)
-      : std::basic_istream<char>(&buf_),
-        buf_(std::move(client), std::move(request)) {}
+  explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
+      : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {}
+
+  ObjectReadStream(ObjectReadStream&& rhs) noexcept
+      : std::basic_istream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {}
+
+  ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
+    buf_ = std::move(rhs.buf_);
+    rdbuf(buf_.get());
+    return *this;
+  }
 
   ObjectReadStream(ObjectReadStream const&) = delete;
   ObjectReadStream& operator=(ObjectReadStream const&) = delete;
-  ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : std::basic_istream<char>(&buf_), buf_(std::move(rhs.buf_)) {}
-  ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
-    buf_ = std::move(rhs.buf_);
-    return *this;
-  }
-  ~ObjectReadStream() override = default;
 
-  bool IsOpen() const { return buf_.IsOpen(); }
-  void Close() { buf_.Close(); }
+  /// Closes the stream (if necessary).
+  ~ObjectReadStream() override;
+
+  bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
+  internal::HttpResponse Close();
 
  private:
-  ObjectReadStreamBuf buf_;
+  std::unique_ptr<internal::ObjectReadStreambuf> buf_;
 };
 
 /**
@@ -163,10 +101,10 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   ObjectWriteStream& operator=(ObjectWriteStream const&) = delete;
 
   /// Closes the stream (if necessary).
-  ~ObjectWriteStream();
+  ~ObjectWriteStream() override;
 
   /// Return true while the stream is open.
-  bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
+  bool IsOpen() const { return buf_ != nullptr and buf_->IsOpen(); }
 
   /// Close the stream and return the metadata of the created object.
   ObjectMetadata Close();

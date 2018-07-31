@@ -17,12 +17,6 @@
 #include <sstream>
 #include <thread>
 
-namespace {
-bool IsRetryableStatusCode(long status_code) {
-  return status_code == 429 or status_code >= 500;
-}
-}  // namespace
-
 namespace google {
 namespace cloud {
 namespace storage {
@@ -32,68 +26,30 @@ static_assert(std::is_move_assignable<ObjectReadStream>::value,
 static_assert(std::is_move_constructible<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move constructible.");
 
-std::streamsize ObjectReadStreamBuf::showmanyc() {
-  if (response_.object_size == 0) {
-    return 0;
+ObjectReadStream::~ObjectReadStream() {
+  if (not IsOpen()) {
+    return;
   }
-  if (response_.object_size == response_.last_byte + 1) {
-    return -1;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  try {
+    Close();
+  } catch (std::exception const& ex) {
+    GCP_LOG(INFO) << "Ignored exception while trying to close stream: "
+                  << ex.what();
+  } catch (...) {
+    GCP_LOG(INFO) << "Ignored unknown exception while trying to close stream";
   }
-  return response_.object_size - response_.last_byte - 1;
+#else
+  Close();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-ObjectReadStreamBuf::int_type ObjectReadStreamBuf::underflow() {
-  // TODO(#742) - use literals for KiB and MiB and GiB.
-  std::int64_t const read_size = 64 * 1024;
-  if (response_.object_size == 0) {
-    request_.set_begin(0).set_end(read_size);
-  } else {
-    auto begin = response_.last_byte + 1;
-    auto end = begin + read_size;
-    if (end > response_.object_size) {
-      end = response_.object_size;
-    }
-    if (begin == end) {
-      response_.contents.clear();
-      return RepositionInputSequence();
-    }
-    request_.set_begin(begin).set_end(end);
+internal::HttpResponse ObjectReadStream::Close() {
+  if (not IsOpen()) {
+    google::cloud::internal::RaiseRuntimeError(
+        "Attempting to Close() closed ObjectWriteStream");
   }
-
-  // TODO(#555) - use policies to implement retry loop.
-  Status last_status;
-  constexpr int MAX_NUM_RETRIES = 3;
-  for (int i = 0; i != MAX_NUM_RETRIES; ++i) {
-    auto result = client_->ReadObjectRangeMedia(request_);
-    last_status = std::move(result.first);
-    if (last_status.ok()) {
-      response_ = std::move(result.second);
-      return RepositionInputSequence();
-    }
-    // TODO(#714) - use policies to decide if the operation is idempotent.
-    // TODO(#581) - use policies to determine what error codes are permanent.
-    if (not IsRetryableStatusCode(last_status.status_code())) {
-      std::ostringstream os;
-      os << "Permanent error in " << __func__ << ": " << last_status;
-      google::cloud::internal::RaiseRuntimeError(os.str());
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  std::ostringstream os;
-  os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  google::cloud::internal::RaiseRuntimeError(os.str());
-}
-
-ObjectReadStreamBuf::int_type ObjectReadStreamBuf::RepositionInputSequence() {
-  if (response_.contents.empty()) {
-    response_.contents.push_back('\0');
-    char* data = &response_.contents[0];
-    setg(data, data + 1, data + 1);
-    return traits_type::eof();
-  }
-  char* data = &response_.contents[0];
-  setg(data, data, data + response_.contents.size());
-  return traits_type::to_int_type(*data);
+  return buf_->Close();
 }
 
 ObjectWriteStream::~ObjectWriteStream() {

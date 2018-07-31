@@ -81,7 +81,7 @@ class Client {
   }
 
   /**
-   * Fetch the bucket metadata and return it.
+   * Fetch the bucket metadata and return it.c
    *
    * @param bucket_name query metadata information about this bucket.
    * @param options a list of optional query parameters and/or request headers.
@@ -190,11 +190,12 @@ class Client {
    * @snippet storage_object_samples.cc read object
    */
   template <typename... Options>
-  ObjectReadStream Read(std::string const& bucket_name,
-                        std::string const& object_name, Options&&... options) {
+  ObjectReadStream ReadObject(std::string const& bucket_name,
+                              std::string const& object_name,
+                              Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectReadStream(raw_client_, request);
+    return ObjectReadStream(raw_client_->ReadObject(request).second);
   }
 
   /**

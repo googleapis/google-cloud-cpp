@@ -20,6 +20,49 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+CurlReadStreambuf::CurlReadStreambuf(CurlDownloadRequest&& download,
+                                     std::size_t target_buffer_size)
+    : download_(std::move(download)), target_buffer_size_(target_buffer_size) {
+  // Start with an empty read area, to force an underflow() on the first
+  // extraction.
+  current_ios_buffer_.push_back('\0');
+  char* data = &current_ios_buffer_[0];
+  setg(data, data + 1, data + 1);
+}
+
+bool CurlReadStreambuf::IsOpen() const { return download_.IsOpen(); }
+
+HttpResponse CurlReadStreambuf::Close() { return download_.Close(); }
+
+CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
+  if (not IsOpen()) {
+    current_ios_buffer_.clear();
+    current_ios_buffer_.push_back('\0');
+    char* data = &current_ios_buffer_[0];
+    setg(data, data + 1, data + 1);
+    return traits_type::eof();
+  }
+
+  current_ios_buffer_.reserve(target_buffer_size_);
+  auto response = download_.GetMore(current_ios_buffer_);
+  if (response.status_code >= 300) {
+    std::ostringstream os;
+    os << "CurlDownloadRequest reports error: " << response.status_code
+       << ", payload=" << response.payload;
+    google::cloud::internal::RaiseRuntimeError(os.str());
+  }
+
+  if (not current_ios_buffer_.empty()) {
+    char* data = &current_ios_buffer_[0];
+    setg(data, data, data + current_ios_buffer_.size());
+    return traits_type::to_int_type(*data);
+  }
+  current_ios_buffer_.push_back('\0');
+  char* data = &current_ios_buffer_[0];
+  setg(data, data + 1, data + 1);
+  return traits_type::eof();
+}
+
 CurlStreambuf::CurlStreambuf(CurlUploadRequest&& upload,
                              std::size_t max_buffer_size)
     : upload_(std::move(upload)), max_buffer_size_(max_buffer_size) {

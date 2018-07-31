@@ -258,7 +258,6 @@ set(storage_client_unit_tests
     list_objects_reader_test.cc
     object_access_control_test.cc
     object_metadata_test.cc
-    object_stream_test.cc
     object_test.cc
     retry_policy_test.cc
     storage_client_options_test.cc

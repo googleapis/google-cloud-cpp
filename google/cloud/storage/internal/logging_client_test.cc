@@ -30,7 +30,11 @@ using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
+  // Cannot use `override` here because if we do the build breaks: the compiler
+  // on macOS then expects *all* overriden functions to have it, and the
+  // MOCK_METHOD1() macro does not use override.
   void Process(LogRecord const& lr) { ProcessWithOwnership(lr); }
+
   MOCK_METHOD1(ProcessWithOwnership, void(LogRecord));
   // For the purposes of testing we just need one of the member functions.
 };
@@ -117,33 +121,6 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
   LoggingClient client(mock);
   client.InsertObjectMedia(
       InsertObjectMediaRequest("foo-bar", "baz", "the contents"));
-}
-
-TEST_F(LoggingClientTest, ReadObjectRangeMedia) {
-  auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, ReadObjectRangeMedia(_))
-      .WillOnce(Return(std::make_pair(
-          Status(), ReadObjectRangeResponse{"the contents", 0, 11, 12})));
-
-  // We want to test that the key elements are logged, but do not want a
-  // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr("ReadObjectRangeRequest={"));
-        EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
-        EXPECT_THAT(lr.message, HasSubstr("baz"));
-      }))
-      .WillOnce(Invoke([](LogRecord lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" >> "));
-        EXPECT_THAT(lr.message, HasSubstr("status={"));
-        EXPECT_THAT(lr.message, HasSubstr("payload={"));
-        EXPECT_THAT(lr.message, HasSubstr("ReadObjectRangeResponse={"));
-        EXPECT_THAT(lr.message, HasSubstr("the contents"));
-      }));
-
-  LoggingClient client(mock);
-  client.ReadObjectRangeMedia(ReadObjectRangeRequest("foo-bar", "baz"));
 }
 
 TEST_F(LoggingClientTest, ListObjects) {

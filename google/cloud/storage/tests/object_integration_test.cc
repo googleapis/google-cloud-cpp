@@ -126,7 +126,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   EXPECT_EQ(bucket_name, meta.bucket());
 
   // Create a iostream to read the object back.
-  auto stream = client.Read(bucket_name, object_name);
+  auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
@@ -139,34 +139,36 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
-  std::string expected;
+  std::ostringstream expected;
 
   auto generate_random_line = [this] {
     std::string const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz"
         "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()\t\n\r\v";
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
     return google::cloud::internal::Sample(generator_, 200, characters);
   };
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line();
-    os << random;
-    expected += random;
+    std::string random = generate_random_line() + "\n";
+    os << line << ": " << random;
+    expected << line << ": " << random;
   }
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
-  ASSERT_EQ(expected.size(), meta.size());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), meta.size());
 
   // Create a iostream to read the object back.
-  auto stream = client.Read(bucket_name, object_name);
+  auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected, actual);
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -186,7 +188,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
     os << expected;
   }
   // Create a iostream to read the object back.
-  auto stream = client.Read(bucket_name, object_name);
+  auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected, actual);

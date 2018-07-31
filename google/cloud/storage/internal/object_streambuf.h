@@ -24,6 +24,23 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
+ * A `std::basic_streambuf` to read from a GCS Object.
+ */
+class ObjectReadStreambuf : public std::basic_streambuf<char> {
+ public:
+  ObjectReadStreambuf() : std::basic_streambuf<char>() {}
+  ~ObjectReadStreambuf() override = default;
+
+  ObjectReadStreambuf(ObjectReadStreambuf&&) noexcept = delete;
+  ObjectReadStreambuf& operator=(ObjectReadStreambuf&&) noexcept = delete;
+  ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
+  ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
+
+  virtual HttpResponse Close() = 0;
+  virtual bool IsOpen() const = 0;
+};
+
+/**
  * A `std::basic_streambuf` that writes to a GCS Object.
  */
 class ObjectWriteStreambuf : public std::basic_streambuf<char> {

@@ -46,6 +46,7 @@ class CurlDownloadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
         initial_buffer_size_(rhs.initial_buffer_size_) {
     ResetOptions();
@@ -59,11 +60,15 @@ class CurlDownloadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
     initial_buffer_size_ = rhs.initial_buffer_size_;
     ResetOptions();
     return *this;
   }
+
+  bool IsOpen() const { return not curl_closed_; }
+  HttpResponse Close();
 
   /**
    * Wait for additional data or the end of the transfer.
@@ -130,7 +135,16 @@ class CurlDownloadRequest {
   CurlMulti multi_;
 
   std::string buffer_;
-  // The curl_closed_ flag is set if the transfer is done.
+  // Closing the handle happens in two steps.
+  // 1. First the application (or higher-level class), calls Close(). This class
+  //    needs to notify libcurl that the transfer is terminated by returning 0
+  //    from the callback.
+  // 2. Once that callback returns 0, this class needs to know
+  //
+  // The closing_ flag is set when we enter step 1.
+  bool closing_;
+  // The curl_closed_ flag is set when we enter step 2, or when the transfer
+  // completes.
   bool curl_closed_;
 
   std::size_t initial_buffer_size_;
