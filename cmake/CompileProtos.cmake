@@ -58,7 +58,7 @@ function (PROTOBUF_GENERATE_CPP SRCS HDRS)
         list(APPEND ${HDRS} ${HDR})
         add_custom_command(
             OUTPUT ${SRC} ${HDR}
-            COMMAND $<TARGET_FILE:protoc>
+            COMMAND protoc
                     ARGS
                     --cpp_out ${CMAKE_CURRENT_BINARY_DIR}
                               ${_protobuf_include_path} ${FIL}

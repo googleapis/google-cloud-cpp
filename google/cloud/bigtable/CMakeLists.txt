@@ -55,12 +55,8 @@ add_library(bigtable_common_options INTERFACE)
 google_cloud_cpp_add_common_options(bigtable_common_options)
 
 # Configure the location of proto files, particulary the googleapis protos.
-set(PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
-    "${PROJECT_SOURCE_DIR}")
-if (GRPC_ROOT_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0
-                "${GRPC_ROOT_DIR}/third_party/protobuf/src")
-endif (GRPC_ROOT_DIR)
+list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
+            "${PROJECT_SOURCE_DIR}")
 
 # Include the functions to compile proto files.
 include(CompileProtos)
