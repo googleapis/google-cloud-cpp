@@ -214,12 +214,6 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   return os;
 }
 
-constexpr char BucketMetadata::STORAGE_CLASS_STANDARD[];
-constexpr char BucketMetadata::STORAGE_CLASS_MULTI_REGIONAL[];
-constexpr char BucketMetadata::STORAGE_CLASS_REGIONAL[];
-constexpr char BucketMetadata::STORAGE_CLASS_NEARLINE[];
-constexpr char BucketMetadata::STORAGE_CLASS_COLDLINE[];
-constexpr char BucketMetadata::STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY[];
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

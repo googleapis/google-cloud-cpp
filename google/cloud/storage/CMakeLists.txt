@@ -183,6 +183,7 @@ add_library(storage_client
             well_known_parameters.h
             retry_policy.h
             status.h
+            storage_class.h
             version.h
             version.cc)
 target_link_libraries(storage_client
@@ -260,6 +261,7 @@ set(storage_client_unit_tests
     object_metadata_test.cc
     object_test.cc
     retry_policy_test.cc
+    storage_class_test.cc
     storage_client_options_test.cc
     link_test.cc)
 
