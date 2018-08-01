@@ -14,5 +14,6 @@ var searchData=
   ['bucketlogging',['BucketLogging',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html',1,'google::cloud::storage::v0']]],
   ['bucketmetadata',['BucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html',1,'google::cloud::storage::v0::BucketMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#acc89a140d787c96f0d3207e101275b0e',1,'google::cloud::storage::v0::BucketMetadata::BucketMetadata()']]],
   ['bucketversioning',['BucketVersioning',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketVersioning.html',1,'google::cloud::storage::v0::BucketVersioning'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketVersioning.html#aa0555c0ffd94a3c389dfcfa1166dea81',1,'google::cloud::storage::v0::BucketVersioning::BucketVersioning()'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketVersioning.html#a8a65b1228e43c97a776a8ca375058848',1,'google::cloud::storage::v0::BucketVersioning::BucketVersioning(bool flag)']]],
-  ['bucketwebsite',['BucketWebsite',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html',1,'google::cloud::storage::v0']]]
+  ['bucketwebsite',['BucketWebsite',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html',1,'google::cloud::storage::v0']]],
+  ['buildpatch',['BuildPatch',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html#aaac1c2b7a79ea0e6fc0fc218ef0b0cea',1,'google::cloud::storage::v0::ObjectAccessControlPatchBuilder']]]
 ];
