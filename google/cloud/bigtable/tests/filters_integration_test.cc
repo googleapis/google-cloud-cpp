@@ -107,11 +107,6 @@ TEST_F(FilterIntegrationTest, PassAll) {
 }
 
 TEST_F(FilterIntegrationTest, BlockAll) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
-
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "block-all-row-key";
