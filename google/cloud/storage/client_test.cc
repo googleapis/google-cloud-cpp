@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -123,6 +124,23 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, DefaultDecorators) {
+  // Create a client, use the insecure credentials because on the CI environment
+  // there may not be other credentials configured.
+  Client tested(CreateInsecureCredentials());
+
+  EXPECT_TRUE(tested.raw_client() != nullptr);
+  auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
+  ASSERT_TRUE(logging != nullptr);
+
+  auto curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
+  ASSERT_TRUE(curl != nullptr);
 }
 
 }  // namespace
