@@ -20,8 +20,8 @@ workspace(name="com_github_googlecloudplatform_google_cloud_cpp_test_install")
 #
 # http_archive(
 #     name = "com_github_googlecloudplatform_google_cloud_cpp",
-#     url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.1.0.tar.gz",
-#     sha256 = "fa198ff055a36adb293447a2a83582c42ce210b93db2acc40c2eff0a27879717",
+#     url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.2.0.tar.gz",
+#     sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281",
 # )
 #
 # But we want to test that the *current* version is correct.
