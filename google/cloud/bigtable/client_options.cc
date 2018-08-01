@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/client_options.h"
+#include <thread>
 
 // Make the default pool size 4 because that is consistent with what Go does.
 #ifndef BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
@@ -32,9 +33,15 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+inline std::size_t CalculateDefaultConnectionPoolSize() {
+  std::size_t pool_size = std::thread::hardware_concurrency();
+  return (pool_size > 0) ? pool_size
+                         : BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+}
+
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
     : credentials_(std::move(creds)),
-      connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE),
+      connection_pool_size_(CalculateDefaultConnectionPoolSize()),
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com") {
   static std::string const user_agent_prefix = "cbt-c++/" + version_string();
