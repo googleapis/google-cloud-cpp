@@ -101,6 +101,30 @@ class ObjectAclRequest
 
 std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r);
 
+/**
+ * Patch an ObjectAccessControl entry.
+ */
+class PatchObjectAclRequest
+    : public GenericObjectRequest<PatchObjectAclRequest, Generation,
+                                  UserProject> {
+ public:
+  PatchObjectAclRequest(std::string bucket, std::string object,
+                        std::string entity, ObjectAccessControl const& original,
+                        ObjectAccessControl const& new_acl);
+  PatchObjectAclRequest(std::string bucket, std::string object,
+                        std::string entity,
+                        ObjectAccessControlPatchBuilder const& patch);
+
+  std::string const& entity() const { return entity_; }
+  std::string const& payload() const { return payload_; }
+
+ private:
+  std::string entity_;
+  std::string payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, PatchObjectAclRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
