@@ -251,6 +251,19 @@ TEST(BucketMetadataTest, SetBilling) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can reset the billing configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetBilling) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_billing());
+  auto copy = expected;
+  copy.reset_billing();
+  EXPECT_FALSE(copy.has_billing());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("billing")));
+}
+
 /// @test Verify we can make changes to one CORS entry in BucketMetadata.
 TEST(BucketMetadataTest, MutableCors) {
   auto expected = CreateBucketMetadataForTest();
@@ -312,6 +325,19 @@ TEST(BucketMetadataTest, SetEncryption) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, ResetEncryption) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_encryption());
+  auto copy = expected;
+  copy.reset_encryption();
+  EXPECT_FALSE(copy.has_encryption());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("encryption.")));
+}
+
 /// @test Verify we can change the Logging configuration in BucketMetadata.
 TEST(BucketMetadataTest, SetLogging) {
   auto expected = CreateBucketMetadataForTest();
@@ -322,6 +348,19 @@ TEST(BucketMetadataTest, SetLogging) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can change the Logging configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetLogging) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_logging());
+  auto copy = expected;
+  copy.reset_logging();
+  EXPECT_FALSE(copy.has_logging());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("logging.")));
+}
+
 /// @test Verify we can clear the versioning field in BucketMetadata.
 TEST(BucketMetadataTest, ClearVersioning) {
   auto expected = CreateBucketMetadataForTest();
@@ -330,6 +369,9 @@ TEST(BucketMetadataTest, ClearVersioning) {
   copy.clear_versioning();
   EXPECT_FALSE(copy.versioning().has_value());
   EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("versioning.")));
 }
 
 /// @test Verify we can set the versioning field in BucketMetadata.
@@ -377,6 +419,19 @@ TEST(BucketMetadataTest, SetWebsite) {
   EXPECT_EQ("main.html", copy.website().main_page_suffix);
   EXPECT_EQ("not-found.html", copy.website().not_found_page);
   EXPECT_NE(copy, expected);
+}
+
+/// @test Verify we can set the website field in BucketMetadata.
+TEST(BucketMetadataTest, ResetWebsite) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_website());
+  auto copy = expected;
+  copy.reset_website();
+  EXPECT_FALSE(copy.has_website());
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("website.")));
 }
 
 }  // namespace
