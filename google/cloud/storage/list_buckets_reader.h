@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_READER_H_
 
-#include "google/cloud/storage/internal/list_buckets_request.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include <iterator>
 

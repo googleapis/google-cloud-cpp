@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/list_buckets_request.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,6 +21,25 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using ::testing::HasSubstr;
+using ::testing::Not;
+
+TEST(GetBucketMetadataRequestTest, OStreamBasic) {
+  GetBucketMetadataRequest request("my-bucket");
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
+}
+
+TEST(GetBucketMetadataRequestTest, OStreamParameter) {
+  GetBucketMetadataRequest request("my-bucket");
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
+}
 
 TEST(ListBucketsRequestTest, Simple) {
   ListBucketsRequest request("my-project");
