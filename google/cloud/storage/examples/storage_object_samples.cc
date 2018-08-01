@@ -77,7 +77,8 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
      std::string contents) {
     gcs::ObjectMetadata meta =
         client.InsertObject(bucket_name, object_name, std::move(contents));
-    std::cout << "The new object metadata is " << meta << std::endl;
+    std::cout << "The file was uploaded. The new object metadata is " << meta
+              << std::endl;
   }
   //! [insert object] [END storage_upload_file]
   (std::move(client), bucket_name, object_name, contents);
