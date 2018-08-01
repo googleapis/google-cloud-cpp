@@ -21,6 +21,13 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
+### v0.2.0 - 2018-08
+
+* First Beta release.
+* Completed instance admin APIs.
+* Completed documentation and examples.
+* The API is considered stable, we do not expect any changes before 1.0
+
 ### v0.1.0 - 2018-03
 
 * This release implements all the APIs for table and data manipulation in Cloud
