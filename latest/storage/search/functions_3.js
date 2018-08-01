@@ -1,6 +1,7 @@
 var searchData=
 [
   ['default_5facl',['default_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a243c7eeb31e604009d243b3625ce7727',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['delete',['Delete',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a4158d50ef84091b3a8a74671628f2472',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['delete_5fentity',['delete_entity',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html#aead5259baeba7279c381993bab8dad4e',1,'google::cloud::storage::v0::ObjectAccessControlPatchBuilder']]],
   ['delete_5fmetadata',['delete_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a6f92c67daacac99292344424def1466c',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['delete_5frole',['delete_role',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html#a6431defd9dc92918ad8d673c95af18cf',1,'google::cloud::storage::v0::ObjectAccessControlPatchBuilder']]],
