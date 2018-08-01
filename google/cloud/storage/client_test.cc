@@ -126,7 +126,7 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
 }
 
-/// @test Verify the constructor create the right set of RawClient decorations.
+/// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecorators) {
   // Create a client, use the insecure credentials because on the CI environment
   // there may not be other credentials configured.
