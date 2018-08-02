@@ -54,6 +54,13 @@ std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, CreateBucketRequest const& r) {
+  os << "CreateBucketRequest={project_id=" << r.project_id()
+     << ", metadata=" << r.metadata();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

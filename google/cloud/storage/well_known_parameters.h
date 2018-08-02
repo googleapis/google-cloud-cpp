@@ -106,6 +106,15 @@ struct Prefix : public WellKnownParameter<Prefix, std::string> {
   static char const* well_known_parameter_name() { return "prefix"; }
 };
 
+struct PredefinedDefaultObjectAcl
+    : public WellKnownParameter<PredefinedDefaultObjectAcl, std::string> {
+  using WellKnownParameter<PredefinedDefaultObjectAcl,
+                           std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "predefinedDefaultObjectAcl";
+  }
+};
+
 struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
   using WellKnownParameter<MaxResults, std::int64_t>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "maxResults"; }
