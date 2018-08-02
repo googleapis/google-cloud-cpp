@@ -156,7 +156,6 @@ run_all_bucket_examples() {
 list-buckets
 list-buckets-for-project
 get-bucket-metadata
-list-objects
 _EOF_
 )
 
@@ -183,6 +182,7 @@ run_all_object_examples() {
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly OBJECT_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 insert-object
+list-objects
 get-object-metadata
 read-object
 write-object
