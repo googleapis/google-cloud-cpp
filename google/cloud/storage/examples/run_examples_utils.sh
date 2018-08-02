@@ -174,6 +174,32 @@ _EOF_
 # Returns:
 #   None
 ################################################
+run_all_bucket_acl_examples() {
+  local bucket_name=$1
+  shift
+
+  # The list of commands in the storage_bucket_samples program that we will
+  # test. Currently get-metadata assumes that $bucket_name is already created.
+  readonly BUCKET_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
+list-bucket-acl
+_EOF_
+)
+
+  run_program_examples ./storage_bucket_acl_samples \
+      "${BUCKET_ACL_COMMANDS}" \
+      "${bucket_name}"
+}
+
+################################################
+# Run all Object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
 run_all_object_examples() {
   local bucket_name=$1
   shift
@@ -282,6 +308,7 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   run_all_bucket_examples "${BUCKET_NAME}"
+  run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \

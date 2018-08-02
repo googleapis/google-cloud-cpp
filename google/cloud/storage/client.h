@@ -270,6 +270,24 @@ class Client {
   }
 
   /**
+   * Retrieves the list of BucketAccessControls for a bucket.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc list bucket acl
+   */
+  template <typename... Options>
+  std::vector<BucketAccessControl> ListBucketAcl(std::string const& bucket_name,
+                                                 Options&&... options) {
+    internal::ListBucketAclRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ListBucketAcl(request).second.items;
+  }
+
+  /**
    * Retrieve the list of ObjectAccessControls for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
