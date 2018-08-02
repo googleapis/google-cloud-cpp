@@ -26,7 +26,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/// A request type for `BucketAccessControl: list`
+/// Represents a request to call the `BucketAccessControl: list` API.
 class ListBucketAclRequest
     : public GenericRequest<ListBucketAclRequest, Generation, UserProject> {
  public:
@@ -46,7 +46,7 @@ class ListBucketAclRequest
 
 std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r);
 
-/// Represent a response to the ListBucketAclRequest.
+/// Represents a response to the `BucketAccessControl: list` API.
 struct ListBucketAclResponse {
   static ListBucketAclResponse FromHttpResponse(HttpResponse&& response);
 
@@ -55,7 +55,14 @@ struct ListBucketAclResponse {
 
 std::ostream& operator<<(std::ostream& os, ListBucketAclResponse const& r);
 
-/// A request type for `BucketAccessControl: {create,get,delete,patch,update}`
+/**
+ * Represents common attributes to multiple `BucketAccessControls` request
+ * types.
+ *
+ * The classes to represent requests for the `BucketAccessControls: create`,
+ * `get`, `delete`, `patch`, and `update` APIs have a lot of commonality. This
+ * template class refactors that code.
+ */
 template <typename Derived>
 class GenericBucketAclRequest
     : public GenericRequest<Derived, Generation, UserProject> {
@@ -82,7 +89,7 @@ class GenericBucketAclRequest
 };
 
 /**
- * Implements request object for `BucketAccessControls: get`.
+ * Represents a request to call the `BucketAccessControls: get` API.
  */
 class GetBucketAclRequest
     : public GenericBucketAclRequest<GetBucketAclRequest> {
@@ -92,7 +99,7 @@ class GetBucketAclRequest
 std::ostream& operator<<(std::ostream& os, GetBucketAclRequest const& r);
 
 /**
- * Implements request object for `BucketAccessControls: delete`.
+ * Represents a request to call the `BucketAccessControls: delete` API.
  */
 class DeleteBucketAclRequest
     : public GenericBucketAclRequest<DeleteBucketAclRequest> {
@@ -102,7 +109,7 @@ class DeleteBucketAclRequest
 std::ostream& operator<<(std::ostream& os, DeleteBucketAclRequest const& r);
 
 /**
- * Create an BucketAccessControl entry.
+ * Represents a request to call the `BucketAccessControls: insert` API.
  */
 class CreateBucketAclRequest
     : public GenericBucketAclRequest<CreateBucketAclRequest> {

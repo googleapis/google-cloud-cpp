@@ -239,7 +239,7 @@ class Client {
   }
 
   /**
-   * Retrieve the list of BucketAccessControls for a bucket.
+   * Retrieves the list of BucketAccessControls for a bucket.
    *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.

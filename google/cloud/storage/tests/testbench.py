@@ -339,6 +339,7 @@ class GcsBucket(object):
     def check_preconditions(self, request):
         """
         Verify that the preconditions in request are met.
+
         :param request:flask.Request the contents of the HTTP request.
         :return:None
         :raises:ErrorResponse if the request does not pass the preconditions,
@@ -371,7 +372,7 @@ class GcsBucket(object):
         entity_id = ''
         if entity.startswith('user-'):
             email = entity
-        # Replace or insert the entry
+        # Replace or insert the entry.
         indexed = {
             entry.get('entity').lower(): entry
             for entry in self.metadata.get('acl', [])
