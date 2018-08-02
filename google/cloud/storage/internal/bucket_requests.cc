@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/list_buckets_request.h"
-#include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/object_metadata.h"
-#include <sstream>
+#include "google/cloud/storage/internal/bucket_requests.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -48,6 +46,12 @@ std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r) {
   std::copy(r.items.begin(), r.items.end(),
             std::ostream_iterator<BucketMetadata>(os, "\n  "));
   return os << "}}";
+}
+
+std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r) {
+  os << "GetBucketMetadataRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
 }
 
 }  // namespace internal

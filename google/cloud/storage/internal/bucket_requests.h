@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LIST_BUCKETS_REQUEST_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LIST_BUCKETS_REQUEST_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H_
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include <iosfwd>
 
 namespace google {
 namespace cloud {
@@ -26,7 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Request the metadata for a bucket.
+ * Request the list of buckets for a project.
  */
 class ListBucketsRequest
     : public GenericRequest<ListBucketsRequest, MaxResults, Prefix, Projection,
@@ -64,10 +65,32 @@ struct ListBucketsResponse {
 
 std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r);
 
+/**
+ * Request the metadata for a bucket.
+ */
+class GetBucketMetadataRequest
+    : public GenericRequest<GetBucketMetadataRequest, IfMetaGenerationMatch,
+                            IfMetaGenerationNotMatch, Projection, UserProject> {
+ public:
+  GetBucketMetadataRequest() = default;
+  explicit GetBucketMetadataRequest(std::string bucket_name)
+      : bucket_name_(std::move(bucket_name)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  GetBucketMetadataRequest& set_bucket_name(std::string bucket_name) {
+    bucket_name_ = std::move(bucket_name);
+    return *this;
+  }
+
+ private:
+  std::string bucket_name_;
+};
+
+std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LIST_BUCKETS_REQUEST_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H_

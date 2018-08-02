@@ -113,6 +113,8 @@ add_library(storage_client
             internal/binary_data_as_debug_string.cc
             internal/bucket_acl_requests.h
             internal/bucket_acl_requests.cc
+            internal/bucket_requests.h
+            internal/bucket_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
             internal/credential_constants.h
@@ -138,8 +140,6 @@ add_library(storage_client
             internal/empty_response.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/get_bucket_metadata_request.h
-            internal/get_bucket_metadata_request.cc
             internal/get_object_metadata_request.h
             internal/get_object_metadata_request.cc
             internal/google_application_default_credentials_file.h
@@ -147,8 +147,6 @@ add_library(storage_client
             internal/http_response.h
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
-            internal/list_buckets_request.h
-            internal/list_buckets_request.cc
             internal/list_object_acl_request.h
             internal/list_object_acl_request.cc
             internal/list_objects_request.h
@@ -246,11 +244,10 @@ set(storage_client_unit_tests
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
     internal/delete_object_request_test.cc
-    internal/get_bucket_metadata_request_test.cc
+    internal/bucket_requests_test.cc
     internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
-    internal/list_buckets_request_test.cc
     internal/list_object_acl_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc
