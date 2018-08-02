@@ -23,6 +23,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using google::cloud::internal::make_optional;
 using google::cloud::internal::optional;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 BucketMetadata CreateBucketMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
@@ -221,7 +223,6 @@ TEST(BucketMetadataTest, IOStream) {
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
-  using ::testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("BucketMetadata"));
 
   // acl()
@@ -310,7 +311,7 @@ TEST(BucketMetadataTest, ResetBilling) {
   EXPECT_NE(expected, copy);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("billing")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("billing")));
 }
 
 /// @test Verify we can make changes to one CORS entry in BucketMetadata.
@@ -384,7 +385,7 @@ TEST(BucketMetadataTest, ResetEncryption) {
   EXPECT_NE(expected, copy);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("encryption.")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("encryption.")));
 }
 
 /// @test Verify we can reset the Object Lifecycle in BucketMetadata.
@@ -397,7 +398,7 @@ TEST(BucketMetadataTest, ResetLifecycle) {
   EXPECT_NE(expected, copy);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("lifecycle.")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("lifecycle.")));
 }
 
 /// @test Verify we can change the Object Lifecycle in BucketMetadata.
@@ -432,7 +433,7 @@ TEST(BucketMetadataTest, ResetLogging) {
   EXPECT_NE(expected, copy);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("logging.")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("logging.")));
 }
 
 /// @test Verify we can clear the versioning field in BucketMetadata.
@@ -445,7 +446,7 @@ TEST(BucketMetadataTest, ClearVersioning) {
   EXPECT_NE(copy, expected);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("versioning.")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("versioning.")));
 }
 
 /// @test Verify we can set the versioning field in BucketMetadata.
@@ -505,7 +506,7 @@ TEST(BucketMetadataTest, ResetWebsite) {
   EXPECT_NE(copy, expected);
   std::ostringstream os;
   os << copy;
-  EXPECT_THAT(os.str(), ::testing::Not(::testing::HasSubstr("website.")));
+  EXPECT_THAT(os.str(), Not(HasSubstr("website.")));
 }
 
 }  // namespace
