@@ -21,6 +21,23 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+LifecycleRule CreateLifecycleRuleForTest() {
+  std::string text = R"""({
+      "condition": {
+        "age": 42,
+        "createdBefore": "2018-07-23T12:00:00Z",
+        "isLive": true,
+        "matchesStorageClass": [ "STANDARD" ],
+        "numNewerVersions": 7
+      },
+      "action": {
+        "type": "SetStorageClass",
+        "storageClass": "NEARLINE"
+      }
+    })""";
+  return LifecycleRule::ParseFromString(text);
+}
+
 /// @test Verify that LifecycleRuleAction streaming works as expected.
 TEST(LifecycleRuleTest, LifecycleRuleActionStream) {
   LifecycleRuleAction action = LifecycleRule::SetStorageClassStandard();
@@ -315,6 +332,34 @@ TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
               ::testing::UnorderedElementsAre(storage_class::Nearline(),
                                               storage_class::Standard(),
                                               storage_class::Regional()));
+}
+
+/// @test Verify that LifecycleRule parsing works as expected.
+TEST(LifecycleRuleTest, Parsing) {
+  // This function uses ParseFromString() to create the LifecycleRule.
+  LifecycleRule actual = CreateLifecycleRuleForTest();
+  LifecycleRuleCondition expected_condition =
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(42),
+          LifecycleRule::CreatedBefore("2018-07-23T12:00:00Z"),
+          LifecycleRule::IsLive(true),
+          LifecycleRule::MatchesStorageClassStandard(),
+          LifecycleRule::NumNewerVersions(7));
+  EXPECT_EQ(expected_condition, actual.condition());
+
+  LifecycleRuleAction expected_action =
+      LifecycleRule::SetStorageClassNearline();
+  EXPECT_EQ(expected_action, actual.action());
+}
+
+/// @test Verify that LifecycleRule streaming operator works as expected.
+TEST(LifecycleRuleTest, LifecycleRuleStream) {
+  auto rule = CreateLifecycleRuleForTest();
+  std::ostringstream os;
+  os << rule;
+  auto actual = os.str();
+  EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
+  EXPECT_THAT(actual, ::testing::HasSubstr("NEARLINE"));
 }
 
 }  // namespace
