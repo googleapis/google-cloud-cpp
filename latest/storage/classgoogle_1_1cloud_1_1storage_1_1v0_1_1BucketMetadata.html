@@ -135,6 +135,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a676b7876b13a8ef799b594bdb4ed9767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96fe7df007dc0ed3dbcddd1e50f8bcb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a96fe7df007dc0ed3dbcddd1e50f8bcb6">reset_encryption</a> ()</td></tr>
 <tr class="separator:a96fe7df007dc0ed3dbcddd1e50f8bcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors and modifiers for object lifecycle rules.</div></td></tr>
+<tr class="memitem:a870a4d47bdf58d4b85dcde0a742212d0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a870a4d47bdf58d4b85dcde0a742212d0">has_lifecycle</a> () const</td></tr>
+<tr class="separator:a870a4d47bdf58d4b85dcde0a742212d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ac1f8e6ff20f22740be2967727bb27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af7ac1f8e6ff20f22740be2967727bb27">lifecycle</a> () const</td></tr>
+<tr class="separator:af7ac1f8e6ff20f22740be2967727bb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bddb735f2f219e27b5f8ea9ac16adb4"><td class="memItemLeft" align="right" valign="top">google::cloud::internal::optional&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a1bddb735f2f219e27b5f8ea9ac16adb4">lifecycle_as_optional</a> () const</td></tr>
+<tr class="separator:a1bddb735f2f219e27b5f8ea9ac16adb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae803a5da356a8281276d57fda2582efa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae803a5da356a8281276d57fda2582efa">set_lifecycle</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a> v)</td></tr>
+<tr class="separator:ae803a5da356a8281276d57fda2582efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a510f0db77879b9562233e324c6c724af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a510f0db77879b9562233e324c6c724af">reset_lifecycle</a> ()</td></tr>
+<tr class="separator:a510f0db77879b9562233e324c6c724af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors and modifiers for logging configuration.</div></td></tr>
 <tr class="memitem:a08d05b49607fc67bbbede20a1a0532c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a08d05b49607fc67bbbede20a1a0532c0">has_logging</a> () const</td></tr>
 <tr class="separator:a08d05b49607fc67bbbede20a1a0532c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -484,6 +495,31 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a870a4d47bdf58d4b85dcde0a742212d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a870a4d47bdf58d4b85dcde0a742212d0">&#9670;&nbsp;</a></span>has_lifecycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage::v0::BucketMetadata::has_lifecycle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a08d05b49607fc67bbbede20a1a0532c0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08d05b49607fc67bbbede20a1a0532c0">&#9670;&nbsp;</a></span>has_logging()</h2>
 
@@ -571,6 +607,56 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::size_t google::cloud::storage::v0::BucketMetadata::label_count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af7ac1f8e6ff20f22740be2967727bb27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7ac1f8e6ff20f22740be2967727bb27">&#9670;&nbsp;</a></span>lifecycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a> const&amp; google::cloud::storage::v0::BucketMetadata::lifecycle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1bddb735f2f219e27b5f8ea9ac16adb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bddb735f2f219e27b5f8ea9ac16adb4">&#9670;&nbsp;</a></span>lifecycle_as_optional()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::internal::optional&lt;<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a>&gt; const&amp; google::cloud::storage::v0::BucketMetadata::lifecycle_as_optional </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -881,6 +967,31 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a510f0db77879b9562233e324c6c724af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510f0db77879b9562233e324c6c724af">&#9670;&nbsp;</a></span>reset_lifecycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::reset_lifecycle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af4b0df7704e4eba18531967bf3f8c299"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4b0df7704e4eba18531967bf3f8c299">&#9670;&nbsp;</a></span>reset_logging()</h2>
 
@@ -1048,6 +1159,32 @@ Friends</h2></td></tr>
           <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::set_encryption </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a>&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae803a5da356a8281276d57fda2582efa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae803a5da356a8281276d57fda2582efa">&#9670;&nbsp;</a></span>set_lifecycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::set_lifecycle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">BucketLifecycle</a>&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>

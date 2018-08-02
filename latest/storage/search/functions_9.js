@@ -2,6 +2,9 @@ var searchData=
 [
   ['label',['label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a77fc36e5c9291fa3dd3e588a566d4d14',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['label_5fcount',['label_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae82c2cb426f5cca39be0926591138ed5',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecycle',['lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af7ac1f8e6ff20f22740be2967727bb27',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecycle_5fas_5foptional',['lifecycle_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a1bddb735f2f219e27b5f8ea9ac16adb4',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecyclerule',['LifecycleRule',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#af9645e330d7b20ff0aa7a423b77f6601',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsforproject',['ListBucketsForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2e084a0359a2ebac0000fe41b7f4ea56',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsiterator',['ListBucketsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a177d68ada24c43cc52775d7603abd207',1,'google::cloud::storage::v0::ListBucketsIterator']]],

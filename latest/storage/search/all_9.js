@@ -2,9 +2,11 @@ var searchData=
 [
   ['label',['label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a77fc36e5c9291fa3dd3e588a566d4d14',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['label_5fcount',['label_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae82c2cb426f5cca39be0926591138ed5',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecycle',['lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af7ac1f8e6ff20f22740be2967727bb27',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecycle_5fas_5foptional',['lifecycle_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a1bddb735f2f219e27b5f8ea9ac16adb4',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['lifecycle_5frule_2ecc',['lifecycle_rule.cc',['../lifecycle__rule_8cc.html',1,'']]],
   ['lifecycle_5frule_2eh',['lifecycle_rule.h',['../lifecycle__rule_8h.html',1,'']]],
-  ['lifecyclerule',['LifecycleRule',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html',1,'google::cloud::storage::v0']]],
+  ['lifecyclerule',['LifecycleRule',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html',1,'google::cloud::storage::v0::LifecycleRule'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#af9645e330d7b20ff0aa7a423b77f6601',1,'google::cloud::storage::v0::LifecycleRule::LifecycleRule()']]],
   ['lifecycleruleaction',['LifecycleRuleAction',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html',1,'google::cloud::storage::v0']]],
   ['lifecyclerulecondition',['LifecycleRuleCondition',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html',1,'google::cloud::storage::v0']]],
   ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6817bf72f9643a4959f1045b768f32b1',1,'google::cloud::storage::v0']]],

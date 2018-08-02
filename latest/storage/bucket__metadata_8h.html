@@ -72,6 +72,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="bucket__access__control_8h_source.html">google/cloud/storage/bucket_access_control.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/storage/internal/common_metadata.h&quot;</code><br />
 <code>#include &quot;google/cloud/storage/internal/nljson.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="lifecycle__rule_8h_source.html">google/cloud/storage/lifecycle_rule.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="object__access__control_8h_source.html">google/cloud/storage/object_access_control.h</a>&quot;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;tuple&gt;</code><br />
@@ -86,6 +87,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">google::cloud::storage::v0::CorsEntry</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An entry in the CORS list.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html">google::cloud::storage::v0::BucketLifecycle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Object Lifecycle configuration for a Bucket.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html">google::cloud::storage::v0::BucketLogging</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,6 +200,19 @@ Functions</h2></td></tr>
 <tr class="separator:a8c818f59ab2287a2ddf43c7d61bd9e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a391f275c88b49c1abeec11adccca30b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a391f275c88b49c1abeec11adccca30b5">google::cloud::storage::v0::operator&gt;=</a> (CorsEntry const &amp;lhs, CorsEntry const &amp;rhs)</td></tr>
 <tr class="separator:a391f275c88b49c1abeec11adccca30b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Comparison operators for BucketLifecycle.</div></td></tr>
+<tr class="memitem:a643becfde35c6afd671fcd95339723ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a643becfde35c6afd671fcd95339723ba">google::cloud::storage::v0::operator==</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:a643becfde35c6afd671fcd95339723ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18d5a514312385699ea5d2e3462fcc67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a18d5a514312385699ea5d2e3462fcc67">google::cloud::storage::v0::operator&lt;</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:a18d5a514312385699ea5d2e3462fcc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8283fcd1421a8e21adc22b23bc91ece"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa8283fcd1421a8e21adc22b23bc91ece">google::cloud::storage::v0::operator!=</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:aa8283fcd1421a8e21adc22b23bc91ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0dc4aeecb4731333bbae938801918e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ad0dc4aeecb4731333bbae938801918e3">google::cloud::storage::v0::operator&gt;</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:ad0dc4aeecb4731333bbae938801918e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4cc5da1e1b648b7b543806ba989ea10"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ab4cc5da1e1b648b7b543806ba989ea10">google::cloud::storage::v0::operator&lt;=</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:ab4cc5da1e1b648b7b543806ba989ea10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77a6357e2f4fa01a2b47947b1d8e0b00"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a77a6357e2f4fa01a2b47947b1d8e0b00">google::cloud::storage::v0::operator&gt;=</a> (BucketLifecycle const &amp;lhs, BucketLifecycle const &amp;rhs)</td></tr>
+<tr class="separator:a77a6357e2f4fa01a2b47947b1d8e0b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

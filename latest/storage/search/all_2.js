@@ -12,6 +12,7 @@ var searchData=
   ['closeraw',['CloseRaw',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a245b4f43c4518f6550eb9b55f3d65de9',1,'google::cloud::storage::v0::ObjectWriteStream']]],
   ['coldline',['Coldline',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#aa712796263130d30270650fe484706d7',1,'google::cloud::storage::v0::storage_class']]],
   ['component_5fcount',['component_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a691b96396ac28cfa24077679b4bc8b93',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['condition',['condition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['conditionconjunction',['ConditionConjunction',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['content_5fdisposition',['content_disposition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a98b53de8376581025dc22235223e3275',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['content_5fencoding',['content_encoding',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#af3cbb2b658e8fc42f95b7c6250f0c040',1,'google::cloud::storage::v0::ObjectMetadata']]],
