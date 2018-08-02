@@ -252,8 +252,35 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   std::vector<BucketAccessControl> initial_acl =
       client.ListBucketAcl(bucket_name);
 
-  // TODO(#829) - make stronger assertions once we can modify the ACL.
-  EXPECT_FALSE(initial_acl.empty());
+  auto name_counter = [](std::string const& name,
+                         std::vector<BucketAccessControl> const& list) {
+    auto name_matcher = [](std::string const& name) {
+      return
+          [name](BucketAccessControl const& m) { return m.entity() == name; };
+    };
+    return std::count_if(list.begin(), list.end(), name_matcher(name));
+  };
+  // TODO(#827) - handle this more gracefully, delete the entry.  Or ...
+  // TODO(#821) TODO(#820) - use a new bucket to simplify this test.
+  EXPECT_EQ(0, name_counter(entity_name, initial_acl))
+      << "Test aborted (without failure). The entity <" << entity_name
+      << "> already exists, and DeleteBucketAcl() is not implemented.";
+  if (name_counter(entity_name, initial_acl) == 0) {
+    return;
+  }
+
+  BucketAccessControl result =
+      client.CreateBucketAcl(bucket_name, entity_name, "OWNER");
+  EXPECT_EQ("OWNER", result.role());
+  auto current_acl = client.ListBucketAcl(bucket_name);
+  EXPECT_FALSE(current_acl.empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+
+  // TODO(#827) - delete the new entry to leave the bucket in the original
+  // state.
 }
 
 }  // namespace

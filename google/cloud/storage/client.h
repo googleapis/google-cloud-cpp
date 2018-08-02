@@ -356,7 +356,7 @@ class Client {
    *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`, and `UserProject`.
+   *     Valid types for this operation include `UserProject`.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc list bucket acl
@@ -367,6 +367,25 @@ class Client {
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ListBucketAcl(request).second.items;
+  }
+
+  /**
+   * Creates a new entry in a bucket ACL.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the name of the entity added to the ACL.
+   * @param role the role of the entity.
+   *
+   * @snippet storage_bucket_acl_samples.cc create bucket acl
+   */
+  template <typename... Options>
+  BucketAccessControl CreateBucketAcl(std::string const& bucket_name,
+                                      std::string const& entity,
+                                      std::string const& role,
+                                      Options&&... options) {
+    internal::CreateBucketAclRequest request(bucket_name, entity, role);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CreateBucketAcl(request).second;
   }
 
   /**

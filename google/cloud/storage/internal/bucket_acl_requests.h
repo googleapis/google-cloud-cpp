@@ -60,8 +60,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclResponse const& r);
  * template class refactors that code.
  */
 template <typename Derived>
-class GenericBucketAclRequest
-    : public GenericRequest<Derived, Generation, UserProject> {
+class GenericBucketAclRequest : public GenericRequest<Derived, UserProject> {
  public:
   GenericBucketAclRequest() = default;
   GenericBucketAclRequest(std::string bucket, std::string entity)

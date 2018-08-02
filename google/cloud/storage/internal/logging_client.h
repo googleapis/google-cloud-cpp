@@ -56,6 +56,8 @@ class LoggingClient : public RawClient {
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
+  std::pair<Status, BucketAccessControl> CreateBucketAcl(
+      CreateBucketAclRequest const&) override;
   std::pair<Status, BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) override;
 
