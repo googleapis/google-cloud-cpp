@@ -113,6 +113,8 @@ add_library(storage_client
             internal/binary_data_as_debug_string.cc
             internal/bucket_acl_requests.h
             internal/bucket_acl_requests.cc
+            internal/bucket_requests.h
+            internal/bucket_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
             internal/credential_constants.h
@@ -138,8 +140,6 @@ add_library(storage_client
             internal/empty_response.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/bucket_requests.h
-            internal/bucket_requests.cc
             internal/get_object_metadata_request.h
             internal/get_object_metadata_request.cc
             internal/google_application_default_credentials_file.h
