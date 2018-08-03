@@ -55,6 +55,64 @@ class BucketTest : public ::testing::Test {
   ClientOptions client_options = ClientOptions(CreateInsecureCredentials());
 };
 
+TEST_F(BucketTest, CreateBucket) {
+  std::string text = R"""({
+      "kind": "storage#bucket",
+      "id": "test-bucket-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "projectNumber": "123456789",
+      "name": "test-bucket-name",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": 7,
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
+})""";
+  auto expected = BucketMetadata::ParseFromString(text);
+
+  ClientOptions mock_options(CreateInsecureCredentials());
+  mock_options.set_project_id("test-project-name");
+
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
+  EXPECT_CALL(*mock, CreateBucket(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Invoke([&expected](internal::CreateBucketRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.metadata().name());
+        EXPECT_EQ("US", r.metadata().location());
+        EXPECT_EQ("STANDARD", r.metadata().storage_class());
+        EXPECT_EQ("test-project-name", r.project_id());
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.CreateBucket(
+      "test-bucket-name",
+      BucketMetadata().set_location("US").set_storage_class("STANDARD"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, CreateBucketTooManyFailures) {
+  testing::TooManyFailuresTest<BucketMetadata>(
+      mock, EXPECT_CALL(*mock, CreateBucket(_)),
+      [](Client& client) {
+        client.CreateBucketForProject("test-bucket-name", "test-project-name",
+                                      BucketMetadata());
+      },
+      "CreateBucket");
+}
+
+TEST_F(BucketTest, CreateBucketPermanentFailure) {
+  testing::PermanentFailureTest<BucketMetadata>(
+      *client, EXPECT_CALL(*mock, CreateBucket(_)),
+      [](Client& client) {
+        client.CreateBucketForProject("test-bucket-name", "test-project-name",
+                                      BucketMetadata());
+      },
+      "CreateBucket");
+}
+
 TEST_F(BucketTest, GetBucketMetadata) {
   std::string text = R"""({
       "kind": "storage#bucket",

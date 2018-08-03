@@ -42,6 +42,8 @@ class CurlClient : public RawClient {
 
   std::pair<Status, ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
+  std::pair<Status, BucketMetadata> CreateBucket(
+      CreateBucketRequest const& request) override;
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override;
   std::pair<Status, EmptyResponse> DeleteBucket(

@@ -71,6 +71,8 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
         [&name](BucketMetadata const& m) { return m.name() == name; });
   };
   EXPECT_EQ(1U, name_counter(bucket_name, initial_buckets));
+
+  // TODO(#820) - improve tests once delete is implemented.
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {

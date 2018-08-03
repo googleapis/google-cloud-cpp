@@ -88,6 +88,41 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
   (std::move(client), project_id);
 }
 
+void CreateBucket(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"create-bucket <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [create bucket] [START storage_create_bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata meta =
+        client.CreateBucket(bucket_name, gcs::BucketMetadata());
+    std::cout << "Bucket created.  The metadata is " << meta << std::endl;
+  }
+  //! [create bucket] [END storage_create_bucket]
+  (std::move(client), bucket_name);
+}
+
+void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-bucket-for-project <bucket-name> <project-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto project_id = ConsumeArg(argc, argv);
+  //! [create bucket for project]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string project_id) {
+    gcs::BucketMetadata meta = client.CreateBucketForProject(
+        bucket_name, project_id, gcs::BucketMetadata());
+    std::cout << "Bucket created.  The metadata is " << meta << std::endl;
+  }
+  //! [create bucket for project]
+  (std::move(client), bucket_name, project_id);
+}
+
 void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc < 2) {
@@ -131,6 +166,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
+      {"create-bucket", &CreateBucket},
+      {"create-bucket-for-project", &CreateBucketForProject},
       {"get-bucket-metadata", &GetBucketMetadata},
       {"delete-bucket", &DeleteBucket},
   };

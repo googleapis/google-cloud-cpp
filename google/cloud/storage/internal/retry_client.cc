@@ -119,6 +119,14 @@ std::pair<Status, ListBucketsResponse> RetryClient::ListBuckets(
                   &RawClient::ListBuckets, request, __func__);
 }
 
+std::pair<Status, BucketMetadata> RetryClient::CreateBucket(
+    CreateBucketRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::CreateBucket, request, __func__);
+}
+
 std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   auto retry_policy = retry_policy_->clone();
