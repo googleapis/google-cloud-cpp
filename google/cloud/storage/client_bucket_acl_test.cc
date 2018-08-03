@@ -141,6 +141,39 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
       "CreateBucketAcl");
 }
 
+TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
+  EXPECT_CALL(*mock, DeleteBucketAcl(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::DeleteBucketAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+}
+
+TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
+      [](Client& client) {
+        client.DeleteBucketAcl("test-bucket-name", "user-test-user-1");
+      },
+      "DeleteBucketAcl");
+}
+
+TEST_F(BucketAccessControlsTest, DeleteBucketAclPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
+      [](Client& client) {
+        client.DeleteBucketAcl("test-bucket-name", "user-test-user");
+      },
+      "DeleteBucketAcl");
+}
+
 TEST_F(BucketAccessControlsTest, GetBucketAcl) {
   BucketAccessControl expected = BucketAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",

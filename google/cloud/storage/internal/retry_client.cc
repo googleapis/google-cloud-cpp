@@ -216,6 +216,14 @@ std::pair<Status, BucketAccessControl> RetryClient::CreateBucketAcl(
                   &RawClient::CreateBucketAcl, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> RetryClient::DeleteBucketAcl(
+    DeleteBucketAclRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteBucketAcl, request, __func__);
+}
+
 std::pair<Status, ListObjectAclResponse> RetryClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();

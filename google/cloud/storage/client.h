@@ -391,6 +391,24 @@ class Client {
   }
 
   /**
+   * Deletes an entry from a bucket ACL.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the name of the entity added to the ACL.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @snippet storage_bucket_acl_samples.cc delete bucket acl
+   */
+  template <typename... Options>
+  void DeleteBucketAcl(std::string const& bucket_name,
+                       std::string const& entity, Options&&... options) {
+    internal::DeleteBucketAclRequest request(bucket_name, entity);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->DeleteBucketAcl(request);
+  }
+
+  /**
    * Get the value of an existing bucket ACL.
    *
    * @param bucket_name the name of the bucket to query.

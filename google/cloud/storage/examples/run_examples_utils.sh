@@ -88,6 +88,9 @@ run_program_examples() {
         get-bucket-acl)
             arguments="${base_arguments} allAuthenticatedUsers"
             ;;
+        delete-bucket-acl)
+            arguments="${base_arguments} allAuthenticatedUsers"
+            ;;
         create-object-acl)
             arguments="${base_arguments} allAuthenticatedUsers READER"
             ;;
@@ -226,6 +229,7 @@ run_all_bucket_acl_examples() {
 list-bucket-acl
 create-bucket-acl
 get-bucket-acl
+delete-bucket-acl
 _EOF_
 )
 
