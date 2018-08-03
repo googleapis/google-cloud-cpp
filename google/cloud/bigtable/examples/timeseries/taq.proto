@@ -1,0 +1,55 @@
+// Copyright 2018 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package taq;
+
+message Quote {
+    // The exchange that originated the bid in this quote.
+    int32 bid_exchange_code = 1;
+    double bid_price = 2;
+    int32 bid_size = 3;
+
+    // The exchange that originated the offer in this quote.
+    int32 offer_exchange_code = 4;
+    double offer_price = 5;
+    int32 offer_size = 6;
+}
+
+message QuoteSequence {
+    // A sequence of quotes as parallel arrays for easy processing as vectors.
+    repeated int64 timestamp = 1;
+    repeated int32 bid_exchange_code = 2;
+    repeated double bid_price = 3;
+    repeated int32 bid_size = 4;
+    repeated int32 offer_exchange_code = 5;
+    repeated double offer_price = 6;
+    repeated int32 offer_size = 7;
+}
+
+message Trade {
+    // The exchange where the trade took plance.
+    int32 trade_exchange_code = 1;
+    double trade_price = 2;
+    int32 trade_volume = 3;
+}
+
+message TradeSequence {
+    // A sequence of trades as parallel arrays for easy processing as vectors.
+    repeated int64 timestamp = 1;
+    repeated int32 trade_exchange_code = 2;
+    repeated int32 trade_price = 3;
+    repeated int32 trade_volume = 4;
+}
