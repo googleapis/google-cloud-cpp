@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <typeinfo>
 
 namespace bigtable = google::cloud::bigtable;
@@ -165,7 +165,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.

@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/internal/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -217,7 +217,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
  */
 TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
@@ -240,7 +240,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
 TEST_F(TableAdminTest, CreateTableSimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
 
@@ -324,7 +324,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
  */
 TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
@@ -356,7 +356,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
@@ -381,7 +381,7 @@ view: SCHEMA_VIEW
  */
 TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GetTable(_, _, _))
@@ -401,7 +401,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
  */
 TEST_F(TableAdminTest, GetTableTooManyFailures) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
@@ -461,7 +461,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
  */
 TEST_F(TableAdminTest, ModifyColumnFamilies) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   using google::protobuf::Empty;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
@@ -497,7 +497,7 @@ name: 'projects/the-project/instances/the-instance/tables/the-table'
  */
 TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _))
@@ -600,7 +600,7 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
  */
 TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
@@ -643,7 +643,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
  */
 TEST_F(TableAdminTest, CheckConsistencySimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
@@ -690,7 +690,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
  */
 TEST_F(TableAdminTest, GetSnapshotSimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
@@ -716,7 +716,7 @@ name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshot
  */
 TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GetSnapshot(_, _, _))
@@ -737,7 +737,7 @@ TEST_F(TableAdminTest, GetSnapshotUnrecoverableFailures) {
  */
 TEST_F(TableAdminTest, GetSnapshotTooManyFailures) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
@@ -800,7 +800,7 @@ TEST_F(TableAdminTest, DeleteSnapshotFailure) {
  */
 TEST_F(TableAdminTest, ListSnapshotsSimple) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
@@ -853,7 +853,7 @@ TEST_F(TableAdminTest, ListSnapshots_SimpleList) {
  */
 TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::noex::TableAdmin tested(client_, "the-instance");
   auto mock_recoverable_failure =

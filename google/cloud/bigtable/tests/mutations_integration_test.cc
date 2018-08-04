@@ -14,14 +14,14 @@
 
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/endian.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
 
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 
 class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
