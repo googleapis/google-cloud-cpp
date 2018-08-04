@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/internal/make_unique.h"
 #include <google/protobuf/text_format.h>
 #include <algorithm>
 #include <cctype>
@@ -29,7 +29,7 @@ std::string TableTestEnvironment::instance_id_;
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
-  table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
+  table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
@@ -39,8 +39,8 @@ void TableIntegrationTest::SetUp() {
 std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
     std::string const& table_name, bigtable::TableConfig& table_config) {
   table_admin_->CreateTable(table_name, table_config);
-  return bigtable::internal::make_unique<bigtable::Table>(data_client_,
-                                                          table_name);
+  return google::cloud::internal::make_unique<bigtable::Table>(data_client_,
+                                                               table_name);
 }
 
 void TableIntegrationTest::DeleteTable(std::string const& table_name) {

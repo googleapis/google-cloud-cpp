@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -320,7 +320,8 @@ TEST_F(InstanceAdminTest, CreateInstance) {
                       google::longrunning::GetOperationRequest const& request,
                       google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -362,7 +363,8 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
             EXPECT_EQ(project_name, request.parent());
             response->set_done(true);
             response->set_name("operation-name");
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected);
             response->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -421,7 +423,8 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
                       google::longrunning::GetOperationRequest const& request,
                       google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -512,7 +515,8 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
                     google::longrunning::GetOperationRequest const& request,
                     google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto error = bigtable::internal::make_unique<google::rpc::Status>();
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
             error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
             error->set_message("something is broken");
             operation->set_allocated_error(error.release());
@@ -593,7 +597,8 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
                     google::longrunning::GetOperationRequest const& request,
                     google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto error = bigtable::internal::make_unique<google::rpc::Status>();
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
             error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
             error->set_message("something is broken");
             operation->set_allocated_error(error.release());
@@ -672,7 +677,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
                     google::longrunning::GetOperationRequest const& request,
                     google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto error = bigtable::internal::make_unique<google::rpc::Status>();
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
             error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
             error->set_message("something is broken");
             operation->set_allocated_error(error.release());
@@ -745,7 +751,8 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -792,7 +799,8 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
             EXPECT_EQ(instance_name, request.instance().name());
             response->set_done(true);
             response->set_name("operation-name");
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             response->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -857,7 +865,8 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1147,7 +1156,8 @@ TEST_F(InstanceAdminTest, CreateCluster) {
                       google::longrunning::GetOperationRequest const& request,
                       google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1189,7 +1199,8 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
         EXPECT_EQ(project_name, request.parent());
         response->set_done(true);
         response->set_name("operation-name");
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        auto any =
+            google::cloud::internal::make_unique<google::protobuf::Any>();
         any->PackFrom(expected);
         response->set_allocated_response(any.release());
         return grpc::Status::OK;
@@ -1253,7 +1264,8 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
                       google::longrunning::GetOperationRequest const& request,
                       google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1322,7 +1334,8 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1369,7 +1382,8 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
         EXPECT_EQ(cluster_name, request.name());
         response->set_done(true);
         response->set_name("operation-name");
-        auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+        auto any =
+            google::cloud::internal::make_unique<google::protobuf::Any>();
         any->PackFrom(expected_copy);
         response->set_allocated_response(any.release());
         return grpc::Status::OK;
@@ -1434,7 +1448,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1500,7 +1515,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1550,7 +1566,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
                 "my-profile";
             EXPECT_EQ(expected_profile_name, request.app_profile().name());
             response->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             response->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1607,7 +1624,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
                 "my-profile";
             EXPECT_EQ(expected_profile_name, request.app_profile().name());
             response->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             response->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1732,7 +1750,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;
@@ -1795,7 +1814,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
                      google::longrunning::GetOperationRequest const& request,
                      google::longrunning::Operation* operation) {
             operation->set_done(true);
-            auto any = bigtable::internal::make_unique<google::protobuf::Any>();
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
             any->PackFrom(expected_copy);
             operation->set_allocated_response(any.release());
             return grpc::Status::OK;

@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/admin_client.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
+#include "google/cloud/internal/make_unique.h"
 #include <gtest/gtest.h>
 #include <map>
 #include <thread>

@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
@@ -44,8 +44,9 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
   void SetUp() override {
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
         InstanceTestEnvironment::project_id(), bigtable::ClientOptions());
-    instance_admin_ = bigtable::internal::make_unique<bigtable::InstanceAdmin>(
-        instance_admin_client);
+    instance_admin_ =
+        google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
+            instance_admin_client);
   }
 
  protected:

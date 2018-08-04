@@ -158,7 +158,7 @@ commit_row: true
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
@@ -202,7 +202,7 @@ commit_row: true
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
@@ -238,7 +238,7 @@ TEST_F(NoexTableTest, ReadRowMissing) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
@@ -261,7 +261,7 @@ TEST_F(NoexTableTest, ReadRowError) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish())
       .WillOnce(
@@ -298,7 +298,7 @@ commit_row: true
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(testing::_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -348,8 +348,9 @@ commit_row: true
                                                               status);
   EXPECT_TRUE(status.ok());
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
-  auto stream_retry = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
+  auto stream_retry =
+      google::cloud::internal::make_unique<MockReadRowsReader>();
 
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -489,7 +490,7 @@ TEST_F(NoexTableTest, BulkApplySimple) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
 
-  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto reader = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -526,7 +527,7 @@ TEST_F(NoexTableTest, BulkApply_AppProfileId) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
 
-  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto reader = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -572,7 +573,7 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
 
-  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         // Simulate a partial (recoverable) failure.
@@ -587,7 +588,7 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -622,7 +623,7 @@ TEST_F(NoexTableTest, BulkApplyPermanentFailure) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
 
-  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -662,7 +663,7 @@ TEST_F(NoexTableTest, BulkApplyCanceledStream) {
   // the BulkApply() operation to retry the request, because the mutation is in
   // an undetermined state.  Well, it should retry assuming it is idempotent,
   // which happens to be the case in this test.
-  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -676,7 +677,7 @@ TEST_F(NoexTableTest, BulkApplyCanceledStream) {
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   // Create a second stream returned by the mocks when the client retries.
-  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -722,7 +723,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
       bt::ExponentialBackoffPolicy(10_us, 40_us));
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -738,7 +739,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
 
   auto create_cancelled_stream = [&](grpc::ClientContext*,
                                      btproto::MutateRowsRequest const&) {
-    auto stream = bigtable::internal::make_unique<MockMutateRowsReader>();
+    auto stream = google::cloud::internal::make_unique<MockMutateRowsReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "yikes")));
@@ -769,11 +770,11 @@ TEST_F(NoexTableTest, BulkApplyRetryOnlyIdempotent) {
   // We will send both idempotent and non-idempotent mutations.  We prepare the
   // mocks to return an empty stream in the first RPC request.  That will force
   // the client to only retry the idempotent mutations.
-  auto r1 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         {
@@ -810,7 +811,7 @@ TEST_F(NoexTableTest, BulkApplyFailedRPC) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
 
-  auto reader = bigtable::internal::make_unique<MockMutateRowsReader>();
+  auto reader = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
@@ -890,7 +891,7 @@ TEST_F(NoexTableTest, SampleRowsDefaultParameterTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -920,7 +921,7 @@ TEST_F(NoexTableTest, SampleRowKeys_AppProfileId) {
   namespace btproto = ::google::bigtable::v2;
 
   std::string expected_id = "test-id";
-  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
       .WillOnce(
           Invoke([expected_id, &reader](grpc::ClientContext* ctx,
@@ -945,7 +946,7 @@ TEST_F(NoexTableTest, SampleRowsSimpleVectorTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -975,7 +976,7 @@ TEST_F(NoexTableTest, SampleRowsSimpleListTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {
@@ -1004,9 +1005,9 @@ TEST_F(NoexTableTest, SampleRowsSampleRowKeysRetryTest) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   auto reader_retry =
-      bigtable::internal::make_unique<MockSampleRowKeysReader>();
+      google::cloud::internal::make_unique<MockSampleRowKeysReader>();
 
   EXPECT_CALL(*reader, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -1077,7 +1078,7 @@ TEST_F(NoexTableTest, SampleRowsTooManyFailures) {
       ::bigtable::SafeIdempotentMutationPolicy());
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = bigtable::internal::make_unique<MockSampleRowKeysReader>();
+  auto r1 = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
   EXPECT_CALL(*r1, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
         {

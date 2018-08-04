@@ -5,6 +5,7 @@ google_cloud_cpp_common_HDRS = [
     "iam_policy.h",
     "internal/backoff_policy.h",
     "internal/build_info.h",
+    "internal/make_unique.h",
     "internal/optional.h",
     "internal/port_platform.h",
     "internal/random.h",

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <thread>
 
@@ -156,7 +156,7 @@ void RowReader::MakeRequest() {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
-  context_ = bigtable::internal::make_unique<grpc::ClientContext>();
+  context_ = google::cloud::internal::make_unique<grpc::ClientContext>();
   retry_policy_->Setup(*context_);
   backoff_policy_->Setup(*context_);
   metadata_update_policy_.Setup(*context_);
