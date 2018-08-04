@@ -328,8 +328,7 @@ class Table {
    */
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key,
-                         bigtable::ReadModifyWriteRule&& rule,
-                         Args&&... rules) {
+                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     grpc::Status status;
     Row row =
         impl_.ReadModifyWriteRow(std::move(row_key), status, std::move(rule),
