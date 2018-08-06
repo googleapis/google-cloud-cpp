@@ -122,6 +122,20 @@ TEST(CreateBucketsRequestTest, Basic) {
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
 }
 
+TEST(DeleteBucketRequestTest, OStream) {
+  DeleteBucketRequest request("my-bucket");
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -61,6 +61,12 @@ std::ostream& operator<<(std::ostream& os, CreateBucketRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, DeleteBucketRequest const& r) {
+  os << "DeleteBucketRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

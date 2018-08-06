@@ -103,6 +103,21 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
   //! [get bucket metadata] [END storage_get_bucket_metadata]
   (std::move(client), bucket_name);
 }
+
+void DeleteBucket(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"delete-bucket <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [delete bucket] [START storage_delete_bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    client.DeleteBucket(bucket_name);
+  }
+  //! [delete bucket] [END storage_delete_bucket]
+  (std::move(client), bucket_name);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -117,6 +132,7 @@ int main(int argc, char* argv[]) try {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
       {"get-bucket-metadata", &GetBucketMetadata},
+      {"delete-bucket", &DeleteBucket},
   };
   for (auto&& kv : commands) {
     try {
@@ -126,6 +142,8 @@ int main(int argc, char* argv[]) try {
       command_usage += "    ";
       command_usage += u.msg;
       command_usage += "\n";
+    } catch (...) {
+      // ignore other exceptions.
     }
   }
 

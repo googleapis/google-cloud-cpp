@@ -516,6 +516,20 @@ def buckets_get(bucket_name):
     return json.dumps(bucket.metadata)
 
 
+@gcs.route('/b/<bucket_name>', methods=['DELETE'])
+def buckets_delete(bucket_name):
+    """Implement the 'Buckets: delete' API.
+
+      Delete a Bucket.
+      """
+    bucket = GCS_BUCKETS.get(bucket_name, None)
+    if bucket is None:
+        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+    bucket.check_preconditions(flask.request)
+    del(GCS_BUCKETS[bucket_name])
+    return json.dumps({})
+
+
 @gcs.route('/b/<bucket_name>/acl')
 def bucket_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API.
@@ -523,6 +537,8 @@ def bucket_acl_list(bucket_name):
      List Bucket Access Controls.
      """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    if gcs_bucket is None:
+        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('acl', []),

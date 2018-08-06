@@ -55,6 +55,23 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
                         BucketMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, EmptyResponse> CurlClient::DeleteBucket(
+    DeleteBucketRequest const& request) {
+  // Assume the bucket name is validated by the caller.
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+  builder.SetMethod("DELETE");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        internal::EmptyResponse{});
+  }
+  return std::make_pair(Status(), internal::EmptyResponse{});
+}
+
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.
