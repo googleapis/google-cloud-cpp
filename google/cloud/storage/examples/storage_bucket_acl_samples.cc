@@ -63,6 +63,24 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void GetBucketAcl(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"get-bucket-acl <bucket-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [get bucket acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    gcs::BucketAccessControl acl = client.GetBucketAcl(bucket_name, entity);
+    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
+              << " is " << acl << std::endl;
+  }
+  //! [get bucket acl]
+  (std::move(client), bucket_name, entity);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
