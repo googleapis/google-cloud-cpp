@@ -167,13 +167,14 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity, std::string role) {
     gcs::ObjectAccessControl original_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    auto updated_acl = original_acl;
-    updated_acl.set_role(role);
-    gcs::ObjectAccessControl acl = client.PatchObjectAcl(
-        bucket_name, object_name, entity, original_acl, updated_acl,
-        gcs::IfMatchEtag(original_acl.etag()));
+    auto new_acl = original_acl;
+    new_acl.set_role(role);
+    gcs::ObjectAccessControl updated_acl =
+        client.PatchObjectAcl(bucket_name, object_name, entity, original_acl,
+                              new_acl, gcs::IfMatchEtag(original_acl.etag()));
     std::cout << "ACL entry for " << entity << " in object " << object_name
-              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+              << " in bucket " << bucket_name << " is now " << updated_acl
+              << std::endl;
   }
   //! [patch object acl]
   (std::move(client), bucket_name, object_name, entity, role);
