@@ -192,8 +192,8 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
         """
@@ -221,12 +221,11 @@ class GcsObjectVersion(object):
                 'Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s'
                 % (entity, request_entity))
         etag_match = request.headers.get('if-match')
-        if etag_match is not None \
-                and etag_match != acl.get('etag'):
+        if etag_match is not None and etag_match != acl.get('etag'):
             raise ErrorResponse('Precondition Failed', status_code=412)
         etag_none_match = request.headers.get('if-none-match')
-        if etag_none_match is not None \
-                and etag_none_match != acl.get('etag'):
+        if (etag_none_match is not None
+                and etag_none_match != acl.get('etag')):
             raise ErrorResponse('Precondition Failed', status_code=412)
         role = payload.get('role')
         if role is None:
