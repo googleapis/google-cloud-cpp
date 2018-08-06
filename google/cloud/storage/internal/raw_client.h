@@ -18,12 +18,12 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/delete_object_request.h"
 #include "google/cloud/storage/internal/empty_response.h"
-#include "google/cloud/storage/internal/get_bucket_metadata_request.h"
 #include "google/cloud/storage/internal/get_object_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
-#include "google/cloud/storage/internal/list_buckets_request.h"
 #include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -75,6 +75,9 @@ class RawClient {
 
   virtual std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) = 0;
+
+  virtual std::pair<Status, ListBucketAclResponse> ListBucketAcl(
+      ListBucketAclRequest const&) = 0;
 
   virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const&) = 0;

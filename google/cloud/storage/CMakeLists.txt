@@ -111,6 +111,10 @@ add_library(storage_client
             internal/authorized_user_credentials.h
             internal/binary_data_as_debug_string.h
             internal/binary_data_as_debug_string.cc
+            internal/bucket_acl_requests.h
+            internal/bucket_acl_requests.cc
+            internal/bucket_requests.h
+            internal/bucket_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
             internal/credential_constants.h
@@ -136,8 +140,6 @@ add_library(storage_client
             internal/empty_response.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/get_bucket_metadata_request.h
-            internal/get_bucket_metadata_request.cc
             internal/get_object_metadata_request.h
             internal/get_object_metadata_request.cc
             internal/google_application_default_credentials_file.h
@@ -145,8 +147,6 @@ add_library(storage_client
             internal/http_response.h
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
-            internal/list_buckets_request.h
-            internal/list_buckets_request.cc
             internal/list_object_acl_request.h
             internal/list_object_acl_request.cc
             internal/list_objects_request.h
@@ -170,6 +170,8 @@ add_library(storage_client
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_credentials.h
+            lifecycle_rule.h
+            lifecycle_rule.cc
             list_buckets_reader.h
             list_buckets_reader.cc
             list_objects_reader.h
@@ -180,11 +182,13 @@ add_library(storage_client
             object_metadata.cc
             object_stream.h
             object_stream.cc
-            well_known_parameters.h
             retry_policy.h
             status.h
+            storage_class.h
             version.h
-            version.cc)
+            version.cc
+            well_known_headers.h
+            well_known_parameters.h)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
                              nlohmann_json
@@ -230,6 +234,7 @@ set(storage_client_unit_tests
     bucket_access_control_test.cc
     bucket_metadata_test.cc
     bucket_test.cc
+    client_bucket_acl_test.cc
     client_object_acl_test.cc
     client_test.cc
     client_write_object_test.cc
@@ -237,12 +242,12 @@ set(storage_client_unit_tests
     internal/access_control_common_test.cc
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
+    internal/bucket_acl_requests_test.cc
     internal/delete_object_request_test.cc
-    internal/get_bucket_metadata_request_test.cc
+    internal/bucket_requests_test.cc
     internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
-    internal/list_buckets_request_test.cc
     internal/list_object_acl_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc
@@ -254,12 +259,14 @@ set(storage_client_unit_tests
     internal/retry_client_test.cc
     internal/read_object_range_request_test.cc
     internal/service_account_credentials_test.cc
+    lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
     object_access_control_test.cc
     object_metadata_test.cc
     object_test.cc
     retry_policy_test.cc
+    storage_class_test.cc
     storage_client_options_test.cc
     link_test.cc)
 

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
 #include <tuple>
@@ -39,6 +40,30 @@ struct BucketBilling {
 
   bool requester_pays;
 };
+
+inline bool operator==(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return lhs.requester_pays == rhs.requester_pays;
+}
+
+inline bool operator<(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return lhs.requester_pays < rhs.requester_pays;
+}
+
+inline bool operator!=(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketBilling const& lhs, BucketBilling const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 /**
  * An entry in the CORS list.
@@ -99,6 +124,43 @@ inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 
+/**
+ * The Object Lifecycle configuration for a Bucket.
+ *
+ * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
+ *     information on object lifecycle rules.
+ */
+struct BucketLifecycle {
+  std::vector<LifecycleRule> rule;
+};
+
+//@{
+/// @name Comparison operators for BucketLifecycle.
+inline bool operator==(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return lhs.rule == rhs.rule;
+}
+
+inline bool operator<(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return lhs.rule < rhs.rule;
+}
+
+inline bool operator!=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+//@}
+
 /*
  * The Logging configuration for a Bucket.
  *
@@ -144,6 +206,36 @@ std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs);
 struct BucketEncryption {
   std::string default_kms_key_name;
 };
+
+inline bool operator==(BucketEncryption const& lhs,
+                       BucketEncryption const& rhs) {
+  return lhs.default_kms_key_name == rhs.default_kms_key_name;
+}
+
+inline bool operator<(BucketEncryption const& lhs,
+                      BucketEncryption const& rhs) {
+  return lhs.default_kms_key_name < rhs.default_kms_key_name;
+}
+
+inline bool operator!=(BucketEncryption const& lhs,
+                       BucketEncryption const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketEncryption const& lhs,
+                      BucketEncryption const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketEncryption const& lhs,
+                       BucketEncryption const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketEncryption const& lhs,
+                       BucketEncryption const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 /**
  * The versioning configuration for a Bucket.
@@ -263,9 +355,14 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    *
    * @see https://cloud.google.com/storage/docs/requester-pays
    */
-  BucketBilling const& billing() const { return billing_; }
+  bool has_billing() const { return billing_.has_value(); }
+  BucketBilling const& billing() const { return *billing_; }
   BucketMetadata& set_billing(BucketBilling const& v) {
     billing_ = v;
+    return *this;
+  }
+  BucketMetadata& reset_billing() {
+    billing_.reset();
     return *this;
   }
   //@}
@@ -325,9 +422,14 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * https://cloud.google.com/storage/docs/encryption/customer-managed-keys
    *     for information on Customer-Managed Encryption Keys.
    */
-  BucketEncryption const& encryption() const { return encryption_; }
+  bool has_encryption() const { return encryption_.has_value(); }
+  BucketEncryption const& encryption() const { return *encryption_; }
   BucketMetadata& set_encryption(BucketEncryption v) {
     encryption_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_encryption() {
+    encryption_.reset();
     return *this;
   }
   //@}
@@ -343,13 +445,45 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+
+  //@{
+  /**
+   * @name Accessors and modifiers for object lifecycle rules.
+   *
+   * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
+   *     information on object lifecycle rules.
+   */
+  bool has_lifecycle() const { return lifecycle_.has_value(); }
+  BucketLifecycle const& lifecycle() const { return *lifecycle_; }
+  google::cloud::internal::optional<BucketLifecycle> const&
+  lifecycle_as_optional() const {
+    return lifecycle_;
+  }
+  BucketMetadata& set_lifecycle(BucketLifecycle v) {
+    lifecycle_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_lifecycle() {
+    lifecycle_.reset();
+    return *this;
+  }
+  //@}
+
   std::string const& location() const { return location_; }
 
-  BucketLogging const& logging() const { return logging_; }
+  //@{
+  /// @name Accessors and modifiers for logging configuration.
+  bool has_logging() const { return logging_.has_value(); }
+  BucketLogging const& logging() const { return *logging_; }
   BucketMetadata& set_logging(BucketLogging v) {
     logging_ = v;
     return *this;
   }
+  BucketMetadata& reset_logging() {
+    logging_.reset();
+    return *this;
+  }
+  //@}
 
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
@@ -362,6 +496,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   using CommonMetadata::time_created;
   using CommonMetadata::updated;
 
+  //@{
+  /// @name Accessors and modifiers for versioning configuration.
   google::cloud::internal::optional<BucketVersioning> const& versioning()
       const {
     return versioning_;
@@ -383,38 +519,40 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_ = std::move(v);
     return *this;
   }
+  //@}
 
-  BucketWebsite const& website() const { return website_; }
+  //@{
+  /// @name Accessors and modifiers for website configuration.
+  bool has_website() const { return website_.has_value(); }
+  BucketWebsite const& website() const { return *website_; }
   BucketMetadata& set_website(BucketWebsite v) {
     website_ = std::move(v);
     return *this;
   }
+  BucketMetadata& reset_website() {
+    website_.reset();
+    return *this;
+  }
+  //@}
 
   bool operator==(BucketMetadata const& rhs) const;
   bool operator!=(BucketMetadata const& rhs) const { return not(*this == rhs); }
-
-  constexpr static char STORAGE_CLASS_STANDARD[] = "STANDARD";
-  constexpr static char STORAGE_CLASS_MULTI_REGIONAL[] = "MULTI_REGIONAL";
-  constexpr static char STORAGE_CLASS_REGIONAL[] = "REGIONAL";
-  constexpr static char STORAGE_CLASS_NEARLINE[] = "NEARLINE";
-  constexpr static char STORAGE_CLASS_COLDLINE[] = "COLDLINE";
-  constexpr static char STORAGE_CLASS_DURABLE_REDUCED_AVAILABILITY[] =
-      "DURABLE_REDUCED_AVAILABILITY";
 
  private:
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
-  BucketBilling billing_;
+  google::cloud::internal::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
   std::vector<ObjectAccessControl> default_acl_;
-  BucketEncryption encryption_;
+  google::cloud::internal::optional<BucketEncryption> encryption_;
   std::map<std::string, std::string> labels_;
+  google::cloud::internal::optional<BucketLifecycle> lifecycle_;
   std::string location_;
-  BucketLogging logging_;
+  google::cloud::internal::optional<BucketLogging> logging_;
   std::int64_t project_number_;
   google::cloud::internal::optional<BucketVersioning> versioning_;
-  BucketWebsite website_;
+  google::cloud::internal::optional<BucketWebsite> website_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

@@ -53,11 +53,12 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   //! [list object acl] [START storage_print_file_acl]
-  [](google::cloud::storage::Client client, std::string bucket_name,
-     std::string object_name) {
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
     std::cout << "ACLs for object=" << object_name << " in bucket "
               << bucket_name << std::endl;
-    for (auto&& acl : client.ListObjectAcl(bucket_name, object_name)) {
+    for (gcs::ObjectAccessControl const& acl :
+         client.ListObjectAcl(bucket_name, object_name)) {
       std::cout << acl.role() << ":" << acl.entity() << std::endl;
     }
   }
@@ -75,9 +76,10 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
   //! [create object acl] [START storage_create_file_acl]
-  [](google::cloud::storage::Client client, std::string bucket_name,
-     std::string object_name, std::string entity, std::string role) {
-    auto result =
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity, std::string role) {
+    gcs::ObjectAccessControl result =
         client.CreateObjectAcl(bucket_name, object_name, entity, role);
     std::cout << "Role " << result.role() << " granted to " << result.entity()
               << " on " << result.object() << "\n"
@@ -95,8 +97,9 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
   //! [delete object acl] [START storage_delete_file_acl]
-  [](google::cloud::storage::Client client, std::string bucket_name,
-     std::string object_name, std::string entity) {
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity) {
     client.DeleteObjectAcl(bucket_name, object_name, entity);
     std::cout << "Deleted ACL entry for " << entity << " in object "
               << object_name << " in bucket " << bucket_name << std::endl;

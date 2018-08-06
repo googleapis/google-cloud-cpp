@@ -17,8 +17,6 @@
 #include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
-namespace btproto = google::bigtable::v2;
-namespace admin_proto = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class FilterIntegrationTest : public bigtable::testing::TableIntegrationTest {
@@ -109,11 +107,6 @@ TEST_F(FilterIntegrationTest, PassAll) {
 }
 
 TEST_F(FilterIntegrationTest, BlockAll) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
-
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "block-all-row-key";

@@ -63,6 +63,10 @@ run_program_examples() {
     #
     case ${example} in
         list-buckets)
+            arguments=""
+            export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+            ;;
+        list-buckets-for-project)
             arguments="${PROJECT_ID}"
             ;;
         insert-object)
@@ -150,13 +154,39 @@ run_all_bucket_examples() {
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-buckets
+list-buckets-for-project
 get-bucket-metadata
-list-objects
 _EOF_
 )
 
   run_program_examples ./storage_bucket_samples \
       "${BUCKET_EXAMPLES_COMMANDS}" \
+      "${bucket_name}"
+}
+
+################################################
+# Run all Object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_bucket_acl_examples() {
+  local bucket_name=$1
+  shift
+
+  # The list of commands in the storage_bucket_samples program that we will
+  # test. Currently get-metadata assumes that $bucket_name is already created.
+  readonly BUCKET_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
+list-bucket-acl
+_EOF_
+)
+
+  run_program_examples ./storage_bucket_acl_samples \
+      "${BUCKET_ACL_COMMANDS}" \
       "${bucket_name}"
 }
 
@@ -178,6 +208,7 @@ run_all_object_examples() {
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly OBJECT_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 insert-object
+list-objects
 get-object-metadata
 read-object
 write-object
@@ -277,6 +308,7 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   run_all_bucket_examples "${BUCKET_NAME}"
+  run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \

@@ -19,8 +19,6 @@
 #include <thread>
 #include <type_traits>
 
-namespace btproto = ::google::bigtable::v2;
-
 namespace {
 [[noreturn]] void ReportPermanentFailures(
     char const* msg, grpc::Status const& status,

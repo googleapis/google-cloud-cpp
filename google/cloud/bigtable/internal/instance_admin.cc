@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <type_traits>
 
-namespace btproto = ::google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {
@@ -29,17 +29,17 @@ static_assert(std::is_copy_assignable<bigtable::noex::InstanceAdmin>::value,
 using ClientUtils =
     bigtable::internal::noex::UnaryClientUtils<bigtable::InstanceAdminClient>;
 
-std::vector<btproto::Instance> InstanceAdmin::ListInstances(
+std::vector<btadmin::Instance> InstanceAdmin::ListInstances(
     grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Instance> result;
+  std::vector<btadmin::Instance> result;
   std::string page_token;
   do {
-    btproto::ListInstancesRequest request;
+    btadmin::ListInstancesRequest request;
     request.set_page_token(std::move(page_token));
     request.set_parent(project_name_);
 
@@ -59,13 +59,13 @@ std::vector<btproto::Instance> InstanceAdmin::ListInstances(
   return result;
 }
 
-btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
+btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
                                              grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
-  btproto::GetInstanceRequest request;
+  btadmin::GetInstanceRequest request;
   // Setting instance name.
   request.set_name(project_name_ + "/instances/" + instance_id);
 
@@ -78,7 +78,7 @@ btproto::Instance InstanceAdmin::GetInstance(std::string const& instance_id,
 
 void InstanceAdmin::DeleteInstance(std::string const& instance_id,
                                    grpc::Status& status) {
-  btproto::DeleteInstanceRequest request;
+  btadmin::DeleteInstanceRequest request;
   request.set_name(InstanceName(instance_id));
 
   // This API is not idempotent, lets call it without retry
@@ -88,13 +88,13 @@ void InstanceAdmin::DeleteInstance(std::string const& instance_id,
       "InstanceAdmin::DeleteInstance", status);
 }
 
-btproto::Cluster InstanceAdmin::GetCluster(
+btadmin::Cluster InstanceAdmin::GetCluster(
     bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id, grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
-  btproto::GetClusterRequest request;
+  btadmin::GetClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
   return ClientUtils::MakeCall(*client_, *rpc_policy, *backoff_policy,
@@ -103,17 +103,17 @@ btproto::Cluster InstanceAdmin::GetCluster(
                                "InstanceAdmin::GetCluster", status, true);
 }
 
-std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
+std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
     std::string const& instance_id, grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btproto::Cluster> result;
+  std::vector<btadmin::Cluster> result;
   std::string page_token;
   do {
-    btproto::ListClustersRequest request;
+    btadmin::ListClustersRequest request;
     request.set_page_token(std::move(page_token));
     request.set_parent(InstanceName(instance_id));
 
@@ -136,7 +136,7 @@ std::vector<btproto::Cluster> InstanceAdmin::ListClusters(
 void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
                                   bigtable::ClusterId const& cluster_id,
                                   grpc::Status& status) {
-  btproto::DeleteClusterRequest request;
+  btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
   MetadataUpdatePolicy metadata_update_policy(
@@ -149,7 +149,7 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteCluster", status);
 }
 
-btproto::AppProfile InstanceAdmin::CreateAppProfile(
+btadmin::AppProfile InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config,
     grpc::Status& status) {
   auto request = config.as_proto_move();
@@ -162,10 +162,10 @@ btproto::AppProfile InstanceAdmin::CreateAppProfile(
       "InstanceAdmin::CreateAppProfile", status);
 }
 
-btproto::AppProfile InstanceAdmin::GetAppProfile(
+btadmin::AppProfile InstanceAdmin::GetAppProfile(
     bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id, grpc::Status& status) {
-  btproto::GetAppProfileRequest request;
+  btadmin::GetAppProfileRequest request;
   request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
                    profile_id.get());
 
@@ -189,17 +189,17 @@ btproto::AppProfile InstanceAdmin::GetAppProfile(
       "InstanceAdmin::UpdateAppProfile", status, true);
 }
 
-std::vector<btproto::AppProfile> InstanceAdmin::ListAppProfiles(
+std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id, grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btproto::AppProfile> result;
+  std::vector<btadmin::AppProfile> result;
   std::string page_token;
   do {
-    btproto::ListAppProfilesRequest request;
+    btadmin::ListAppProfilesRequest request;
     request.set_page_token(std::move(page_token));
     request.set_parent(InstanceName(instance_id));
 
@@ -223,7 +223,7 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
                                      bigtable::AppProfileId const& profile_id,
                                      bool ignore_warnings,
                                      grpc::Status& status) {
-  btproto::DeleteAppProfileRequest request;
+  btadmin::DeleteAppProfileRequest request;
   request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
                    profile_id.get());
   request.set_ignore_warnings(ignore_warnings);

@@ -12,37 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/get_bucket_metadata_request.h"
+#include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace storage_class {
 namespace {
-using ::testing::HasSubstr;
-using ::testing::Not;
 
-TEST(GetBucketMetadataRequestTest, OStreamBasic) {
-  GetBucketMetadataRequest request("my-bucket");
-  std::ostringstream os;
-  os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
-}
-
-TEST(GetBucketMetadataRequestTest, OStreamParameter) {
-  GetBucketMetadataRequest request("my-bucket");
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
-                               UserProject("my-project"));
-  std::ostringstream os;
-  os << request;
-  EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));
-  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
+/// @test Verify the values for the storage class functions.
+TEST(StorageClassTest, Values) {
+  EXPECT_EQ(std::string("STANDARD"), Standard());
+  EXPECT_EQ(std::string("MULTI_REGIONAL"), MultiRegional());
+  EXPECT_EQ(std::string("REGIONAL"), Regional());
+  EXPECT_EQ(std::string("NEARLINE"), Nearline());
+  EXPECT_EQ(std::string("COLDLINE"), Coldline());
+  EXPECT_EQ(std::string("DURABLE_REDUCED_AVAILABILITY"),
+            DurableReducedAvailability());
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace storage_class
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

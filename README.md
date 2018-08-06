@@ -20,7 +20,7 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [client-library-docs]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
 
 This library supports the following Google Cloud Platform services with clients
-at an [Alpha](#versioning) quality level:
+at the [Beta](#versioning) quality level:
 
 - [Google Cloud Bigtable](google/cloud/bigtable#google-cloud-bigtable)
 

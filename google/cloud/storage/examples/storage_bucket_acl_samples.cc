@@ -44,79 +44,36 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
             << command_usage << std::endl;
 }
 
-void ListBuckets(google::cloud::storage::Client client, int& argc,
-                 char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"list-buckets"};
-  }
-  //! [list buckets] [START storage_list_buckets]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client) {
-    int count = 0;
-    for (gcs::BucketMetadata const& meta : client.ListBuckets()) {
-      std::cout << meta.name() << std::endl;
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No buckets in default project" << std::endl;
-    }
-  }
-  //! [list buckets] [END storage_list_buckets]
-  (std::move(client));
-}
-
-void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
+void ListBucketAcl(google::cloud::storage::Client client, int& argc,
+                   char* argv[]) {
   if (argc != 2) {
-    throw Usage{"list-buckets-for-project <project-id>"};
-  }
-  auto project_id = ConsumeArg(argc, argv);
-  //! [list buckets for project]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string project_id) {
-    int count = 0;
-    for (gcs::BucketMetadata const& meta :
-         client.ListBucketsForProject(project_id)) {
-      std::cout << meta.name() << std::endl;
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No buckets in project " << project_id << std::endl;
-    }
-  }
-  //! [list buckets for project]
-  (std::move(client), project_id);
-}
-
-void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc < 2) {
-    throw Usage{"get-bucket-metadata <bucket-name>"};
+    throw Usage{"list-bucket-acl <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket metadata] [START storage_get_bucket_metadata]
+  //! [list bucket acl] [START storage_print_bucket_acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    gcs::BucketMetadata meta = client.GetBucketMetadata(bucket_name);
-    std::cout << "The metadata is " << meta << std::endl;
+    std::cout << "ACLs for bucket=" << bucket_name << std::endl;
+    for (gcs::BucketAccessControl const& acl :
+         client.ListBucketAcl(bucket_name)) {
+      std::cout << acl.role() << ":" << acl.entity() << std::endl;
+    }
   }
-  //! [get bucket metadata] [END storage_get_bucket_metadata]
+  //! [list bucket acl] [END storage_print_bucket_acl]
   (std::move(client), bucket_name);
 }
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
   google::cloud::storage::Client client;
-  //! [create client]
 
+  // Build the list of commands and the usage string from that list.
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
-      {"list-buckets", &ListBuckets},
-      {"list-buckets-for-project", &ListBucketsForProject},
-      {"get-bucket-metadata", &GetBucketMetadata},
+      {"list-bucket-acl", &ListBucketAcl},
   };
   for (auto&& kv : commands) {
     try {
@@ -141,6 +98,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  // Call the command with that client.
   it->second(client, argc, argv);
 
   return 0;

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * The Google Cloud Storage Client.
  *
- * @warning this implementation is incomplete, we are still prototyping.
+ * @warning this implementation is incomplete.
  */
 class Client {
  public:
@@ -52,12 +52,12 @@ class Client {
   template <typename... Policies>
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
-      : raw_client_(new internal::RetryClient(
-            std::move(client), std::forward<Policies>(policies)...)) {}
+      : raw_client_(
+            Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
 
-  /// Build a client with an specific RawClient, without retry policies.
-  struct NoRetry {};
-  explicit Client(std::shared_ptr<internal::RawClient> client, NoRetry)
+  /// Build a client with an specific RawClient, without decorations.
+  struct NoDecorations {};
+  explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
 
   /**
@@ -71,17 +71,48 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list buckets
+   * @snippet storage_bucket_samples.cc list buckets for project
    */
   template <typename... Options>
-  ListBucketsReader ListBuckets(std::string const& project_id,
-                                Options&&... options) {
+  ListBucketsReader ListBucketsForProject(std::string const& project_id,
+                                          Options&&... options) {
     return ListBucketsReader(raw_client_, project_id,
                              std::forward<Options>(options)...);
   }
 
   /**
-   * Fetch the bucket metadata and return it.c
+   * Fetch the list of buckets for the default project.
+   *
+   * The default project is configured in the `ClientOptions` used to construct
+   * this object. If the application does not set the project id in the
+   * `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is used. If
+   * neither the environment variable is set, nor a value is set explicitly by
+   * the application this function raises an exception.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
+   *     `UserProject`, and `Projection`.
+   *
+   * @throw std::logic_error if the function is called without a default
+   *     project id set.
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets
+   */
+  template <typename... Options>
+  ListBucketsReader ListBuckets(Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    if (project_id.empty()) {
+      std::string msg = "Default project id not set in ";
+      msg += __func__;
+      google::cloud::internal::RaiseLogicError(msg);
+    }
+    return ListBucketsForProject(project_id, std::forward<Options>(options)...);
+  }
+
+  /**
+   * Fetch the bucket metadata and return it.
    *
    * @param bucket_name query metadata information about this bucket.
    * @param options a list of optional query parameters and/or request headers.
@@ -167,7 +198,7 @@ class Client {
    *   current policies.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc list objects
+   * @snippet storage_object_samples.cc list objects
    */
   template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
@@ -236,6 +267,24 @@ class Client {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteObject(request);
+  }
+
+  /**
+   * Retrieves the list of BucketAccessControls for a bucket.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc list bucket acl
+   */
+  template <typename... Options>
+  std::vector<BucketAccessControl> ListBucketAcl(std::string const& bucket_name,
+                                                 Options&&... options) {
+    internal::ListBucketAclRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ListBucketAcl(request).second.items;
   }
 
   /**
@@ -354,12 +403,25 @@ class Client {
     return raw_client_->UpdateObjectAcl(request).second;
   }
 
+  std::shared_ptr<internal::RawClient> raw_client() const {
+    return raw_client_;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
 
   ObjectMetadata InsertObjectMediaImpl(
       internal::InsertObjectMediaRequest const& request);
+
+  template <typename... Policies>
+  std::shared_ptr<internal::RawClient> Decorate(
+      std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
+    auto logging = std::make_shared<internal::LoggingClient>(std::move(client));
+    auto retry = std::make_shared<internal::RetryClient>(
+        std::move(logging), std::forward<Policies>(policies)...);
+    return retry;
+  }
 
  private:
   std::shared_ptr<internal::RawClient> raw_client_;

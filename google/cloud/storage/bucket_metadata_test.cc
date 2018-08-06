@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,6 +23,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using google::cloud::internal::make_optional;
 using google::cloud::internal::optional;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 BucketMetadata CreateBucketMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
@@ -96,6 +99,23 @@ BucketMetadata CreateBucketMetadataForTest() {
         "foo": "bar",
         "baz": "qux"
       },
+      "lifecycle": {
+        "rule": [{
+          "condition": {
+            "age": 30,
+            "matchesStorageClass": [ "STANDARD" ]
+          },
+          "action": {
+            "type": "SetStorageClass",
+            "storageClass": "NEARLINE"
+          }
+        }]
+      },
+      "location": "US",
+      "logging": {
+        "logBucket": "test-log-bucket",
+        "logPrefix": "test-log-prefix"
+      },
       "metageneration": "4",
       "name": "test-bucket",
       "owner": {
@@ -103,11 +123,6 @@ BucketMetadata CreateBucketMetadataForTest() {
         "entityId": "test-owner-id-123"
       },
       "projectNumber": "123456789",
-      "location": "US",
-      "logging": {
-        "logBucket": "test-log-bucket",
-        "logPrefix": "test-log-prefix"
-      },
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -163,6 +178,18 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_DEATH_IF_SUPPORTED(actual.label("qux"), "");
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 
+  EXPECT_TRUE(actual.has_lifecycle());
+  EXPECT_EQ(1U, actual.lifecycle().rule.size());
+  LifecycleRuleCondition expected_condition =
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(30),
+          LifecycleRule::MatchesStorageClassStandard());
+  EXPECT_EQ(expected_condition, actual.lifecycle().rule.at(0).condition());
+
+  LifecycleRuleAction expected_action =
+      LifecycleRule::SetStorageClassNearline();
+  EXPECT_EQ(expected_action, actual.lifecycle().rule.at(0).action());
+
   EXPECT_EQ("US", actual.location());
 
   EXPECT_EQ("test-log-bucket", actual.logging().log_bucket);
@@ -174,7 +201,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(123456789, actual.project_number());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
-  EXPECT_EQ(BucketMetadata::STORAGE_CLASS_STANDARD, actual.storage_class());
+  EXPECT_EQ(storage_class::Standard(), actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   auto magic_timestamp = 1526758274L;
   using std::chrono::duration_cast;
@@ -196,22 +223,46 @@ TEST(BucketMetadataTest, IOStream) {
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
-  using ::testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("BucketMetadata"));
+
+  // acl()
   EXPECT_THAT(actual, HasSubstr("acl-id-0"));
   EXPECT_THAT(actual, HasSubstr("acl-id-1"));
+  // billing()
+  EXPECT_THAT(actual, HasSubstr("enabled=true"));
+
+  // bucket()
   EXPECT_THAT(actual, HasSubstr("bucket=test-bucket"));
-  EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
+
+  // labels()
   EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
+
+  // default_acl()
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
+
+  // encryption()
   EXPECT_THAT(actual,
               HasSubstr("projects/test-project-name/locations/us-central1/"
                         "keyRings/test-keyring-name/cryptoKeys/test-key-name"));
+
+  // lifecycle()
+  EXPECT_THAT(actual, HasSubstr("age=30"));
+
+  // logging()
   EXPECT_THAT(actual, HasSubstr("test-log-bucket"));
   EXPECT_THAT(actual, HasSubstr("test-log-prefix"));
+
+  // name()
+  EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
+
+  // project_team()
   EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
   EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
+
+  // versioning()
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
+
+  // website()
   EXPECT_THAT(actual, HasSubstr("index.html"));
   EXPECT_THAT(actual, HasSubstr("404.html"));
 }
@@ -248,6 +299,19 @@ TEST(BucketMetadataTest, SetBilling) {
   billing.requester_pays = not billing.requester_pays;
   copy.set_billing(billing);
   EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the billing configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetBilling) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_billing());
+  auto copy = expected;
+  copy.reset_billing();
+  EXPECT_FALSE(copy.has_billing());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("billing")));
 }
 
 /// @test Verify we can make changes to one CORS entry in BucketMetadata.
@@ -311,6 +375,44 @@ TEST(BucketMetadataTest, SetEncryption) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+TEST(BucketMetadataTest, ResetEncryption) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_encryption());
+  auto copy = expected;
+  copy.reset_encryption();
+  EXPECT_FALSE(copy.has_encryption());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("encryption.")));
+}
+
+/// @test Verify we can reset the Object Lifecycle in BucketMetadata.
+TEST(BucketMetadataTest, ResetLifecycle) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_TRUE(copy.has_lifecycle());
+  copy.reset_lifecycle();
+  EXPECT_FALSE(copy.has_lifecycle());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("lifecycle.")));
+}
+
+/// @test Verify we can change the Object Lifecycle in BucketMetadata.
+TEST(BucketMetadataTest, SetLifecycle) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_TRUE(copy.has_lifecycle());
+  auto updated = copy.lifecycle();
+  updated.rule.emplace_back(
+      LifecycleRule(LifecycleRule::MaxAge(365), LifecycleRule::Delete()));
+  copy.set_lifecycle(std::move(updated));
+  EXPECT_NE(expected, copy);
+}
+
 /// @test Verify we can change the Logging configuration in BucketMetadata.
 TEST(BucketMetadataTest, SetLogging) {
   auto expected = CreateBucketMetadataForTest();
@@ -321,6 +423,19 @@ TEST(BucketMetadataTest, SetLogging) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can change the Logging configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetLogging) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_logging());
+  auto copy = expected;
+  copy.reset_logging();
+  EXPECT_FALSE(copy.has_logging());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("logging.")));
+}
+
 /// @test Verify we can clear the versioning field in BucketMetadata.
 TEST(BucketMetadataTest, ClearVersioning) {
   auto expected = CreateBucketMetadataForTest();
@@ -329,6 +444,9 @@ TEST(BucketMetadataTest, ClearVersioning) {
   copy.clear_versioning();
   EXPECT_FALSE(copy.versioning().has_value());
   EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("versioning.")));
 }
 
 /// @test Verify we can set the versioning field in BucketMetadata.
@@ -376,6 +494,19 @@ TEST(BucketMetadataTest, SetWebsite) {
   EXPECT_EQ("main.html", copy.website().main_page_suffix);
   EXPECT_EQ("not-found.html", copy.website().not_found_page);
   EXPECT_NE(copy, expected);
+}
+
+/// @test Verify we can set the website field in BucketMetadata.
+TEST(BucketMetadataTest, ResetWebsite) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_website());
+  auto copy = expected;
+  copy.reset_website();
+  EXPECT_FALSE(copy.has_website());
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("website.")));
 }
 
 }  // namespace

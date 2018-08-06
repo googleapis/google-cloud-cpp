@@ -12,7 +12,7 @@ client.
 ## Status
 
 This library support Google Cloud Bigtable at the
-[Alpha](../README.md#versioning) quality level.
+[Beta](../README.md#versioning) quality level.
 
 ## Documentation
 
@@ -20,6 +20,13 @@ Full documentation, including a [quick start guide][quickstart-link]
 is available [online][doxygen-link].
 
 ## Release Notes
+
+### v0.2.0 - 2018-08
+
+* First Beta release.
+* Completed instance admin APIs.
+* Completed documentation and examples.
+* The API is considered stable, we do not expect any changes before 1.0
 
 ### v0.1.0 - 2018-03
 

@@ -20,8 +20,6 @@
 //! [bigtable includes]
 #include <google/protobuf/text_format.h>
 
-namespace btproto = ::google::bigtable::admin::v2;
-
 namespace {
 struct Usage {
   std::string msg;

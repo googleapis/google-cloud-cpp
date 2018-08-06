@@ -41,9 +41,10 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   result.crc32c_ = json.value("crc32c", "");
   if (json.count("customerEncryption") != 0) {
     auto field = json["customerEncryption"];
-    result.customer_encryption_.encryption_algorithm =
-        field.value("encryptionAlgorithm", "");
-    result.customer_encryption_.key_sha256 = field.value("keySha256", "");
+    CustomerEncryption e;
+    e.encryption_algorithm = field.value("encryptionAlgorithm", "");
+    e.key_sha256 = field.value("keySha256", "");
+    result.customer_encryption_ = std::move(e);
   }
   result.generation_ = internal::ParseLongField(json, "generation");
   result.kms_key_name_ = json.value("kmsKeyName", "");
@@ -76,10 +77,7 @@ bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
          content_encoding_ == rhs.content_encoding_ and
          content_language_ == rhs.content_language_ and
          content_type_ == rhs.content_type_ and crc32c_ == rhs.crc32c_ and
-         customer_encryption_.encryption_algorithm ==
-             rhs.customer_encryption_.encryption_algorithm and
-         customer_encryption_.key_sha256 ==
-             rhs.customer_encryption_.key_sha256 and
+         customer_encryption_ == customer_encryption_ and
          generation_ == rhs.generation_ and
          kms_key_name_ == rhs.kms_key_name_ and md5_hash_ == rhs.md5_hash_ and
          media_link_ == rhs.media_link_ and metadata_ == rhs.metadata_ and
@@ -102,23 +100,32 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << ", content_disposition=" << rhs.content_disposition()
      << ", content_encoding=" << rhs.content_encoding()
      << ", content_language=" << rhs.content_language()
-     << ", content_type=" << rhs.content_type() << ", crc32c=" << rhs.crc32c()
-     << ", customer_encryption.encryption_algorithm="
-     << rhs.customer_encryption().encryption_algorithm
-     << ", customer_encryption.key_sha256="
-     << rhs.customer_encryption().key_sha256 << ", etag=" << rhs.etag()
-     << ", generation=" << rhs.generation() << ", id=" << rhs.id()
-     << ", kind=" << rhs.kind() << ", kms_key_name=" << rhs.kms_key_name()
+     << ", content_type=" << rhs.content_type() << ", crc32c=" << rhs.crc32c();
+
+  if (rhs.has_customer_encryption()) {
+    os << ", customer_encryption.encryption_algorithm="
+       << rhs.customer_encryption().encryption_algorithm
+       << ", customer_encryption.key_sha256="
+       << rhs.customer_encryption().key_sha256;
+  }
+
+  os << ", etag=" << rhs.etag() << ", generation=" << rhs.generation()
+     << ", id=" << rhs.id() << ", kind=" << rhs.kind()
+     << ", kms_key_name=" << rhs.kms_key_name()
      << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
   sep = "metadata.";
   for (auto const& kv : rhs.metadata_) {
     os << sep << kv.first << "=" << kv.second;
     sep = ", metadata.";
   }
-  os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name()
-     << ", owner.entity=" << rhs.owner().entity
-     << ", owner.entity_id=" << rhs.owner().entity_id
-     << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
+  os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name();
+
+  if (rhs.has_owner()) {
+    os << ", owner.entity=" << rhs.owner().entity
+       << ", owner.entity_id=" << rhs.owner().entity_id;
+  }
+
+  os << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
      << ", time_deleted=" << rhs.time_deleted().time_since_epoch().count()

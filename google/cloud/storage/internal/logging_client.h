@@ -56,6 +56,9 @@ class LoggingClient : public RawClient {
   std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) override;
 
+  std::pair<Status, ListBucketAclResponse> ListBucketAcl(
+      ListBucketAclRequest const& request) override;
+
   std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;
   std::pair<Status, ObjectAccessControl> CreateObjectAcl(
@@ -66,6 +69,8 @@ class LoggingClient : public RawClient {
       ObjectAclRequest const&) override;
   std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) override;
+
+  std::shared_ptr<RawClient> client() const { return client_; }
 
  private:
   std::shared_ptr<RawClient> client_;
