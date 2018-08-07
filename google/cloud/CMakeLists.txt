@@ -105,6 +105,7 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 add_library(google_cloud_cpp_testing
             testing_util/check_predicate_becomes_false.h
+            testing_util/chrono_literals.h
             testing_util/environment_variable_restore.h
             testing_util/environment_variable_restore.cc
             testing_util/custom_google_mock_main.cc

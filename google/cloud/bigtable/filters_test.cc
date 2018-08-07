@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/filters.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
@@ -63,7 +63,7 @@ TEST(FiltersTest, TimestampRangeMicros) {
 }
 
 TEST(FiltersTest, TimestampRange) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   auto proto = bigtable::Filter::TimestampRange(10_us, 10_ms).as_proto();
   EXPECT_EQ(10, proto.timestamp_range_filter().start_timestamp_micros());
   EXPECT_EQ(10000, proto.timestamp_range_filter().end_timestamp_micros());

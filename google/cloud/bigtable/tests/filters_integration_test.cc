@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
@@ -373,7 +373,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (UsingCloudBigtableEmulator()) {
     return;
@@ -585,7 +585,7 @@ namespace {
 void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
                                               std::string const& prefix) {
   namespace bt = bigtable;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and

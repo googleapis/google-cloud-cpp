@@ -213,7 +213,6 @@ create_bazel_config(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)
 
 add_library(bigtable_client_testing
-            testing/chrono_literals.h
             testing/embedded_server_test_fixture.h
             testing/embedded_server_test_fixture.cc
             testing/internal_table_test_fixture.h

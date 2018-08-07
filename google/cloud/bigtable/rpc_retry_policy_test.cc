@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <thread>
@@ -31,7 +31,7 @@ grpc::Status CreatePermanentError() {
 }
 
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 auto const kLimitedTimeTestPeriod = 50_ms;
 auto const kLimitedTimeTolerance = 10_ms;
 
@@ -54,14 +54,14 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
 
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   CheckLimitedTime(tested);
 }
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Clone) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
@@ -69,14 +69,14 @@ TEST(LimitedTimeRetryPolicy, Clone) {
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::LimitedTimeRetryPolicy tested(10_ms);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
 /// @test A simple test for the LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Simple) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy tested(3);
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
@@ -87,7 +87,7 @@ TEST(LimitedErrorCountRetryPolicy, Simple) {
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Clone) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
   EXPECT_TRUE(tested->OnFailure(CreateTransientError()));

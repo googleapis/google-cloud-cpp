@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/internal_table_test_fixture.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
 using testing::_;
 using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 namespace btproto = google::bigtable::v2;
 
 /// Define types and functions used in the tests.
@@ -710,7 +710,7 @@ TEST_F(NoexTableTest, BulkApplyTooManyFailures) {
   namespace bt = ::bigtable;
   namespace btnoex = ::bigtable::noex;
 
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
@@ -1064,7 +1064,7 @@ TEST_F(NoexTableTest, SampleRowsTooManyFailures) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.

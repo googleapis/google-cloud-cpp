@@ -13,14 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
 namespace bigtable = google::cloud::bigtable;
 
 /// @test Verify that the default policy works as expected.
 TEST(IdempotentMutationPolicyTest, Simple) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   auto policy = bigtable::DefaultIdempotentMutationPolicy();
   EXPECT_TRUE(policy->is_idempotent(
       bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
@@ -33,7 +33,7 @@ TEST(IdempotentMutationPolicyTest, Simple) {
 
 /// @test Verify that bigtable::AlwaysRetryMutationPolicy works as expected.
 TEST(IdempotentMutationPolicyTest, AlwaysRetry) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::AlwaysRetryMutationPolicy policy;
   EXPECT_TRUE(policy.is_idempotent(
       bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
