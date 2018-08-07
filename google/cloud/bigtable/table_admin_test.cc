@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
