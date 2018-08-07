@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['calculatedefaultconnectionpoolsize',['CalculateDefaultConnectionPoolSize',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a41ef56720f310ab4ea29ea08b5efcbf5',1,'google::cloud::bigtable::v0']]],
   ['cancel',['Cancel',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#a17e25bb619e64399b4af0ebf7c5fd63d',1,'google::cloud::bigtable::v0::RowReader']]],
   ['cell',['Cell',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ab0c97330011260c79c3dc04ecb2e8add',1,'google::cloud::bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, std::string value, std::vector&lt; std::string &gt; labels)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ac508056931f9757cb13c558599f9bf7a',1,'google::cloud::bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, bigendian64_t value, std::vector&lt; std::string &gt; labels)']]],
   ['cells',['cells',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Row.html#acf5bfab3427bce2c1feda03a2a39154d',1,'google::cloud::bigtable::v0::Row']]],

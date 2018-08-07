@@ -6,6 +6,7 @@ var searchData=
   ['bigtable_2dquickstart_2edox',['bigtable-quickstart.dox',['../bigtable-quickstart_8dox.html',1,'']]],
   ['bigtable_2dsamples_2dinstance_2dadmin_2edox',['bigtable-samples-instance-admin.dox',['../bigtable-samples-instance-admin_8dox.html',1,'']]],
   ['bigtable_2dsamples_2edox',['bigtable-samples.dox',['../bigtable-samples_8dox.html',1,'']]],
+  ['bigtable_5fclient_5fdefault_5fchannels_5fper_5fcpu',['BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU',['../client__options_8cc.html#a05d0f2567bc347a3f69e433ccaed24c0',1,'client_options.cc']]],
   ['bigtable_5fclient_5fdefault_5fconnection_5fpool_5fsize',['BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE',['../client__options_8cc.html#a5cdb8cfbd103919bc766bc4db60d80c8',1,'client_options.cc']]],
   ['bigtable_5fclient_5fdefault_5finitial_5fdelay',['BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY',['../rpc__backoff__policy_8cc.html#ab383d4c12c7ab0838ad7be89fb03ca38',1,'rpc_backoff_policy.cc']]],
   ['bigtable_5fclient_5fdefault_5fmaximum_5fdelay',['BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY',['../rpc__backoff__policy_8cc.html#ad3273acbdec1d5d5b3330c34428ca2da',1,'rpc_backoff_policy.cc']]],
