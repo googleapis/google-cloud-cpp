@@ -21,6 +21,10 @@
 DEPS       := bigtable_client google_cloud_cpp_common grpc++ grpc zlib openssl libcares protobuf
 CXXFLAGS   := $(shell pkg-config $(DEPS) --cflags)
 CXXLDFLAGS := $(shell pkg-config $(DEPS) --libs-only-L)
+
+# gRPC does not install a full complement of pkg-config files:
+#   https://github.com/grpc/grpc/issues/15166
+# so we need to "guess" that -lgpr and -laddress_sorting will be needed.
 LIBS       := $(shell pkg-config $(DEPS) --libs-only-l) -lgpr -laddress_sorting $(shell pkg-config libcares --libs-only-l)
 
 # This is hard-coded because it is intended for a test, applications are
