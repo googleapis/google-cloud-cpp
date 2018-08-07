@@ -119,11 +119,13 @@ TEST(PatchObjectAclRequestTest, PatchStream) {
 
   PatchObjectAclRequest request("my-bucket", "my-object", "user-test-user",
                                 original, new_acl);
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
+  request.set_multiple_options(UserProject("my-project"), Generation(7),
+                               IfMatchEtag("ABC="));
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("If-Match: ABC="));
   EXPECT_THAT(str, HasSubstr("generation=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("my-object"));

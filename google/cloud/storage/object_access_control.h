@@ -60,6 +60,7 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   using AccessControlCommon::id;
   using AccessControlCommon::kind;
   using AccessControlCommon::project_team;
+  using AccessControlCommon::project_team_as_optional;
 
   using AccessControlCommon::role;
   ObjectAccessControl& set_role(std::string v) {

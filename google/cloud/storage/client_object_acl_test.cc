@@ -279,6 +279,55 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAclPermanentFailure) {
       "UpdateObjectAcl");
 }
 
+TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
+  auto result = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "object": "test-object",
+          "entity": "user-test-user-1",
+          "role": "OWNER"
+      })""");
+  EXPECT_CALL(*mock, PatchObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Invoke([result](internal::PatchObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-object", r.object_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        internal::nl::json expected{{"role", "OWNER"}};
+        auto payload = internal::nl::json::parse(r.payload());
+        EXPECT_EQ(expected, payload);
+
+        return std::make_pair(Status(), result);
+      }));
+
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+  auto actual = client.PatchObjectAcl(
+      "test-bucket", "test-object", "user-test-user-1",
+      ObjectAccessControlPatchBuilder().set_role("OWNER"));
+  EXPECT_EQ(result, actual);
+}
+
+TEST_F(ObjectAccessControlsTest, PatchObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, PatchObjectAcl(_)),
+      [](Client& client) {
+        client.PatchObjectAcl("test-bucket-name", "test-object-name",
+                              "user-test-user-1",
+                              ObjectAccessControlPatchBuilder());
+      },
+      "PatchObjectAcl");
+}
+
+TEST_F(ObjectAccessControlsTest, PatchObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, PatchObjectAcl(_)),
+      [](Client& client) {
+        client.PatchObjectAcl("test-bucket-name", "test-object-name",
+                              "user-test-user-1",
+                              ObjectAccessControlPatchBuilder());
+      },
+      "PatchObjectAcl");
+}
+
 }  // namespace
 }  // namespace storage
 }  // namespace cloud

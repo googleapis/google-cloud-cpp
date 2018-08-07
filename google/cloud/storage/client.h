@@ -60,6 +60,10 @@ class Client {
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
 
+  std::shared_ptr<internal::RawClient> raw_client() const {
+    return raw_client_;
+  }
+
   /**
    * Fetch the list of buckets for a given project.
    *
@@ -403,8 +407,86 @@ class Client {
     return raw_client_->UpdateObjectAcl(request).second;
   }
 
-  std::shared_ptr<internal::RawClient> raw_client() const {
-    return raw_client_;
+  /**
+   * Patch the value of an existing object ACL.
+   *
+   * Compute the delta between a previous value for an ObjectAccessControl and
+   * the new value for an ObjectAccessControl and apply that delta.
+   *
+   * @par Notes
+   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param entity the identifier for the user, group, service account, or
+   *     predefined set of actors holding the permission.
+   * @param original_acl the original ACL value.
+   * @param new_acl the new ACL value. Note that only changes on writeable
+   *     fields will be accepted by the server.
+   * @param options a list of optional query parameters and/or request
+   *     headers. Valid types for this operation include `Generation`,
+   *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc patch object acl
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Options>
+  ObjectAccessControl PatchObjectAcl(std::string const& bucket_name,
+                                     std::string const& object_name,
+                                     std::string const& entity,
+                                     ObjectAccessControl const& original_acl,
+                                     ObjectAccessControl const& new_acl,
+                                     Options&&... options) {
+    internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
+                                            original_acl, new_acl);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchObjectAcl(request).second;
+  }
+
+  /**
+   * Patch the value of an existing object ACL.
+   *
+   * This API allows the application to patch an ObjectAccessControl without
+   * having to read the current value.
+   *
+   * @par Notes
+   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param entity the identifier for the user, group, service account, or
+   *     predefined set of actors holding the permission.
+   * @param builder a builder ready to create the patch.
+   * @param options a list of optional query parameters and/or request
+   *     headers. Valid types for this operation include `Generation`,
+   *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
+   *
+   * @par Example
+   * @snippet storage_object_acl_samples.cc patch object acl no-read
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Options>
+  ObjectAccessControl PatchObjectAcl(
+      std::string const& bucket_name, std::string const& object_name,
+      std::string const& entity, ObjectAccessControlPatchBuilder const& builder,
+      Options&&... options) {
+    internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
+                                            builder);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchObjectAcl(request).second;
   }
 
  private:

@@ -143,7 +143,6 @@ class GcsObjectVersion(object):
         """
         entity = canonical_entity_name(entity)
         email = ''
-        entity_id = ''
         if entity.startswith('user-'):
             email = entity
         # Replace or insert the entry
@@ -155,6 +154,7 @@ class GcsObjectVersion(object):
             'bucket': self.bucket_name,
             'email': email,
             'entity': entity,
+            'entity_id': '',
             'etag': self.metadata.get('etag', 'XYZ='),
             'generation': self.generation,
             'id': self.metadata.get('id', '') + '/' + entity,
@@ -203,6 +203,33 @@ class GcsObjectVersion(object):
         :param role:str the new role for the entity.
         :return:dict with the contents of the ObjectAccessControl.
         """
+        return self.insert_acl(entity, role)
+
+    def patch_acl(self, entity, request):
+        """
+        Patch a single AccessControl entry in this Object revision.
+
+        :param entity:str the name of the entity.
+        :param request:flask.Request the parameters for this request.
+        :return:dict with the contents of the ObjectAccessControl.
+        """
+        acl = self.get_acl(entity)
+        payload = json.loads(request.data)
+        request_entity = payload.get('entity')
+        if request_entity is not None and request_entity != entity:
+            raise ErrorResponse(
+                'Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s'
+                % (entity, request_entity))
+        etag_match = request.headers.get('if-match')
+        if etag_match is not None and etag_match != acl.get('etag'):
+            raise ErrorResponse('Precondition Failed', status_code=412)
+        etag_none_match = request.headers.get('if-none-match')
+        if (etag_none_match is not None
+                and etag_none_match != acl.get('etag')):
+            raise ErrorResponse('Precondition Failed', status_code=412)
+        role = payload.get('role')
+        if role is None:
+            raise ErrorResponse('Missing role value')
         return self.insert_acl(entity, role)
 
 
@@ -681,6 +708,21 @@ def objects_acl_update(bucket_name, object_name, entity):
     return json.dumps(acl)
 
 
+@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
+def objects_acl_patch(bucket_name, object_name, entity):
+    """Implement the 'ObjectAccessControls: patch' API.
+
+      Patch the access control configuration for a particular entity.
+      """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.get_revision(flask.request)
+    acl = revision.patch_acl(entity, flask.request)
+    return json.dumps(acl)
+
+
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
@@ -713,12 +755,12 @@ def objects_insert(bucket_name):
     return json.dumps(current_version.metadata)
 
 
-application = wsgi.DispatcherMiddleware(
-    root, {
-        '/httpbin': httpbin.app,
-        GCS_HANDLER_PATH: gcs,
-        UPLOAD_HANDLER_PATH: upload,
-    })
+application = wsgi.DispatcherMiddleware(root, {
+    '/httpbin': httpbin.app,
+    GCS_HANDLER_PATH: gcs,
+    UPLOAD_HANDLER_PATH: upload,
+})
+
 
 def main():
     """Parse the arguments and run the test bench application."""

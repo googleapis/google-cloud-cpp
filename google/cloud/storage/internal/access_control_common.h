@@ -113,6 +113,10 @@ class AccessControlCommon {
 
   bool has_project_team() const { return project_team_.has_value(); }
   ProjectTeam const& project_team() const { return *project_team_; }
+  google::cloud::internal::optional<ProjectTeam> const&
+  project_team_as_optional() const {
+    return project_team_;
+  }
 
   std::string const& role() const { return role_; }
   void set_role(std::string r) { role_ = std::move(r); }
