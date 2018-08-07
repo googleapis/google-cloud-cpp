@@ -69,6 +69,8 @@ class LoggingClient : public RawClient {
       ObjectAclRequest const&) override;
   std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) override;
+  std::pair<Status, ObjectAccessControl> PatchObjectAcl(
+      PatchObjectAclRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 

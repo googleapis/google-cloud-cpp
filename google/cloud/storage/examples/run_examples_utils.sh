@@ -84,6 +84,9 @@ run_program_examples() {
         update-object-acl)
             arguments="${base_arguments} allAuthenticatedUsers OWNER"
             ;;
+        patch-object-acl)
+            arguments="${base_arguments} allAuthenticatedUsers READER"
+            ;;
         delete-object-acl)
             arguments="${base_arguments} allAuthenticatedUsers"
             ;;
@@ -245,6 +248,7 @@ list-object-acl
 create-object-acl
 get-object-acl
 update-object-acl
+patch-object-acl
 delete-object-acl
 _EOF_
 )

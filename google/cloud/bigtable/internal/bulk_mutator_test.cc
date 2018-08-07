@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/make_unique.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 
 /// Define types and functions used in the tests.
 namespace {
@@ -24,7 +24,7 @@ namespace btproto = google::bigtable::v2;
 namespace bigtable = google::cloud::bigtable;
 namespace bt = ::bigtable;
 using namespace ::testing;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 
 using bigtable::testing::MockMutateRowsReader;
 }  // anonymous namespace
@@ -81,7 +81,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
   using namespace ::testing;
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
 
   // In this test we create a Mutation for two rows, which succeeds in the
   // first RPC request.  First create the mutation.

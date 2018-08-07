@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <vector>
@@ -30,7 +30,7 @@ grpc::Status CreateTransientError() {
 
 /// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
 
   EXPECT_GE(10_ms, tested.OnCompletion(CreateTransientError()));
@@ -45,7 +45,7 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Clone) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy original(10_ms, 50_ms);
   auto tested = original.clone();
 
@@ -56,7 +56,7 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
 /// @test Test for testing randomness for 2 objects of
 /// ExponentialBackoffRetryPolicy such that no two clients have same sleep time.
 TEST(ExponentialBackoffRetryPolicy, Randomness) {
-  using namespace bigtable::chrono_literals;
+  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
   bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
   std::vector<int> output1, output2;

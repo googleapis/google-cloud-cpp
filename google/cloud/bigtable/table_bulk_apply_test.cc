@@ -14,13 +14,13 @@
 
 #include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 
 namespace btproto = google::bigtable::v2;
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 using namespace testing;
 namespace bt = google::cloud::bigtable;
 

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
 
@@ -106,7 +107,7 @@ std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r);
  */
 class PatchObjectAclRequest
     : public GenericObjectRequest<PatchObjectAclRequest, Generation,
-                                  UserProject> {
+                                  UserProject, IfMatchEtag, IfNoneMatchEtag> {
  public:
   PatchObjectAclRequest(std::string bucket, std::string object,
                         std::string entity, ObjectAccessControl const& original,

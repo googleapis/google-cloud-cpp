@@ -138,6 +138,8 @@ add_library(storage_client
             internal/delete_object_request.cc
             internal/empty_response.h
             internal/empty_response.cc
+            internal/format_rfc3339.h
+            internal/format_rfc3339.cc
             internal/generic_object_request.h
             internal/generic_request.h
             internal/get_object_metadata_request.h
@@ -243,8 +245,9 @@ set(storage_client_unit_tests
     internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
-    internal/delete_object_request_test.cc
     internal/bucket_requests_test.cc
+    internal/delete_object_request_test.cc
+    internal/format_rfc3339_test.cc
     internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc

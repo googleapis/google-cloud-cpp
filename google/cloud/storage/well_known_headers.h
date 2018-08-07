@@ -30,19 +30,27 @@ inline namespace STORAGE_CLIENT_NS {
  * @tparam H the type we will use to represent the header.
  * @tparam T the C++ type of the query parameter
  */
-template <typename P, typename T>
+template <typename H, typename T>
 class WellKnownHeader {
  public:
   WellKnownHeader() : value_{} {}
-  explicit WellKnownHeader(T&& value) : value_(std::forward<T>(value)) {}
+  explicit WellKnownHeader(T value) : value_(std::move(value)) {}
 
-  char const* header_name() const { return P::well_known_parameter_name(); }
+  char const* header_name() const { return H::header_name(); }
   bool has_value() const { return value_.has_value(); }
   T const& value() const { return value_.value(); }
 
  private:
   google::cloud::internal::optional<T> value_;
 };
+
+template <typename H, typename T>
+std::ostream& operator<<(std::ostream& os, WellKnownHeader<H, T> const& rhs) {
+  if (rhs.has_value()) {
+    return os << rhs.header_name() << ": " << rhs.value();
+  }
+  return os << rhs.header_name() << ": <not set>";
+}
 
 struct IfMatchEtag : public WellKnownHeader<IfMatchEtag, std::string> {
   using WellKnownHeader<IfMatchEtag, std::string>::WellKnownHeader;

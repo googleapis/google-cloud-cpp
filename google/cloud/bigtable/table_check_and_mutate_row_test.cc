@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 
 /// Define helper types and functions for this test.
 namespace {

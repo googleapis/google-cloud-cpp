@@ -13,11 +13,11 @@
 //   limitations under the License.
 
 #include "google/cloud/bigtable/column_family.h"
-#include "google/cloud/bigtable/testing/chrono_literals.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::chrono_literals;
+using namespace google::cloud::testing_util::chrono_literals;
 
 TEST(GcRule, MaxNumVersions) {
   auto proto = bigtable::GcRule::MaxNumVersions(3).as_proto();

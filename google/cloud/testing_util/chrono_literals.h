@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_CHRONO_LITERALS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_CHRONO_LITERALS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_LITERALS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_LITERALS_H_
 
+#include "google/cloud/version.h"
 #include <chrono>
 
 // TODO(#109) - these are generally useful, consider submitting to abseil.io
 namespace google {
 namespace cloud {
-namespace bigtable {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace testing_util {
 namespace chrono_literals {
 constexpr std::chrono::hours operator"" _h(unsigned long long h) {
   return std::chrono::hours(h);
@@ -47,8 +49,9 @@ constexpr std::chrono::nanoseconds operator"" _ns(unsigned long long ns) {
 }
 
 }  // namespace chrono_literals
-}  // namespace bigtable
+}  // namespace testing_util
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_CHRONO_LITERALS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_LITERALS_H_

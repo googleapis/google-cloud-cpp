@@ -64,12 +64,10 @@ PatchObjectAclRequest::PatchObjectAclRequest(
   build_patch.AddStringField("kind", original.kind(), new_acl.kind());
   build_patch.AddStringField("object", original.object(), new_acl.object());
 
-  if (original.project_team() != new_acl.project_team()) {
-    auto empty = [](ProjectTeam const& p) {
-      return p.project_number.empty() and p.team.empty();
-    };
-    if (empty(new_acl.project_team())) {
-      if (not empty(original.project_team())) {
+  if (original.project_team_as_optional() !=
+      new_acl.project_team_as_optional()) {
+    if (not new_acl.has_project_team()) {
+      if (original.has_project_team()) {
         build_patch.RemoveField("projectTeam");
       }
     } else {
