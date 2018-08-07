@@ -21,7 +21,7 @@
 DEPS       := bigtable_client google_cloud_cpp_common grpc++ grpc zlib openssl libcares protobuf
 CXXFLAGS   := $(shell pkg-config $(DEPS) --cflags)
 CXXLDFLAGS := $(shell pkg-config $(DEPS) --libs-only-L)
-LIBS       := $(shell pkg-config $(DEPS) --libs-only-l) -lgpr $(shell pkg-config libcares --libs-only-l)
+LIBS       := $(shell pkg-config $(DEPS) --libs-only-l) -lgpr -laddress_sorting $(shell pkg-config libcares --libs-only-l)
 
 # This is hard-coded because it is intended for a test, applications are
 # expected to configure the files themselves.
