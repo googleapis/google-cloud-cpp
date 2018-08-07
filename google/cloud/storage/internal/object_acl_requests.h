@@ -27,6 +27,27 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
+ * Represents a request for the `ObjectAccessControls: list` API.
+ */
+class ListObjectAclRequest
+    : public GenericObjectRequest<ListObjectAclRequest, Generation,
+                                  UserProject> {
+ public:
+  using GenericObjectRequest::GenericObjectRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r);
+
+/// Represents a response to `ListObjectAclRequest`.
+struct ListObjectAclResponse {
+  static ListObjectAclResponse FromHttpResponse(HttpResponse&& response);
+
+  std::vector<ObjectAccessControl> items;
+};
+
+std::ostream& operator<<(std::ostream& os, ListObjectAclResponse const& r);
+
+/**
  * Generic ObjectAccessControl change.
  */
 template <typename Derived>

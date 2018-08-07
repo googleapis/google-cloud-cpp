@@ -147,8 +147,6 @@ add_library(storage_client
             internal/http_response.h
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
-            internal/list_object_acl_request.h
-            internal/list_object_acl_request.cc
             internal/list_objects_request.h
             internal/list_objects_request.cc
             internal/logging_client.h
@@ -248,7 +246,6 @@ set(storage_client_unit_tests
     internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/insert_object_media_request_test.cc
-    internal/list_object_acl_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc
