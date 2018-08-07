@@ -38,11 +38,6 @@ class ListBucketsRequest
       : project_id_(std::move(project_id)) {}
 
   std::string const& project_id() const { return project_id_; }
-  ListBucketsRequest& set_project_id(std::string project_id) {
-    project_id_ = std::move(project_id);
-    return *this;
-  }
-
   std::string const& page_token() const { return page_token_; }
   ListBucketsRequest& set_page_token(std::string page_token) {
     page_token_ = std::move(page_token);
@@ -77,10 +72,6 @@ class GetBucketMetadataRequest
       : bucket_name_(std::move(bucket_name)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
-  GetBucketMetadataRequest& set_bucket_name(std::string bucket_name) {
-    bucket_name_ = std::move(bucket_name);
-    return *this;
-  }
 
  private:
   std::string bucket_name_;

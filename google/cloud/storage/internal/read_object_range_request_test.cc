@@ -46,8 +46,7 @@ TEST(ReadObjectRangeRequestTest, Simple) {
 using ::testing::HasSubstr;
 
 TEST(ReadObjectRangeRequestTest, OStreamBasic) {
-  ReadObjectRangeRequest request("my-bucket", "my-object");
-  request.set_begin(1024).set_end(2048);
+  ReadObjectRangeRequest request("my-bucket", "my-object", 1024, 2048);
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr("my-bucket"));

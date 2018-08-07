@@ -40,15 +40,7 @@ class GetObjectMetadataRequest
         object_name_(std::move(object_name)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
-  GetObjectMetadataRequest& set_bucket_name(std::string bucket_name) {
-    bucket_name_ = std::move(bucket_name);
-    return *this;
-  }
   std::string const& object_name() const { return object_name_; }
-  GetObjectMetadataRequest& set_object_name(std::string object_name) {
-    object_name_ = std::move(object_name);
-    return *this;
-  }
 
  private:
   std::string bucket_name_;

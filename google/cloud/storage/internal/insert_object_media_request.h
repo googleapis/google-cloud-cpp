@@ -41,10 +41,6 @@ class InsertObjectMediaRequest
         contents_(std::move(contents)) {}
 
   std::string const& contents() const { return contents_; }
-  InsertObjectMediaRequest& set_contents(std::string contents) {
-    contents_ = std::move(contents);
-    return *this;
-  }
 
  private:
   std::string contents_;

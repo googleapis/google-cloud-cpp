@@ -43,15 +43,7 @@ class GenericChangeObjectAclRequest
         role_(std::move(role)) {}
 
   std::string const& entity() const { return entity_; }
-  GenericChangeObjectAclRequest& set_entity(std::string v) {
-    entity_ = std::move(v);
-    return *this;
-  }
   std::string const& role() const { return role_; }
-  GenericChangeObjectAclRequest& set_role(std::string v) {
-    role_ = std::move(v);
-    return *this;
-  }
 
  private:
   std::string entity_;

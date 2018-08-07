@@ -35,10 +35,6 @@ class ListBucketAclRequest
       : bucket_name_(std::move(bucket)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
-  ListBucketAclRequest& set_bucket_name(std::string v) {
-    bucket_name_ = std::move(v);
-    return *this;
-  }
 
  private:
   std::string bucket_name_;
@@ -72,16 +68,7 @@ class GenericBucketAclRequest
       : bucket_name_(std::move(bucket)), entity_(std::move(entity)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
-  Derived& set_bucket_name(std::string v) {
-    bucket_name_ = std::move(v);
-    return *static_cast<Derived*>(this);
-  }
-
   std::string const& entity() const { return entity_; }
-  Derived& set_entity(std::string v) {
-    entity_ = std::move(v);
-    return *static_cast<Derived*>(this);
-  }
 
  private:
   std::string bucket_name_;
@@ -123,10 +110,6 @@ class CreateBucketAclRequest
         role_(std::move(role)) {}
 
   std::string const& role() const { return role_; }
-  CreateBucketAclRequest& set_role(std::string v) {
-    role_ = std::move(v);
-    return *this;
-  }
 
  private:
   std::string role_;

@@ -44,12 +44,8 @@ TEST(GetBucketMetadataRequestTest, OStreamParameter) {
 TEST(ListBucketsRequestTest, Simple) {
   ListBucketsRequest request("my-project");
   EXPECT_EQ("my-project", request.project_id());
-  request.set_project_id("another-project");
-  EXPECT_EQ("another-project", request.project_id());
   request.set_option(Prefix("foo-"));
 }
-
-using ::testing::HasSubstr;
 
 TEST(ListBucketsRequestTest, OStream) {
   ListBucketsRequest request("project-to-list");
