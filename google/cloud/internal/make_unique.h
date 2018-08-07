@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MAKE_UNIQUE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MAKE_UNIQUE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_
 
-#include "google/cloud/bigtable/version.h"
-
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * A naive implementation of std::make_unique for C++11.
@@ -46,9 +44,8 @@ std::unique_ptr<T> make_unique(Args&&... a) {
 }
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MAKE_UNIQUE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_

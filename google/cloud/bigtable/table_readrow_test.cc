@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/make_unique.h"
 
 namespace bigtable = google::cloud::bigtable;
 
@@ -40,7 +40,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       }
 )");
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
         *r = response;
@@ -69,7 +69,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
@@ -91,7 +91,7 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
   using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  auto stream = bigtable::internal::make_unique<MockReadRowsReader>();
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
   EXPECT_CALL(*stream, Finish())
       .WillRepeatedly(

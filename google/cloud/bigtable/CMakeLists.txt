@@ -151,7 +151,6 @@ add_library(bigtable_client
             internal/grpc_error_delegate.cc
             internal/instance_admin.h
             internal/instance_admin.cc
-            internal/make_unique.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
             internal/readrowsparser.h

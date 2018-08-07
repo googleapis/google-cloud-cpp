@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/grpc_error.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -35,7 +35,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
-    table_admin_ = bigtable::internal::make_unique<bigtable::TableAdmin>(
+    table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 

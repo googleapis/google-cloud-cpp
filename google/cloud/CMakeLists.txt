@@ -77,6 +77,7 @@ add_library(google_cloud_cpp_common
             internal/backoff_policy.cc
             internal/build_info.h
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+            internal/make_unique.h
             internal/optional.h
             internal/port_platform.h
             internal/random.h

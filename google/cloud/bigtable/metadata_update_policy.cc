@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/internal/make_unique.h"
-
 #include <sstream>
 
 namespace google {
