@@ -12,11 +12,16 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/client_options.h"
+#include <thread>
 
 // Make the default pool size 4 because that is consistent with what Go does.
 #ifndef BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
 #define BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE 4
 #endif  // BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
+
+#ifndef BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
+#define BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU 2
+#endif  // BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
 
 namespace {
 std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
@@ -32,9 +37,21 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+inline std::size_t CalculateDefaultConnectionPoolSize() {
+  // For batter resource utilization and greater throughput, it is recommended
+  // to calculate the default pool size based on cores(CPU) available. However,
+  // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
+  // fully rely upon, it is only a hint and the value can be 0 if it is not
+  // well defined or not computable. Apart from CPU count, multiple channels can
+  // be opened for each CPU to increase throughput.
+  std::size_t cpu_count = std::thread::hardware_concurrency();
+  return (cpu_count > 0) ? cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
+                         : BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+}
+
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
     : credentials_(std::move(creds)),
-      connection_pool_size_(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE),
+      connection_pool_size_(CalculateDefaultConnectionPoolSize()),
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com") {
   static std::string const user_agent_prefix = "cbt-c++/" + version_string();
