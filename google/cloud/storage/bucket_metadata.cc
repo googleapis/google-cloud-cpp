@@ -156,10 +156,11 @@ BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
 }
 
 std::string BucketMetadata::ToJsonString() const {
-  internal::nl::json metadata_as_json;
+  using internal::nl::json;
+  json metadata_as_json;
   if (not acl().empty()) {
     for (BucketAccessControl const& a : acl()) {
-      internal::nl::json acl_as_json{
+      json acl_as_json{
           {"entity", a.entity()},
           {"role", a.role()},
       };
@@ -169,7 +170,7 @@ std::string BucketMetadata::ToJsonString() const {
 
   if (not cors().empty()) {
     for (CorsEntry const& v : cors()) {
-      internal::nl::json cors_as_json;
+      json cors_as_json;
       if (v.max_age_seconds.has_value()) {
         cors_as_json["maxAgeSeconds"] = *v.max_age_seconds;
       }
@@ -187,7 +188,7 @@ std::string BucketMetadata::ToJsonString() const {
   }
 
   if (has_billing()) {
-    internal::nl::json b{
+    json b{
         {"requesterPays", billing().requester_pays},
     };
     metadata_as_json["billing"] = b;
@@ -195,7 +196,7 @@ std::string BucketMetadata::ToJsonString() const {
 
   if (not default_acl().empty()) {
     for (ObjectAccessControl const& a : default_acl()) {
-      internal::nl::json acl_as_json{
+      json acl_as_json{
           {"entity", a.entity()},
           {"role", a.role()},
       };
@@ -204,14 +205,14 @@ std::string BucketMetadata::ToJsonString() const {
   }
 
   if (has_encryption()) {
-    internal::nl::json e{
+    json e{
         {"defaultKmsKeyName", encryption().default_kms_key_name},
     };
     metadata_as_json["encryption"] = e;
   }
 
   if (not labels_.empty()) {
-    internal::nl::json labels_as_json;
+    json labels_as_json;
     for (auto const& kv : labels_) {
       labels_as_json[kv.first] = kv.second;
     }
