@@ -138,6 +138,27 @@ class Client {
   }
 
   /**
+   * Deletes a Google Cloud Storage Bucket.
+   *
+   * @param bucket_name the bucket to be deleted.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc delete bucket
+   */
+  template <typename... Options>
+  void DeleteBucket(std::string const& bucket_name, Options&&... options) {
+    internal::DeleteBucketRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->DeleteBucket(request);
+  }
+
+  /**
    * Create an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.

@@ -127,6 +127,14 @@ std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
                   &RawClient::GetBucketMetadata, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> RetryClient::DeleteBucket(
+    DeleteBucketRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteBucket, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   auto retry_policy = retry_policy_->clone();

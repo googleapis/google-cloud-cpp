@@ -122,6 +122,24 @@ class CreateBucketRequest
 
 std::ostream& operator<<(std::ostream& os, CreateBucketRequest const& r);
 
+/**
+ * Represents a request to the `Buckets: delete` API.
+ */
+class DeleteBucketRequest
+    : public GenericRequest<DeleteBucketRequest, IfMetaGenerationMatch,
+                            IfMetaGenerationNotMatch, UserProject> {
+ public:
+  DeleteBucketRequest() = default;
+  explicit DeleteBucketRequest(std::string bucket_name)
+      : bucket_name_(std::move(bucket_name)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+
+ private:
+  std::string bucket_name_;
+};
+
+std::ostream& operator<<(std::ostream& os, DeleteBucketRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

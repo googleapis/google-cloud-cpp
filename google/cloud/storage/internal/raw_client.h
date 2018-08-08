@@ -58,6 +58,8 @@ class RawClient {
    */
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteBucket(
+      DeleteBucketRequest const& request) = 0;
 
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;

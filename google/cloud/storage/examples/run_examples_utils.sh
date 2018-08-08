@@ -181,6 +181,28 @@ run_all_bucket_acl_examples() {
   local bucket_name=$1
   shift
 
+  # First create a bucket for the example:
+  if [ ! -x ./storage_bucket_samples ]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " storage_bucket_samples is not compiled"
+    return
+  fi
+  log="$(mktemp -t "storage_bucket_acl_setup.XXXXXX")"
+  set +e
+  ./storage_bucket_samples get-bucket-metadata \
+      "${bucket_name}"  >${log} 2>&1
+  if [ $? != 0 ]; then
+    EXIT_STATUS=1
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        " cannot create test bucket"
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+    set -e
+    return
+  fi
+  set -e
+
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
   readonly BUCKET_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_

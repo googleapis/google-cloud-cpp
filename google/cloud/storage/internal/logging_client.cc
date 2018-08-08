@@ -93,6 +93,11 @@ std::pair<Status, BucketMetadata> LoggingClient::GetBucketMetadata(
   return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> LoggingClient::DeleteBucket(
+    DeleteBucketRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteBucket, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);

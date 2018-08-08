@@ -99,6 +99,35 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
       "GetBucketMetadata");
 }
 
+TEST_F(BucketTest, DeleteBucket) {
+  EXPECT_CALL(*mock, DeleteBucket(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::DeleteBucketRequest const& r) {
+        EXPECT_EQ("foo-bar-baz", r.bucket_name());
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  client.DeleteBucket("foo-bar-baz");
+  SUCCEED();
+}
+
+TEST_F(BucketTest, DeleteBucketTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock, EXPECT_CALL(*mock, DeleteBucket(_)),
+      [](Client& client) { client.DeleteBucket("test-bucket-name"); },
+      "DeleteBucket");
+}
+
+TEST_F(BucketTest, DeleteBucketPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client, EXPECT_CALL(*mock, DeleteBucket(_)),
+      [](Client& client) { client.DeleteBucket("test-bucket-name"); },
+      "DeleteBucket");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
