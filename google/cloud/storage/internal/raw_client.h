@@ -24,7 +24,6 @@
 #include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_object_metadata_request.h"
 #include "google/cloud/storage/internal/insert_object_media_request.h"
-#include "google/cloud/storage/internal/list_object_acl_request.h"
 #include "google/cloud/storage/internal/list_objects_request.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
