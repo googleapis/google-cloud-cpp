@@ -87,6 +87,26 @@ def canonical_entity_name(entity):
     return entity.lower()
 
 
+def index_acl(acl):
+    """Return a ACL as a dictionary indexed by the 'entity' values of the ACL.
+
+    We represent ACLs as lists of dictionaries, that makes it easy to convert
+    them to JSON objects. When changing them though, we need to make sure there
+    is a single element in the list for each `entity` value, so it is convenient
+    to convert the list to a dictionary (indexed by `entity`) of dictionaries.
+    This function performs that conversion.
+
+    :param acl:list of dict
+    :return:dict the ACL indexed by the entity of each entry.
+    """
+    # This can be expressed by a comprehension but turns out to be less
+    # readable in that form.
+    indexed = dict()
+    for e in acl:
+        indexed[e['entity']] = e
+    return indexed
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -146,10 +166,7 @@ class GcsObjectVersion(object):
         if entity.startswith('user-'):
             email = entity
         # Replace or insert the entry.
-        indexed = {
-            entry.get('entity').lower(): entry
-            for entry in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed[entity] = {
             'bucket': self.bucket_name,
             'email': email,
@@ -174,10 +191,7 @@ class GcsObjectVersion(object):
         :return:None
         """
         entity = canonical_entity_name(entity)
-        indexed = {
-            acl.get('entity').lower(): acl
-            for acl in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
@@ -399,10 +413,7 @@ class GcsBucket(object):
         if entity.startswith('user-'):
             email = entity.replace('user-', '', 1)
         # Replace or insert the entry.
-        indexed = {
-            entry.get('entity').lower(): entry
-            for entry in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed[entity] = {
             'bucket': self.name,
             'email': email,
@@ -424,10 +435,7 @@ class GcsBucket(object):
         :return:None
         """
         entity = canonical_entity_name(entity)
-        indexed = {
-            acl.get('entity').lower(): acl
-            for acl in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
@@ -468,10 +476,7 @@ class GcsBucket(object):
         if entity.startswith('user-'):
             email = email.replace('user-', '', 1)
         # Replace or insert the entry.
-        indexed = {
-            entry.get('entity').lower(): entry
-            for entry in self.metadata.get('defaultObjectAcl', [])
-        }
+        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed[entity] = {
             'bucket': self.name,
             'email': email,
@@ -493,10 +498,7 @@ class GcsBucket(object):
         :return:None
         """
         entity = canonical_entity_name(entity)
-        indexed = {
-            acl.get('entity').lower(): acl
-            for acl in self.metadata.get('defaultObjectAcl', [])
-        }
+        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed.pop(entity)
         self.metadata['defaultObjectAcl'] = indexed.values()
 
