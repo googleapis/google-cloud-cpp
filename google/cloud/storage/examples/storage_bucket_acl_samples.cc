@@ -92,6 +92,7 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-bucket-acl", &ListBucketAcl},
+      {"get-bucket-acl", &GetBucketAcl},
   };
   for (auto&& kv : commands) {
     try {
