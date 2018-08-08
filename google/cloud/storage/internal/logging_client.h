@@ -34,7 +34,8 @@ class LoggingClient : public RawClient {
 
   std::pair<Status, ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
-
+  std::pair<Status, BucketMetadata> CreateBucket(
+      CreateBucketRequest const& request) override;
   std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override;
   std::pair<Status, EmptyResponse> DeleteBucket(
@@ -42,19 +43,14 @@ class LoggingClient : public RawClient {
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
-
   std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
-
   std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) override;
-
   std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) override;
-
   std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) override;
-
   std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) override;
 

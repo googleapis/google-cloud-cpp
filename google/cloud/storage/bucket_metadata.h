@@ -472,6 +472,10 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   //@}
 
   std::string const& location() const { return location_; }
+  BucketMetadata& set_location(std::string v) {
+    location_ = std::move(v);
+    return *this;
+  }
 
   //@{
   /// @name Accessors and modifiers for logging configuration.
@@ -499,7 +503,13 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::int64_t const& project_number() const { return project_number_; }
 
   using CommonMetadata::self_link;
+
   using CommonMetadata::storage_class;
+  BucketMetadata& set_storage_class(std::string v) {
+    CommonMetadata::set_storage_class(std::move(v));
+    return *this;
+  }
+
   using CommonMetadata::time_created;
   using CommonMetadata::updated;
 

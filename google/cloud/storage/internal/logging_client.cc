@@ -88,6 +88,11 @@ std::pair<Status, ListBucketsResponse> LoggingClient::ListBuckets(
   return MakeCall(*client_, &RawClient::ListBuckets, request, __func__);
 }
 
+std::pair<Status, BucketMetadata> LoggingClient::CreateBucket(
+    CreateBucketRequest const& request) {
+  return MakeCall(*client_, &RawClient::CreateBucket, request, __func__);
+}
+
 std::pair<Status, BucketMetadata> LoggingClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);

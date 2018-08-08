@@ -155,6 +155,7 @@ run_all_bucket_examples() {
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
+  # TODO(#820) - run create-bucket-metadata and delete-bucket-metadata
   readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-buckets
 list-buckets-for-project

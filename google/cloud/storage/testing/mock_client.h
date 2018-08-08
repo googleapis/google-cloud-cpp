@@ -34,6 +34,8 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_CONST_METHOD0(client_options, ClientOptions const&());
   MOCK_METHOD1(ListBuckets, ResponseWrapper<internal::ListBucketsResponse>(
                                 internal::ListBucketsRequest const&));
+  MOCK_METHOD1(CreateBucket, ResponseWrapper<storage::BucketMetadata>(
+                                 internal::CreateBucketRequest const&));
   MOCK_METHOD1(GetBucketMetadata,
                ResponseWrapper<storage::BucketMetadata>(
                    internal::GetBucketMetadataRequest const&));

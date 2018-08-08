@@ -48,38 +48,42 @@ class RawClient {
 
   virtual ClientOptions const& client_options() const = 0;
 
+  //@{
+  /// @name Bucket resource operations
   virtual std::pair<Status, ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) = 0;
-
-  /**
-   * Execute a request to fetch bucket metadata.
-   *
-   */
+  virtual std::pair<Status, BucketMetadata> CreateBucket(
+      CreateBucketRequest const&) = 0;
   virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
   virtual std::pair<Status, EmptyResponse> DeleteBucket(
       DeleteBucketRequest const& request) = 0;
+  //@}
 
+  //@{
+  /// @name Object resource operations
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
-
   virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
-
   virtual std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) = 0;
   virtual std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) = 0;
-
   virtual std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) = 0;
-
   virtual std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) = 0;
+  //@}
 
+  //@{
+  /// @name BucketAccessControls resource operations
   virtual std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const&) = 0;
+  //@}
 
+  //@{
+  /// @name ObjectAccessControls operations
   virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
@@ -92,6 +96,7 @@ class RawClient {
       UpdateObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> PatchObjectAcl(
       PatchObjectAclRequest const&) = 0;
+  //@}
 };
 
 }  // namespace internal

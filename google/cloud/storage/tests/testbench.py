@@ -339,29 +339,45 @@ class GcsBucket(object):
 
     def __init__(self, gcs_url, name):
         self.name = name
+        self.gcs_url = gcs_url
         self.metadata = {
-            'id': name,
-            'kind': 'storage#bucket',
-            'metageneration': '4',
-            'selfLink': gcs_url + name,
-            'projectNumber': '123456789',
-            'name': name,
-            'timeCreated': '2018-05-19T19:31:14Z',
-            'updated': '2018-05-19T19:31:24Z',
+            'metageneration': 0,
+            'name': self.name,
             'location': 'US',
             'storageClass': 'STANDARD',
             'etag': 'XYZ=',
             'labels': {
-                'foo': 'bar',
-                'baz': 'qux'
-            }
+                 'foo': 'bar',
+                 'baz': 'qux'
+             }
         }
+        # Update the derived metadata attributes (e.g.: id, kind, selfLink)
+        self.update_from_metadata({})
         self.insert_acl(
             canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_acl(
             canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_acl(
             canonical_entity_name('project-viewers-123456789'), 'READER')
+
+    def update_from_metadata(self, metadata):
+        """Update from a metadata dictionary.
+
+        :param metadata:dict a dictionary with new metadata values.
+        """
+        tmp = self.metadata.copy()
+        tmp.update(metadata)
+        tmp['name'] = tmp.get('name', self.name)
+        tmp.update({
+            'id': self.name,
+            'kind': 'storage#bucket',
+            'selfLink': self.gcs_url + self.name,
+            'projectNumber': '123456789',
+            'timeCreated': '2018-05-19T19:31:14Z',
+            'updated': '2018-05-19T19:31:24Z',
+        })
+        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
+        self.metadata = tmp
 
     def check_preconditions(self, request):
         """
@@ -380,11 +396,11 @@ class GcsBucket(object):
 
         if metageneration_not_match is not None \
                 and int(metageneration_not_match) == metageneration:
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
 
         if metageneration_match is not None \
                 and int(metageneration_match) != metageneration:
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
 
     def insert_acl(self, entity, role):
         """
@@ -469,6 +485,21 @@ gcs = flask.Flask(__name__)
 gcs.debug = True
 
 
+# TODO(#821) TODO(#820) - until we implement CreateBucket + DeleteBucket insert
+# a well-known bucket based on the BUCKET_NAME environment (this is set by our
+# CI builds), to make the integration tests easy to write.
+def insert_magic_bucket(base_url):
+    if len(GCS_BUCKETS) == 0:
+        bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
+        bucket = GcsBucket(base_url, bucket_name)
+        # Get the metageneration to 4, the value expected by the integration
+        # tests.
+        bucket.update_from_metadata({})
+        bucket.update_from_metadata({})
+        bucket.update_from_metadata({})
+        GCS_BUCKETS[bucket_name] = bucket
+
+
 @gcs.route('/')
 def gcs_index():
     """The default handler for GCS requests."""
@@ -484,35 +515,48 @@ def gcs_error(error):
 def buckets_list():
     """Implement the 'Buckets: list' API: return the Buckets in a project."""
     base_url = flask.url_for('gcs_index', _external=True)
+    insert_magic_bucket(base_url)
     result = {'next_page_token': '', 'items': []}
-    if len(GCS_BUCKETS) == 0:
-        # TODO(#821) - until we implement CreateBucket simply insert a bucket
-        # based on the BUCKET_NAME environment (this is set by our CI builds),
-        # to make the integration tests easy to write.
-        bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
-        bucket = GcsBucket(base_url, bucket_name)
-        GCS_BUCKETS[bucket_name] = bucket
     for name, b in GCS_BUCKETS.items():
         result['items'].append(b.metadata)
     return json.dumps(result)
+
+
+@gcs.route('/b', methods=['POST'])
+def buckets_insert():
+    """Implement the 'Buckets: insert' API: create a new Bucket."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    insert_magic_bucket(base_url)
+    payload = json.loads(flask.request.data)
+    bucket_name = payload.get('name')
+    if bucket_name is None:
+        raise ErrorResponse('Missing bucket name in `Buckets: insert`',
+                            status_code=412)
+    bucket = GCS_BUCKETS.get(bucket_name)
+    if bucket is not None:
+        raise ErrorResponse('Bucket %s already exists' % bucket_name, status_code=503)
+    bucket = GcsBucket(base_url, bucket_name)
+    bucket.update_from(payload)
+    GCS_BUCKETS[bucket_name] = bucket
+    return json.dumps(bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>')
 def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
-    metageneration_match = flask.request.args.get('ifMetagenerationMatch',
-                                                  None)
-    if metageneration_match is not None and metageneration_match != '4':
-        raise ErrorResponse('Precondition Failed', status_code=412)
-    metageneration_not_match = flask.request.args.get(
-        'ifMetagenerationNotMatch', None)
-    if metageneration_not_match is not None and metageneration_not_match == '4':
-        raise ErrorResponse('Precondition Failed', status_code=412)
+    insert_magic_bucket(base_url)
     # TODO(#821) - until we implement Client::CreateBucket, simply insert every
     # bucket that the application queries.
     bucket = GcsBucket(base_url, bucket_name)
-    GCS_BUCKETS[bucket_name] = bucket
+    bucket.update_from_metadata({})
+    bucket.update_from_metadata({})
+    bucket.update_from_metadata({})
+    bucket = GCS_BUCKETS.setdefault(bucket_name, bucket)
+    # end of TODO(#821)
+    if bucket is None:
+        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+    bucket.check_preconditions(flask.request)
     return json.dumps(bucket.metadata)
 
 
@@ -776,6 +820,7 @@ application = wsgi.DispatcherMiddleware(root, {
     GCS_HANDLER_PATH: gcs,
     UPLOAD_HANDLER_PATH: upload,
 })
+
 
 
 def main():
