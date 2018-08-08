@@ -69,6 +69,13 @@ run_program_examples() {
         list-buckets-for-project)
             arguments="${PROJECT_ID}"
             ;;
+        create-bucket)
+            arguments="${base_arguments}"
+            export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+            ;;
+        create-bucket-for-project)
+            arguments="${base_arguments} ${PROJECT_ID}"
+            ;;
         insert-object)
             arguments="${base_arguments} a-short-string-to-put-in-the-object"
             ;;
@@ -145,21 +152,24 @@ run_program_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_all_bucket_examples() {
-  local bucket_name=$1
-  shift
+  local bucket_name="cloud-cpp.tests.$(date +%s).${RANDOM}.${RANDOM}"
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
-  # TODO(#820) - run create-bucket-metadata and delete-bucket-metadata
   readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
 list-buckets
 list-buckets-for-project
+create-bucket
 get-bucket-metadata
+delete-bucket
+create-bucket-for-project
+get-bucket-metadata
+delete-bucket
 _EOF_
 )
 
@@ -334,7 +344,7 @@ _EOF_
 run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
-  run_all_bucket_examples "${BUCKET_NAME}"
+  run_all_bucket_examples
   run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"

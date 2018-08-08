@@ -49,30 +49,55 @@ class BucketIntegrationTest : public ::testing::Test {
     // We always use the viewers for the project because it is known to exist.
     return "project-viewers-" + BucketTestEnvironment::project_id();
   }
+
+  std::string MakeRandomBucketName() {
+    // The total length of this bucket name must be <= 63 characters,
+    static std::string const prefix = "gcs-cpp-test-bucket";
+    static std::size_t const kMaxBucketNameLength = 63;
+    std::size_t const max_random_characters =
+        kMaxBucketNameLength - prefix.size();
+    return prefix + google::cloud::internal::Sample(generator_,
+                                                    max_random_characters,
+                                                    "abcdefghijklmnopqrstuvwxyz"
+                                                    "012456789");
+  }
+
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::MakeDefaultPRNG();
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
-  auto bucket_name = BucketTestEnvironment::bucket_name();
   auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
   Client client;
 
   auto buckets = client.ListBucketsForProject(project_id);
   std::vector<BucketMetadata> initial_buckets(buckets.begin(), buckets.end());
-  // Since `bucket_name` should be available, we do not expect this list to be
-  // empty.
-  EXPECT_FALSE(initial_buckets.empty())
-      << "Unexpected empty list with project_id=" << project_id
-      << ", bucket_name=" << bucket_name;
-
   auto name_counter = [](std::string const& name,
                          std::vector<BucketMetadata> const& list) {
     return std::count_if(
         list.begin(), list.end(),
-        [&name](BucketMetadata const& m) { return m.name() == name; });
+        [name](BucketMetadata const& m) { return m.name() == name; });
   };
-  EXPECT_EQ(1U, name_counter(bucket_name, initial_buckets));
+  ASSERT_EQ(0, name_counter(bucket_name, initial_buckets))
+      << "Test aborted. The bucket <" << bucket_name << "> already exists."
+      << "This is unexpected as the test generates a random bucket name.";
 
-  // TODO(#820) - improve tests once delete is implemented.
+  auto insert_meta =
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  EXPECT_EQ(bucket_name, insert_meta.name());
+
+  buckets = client.ListBucketsForProject(project_id);
+  std::vector<BucketMetadata> current_buckets(buckets.begin(), buckets.end());
+  EXPECT_EQ(1U, name_counter(bucket_name, current_buckets));
+
+  BucketMetadata get_meta = client.GetBucketMetadata(bucket_name);
+  EXPECT_EQ(insert_meta, get_meta);
+
+  client.DeleteBucket(bucket_name);
+  buckets = client.ListBucketsForProject(project_id);
+  current_buckets.assign(buckets.begin(), buckets.end());
+  EXPECT_EQ(0U, name_counter(bucket_name, current_buckets));
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {

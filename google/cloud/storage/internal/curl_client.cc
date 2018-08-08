@@ -41,11 +41,12 @@ std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
 std::pair<Status, BucketMetadata> CurlClient::CreateBucket(
     CreateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/");
+  CurlRequestBuilder builder(storage_endpoint_ + "/b");
   builder.AddQueryParameter("project", request.project_id());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(

@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) try {
   };
   for (auto&& kv : commands) {
     try {
-      int fake_argc = 1;
+      int fake_argc = 0;
       kv.second(client, fake_argc, argv);
     } catch (Usage const& u) {
       command_usage += "    ";
