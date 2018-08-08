@@ -117,7 +117,8 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string project_id) {
     gcs::BucketMetadata meta = client.CreateBucketForProject(
         bucket_name, project_id, gcs::BucketMetadata());
-    std::cout << "Bucket created.  The metadata is " << meta << std::endl;
+    std::cout << "Bucket created for project " << project_id << "."
+              << " The metadata is " << meta << std::endl;
   }
   //! [create bucket for project]
   (std::move(client), bucket_name, project_id);
