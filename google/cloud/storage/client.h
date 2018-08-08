@@ -608,6 +608,24 @@ class Client {
     return raw_client_->PatchObjectAcl(request).second;
   }
 
+  /**
+   * Retrieve the list of DefaultObjectAccessControls for a bucket.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_default_object_acl_samples.cc list default object acl
+   */
+  template <typename... Options>
+  std::vector<ObjectAccessControl> ListDefaultObjectAcl(
+      std::string const& bucket_name, Options&&... options) {
+    internal::ListDefaultObjectAclRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ListDefaultObjectAcl(request).second.items;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

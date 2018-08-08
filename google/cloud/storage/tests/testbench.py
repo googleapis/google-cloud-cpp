@@ -373,6 +373,12 @@ class GcsBucket(object):
             canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_acl(
             canonical_entity_name('project-viewers-123456789'), 'READER')
+        self.insert_default_object_acl(
+            canonical_entity_name('project-owners-123456789'), 'OWNER')
+        self.insert_default_object_acl(
+            canonical_entity_name('project-editors-123456789'), 'OWNER')
+        self.insert_default_object_acl(
+            canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.

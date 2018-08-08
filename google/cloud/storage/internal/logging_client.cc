@@ -180,6 +180,13 @@ std::pair<Status, ObjectAccessControl> LoggingClient::PatchObjectAcl(
   return MakeCall(*client_, &RawClient::PatchObjectAcl, request, __func__);
 }
 
+std::pair<Status, ListDefaultObjectAclResponse>
+LoggingClient::ListDefaultObjectAcl(
+    ListDefaultObjectAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::ListDefaultObjectAcl, request,
+                  __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

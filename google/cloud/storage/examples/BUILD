@@ -23,6 +23,18 @@ cc_binary(
 )
 
 cc_binary(
+    name = "storage_bucket_acl_samples",
+    srcs = ["storage_bucket_acl_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
+    name = "storage_default_object_acl_samples",
+    srcs = ["storage_default_object_acl_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
     name = "storage_object_samples",
     srcs = ["storage_object_samples.cc"],
     deps = ["//google/cloud/storage:storage_client"],
