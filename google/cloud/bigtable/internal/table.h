@@ -149,15 +149,8 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
-    // TODO(#336) - optimize this code by not copying the parameter pack.
-    // Add first default rule
     *request.add_rules() = rule.as_proto_move();
-    // Add if any additional rule is present
-    std::initializer_list<bigtable::ReadModifyWriteRule> rule_list{
-        std::forward<Args>(rules)...};
-    for (auto args_rule : rule_list) {
-      *request.add_rules() = args_rule.as_proto_move();
-    }
+    AddRules(request, std::forward<Args>(rules)...);
 
     return CallReadModifyWriteRowRequest(request, status);
   }
@@ -217,6 +210,17 @@ class Table {
   void SampleRowsImpl(
       std::function<void(bigtable::RowKeySample)> const& inserter,
       std::function<void()> const& clearer, grpc::Status& status);
+
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request) {
+    // no-op for empty list
+  }
+
+  template <typename... Args>
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
+                bigtable::ReadModifyWriteRule rule, Args&&... args) {
+    *request.add_rules() = rule.as_proto_move();
+    AddRules(request, std::forward<Args>(args)...);
+  }
 
   std::shared_ptr<DataClient> client_;
   bigtable::AppProfileId app_profile_id_;
