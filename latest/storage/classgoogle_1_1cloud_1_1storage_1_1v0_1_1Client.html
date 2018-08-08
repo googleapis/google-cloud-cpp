@@ -111,6 +111,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2b12e1262905f3c66e910bb944b237c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html">ListBucketsReader</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c">ListBuckets</a> (Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ad2b12e1262905f3c66e910bb944b237c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the list of buckets for the default project.  <a href="#ad2b12e1262905f3c66e910bb944b237c">More...</a><br /></td></tr>
 <tr class="separator:ad2b12e1262905f3c66e910bb944b237c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6ee60923a239c22709c8ada263672a"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a6a6ee60923a239c22709c8ada263672a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6a6ee60923a239c22709c8ada263672a">CreateBucket</a> (std::string bucket_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a6a6ee60923a239c22709c8ada263672a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Google Cloud Storage Bucket.  <a href="#a6a6ee60923a239c22709c8ada263672a">More...</a><br /></td></tr>
+<tr class="separator:a6a6ee60923a239c22709c8ada263672a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3608e27065bc85b59c6066180df65368"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a3608e27065bc85b59c6066180df65368"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3608e27065bc85b59c6066180df65368">CreateBucketForProject</a> (std::string bucket_name, std::string project_id, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a3608e27065bc85b59c6066180df65368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Google Cloud Storage Bucket in a given project.  <a href="#a3608e27065bc85b59c6066180df65368">More...</a><br /></td></tr>
+<tr class="separator:a3608e27065bc85b59c6066180df65368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd704ed4ade663686872c1ee994511cd"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:afd704ed4ade663686872c1ee994511cd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd704ed4ade663686872c1ee994511cd">GetBucketMetadata</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:afd704ed4ade663686872c1ee994511cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the bucket metadata and return it.  <a href="#afd704ed4ade663686872c1ee994511cd">More...</a><br /></td></tr>
@@ -340,6 +348,135 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6a6ee60923a239c22709c8ada263672a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a6ee60923a239c22709c8ada263672a">&#9670;&nbsp;</a></span>CreateBucket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> google::cloud::storage::v0::Client::CreateBucket </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new Google Cloud Storage Bucket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the new bucket. </td></tr>
+    <tr><td class="paramname">metadata</td><td>the metadata for the new Bucket. The <code>name</code> field is ignored in favor of <code>bucket_name</code>. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PredefinedAcl.html">PredefinedAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PredefinedDefaultObjectAcl.html">PredefinedDefaultObjectAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Projection.html">Projection</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    gcs::BucketMetadata meta =</div><div class="line">        client.CreateBucket(bucket_name, gcs::BucketMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Bucket created.  The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="a3608e27065bc85b59c6066180df65368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3608e27065bc85b59c6066180df65368">&#9670;&nbsp;</a></span>CreateBucketForProject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> google::cloud::storage::v0::Client::CreateBucketForProject </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>project_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new Google Cloud Storage Bucket in a given project. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the new bucket. </td></tr>
+    <tr><td class="paramname">project_id</td><td>the id of the project that will host the new bucket. </td></tr>
+    <tr><td class="paramname">metadata</td><td>the metadata for the new Bucket. The <code>name</code> field is ignored in favor of <code>bucket_name</code>. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PredefinedAcl.html">PredefinedAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PredefinedDefaultObjectAcl.html">PredefinedDefaultObjectAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Projection.html">Projection</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string project_id) {</div><div class="line">    gcs::BucketMetadata meta = client.CreateBucketForProject(</div><div class="line">        bucket_name, project_id, gcs::BucketMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Bucket created for project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;.&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
 <a id="ac904a4ac065a12f7cab583457b3bb636"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac904a4ac065a12f7cab583457b3bb636">&#9670;&nbsp;</a></span>CreateObjectAcl()</h2>
 
