@@ -96,8 +96,8 @@ BucketMetadata CreateBucketMetadataForTest() {
       "id": "test-bucket",
       "kind": "storage#bucket",
       "labels": {
-        "foo": "bar",
-        "baz": "qux"
+        "label-key-1": "label-value-1",
+        "label-key-2": "label-value-2"
       },
       "lifecycle": {
         "rule": [{
@@ -167,15 +167,15 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(2U, actual.label_count());
-  EXPECT_TRUE(actual.has_label("foo"));
-  EXPECT_EQ("bar", actual.label("foo"));
-  EXPECT_FALSE(actual.has_label("qux"));
+  EXPECT_TRUE(actual.has_label("label-key-1"));
+  EXPECT_EQ("label-value-1", actual.label("label-key-1"));
+  EXPECT_FALSE(actual.has_label("not-a-label-key"));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(actual.label("qux"), std::exception);
+  EXPECT_THROW(actual.label("not-a-label-key"), std::exception);
 #else
   // We accept any output here because the actual output depends on the
   // C++ library implementation.
-  EXPECT_DEATH_IF_SUPPORTED(actual.label("qux"), "");
+  EXPECT_DEATH_IF_SUPPORTED(actual.label("not-a-label-key"), "");
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 
   EXPECT_TRUE(actual.has_lifecycle());
@@ -235,7 +235,8 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("bucket=test-bucket"));
 
   // labels()
-  EXPECT_THAT(actual, HasSubstr("labels.foo=bar"));
+  EXPECT_THAT(actual, HasSubstr("labels.label-key-1=label-value-1"));
+  EXPECT_THAT(actual, HasSubstr("labels.label-key-2=label-value-2"));
 
   // default_acl()
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
@@ -265,6 +266,46 @@ TEST(BucketMetadataTest, IOStream) {
   // website()
   EXPECT_THAT(actual, HasSubstr("index.html"));
   EXPECT_THAT(actual, HasSubstr("404.html"));
+}
+
+/// @test Verify we can convert a BucketMetadata object to a JSON string.
+TEST(BucketMetadataTest, ToJsonString) {
+  auto tested = CreateBucketMetadataForTest();
+  auto actual_string = tested.ToJsonString();
+  // Verify that the produced string can be parsed as a JSON object.
+  internal::nl::json actual = internal::nl::json::parse(actual_string);
+  ASSERT_EQ(1U, actual.count("acl")) << actual;
+  EXPECT_TRUE(actual["acl"].is_array()) << actual;
+  EXPECT_EQ(2U, actual["acl"].size()) << actual;
+  EXPECT_EQ("user-test-user", actual["acl"][0].value("entity", ""));
+  EXPECT_EQ("user-test-user2", actual["acl"][1].value("entity", ""));
+
+  ASSERT_EQ(1U, actual.count("billing")) << actual;
+  EXPECT_TRUE(actual["billing"].value("requesterPays", false));
+
+  ASSERT_EQ(1U, actual.count("cors")) << actual;
+  EXPECT_TRUE(actual["cors"].is_array()) << actual;
+  EXPECT_EQ(2U, actual["cors"].size()) << actual;
+  EXPECT_EQ(3600, actual["cors"][0].value("maxAgeSeconds", 0));
+
+  ASSERT_EQ(1U, actual.count("defaultObjectAcl")) << actual;
+  EXPECT_TRUE(actual["defaultObjectAcl"].is_array()) << actual;
+  EXPECT_EQ(1U, actual["defaultObjectAcl"].size()) << actual;
+  EXPECT_EQ("user-test-user-3",
+            actual["defaultObjectAcl"][0].value("entity", ""));
+
+  ASSERT_EQ(1U, actual.count("encryption"));
+  EXPECT_EQ(
+      "projects/test-project-name/locations/us-central1/keyRings/"
+      "test-keyring-name/cryptoKeys/test-key-name",
+      actual["encryption"].value("defaultKmsKeyName", ""));
+
+  ASSERT_EQ(1U, actual.count("labels")) << actual;
+  EXPECT_TRUE(actual["labels"].is_object()) << actual;
+  EXPECT_EQ("label-value-1", actual["labels"].value("label-key-1", ""));
+  EXPECT_EQ("label-value-2", actual["labels"].value("label-key-2", ""));
+
+  EXPECT_EQ("test-bucket", actual.value("name", std::string{}));
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.

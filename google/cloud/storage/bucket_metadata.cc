@@ -155,6 +155,76 @@ BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
   return ParseFromJson(json);
 }
 
+std::string BucketMetadata::ToJsonString() const {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (not acl().empty()) {
+    for (BucketAccessControl const& a : acl()) {
+      json acl_as_json{
+          {"entity", a.entity()},
+          {"role", a.role()},
+      };
+      metadata_as_json["acl"].emplace_back(std::move(acl_as_json));
+    }
+  }
+
+  if (not cors().empty()) {
+    for (CorsEntry const& v : cors()) {
+      json cors_as_json;
+      if (v.max_age_seconds.has_value()) {
+        cors_as_json["maxAgeSeconds"] = *v.max_age_seconds;
+      }
+      if (not v.method.empty()) {
+        cors_as_json["method"] = v.method;
+      }
+      if (not v.origin.empty()) {
+        cors_as_json["origin"] = v.origin;
+      }
+      if (not v.response_header.empty()) {
+        cors_as_json["responseHeader"] = v.response_header;
+      }
+      metadata_as_json["cors"].emplace_back(std::move(cors_as_json));
+    }
+  }
+
+  if (has_billing()) {
+    json b{
+        {"requesterPays", billing().requester_pays},
+    };
+    metadata_as_json["billing"] = b;
+  }
+
+  if (not default_acl().empty()) {
+    for (ObjectAccessControl const& a : default_acl()) {
+      json acl_as_json{
+          {"entity", a.entity()},
+          {"role", a.role()},
+      };
+      metadata_as_json["defaultObjectAcl"].emplace_back(std::move(acl_as_json));
+    }
+  }
+
+  if (has_encryption()) {
+    json e{
+        {"defaultKmsKeyName", encryption().default_kms_key_name},
+    };
+    metadata_as_json["encryption"] = e;
+  }
+
+  if (not labels_.empty()) {
+    json labels_as_json;
+    for (auto const& kv : labels_) {
+      labels_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["labels"] = std::move(labels_as_json);
+  }
+
+  if (not name().empty()) {
+    metadata_as_json["name"] = name();
+  }
+  return metadata_as_json.dump();
+}
+
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
              rhs and

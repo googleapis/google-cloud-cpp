@@ -87,6 +87,41 @@ class GetBucketMetadataRequest
 };
 
 std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: insert` API.
+ */
+class CreateBucketRequest
+    : public GenericRequest<CreateBucketRequest, PredefinedAcl,
+                            PredefinedDefaultObjectAcl, Projection,
+                            UserProject> {
+ public:
+  CreateBucketRequest() = default;
+  explicit CreateBucketRequest(std::string project_id, BucketMetadata metadata)
+      : project_id_(std::move(project_id)), metadata_(std::move(metadata)) {}
+
+  /// Returns the request as the JSON API payload.
+  std::string json_payload() const { return metadata_.ToJsonString(); }
+
+  std::string const& project_id() const { return project_id_; }
+  CreateBucketRequest& set_project_id(std::string project_id) {
+    project_id_ = std::move(project_id);
+    return *this;
+  }
+
+  BucketMetadata const& metadata() const { return metadata_; }
+  CreateBucketRequest& set_metadata(BucketMetadata metadata) {
+    metadata_ = std::move(metadata);
+    return *this;
+  }
+
+ private:
+  std::string project_id_;
+  BucketMetadata metadata_;
+};
+
+std::ostream& operator<<(std::ostream& os, CreateBucketRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

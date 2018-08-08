@@ -106,6 +106,22 @@ TEST(ListBucketsResponseTest, Parse) {
   EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
 }
 
+TEST(CreateBucketsRequestTest, Basic) {
+  CreateBucketRequest request("project-for-new-bucket",
+                              BucketMetadata().set_name("test-bucket"));
+  request.set_multiple_options(UserProject("project-to-bill"),
+                               PredefinedAcl("projectPrivate"));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("CreateBucketRequest"));
+  EXPECT_THAT(actual, HasSubstr("project_id=project-for-new-bucket"));
+  EXPECT_THAT(actual, HasSubstr("userProject=project-to-bill"));
+  EXPECT_THAT(actual, HasSubstr("predefinedAcl=projectPrivate"));
+  EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

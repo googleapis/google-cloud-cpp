@@ -333,6 +333,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   static BucketMetadata ParseFromJson(internal::nl::json const& json);
   static BucketMetadata ParseFromString(std::string const& payload);
 
+  std::string ToJsonString() const;
+
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
   //@{
@@ -487,6 +489,11 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
+  BucketMetadata& set_name(std::string v) {
+    CommonMetadata::set_name(std::move(v));
+    return *this;
+  }
+
   using CommonMetadata::owner;
 
   std::int64_t const& project_number() const { return project_number_; }

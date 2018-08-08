@@ -102,10 +102,7 @@ class CommonMetadata {
   std::int64_t metageneration() const { return metageneration_; }
 
   std::string const& name() const { return name_; }
-  Derived& set_name(std::string value) {
-    name_ = std::move(value);
-    return *static_cast<Derived*>(this);
-  }
+  void set_name(std::string value) { name_ = std::move(value); }
 
   bool has_owner() const { return owner_.has_value(); }
   Owner const& owner() const { return owner_.value(); }
@@ -113,9 +110,8 @@ class CommonMetadata {
   std::string const& self_link() const { return self_link_; }
 
   std::string const& storage_class() const { return storage_class_; }
-  Derived& storage_class(std::string value) {
+  void set_storage_class(std::string value) {
     storage_class_ = std::move(value);
-    return *static_cast<Derived*>(this);
   }
 
   std::chrono::system_clock::time_point time_created() const {
