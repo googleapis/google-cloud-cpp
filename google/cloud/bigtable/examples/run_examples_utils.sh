@@ -15,6 +15,65 @@
 
 set -eu
 
+# If an example fails, this is set to 1 and the program exits with failure.
+EXIT_STATUS=0
+
+################################################
+# Run one example in a given program
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   program_name: the name of the program to run.
+#   example: the name of the example.
+#   *: the arguments for that example.
+# Returns:
+#   None
+################################################
+run_example() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: run_example <program_name> example [arg1 arg2 ...]"
+    exit 1
+  fi
+
+  local program_path=$1
+  local example=$2
+  shift 2
+  local arguments=$*
+  local program_name=$(basename ${program_path})
+
+  if [ ! -x ${program_path} ]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " ${program_name} is not compiled"
+    return
+  fi
+  log="$(mktemp -t "bigtable_samples.XXXXXX")"
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+      "${program_name} ${example} running"
+  echo ${program_path} ${example} ${arguments} >"${log}"
+  set +e
+  ${program_path} ${example} ${arguments} >>"${log}" 2>&1 </dev/null
+  if [ $? = 0 ]; then
+    echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        "${program_name} ${example}"
+  else
+    EXIT_STATUS=1
+    echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        "${program_name} ${example}"
+    echo
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+    if [ -f "testbench.log" ]; then
+      echo "================ [begin testbench.log ================"
+      cat "testbench.log"
+      echo "================ [end testbench.log ================"
+    fi
+  fi
+  set -e
+  /bin/rm -f "${log}"
+}
+
 function cleanup_instance {
   local project=$1
   local instance=$2
@@ -72,97 +131,48 @@ function run_all_instance_admin_examples {
   shift 2
 
   local setenv="env"
-  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    setenv="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
+  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+    echo "Aborting the test as the instance admin examples should not run" \
+        " against production."
+    exit 1
   fi
+  export BIGTABLE_EMULATOR_HOST="${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
 
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
-  echo
-  echo "Run create-instance example."
-  ${setenv} ../examples/bigtable_samples_instance_admin create-instance \
+  run_example ../examples/bigtable_samples_instance_admin create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
-
-  echo
-  echo "Run list-instances example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-instances \
+  run_example ../examples/bigtable_samples_instance_admin list-instances \
       "${project_id}"
-
-  echo
-  echo "Run get-instance example."
-  ${setenv} ../examples/bigtable_samples_instance_admin get-instance \
+  run_example ../examples/bigtable_samples_instance_admin get-instance \
       "${project_id}" "${INSTANCE}"
-
-  echo
-  echo "Run list-clusters example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-clusters \
+  run_example ../examples/bigtable_samples_instance_admin list-clusters \
       "${project_id}" "${INSTANCE}"
-
-  echo
-  echo "Run list-all-clusters example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-all-clusters \
+  run_example ../examples/bigtable_samples_instance_admin list-all-clusters \
       "${project_id}"
-
-  echo
-  echo "Run create cluster example."
-  ${setenv} ../examples/bigtable_samples_instance_admin create-cluster \
+  run_example ../examples/bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
-
-  echo
-  echo "Run create-app-profile example."
-  ${setenv} ../examples/bigtable_samples_instance_admin create-app-profile \
+  run_example ../examples/bigtable_samples_instance_admin create-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
-
-  echo
-  echo "Run create-app-profile-cluster example."
-  ${setenv} ../examples/bigtable_samples_instance_admin \
+  run_example ../examples/bigtable_samples_instance_admin \
       create-app-profile-cluster "${project_id}" "${INSTANCE}" "profile-c2" \
       "${INSTANCE}-c2"
-
-  echo
-  echo "Run list-app-profile example."
-  ${setenv} ../examples/bigtable_samples_instance_admin list-app-profiles \
+  run_example ../examples/bigtable_samples_instance_admin list-app-profiles \
       "${project_id}" "${INSTANCE}"
-
-  echo
-  echo "Run get-app-profile example."
-  ${setenv} ../examples/bigtable_samples_instance_admin get-app-profile \
+  run_example ../examples/bigtable_samples_instance_admin get-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-
-  echo
-  echo "Run delete-app-profile example."
-  ${setenv} ../examples/bigtable_samples_instance_admin delete-app-profile \
+  run_example ../examples/bigtable_samples_instance_admin delete-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-
-  echo
-  echo "Run get-iam-policy example."
-  ${setenv} ../examples/bigtable_samples_instance_admin get-iam-policy \
+  run_example ../examples/bigtable_samples_instance_admin get-iam-policy \
       "${project_id}" "${INSTANCE}"
-
-  echo
-  echo "Run set-iam-policy example."
-  ${setenv} ../examples/bigtable_samples_instance_admin set-iam-policy \
+  run_example ../examples/bigtable_samples_instance_admin set-iam-policy \
       "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
-
-  echo
-  echo "Run test-iam-permissions example."
-  ${setenv} ../examples/bigtable_samples_instance_admin test-iam-permissions \
+  run_example ../examples/bigtable_samples_instance_admin test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
-
-  echo
-  echo "Run delete-instance example."
   cleanup_instance "${project_id}" "${INSTANCE}"
-
-  echo
-  echo "Run example for basic instance operations"
-    ${setenv} ../examples/bigtable_samples_instance_admin run \
+  run_example ../examples/bigtable_samples_instance_admin run \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
-  trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
-
-  reset_trap
-  echo
 }
 
 # Run all the table admin examples.
@@ -189,48 +199,23 @@ function run_all_table_admin_examples {
   local -r INSTANCE="in-$(date +%s)"
 
   # Use the same table in all the tests.
-  local -r TABLE="sample-table"
+  local -r TABLE="sample-table-for-admin"
 
   # Create an instance to run these examples.
   ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
-  echo
-  echo "Run all basic table operations example."
-  ../examples/bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run create-table example."
-  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run list-tables example."
-  ../examples/bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run get-table example."
-  ../examples/bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  # Populate some data on the table, so the next examples are meaningful.
-  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run modify-table example."
-  ../examples/bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run drop-rows-by-prefix example."
-  ../examples/bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run drop-all-rows example."
-  ../examples/bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run delete-table example."
-  ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   reset_trap
   cleanup_instance "${project_id}" "${INSTANCE}"
@@ -260,57 +245,31 @@ function run_all_data_examples {
   local -r INSTANCE="in-$(date +%s)"
 
   # Use the same table in all the tests.
-  local -r TABLE="sample-table"
+  local -r TABLE="sample-table-for-data"
 
   # Create an instance to run these examples.
   ${setenv} ../examples/bigtable_samples_instance_admin create-instance "${project_id}" "${INSTANCE}" "${zone_id}"
   trap 'exit_handler "${project_id}" "${INSTANCE}"' EXIT
 
-  echo
-  echo "Run create-table example."
-  ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run apply example."
-  ../examples/bigtable_samples apply "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run bulk-apply example."
-  ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run read-row example."
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run read-rows-with-limit example."
-  ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run scan/read-rows example."
-  ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run sample-rows example."
-  ../examples/bigtable_samples sample-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run check-and-mutate example."
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  echo
-  echo "Run read-modify-write example."
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples apply "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples sample-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
 
   reset_trap
   cleanup_instance "${project_id}" "${INSTANCE}"

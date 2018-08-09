@@ -21,3 +21,5 @@ source "${BINDIR}/run_examples_utils.sh"
 # Run only the data examples in production. The CI systems go over project
 # quotas for admin operations if we run the admin examples too.
 run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"
+
+exit ${EXIT_STATUS}
