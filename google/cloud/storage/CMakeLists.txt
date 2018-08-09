@@ -134,6 +134,8 @@ add_library(storage_client
             internal/curl_client.cc
             internal/curl_streambuf.h
             internal/curl_streambuf.cc
+            internal/default_object_acl_requests.h
+            internal/default_object_acl_requests.cc
             internal/delete_object_request.h
             internal/delete_object_request.cc
             internal/empty_response.h
@@ -244,6 +246,7 @@ set(storage_client_unit_tests
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
     internal/bucket_requests_test.cc
+    internal/default_object_acl_requests_test.cc
     internal/delete_object_request_test.cc
     internal/format_rfc3339_test.cc
     internal/get_object_metadata_request_test.cc
