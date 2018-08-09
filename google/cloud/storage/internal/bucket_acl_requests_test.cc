@@ -66,35 +66,33 @@ TEST(BucketAclResponseTest, Simple) {
 
 TEST(BucketAclRequestTest, Get) {
   GetBucketAclRequest request("my-bucket", "user-test-user");
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
+  request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("user-test-user", request.entity());
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
-  EXPECT_THAT(str, HasSubstr("generation=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("user-test-user"));
 }
 
 TEST(BucketAclRequestTest, Delete) {
   DeleteBucketAclRequest request("my-bucket", "user-test-user");
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
+  request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("user-test-user", request.entity());
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
-  EXPECT_THAT(str, HasSubstr("generation=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("user-test-user"));
 }
 
 TEST(CreateBucketAclRequestTest, Create) {
   CreateBucketAclRequest request("my-bucket", "user-testuser", "READER");
-  request.set_multiple_options(UserProject("my-project"), Generation(42));
+  request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("user-testuser", request.entity());
   EXPECT_EQ("READER", request.role());
@@ -103,7 +101,6 @@ TEST(CreateBucketAclRequestTest, Create) {
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
-  EXPECT_THAT(str, HasSubstr("generation=42"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("user-testuser"));
   EXPECT_THAT(str, HasSubstr("READER"));

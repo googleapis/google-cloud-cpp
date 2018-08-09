@@ -145,6 +145,11 @@ std::pair<Status, BucketAccessControl> LoggingClient::GetBucketAcl(
   return MakeCall(*client_, &RawClient::GetBucketAcl, request, __func__);
 }
 
+std::pair<Status, BucketAccessControl> LoggingClient::CreateBucketAcl(
+    CreateBucketAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::CreateBucketAcl, request, __func__);
+}
+
 std::pair<Status, ListObjectAclResponse> LoggingClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjectAcl, request, __func__);

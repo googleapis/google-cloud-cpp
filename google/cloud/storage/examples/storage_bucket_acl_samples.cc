@@ -63,6 +63,28 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"create-bucket-acl <bucket-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [create bucket acl] [START storage_create_bucket_acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity,
+     std::string role) {
+    gcs::BucketAccessControl result =
+        client.CreateBucketAcl(bucket_name, entity, role);
+    std::cout << "Role " << result.role() << " granted to " << result.entity()
+              << " on bucket " << result.bucket() << "\n"
+              << "Full attributes: " << result << std::endl;
+  }
+  //! [create bucket acl] [END storage_create_bucket_acl]
+  (std::move(client), bucket_name, entity, role);
+}
+
 void GetBucketAcl(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 3) {
@@ -92,6 +114,7 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-bucket-acl", &ListBucketAcl},
+      {"create-bucket-acl", &CreateBucketAcl},
       {"get-bucket-acl", &GetBucketAcl},
   };
   for (auto&& kv : commands) {
