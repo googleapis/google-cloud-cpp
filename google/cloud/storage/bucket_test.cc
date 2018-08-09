@@ -186,6 +186,57 @@ TEST_F(BucketTest, DeleteBucketPermanentFailure) {
       "DeleteBucket");
 }
 
+TEST_F(BucketTest, UpdateBucket) {
+  std::string text = R"""({
+      "kind": "storage#bucket",
+      "id": "test-bucket-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "projectNumber": "123456789",
+      "name": "test-bucket-name",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": 7,
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
+})""";
+  auto expected = BucketMetadata::ParseFromString(text);
+
+  EXPECT_CALL(*mock, UpdateBucket(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Invoke([&expected](internal::UpdateBucketRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.metadata().name());
+        EXPECT_EQ("US", r.metadata().location());
+        EXPECT_EQ("STANDARD", r.metadata().storage_class());
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.UpdateBucket(
+      "test-bucket-name",
+      BucketMetadata().set_location("US").set_storage_class("STANDARD"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, UpdateBucketTooManyFailures) {
+  testing::TooManyFailuresTest<BucketMetadata>(
+      mock, EXPECT_CALL(*mock, UpdateBucket(_)),
+      [](Client& client) {
+        client.UpdateBucket("test-bucket-name", BucketMetadata());
+      },
+      "UpdateBucket");
+}
+
+TEST_F(BucketTest, UpdateBucketPermanentFailure) {
+  testing::PermanentFailureTest<BucketMetadata>(
+      *client, EXPECT_CALL(*mock, UpdateBucket(_)),
+      [](Client& client) {
+        client.UpdateBucket("test-bucket-name", BucketMetadata());
+      },
+      "UpdateBucket");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

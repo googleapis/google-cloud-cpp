@@ -94,6 +94,18 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   BucketMetadata get_meta = client.GetBucketMetadata(bucket_name);
   EXPECT_EQ(insert_meta, get_meta);
 
+  // Create a request to update the metadata, change the storage class because
+  // it is easy. And use either COLDLINE or NEARLINE depending on the existing
+  // value.
+  std::string desired_storage_class = storage_class::Coldline();
+  if (get_meta.storage_class() == storage_class::Coldline()) {
+    desired_storage_class = storage_class::Nearline();
+  }
+  BucketMetadata update = get_meta;
+  update.set_storage_class(desired_storage_class);
+  BucketMetadata updated_meta = client.UpdateBucket(bucket_name, update);
+  EXPECT_EQ(desired_storage_class, updated_meta.storage_class());
+
   client.DeleteBucket(bucket_name);
   buckets = client.ListBucketsForProject(project_id);
   current_buckets.assign(buckets.begin(), buckets.end());

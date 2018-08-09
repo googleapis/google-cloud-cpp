@@ -58,6 +58,8 @@ class RawClient {
       GetBucketMetadataRequest const& request) = 0;
   virtual std::pair<Status, EmptyResponse> DeleteBucket(
       DeleteBucketRequest const& request) = 0;
+  virtual std::pair<Status, BucketMetadata> UpdateBucket(
+      UpdateBucketRequest const&) = 0;
   //@}
 
   //@{

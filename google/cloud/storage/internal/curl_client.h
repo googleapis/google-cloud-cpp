@@ -48,6 +48,8 @@ class CurlClient : public RawClient {
       GetBucketMetadataRequest const& request) override;
   std::pair<Status, EmptyResponse> DeleteBucket(
       DeleteBucketRequest const&) override;
+  std::pair<Status, BucketMetadata> UpdateBucket(
+      UpdateBucketRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;

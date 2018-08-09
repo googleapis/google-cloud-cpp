@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 
@@ -41,6 +42,14 @@ CorsEntry ParseCors(internal::nl::json const& json) {
   result.response_header = parse_string_list(json, "responseHeader");
   return result;
 };
+
+void SetIfNotEmpty(internal::nl::json& json, char const* key,
+                   std::string const& value) {
+  if (value.empty()) {
+    return;
+  }
+  json[key] = value;
+}
 
 }  // namespace
 
@@ -160,11 +169,10 @@ std::string BucketMetadata::ToJsonString() const {
   json metadata_as_json;
   if (not acl().empty()) {
     for (BucketAccessControl const& a : acl()) {
-      json acl_as_json{
-          {"entity", a.entity()},
-          {"role", a.role()},
-      };
-      metadata_as_json["acl"].emplace_back(std::move(acl_as_json));
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
     }
   }
 
@@ -191,24 +199,22 @@ std::string BucketMetadata::ToJsonString() const {
     json b{
         {"requesterPays", billing().requester_pays},
     };
-    metadata_as_json["billing"] = b;
+    metadata_as_json["billing"] = std::move(b);
   }
 
   if (not default_acl().empty()) {
     for (ObjectAccessControl const& a : default_acl()) {
-      json acl_as_json{
-          {"entity", a.entity()},
-          {"role", a.role()},
-      };
-      metadata_as_json["defaultObjectAcl"].emplace_back(std::move(acl_as_json));
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["defaultObjectAcl"].emplace_back(std::move(entry));
     }
   }
 
   if (has_encryption()) {
-    json e{
-        {"defaultKmsKeyName", encryption().default_kms_key_name},
-    };
-    metadata_as_json["encryption"] = e;
+    json e;
+    SetIfNotEmpty(e, "defaultKmsKeyName", encryption().default_kms_key_name);
+    metadata_as_json["encryption"] = std::move(e);
   }
 
   if (not labels_.empty()) {
@@ -219,9 +225,59 @@ std::string BucketMetadata::ToJsonString() const {
     metadata_as_json["labels"] = std::move(labels_as_json);
   }
 
-  if (not name().empty()) {
-    metadata_as_json["name"] = name();
+  if (has_lifecycle()) {
+    json rule;
+    for (LifecycleRule const& v : lifecycle().rule) {
+      json condition;
+      auto const& c = v.condition();
+      if (c.age) {
+        condition["age"] = *c.age;
+      }
+      if (c.created_before.has_value()) {
+        condition["createdBefore"] = internal::FormatRfc3339(*c.created_before);
+      }
+      if (c.is_live) {
+        condition["isLive"] = *c.is_live;
+      }
+      if (c.matches_storage_class) {
+        condition["matchesStorageClass"] = *c.matches_storage_class;
+      }
+      if (c.num_newer_versions) {
+        condition["numNewerVersions"] = *c.num_newer_versions;
+      }
+      json action{{"type", v.action().type}};
+      if (not v.action().storage_class.empty()) {
+        action["storageClass"] = v.action().storage_class;
+      }
+      rule.emplace_back(json{{"condition", std::move(condition)},
+                             {"action", std::move(action)}});
+    }
+    metadata_as_json["lifecycle"] = json{{"rule", std::move(rule)}};
   }
+
+  SetIfNotEmpty(metadata_as_json, "location", location());
+
+  if (has_logging()) {
+    json l;
+    SetIfNotEmpty(l, "logBucket", logging().log_bucket);
+    SetIfNotEmpty(l, "logPrefix", logging().log_prefix);
+    metadata_as_json["logging"] = std::move(l);
+  }
+
+  SetIfNotEmpty(metadata_as_json, "name", name());
+  SetIfNotEmpty(metadata_as_json, "storageClass", storage_class());
+
+  if (versioning().has_value()) {
+    metadata_as_json["versioning"] = json{{"enabled", versioning()->enabled}};
+  }
+
+  if (has_website()) {
+    json w;
+    SetIfNotEmpty(w, "mainPageSuffix", website().main_page_suffix);
+    SetIfNotEmpty(w, "notFoundPage", website().not_found_page);
+    metadata_as_json["website"] = std::move(w);
+  }
+
   return metadata_as_json.dump();
 }
 
