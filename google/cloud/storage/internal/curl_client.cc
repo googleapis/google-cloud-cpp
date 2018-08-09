@@ -220,7 +220,6 @@ std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
       internal::ListBucketAclResponse::FromHttpResponse(std::move(payload)));
 }
 
-
 std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -237,7 +236,6 @@ std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
   return std::make_pair(Status(),
                         BucketAccessControl::ParseFromString(payload.payload));
 }
-
 
 std::pair<Status, BucketAccessControl> CurlClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {

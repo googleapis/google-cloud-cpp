@@ -81,8 +81,8 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
               << " on bucket " << result.bucket() << "\n"
               << "Full attributes: " << result << std::endl;
   }
-      //! [create bucket acl] [END storage_create_bucket_acl]
-      (std::move(client), bucket_name, entity, role);
+  //! [create bucket acl] [END storage_create_bucket_acl]
+  (std::move(client), bucket_name, entity, role);
 }
 
 void GetBucketAcl(google::cloud::storage::Client client, int& argc,
