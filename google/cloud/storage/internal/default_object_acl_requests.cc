@@ -129,8 +129,7 @@ std::ostream& operator<<(std::ostream& os,
   os << "DefaultObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", entity=" << r.entity();
   r.DumpOptions(os, ", ");
-  os << ", payload=" << r.payload();
-  return os << "}";
+  return os << ", payload=" << r.payload() << "}";
 }
 
 }  // namespace internal
