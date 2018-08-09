@@ -157,7 +157,7 @@ run_program_examples() {
 #   None
 ################################################
 run_all_bucket_examples() {
-  local bucket_name="cloud-cpp.tests.$(date +%s).${RANDOM}.${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
 
   # The list of commands in the storage_bucket_samples program that we will
   # test. Currently get-metadata assumes that $bucket_name is already created.
