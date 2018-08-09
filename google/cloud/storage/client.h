@@ -375,6 +375,8 @@ class Client {
    * @param bucket_name the name of the bucket.
    * @param entity the name of the entity added to the ACL.
    * @param role the role of the entity.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
    *
    * @snippet storage_bucket_acl_samples.cc create bucket acl
    */
@@ -392,7 +394,7 @@ class Client {
    * Get the value of an existing bucket ACL.
    *
    * @param bucket_name the name of the bucket to query.
-   * @param entity the name of the entity to query..
+   * @param entity the name of the entity to query.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
