@@ -370,6 +370,26 @@ class Client {
   }
 
   /**
+   * Get the value of an existing bucket ACL.
+   *
+   * @param bucket_name the name of the bucket to query.
+   * @param entity the name of the entity to query..
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc get bucket acl
+   */
+  template <typename... Options>
+  BucketAccessControl GetBucketAcl(std::string const& bucket_name,
+                                   std::string const& entity,
+                                   Options&&... options) {
+    internal::GetBucketAclRequest request(bucket_name, entity);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetBucketAcl(request).second;
+  }
+
+  /**
    * Retrieve the list of ObjectAccessControls for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.

@@ -95,6 +95,46 @@ TEST_F(BucketAccessControlsTest, ListBucketAclPermanentFailure) {
       "ListBucketAcl");
 }
 
+TEST_F(BucketAccessControlsTest, GetBucketAcl) {
+  BucketAccessControl expected = BucketAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "OWNER"
+      })""");
+
+  EXPECT_CALL(*mock, GetBucketAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Invoke([&expected](internal::GetBucketAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  BucketAccessControl actual =
+      client.GetBucketAcl("test-bucket", "user-test-user-1");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketAccessControlsTest, GetBucketAclTooManyFailures) {
+  testing::TooManyFailuresTest<BucketAccessControl>(
+      mock, EXPECT_CALL(*mock, GetBucketAcl(_)),
+      [](Client& client) {
+        client.GetBucketAcl("test-bucket-name", "user-test-user-1");
+      },
+      "GetBucketAcl");
+}
+
+TEST_F(BucketAccessControlsTest, GetBucketAclPermanentFailure) {
+  testing::PermanentFailureTest<BucketAccessControl>(
+      *client, EXPECT_CALL(*mock, GetBucketAcl(_)),
+      [](Client& client) {
+        client.GetBucketAcl("test-bucket-name", "user-test-user-1");
+      },
+      "GetBucketAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
