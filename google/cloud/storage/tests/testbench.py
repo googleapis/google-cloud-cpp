@@ -87,6 +87,26 @@ def canonical_entity_name(entity):
     return entity.lower()
 
 
+def index_acl(acl):
+    """Return a ACL as a dictionary indexed by the 'entity' values of the ACL.
+
+    We represent ACLs as lists of dictionaries, that makes it easy to convert
+    them to JSON objects. When changing them though, we need to make sure there
+    is a single element in the list for each `entity` value, so it is convenient
+    to convert the list to a dictionary (indexed by `entity`) of dictionaries.
+    This function performs that conversion.
+
+    :param acl:list of dict
+    :return:dict the ACL indexed by the entity of each entry.
+    """
+    # This can be expressed by a comprehension but turns out to be less
+    # readable in that form.
+    indexed = dict()
+    for e in acl:
+        indexed[e['entity']] = e
+    return indexed
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -145,11 +165,8 @@ class GcsObjectVersion(object):
         email = ''
         if entity.startswith('user-'):
             email = entity
-        # Replace or insert the entry
-        indexed = {
-            entry.get('entity').lower(): entry
-            for entry in self.metadata.get('acl', [])
-        }
+        # Replace or insert the entry.
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed[entity] = {
             'bucket': self.bucket_name,
             'email': email,
@@ -174,10 +191,7 @@ class GcsObjectVersion(object):
         :return:None
         """
         entity = canonical_entity_name(entity)
-        indexed = {
-            acl.get('entity').lower(): acl
-            for acl in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
@@ -404,7 +418,7 @@ class GcsBucket(object):
 
     def insert_acl(self, entity, role):
         """
-        Insert (or update) a new AccessControl entry for this object.
+        Insert (or update) a new BucketAccessControl entry for this bucket.
 
         :param entity:str the name of the entity to insert.
         :param role:str the new role
@@ -412,14 +426,10 @@ class GcsBucket(object):
         """
         entity = canonical_entity_name(entity)
         email = ''
-        entity_id = ''
         if entity.startswith('user-'):
-            email = entity
+            email = entity.replace('user-', '', 1)
         # Replace or insert the entry.
-        indexed = {
-            entry.get('entity').lower(): entry
-            for entry in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed[entity] = {
             'bucket': self.name,
             'email': email,
@@ -435,25 +445,22 @@ class GcsBucket(object):
 
     def delete_acl(self, entity):
         """
-        Delete a single AccessControl entry from the Object revision.
+        Delete a single BucketAccessControl entry from this bucket.
 
         :param entity:str the name of the entity.
         :return:None
         """
         entity = canonical_entity_name(entity)
-        indexed = {
-            acl.get('entity').lower(): acl
-            for acl in self.metadata.get('acl', [])
-        }
+        indexed = index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
     def get_acl(self, entity):
         """
-        Get a single AccessControl entry from the Object revision.
+        Get a single BucketAccessControl entry from this bucket.
 
         :param entity:str the name of the entity.
-        :return:dict with the contents of the ObjectAccessControl.
+        :return:dict with the contents of the BucketAccessControl.
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
@@ -464,7 +471,70 @@ class GcsBucket(object):
 
     def update_acl(self, entity, role):
         """
-        Update a single AccessControl entry in this Object revision.
+        Update a single BucketAccessControl entry in this bucket.
+
+        :param entity:str the name of the entity.
+        :param role:str the new role for the entity.
+        :return:dict with the contents of the BucketAccessControl.
+        """
+        return self.insert_acl(entity, role)
+
+    def insert_default_object_acl(self, entity, role):
+        """
+        Insert (or update) a new default ObjectAccessControl entry for this bucket.
+
+        :param entity:str the name of the entity to insert.
+        :param role:str the new role
+        :return:dict the dictionary representing the new ObjectAccessControl.
+        """
+        entity = canonical_entity_name(entity)
+        email = ''
+        if entity.startswith('user-'):
+            email = email.replace('user-', '', 1)
+        # Replace or insert the entry.
+        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
+        indexed[entity] = {
+            'bucket': self.name,
+            'email': email,
+            'entity': entity,
+            'etag': self.metadata.get('etag', 'XYZ='),
+            'id': self.metadata.get('id', '') + '/' + entity,
+            'kind': 'storage#objectAccessControl',
+            'role': role,
+            'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
+        }
+        self.metadata['defaultObjectAcl'] = indexed.values()
+        return indexed[entity]
+
+    def delete_default_object_acl(self, entity):
+        """
+        Delete a single default ObjectAccessControl entry from this bucket.
+
+        :param entity:str the name of the entity.
+        :return:None
+        """
+        entity = canonical_entity_name(entity)
+        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
+        indexed.pop(entity)
+        self.metadata['defaultObjectAcl'] = indexed.values()
+
+    def get_default_object_acl(self, entity):
+        """
+        Get a single default ObjectAccessControl entry from this Bucket.
+
+        :param entity:str the name of the entity.
+        :return:dict with the contents of the BucketAccessControl.
+        """
+        entity = canonical_entity_name(entity)
+        for acl in self.metadata.get('defaultObjectAcl', []):
+            if acl.get('entity', '').lower() == entity:
+                return acl
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
+
+    def update_default_object_acl(self, entity, role):
+        """
+        Update a single default ObjectAccessControl entry in this Bucket.
 
         :param entity:str the name of the entity.
         :param role:str the new role for the entity.
@@ -568,9 +638,10 @@ def buckets_delete(bucket_name):
       """
     bucket = GCS_BUCKETS.get(bucket_name, None)
     if bucket is None:
-        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
-    del(GCS_BUCKETS[bucket_name])
+    del (GCS_BUCKETS[bucket_name])
     return json.dumps({})
 
 
@@ -582,7 +653,8 @@ def bucket_acl_list(bucket_name):
      """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     if gcs_bucket is None:
-        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('acl', []),
@@ -638,10 +710,74 @@ def bucket_acl_update(bucket_name, entity):
     return json.dumps(acl)
 
 
+@gcs.route('/b/<bucket_name>/defaultObjectAcl')
+def bucket_default_object_acl_list(bucket_name):
+    """Implement the 'BucketAccessControls: list' API.
+
+     List Bucket Access Controls.
+     """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    if gcs_bucket is None:
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
+    gcs_bucket.check_preconditions(flask.request)
+    result = {
+        'items': gcs_bucket.metadata.get('defaultObjectAcl', []),
+    }
+    return json.dumps(result)
+
+
+@gcs.route('/b/<bucket_name>/defaultObjectAcl', methods=['POST'])
+def bucket_default_object_acl_create(bucket_name):
+    """Implement the 'BucketAccessControls: create' API.
+
+     Create a Bucket Access Control.
+     """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    payload = json.loads(flask.request.data)
+    return json.dumps(
+        gcs_bucket.insert_default_object_acl(
+            payload.get('entity', ''), payload.get('role', '')))
+
+
+@gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
+def bucket_default_object_acl_delete(bucket_name, entity):
+    """Implement the 'BucketAccessControls: delete' API.
+
+      Delete a Bucket Access Control.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.delete_default_object_acl(entity)
+    return json.dumps({})
+
+
+@gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>')
+def bucket_default_object_acl_get(bucket_name, entity):
+    """Implement the 'BucketAccessControls: get' API.
+
+      Get the access control configuration for a particular entity.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    acl = gcs_bucket.get_default_object_acl(entity)
+    return json.dumps(acl)
+
+
+@gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PUT'])
+def bucket_default_object_acl_update(bucket_name, entity):
+    """Implement the 'DefaultObjectAccessControls: update' API.
+
+      Update the access control configuration for a particular entity.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
+    payload = json.loads(flask.request.data)
+    acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
+    return json.dumps(acl)
+
+
 @gcs.route('/b/<bucket_name>/o')
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
-    base_url = flask.url_for('gcs_index', _external=True)
     result = {'next_page_token': '', 'items': []}
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
