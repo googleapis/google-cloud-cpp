@@ -23,6 +23,7 @@ var searchData=
   ['corsentry',['CorsEntry',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html',1,'google::cloud::storage::v0']]],
   ['crc32c',['crc32c',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a018b732e33a7dde44671f40137318180',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['createbucket',['CreateBucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6a6ee60923a239c22709c8ada263672a',1,'google::cloud::storage::v0::Client']]],
+  ['createbucketacl',['CreateBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af607e1aa2a0d0ee370417e0a8d7e8899',1,'google::cloud::storage::v0::Client']]],
   ['createbucketforproject',['CreateBucketForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3608e27065bc85b59c6066180df65368',1,'google::cloud::storage::v0::Client']]],
   ['created_5fbefore',['created_before',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#ae2f3b29358c15d2eb7fb32bd2213470c',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
   ['createdbefore',['CreatedBefore',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a039d417bd85e9d6fde3486ad56690583',1,'google::cloud::storage::v0::LifecycleRule::CreatedBefore(std::string const &amp;timestamp)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5127a8475955925f4b5f9cc0ce4a7830',1,'google::cloud::storage::v0::LifecycleRule::CreatedBefore(std::chrono::system_clock::time_point date)']]],

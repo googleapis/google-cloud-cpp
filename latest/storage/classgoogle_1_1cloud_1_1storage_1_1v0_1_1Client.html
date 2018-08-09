@@ -155,6 +155,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab0030af74c45749f6178f160728d8ef6"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0030af74c45749f6178f160728d8ef6">ListBucketAcl</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0030af74c45749f6178f160728d8ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of BucketAccessControls for a bucket.  <a href="#ab0030af74c45749f6178f160728d8ef6">More...</a><br /></td></tr>
 <tr class="separator:ab0030af74c45749f6178f160728d8ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af607e1aa2a0d0ee370417e0a8d7e8899">CreateBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, std::string const &amp;role, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new entry in a bucket ACL.  <a href="#af607e1aa2a0d0ee370417e0a8d7e8899">More...</a><br /></td></tr>
+<tr class="separator:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0825ec57728cfe34b27b0ece813e56e"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ab0825ec57728cfe34b27b0ece813e56e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0825ec57728cfe34b27b0ece813e56e">GetBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0825ec57728cfe34b27b0ece813e56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of an existing bucket ACL.  <a href="#ab0825ec57728cfe34b27b0ece813e56e">More...</a><br /></td></tr>
@@ -411,6 +415,67 @@ template&lt;typename... Options&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    gcs::BucketMetadata meta =</div><div class="line">        client.CreateBucket(bucket_name, gcs::BucketMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Bucket created.  The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
+</div>
+</div>
+<a id="af607e1aa2a0d0ee370417e0a8d7e8899"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af607e1aa2a0d0ee370417e0a8d7e8899">&#9670;&nbsp;</a></span>CreateBucketAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> google::cloud::storage::v0::Client::CreateBucketAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>role</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new entry in a bucket ACL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">entity</td><td>the name of the entity added to the ACL. </td></tr>
+    <tr><td class="paramname">role</td><td>the role of the entity. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity,</div><div class="line">     std::string role) {</div><div class="line">    gcs::BucketAccessControl result =</div><div class="line">        client.CreateBucketAcl(bucket_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; granted to &quot;</span> &lt;&lt; result.entity()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on bucket &quot;</span> &lt;&lt; result.bucket() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a3608e27065bc85b59c6066180df65368"></a>
@@ -767,7 +832,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket to query. </td></tr>
-    <tr><td class="paramname">entity</td><td>the name of the entity to query.. </td></tr>
+    <tr><td class="paramname">entity</td><td>the name of the entity to query. </td></tr>
     <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
   </table>
   </dd>
@@ -1061,7 +1126,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
-    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Generation.html">Generation</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
   </table>
   </dd>
 </dl>
