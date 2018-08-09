@@ -81,7 +81,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   };
   ASSERT_EQ(0, name_counter(bucket_name, initial_buckets))
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
-      << "This is unexpected as the test generates a random bucket name.";
+      << " This is unexpected as the test generates a random bucket name.";
 
   auto insert_meta =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
