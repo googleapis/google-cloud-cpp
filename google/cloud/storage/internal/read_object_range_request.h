@@ -51,16 +51,7 @@ class ReadObjectRangeRequest
         end_(0) {}
 
   std::int64_t begin() const { return begin_; }
-  ReadObjectRangeRequest& set_begin(std::int64_t v) {
-    begin_ = v;
-    return *this;
-  }
-
   std::int64_t end() const { return end_; }
-  ReadObjectRangeRequest& set_end(std::int64_t v) {
-    end_ = v;
-    return *this;
-  }
 
  private:
   std::int64_t begin_;
