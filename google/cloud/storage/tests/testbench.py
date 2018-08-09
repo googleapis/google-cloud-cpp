@@ -606,7 +606,7 @@ def buckets_insert():
     if bucket is not None:
         raise ErrorResponse('Bucket %s already exists' % bucket_name, status_code=503)
     bucket = GcsBucket(base_url, bucket_name)
-    bucket.update_from(payload)
+    bucket.update_from_metadata(payload)
     GCS_BUCKETS[bucket_name] = bucket
     return json.dumps(bucket.metadata)
 
