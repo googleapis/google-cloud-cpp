@@ -131,6 +131,29 @@ class DeleteBucketRequest
 };
 
 std::ostream& operator<<(std::ostream& os, DeleteBucketRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: update` API.
+ */
+class UpdateBucketRequest
+    : public GenericRequest<
+          UpdateBucketRequest, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
+ public:
+  UpdateBucketRequest() = default;
+  explicit UpdateBucketRequest(BucketMetadata metadata)
+      : metadata_(std::move(metadata)) {}
+
+  /// Returns the request as the JSON API payload.
+  std::string json_payload() const { return metadata_.ToJsonString(); }
+
+  BucketMetadata const& metadata() const { return metadata_; }
+
+ private:
+  BucketMetadata metadata_;
+};
+
+std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

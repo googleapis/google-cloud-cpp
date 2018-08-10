@@ -76,6 +76,9 @@ run_program_examples() {
         create-bucket-for-project)
             arguments="${base_arguments} ${PROJECT_ID}"
             ;;
+        change-default-storage-class)
+            arguments="${base_arguments} NEARLINE"
+            ;;
         insert-object)
             arguments="${base_arguments} a-short-string-to-put-in-the-object"
             ;;
@@ -175,6 +178,7 @@ get-bucket-metadata
 delete-bucket
 create-bucket-for-project
 get-bucket-metadata
+change-default-storage-class
 delete-bucket
 _EOF_
 )

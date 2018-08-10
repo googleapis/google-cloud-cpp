@@ -109,6 +109,13 @@ BucketMetadata CreateBucketMetadataForTest() {
             "type": "SetStorageClass",
             "storageClass": "NEARLINE"
           }
+        }, {
+          "condition": {
+            "createdBefore": "2016-01-01T00:00:00Z"
+          },
+          "action": {
+            "type": "Delete"
+          }
         }]
       },
       "location": "US",
@@ -179,16 +186,23 @@ TEST(BucketMetadataTest, Parse) {
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 
   EXPECT_TRUE(actual.has_lifecycle());
-  EXPECT_EQ(1U, actual.lifecycle().rule.size());
-  LifecycleRuleCondition expected_condition =
+  EXPECT_EQ(2U, actual.lifecycle().rule.size());
+  LifecycleRuleCondition expected_condition_0 =
       LifecycleRule::ConditionConjunction(
           LifecycleRule::MaxAge(30),
           LifecycleRule::MatchesStorageClassStandard());
-  EXPECT_EQ(expected_condition, actual.lifecycle().rule.at(0).condition());
+  EXPECT_EQ(expected_condition_0, actual.lifecycle().rule.at(0).condition());
 
-  LifecycleRuleAction expected_action =
+  LifecycleRuleAction expected_action_0 =
       LifecycleRule::SetStorageClassNearline();
-  EXPECT_EQ(expected_action, actual.lifecycle().rule.at(0).action());
+  EXPECT_EQ(expected_action_0, actual.lifecycle().rule.at(0).action());
+
+  LifecycleRuleCondition expected_condition_1 =
+      LifecycleRule::CreatedBefore("2016-01-01T00:00:00Z");
+  EXPECT_EQ(expected_condition_1, actual.lifecycle().rule.at(1).condition());
+
+  LifecycleRuleAction expected_action_1 = LifecycleRule::Delete();
+  EXPECT_EQ(expected_action_1, actual.lifecycle().rule.at(1).action());
 
   EXPECT_EQ("US", actual.location());
 
@@ -274,38 +288,93 @@ TEST(BucketMetadataTest, ToJsonString) {
   auto actual_string = tested.ToJsonString();
   // Verify that the produced string can be parsed as a JSON object.
   internal::nl::json actual = internal::nl::json::parse(actual_string);
+
+  // acl()
   ASSERT_EQ(1U, actual.count("acl")) << actual;
   EXPECT_TRUE(actual["acl"].is_array()) << actual;
   EXPECT_EQ(2U, actual["acl"].size()) << actual;
   EXPECT_EQ("user-test-user", actual["acl"][0].value("entity", ""));
   EXPECT_EQ("user-test-user2", actual["acl"][1].value("entity", ""));
 
+  // billing()
   ASSERT_EQ(1U, actual.count("billing")) << actual;
   EXPECT_TRUE(actual["billing"].value("requesterPays", false));
 
+  // cors()
   ASSERT_EQ(1U, actual.count("cors")) << actual;
   EXPECT_TRUE(actual["cors"].is_array()) << actual;
   EXPECT_EQ(2U, actual["cors"].size()) << actual;
   EXPECT_EQ(3600, actual["cors"][0].value("maxAgeSeconds", 0));
 
+  // default_acl()
   ASSERT_EQ(1U, actual.count("defaultObjectAcl")) << actual;
   EXPECT_TRUE(actual["defaultObjectAcl"].is_array()) << actual;
   EXPECT_EQ(1U, actual["defaultObjectAcl"].size()) << actual;
   EXPECT_EQ("user-test-user-3",
             actual["defaultObjectAcl"][0].value("entity", ""));
 
+  // encryption()
   ASSERT_EQ(1U, actual.count("encryption"));
   EXPECT_EQ(
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual["encryption"].value("defaultKmsKeyName", ""));
 
+  // labels()
   ASSERT_EQ(1U, actual.count("labels")) << actual;
   EXPECT_TRUE(actual["labels"].is_object()) << actual;
   EXPECT_EQ("label-value-1", actual["labels"].value("label-key-1", ""));
   EXPECT_EQ("label-value-2", actual["labels"].value("label-key-2", ""));
 
-  EXPECT_EQ("test-bucket", actual.value("name", std::string{}));
+  // lifecycle()
+  ASSERT_EQ(1U, actual.count("lifecycle")) << actual;
+  EXPECT_TRUE(actual["lifecycle"].is_object()) << actual;
+  EXPECT_EQ(1U, actual["lifecycle"].count("rule")) << actual["lifecycle"];
+  EXPECT_TRUE(actual["lifecycle"]["rule"].is_array()) << actual["lifecycle"];
+  ASSERT_EQ(2U, actual["lifecycle"]["rule"].size());
+  auto rule = actual["lifecycle"]["rule"][0];
+  ASSERT_TRUE(rule.is_object()) << rule;
+  EXPECT_EQ(
+      internal::nl::json({{"age", 30}, {"matchesStorageClass", {"STANDARD"}}}),
+      rule.value("condition", internal::nl::json{}));
+  EXPECT_EQ(internal::nl::json({
+                {"type", "SetStorageClass"},
+                {"storageClass", "NEARLINE"},
+            }),
+            rule.value("action", internal::nl::json{}));
+
+  rule = actual["lifecycle"]["rule"][1];
+  EXPECT_EQ(internal::nl::json({{"createdBefore", "2016-01-01T00:00:00Z"}}),
+            rule.value("condition", internal::nl::json{}));
+  EXPECT_EQ(internal::nl::json({{"type", "Delete"}}),
+            rule.value("action", internal::nl::json{}));
+
+  // location()
+  ASSERT_EQ(1U, actual.count("location")) << actual;
+  EXPECT_EQ("US", actual.value("location", ""));
+
+  // logging()
+  ASSERT_EQ(1U, actual.count("logging")) << actual;
+  ASSERT_TRUE(actual["logging"].is_object()) << actual;
+  EXPECT_EQ("test-log-bucket", actual["logging"].value("logBucket", ""));
+  EXPECT_EQ("test-log-prefix", actual["logging"].value("logPrefix", ""));
+
+  // name()
+  EXPECT_EQ("test-bucket", actual.value("name", ""));
+
+  // storage_class()
+  ASSERT_EQ("STANDARD", actual.value("storageClass", ""));
+
+  // versioning()
+  ASSERT_EQ(1U, actual.count("versioning")) << actual;
+  ASSERT_EQ(1U, actual["versioning"].is_object()) << actual;
+  ASSERT_TRUE(actual["versioning"].value("enabled", false));
+
+  // website()
+  ASSERT_EQ(1U, actual.count("website")) << actual;
+  ASSERT_TRUE(actual["website"].is_object()) << actual;
+  EXPECT_EQ("index.html", actual["website"].value("mainPageSuffix", ""));
+  EXPECT_EQ("404.html", actual["website"].value("notFoundPage", ""));
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.

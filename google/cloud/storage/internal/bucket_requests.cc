@@ -67,6 +67,12 @@ std::ostream& operator<<(std::ostream& os, DeleteBucketRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r) {
+  os << "UpdateBucketRequest={metadata=" << r.metadata();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

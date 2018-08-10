@@ -154,6 +154,27 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
   //! [delete bucket] [END storage_delete_bucket]
   (std::move(client), bucket_name);
 }
+
+void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"change-default-storage-class <bucket-name> <new-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [update bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class) {
+    gcs::BucketMetadata meta = client.GetBucketMetadata(bucket_name);
+    meta.set_storage_class(storage_class);
+    gcs::BucketMetadata updated_meta = client.UpdateBucket(bucket_name, meta);
+    std::cout << "Updated the storage class in " << bucket_name << " to "
+              << storage_class << ". The full updated metadata is "
+              << updated_meta << std::endl;
+  }
+  //! [update bucket]
+  (std::move(client), bucket_name, storage_class);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -171,6 +192,7 @@ int main(int argc, char* argv[]) try {
       {"create-bucket-for-project", &CreateBucketForProject},
       {"get-bucket-metadata", &GetBucketMetadata},
       {"delete-bucket", &DeleteBucket},
+      {"change-default-storage-class", &ChangeDefaultStorageClass},
   };
   for (auto&& kv : commands) {
     try {

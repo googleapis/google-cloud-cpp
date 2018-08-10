@@ -216,6 +216,31 @@ class Client {
   }
 
   /**
+   * Updates the metadata in a Google Cloud Storage Bucket.
+   *
+   * @param bucket_name the name of the new bucket.
+   * @param metadata the new metadata for the Bucket.  The `name` field is
+   *     ignored in favor of @p bucket_name.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetaGenerationMatch`,
+   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc update bucket
+   */
+  template <typename... Options>
+  BucketMetadata UpdateBucket(std::string bucket_name, BucketMetadata metadata,
+                              Options&&... options) {
+    metadata.set_name(std::move(bucket_name));
+    internal::UpdateBucketRequest request(std::move(metadata));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->UpdateBucket(request).second;
+  }
+
+  /**
    * Create an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.

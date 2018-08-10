@@ -611,6 +611,24 @@ def buckets_insert():
     return json.dumps(bucket.metadata)
 
 
+@gcs.route('/b/<bucket_name>', methods=['PUT'])
+def buckets_update(bucket_name):
+    """Implement the 'Buckets: update' API: update an existing Bucket."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    insert_magic_bucket(base_url)
+    payload = json.loads(flask.request.data)
+    bucket_name = payload.get('name')
+    if bucket_name is None:
+        raise ErrorResponse('Missing bucket name in `Buckets: update`',
+                            status_code=412)
+    bucket = GCS_BUCKETS.get(bucket_name)
+    if bucket is None:
+        raise ErrorResponse('Bucket %s does not exist' % bucket_name, status_code=404)
+    bucket.check_preconditions(flask.request)
+    bucket.update_from_metadata(payload)
+    return json.dumps(bucket.metadata)
+
+
 @gcs.route('/b/<bucket_name>')
 def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
