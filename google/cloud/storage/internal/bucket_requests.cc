@@ -81,78 +81,78 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
   BucketMetadataPatchBuilder builder;
 
   if (original.acl() != updated.acl()) {
-    builder.set_acl(updated.acl());
+    builder.SetAcl(updated.acl());
   }
 
   if (original.billing_as_optional() != updated.billing_as_optional()) {
     if (updated.has_billing()) {
-      builder.set_billing(updated.billing());
+      builder.SetBilling(updated.billing());
     } else {
-      builder.reset_billing();
+      builder.ResetBilling();
     }
   }
 
   if (original.cors() != updated.cors()) {
-    builder.set_cors(updated.cors());
+    builder.SetCors(updated.cors());
   }
 
   if (original.default_acl() != updated.default_acl()) {
-    builder.set_default_acl(updated.default_acl());
+    builder.SetDefaultAcl(updated.default_acl());
   }
 
   if (original.encryption_as_optional() != updated.encryption_as_optional()) {
     if (updated.has_encryption()) {
-      builder.set_encryption(updated.encryption());
+      builder.SetEncryption(updated.encryption());
     } else {
-      builder.reset_encryption();
+      builder.ResetEncryption();
     }
   }
 
   if (original.all_labels() != updated.all_labels()) {
-    builder.set_label(updated.all_labels());
+    builder.SetLabel(updated.all_labels());
   }
 
   if (original.lifecycle_as_optional() != updated.lifecycle_as_optional()) {
     if (updated.has_lifecycle()) {
-      builder.set_lifecycle(updated.lifecycle());
+      builder.SetLifecycle(updated.lifecycle());
     } else {
-      builder.reset_lifecycle();
+      builder.ResetLifecycle();
     }
   }
 
   if (original.location() != updated.location()) {
-    builder.set_location(updated.location());
+    builder.SetLocation(updated.location());
   }
 
   if (original.loggin_as_optional() != updated.loggin_as_optional()) {
     if (updated.has_logging()) {
-      builder.set_logging(updated.logging());
+      builder.SetLogging(updated.logging());
     } else {
-      builder.reset_logging();
+      builder.ResetLogging();
     }
   }
 
   if (original.name() != updated.name()) {
-    builder.set_name(updated.name());
+    builder.SetName(updated.name());
   }
 
   if (original.storage_class() != updated.storage_class()) {
-    builder.set_storage_class(updated.storage_class());
+    builder.SetStorageClass(updated.storage_class());
   }
 
   if (original.versioning() != updated.versioning()) {
     if (updated.has_versioning()) {
-      builder.set_versioning(*updated.versioning());
+      builder.SetVersioning(*updated.versioning());
     } else {
-      builder.reset_versioning();
+      builder.ResetVersioning();
     }
   }
 
   if (original.website_as_optional() != updated.website_as_optional()) {
     if (updated.has_website()) {
-      builder.set_website(updated.website());
+      builder.SetWebsite(updated.website());
     } else {
-      builder.reset_website();
+      builder.ResetWebsite();
     }
   }
 

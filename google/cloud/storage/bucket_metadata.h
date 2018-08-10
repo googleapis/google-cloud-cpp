@@ -611,47 +611,46 @@ class BucketMetadataPatchBuilder {
 
   std::string BuildPatch() const { return impl_.ToString(); }
 
-  BucketMetadataPatchBuilder& set_acl(
-      std::vector<BucketAccessControl> const& v);
-  BucketMetadataPatchBuilder& reset_acl();
+  BucketMetadataPatchBuilder& SetAcl(std::vector<BucketAccessControl> const& v);
+  BucketMetadataPatchBuilder& ResetAcl();
 
-  BucketMetadataPatchBuilder& set_billing(BucketBilling const& v);
-  BucketMetadataPatchBuilder& reset_billing();
+  BucketMetadataPatchBuilder& SetBilling(BucketBilling const& v);
+  BucketMetadataPatchBuilder& ResetBilling();
 
-  BucketMetadataPatchBuilder& set_cors(std::vector<CorsEntry> const& v);
-  BucketMetadataPatchBuilder& reset_cors();
+  BucketMetadataPatchBuilder& SetCors(std::vector<CorsEntry> const& v);
+  BucketMetadataPatchBuilder& ResetCors();
 
-  BucketMetadataPatchBuilder& set_default_acl(
+  BucketMetadataPatchBuilder& SetDefaultAcl(
       std::vector<ObjectAccessControl> const& v);
-  BucketMetadataPatchBuilder& reset_default_acl();
+  BucketMetadataPatchBuilder& ResetDefaultAcl();
 
-  BucketMetadataPatchBuilder& set_encryption(BucketEncryption const& v);
-  BucketMetadataPatchBuilder& reset_encryption();
+  BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);
+  BucketMetadataPatchBuilder& ResetEncryption();
 
-  BucketMetadataPatchBuilder& set_label(
+  BucketMetadataPatchBuilder& SetLabel(
       std::map<std::string, std::string> const& v);
-  BucketMetadataPatchBuilder& reset_label();
+  BucketMetadataPatchBuilder& ResetLabel();
 
-  BucketMetadataPatchBuilder& set_lifecycle(BucketLifecycle const& v);
-  BucketMetadataPatchBuilder& reset_lifecycle();
+  BucketMetadataPatchBuilder& SetLifecycle(BucketLifecycle const& v);
+  BucketMetadataPatchBuilder& ResetLifecycle();
 
-  BucketMetadataPatchBuilder& set_location(std::string const& v);
-  BucketMetadataPatchBuilder& reset_location();
+  BucketMetadataPatchBuilder& SetLocation(std::string const& v);
+  BucketMetadataPatchBuilder& ResetLocation();
 
-  BucketMetadataPatchBuilder& set_logging(BucketLogging const& v);
-  BucketMetadataPatchBuilder& reset_logging();
+  BucketMetadataPatchBuilder& SetLogging(BucketLogging const& v);
+  BucketMetadataPatchBuilder& ResetLogging();
 
-  BucketMetadataPatchBuilder& set_name(std::string const& v);
-  BucketMetadataPatchBuilder& reset_name();
+  BucketMetadataPatchBuilder& SetName(std::string const& v);
+  BucketMetadataPatchBuilder& ResetName();
 
-  BucketMetadataPatchBuilder& set_storage_class(std::string const& v);
-  BucketMetadataPatchBuilder& reset_storage_class();
+  BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
+  BucketMetadataPatchBuilder& ResetStorageClass();
 
-  BucketMetadataPatchBuilder& set_versioning(BucketVersioning const& v);
-  BucketMetadataPatchBuilder& reset_versioning();
+  BucketMetadataPatchBuilder& SetVersioning(BucketVersioning const& v);
+  BucketMetadataPatchBuilder& ResetVersioning();
 
-  BucketMetadataPatchBuilder& set_website(BucketWebsite const& v);
-  BucketMetadataPatchBuilder& reset_website();
+  BucketMetadataPatchBuilder& SetWebsite(BucketWebsite const& v);
+  BucketMetadataPatchBuilder& ResetWebsite();
 
  private:
   internal::PatchBuilder impl_;

@@ -166,8 +166,8 @@ TEST(PatchBucketRequestTest, Diff) {
 
 TEST(PatchBucketRequestTest, Builder) {
   PatchBucketRequest request("test-bucket", BucketMetadataPatchBuilder()
-                                                .set_storage_class("NEARLINE")
-                                                .reset_default_acl());
+                                                .SetStorageClass("NEARLINE")
+                                                .ResetDefaultAcl());
   request.set_multiple_options(IfMetaGenerationNotMatch(7),
                                UserProject("my-project"));
   EXPECT_EQ("test-bucket", request.bucket());

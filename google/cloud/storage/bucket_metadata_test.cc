@@ -621,7 +621,7 @@ TEST(BucketMetadataTest, ResetWebsite) {
 
 TEST(BucketMetadataPatchBuilder, SetAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.set_acl({BucketAccessControl::ParseFromString(
+  builder.SetAcl({BucketAccessControl::ParseFromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""")});
 
   auto actual = builder.BuildPatch();
@@ -635,7 +635,7 @@ TEST(BucketMetadataPatchBuilder, SetAcl) {
 
 TEST(BucketMetadataPatchBuilder, ResetAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_acl();
+  builder.ResetAcl();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -645,7 +645,7 @@ TEST(BucketMetadataPatchBuilder, ResetAcl) {
 
 TEST(BucketMetadataPatchBuilder, SetBilling) {
   BucketMetadataPatchBuilder builder;
-  builder.set_billing(BucketBilling{true});
+  builder.SetBilling(BucketBilling{true});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -656,7 +656,7 @@ TEST(BucketMetadataPatchBuilder, SetBilling) {
 
 TEST(BucketMetadataPatchBuilder, ResetBilling) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_billing();
+  builder.ResetBilling();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -673,7 +673,7 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
                 {},
                 {"origin1"},
                 {}});
-  builder.set_cors(v);
+  builder.SetCors(v);
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -693,7 +693,7 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
 
 TEST(BucketMetadataPatchBuilder, ResetCors) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_cors();
+  builder.ResetCors();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -703,7 +703,7 @@ TEST(BucketMetadataPatchBuilder, ResetCors) {
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.set_default_acl({ObjectAccessControl::ParseFromString(
+  builder.SetDefaultAcl({ObjectAccessControl::ParseFromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""")});
 
   auto actual = builder.BuildPatch();
@@ -718,7 +718,7 @@ TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
 
 TEST(BucketMetadataPatchBuilder, ResetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_default_acl();
+  builder.ResetDefaultAcl();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -731,7 +731,7 @@ TEST(BucketMetadataPatchBuilder, SetEncryption) {
   std::string expected =
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name";
-  builder.set_encryption(BucketEncryption{expected});
+  builder.SetEncryption(BucketEncryption{expected});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -743,7 +743,7 @@ TEST(BucketMetadataPatchBuilder, SetEncryption) {
 
 TEST(BucketMetadataPatchBuilder, ResetEncryption) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_encryption();
+  builder.ResetEncryption();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -753,7 +753,7 @@ TEST(BucketMetadataPatchBuilder, ResetEncryption) {
 
 TEST(BucketMetadataPatchBuilder, SetLabel) {
   BucketMetadataPatchBuilder builder;
-  builder.set_label({{"test-label1", "v1"}, {"test-label2", "v2"}});
+  builder.SetLabel({{"test-label1", "v1"}, {"test-label2", "v2"}});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -765,7 +765,7 @@ TEST(BucketMetadataPatchBuilder, SetLabel) {
 
 TEST(BucketMetadataPatchBuilder, ResetLabel) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_label();
+  builder.ResetLabel();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -783,7 +783,7 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
                    LifecycleRule::SetStorageClassNearline());
   lifecycle.rule.emplace_back(r1);
   lifecycle.rule.emplace_back(r2);
-  builder.set_lifecycle(lifecycle);
+  builder.SetLifecycle(lifecycle);
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -805,7 +805,7 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
 
 TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_lifecycle();
+  builder.ResetLifecycle();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -815,7 +815,7 @@ TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
 
 TEST(BucketMetadataPatchBuilder, SetLocation) {
   BucketMetadataPatchBuilder builder;
-  builder.set_location("EU");
+  builder.SetLocation("EU");
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -826,7 +826,7 @@ TEST(BucketMetadataPatchBuilder, SetLocation) {
 
 TEST(BucketMetadataPatchBuilder, ResetLocation) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_location();
+  builder.ResetLocation();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -836,7 +836,7 @@ TEST(BucketMetadataPatchBuilder, ResetLocation) {
 
 TEST(BucketMetadataPatchBuilder, SetLogging) {
   BucketMetadataPatchBuilder builder;
-  builder.set_logging(BucketLogging{"test-log-bucket", "test-log-prefix"});
+  builder.SetLogging(BucketLogging{"test-log-bucket", "test-log-prefix"});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -848,7 +848,7 @@ TEST(BucketMetadataPatchBuilder, SetLogging) {
 
 TEST(BucketMetadataPatchBuilder, ResetLogging) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_logging();
+  builder.ResetLogging();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -858,7 +858,7 @@ TEST(BucketMetadataPatchBuilder, ResetLogging) {
 
 TEST(BucketMetadataPatchBuilder, SetName) {
   BucketMetadataPatchBuilder builder;
-  builder.set_name("test-bucket-changed-name");
+  builder.SetName("test-bucket-changed-name");
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -869,7 +869,7 @@ TEST(BucketMetadataPatchBuilder, SetName) {
 
 TEST(BucketMetadataPatchBuilder, ResetName) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_name();
+  builder.ResetName();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -879,7 +879,7 @@ TEST(BucketMetadataPatchBuilder, ResetName) {
 
 TEST(BucketMetadataPatchBuilder, SetStorageClass) {
   BucketMetadataPatchBuilder builder;
-  builder.set_storage_class("NEARLINE");
+  builder.SetStorageClass("NEARLINE");
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -890,7 +890,7 @@ TEST(BucketMetadataPatchBuilder, SetStorageClass) {
 
 TEST(BucketMetadataPatchBuilder, ResetStorageClass) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_storage_class();
+  builder.ResetStorageClass();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -900,7 +900,7 @@ TEST(BucketMetadataPatchBuilder, ResetStorageClass) {
 
 TEST(BucketMetadataPatchBuilder, SetVersioning) {
   BucketMetadataPatchBuilder builder;
-  builder.set_versioning(BucketVersioning{true});
+  builder.SetVersioning(BucketVersioning{true});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -911,7 +911,7 @@ TEST(BucketMetadataPatchBuilder, SetVersioning) {
 
 TEST(BucketMetadataPatchBuilder, ResetVersioning) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_versioning();
+  builder.ResetVersioning();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -921,7 +921,7 @@ TEST(BucketMetadataPatchBuilder, ResetVersioning) {
 
 TEST(BucketMetadataPatchBuilder, SetWebsite) {
   BucketMetadataPatchBuilder builder;
-  builder.set_website(BucketWebsite{"index.htm", "404.htm"});
+  builder.SetWebsite(BucketWebsite{"index.htm", "404.htm"});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -933,7 +933,7 @@ TEST(BucketMetadataPatchBuilder, SetWebsite) {
 
 TEST(BucketMetadataPatchBuilder, ResetWebsite) {
   BucketMetadataPatchBuilder builder;
-  builder.reset_website();
+  builder.ResetWebsite();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);

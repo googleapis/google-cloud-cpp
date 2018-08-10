@@ -384,12 +384,13 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   return os << "}";
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_acl(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
     std::vector<BucketAccessControl> const& v) {
   if (v.empty()) {
-    return reset_acl();
+    return ResetAcl();
   }
   std::vector<internal::nl::json> array;
+  array.reserve(v.size());
   for (auto const& a : v) {
     array.emplace_back(internal::nl::json{
         {"entity", a.entity()},
@@ -400,29 +401,30 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_acl(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_acl() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetAcl() {
   impl_.RemoveField("acl");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_billing(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetBilling(
     BucketBilling const& v) {
   impl_.AddSubPatch("billing", internal::PatchBuilder().SetBoolField(
                                    "requesterPays", v.requester_pays));
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_billing() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetBilling() {
   impl_.RemoveField("billing");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_cors(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
     std::vector<CorsEntry> const& v) {
   if (v.empty()) {
-    return reset_cors();
+    return ResetCors();
   }
   std::vector<internal::nl::json> array;
+  array.reserve(v.size());
   for (auto const& a : v) {
     internal::nl::json entry;
     if (a.max_age_seconds.has_value()) {
@@ -443,17 +445,18 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_cors(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_cors() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetCors() {
   impl_.RemoveField("cors");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_default_acl(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetDefaultAcl(
     std::vector<ObjectAccessControl> const& v) {
   if (v.empty()) {
-    return reset_default_acl();
+    return ResetDefaultAcl();
   }
   std::vector<internal::nl::json> array;
+  array.reserve(v.size());
   for (auto const& a : v) {
     array.emplace_back(internal::nl::json{
         {"entity", a.entity()},
@@ -464,12 +467,12 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_default_acl(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_default_acl() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetDefaultAcl() {
   impl_.RemoveField("defaultObjectAcl");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_encryption(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
   impl_.AddSubPatch("encryption",
                     internal::PatchBuilder().SetStringField(
@@ -477,15 +480,15 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_encryption(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_encryption() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
   impl_.RemoveField("encryption");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_label(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLabel(
     std::map<std::string, std::string> const& v) {
   if (v.empty()) {
-    return reset_label();
+    return ResetLabel();
   }
   internal::PatchBuilder subpatch;
   for (auto const& kv : v) {
@@ -495,18 +498,19 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_label(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_label() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLabel() {
   impl_.RemoveField("label");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_lifecycle(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     BucketLifecycle const& v) {
   if (v.rule.empty()) {
-    return reset_lifecycle();
+    return ResetLifecycle();
   }
   internal::PatchBuilder subpatch;
   std::vector<internal::nl::json> array;
+  array.reserve(v.rule.size());
   for (auto const& a : v.rule) {
     internal::nl::json condition;
     auto const& c = a.condition();
@@ -542,26 +546,26 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_lifecycle(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_lifecycle() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLifecycle() {
   impl_.RemoveField("lifecycle");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_location(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLocation(
     std::string const& v) {
   if (v.empty()) {
-    return reset_location();
+    return ResetLocation();
   }
   impl_.SetStringField("location", v);
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_location() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLocation() {
   impl_.RemoveField("location");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_logging(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLogging(
     BucketLogging const& v) {
   impl_.AddSubPatch("logging", internal::PatchBuilder()
                                    .SetStringField("logBucket", v.log_bucket)
@@ -569,52 +573,52 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_logging(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_logging() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLogging() {
   impl_.RemoveField("logging");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_name(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetName(
     std::string const& v) {
   if (v.empty()) {
-    return reset_name();
+    return ResetName();
   }
   impl_.SetStringField("name", v);
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_name() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetName() {
   impl_.RemoveField("name");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_storage_class(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetStorageClass(
     std::string const& v) {
   if (v.empty()) {
-    return reset_storage_class();
+    return ResetStorageClass();
   }
   impl_.SetStringField("storageClass", v);
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_storage_class() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetStorageClass() {
   impl_.RemoveField("storageClass");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_versioning(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetVersioning(
     BucketVersioning const& v) {
   impl_.AddSubPatch("versioning", internal::PatchBuilder().SetBoolField(
                                       "enabled", v.enabled));
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_versioning() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetVersioning() {
   impl_.RemoveField("versioning");
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_website(
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetWebsite(
     BucketWebsite const& v) {
   impl_.AddSubPatch("website",
                     internal::PatchBuilder()
@@ -623,7 +627,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_website(
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_website() {
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetWebsite() {
   impl_.RemoveField("website");
   return *this;
 }
