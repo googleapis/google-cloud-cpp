@@ -132,6 +132,57 @@ TEST(DeleteBucketRequestTest, OStream) {
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
+TEST(PatchBucketRequestTest, Diff) {
+  BucketMetadata original = BucketMetadata::ParseFromString(R"""({
+      "kind": "storage#bucket",
+      "id": "test-bucket",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
+      "projectNumber": "123456789",
+      "name": "test-bucket",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": "4",
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
+})""");
+  BucketMetadata updated = original;
+  updated.set_location("EU").set_storage_class("NEARLINE");
+  PatchBucketRequest request("test-bucket", original, updated);
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
+  EXPECT_EQ("test-bucket", request.bucket());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(actual, HasSubstr("NEARLINE"));
+  EXPECT_THAT(actual, HasSubstr("EU"));
+  EXPECT_THAT(actual, Not(HasSubstr("defaultObjectAcl")));
+}
+
+TEST(PatchBucketRequestTest, Builder) {
+  PatchBucketRequest request("test-bucket", BucketMetadataPatchBuilder()
+                                                .set_storage_class("NEARLINE")
+                                                .reset_default_acl());
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
+  EXPECT_EQ("test-bucket", request.bucket());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(actual, HasSubstr("NEARLINE"));
+  EXPECT_THAT(actual, Not(HasSubstr("EU")));
+  EXPECT_THAT(actual, HasSubstr("defaultObjectAcl"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

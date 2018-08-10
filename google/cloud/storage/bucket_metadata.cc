@@ -384,6 +384,250 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   return os << "}";
 }
 
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_acl(
+    std::vector<BucketAccessControl> const& v) {
+  if (v.empty()) {
+    return reset_acl();
+  }
+  std::vector<internal::nl::json> array;
+  for (auto const& a : v) {
+    array.emplace_back(internal::nl::json{
+        {"entity", a.entity()},
+        {"role", a.role()},
+    });
+  }
+  impl_.SetArrayField("acl", array);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_acl() {
+  impl_.RemoveField("acl");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_billing(
+    BucketBilling const& v) {
+  impl_.AddSubPatch("billing", internal::PatchBuilder().SetBoolField(
+                                   "requesterPays", v.requester_pays));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_billing() {
+  impl_.RemoveField("billing");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_cors(
+    std::vector<CorsEntry> const& v) {
+  if (v.empty()) {
+    return reset_cors();
+  }
+  std::vector<internal::nl::json> array;
+  for (auto const& a : v) {
+    internal::nl::json entry;
+    if (a.max_age_seconds.has_value()) {
+      entry["maxAgeSeconds"] = *a.max_age_seconds;
+    }
+    if (not a.method.empty()) {
+      entry["method"] = a.method;
+    }
+    if (not a.origin.empty()) {
+      entry["origin"] = a.origin;
+    }
+    if (not a.response_header.empty()) {
+      entry["responseHeader"] = a.response_header;
+    }
+    array.emplace_back(std::move(entry));
+  }
+  impl_.SetArrayField("cors", array);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_cors() {
+  impl_.RemoveField("cors");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_default_acl(
+    std::vector<ObjectAccessControl> const& v) {
+  if (v.empty()) {
+    return reset_default_acl();
+  }
+  std::vector<internal::nl::json> array;
+  for (auto const& a : v) {
+    array.emplace_back(internal::nl::json{
+        {"entity", a.entity()},
+        {"role", a.role()},
+    });
+  }
+  impl_.SetArrayField("defaultObjectAcl", array);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_default_acl() {
+  impl_.RemoveField("defaultObjectAcl");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_encryption(
+    BucketEncryption const& v) {
+  impl_.AddSubPatch("encryption",
+                    internal::PatchBuilder().SetStringField(
+                        "defaultKmsKeyName", v.default_kms_key_name));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_encryption() {
+  impl_.RemoveField("encryption");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_label(
+    std::map<std::string, std::string> const& v) {
+  if (v.empty()) {
+    return reset_label();
+  }
+  internal::PatchBuilder subpatch;
+  for (auto const& kv : v) {
+    subpatch.SetStringField(kv.first.c_str(), kv.second);
+  }
+  impl_.AddSubPatch("label", subpatch);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_label() {
+  impl_.RemoveField("label");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_lifecycle(
+    BucketLifecycle const& v) {
+  if (v.rule.empty()) {
+    return reset_lifecycle();
+  }
+  internal::PatchBuilder subpatch;
+  std::vector<internal::nl::json> array;
+  for (auto const& a : v.rule) {
+    internal::nl::json condition;
+    auto const& c = a.condition();
+    if (c.age.has_value()) {
+      condition["age"] = *c.age;
+    }
+    if (c.created_before.has_value()) {
+      condition["createdBefore"] = internal::FormatRfc3339(*c.created_before);
+    }
+    if (c.is_live.has_value()) {
+      condition["isLive"] = *c.is_live;
+    }
+    if (c.matches_storage_class.has_value()) {
+      condition["matchesStorageClass"] = *c.matches_storage_class;
+    }
+    if (c.num_newer_versions.has_value()) {
+      condition["numNewerVersions"] = *c.num_newer_versions;
+    }
+    internal::nl::json action;
+    if (not a.action().type.empty()) {
+      action["type"] = a.action().type;
+    }
+    if (not a.action().storage_class.empty()) {
+      action["storageClass"] = a.action().storage_class;
+    }
+    array.emplace_back(internal::nl::json{
+        {"action", action},
+        {"condition", condition},
+    });
+  }
+  subpatch.SetArrayField("rule", array);
+  impl_.AddSubPatch("lifecycle", subpatch);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_lifecycle() {
+  impl_.RemoveField("lifecycle");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_location(
+    std::string const& v) {
+  if (v.empty()) {
+    return reset_location();
+  }
+  impl_.SetStringField("location", v);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_location() {
+  impl_.RemoveField("location");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_logging(
+    BucketLogging const& v) {
+  impl_.AddSubPatch("logging", internal::PatchBuilder()
+                                   .SetStringField("logBucket", v.log_bucket)
+                                   .SetStringField("logPrefix", v.log_prefix));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_logging() {
+  impl_.RemoveField("logging");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_name(
+    std::string const& v) {
+  if (v.empty()) {
+    return reset_name();
+  }
+  impl_.SetStringField("name", v);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_name() {
+  impl_.RemoveField("name");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_storage_class(
+    std::string const& v) {
+  if (v.empty()) {
+    return reset_storage_class();
+  }
+  impl_.SetStringField("storageClass", v);
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_storage_class() {
+  impl_.RemoveField("storageClass");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_versioning(
+    BucketVersioning const& v) {
+  impl_.AddSubPatch("versioning", internal::PatchBuilder().SetBoolField(
+                                      "enabled", v.enabled));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_versioning() {
+  impl_.RemoveField("versioning");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::set_website(
+    BucketWebsite const& v) {
+  impl_.AddSubPatch("website",
+                    internal::PatchBuilder()
+                        .SetStringField("mainPageSuffix", v.main_page_suffix)
+                        .SetStringField("notFoundPage", v.not_found_page));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::reset_website() {
+  impl_.RemoveField("website");
+  return *this;
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

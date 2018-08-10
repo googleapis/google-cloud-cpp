@@ -73,6 +73,102 @@ std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r) {
   return os << "}";
 }
 
+PatchBucketRequest::PatchBucketRequest(std::string bucket,
+                                       BucketMetadata const& original,
+                                       BucketMetadata const& updated)
+    : bucket_(std::move(bucket)) {
+  // Compare each modifiable field to build the patch
+  BucketMetadataPatchBuilder builder;
+
+  if (original.acl() != updated.acl()) {
+    builder.set_acl(updated.acl());
+  }
+
+  if (original.billing_as_optional() != updated.billing_as_optional()) {
+    if (updated.has_billing()) {
+      builder.set_billing(updated.billing());
+    } else {
+      builder.reset_billing();
+    }
+  }
+
+  if (original.cors() != updated.cors()) {
+    builder.set_cors(updated.cors());
+  }
+
+  if (original.default_acl() != updated.default_acl()) {
+    builder.set_default_acl(updated.default_acl());
+  }
+
+  if (original.encryption_as_optional() != updated.encryption_as_optional()) {
+    if (updated.has_encryption()) {
+      builder.set_encryption(updated.encryption());
+    } else {
+      builder.reset_encryption();
+    }
+  }
+
+  if (original.all_labels() != updated.all_labels()) {
+    builder.set_label(updated.all_labels());
+  }
+
+  if (original.lifecycle_as_optional() != updated.lifecycle_as_optional()) {
+    if (updated.has_lifecycle()) {
+      builder.set_lifecycle(updated.lifecycle());
+    } else {
+      builder.reset_lifecycle();
+    }
+  }
+
+  if (original.location() != updated.location()) {
+    builder.set_location(updated.location());
+  }
+
+  if (original.loggin_as_optional() != updated.loggin_as_optional()) {
+    if (updated.has_logging()) {
+      builder.set_logging(updated.logging());
+    } else {
+      builder.reset_logging();
+    }
+  }
+
+  if (original.name() != updated.name()) {
+    builder.set_name(updated.name());
+  }
+
+  if (original.storage_class() != updated.storage_class()) {
+    builder.set_storage_class(updated.storage_class());
+  }
+
+  if (original.versioning() != updated.versioning()) {
+    if (updated.has_versioning()) {
+      builder.set_versioning(*updated.versioning());
+    } else {
+      builder.reset_versioning();
+    }
+  }
+
+  if (original.website_as_optional() != updated.website_as_optional()) {
+    if (updated.has_website()) {
+      builder.set_website(updated.website());
+    } else {
+      builder.reset_website();
+    }
+  }
+
+  payload_ = builder.BuildPatch();
+}
+
+PatchBucketRequest::PatchBucketRequest(std::string bucket,
+                                       BucketMetadataPatchBuilder const& patch)
+    : bucket_(std::move(bucket)), payload_(patch.BuildPatch()) {}
+
+std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r) {
+  os << "PatchBucketRequest={bucket_name=" << r.bucket();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.payload() << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
