@@ -617,7 +617,6 @@ def buckets_update(bucket_name):
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
     payload = json.loads(flask.request.data)
-    print("\n\n\n%s\n\n\n" % flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
         raise ErrorResponse('Missing bucket name in `Buckets: update`',
