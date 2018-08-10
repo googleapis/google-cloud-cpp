@@ -113,6 +113,28 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   BucketMetadata updated_meta = client.UpdateBucket(bucket_name, update);
   EXPECT_EQ(desired_storage_class, updated_meta.storage_class());
 
+  // Patch the metadata to change the storage class, add some lifecycle
+  // rules, and the website settings.
+  BucketMetadata desired_state = updated_meta;
+  LifecycleRule rule(LifecycleRule::ConditionConjunction(
+                         LifecycleRule::MaxAge(30),
+                         LifecycleRule::MatchesStorageClassStandard()),
+                     LifecycleRule::Delete());
+  desired_state.set_storage_class(storage_class::Standard())
+      .set_lifecycle(BucketLifecycle{{rule}})
+      .set_website(BucketWebsite{"index.html", "404.html"});
+
+  BucketMetadata patched =
+      client.PatchBucket(bucket_name, updated_meta, desired_state);
+  EXPECT_EQ(storage_class::Standard(), patched.storage_class());
+  EXPECT_EQ(1U, patched.lifecycle().rule.size());
+
+  // Patch the metadata again, this time remove billing and website settings.
+  patched = client.PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
+  EXPECT_FALSE(patched.has_billing());
+  EXPECT_FALSE(patched.has_website());
+
   client.DeleteBucket(bucket_name);
   buckets = client.ListBucketsForProject(project_id);
   current_buckets.assign(buckets.begin(), buckets.end());

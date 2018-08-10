@@ -241,6 +241,65 @@ class Client {
   }
 
   /**
+   * Patch the metadata in a Google Cloud Storage Bucket.
+   *
+   * This function creates a patch request to change the writeable attributes in
+   * @p original to the values in @p updated.  Non-writeable attributes are
+   * ignored, and attributes not present in @p updated are removed. Typically
+   * this function is used after the application obtained a value with
+   * `GetBucketMetadata` and has modified these parameters.
+   *
+   * @param bucket_name the bucket to be updated.
+   * @param original the initial value of the bucket metadata.
+   * @param updated the updated value for the bucket metadata.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc patch bucket
+   */
+  template <typename... Options>
+  BucketMetadata PatchBucket(std::string bucket_name,
+                             BucketMetadata const& original,
+                             BucketMetadata const& updated,
+                             Options&&... options) {
+    internal::PatchBucketRequest request(std::move(bucket_name), original,
+                                         updated);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchBucket(request).second;
+  }
+
+  /**
+   * Patch the metadata in a Google Cloud Storage Bucket.
+   *
+   * This function creates a patch request based on the given @p builder.
+   *
+   * @param bucket_name the bucket to be updated.
+   * @param builder the set of updates to perform in the Bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc patch bucket with builder
+   */
+  template <typename... Options>
+  BucketMetadata PatchBucket(std::string bucket_name,
+                             BucketMetadataPatchBuilder const& builder,
+                             Options&&... options) {
+    internal::PatchBucketRequest request(std::move(bucket_name), builder);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchBucket(request).second;
+  }
+
+  /**
    * Create an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.

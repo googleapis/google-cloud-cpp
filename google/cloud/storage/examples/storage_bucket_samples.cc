@@ -175,6 +175,50 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
   //! [update bucket]
   (std::move(client), bucket_name, storage_class);
 }
+
+void PatchBucket(google::cloud::storage::Client client, int& argc,
+                 char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"patch-bucket <bucket-name> <storage-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [patch bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class) {
+    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
+    gcs::BucketMetadata desired = original;
+    desired.set_storage_class(storage_class);
+    gcs::BucketMetadata patched =
+        client.PatchBucket(bucket_name, original, desired);
+    std::cout << "Storage class for bucket " << bucket_name
+              << " has been updated to " << storage_class
+              << ". The metadata is " << patched;
+  }
+  //! [patch bucket]
+  (std::move(client), bucket_name, storage_class);
+}
+
+void PatchBucketWithBuilder(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"patch-bucket-with-builder <bucket-name> <storage-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [patch bucket with builder]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class) {
+    gcs::BucketMetadata patched = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetStorageClass(storage_class));
+    std::cout << "Storage class for bucket " << bucket_name
+              << " has been updated to " << storage_class
+              << ". The metadata is " << patched;
+  }
+  //! [patch bucket with builder]
+  (std::move(client), bucket_name, storage_class);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -193,6 +237,8 @@ int main(int argc, char* argv[]) try {
       {"get-bucket-metadata", &GetBucketMetadata},
       {"delete-bucket", &DeleteBucket},
       {"change-default-storage-class", &ChangeDefaultStorageClass},
+      {"patch-bucket", &PatchBucket},
+      {"patch-bucket-with-builder", &PatchBucketWithBuilder},
   };
   for (auto&& kv : commands) {
     try {

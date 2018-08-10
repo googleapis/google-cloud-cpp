@@ -44,12 +44,17 @@ run_all_bucket_examples() {
       "${bucket_name}"
   run_example ./storage_bucket_samples change-default-storage-class \
       "${bucket_name}" "NEARLINE"
+  run_example ./storage_bucket_samples patch-bucket \
+      "${bucket_name}" "STANDARD"
+  run_example ./storage_bucket_samples patch-bucket-with-builder \
+      "${bucket_name}" "COLDLINE"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 
   # Run the examples where the project id is obtained from the environment:
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
   run_example ./storage_bucket_samples list-buckets
   run_example ./storage_bucket_samples create-bucket "${bucket_name}"
+  run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   unset GOOGLE_CLOUD_PROJECT

@@ -42,6 +42,8 @@ class LoggingClient : public RawClient {
       DeleteBucketRequest const&) override;
   std::pair<Status, BucketMetadata> UpdateBucket(
       UpdateBucketRequest const& request) override;
+  std::pair<Status, BucketMetadata> PatchBucket(
+      PatchBucketRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
