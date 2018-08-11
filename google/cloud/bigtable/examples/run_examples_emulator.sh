@@ -29,19 +29,8 @@ start_emulators
 readonly PROJECT_ID="project-$(date +%s)"
 readonly ZONE_ID="fake-zone"
 
-# The examples are noisy,
-log="$(mktemp -t "bigtable_examples.XXXXXX")"
-for example in instance_admin table_admin data; do
-  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${example}"
-  run_all_${example}_examples "${PROJECT_ID}" "${ZONE_ID}" >${log} 2>&1 </dev/null
-  if [ $? = 0 ]; then
-    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${example} examples"
-  else
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${example} examples"
-    echo
-    echo "================ ${log} ================"
-    cat ${log}
-    echo "================ ${log} ================"
-  fi
-  /bin/rm "${log}"
-done
+run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+
+exit ${EXIT_STATUS}
