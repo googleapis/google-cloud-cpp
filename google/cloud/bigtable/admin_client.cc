@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
+#include <google/longrunning/operations.grpc.pb.h>
 
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
@@ -138,6 +139,14 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
                               btadmin::DeleteSnapshotRequest const& request,
                               google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteSnapshot(context, request, response);
+  }
+
+  grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) override {
+    auto stub = google::longrunning::Operations::NewStub(Channel());
+    return stub->GetOperation(context, request, response);
   }
 
  private:

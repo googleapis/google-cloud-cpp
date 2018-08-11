@@ -103,6 +103,14 @@ grpc::Status InProcessAdminClient::DeleteSnapshot(
   return Stub()->DeleteSnapshot(context, request, response);
 }
 
+grpc::Status InProcessAdminClient::GetOperation(
+    grpc::ClientContext* context,
+    google::longrunning::GetOperationRequest const& request,
+    google::longrunning::Operation* response) {
+  auto stub = google::longrunning::Operations::NewStub(Channel());
+  return stub->GetOperation(context, request, response);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud
