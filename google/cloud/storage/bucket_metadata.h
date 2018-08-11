@@ -492,7 +492,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for logging configuration.
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
-  cloud::internal::optional<BucketLogging> const& loggin_as_optional() const {
+  cloud::internal::optional<BucketLogging> const& logging_as_optional() const {
     return logging_;
   }
   BucketMetadata& set_logging(BucketLogging v) {
@@ -542,7 +542,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_.emplace(BucketVersioning{false});
     return *this;
   }
-  BucketMetadata& clear_versioning() {
+  BucketMetadata& reset_versioning() {
     versioning_.reset();
     return *this;
   }

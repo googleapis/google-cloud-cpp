@@ -344,6 +344,198 @@ TEST(PatchBucketRequestTest, DiffResetLabels) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetLifecycle) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_lifecycle();;
+  BucketMetadata updated = original;
+  updated.set_lifecycle(BucketLifecycle{{LifecycleRule(
+      LifecycleRule::NumNewerVersions(5), LifecycleRule::Delete())}});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "lifecycle": {
+          "rule": [
+              {
+                  "condition": {"numNewerVersions": 5},
+                  "action": {"type": "Delete"}
+              }
+          ]
+       }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetLifecycle) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_lifecycle(BucketLifecycle{{LifecycleRule(
+      LifecycleRule::NumNewerVersions(5), LifecycleRule::Delete())}});
+  BucketMetadata updated = original;
+  updated.reset_lifecycle();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"lifecycle": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetLocation) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_location("");
+  BucketMetadata updated = original;
+  updated.set_location("EU");
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"location": "EU"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetLocation) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_location("US");
+  BucketMetadata updated = original;
+  updated.set_location("");
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"location": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetLogging) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_logging();
+  BucketMetadata updated = original;
+  updated.set_logging(BucketLogging{"test-log-bucket", "test-log-prefix"});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "logging": {
+          "logBucket": "test-log-bucket",
+          "logPrefix": "test-log-prefix"
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetLogging) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_logging(BucketLogging{"test-log-bucket", "test-log-prefix"});
+  BucketMetadata updated = original;
+  updated.reset_logging();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"logging": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetName) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_name("");
+  BucketMetadata updated = original;
+  updated.set_name("new-bucket-name");
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"name": "new-bucket-name"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetName) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_name("bucket-name");
+  BucketMetadata updated = original;
+  updated.set_name("");
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"name": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetStorageClass) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_storage_class(storage_class::Standard());
+  BucketMetadata updated = original;
+  updated.set_storage_class(storage_class::Coldline());
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"storageClass": "COLDLINE"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetStorageClass) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_storage_class(storage_class::Standard());
+  BucketMetadata updated = original;
+  updated.set_storage_class("");
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"storageClass": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetVersioning) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_versioning();
+  BucketMetadata updated = original;
+  updated.disable_versioning();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "versioning": {"enabled": false}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetVersioning) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.enable_versioning();
+  BucketMetadata updated = original;
+  updated.reset_versioning();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"versioning": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetWebsite) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_website();
+  BucketMetadata updated = original;
+  updated.set_website(BucketWebsite{"idx.htm", "404.htm"});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "website": {
+          "mainPageSuffix": "idx.htm",
+          "notFoundPage": "404.htm"
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetWebsite) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_website(BucketWebsite{"idx.htm", "404.htm"});
+  BucketMetadata updated = original;
+  updated.reset_website();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"website": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+
 TEST(PatchBucketRequestTest, DiffOStream) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketMetadata updated = original;

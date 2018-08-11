@@ -148,7 +148,7 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
     builder.SetLocation(updated.location());
   }
 
-  if (original.loggin_as_optional() != updated.loggin_as_optional()) {
+  if (original.logging_as_optional() != updated.logging_as_optional()) {
     if (updated.has_logging()) {
       builder.SetLogging(updated.logging());
     } else {
