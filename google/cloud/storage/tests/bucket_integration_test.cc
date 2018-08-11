@@ -56,8 +56,15 @@ class BucketIntegrationTest : public ::testing::Test {
     static std::size_t const kMaxBucketNameLength = 63;
     std::size_t const max_random_characters =
         kMaxBucketNameLength - prefix.size();
-    return prefix + google::cloud::internal::Sample(generator_,
-                                                    max_random_characters,
+    return prefix + google::cloud::internal::Sample(
+                        generator_, static_cast<int>(max_random_characters),
+                        "abcdefghijklmnopqrstuvwxyz012456789");
+  }
+
+  std::string MakeRandomObjectName() {
+    static std::string const prefix = "bucket-integration-test-";
+    return prefix + google::cloud::internal::Sample(generator_, 64,
+                                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                                     "abcdefghijklmnopqrstuvwxyz"
                                                     "012456789");
   }
@@ -162,13 +169,9 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetaGenerationNotMatch_Failure) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMedia) {
-  // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   Client client;
-  auto object_name =
-      std::string("the-test-object-") +
-      std::to_string(
-          std::chrono::system_clock::now().time_since_epoch().count());
+  auto object_name = MakeRandomObjectName();
 
   auto metadata = client.InsertObject(bucket_name, object_name, "blah blah");
   EXPECT_EQ(bucket_name, metadata.bucket());
@@ -177,13 +180,9 @@ TEST_F(BucketIntegrationTest, InsertObjectMedia) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
-  // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   Client client;
-  auto object_name =
-      std::string("the-test-object-") +
-      std::to_string(
-          std::chrono::system_clock::now().time_since_epoch().count());
+  auto object_name = MakeRandomObjectName();
 
   auto original = client.InsertObject(bucket_name, object_name, "blah blah",
                                       storage::IfGenerationMatch(0));
@@ -203,13 +202,9 @@ TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationMatch) {
 }
 
 TEST_F(BucketIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
-  // TODO(#681) - use random names for the object and buckets in the tests.
   auto bucket_name = BucketTestEnvironment::bucket_name();
   Client client;
-  auto object_name =
-      std::string("the-test-object-") +
-      std::to_string(
-          std::chrono::system_clock::now().time_since_epoch().count());
+  auto object_name = MakeRandomObjectName();
 
   auto original = client.InsertObject(bucket_name, object_name, "blah blah",
                                       storage::IfGenerationMatch(0));
@@ -228,11 +223,8 @@ TEST_F(BucketIntegrationTest, ListObjects) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
   Client client;
 
-  auto gen = google::cloud::internal::MakeDefaultPRNG();
-  auto create_small_object = [&client, &bucket_name, &gen] {
-    auto object_name =
-        "object-" + google::cloud::internal::Sample(
-                        gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto create_small_object = [&client, &bucket_name, this] {
+    auto object_name = MakeRandomObjectName();
     auto meta = client.InsertObject(bucket_name, object_name, "blah blah",
                                     storage::IfGenerationMatch(0));
     return meta.name();
