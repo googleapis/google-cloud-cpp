@@ -551,7 +551,7 @@ TEST(BucketMetadataTest, ClearVersioning) {
   auto expected = CreateBucketMetadataForTest();
   EXPECT_TRUE(expected.versioning().has_value());
   auto copy = expected;
-  copy.clear_versioning();
+  copy.reset_versioning();
   EXPECT_FALSE(copy.versioning().has_value());
   EXPECT_NE(copy, expected);
   std::ostringstream os;
@@ -577,7 +577,7 @@ TEST(BucketMetadataTest, EnableVersioning) {
   EXPECT_TRUE(expected.versioning().has_value());
   EXPECT_TRUE(expected.versioning()->enabled);
   auto copy = expected;
-  copy.clear_versioning();
+  copy.reset_versioning();
   copy.enable_versioning();
   EXPECT_TRUE(copy.versioning().has_value());
   EXPECT_TRUE(copy.versioning()->enabled);
@@ -751,26 +751,29 @@ TEST(BucketMetadataPatchBuilder, ResetEncryption) {
   ASSERT_TRUE(json["encryption"].is_null()) << json;
 }
 
-TEST(BucketMetadataPatchBuilder, SetLabel) {
+TEST(BucketMetadataPatchBuilder, SetLabels) {
   BucketMetadataPatchBuilder builder;
-  builder.SetLabel({{"test-label1", "v1"}, {"test-label2", "v2"}});
+  builder.SetLabel("test-label1", "v1");
+  builder.SetLabel("test-label2", "v2");
+  builder.ResetLabel("test-label3");
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
-  ASSERT_EQ(1U, json.count("label")) << json;
-  ASSERT_TRUE(json["label"].is_object()) << json;
-  EXPECT_EQ("v1", json["label"].value("test-label1", "")) << json;
-  EXPECT_EQ("v2", json["label"].value("test-label2", "")) << json;
+  ASSERT_EQ(1U, json.count("labels")) << json;
+  ASSERT_TRUE(json["labels"].is_object()) << json;
+  EXPECT_EQ("v1", json["labels"].value("test-label1", "")) << json;
+  EXPECT_EQ("v2", json["labels"].value("test-label2", "")) << json;
+  EXPECT_TRUE(json["labels"]["test-label3"].is_null()) << json;
 }
 
-TEST(BucketMetadataPatchBuilder, ResetLabel) {
+TEST(BucketMetadataPatchBuilder, ResetLabels) {
   BucketMetadataPatchBuilder builder;
-  builder.ResetLabel();
+  builder.ResetLabels();
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
-  ASSERT_EQ(1U, json.count("label")) << json;
-  ASSERT_TRUE(json["label"].is_null()) << json;
+  ASSERT_EQ(1U, json.count("labels")) << json;
+  ASSERT_TRUE(json["labels"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetLifecycle) {
