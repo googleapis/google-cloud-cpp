@@ -271,7 +271,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   ASSERT_EQ(0, name_counter(entity_name, meta.acl()))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
-      << " created with an predefine ACL that should preclude this result.";
+      << " created with a predefine ACL which should preclude this result.";
 
   BucketAccessControl result =
       client.CreateBucketAcl(bucket_name, entity_name, "OWNER");
