@@ -15,6 +15,11 @@
 
 set -eu
 
+if [ -z "${PROJECT_ROOT+x}" ]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/colors.sh"
+
 # If an example fails, this is set to 1 and the program exits with failure.
 EXIT_STATUS=0
 
