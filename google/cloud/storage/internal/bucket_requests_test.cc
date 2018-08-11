@@ -346,7 +346,7 @@ TEST(PatchBucketRequestTest, DiffResetLabels) {
 
 TEST(PatchBucketRequestTest, DiffSetLifecycle) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.reset_lifecycle();;
+  original.reset_lifecycle();
   BucketMetadata updated = original;
   updated.set_lifecycle(BucketLifecycle{{LifecycleRule(
       LifecycleRule::NumNewerVersions(5), LifecycleRule::Delete())}});
@@ -534,7 +534,6 @@ TEST(PatchBucketRequestTest, DiffResetWebsite) {
   nl::json expected = nl::json::parse(R"""({"website": null})""");
   EXPECT_EQ(expected, patch);
 }
-
 
 TEST(PatchBucketRequestTest, DiffOStream) {
   BucketMetadata original = CreateBucketMetadataForTest();
