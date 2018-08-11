@@ -132,8 +132,8 @@ TEST(DeleteBucketRequestTest, OStream) {
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
-TEST(PatchBucketRequestTest, Diff) {
-  BucketMetadata original = BucketMetadata::ParseFromString(R"""({
+BucketMetadata CreateBucketMetadataForTest() {
+  return BucketMetadata::ParseFromString(R"""({
       "kind": "storage#bucket",
       "id": "test-bucket",
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
@@ -146,6 +146,173 @@ TEST(PatchBucketRequestTest, Diff) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""");
+}
+
+TEST(UpdateBucketRequestTest, Simple) {
+  BucketMetadata metadata = CreateBucketMetadataForTest();
+  metadata.set_name("my-bucket");
+  UpdateBucketRequest request(metadata);
+  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+                               UserProject("my-project"));
+  EXPECT_EQ(metadata, request.metadata());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
+TEST(PatchBucketRequestTest, DiffSetAcl) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_acl({});
+  BucketMetadata updated = original;
+  updated.set_acl({BucketAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "acl": [{"entity": "user-test-user", "role": "OWNER"}]
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetAcl) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_acl({BucketAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  BucketMetadata updated = original;
+  updated.set_acl({});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"acl": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetBilling) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_billing();
+  BucketMetadata updated = original;
+  updated.set_billing(BucketBilling(true));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "billing": {"requesterPays": true}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetBilling) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_billing(BucketBilling(true));
+  BucketMetadata updated = original;
+  updated.reset_billing();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"billing": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetCors) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_cors({});
+  BucketMetadata updated = original;
+  CorsEntry e1;
+  e1.max_age_seconds = 86400;
+  CorsEntry e2{{}, {"m1", "m2"}, {"o1"}, {"r1"}};
+  updated.set_cors({e1, e2});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "cors": [{
+          "maxAgeSeconds": 86400
+       }, {
+           "method": ["m1", "m2"],
+           "origin": ["o1"],
+           "responseHeader": ["r1"]
+       }]
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetCors) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_cors({CorsEntry{{}, {"m1"}, {}, {}}});
+  BucketMetadata updated = original;
+  updated.set_cors({});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"cors": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_default_acl({});
+  BucketMetadata updated = original;
+  updated.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "defaultObjectAcl": [{"entity": "user-test-user", "role": "OWNER"}]
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  BucketMetadata updated = original;
+  updated.set_default_acl({});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"defaultObjectAcl": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetEncryption) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_encryption();
+  BucketMetadata updated = original;
+  updated.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "encryption": {"defaultKmsKeyName": "invalid-key-name-just-for-test"}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetEncryption) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  BucketMetadata updated = original;
+  updated.reset_encryption();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"encryption": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffOStream) {
+  BucketMetadata original = CreateBucketMetadataForTest();
   BucketMetadata updated = original;
   updated.set_location("EU").set_storage_class("NEARLINE");
   PatchBucketRequest request("test-bucket", original, updated);
