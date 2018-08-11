@@ -85,6 +85,25 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, entity, role);
 }
 
+void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"delete-bucket-acl <bucket-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [delete bucket acl] [START storage_delete_bucket_acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    client.DeleteBucketAcl(bucket_name, entity);
+    std::cout << "Deleted ACL entry for " << entity << " in bucket "
+              << bucket_name << std::endl;
+  }
+  //! [delete bucket acl] [END storage_delete_bucket_acl]
+  (std::move(client), bucket_name, entity);
+}
+
 void GetBucketAcl(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 3) {
@@ -115,6 +134,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-bucket-acl", &ListBucketAcl},
       {"create-bucket-acl", &CreateBucketAcl},
+      {"delete-bucket-acl", &DeleteBucketAcl},
       {"get-bucket-acl", &GetBucketAcl},
   };
   for (auto&& kv : commands) {

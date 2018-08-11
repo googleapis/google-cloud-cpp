@@ -249,12 +249,17 @@ TEST_F(BucketIntegrationTest, ListObjects) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
   Client client;
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+
+  // Create a new bucket to run the test, with the "private" PredefinedAcl so
+  // we know what the contents of the ACL will be.
+  auto meta = client.CreateBucketForProject(
+      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      Projection("full"));
 
   auto entity_name = MakeEntityName();
-  std::vector<BucketAccessControl> initial_acl =
-      client.ListBucketAcl(bucket_name);
 
   auto name_counter = [](std::string const& name,
                          std::vector<BucketAccessControl> const& list) {
@@ -264,14 +269,13 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
     };
     return std::count_if(list.begin(), list.end(), name_matcher(name));
   };
-  // TODO(#827) - handle this more gracefully, delete the entry.  Or ...
-  // TODO(#821) TODO(#820) - use a new bucket to simplify this test.
-  EXPECT_EQ(0, name_counter(entity_name, initial_acl))
-      << "Test aborted (without failure). The entity <" << entity_name
-      << "> already exists, and DeleteBucketAcl() is not implemented.";
-  if (name_counter(entity_name, initial_acl) == 0) {
-    return;
-  }
+  ASSERT_FALSE(meta.acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_EQ(0, name_counter(entity_name, meta.acl()))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
 
   BucketAccessControl result =
       client.CreateBucketAcl(bucket_name, entity_name, "OWNER");
@@ -283,8 +287,11 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result.entity(), current_acl));
 
-  // TODO(#827) - delete the new entry to leave the bucket in the original
-  // state.
+  client.DeleteBucketAcl(bucket_name, entity_name);
+  current_acl = client.ListBucketAcl(bucket_name);
+  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+
+  client.DeleteBucket(bucket_name);
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {

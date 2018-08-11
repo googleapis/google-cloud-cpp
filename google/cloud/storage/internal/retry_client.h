@@ -75,6 +75,8 @@ class RetryClient : public RawClient {
       ListBucketAclRequest const& request) override;
   std::pair<Status, BucketAccessControl> CreateBucketAcl(
       CreateBucketAclRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteBucketAcl(
+      DeleteBucketAclRequest const&) override;
   std::pair<Status, BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) override;
 

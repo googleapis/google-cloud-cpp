@@ -70,6 +70,8 @@ class CurlClient : public RawClient {
       CreateBucketAclRequest const&) override;
   std::pair<Status, BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteBucketAcl(
+      DeleteBucketAclRequest const&) override;
 
   std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;
