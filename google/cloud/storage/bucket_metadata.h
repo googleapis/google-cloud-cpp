@@ -456,9 +456,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
-  std::map<std::string, std::string> const& all_labels() const {
-    return labels_;
-  }
+  std::map<std::string, std::string> const& labels() const { return labels_; }
+  std::map<std::string, std::string>& mutable_labels() { return labels_; }
 
   //@{
   /**
@@ -607,9 +606,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
  */
 class BucketMetadataPatchBuilder {
  public:
-  BucketMetadataPatchBuilder() = default;
+  BucketMetadataPatchBuilder() : labels_subpatch_dirty_(false) {}
 
-  std::string BuildPatch() const { return impl_.ToString(); }
+  std::string BuildPatch() const;
 
   BucketMetadataPatchBuilder& SetAcl(std::vector<BucketAccessControl> const& v);
   BucketMetadataPatchBuilder& ResetAcl();
@@ -627,9 +626,10 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);
   BucketMetadataPatchBuilder& ResetEncryption();
 
-  BucketMetadataPatchBuilder& SetLabel(
-      std::map<std::string, std::string> const& v);
-  BucketMetadataPatchBuilder& ResetLabel();
+  BucketMetadataPatchBuilder& SetLabel(std::string const& label,
+                                       std::string const& value);
+  BucketMetadataPatchBuilder& ResetLabel(std::string const& label);
+  BucketMetadataPatchBuilder& ResetLabels();
 
   BucketMetadataPatchBuilder& SetLifecycle(BucketLifecycle const& v);
   BucketMetadataPatchBuilder& ResetLifecycle();
@@ -654,6 +654,8 @@ class BucketMetadataPatchBuilder {
 
  private:
   internal::PatchBuilder impl_;
+  bool labels_subpatch_dirty_;
+  internal::PatchBuilder labels_subpatch_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

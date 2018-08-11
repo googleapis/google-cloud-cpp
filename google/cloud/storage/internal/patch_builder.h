@@ -46,6 +46,9 @@ class PatchBuilder {
   /// Return the patch as a string.
   std::string ToString() const { return patch_.dump(); }
 
+  bool empty() const { return patch_.empty(); }
+  void clear() { patch_.clear(); }
+
   //@{
   /// @name Calculate the delta between the original (`lhs`) and the new (`rhs`)
   /// values and set the patch instructions accordingly.

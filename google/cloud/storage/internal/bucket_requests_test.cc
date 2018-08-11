@@ -311,6 +311,39 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetLabels) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.mutable_labels() = {
+      {"label1", "v1"},
+      {"label2", "v2"},
+  };
+  BucketMetadata updated = original;
+  updated.mutable_labels().erase("label2");
+  updated.mutable_labels().insert({"label3", "v3"});
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "labels": {"label2": null, "label3": "v3"}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetLabels) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.mutable_labels() = {
+      {"label1", "v1"},
+      {"label2", "v2"},
+  };
+  BucketMetadata updated = original;
+  updated.mutable_labels().clear();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"labels": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffOStream) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketMetadata updated = original;

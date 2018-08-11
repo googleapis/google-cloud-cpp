@@ -384,6 +384,18 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   return os << "}";
 }
 
+std::string BucketMetadataPatchBuilder::BuildPatch() const {
+  internal::PatchBuilder tmp = impl_;
+  if (labels_subpatch_dirty_) {
+    if (labels_subpatch_.empty()) {
+      tmp.RemoveField("labels");
+    } else {
+      tmp.AddSubPatch("labels", labels_subpatch_);
+    }
+  }
+  return tmp.ToString();
+}
+
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
     std::vector<BucketAccessControl> const& v) {
   if (v.empty()) {
@@ -486,20 +498,25 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
 }
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLabel(
-    std::map<std::string, std::string> const& v) {
-  if (v.empty()) {
-    return ResetLabel();
+    std::string const& label, std::string const& value) {
+  if (value.empty()) {
+    return ResetLabel(label);
   }
-  internal::PatchBuilder subpatch;
-  for (auto const& kv : v) {
-    subpatch.SetStringField(kv.first.c_str(), kv.second);
-  }
-  impl_.AddSubPatch("label", subpatch);
+  labels_subpatch_.SetStringField(label.c_str(), value);
+  labels_subpatch_dirty_ = true;
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLabel() {
-  impl_.RemoveField("label");
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLabel(
+    std::string const& label) {
+  labels_subpatch_.RemoveField(label.c_str());
+  labels_subpatch_dirty_ = true;
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLabels() {
+  labels_subpatch_.clear();
+  labels_subpatch_dirty_ = true;
   return *this;
 }
 

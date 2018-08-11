@@ -108,8 +108,32 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
     }
   }
 
-  if (original.all_labels() != updated.all_labels()) {
-    builder.SetLabel(updated.all_labels());
+  if (original.labels() != updated.labels()) {
+    if (updated.labels().empty()) {
+      builder.ResetLabels();
+    } else {
+      std::map<std::string, std::string> difference;
+      // Find the keys in the original map that are not in the new map:
+      std::set_difference(original.labels().begin(), original.labels().end(),
+          updated.labels().begin(), updated.labels().end(),
+          std::inserter(difference, difference.end()),
+          // We want to compare just keys and ignore values, the map class
+          // provides such a function, so use it:
+          original.labels().value_comp());
+      for (auto&& d : difference) {
+        builder.ResetLabel(d.first);
+      }
+
+      // Find the elements (comparing key and value) in the updated map that
+      // are not in the original map:
+      difference.clear();
+      std::set_difference(updated.labels().begin(), updated.labels().end(),
+                          original.labels().begin(), original.labels().end(),
+                          std::inserter(difference, difference.end()));
+      for (auto&& d : difference) {
+        builder.SetLabel(d.first, d.second);
+      }
+    }
   }
 
   if (original.lifecycle_as_optional() != updated.lifecycle_as_optional()) {
