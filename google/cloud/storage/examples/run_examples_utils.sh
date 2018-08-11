@@ -189,7 +189,7 @@ _EOF_
 }
 
 ################################################
-# Run all Object examples.
+# Run all Bucket ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
@@ -235,6 +235,54 @@ _EOF_
 
   run_program_examples ./storage_bucket_acl_samples \
       "${BUCKET_ACL_COMMANDS}" \
+      "${bucket_name}"
+}
+
+################################################
+# Run all Default Object ACL examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_default_object_acl_examples() {
+  local bucket_name=$1
+  shift
+
+  # First create a bucket for the example:
+  if [ ! -x ./storage_bucket_samples ]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " storage_bucket_samples is not compiled"
+    return
+  fi
+  log="$(mktemp -t "storage_default_object_acl_setup.XXXXXX")"
+  set +e
+  ./storage_bucket_samples get-bucket-metadata \
+      "${bucket_name}"  >${log} 2>&1
+  if [ $? != 0 ]; then
+    EXIT_STATUS=1
+    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        " cannot create test bucket"
+    echo "================ [begin ${log}] ================"
+    cat "${log}"
+    echo "================ [end ${log}] ================"
+    set -e
+    return
+  fi
+  set -e
+
+  # The list of commands in the storage_bucket_samples program that we will
+  # test. Currently get-metadata assumes that $bucket_name is already created.
+  readonly DEFAULT_OBJECT_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
+list-default-object-acl
+_EOF_
+)
+
+  run_program_examples ./storage_default_object_acl_samples \
+      "${DEFAULT_OBJECT_ACL_COMMANDS}" \
       "${bucket_name}"
 }
 
@@ -358,6 +406,7 @@ run_all_storage_examples() {
       " Running Google Cloud Storage Examples"
   run_all_bucket_examples
   run_all_bucket_acl_examples "${BUCKET_NAME}"
+  run_all_default_object_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \

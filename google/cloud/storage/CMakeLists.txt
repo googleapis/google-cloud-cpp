@@ -237,6 +237,7 @@ set(storage_client_unit_tests
     bucket_metadata_test.cc
     bucket_test.cc
     client_bucket_acl_test.cc
+    client_default_object_acl_test.cc
     client_object_acl_test.cc
     client_test.cc
     client_write_object_test.cc

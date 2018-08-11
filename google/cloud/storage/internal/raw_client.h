@@ -20,6 +20,7 @@
 #include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/delete_object_request.h"
 #include "google/cloud/storage/internal/empty_response.h"
 #include "google/cloud/storage/internal/get_object_metadata_request.h"
@@ -102,6 +103,12 @@ class RawClient {
       UpdateObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> PatchObjectAcl(
       PatchObjectAclRequest const&) = 0;
+  //@}
+
+  //@{
+  /// @name DefaultObjectAccessControls operations.
+  virtual std::pair<Status, ListDefaultObjectAclResponse> ListDefaultObjectAcl(
+      ListDefaultObjectAclRequest const&) = 0;
   //@}
 };
 

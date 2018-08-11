@@ -295,6 +295,19 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // state.
 }
 
+TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
+  Client client;
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+
+  auto entity_name = MakeEntityName();
+  std::vector<ObjectAccessControl> initial_acl =
+      client.ListDefaultObjectAcl(bucket_name);
+
+  // TODO(#833) TODO(#835) - make stronger assertions once we can modify the
+  // ACL.
+  EXPECT_FALSE(initial_acl.empty());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
