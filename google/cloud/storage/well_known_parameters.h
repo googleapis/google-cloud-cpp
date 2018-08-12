@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <string>
@@ -43,7 +43,7 @@ class WellKnownParameter {
   T const& value() const { return value_.value(); }
 
  private:
-  google::cloud::internal::optional<T> value_;
+  google::cloud::optional<T> value_;
 };
 
 template <typename P, typename T>

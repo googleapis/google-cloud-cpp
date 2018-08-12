@@ -186,7 +186,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // cors()
   desired_state.mutable_cors().push_back(CorsEntry{
-      google::cloud::internal::optional<std::int64_t>(86400), {"GET"}, {}, {}});
+      google::cloud::optional<std::int64_t>(86400), {"GET"}, {}, {}});
 
   // default_acl()
   desired_state.mutable_default_acl().push_back(

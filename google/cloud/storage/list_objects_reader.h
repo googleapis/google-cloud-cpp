@@ -71,13 +71,12 @@ class ListObjectsIterator {
 
  private:
   friend class ListObjectsReader;
-  explicit ListObjectsIterator(
-      ListObjectsReader* owner,
-      google::cloud::internal::optional<ObjectMetadata> value);
+  explicit ListObjectsIterator(ListObjectsReader* owner,
+                               google::cloud::optional<ObjectMetadata> value);
 
  private:
   ListObjectsReader* owner_;
-  google::cloud::internal::optional<ObjectMetadata> value_;
+  google::cloud::optional<ObjectMetadata> value_;
 };
 
 /**
@@ -125,7 +124,7 @@ class ListObjectsReader {
    *
    * @return an unset optional if there are no more objects in the stream.
    */
-  google::cloud::internal::optional<ObjectMetadata> GetNext();
+  google::cloud::optional<ObjectMetadata> GetNext();
 
  private:
   std::shared_ptr<internal::RawClient> client_;

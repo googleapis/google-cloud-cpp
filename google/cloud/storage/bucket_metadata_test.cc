@@ -21,8 +21,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using google::cloud::internal::make_optional;
-using google::cloud::internal::optional;
+using google::cloud::make_optional;
+using google::cloud::optional;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -702,7 +702,7 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
   std::vector<CorsEntry> v;
   v.emplace_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
   v.emplace_back(
-      CorsEntry{google::cloud::internal::optional<std::int64_t>(86400),
+      CorsEntry{google::cloud::optional<std::int64_t>(86400),
                 {},
                 {"origin1"},
                 {}});

@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H_
 
 #include "google/cloud/bigtable/row.h"
-#include "google/cloud/internal/optional.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/optional.h"
 #include <iterator>
 
 namespace google {
@@ -33,7 +33,7 @@ namespace internal {
  *
  * TODO(#277) - replace with absl::optional<> or std::optional<> when possible.
  */
-using OptionalRow = google::cloud::internal::optional<Row>;
+using OptionalRow = google::cloud::optional<Row>;
 
 /**
  * The input iterator used to scan the rows in a RowReader.

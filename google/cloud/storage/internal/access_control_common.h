@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <utility>
@@ -113,8 +113,7 @@ class AccessControlCommon {
 
   bool has_project_team() const { return project_team_.has_value(); }
   ProjectTeam const& project_team() const { return *project_team_; }
-  google::cloud::internal::optional<ProjectTeam> const&
-  project_team_as_optional() const {
+  google::cloud::optional<ProjectTeam> const& project_team_as_optional() const {
     return project_team_;
   }
 
@@ -146,7 +145,7 @@ class AccessControlCommon {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  google::cloud::internal::optional<ProjectTeam> project_team_;
+  google::cloud::optional<ProjectTeam> project_team_;
   std::string role_;
   std::string self_link_;
 };

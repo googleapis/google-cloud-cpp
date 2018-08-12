@@ -71,13 +71,12 @@ class ListBucketsIterator {
 
  private:
   friend class ListBucketsReader;
-  explicit ListBucketsIterator(
-      ListBucketsReader* owner,
-      google::cloud::internal::optional<BucketMetadata> value);
+  explicit ListBucketsIterator(ListBucketsReader* owner,
+                               google::cloud::optional<BucketMetadata> value);
 
  private:
   ListBucketsReader* owner_;
-  google::cloud::internal::optional<BucketMetadata> value_;
+  google::cloud::optional<BucketMetadata> value_;
 };
 
 /**
@@ -125,7 +124,7 @@ class ListBucketsReader {
    *
    * @return an unset optional if there are no more buckets in the stream.
    */
-  google::cloud::internal::optional<BucketMetadata> GetNext();
+  google::cloud::optional<BucketMetadata> GetNext();
 
  private:
   std::shared_ptr<internal::RawClient> client_;

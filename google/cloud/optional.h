@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONAL_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONAL_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H_
 
-#include "google/cloud/internal/throw_delegate.h"
+#include "internal/throw_delegate.h"
 #include <type_traits>
 #include <utility>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 /**
  * A poor's man version of std::optional<T>.
  *
@@ -258,9 +257,8 @@ optional<T> make_optional(T&& t) {
   return optional<T>(std::forward<T>(t));
 }
 
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONAL_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H_

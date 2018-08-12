@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -85,7 +85,7 @@ inline bool operator>=(BucketBilling const& lhs, BucketBilling const& rhs) {
  *     on how to set and troubleshoot CORS settings.
  */
 struct CorsEntry {
-  google::cloud::internal::optional<std::int64_t> max_age_seconds;
+  google::cloud::optional<std::int64_t> max_age_seconds;
   std::vector<std::string> method;
   std::vector<std::string> origin;
   std::vector<std::string> response_header;
@@ -370,7 +370,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_billing() const { return billing_.has_value(); }
   BucketBilling const& billing() const { return *billing_; }
-  cloud::internal::optional<BucketBilling> const& billing_as_optional() const {
+  google::cloud::optional<BucketBilling> const& billing_as_optional() const {
     return billing_;
   }
   BucketMetadata& set_billing(BucketBilling const& v) {
@@ -440,7 +440,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_encryption() const { return encryption_.has_value(); }
   BucketEncryption const& encryption() const { return *encryption_; }
-  cloud::internal::optional<BucketEncryption> const& encryption_as_optional()
+  google::cloud::optional<BucketEncryption> const& encryption_as_optional()
       const {
     return encryption_;
   }
@@ -500,8 +500,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_lifecycle() const { return lifecycle_.has_value(); }
   BucketLifecycle const& lifecycle() const { return *lifecycle_; }
-  google::cloud::internal::optional<BucketLifecycle> const&
-  lifecycle_as_optional() const {
+  google::cloud::optional<BucketLifecycle> const& lifecycle_as_optional()
+      const {
     return lifecycle_;
   }
   BucketMetadata& set_lifecycle(BucketLifecycle v) {
@@ -524,7 +524,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for logging configuration.
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
-  cloud::internal::optional<BucketLogging> const& logging_as_optional() const {
+  google::cloud::optional<BucketLogging> const& logging_as_optional() const {
     return logging_;
   }
   BucketMetadata& set_logging(BucketLogging v) {
@@ -562,8 +562,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   //@{
   /// @name Accessors and modifiers for versioning configuration.
-  google::cloud::internal::optional<BucketVersioning> const& versioning()
-      const {
+  google::cloud::optional<BucketVersioning> const& versioning() const {
     return versioning_;
   }
   bool has_versioning() const { return versioning_.has_value(); }
@@ -579,8 +578,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_.reset();
     return *this;
   }
-  BucketMetadata& set_versioning(
-      google::cloud::internal::optional<BucketVersioning> v) {
+  BucketMetadata& set_versioning(google::cloud::optional<BucketVersioning> v) {
     versioning_ = std::move(v);
     return *this;
   }
@@ -590,7 +588,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for website configuration.
   bool has_website() const { return website_.has_value(); }
   BucketWebsite const& website() const { return *website_; }
-  cloud::internal::optional<BucketWebsite> const& website_as_optional() const {
+  google::cloud::optional<BucketWebsite> const& website_as_optional() const {
     return website_;
   }
   BucketMetadata& set_website(BucketWebsite v) {
@@ -610,17 +608,17 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
-  google::cloud::internal::optional<BucketBilling> billing_;
+  google::cloud::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
   std::vector<ObjectAccessControl> default_acl_;
-  google::cloud::internal::optional<BucketEncryption> encryption_;
+  google::cloud::optional<BucketEncryption> encryption_;
   std::map<std::string, std::string> labels_;
-  google::cloud::internal::optional<BucketLifecycle> lifecycle_;
+  google::cloud::optional<BucketLifecycle> lifecycle_;
   std::string location_;
-  google::cloud::internal::optional<BucketLogging> logging_;
+  google::cloud::optional<BucketLogging> logging_;
   std::int64_t project_number_;
-  google::cloud::internal::optional<BucketVersioning> versioning_;
-  google::cloud::internal::optional<BucketWebsite> website_;
+  google::cloud::optional<BucketVersioning> versioning_;
+  google::cloud::optional<BucketWebsite> website_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include <gmock/gmock.h>
 
-using namespace ::testing;
-
-/// Helper types to test google::cloud::internal::optional<T>
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+/// Helper types to test google::cloud::optional<T>
 namespace {
 class Observable {
  public:
@@ -94,10 +95,11 @@ class NoDefaultConstructor {
  private:
   std::string str_;
 };
-}  // namespace
+
+using OptionalObservable = optional<Observable>;
 
 TEST(OptionalTest, Simple) {
-  google::cloud::internal::optional<int> actual;
+  optional<int> actual;
   EXPECT_FALSE(actual.has_value());
   EXPECT_FALSE(static_cast<bool>(actual));
 
@@ -114,8 +116,6 @@ TEST(OptionalTest, Simple) {
   EXPECT_EQ(24, actual.value_or(42));
   EXPECT_EQ(24, actual.value());
 }
-
-using OptionalObservable = google::cloud::internal::optional<Observable>;
 
 TEST(OptionalTest, NoDefaultConstruction) {
   Observable::reset_counters();
@@ -393,8 +393,7 @@ TEST(OptionalTest, MoveValueOr) {
 }
 
 TEST(OptionalTest, WithNoDefaultConstructor) {
-  using TestedOptional =
-      google::cloud::internal::optional<NoDefaultConstructor>;
+  using TestedOptional = optional<NoDefaultConstructor>;
   TestedOptional empty;
   EXPECT_FALSE(empty.has_value());
 
@@ -402,3 +401,7 @@ TEST(OptionalTest, WithNoDefaultConstructor) {
   EXPECT_TRUE(actual.has_value());
   EXPECT_EQ(actual->str(), "foo");
 }
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
