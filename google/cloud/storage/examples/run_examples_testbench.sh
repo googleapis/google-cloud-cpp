@@ -31,4 +31,8 @@ start_testbench
 readonly PROJECT_ID="fake-project-$(date +%s)"
 readonly BUCKET_NAME="fake-bucket-$(date +%s)"
 
+# Most of the examples assume a bucket already exists, create one for them.
+run_example ./storage_bucket_samples create-bucket-for-project \
+      "${BUCKET_NAME}" "${PROJECT_ID}"
+
 run_all_storage_examples
