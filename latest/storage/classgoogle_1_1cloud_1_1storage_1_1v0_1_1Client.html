@@ -163,6 +163,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af607e1aa2a0d0ee370417e0a8d7e8899">CreateBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, std::string const &amp;role, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new entry in a bucket ACL.  <a href="#af607e1aa2a0d0ee370417e0a8d7e8899">More...</a><br /></td></tr>
 <tr class="separator:af607e1aa2a0d0ee370417e0a8d7e8899"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b22b96b696393ad27a913b1c374afc0"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a0b22b96b696393ad27a913b1c374afc0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0b22b96b696393ad27a913b1c374afc0">DeleteBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a0b22b96b696393ad27a913b1c374afc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes an entry from a bucket ACL.  <a href="#a0b22b96b696393ad27a913b1c374afc0">More...</a><br /></td></tr>
+<tr class="separator:a0b22b96b696393ad27a913b1c374afc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0825ec57728cfe34b27b0ece813e56e"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ab0825ec57728cfe34b27b0ece813e56e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0825ec57728cfe34b27b0ece813e56e">GetBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0825ec57728cfe34b27b0ece813e56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of an existing bucket ACL.  <a href="#ab0825ec57728cfe34b27b0ece813e56e">More...</a><br /></td></tr>
@@ -675,6 +679,60 @@ template&lt;typename... Options&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    client.DeleteBucket(bucket_name);</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
+</div>
+</div>
+<a id="a0b22b96b696393ad27a913b1c374afc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b22b96b696393ad27a913b1c374afc0">&#9670;&nbsp;</a></span>DeleteBucketAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void google::cloud::storage::v0::Client::DeleteBucketAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deletes an entry from a bucket ACL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">entity</td><td>the name of the entity added to the ACL. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity) {</div><div class="line">    client.DeleteBucketAcl(bucket_name, entity);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Deleted ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a0c9ed0e219ba99dce6024e326d7c9708"></a>
