@@ -515,7 +515,7 @@ class Client {
   void DeleteObjectAcl(std::string const& bucket_name,
                        std::string const& object_name,
                        std::string const& entity, Options&&... options) {
-    internal::ObjectAclRequest request(bucket_name, object_name, entity);
+    internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteObjectAcl(request);
   }
@@ -537,7 +537,7 @@ class Client {
                                    std::string const& object_name,
                                    std::string const& entity,
                                    Options&&... options) {
-    internal::ObjectAclRequest request(bucket_name, object_name, entity);
+    internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetObjectAcl(request).second;
   }

@@ -171,12 +171,12 @@ std::pair<Status, ObjectAccessControl> LoggingClient::CreateObjectAcl(
 }
 
 std::pair<Status, EmptyResponse> LoggingClient::DeleteObjectAcl(
-    ObjectAclRequest const& request) {
+    DeleteObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteObjectAcl, request, __func__);
 }
 
 std::pair<Status, ObjectAccessControl> LoggingClient::GetObjectAcl(
-    ObjectAclRequest const& request) {
+    GetObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::GetObjectAcl, request, __func__);
 }
 

@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// Represents a request to call the `BucketAccessControl: list` API.
 class ListBucketAclRequest
-    : public GenericRequest<ListBucketAclRequest, Generation, UserProject> {
+    : public GenericRequest<ListBucketAclRequest, UserProject> {
  public:
   ListBucketAclRequest() : GenericRequest() {}
   explicit ListBucketAclRequest(std::string bucket)
@@ -95,17 +95,21 @@ class DeleteBucketAclRequest
 std::ostream& operator<<(std::ostream& os, DeleteBucketAclRequest const& r);
 
 /**
- * Represents a request to call the `BucketAccessControls: insert` API.
+ * Represents common attributes to multiple `BucketAccessControls` request
+ * types.
+ *
+ * The classes that represent requests for the `BucketAccessControls: create`,
+ * `patch`, and `update` APIs have a lot of commonality. This
+ * template class refactors that code.
  */
-class CreateBucketAclRequest
-    : public GenericBucketAclRequest<CreateBucketAclRequest> {
+template <typename Derived>
+class GenericChangeBucketAclRequest : public GenericBucketAclRequest<Derived> {
  public:
-  CreateBucketAclRequest() = default;
+  GenericChangeBucketAclRequest() = default;
 
-  explicit CreateBucketAclRequest(std::string bucket, std::string entity,
-                                  std::string role)
-      : GenericBucketAclRequest<CreateBucketAclRequest>(std::move(bucket),
-                                                        std::move(entity)),
+  explicit GenericChangeBucketAclRequest(std::string bucket, std::string entity,
+                                         std::string role)
+      : GenericBucketAclRequest<Derived>(std::move(bucket), std::move(entity)),
         role_(std::move(role)) {}
 
   std::string const& role() const { return role_; }
@@ -114,7 +118,47 @@ class CreateBucketAclRequest
   std::string role_;
 };
 
+/**
+ * Represents a request to call the `BucketAccessControls: insert` API.
+ */
+class CreateBucketAclRequest
+    : public GenericChangeBucketAclRequest<CreateBucketAclRequest> {
+ public:
+  using GenericChangeBucketAclRequest::GenericChangeBucketAclRequest;
+};
+
 std::ostream& operator<<(std::ostream& os, CreateBucketAclRequest const& r);
+
+/**
+ * Represents a request to call the `BucketAccessControls: update` API.
+ */
+class UpdateBucketAclRequest
+    : public GenericChangeBucketAclRequest<UpdateBucketAclRequest> {
+ public:
+  using GenericChangeBucketAclRequest::GenericChangeBucketAclRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, UpdateBucketAclRequest const& r);
+
+/**
+ * Represents a request to call the `BucketAccessControls: patch` API.
+ */
+class PatchBucketAclRequest
+    : public GenericBucketAclRequest<PatchBucketAclRequest> {
+ public:
+  PatchBucketAclRequest(std::string bucket, std::string entity,
+                        BucketAccessControl const& original,
+                        BucketAccessControl const& new_acl);
+  PatchBucketAclRequest(std::string bucket, std::string entity,
+                        BucketAccessControlPatchBuilder const& patch);
+
+  std::string const& payload() const { return payload_; }
+
+ private:
+  std::string payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, PatchBucketAclRequest const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -24,15 +24,12 @@ namespace internal {
 namespace {
 using ::testing::HasSubstr;
 
-TEST(ListObjectAclRequestTest, Simple) {
-  ListObjectAclRequest request("my-bucket", "my-object");
-  EXPECT_EQ("my-bucket", request.bucket_name());
-  EXPECT_EQ("my-object", request.object_name());
-}
-
-TEST(ListObjectAclRequestTest, Stream) {
+TEST(ObjectAclRequestTest, List) {
   ListObjectAclRequest request("my-bucket", "my-object");
   request.set_multiple_options(UserProject("my-project"), Generation(7));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ("my-object", request.object_name());
+
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -42,7 +39,7 @@ TEST(ListObjectAclRequestTest, Stream) {
   EXPECT_THAT(str, HasSubstr("my-object"));
 }
 
-TEST(ListObjectAclResponseTest, Parse) {
+TEST(ObjectAclRequestTest, ListResponse) {
   std::string text = R"""({
       "items": [{
           "bucket": "foo-bar",
@@ -63,26 +60,9 @@ TEST(ListObjectAclResponseTest, Parse) {
   EXPECT_EQ("OWNER", actual.items.at(0).role());
   EXPECT_EQ("user-quux", actual.items.at(1).entity());
   EXPECT_EQ("READER", actual.items.at(1).role());
-}
 
-TEST(ListObjectAclResponseTest, Stream) {
-  std::string text = R"""({
-      "items": [{
-          "bucket": "foo-bar",
-          "object": "baz",
-          "entity": "user-qux",
-          "role": "OWNER"
-      }, {
-          "bucket": "foo-bar",
-          "object": "baz",
-          "entity": "user-quux",
-          "role": "READER"
-      }]})""";
-
-  auto list =
-      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
   std::ostringstream os;
-  os << list;
+  os << actual;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("entity=user-qux"));
   EXPECT_THAT(str, HasSubstr("entity=user-quux"));
@@ -91,19 +71,45 @@ TEST(ListObjectAclResponseTest, Stream) {
   EXPECT_THAT(str, HasSubstr("ObjectAccessControl={"));
 }
 
-TEST(CreateObjectAclRequestTest, Simple) {
+TEST(ObjectAclRequestTest, Get) {
+  GetObjectAclRequest request("my-bucket", "my-object", "user-test-user");
+  request.set_multiple_options(UserProject("my-project"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ("my-object", request.object_name());
+  EXPECT_EQ("user-test-user", request.entity());
+
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("user-test-user"));
+}
+
+TEST(ObjectAclRequestTest, Delete) {
+  DeleteObjectAclRequest request("my-bucket", "my-object", "user-test-user");
+  request.set_multiple_options(UserProject("my-project"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ("my-object", request.object_name());
+  EXPECT_EQ("user-test-user", request.entity());
+
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("user-test-user"));
+}
+
+TEST(ObjectAclRequestTest, Create) {
   CreateObjectAclRequest request("my-bucket", "my-object", "user-testuser",
                                  "READER");
+  request.set_multiple_options(UserProject("my-project"), Generation(7));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("my-object", request.object_name());
   EXPECT_EQ("user-testuser", request.entity());
   EXPECT_EQ("READER", request.role());
-}
 
-TEST(CreateObjectAclRequestTest, Stream) {
-  CreateObjectAclRequest request("my-bucket", "my-object", "user-testuser",
-                                 "READER");
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -115,16 +121,15 @@ TEST(CreateObjectAclRequestTest, Stream) {
   EXPECT_THAT(str, HasSubstr("READER"));
 }
 
-TEST(ObjectAclRequestTest, Simple) {
-  ObjectAclRequest request("my-bucket", "my-object", "user-test-user");
+TEST(ObjectAclRequestTest, Update) {
+  UpdateObjectAclRequest request("my-bucket", "my-object", "user-testuser",
+                                 "READER");
+  request.set_multiple_options(UserProject("my-project"), Generation(7));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("my-object", request.object_name());
-  EXPECT_EQ("user-test-user", request.entity());
-}
+  EXPECT_EQ("user-testuser", request.entity());
+  EXPECT_EQ("READER", request.role());
 
-TEST(ObjectAclRequestTest, Stream) {
-  ObjectAclRequest request("my-bucket", "my-object", "user-test-user");
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -132,7 +137,8 @@ TEST(ObjectAclRequestTest, Stream) {
   EXPECT_THAT(str, HasSubstr("generation=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("my-object"));
-  EXPECT_THAT(str, HasSubstr("user-test-user"));
+  EXPECT_THAT(str, HasSubstr("user-testuser"));
+  EXPECT_THAT(str, HasSubstr("READER"));
 }
 
 ObjectAccessControl CreateObjectAccessControlForTest() {
@@ -156,7 +162,7 @@ ObjectAccessControl CreateObjectAccessControlForTest() {
   return ObjectAccessControl::ParseFromString(text);
 }
 
-TEST(PatchObjectAclRequestTest, ReadModifyWrite) {
+TEST(ObjectAclRequestTest, PatchDiff) {
   ObjectAccessControl original = CreateObjectAccessControlForTest();
   ObjectAccessControl new_acl =
       CreateObjectAccessControlForTest().set_role("READER");
@@ -170,7 +176,7 @@ TEST(PatchObjectAclRequestTest, ReadModifyWrite) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PatchObjectAclRequestTest, Patch) {
+TEST(ObjectAclRequestTest, PatchBuilder) {
   PatchObjectAclRequest request(
       "my-bucket", "my-object", "user-test-user",
       ObjectAccessControlPatchBuilder().set_role("READER").delete_entity());
