@@ -479,6 +479,84 @@ class Client {
   }
 
   /**
+   * Patch the value of an existing bucket ACL.
+   *
+   * Compute the delta between a previous value for an BucketAccessControl and
+   * the new value for an BucketAccessControl and apply that delta.
+   *
+   * @par Notes
+   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the identifier for the user, group, service account, or
+   *     predefined set of actors holding the permission.
+   * @param original_acl the original ACL value.
+   * @param new_acl the new ACL value. Note that only changes on writeable
+   *     fields will be accepted by the server.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`, and the standard
+   *     options available to all operations.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc patch bucket acl
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Options>
+  BucketAccessControl PatchBucketAcl(std::string const& bucket_name,
+                                     std::string const& entity,
+                                     BucketAccessControl const& original_acl,
+                                     BucketAccessControl const& new_acl,
+                                     Options&&... options) {
+    internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
+                                            new_acl);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchBucketAcl(request).second;
+  }
+
+  /**
+   * Patch the value of an existing bucket ACL.
+   *
+   * This API allows the application to patch an BucketAccessControl without
+   * having to read the current value.
+   *
+   * @par Notes
+   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
+   *
+   * @param bucket_name the name of the bucket that contains the bucket.
+   * @param bucket_name the name of the bucket.
+   * @param entity the identifier for the user, group, service account, or
+   *     predefined set of actors holding the permission.
+   * @param builder a builder ready to create the patch.
+   * @param options a list of optional query parameters and/or request
+   *     headers. Valid types for this operation include `Generation`,
+   *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc patch bucket acl no-read
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Options>
+  BucketAccessControl PatchBucketAcl(
+      std::string const& bucket_name, std::string const& entity,
+      BucketAccessControlPatchBuilder const& builder, Options&&... options) {
+    internal::PatchBucketAclRequest request(bucket_name, entity, builder);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchBucketAcl(request).second;
+  }
+
+  /**
    * Retrieve the list of ObjectAccessControls for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.

@@ -317,6 +317,25 @@ std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
                         BucketAccessControl::ParseFromString(payload.payload));
 }
 
+std::pair<Status, BucketAccessControl> CurlClient::PatchBucketAcl(
+    PatchBucketAclRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/acl/" + request.entity());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+  builder.SetMethod("PATCH");
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(request.payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        BucketAccessControl{});
+  }
+  return std::make_pair(Status(),
+                        BucketAccessControl::ParseFromString(payload.payload));
+}
+
 std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.

@@ -262,6 +262,52 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAclPermanentFailure) {
       "UpdateBucketAcl");
 }
 
+TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
+  BucketAccessControl result = BucketAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "OWNER"
+      })""");
+
+  EXPECT_CALL(*mock, PatchBucketAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Invoke([&result](internal::PatchBucketAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        internal::nl::json expected{{"role", "OWNER"}};
+        auto payload = internal::nl::json::parse(r.payload());
+        EXPECT_EQ(expected, payload);
+
+        return std::make_pair(Status(), result);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  BucketAccessControl actual = client.PatchBucketAcl(
+      "test-bucket", "user-test-user-1",
+      BucketAccessControlPatchBuilder().set_role("OWNER"));
+  EXPECT_EQ(result, actual);
+}
+
+TEST_F(BucketAccessControlsTest, PatchBucketAclTooManyFailures) {
+  testing::TooManyFailuresTest<BucketAccessControl>(
+      mock, EXPECT_CALL(*mock, PatchBucketAcl(_)),
+      [](Client& client) {
+        client.PatchBucketAcl("test-bucket", "user-test-user-1",
+                              BucketAccessControlPatchBuilder());
+      },
+      "PatchBucketAcl");
+}
+
+TEST_F(BucketAccessControlsTest, PatchBucketAclPermanentFailure) {
+  testing::PermanentFailureTest<BucketAccessControl>(
+      *client, EXPECT_CALL(*mock, PatchBucketAcl(_)),
+      [](Client& client) {
+        client.PatchBucketAcl("test-bucket", "user-test-user-1",
+                              BucketAccessControlPatchBuilder());
+      },
+      "PatchBucketAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

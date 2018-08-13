@@ -734,6 +734,19 @@ def bucket_acl_update(bucket_name, entity):
     return json.dumps(acl)
 
 
+@gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
+def bucket_acl_patch(bucket_name, entity):
+    """Implement the 'BucketAccessControls: patch' API.
+
+      Patch the access control configuration for a particular entity.
+      """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
+    payload = json.loads(flask.request.data)
+    acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
+    return json.dumps(acl)
+
+
 @gcs.route('/b/<bucket_name>/defaultObjectAcl')
 def bucket_default_object_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API.

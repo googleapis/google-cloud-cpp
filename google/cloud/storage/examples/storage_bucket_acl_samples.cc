@@ -144,6 +144,53 @@ void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, entity, role);
 }
 
+void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
+                    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"patch-bucket-acl <bucket-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [patch bucket acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity,
+     std::string role) {
+    gcs::BucketAccessControl original_acl =
+        client.GetBucketAcl(bucket_name, entity);
+    auto new_acl = original_acl;
+    new_acl.set_role(role);
+    gcs::BucketAccessControl updated_acl =
+        client.PatchBucketAcl(bucket_name, entity, original_acl, new_acl,
+                              gcs::IfMatchEtag(original_acl.etag()));
+    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
+              << " is now " << updated_acl << std::endl;
+  }
+  //! [patch bucket acl]
+  (std::move(client), bucket_name, entity, role);
+}
+
+void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"patch-bucket-acl-no-read <bucket-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [patch bucket acl no-read]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity,
+     std::string role) {
+    gcs::BucketAccessControl acl = client.PatchBucketAcl(
+        bucket_name, entity,
+        gcs::BucketAccessControlPatchBuilder().set_role(role));
+    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
+              << " is now " << acl << std::endl;
+  }
+  //! [patch bucket acl no-read]
+  (std::move(client), bucket_name, entity, role);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -159,6 +206,8 @@ int main(int argc, char* argv[]) try {
       {"delete-bucket-acl", &DeleteBucketAcl},
       {"get-bucket-acl", &GetBucketAcl},
       {"update-bucket-acl", &UpdateBucketAcl},
+      {"patch-bucket-acl", &PatchBucketAcl},
+      {"patch-bucket-acl-no-read", &PatchBucketAclNoRead},
   };
   for (auto&& kv : commands) {
     try {

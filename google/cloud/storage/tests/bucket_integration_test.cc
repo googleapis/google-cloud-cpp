@@ -219,6 +219,12 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   get_result = client.GetBucketAcl(bucket_name, entity_name);
   EXPECT_EQ(get_result, updated_result);
 
+  new_acl = get_result;
+  new_acl.set_role("OWNER");
+  get_result = client.PatchBucketAcl(bucket_name, entity_name, get_result,
+                                     new_acl, IfMatchEtag(get_result.etag()));
+  EXPECT_EQ(get_result.role(), new_acl.role());
+
   client.DeleteBucketAcl(bucket_name, entity_name);
   current_acl = client.ListBucketAcl(bucket_name);
   EXPECT_EQ(0, name_counter(result.entity(), current_acl));
