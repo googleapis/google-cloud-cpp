@@ -160,46 +160,58 @@ function run_all_table_admin_examples {
   run_example ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 }
 
+################################################
 # Run the Bigtable data manipulation examples.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
 #
 # This function allows us to keep a single place where all the examples are
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
-function run_all_data_examples {
+run_all_data_examples() {
   if [ ! -x ../examples/bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"
     return
   fi
 
   local project_id=$1
-  local zone_id=$2
+  local instance_id=$2
   shift 2
 
   EMULATOR_LOG="instance-admin-emulator.log"
 
-  # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-$(date +%s)"
-
   # Use the same table in all the tests.
-  local -r TABLE="sample-table-for-data"
+  local -r TABLE="data-examples-tbl-${RANDOM}"
 
-  run_example ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples apply "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples sample-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ../examples/bigtable_samples create-table "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples scan "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples sample-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
 }

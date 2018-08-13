@@ -27,9 +27,10 @@ start_emulators
 
 # Use a (likely unique) project id for the emulator.
 readonly PROJECT_ID="project-$(date +%s)"
+readonly INSTANCE_ID="in-$(date +%s)-${RANDOM}"
 readonly ZONE_ID="fake-zone"
 
-run_all_data_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
 run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
 
