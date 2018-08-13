@@ -611,6 +611,12 @@ class BucketMetadataPatchBuilder {
   std::string BuildPatch() const;
 
   BucketMetadataPatchBuilder& SetAcl(std::vector<BucketAccessControl> const& v);
+
+  /**
+   * Clear the ACL for the Bucket.
+   *
+   * @warning Currently the server ignores requests to reset the full ACL.
+   */
   BucketMetadataPatchBuilder& ResetAcl();
 
   BucketMetadataPatchBuilder& SetBilling(BucketBilling const& v);
@@ -621,6 +627,12 @@ class BucketMetadataPatchBuilder {
 
   BucketMetadataPatchBuilder& SetDefaultAcl(
       std::vector<ObjectAccessControl> const& v);
+
+  /**
+   * Clear the ACL for the Bucket.
+   *
+   * @warning Currently the server ignores requests to reset the full ACL.
+   */
   BucketMetadataPatchBuilder& ResetDefaultAcl();
 
   BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);

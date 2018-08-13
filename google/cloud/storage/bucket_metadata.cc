@@ -499,9 +499,6 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLabel(
     std::string const& label, std::string const& value) {
-  if (value.empty()) {
-    return ResetLabel(label);
-  }
   labels_subpatch_.SetStringField(label.c_str(), value);
   labels_subpatch_dirty_ = true;
   return *this;
