@@ -19,7 +19,7 @@ set -eu
 if [ -z "${PROJECT_ROOT+x}" ]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/run-example.sh"
+source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
 # Run all Bucket examples.

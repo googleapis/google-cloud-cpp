@@ -21,8 +21,9 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # If an example fails, this is set to 1 and the program exits with failure.
 EXIT_STATUS=0
 
-# The name of the emulator / testbench log file
-EMULATOR_LOG=""
+# Define the name of the emulator / testbench log file, if it has not been
+# defined already.
+EMULATOR_LOG="${EMULATOR_LOG:-}"
 
 ################################################
 # Run one example in a given program
