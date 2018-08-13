@@ -25,17 +25,17 @@ using ::testing::HasSubstr;
 
 TEST(BucketAclRequestTest, List) {
   ListBucketAclRequest request("my-bucket");
-  request.set_multiple_options(UserProject("my-project"), Generation(7));
+  request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
+
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
-  EXPECT_THAT(str, HasSubstr("generation=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
 }
 
-TEST(BucketAclResponseTest, Simple) {
+TEST(BucketAclRequestTest, ListResponse) {
   std::string text = R"""({
       "items": [{
           "bucket": "test-bucket-name",
@@ -104,6 +104,83 @@ TEST(CreateBucketAclRequestTest, Create) {
   EXPECT_THAT(str, HasSubstr("my-bucket"));
   EXPECT_THAT(str, HasSubstr("user-testuser"));
   EXPECT_THAT(str, HasSubstr("READER"));
+}
+
+TEST(BucketAclRequestTest, Update) {
+  UpdateBucketAclRequest request("my-bucket", "user-testuser", "READER");
+  request.set_multiple_options(UserProject("my-project"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ("user-testuser", request.entity());
+  EXPECT_EQ("READER", request.role());
+
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("user-testuser"));
+  EXPECT_THAT(str, HasSubstr("READER"));
+}
+
+BucketAccessControl CreateBucketAccessControlForTest() {
+  std::string text = R"""({
+      "bucket": "foo-bar",
+      "domain": "example.com",
+      "email": "foobar@example.com",
+      "entity": "user-foobar",
+      "entityId": "user-foobar-id-123",
+      "etag": "XYZ=",
+      "generation": 42,
+      "id": "object-foo-bar-baz-acl-234",
+      "kind": "storage#bucketAccessControl",
+      "object": "baz",
+      "projectTeam": {
+        "projectNumber": "3456789",
+        "team": "a-team"
+      },
+      "role": "OWNER"
+})""";
+  return BucketAccessControl::ParseFromString(text);
+}
+
+TEST(BucketAclRequestTest, PatchDiff) {
+  BucketAccessControl original = CreateBucketAccessControlForTest();
+  BucketAccessControl new_acl =
+      CreateBucketAccessControlForTest().set_role("READER");
+
+  PatchBucketAclRequest request("my-bucket", "user-test-user", original,
+                                new_acl);
+  nl::json expected = {
+      {"role", "READER"},
+  };
+  nl::json actual = nl::json::parse(request.payload());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(BucketAclRequestTest, PatchBuilder) {
+  PatchBucketAclRequest request(
+      "my-bucket", "user-test-user",
+      BucketAccessControlPatchBuilder().set_role("READER").delete_entity());
+  nl::json expected = {{"role", "READER"}, {"entity", nullptr}};
+  nl::json actual = nl::json::parse(request.payload());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(PatchObjectAclRequestTest, PatchStream) {
+  BucketAccessControl original = CreateBucketAccessControlForTest();
+  BucketAccessControl new_acl =
+      CreateBucketAccessControlForTest().set_role("READER");
+
+  PatchBucketAclRequest request("my-bucket", "user-test-user", original,
+                                new_acl);
+  request.set_multiple_options(UserProject("my-project"));
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("user-test-user"));
+  EXPECT_THAT(str, HasSubstr(request.payload()));
 }
 
 }  // namespace

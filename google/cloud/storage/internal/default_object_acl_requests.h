@@ -64,8 +64,7 @@ std::ostream& operator<<(std::ostream& os,
  */
 template <typename Derived>
 class GenericDefaultObjectAclRequest
-    : public GenericRequest<Derived, IfMatchEtag, IfNoneMatchEtag,
-                            UserProject> {
+    : public GenericRequest<Derived, UserProject> {
  public:
   GenericDefaultObjectAclRequest() = default;
   GenericDefaultObjectAclRequest(std::string bucket, std::string entity)
@@ -101,23 +100,41 @@ std::ostream& operator<<(std::ostream& os,
                          DeleteDefaultObjectAclRequest const& r);
 
 /**
- * Represents a request to call the `DefaultObjectAccessControls: insert` API.
+ * Represents common attributes to multiple `DefaultObjectAccessControls`
+ * request types.
+ *
+ * The classes that represent requests for the
+ * `DefaultObjectAccessControls: create`, `patch`, and `update` APIs have a lot
+ * of commonality. This template class refactors that code.
  */
-class CreateDefaultObjectAclRequest
-    : public GenericDefaultObjectAclRequest<CreateDefaultObjectAclRequest> {
+template <typename Derived>
+class GenericChangeDefaultObjectAclRequest
+    : public GenericDefaultObjectAclRequest<Derived> {
  public:
-  CreateDefaultObjectAclRequest() = default;
+  GenericChangeDefaultObjectAclRequest() = default;
 
-  explicit CreateDefaultObjectAclRequest(std::string bucket, std::string entity,
-                                         std::string role)
-      : GenericDefaultObjectAclRequest<CreateDefaultObjectAclRequest>(
-            std::move(bucket), std::move(entity)),
+  explicit GenericChangeDefaultObjectAclRequest(std::string bucket,
+                                                std::string entity,
+                                                std::string role)
+      : GenericDefaultObjectAclRequest<Derived>(std::move(bucket),
+                                                std::move(entity)),
         role_(std::move(role)) {}
 
   std::string const& role() const { return role_; }
 
  private:
   std::string role_;
+};
+
+/**
+ * Represents a request to call the `DefaultObjectAccessControls: insert` API.
+ */
+class CreateDefaultObjectAclRequest
+    : public GenericChangeDefaultObjectAclRequest<
+          CreateDefaultObjectAclRequest> {
+ public:
+  using GenericChangeDefaultObjectAclRequest::
+      GenericChangeDefaultObjectAclRequest;
 };
 
 std::ostream& operator<<(std::ostream& os,
@@ -127,20 +144,11 @@ std::ostream& operator<<(std::ostream& os,
  * Represents a request to call the `DefaultObjectAccessControls: update` API.
  */
 class UpdateDefaultObjectAclRequest
-    : public GenericDefaultObjectAclRequest<UpdateDefaultObjectAclRequest> {
+    : public GenericChangeDefaultObjectAclRequest<
+          UpdateDefaultObjectAclRequest> {
  public:
-  UpdateDefaultObjectAclRequest() = default;
-
-  explicit UpdateDefaultObjectAclRequest(std::string bucket, std::string entity,
-                                         std::string role)
-      : GenericDefaultObjectAclRequest<UpdateDefaultObjectAclRequest>(
-            std::move(bucket), std::move(entity)),
-        role_(std::move(role)) {}
-
-  std::string const& role() const { return role_; }
-
- private:
-  std::string role_;
+  using GenericChangeDefaultObjectAclRequest::
+      GenericChangeDefaultObjectAclRequest;
 };
 
 std::ostream& operator<<(std::ostream& os,

@@ -98,9 +98,9 @@ class RawClient {
   virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
       CreateObjectAclRequest const&) = 0;
   virtual std::pair<Status, EmptyResponse> DeleteObjectAcl(
-      ObjectAclRequest const&) = 0;
+      DeleteObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> GetObjectAcl(
-      ObjectAclRequest const&) = 0;
+      GetObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> PatchObjectAcl(

@@ -249,7 +249,7 @@ std::pair<Status, ObjectAccessControl> RetryClient::CreateObjectAcl(
 }
 
 std::pair<Status, EmptyResponse> RetryClient::DeleteObjectAcl(
-    ObjectAclRequest const& request) {
+    DeleteObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
@@ -257,7 +257,7 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteObjectAcl(
 }
 
 std::pair<Status, ObjectAccessControl> RetryClient::GetObjectAcl(
-    ObjectAclRequest const& request) {
+    GetObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,

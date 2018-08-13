@@ -39,7 +39,7 @@ class ListObjectAclRequest
 
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r);
 
-/// Represents a response to `ListObjectAclRequest`.
+/// Represents a response to the `ObjectAccessControls: list` API.
 struct ListObjectAclResponse {
   static ListObjectAclResponse FromHttpResponse(HttpResponse&& response);
 
@@ -49,31 +49,77 @@ struct ListObjectAclResponse {
 std::ostream& operator<<(std::ostream& os, ListObjectAclResponse const& r);
 
 /**
- * Generic ObjectAccessControl change.
+ * Represents common attributes to multiple `ObjectAccessControls` request
+ * types.
+ *
+ * The classes that represent requests for the `ObjectAccessControls: create`,
+ * `get`, `delete`, `patch`, and `update` APIs have a lot of commonality. This
+ * template class refactors that code.
  */
 template <typename Derived>
-class GenericChangeObjectAclRequest
+class GenericObjectAclRequest
     : public GenericObjectRequest<Derived, Generation, UserProject> {
+ public:
+  GenericObjectAclRequest() = default;
+  GenericObjectAclRequest(std::string bucket, std::string object,
+                          std::string entity)
+      : GenericObjectRequest<Derived, Generation, UserProject>(
+            std::move(bucket), std::move(object)),
+        entity_(std::move(entity)) {}
+
+  std::string const& entity() const { return entity_; }
+
+ private:
+  std::string entity_;
+};
+
+/**
+ * Represents a request to call the `ObjectAccessControls: get` API.
+ */
+class GetObjectAclRequest
+    : public GenericObjectAclRequest<GetObjectAclRequest> {
+  using GenericObjectAclRequest::GenericObjectAclRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, GetObjectAclRequest const& r);
+
+/**
+ * Represents a request to call the `ObjectAccessControls: delete` API.
+ */
+class DeleteObjectAclRequest
+    : public GenericObjectAclRequest<DeleteObjectAclRequest> {
+  using GenericObjectAclRequest::GenericObjectAclRequest;
+};
+
+std::ostream& operator<<(std::ostream& os, DeleteObjectAclRequest const& r);
+
+/**
+ * Represents common attributes to multiple `ObjectAccessControls` request
+ * types.
+ *
+ * The classes that represent requests for the `ObjectAccessControls: create`,
+ * `patch`, and `update` APIs have a lot of commonality. This
+ * template class refactors that code.
+ */
+template <typename Derived>
+class GenericChangeObjectAclRequest : public GenericObjectAclRequest<Derived> {
  public:
   GenericChangeObjectAclRequest() = default;
 
   explicit GenericChangeObjectAclRequest(std::string bucket, std::string object,
                                          std::string entity, std::string role)
-      : GenericObjectRequest<Derived, Generation, UserProject>(
-            std::move(bucket), std::move(object)),
-        entity_(std::move(entity)),
+      : GenericObjectAclRequest<Derived>(std::move(bucket), std::move(object),
+                                         std::move(entity)),
         role_(std::move(role)) {}
 
-  std::string const& entity() const { return entity_; }
   std::string const& role() const { return role_; }
 
  private:
-  std::string entity_;
   std::string role_;
 };
 
 /**
- * Create an ObjectAccessControl entry.
+ * Represents a request to call the `ObjectAccessControls: insert` API.
  */
 class CreateObjectAclRequest
     : public GenericChangeObjectAclRequest<CreateObjectAclRequest> {
@@ -84,7 +130,7 @@ class CreateObjectAclRequest
 std::ostream& operator<<(std::ostream& os, CreateObjectAclRequest const& r);
 
 /**
- * Update an ObjectAccessControl entry.
+ * Represents a request to call the `ObjectAccessControls: update` API.
  */
 class UpdateObjectAclRequest
     : public GenericChangeObjectAclRequest<UpdateObjectAclRequest> {
@@ -94,33 +140,11 @@ class UpdateObjectAclRequest
 
 std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r);
 
-/// A request type for `ObjectAccessControl: {get,delete,patch,update}`
-class ObjectAclRequest
-    : public GenericObjectRequest<ObjectAclRequest, Generation, UserProject> {
- public:
-  ObjectAclRequest() : GenericObjectRequest() {}
-  ObjectAclRequest(std::string bucket, std::string object, std::string entity)
-      : GenericObjectRequest(std::move(bucket), std::move(object)),
-        entity_(std::move(entity)) {}
-
-  std::string const& entity() const { return entity_; }
-  ObjectAclRequest& set_entity(std::string v) {
-    entity_ = std::move(v);
-    return *this;
-  }
-
- private:
-  std::string entity_;
-};
-
-std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r);
-
 /**
- * Patch an ObjectAccessControl entry.
+ * Represents a request to call the `ObjectAccessControls: patch` API.
  */
 class PatchObjectAclRequest
-    : public GenericObjectRequest<PatchObjectAclRequest, Generation,
-                                  UserProject, IfMatchEtag, IfNoneMatchEtag> {
+    : public GenericObjectAclRequest<PatchObjectAclRequest> {
  public:
   PatchObjectAclRequest(std::string bucket, std::string object,
                         std::string entity, ObjectAccessControl const& original,
@@ -129,11 +153,9 @@ class PatchObjectAclRequest
                         std::string entity,
                         ObjectAccessControlPatchBuilder const& patch);
 
-  std::string const& entity() const { return entity_; }
   std::string const& payload() const { return payload_; }
 
  private:
-  std::string entity_;
   std::string payload_;
 };
 

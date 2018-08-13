@@ -35,7 +35,7 @@ TEST(DefaultObjectAclRequestTest, List) {
   EXPECT_THAT(str, HasSubstr("my-bucket"));
 }
 
-TEST(DefaultObjectAclResponseTest, Simple) {
+TEST(DefaultObjectAclRequestTest, ListResponse) {
   std::string text = R"""({
       "items": [{
           "bucket": "test-bucket-name",
@@ -64,7 +64,7 @@ TEST(DefaultObjectAclResponseTest, Simple) {
   EXPECT_THAT(str, HasSubstr("ObjectAccessControl={"));
 }
 
-TEST(GetDefaultObjectAclRequestTest, Simple) {
+TEST(DefaultObjectAclRequestTest, Get) {
   GetDefaultObjectAclRequest request("my-bucket", "user-testuser");
   request.set_multiple_options(UserProject("my-project"), IfMatchEtag("ABC="));
   EXPECT_EQ("my-bucket", request.bucket_name());
@@ -79,7 +79,21 @@ TEST(GetDefaultObjectAclRequestTest, Simple) {
   EXPECT_THAT(str, HasSubstr("If-Match: ABC="));
 }
 
-TEST(CreateDefaultObjectAclRequestTest, Simple) {
+TEST(DefaultObjectAclRequestTest, Delete) {
+  DeleteDefaultObjectAclRequest request("my-bucket", "user-testuser");
+  request.set_multiple_options(UserProject("my-project"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ("user-testuser", request.entity());
+
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("my-bucket"));
+  EXPECT_THAT(str, HasSubstr("user-testuser"));
+}
+
+TEST(DefaultObjectAclRequestTest, Create) {
   CreateDefaultObjectAclRequest request("my-bucket", "user-testuser", "READER");
   request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
@@ -95,22 +109,8 @@ TEST(CreateDefaultObjectAclRequestTest, Simple) {
   EXPECT_THAT(str, HasSubstr("READER"));
 }
 
-TEST(DeleteDefaultObjectAclRequestTest, Simple) {
-  DeleteDefaultObjectAclRequest request("my-bucket", "user-testuser");
-  request.set_multiple_options(UserProject("my-project"));
-  EXPECT_EQ("my-bucket", request.bucket_name());
-  EXPECT_EQ("user-testuser", request.entity());
-
-  std::ostringstream os;
-  os << request;
-  auto str = os.str();
-  EXPECT_THAT(str, HasSubstr("userProject=my-project"));
-  EXPECT_THAT(str, HasSubstr("my-bucket"));
-  EXPECT_THAT(str, HasSubstr("user-testuser"));
-}
-
-TEST(UpdateDefaultObjectAclRequestTest, Simple) {
-  CreateDefaultObjectAclRequest request("my-bucket", "user-testuser", "READER");
+TEST(DefaultObjectAclRequestTest, Update) {
+  UpdateDefaultObjectAclRequest request("my-bucket", "user-testuser", "READER");
   request.set_multiple_options(UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("user-testuser", request.entity());
@@ -144,7 +144,7 @@ ObjectAccessControl CreateDefaultObjectAccessControlForTest() {
   return ObjectAccessControl::ParseFromString(text);
 }
 
-TEST(PatchDefaultObjectAclRequestTest, ReadModifyWrite) {
+TEST(DefaultObjectAclRequestTest, PatchDiff) {
   ObjectAccessControl original = CreateDefaultObjectAccessControlForTest();
   ObjectAccessControl new_acl =
       CreateDefaultObjectAccessControlForTest().set_role("READER");
@@ -158,7 +158,7 @@ TEST(PatchDefaultObjectAclRequestTest, ReadModifyWrite) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PatchDefaultObjectAclRequestTest, Patch) {
+TEST(DefaultObjectAclRequestTest, PatchBuilder) {
   PatchDefaultObjectAclRequest request(
       "my-bucket", "user-test-user",
       ObjectAccessControlPatchBuilder().set_role("READER").delete_entity());
@@ -167,7 +167,7 @@ TEST(PatchDefaultObjectAclRequestTest, Patch) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PatchDefaultObjectAclRequestTest, PatchStream) {
+TEST(DefaultObjectAclRequestTest, PatchStream) {
   ObjectAccessControl original = CreateDefaultObjectAccessControlForTest();
   ObjectAccessControl new_acl =
       CreateDefaultObjectAccessControlForTest().set_role("READER");

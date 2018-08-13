@@ -69,6 +69,36 @@ std::ostream& operator<<(std::ostream& os, CreateBucketAclRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, UpdateBucketAclRequest const& r) {
+  os << "UpdateBucketAclRequest={bucket_name=" << r.bucket_name()
+     << ", entity=" << r.entity() << ", role=" << r.role();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+PatchBucketAclRequest::PatchBucketAclRequest(
+    std::string bucket, std::string entity, BucketAccessControl const& original,
+    BucketAccessControl const& new_acl)
+    : GenericBucketAclRequest(std::move(bucket), std::move(entity)) {
+  PatchBuilder build_patch;
+  build_patch.AddStringField("entity", original.entity(), new_acl.entity());
+  build_patch.AddStringField("role", original.role(), new_acl.role());
+  payload_ = build_patch.ToString();
+}
+
+PatchBucketAclRequest::PatchBucketAclRequest(
+    std::string bucket, std::string entity,
+    BucketAccessControlPatchBuilder const& patch)
+    : GenericBucketAclRequest(std::move(bucket), std::move(entity)),
+      payload_(patch.BuildPatch()) {}
+
+std::ostream& operator<<(std::ostream& os, PatchBucketAclRequest const& r) {
+  os << "BucketAclRequest={bucket_name=" << r.bucket_name()
+     << ", entity=" << r.entity();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.payload() << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

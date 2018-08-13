@@ -336,7 +336,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
 }
 
 std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
-    ObjectAclRequest const& request) {
+    DeleteObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());
@@ -354,7 +354,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
 }
 
 std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
-    ObjectAclRequest const& request) {
+    GetObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());

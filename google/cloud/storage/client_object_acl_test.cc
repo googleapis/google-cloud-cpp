@@ -157,7 +157,7 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
   EXPECT_CALL(*mock, DeleteObjectAcl(_))
       .WillOnce(
           Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
-      .WillOnce(Invoke([](internal::ObjectAclRequest const& r) {
+      .WillOnce(Invoke([](internal::DeleteObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user", r.entity());
@@ -200,7 +200,7 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
 
   EXPECT_CALL(*mock, GetObjectAcl(_))
       .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
-      .WillOnce(Invoke([&expected](internal::ObjectAclRequest const& r) {
+      .WillOnce(Invoke([&expected](internal::GetObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user-1", r.entity());

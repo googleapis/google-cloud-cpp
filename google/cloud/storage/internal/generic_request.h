@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
 
-#include "google/cloud/storage/version.h"
+#include "google/cloud/storage/well_known_headers.h"
 #include <iostream>
 #include <utility>
 
@@ -140,11 +140,15 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  * @tparam Options the list of options that the Request class will support.
  */
 template <typename Derived, typename... Options>
-class GenericRequest : public GenericRequestBase<Derived, Options...> {
+class GenericRequest : public GenericRequestBase<Derived, IfMatchEtag,
+                                                 IfNoneMatchEtag, Options...> {
  public:
+  using Super =
+      GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag, Options...>;
+
   template <typename H, typename... T>
   Derived& set_multiple_options(H&& h, T&&... tail) {
-    GenericRequestBase<Derived, Options...>::set_option(std::forward<H>(h));
+    Super::set_option(std::forward<H>(h));
     return set_multiple_options(std::forward<T>(tail)...);
   }
 

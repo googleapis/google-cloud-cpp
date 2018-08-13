@@ -50,6 +50,20 @@ std::ostream& operator<<(std::ostream& os, ListObjectAclResponse const& r) {
   return os << "}}";
 }
 
+std::ostream& operator<<(std::ostream& os, GetObjectAclRequest const& r) {
+  os << "GetObjectAclRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", entity=" << r.entity();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, DeleteObjectAclRequest const& r) {
+  os << "DeleteObjectAclRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", entity=" << r.entity();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, CreateObjectAclRequest const& r) {
   os << "CreateObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity()
@@ -66,69 +80,29 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r) {
   return os << "}";
 }
 
-std::ostream& operator<<(std::ostream& os, ObjectAclRequest const& r) {
-  os << "ObjectAclRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name() << ", entity=" << r.entity();
-  r.DumpOptions(os, ", ");
-  return os << "}";
-}
-
 PatchObjectAclRequest::PatchObjectAclRequest(
     std::string bucket, std::string object, std::string entity,
     ObjectAccessControl const& original, ObjectAccessControl const& new_acl)
-    : GenericObjectRequest(std::move(bucket), std::move(object)),
-      entity_(std::move(entity)) {
+    : GenericObjectAclRequest(std::move(bucket), std::move(object),
+                              std::move(entity)) {
   PatchBuilder build_patch;
-  build_patch.AddStringField("bucket", original.bucket(), new_acl.bucket());
-  build_patch.AddStringField("domain", original.domain(), new_acl.domain());
-  build_patch.AddStringField("email", original.email(), new_acl.email());
   build_patch.AddStringField("entity", original.entity(), new_acl.entity());
-  build_patch.AddStringField("entityId", original.entity_id(),
-                             new_acl.entity_id());
-  build_patch.AddStringField("etag", original.etag(), new_acl.etag());
-  build_patch.AddIntField("generation", original.generation(),
-                          new_acl.generation());
-  build_patch.AddStringField("id", original.id(), new_acl.id());
-  build_patch.AddStringField("kind", original.kind(), new_acl.kind());
-  build_patch.AddStringField("object", original.object(), new_acl.object());
-
-  if (original.project_team_as_optional() !=
-      new_acl.project_team_as_optional()) {
-    if (not new_acl.has_project_team()) {
-      if (original.has_project_team()) {
-        build_patch.RemoveField("projectTeam");
-      }
-    } else {
-      PatchBuilder project_team_patch;
-      project_team_patch
-          .AddStringField("project_number",
-                          original.project_team().project_number,
-                          new_acl.project_team().project_number)
-          .AddStringField("team", original.project_team().team,
-                          new_acl.project_team().team);
-      build_patch.AddSubPatch("projectTeam", project_team_patch);
-    }
-  }
-
   build_patch.AddStringField("role", original.role(), new_acl.role());
-  build_patch.AddStringField("selfLink", original.self_link(),
-                             new_acl.self_link());
   payload_ = build_patch.ToString();
 }
 
 PatchObjectAclRequest::PatchObjectAclRequest(
     std::string bucket, std::string object, std::string entity,
     ObjectAccessControlPatchBuilder const& patch)
-    : GenericObjectRequest(std::move(bucket), std::move(object)),
-      entity_(std::move(entity)),
+    : GenericObjectAclRequest(std::move(bucket), std::move(object),
+                              std::move(entity)),
       payload_(patch.BuildPatch()) {}
 
 std::ostream& operator<<(std::ostream& os, PatchObjectAclRequest const& r) {
   os << "ObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity();
   r.DumpOptions(os, ", ");
-  os << ", payload=" << r.payload();
-  return os << "}";
+  return os << ", payload=" << r.payload() << "}";
 }
 
 }  // namespace internal
