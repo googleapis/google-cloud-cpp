@@ -19,150 +19,14 @@ set -eu
 if [ -z "${PROJECT_ROOT+x}" ]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/colors.sh"
-
-# If an example fails, this is set to 1 and the program exits with failure.
-EXIT_STATUS=0
-
-################################################
-# Run a list of examples in a given program
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   program_name: the name of the program to run.
-#   examples: a string with the list of examples to run, separated by commas
-#   *: the base arguments that all commands need.
-# Returns:
-#   None
-################################################
-run_program_examples() {
-  if [ $# -lt 3 ]; then
-    echo "Usage: run_all_examples <program_name> [example ...]"
-    exit 1
-  fi
-
-  local program_path=$1
-  local example_list=$(echo $2 | tr ',' ' ')
-  shift 2
-  local base_arguments=$*
-
-  local program_name=$(basename ${program_path})
-
-  if [ ! -x ${program_name} ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " ${program_name} is not compiled"
-    return
-  fi
-  log="$(mktemp -t "storage_samples.XXXXXX")"
-  for example in ${example_list}; do
-    echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        "${program_name} ${example} running"
-    #
-    # Magic list of examples that need additional arguments.
-    #
-    case ${example} in
-        list-buckets)
-            arguments=""
-            export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-            ;;
-        list-buckets-for-project)
-            arguments="${PROJECT_ID}"
-            ;;
-        create-bucket)
-            arguments="${base_arguments}"
-            export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-            ;;
-        create-bucket-for-project)
-            arguments="${base_arguments} ${PROJECT_ID}"
-            ;;
-        change-default-storage-class)
-            arguments="${base_arguments} NEARLINE"
-            ;;
-        insert-object)
-            arguments="${base_arguments} a-short-string-to-put-in-the-object"
-            ;;
-        write-object)
-            arguments="${base_arguments} 100000"
-            ;;
-        create-bucket-acl)
-            arguments="${base_arguments} allAuthenticatedUsers READER"
-            ;;
-        get-bucket-acl)
-            arguments="${base_arguments} allAuthenticatedUsers"
-            ;;
-        delete-bucket-acl)
-            arguments="${base_arguments} allAuthenticatedUsers"
-            ;;
-        create-object-acl)
-            arguments="${base_arguments} allAuthenticatedUsers READER"
-            ;;
-        get-object-acl)
-            arguments="${base_arguments} allAuthenticatedUsers"
-            ;;
-        update-object-acl)
-            arguments="${base_arguments} allAuthenticatedUsers OWNER"
-            ;;
-        patch-object-acl)
-            arguments="${base_arguments} allAuthenticatedUsers READER"
-            ;;
-        delete-object-acl)
-            arguments="${base_arguments} allAuthenticatedUsers"
-            ;;
-        *)
-            arguments="${base_arguments}"
-            ;;
-    esac
-    echo ${program_path} ${example} ${arguments} >"${log}"
-    set +e
-    ${program_path} ${example} ${arguments} >>"${log}" 2>&1 </dev/null
-    if [ $? = 0 ]; then
-      echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-          "${program_name} ${example}"
-      continue
-    else
-      EXIT_STATUS=1
-      echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-          "${program_name} ${example}"
-      echo
-      echo "================ [begin ${log}] ================"
-      cat "${log}"
-      echo "================ [end ${log}] ================"
-      if [ -f "testbench.log" ]; then
-        echo "================ [begin testbench.log ================"
-        cat "testbench.log"
-        echo "================ [end testbench.log ================"
-      fi
-    fi
-    set -e
-  done
-
-  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "${program_name} (no command) running"
-  set +e
-  ${program_path} >"${log}" 2>&1 </dev/null
-  # Note the inverted test, this is supposed to exit with 1.
-  if [ $? != 0 ]; then
-    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        "${program_name}" "(no command)"
-  else
-    EXIT_STATUS=1
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        "${program_name}" "(no command)"
-    echo
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-  fi
-  set -e
-  /bin/rm -f "${log}"
-}
+source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
 # Run all Bucket examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
 # Arguments:
 #   None
 # Returns:
@@ -171,24 +35,24 @@ run_program_examples() {
 run_all_bucket_examples() {
   local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
 
-  # The list of commands in the storage_bucket_samples program that we will
-  # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly BUCKET_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
-list-buckets
-list-buckets-for-project
-create-bucket
-get-bucket-metadata
-delete-bucket
-create-bucket-for-project
-get-bucket-metadata
-change-default-storage-class
-delete-bucket
-_EOF_
-)
-
-  run_program_examples ./storage_bucket_samples \
-      "${BUCKET_EXAMPLES_COMMANDS}" \
+  EMULATOR_LOG="testbench.log"
+  run_example ./storage_bucket_samples list-buckets-for-project \
+      "${PROJECT_ID}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples get-bucket-metadata \
       "${bucket_name}"
+  run_example ./storage_bucket_samples change-default-storage-class \
+      "${bucket_name}" "NEARLINE"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+
+  # Run the examples where the project id is obtained from the environment:
+  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+  run_example ./storage_bucket_samples list-buckets
+  run_example ./storage_bucket_samples create-bucket "${bucket_name}"
+  run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+  unset GOOGLE_CLOUD_PROJECT
 }
 
 ################################################
@@ -205,41 +69,14 @@ run_all_bucket_acl_examples() {
   local bucket_name=$1
   shift
 
-  # First create a bucket for the example:
-  if [ ! -x ./storage_bucket_samples ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " storage_bucket_samples is not compiled"
-    return
-  fi
-  log="$(mktemp -t "storage_bucket_acl_setup.XXXXXX")"
-  set +e
-  ./storage_bucket_samples get-bucket-metadata \
-      "${bucket_name}"  >${log} 2>&1
-  if [ $? != 0 ]; then
-    EXIT_STATUS=1
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " cannot create test bucket"
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-    set -e
-    return
-  fi
-  set -e
-
-  # The list of commands in the storage_bucket_samples program that we will
-  # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly BUCKET_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
-list-bucket-acl
-create-bucket-acl
-get-bucket-acl
-delete-bucket-acl
-_EOF_
-)
-
-  run_program_examples ./storage_bucket_acl_samples \
-      "${BUCKET_ACL_COMMANDS}" \
+  run_example ./storage_bucket_acl_samples list-bucket-acl \
       "${bucket_name}"
+  run_example ./storage_bucket_acl_samples create-bucket-acl \
+      "${bucket_name}" allAuthenticatedUsers READER
+  run_example ./storage_bucket_acl_samples get-bucket-acl \
+      "${bucket_name}" allAuthenticatedUsers
+  run_example ./storage_bucket_acl_samples delete-bucket-acl \
+      "${bucket_name}" allAuthenticatedUsers
 }
 
 ################################################
@@ -256,37 +93,7 @@ run_all_default_object_acl_examples() {
   local bucket_name=$1
   shift
 
-  # First create a bucket for the example:
-  if [ ! -x ./storage_bucket_samples ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " storage_bucket_samples is not compiled"
-    return
-  fi
-  log="$(mktemp -t "storage_default_object_acl_setup.XXXXXX")"
-  set +e
-  ./storage_bucket_samples get-bucket-metadata \
-      "${bucket_name}"  >${log} 2>&1
-  if [ $? != 0 ]; then
-    EXIT_STATUS=1
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " cannot create test bucket"
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-    set -e
-    return
-  fi
-  set -e
-
-  # The list of commands in the storage_bucket_samples program that we will
-  # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly DEFAULT_OBJECT_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
-list-default-object-acl
-_EOF_
-)
-
-  run_program_examples ./storage_default_object_acl_samples \
-      "${DEFAULT_OBJECT_ACL_COMMANDS}" \
+  run_example ./storage_default_object_acl_samples list-default-object-acl \
       "${bucket_name}"
 }
 
@@ -304,28 +111,24 @@ run_all_object_examples() {
   local bucket_name=$1
   shift
 
-  # The list of commands in the storage_bucket_samples program that we will
-  # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly OBJECT_EXAMPLES_COMMANDS=$(tr '\n' ',' <<_EOF_
-insert-object
-list-objects
-get-object-metadata
-read-object
-write-object
-delete-object
-_EOF_
-)
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
 
-  local object_name="object-$(date +%s)"
-
-  run_program_examples ./storage_object_samples \
-      "${OBJECT_EXAMPLES_COMMANDS}" \
-      "${bucket_name}" \
-      "${object_name}"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples list-objects \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples get-object-metadata \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples read-object \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples write-object \
+      "${bucket_name}" "${object_name}" 100000
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
 }
 
 ################################################
-# Run all Object examples.
+# Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
@@ -338,60 +141,27 @@ run_all_object_acl_examples() {
   local bucket_name=$1
   shift
 
-  # The list of commands in the storage_bucket_samples program that we will
-  # test. Currently get-metadata assumes that $bucket_name is already created.
-  readonly OBJECT_ACL_COMMANDS=$(tr '\n' ',' <<_EOF_
-list-object-acl
-create-object-acl
-get-object-acl
-update-object-acl
-patch-object-acl
-delete-object-acl
-_EOF_
-)
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
 
-  # First create an object for the example:
-  local object_name="object-$(date +%s)"
-  if [ ! -x ./storage_object_samples ]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " storage_object_samples is not compiled"
-    return
-  fi
-  log="$(mktemp -t "storage_object_acl_setup.XXXXXX")"
-  set +e
-  ./storage_object_samples insert-object \
-      "${bucket_name}" \
-      "${object_name}" \
-      "some-contents-does-not-matter-what" >${log} 2>&1
-  if [ $? != 0 ]; then
-    EXIT_STATUS=1
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " cannot create test object"
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-    set -e
-    return
-  fi
-  set -e
+  # We need to create an object to run the examples on.
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "some-string-to-serve-as-object-media"
 
-  run_program_examples ./storage_object_acl_samples \
-      "${OBJECT_ACL_COMMANDS}" \
-      "${bucket_name}" \
-      "${object_name}"
+  run_example ./storage_object_acl_samples list-object-acl \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_acl_samples create-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
+  run_example ./storage_object_acl_samples get-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+  run_example ./storage_object_acl_samples update-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
+  run_example ./storage_object_acl_samples patch-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
+  run_example ./storage_object_acl_samples delete-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
 
-  ./storage_object_samples delete-object \
-      "${bucket_name}" \
-      "${object_name}" >${log} 2>&1
-  if [ $? != 0 ]; then
-    EXIT_STATUS=1
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " cannot delete test object"
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
-  fi
-  set -e
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
 }
 
 ################################################

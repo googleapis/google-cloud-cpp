@@ -47,7 +47,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 2) {
-    throw Usage{"list-bucket-acl <bucket-name>"};
+    throw Usage{"list-default-object-acl <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   //! [list default object acl] [START storage_print_bucket_default_acl]
