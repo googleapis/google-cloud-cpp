@@ -454,6 +454,31 @@ class Client {
   }
 
   /**
+   * Update the value of an existing bucket ACL.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param acl the new ACL value. Note that only the writable values of the ACL
+   *   will be modified by the server.
+   * @param options a list of optional query parameters and/or request
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_bucket_acl_samples.cc update bucket acl
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
+   *     for additional details on what fields are writeable.
+   */
+  template <typename... Options>
+  BucketAccessControl UpdateBucketAcl(std::string const& bucket_name,
+                                      BucketAccessControl const& acl,
+                                      Options&&... options) {
+    internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
+                                             acl.role());
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->UpdateBucketAcl(request).second;
+  }
+
+  /**
    * Retrieve the list of ObjectAccessControls for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.

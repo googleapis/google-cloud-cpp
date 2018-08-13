@@ -207,6 +207,18 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result.entity(), current_acl));
 
+  BucketAccessControl get_result =
+      client.GetBucketAcl(bucket_name, entity_name);
+  EXPECT_EQ(get_result, result);
+
+  BucketAccessControl new_acl = get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client.UpdateBucketAcl(bucket_name, new_acl);
+  EXPECT_EQ(updated_result.role(), "READER");
+
+  get_result = client.GetBucketAcl(bucket_name, entity_name);
+  EXPECT_EQ(get_result, updated_result);
+
   client.DeleteBucketAcl(bucket_name, entity_name);
   current_acl = client.ListBucketAcl(bucket_name);
   EXPECT_EQ(0, name_counter(result.entity(), current_acl));

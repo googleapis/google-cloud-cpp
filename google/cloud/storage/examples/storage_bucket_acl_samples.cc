@@ -122,6 +122,28 @@ void GetBucketAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, entity);
 }
 
+void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"update-bucket-acl <bucket-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [update bucket acl]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity,
+     std::string role) {
+    gcs::BucketAccessControl acl =
+        gcs::BucketAccessControl().set_entity(entity).set_role(role);
+    gcs::BucketAccessControl updated = client.UpdateBucketAcl(bucket_name, acl);
+    std::cout << "Bucket ACL updated. The ACL entry for " << entity
+              << " in bucket " << bucket_name << " is " << updated << std::endl;
+  }
+  //! [update bucket acl]
+  (std::move(client), bucket_name, entity, role);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -136,6 +158,7 @@ int main(int argc, char* argv[]) try {
       {"create-bucket-acl", &CreateBucketAcl},
       {"delete-bucket-acl", &DeleteBucketAcl},
       {"get-bucket-acl", &GetBucketAcl},
+      {"update-bucket-acl", &UpdateBucketAcl},
   };
   for (auto&& kv : commands) {
     try {

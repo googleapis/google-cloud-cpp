@@ -160,6 +160,11 @@ std::pair<Status, EmptyResponse> LoggingClient::DeleteBucketAcl(
   return MakeCall(*client_, &RawClient::DeleteBucketAcl, request, __func__);
 }
 
+std::pair<Status, BucketAccessControl> LoggingClient::UpdateBucketAcl(
+    UpdateBucketAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::UpdateBucketAcl, request, __func__);
+}
+
 std::pair<Status, ListObjectAclResponse> LoggingClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjectAcl, request, __func__);

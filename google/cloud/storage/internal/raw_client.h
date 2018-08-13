@@ -89,6 +89,8 @@ class RawClient {
       DeleteBucketAclRequest const&) = 0;
   virtual std::pair<Status, BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) = 0;
+  virtual std::pair<Status, BucketAccessControl> UpdateBucketAcl(
+      UpdateBucketAclRequest const&) = 0;
   //@}
 
   //@{
