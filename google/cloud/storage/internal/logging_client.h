@@ -82,6 +82,8 @@ class LoggingClient : public RawClient {
       ListDefaultObjectAclRequest const& request) override;
   std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
       CreateDefaultObjectAclRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 

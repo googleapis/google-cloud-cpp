@@ -203,6 +203,12 @@ std::pair<Status, ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
                   __func__);
 }
 
+std::pair<Status, EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
+    DeleteDefaultObjectAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteDefaultObjectAcl, request,
+                  __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

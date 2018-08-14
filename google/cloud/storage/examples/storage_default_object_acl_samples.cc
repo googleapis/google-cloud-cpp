@@ -86,6 +86,24 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, entity, role);
 }
 
+void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"delete-default-object-acl <bucket-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [delete default object acl] [START storage_remove_bucket_default_owner]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    client.DeleteDefaultObjectAcl(bucket_name, entity);
+    std::cout << "Deleted ACL entry for " << entity << " in bucket "
+              << bucket_name << std::endl;
+  }
+  //! [delete default object acl] [END storage_remove_bucket_default_owner]
+  (std::move(client), bucket_name, entity);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -98,6 +116,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-default-object-acl", &ListDefaultObjectAcl},
       {"create-default-object-acl", &CreateDefaultObjectAcl},
+      {"delete-default-object-acl", &DeleteDefaultObjectAcl},
   };
   for (auto&& kv : commands) {
     try {

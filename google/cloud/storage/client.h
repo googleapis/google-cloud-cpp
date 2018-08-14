@@ -702,6 +702,30 @@ class Client {
     return raw_client_->CreateDefaultObjectAcl(request).second;
   }
 
+  /**
+   * Deletes an entry from the default object ACL in a bucket.
+   *
+   * The default object ACL sets the ACL for any object created in the bucket,
+   * unless a different ACL is specified when the object is created.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the name of the entity added to the ACL.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @snippet storage_default_object_acl_samples.cc delete default object acl
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   */
+  template <typename... Options>
+  void DeleteDefaultObjectAcl(std::string const& bucket_name,
+                              std::string const& entity, Options&&... options) {
+    internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->DeleteDefaultObjectAcl(request);
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
