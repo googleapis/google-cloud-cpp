@@ -652,7 +652,10 @@ class Client {
   }
 
   /**
-   * Retrieve the list of DefaultObjectAccessControls for a bucket.
+   * Retrieves the default object ACL for a bucket.
+   *
+   * The default object ACL sets the ACL for any object created in the bucket,
+   * unless a different ACL is specified when the object is created.
    *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
@@ -660,6 +663,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc list default object acl
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
   std::vector<ObjectAccessControl> ListDefaultObjectAcl(
@@ -667,6 +673,33 @@ class Client {
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ListDefaultObjectAcl(request).second.items;
+  }
+
+  /**
+   * Creates a new entry in the default object ACL for a bucket.
+   *
+   * The default object ACL sets the ACL for any object created in the bucket,
+   * unless a different ACL is specified when the object is created.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the name of the entity added to the ACL.
+   * @param role the role of the entity.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @snippet storage_default_object_acl_samples.cc create default object acl
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   */
+  template <typename... Options>
+  ObjectAccessControl CreateDefaultObjectAcl(std::string const& bucket_name,
+                                             std::string const& entity,
+                                             std::string const& role,
+                                             Options&&... options) {
+    internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CreateDefaultObjectAcl(request).second;
   }
 
  private:

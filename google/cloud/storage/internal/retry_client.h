@@ -95,6 +95,8 @@ class RetryClient : public RawClient {
 
   std::pair<Status, ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       ListDefaultObjectAclRequest const& request) override;
+  std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
+      CreateDefaultObjectAclRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 

@@ -111,6 +111,8 @@ class RawClient {
   /// @name DefaultObjectAccessControls operations.
   virtual std::pair<Status, ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       ListDefaultObjectAclRequest const&) = 0;
+  virtual std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
+      CreateDefaultObjectAclRequest const&) = 0;
   //@}
 };
 
