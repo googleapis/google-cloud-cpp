@@ -19,6 +19,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
@@ -37,6 +38,7 @@ inline namespace STORAGE_CLIENT_NS {
  */
 struct BucketBilling {
   BucketBilling() : requester_pays(false) {}
+  BucketBilling(bool v) : requester_pays(v) {}
 
   bool requester_pays;
 };
@@ -359,6 +361,9 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_billing() const { return billing_.has_value(); }
   BucketBilling const& billing() const { return *billing_; }
+  cloud::internal::optional<BucketBilling> const& billing_as_optional() const {
+    return billing_;
+  }
   BucketMetadata& set_billing(BucketBilling const& v) {
     billing_ = v;
     return *this;
@@ -426,6 +431,10 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_encryption() const { return encryption_.has_value(); }
   BucketEncryption const& encryption() const { return *encryption_; }
+  cloud::internal::optional<BucketEncryption> const& encryption_as_optional()
+      const {
+    return encryption_;
+  }
   BucketMetadata& set_encryption(BucketEncryption v) {
     encryption_ = std::move(v);
     return *this;
@@ -447,6 +456,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+  std::map<std::string, std::string> const& labels() const { return labels_; }
+  std::map<std::string, std::string>& mutable_labels() { return labels_; }
 
   //@{
   /**
@@ -481,6 +492,9 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for logging configuration.
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
+  cloud::internal::optional<BucketLogging> const& logging_as_optional() const {
+    return logging_;
+  }
   BucketMetadata& set_logging(BucketLogging v) {
     logging_ = v;
     return *this;
@@ -519,6 +533,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
       const {
     return versioning_;
   }
+  bool has_versioning() const { return versioning_.has_value(); }
   BucketMetadata& enable_versioning() {
     versioning_.emplace(BucketVersioning{true});
     return *this;
@@ -527,7 +542,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_.emplace(BucketVersioning{false});
     return *this;
   }
-  BucketMetadata& clear_versioning() {
+  BucketMetadata& reset_versioning() {
     versioning_.reset();
     return *this;
   }
@@ -542,6 +557,9 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for website configuration.
   bool has_website() const { return website_.has_value(); }
   BucketWebsite const& website() const { return *website_; }
+  cloud::internal::optional<BucketWebsite> const& website_as_optional() const {
+    return website_;
+  }
   BucketMetadata& set_website(BucketWebsite v) {
     website_ = std::move(v);
     return *this;
@@ -574,6 +592,83 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
 
+/**
+ * Prepare a patch for the Bucket resource.
+ *
+ * The Bucket resource has many modifiable fields. The application may send a
+ * patch request to change (or delete) a small fraction of these fields by using
+ * this object.
+ *
+ * @see
+ * https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch
+ *     for general information on PATCH requests for the Google Cloud Storage
+ *     JSON API.
+ */
+class BucketMetadataPatchBuilder {
+ public:
+  BucketMetadataPatchBuilder() : labels_subpatch_dirty_(false) {}
+
+  std::string BuildPatch() const;
+
+  BucketMetadataPatchBuilder& SetAcl(std::vector<BucketAccessControl> const& v);
+
+  /**
+   * Clear the ACL for the Bucket.
+   *
+   * @warning Currently the server ignores requests to reset the full ACL.
+   */
+  BucketMetadataPatchBuilder& ResetAcl();
+
+  BucketMetadataPatchBuilder& SetBilling(BucketBilling const& v);
+  BucketMetadataPatchBuilder& ResetBilling();
+
+  BucketMetadataPatchBuilder& SetCors(std::vector<CorsEntry> const& v);
+  BucketMetadataPatchBuilder& ResetCors();
+
+  BucketMetadataPatchBuilder& SetDefaultAcl(
+      std::vector<ObjectAccessControl> const& v);
+
+  /**
+   * Clear the ACL for the Bucket.
+   *
+   * @warning Currently the server ignores requests to reset the full ACL.
+   */
+  BucketMetadataPatchBuilder& ResetDefaultAcl();
+
+  BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);
+  BucketMetadataPatchBuilder& ResetEncryption();
+
+  BucketMetadataPatchBuilder& SetLabel(std::string const& label,
+                                       std::string const& value);
+  BucketMetadataPatchBuilder& ResetLabel(std::string const& label);
+  BucketMetadataPatchBuilder& ResetLabels();
+
+  BucketMetadataPatchBuilder& SetLifecycle(BucketLifecycle const& v);
+  BucketMetadataPatchBuilder& ResetLifecycle();
+
+  BucketMetadataPatchBuilder& SetLocation(std::string const& v);
+  BucketMetadataPatchBuilder& ResetLocation();
+
+  BucketMetadataPatchBuilder& SetLogging(BucketLogging const& v);
+  BucketMetadataPatchBuilder& ResetLogging();
+
+  BucketMetadataPatchBuilder& SetName(std::string const& v);
+  BucketMetadataPatchBuilder& ResetName();
+
+  BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
+  BucketMetadataPatchBuilder& ResetStorageClass();
+
+  BucketMetadataPatchBuilder& SetVersioning(BucketVersioning const& v);
+  BucketMetadataPatchBuilder& ResetVersioning();
+
+  BucketMetadataPatchBuilder& SetWebsite(BucketWebsite const& v);
+  BucketMetadataPatchBuilder& ResetWebsite();
+
+ private:
+  internal::PatchBuilder impl_;
+  bool labels_subpatch_dirty_;
+  internal::PatchBuilder labels_subpatch_;
+};
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

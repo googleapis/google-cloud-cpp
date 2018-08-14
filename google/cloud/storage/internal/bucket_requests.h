@@ -154,6 +154,31 @@ class UpdateBucketRequest
 };
 
 std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: patch` API.
+ */
+class PatchBucketRequest
+    : public GenericRequest<
+          PatchBucketRequest, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
+ public:
+  PatchBucketRequest() = default;
+  explicit PatchBucketRequest(std::string bucket,
+                              BucketMetadata const& original,
+                              BucketMetadata const& updated);
+  explicit PatchBucketRequest(std::string bucket,
+                              BucketMetadataPatchBuilder const& patch);
+
+  std::string const& bucket() const { return bucket_; }
+  std::string const& payload() const { return payload_; }
+
+ private:
+  std::string bucket_;
+  std::string payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

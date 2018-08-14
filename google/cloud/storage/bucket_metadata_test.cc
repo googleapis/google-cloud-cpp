@@ -551,7 +551,7 @@ TEST(BucketMetadataTest, ClearVersioning) {
   auto expected = CreateBucketMetadataForTest();
   EXPECT_TRUE(expected.versioning().has_value());
   auto copy = expected;
-  copy.clear_versioning();
+  copy.reset_versioning();
   EXPECT_FALSE(copy.versioning().has_value());
   EXPECT_NE(copy, expected);
   std::ostringstream os;
@@ -577,7 +577,7 @@ TEST(BucketMetadataTest, EnableVersioning) {
   EXPECT_TRUE(expected.versioning().has_value());
   EXPECT_TRUE(expected.versioning()->enabled);
   auto copy = expected;
-  copy.clear_versioning();
+  copy.reset_versioning();
   copy.enable_versioning();
   EXPECT_TRUE(copy.versioning().has_value());
   EXPECT_TRUE(copy.versioning()->enabled);
@@ -617,6 +617,331 @@ TEST(BucketMetadataTest, ResetWebsite) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("website.")));
+}
+
+TEST(BucketMetadataPatchBuilder, SetAcl) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetAcl({BucketAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("acl"));
+  ASSERT_TRUE(json["acl"].is_array()) << json;
+  ASSERT_EQ(1U, json["acl"].size()) << json;
+  EXPECT_EQ("user-test-user", json["acl"][0].value("entity", "")) << json;
+  EXPECT_EQ("OWNER", json["acl"][0].value("role", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetAcl) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetAcl();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("acl")) << json;
+  ASSERT_TRUE(json["acl"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetBilling) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetBilling(BucketBilling{true});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("billing")) << json;
+  ASSERT_TRUE(json["billing"].is_object()) << json;
+  EXPECT_TRUE(json["billing"].value("requesterPays", false)) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetBilling) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetBilling();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("billing")) << json;
+  ASSERT_TRUE(json["billing"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetCors) {
+  BucketMetadataPatchBuilder builder;
+  std::vector<CorsEntry> v;
+  v.emplace_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
+  v.emplace_back(
+      CorsEntry{google::cloud::internal::optional<std::int64_t>(86400),
+                {},
+                {"origin1"},
+                {}});
+  builder.SetCors(v);
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("cors")) << json;
+  ASSERT_TRUE(json["cors"].is_array()) << json;
+  ASSERT_EQ(2U, json["cors"].size()) << json;
+  EXPECT_EQ(0U, json["cors"][0].count("maxAgeSeconds")) << json;
+  EXPECT_EQ(1U, json["cors"][0].count("method")) << json;
+  EXPECT_EQ(0U, json["cors"][0].count("origin")) << json;
+  EXPECT_EQ(1U, json["cors"][0].count("responseHeader")) << json;
+
+  EXPECT_EQ(1U, json["cors"][1].count("maxAgeSeconds")) << json;
+  EXPECT_EQ(0U, json["cors"][1].count("method")) << json;
+  EXPECT_EQ(1U, json["cors"][1].count("origin")) << json;
+  EXPECT_EQ(0U, json["cors"][1].count("responseHeader")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetCors) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetCors();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("cors")) << json;
+  ASSERT_TRUE(json["cors"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetDefaultAcl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("defaultObjectAcl")) << json;
+  ASSERT_TRUE(json["defaultObjectAcl"].is_array()) << json;
+  ASSERT_EQ(1U, json["defaultObjectAcl"].size()) << json;
+  EXPECT_EQ("user-test-user", json["defaultObjectAcl"][0].value("entity", ""))
+      << json;
+  EXPECT_EQ("OWNER", json["defaultObjectAcl"][0].value("role", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetDefaultAcl) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetDefaultAcl();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("defaultObjectAcl")) << json;
+  ASSERT_TRUE(json["defaultObjectAcl"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetEncryption) {
+  BucketMetadataPatchBuilder builder;
+  std::string expected =
+      "projects/test-project-name/locations/us-central1/keyRings/"
+      "test-keyring-name/cryptoKeys/test-key-name";
+  builder.SetEncryption(BucketEncryption{expected});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("encryption")) << json;
+  ASSERT_TRUE(json["encryption"].is_object()) << json;
+  EXPECT_EQ(expected, json["encryption"].value("defaultKmsKeyName", ""))
+      << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetEncryption) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetEncryption();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("encryption")) << json;
+  ASSERT_TRUE(json["encryption"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetLabels) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetLabel("test-label1", "v1");
+  builder.SetLabel("test-label2", "v2");
+  builder.ResetLabel("test-label3");
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("labels")) << json;
+  ASSERT_TRUE(json["labels"].is_object()) << json;
+  EXPECT_EQ("v1", json["labels"].value("test-label1", "")) << json;
+  EXPECT_EQ("v2", json["labels"].value("test-label2", "")) << json;
+  EXPECT_TRUE(json["labels"]["test-label3"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetLabels) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetLabels();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("labels")) << json;
+  ASSERT_TRUE(json["labels"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetLifecycle) {
+  BucketMetadataPatchBuilder builder;
+  BucketLifecycle lifecycle;
+  LifecycleRule r1(LifecycleRule::MaxAge(365), LifecycleRule::Delete());
+  LifecycleRule r2(LifecycleRule::ConditionConjunction(
+                       LifecycleRule::MatchesStorageClassStandard(),
+                       LifecycleRule::NumNewerVersions(3)),
+                   LifecycleRule::SetStorageClassNearline());
+  lifecycle.rule.emplace_back(r1);
+  lifecycle.rule.emplace_back(r2);
+  builder.SetLifecycle(lifecycle);
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("lifecycle")) << json;
+  ASSERT_TRUE(json["lifecycle"].is_object()) << json;
+  ASSERT_EQ(1U, json["lifecycle"].count("rule")) << json;
+  auto rule = json["lifecycle"]["rule"];
+  ASSERT_TRUE(rule.is_array()) << json;
+  ASSERT_EQ(2U, rule.size());
+
+  EXPECT_EQ(365, rule[0]["condition"].value("age", 0)) << json;
+  EXPECT_EQ("Delete", rule[0]["action"].value("type", "")) << json;
+
+  EXPECT_EQ(3, rule[1]["condition"].value("numNewerVersions", 0)) << json;
+  EXPECT_EQ("STANDARD", rule[1]["condition"]["matchesStorageClass"][0]) << json;
+  EXPECT_EQ("SetStorageClass", rule[1]["action"].value("type", "")) << json;
+  EXPECT_EQ("NEARLINE", rule[1]["action"].value("storageClass", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetLifecycle();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("lifecycle")) << json;
+  ASSERT_TRUE(json["lifecycle"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetLocation) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetLocation("EU");
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("location")) << json;
+  ASSERT_TRUE(json["location"].is_string()) << json;
+  EXPECT_EQ("EU", json.value("location", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetLocation) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetLocation();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("location")) << json;
+  ASSERT_TRUE(json["location"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetLogging) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetLogging(BucketLogging{"test-log-bucket", "test-log-prefix"});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("logging")) << json;
+  ASSERT_TRUE(json["logging"].is_object()) << json;
+  EXPECT_EQ("test-log-bucket", json["logging"].value("logBucket", "")) << json;
+  EXPECT_EQ("test-log-prefix", json["logging"].value("logPrefix", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetLogging) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetLogging();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("logging")) << json;
+  ASSERT_TRUE(json["logging"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetName) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetName("test-bucket-changed-name");
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("name")) << json;
+  ASSERT_TRUE(json["name"].is_string()) << json;
+  EXPECT_EQ("test-bucket-changed-name", json.value("name", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetName) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetName();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("name")) << json;
+  ASSERT_TRUE(json["name"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetStorageClass) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetStorageClass("NEARLINE");
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("storageClass")) << json;
+  ASSERT_TRUE(json["storageClass"].is_string()) << json;
+  EXPECT_EQ("NEARLINE", json.value("storageClass", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetStorageClass) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetStorageClass();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("storageClass")) << json;
+  ASSERT_TRUE(json["storageClass"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetVersioning) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetVersioning(BucketVersioning{true});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("versioning")) << json;
+  ASSERT_TRUE(json["versioning"].is_object()) << json;
+  EXPECT_TRUE(json["versioning"].value("enabled", false)) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetVersioning) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetVersioning();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("versioning")) << json;
+  ASSERT_TRUE(json["versioning"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetWebsite) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetWebsite(BucketWebsite{"index.htm", "404.htm"});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("website")) << json;
+  ASSERT_TRUE(json["website"].is_object()) << json;
+  EXPECT_EQ("index.htm", json["website"].value("mainPageSuffix", "")) << json;
+  EXPECT_EQ("404.htm", json["website"].value("notFoundPage", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetWebsite) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetWebsite();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("website")) << json;
+  ASSERT_TRUE(json["website"].is_null()) << json;
 }
 
 }  // namespace
