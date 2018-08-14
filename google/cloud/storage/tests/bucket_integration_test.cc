@@ -52,7 +52,7 @@ class BucketIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomBucketName() {
     // The total length of this bucket name must be <= 63 characters,
-    static std::string const prefix = "gcs-cpp-test-bucket";
+    static std::string const prefix = "gcs-cpp-test-bucket-";
     static std::size_t const kMaxBucketNameLength = 63;
     std::size_t const max_random_characters =
         kMaxBucketNameLength - prefix.size();
@@ -304,7 +304,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   // ACL.
   auto meta = client.CreateBucketForProject(
       bucket_name, project_id, BucketMetadata(),
-      PredefinedDefaultObjectAcl("private"), Projection("full"));
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
 
   auto entity_name = MakeEntityName();
 
