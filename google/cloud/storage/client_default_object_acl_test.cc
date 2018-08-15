@@ -222,6 +222,56 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAclPermanentFailure) {
       "GetDefaultObjectAcl");
 }
 
+TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
+  auto expected = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "READER"
+      })""");
+
+  EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(
+          Invoke([&expected](internal::UpdateDefaultObjectAclRequest const& r) {
+            EXPECT_EQ("test-bucket", r.bucket_name());
+            EXPECT_EQ("user-test-user-1", r.entity());
+            EXPECT_EQ("READER", r.role());
+
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  ObjectAccessControl actual = client.UpdateDefaultObjectAcl(
+      "test-bucket", ObjectAccessControl()
+                         .set_entity("user-test-user-1")
+                         .set_role(ObjectAccessControl::ROLE_READER()));
+  // Compare just a few fields because the values for most of the fields are
+  // hard to predict when testing against the production environment.
+  EXPECT_EQ(expected.bucket(), actual.bucket());
+  EXPECT_EQ(expected.entity(), actual.entity());
+  EXPECT_EQ(expected.role(), actual.role());
+}
+
+TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.UpdateDefaultObjectAcl("test-bucket-name",
+                                      ObjectAccessControl());
+      },
+      "UpdateDefaultObjectAcl");
+}
+
+TEST_F(DefaultObjectAccessControlsTest,
+       UpdateDefaultObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.UpdateDefaultObjectAcl("test-bucket-name",
+                                      ObjectAccessControl());
+      },
+      "UpdateDefaultObjectAcl");
+}
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
