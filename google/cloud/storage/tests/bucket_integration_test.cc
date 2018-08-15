@@ -189,7 +189,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
           .set_role("READER"));
 
   // encryption()
-  // TODO(#) - need a valid KMS entry to set the encryption.
+  // TODO(#1003) - need a valid KMS entry to set the encryption.
 
   // labels()
   desired_state.mutable_labels().emplace("test-label", "testing-full-patch");
@@ -248,7 +248,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));
 
-  // encryption() - TODO(#)
+  // encryption() - TODO(#1003) - verify the key was correctly used.
 
   // lifecycle()
   EXPECT_EQ(desired_state.lifecycle_as_optional(),
