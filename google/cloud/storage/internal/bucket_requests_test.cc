@@ -379,30 +379,6 @@ TEST(PatchBucketRequestTest, DiffResetLifecycle) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetLocation) {
-  BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_location("");
-  BucketMetadata updated = original;
-  updated.set_location("EU");
-  PatchBucketRequest request("test-bucket", original, updated);
-
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"location": "EU"})""");
-  EXPECT_EQ(expected, patch);
-}
-
-TEST(PatchBucketRequestTest, DiffResetLocation) {
-  BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_location("US");
-  BucketMetadata updated = original;
-  updated.set_location("");
-  PatchBucketRequest request("test-bucket", original, updated);
-
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"location": null})""");
-  EXPECT_EQ(expected, patch);
-}
-
 TEST(PatchBucketRequestTest, DiffSetLogging) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_logging();
@@ -414,7 +390,7 @@ TEST(PatchBucketRequestTest, DiffSetLogging) {
   nl::json expected = nl::json::parse(R"""({
       "logging": {
           "logBucket": "test-log-bucket",
-          "logPrefix": "test-log-prefix"
+          "logObjectPrefix": "test-log-prefix"
       }
   })""");
   EXPECT_EQ(expected, patch);
@@ -538,7 +514,7 @@ TEST(PatchBucketRequestTest, DiffResetWebsite) {
 TEST(PatchBucketRequestTest, DiffOStream) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketMetadata updated = original;
-  updated.set_location("EU").set_storage_class("NEARLINE");
+  updated.set_storage_class("NEARLINE");
   PatchBucketRequest request("test-bucket", original, updated);
   request.set_multiple_options(IfMetaGenerationNotMatch(7),
                                UserProject("my-project"));
@@ -551,7 +527,6 @@ TEST(PatchBucketRequestTest, DiffOStream) {
   EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
   EXPECT_THAT(actual, HasSubstr("NEARLINE"));
-  EXPECT_THAT(actual, HasSubstr("EU"));
   EXPECT_THAT(actual, Not(HasSubstr("defaultObjectAcl")));
 }
 

@@ -258,7 +258,6 @@ TEST_F(BucketTest, PatchBucket) {
       .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
       .WillOnce(Invoke([&expected](internal::PatchBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket());
-        EXPECT_THAT(r.payload(), HasSubstr("US"));
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
         return std::make_pair(Status(), expected);
       }));
@@ -267,8 +266,7 @@ TEST_F(BucketTest, PatchBucket) {
 
   auto actual = client.PatchBucket(
       "test-bucket-name",
-      BucketMetadataPatchBuilder().SetLocation("US").SetStorageClass(
-          "STANDARD"));
+      BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
   EXPECT_EQ(expected, actual);
 }
 

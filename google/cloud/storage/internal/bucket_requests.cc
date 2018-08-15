@@ -144,10 +144,6 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
     }
   }
 
-  if (original.location() != updated.location()) {
-    builder.SetLocation(updated.location());
-  }
-
   if (original.logging_as_optional() != updated.logging_as_optional()) {
     if (updated.has_logging()) {
       builder.SetLogging(updated.logging());
