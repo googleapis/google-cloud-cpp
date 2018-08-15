@@ -1091,6 +1091,7 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_Simple) {
  * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` handles
  * unrecoverable failure.
  */
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
   using namespace ::testing;
 
@@ -1103,8 +1104,7 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
   auto future = tested.CreateTableFromSnapshot(
       bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
       table_id);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
