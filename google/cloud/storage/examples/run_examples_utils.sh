@@ -44,9 +44,9 @@ run_all_bucket_examples() {
       "${bucket_name}"
   run_example ./storage_bucket_samples change-default-storage-class \
       "${bucket_name}" "NEARLINE"
-  run_example ./storage_bucket_samples patch-bucket \
+  run_example ./storage_bucket_samples patch-bucket-storage-class \
       "${bucket_name}" "STANDARD"
-  run_example ./storage_bucket_samples patch-bucket-with-builder \
+  run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
       "${bucket_name}" "COLDLINE"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 

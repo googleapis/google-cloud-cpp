@@ -260,7 +260,7 @@ class Client {
    * current policies.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc patch bucket
+   * @snippet storage_bucket_samples.cc patch bucket storage class
    */
   template <typename... Options>
   BucketMetadata PatchBucket(std::string bucket_name,
@@ -288,7 +288,7 @@ class Client {
    * current policies.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc patch bucket with builder
+   * @snippet storage_bucket_samples.cc patch bucket storage class with builder
    */
   template <typename... Options>
   BucketMetadata PatchBucket(std::string bucket_name,
