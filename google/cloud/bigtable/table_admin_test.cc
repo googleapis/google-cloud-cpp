@@ -1106,7 +1106,5 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
