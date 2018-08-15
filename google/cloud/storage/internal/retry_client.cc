@@ -344,6 +344,14 @@ std::pair<Status, ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
                   &RawClient::UpdateDefaultObjectAcl, request, __func__);
 }
 
+std::pair<Status, ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
+    PatchDefaultObjectAclRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::PatchDefaultObjectAcl, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

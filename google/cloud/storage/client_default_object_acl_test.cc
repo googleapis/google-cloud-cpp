@@ -272,6 +272,53 @@ TEST_F(DefaultObjectAccessControlsTest,
       },
       "UpdateDefaultObjectAcl");
 }
+
+TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
+  auto result = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "OWNER"
+      })""");
+  EXPECT_CALL(*mock, PatchDefaultObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(
+          Invoke([result](internal::PatchDefaultObjectAclRequest const& r) {
+            EXPECT_EQ("test-bucket", r.bucket_name());
+            EXPECT_EQ("user-test-user-1", r.entity());
+            internal::nl::json expected{{"role", "OWNER"}};
+            auto payload = internal::nl::json::parse(r.payload());
+            EXPECT_EQ(expected, payload);
+
+            return std::make_pair(Status(), result);
+          }));
+
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+  auto actual = client.PatchDefaultObjectAcl(
+      "test-bucket", "user-test-user-1",
+      ObjectAccessControlPatchBuilder().set_role("OWNER"));
+  EXPECT_EQ(result, actual);
+}
+
+TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, PatchDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                     ObjectAccessControlPatchBuilder());
+      },
+      "PatchDefaultObjectAcl");
+}
+
+TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, PatchDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                     ObjectAccessControlPatchBuilder());
+      },
+      "PatchDefaultObjectAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

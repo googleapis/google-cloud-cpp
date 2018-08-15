@@ -112,6 +112,10 @@ run_all_default_object_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers
   run_example ./storage_default_object_acl_samples update-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers OWNER
+  run_example ./storage_default_object_acl_samples patch-default-object-acl \
+      "${bucket_name}" allAuthenticatedUsers READER
+  run_example ./storage_default_object_acl_samples patch-default-object-acl-no-read \
+      "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_default_object_acl_samples delete-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
 }
@@ -176,6 +180,8 @@ run_all_object_acl_examples() {
       "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
   run_example ./storage_object_acl_samples patch-object-acl \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
+  run_example ./storage_object_acl_samples patch-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
   run_example ./storage_object_acl_samples delete-object-acl \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers
 

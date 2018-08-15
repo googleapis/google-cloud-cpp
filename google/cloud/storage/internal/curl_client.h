@@ -102,6 +102,8 @@ class CurlClient : public RawClient {
       GetDefaultObjectAclRequest const&) override;
   std::pair<Status, ObjectAccessControl> UpdateDefaultObjectAcl(
       UpdateDefaultObjectAclRequest const&) override;
+  std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
+      PatchDefaultObjectAclRequest const&) override;
 
  private:
   ClientOptions options_;

@@ -235,6 +235,12 @@ std::pair<Status, ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
                   __func__);
 }
 
+std::pair<Status, ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
+    PatchDefaultObjectAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::PatchDefaultObjectAcl, request,
+                  __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
