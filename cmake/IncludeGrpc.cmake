@@ -71,6 +71,11 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
 
     find_package(OpenSSL REQUIRED)
 
+    add_library(gRPC::address_sorting INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::address_sorting
+                                                address_sorting)
+    add_dependencies(gRPC::address_sorting grpc_project)
+
     add_library(gRPC::gpr INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::gpr gpr)
     add_dependencies(gRPC::gpr grpc_project)
@@ -84,6 +89,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     set_property(TARGET gRPC::grpc
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
+                          gRPC::address_sorting
                           gRPC::gpr
                           OpenSSL::SSL
                           OpenSSL::Crypto

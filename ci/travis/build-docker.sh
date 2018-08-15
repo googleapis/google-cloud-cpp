@@ -85,9 +85,9 @@ function install_grpc {
   # Install gRPC. Note that we use the system's zlib and ssl libraries.
   # For similar reasons to c-ares (see above), we need two install steps.
   echo "${COLOR_YELLOW}Installing gRPC $(date)${COLOR_RESET}"
-  wget -q https://github.com/grpc/grpc/archive/v1.10.0.tar.gz
-  tar -xf v1.10.0.tar.gz
-  cd grpc-1.10.0
+  wget -q https://github.com/grpc/grpc/archive/v1.14.0.tar.gz
+  tar -xf v1.14.0.tar.gz
+  cd grpc-1.14.0
   env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
       -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
       -DgRPC_BUILD_TESTS=OFF \

@@ -73,7 +73,13 @@ function (set_library_properties_for_external_project _target _lib)
     # would have the right information. But the configuration for external
     # libraries runs before the installation of the external libraries, so we
     # cannot use FindPackage(). Sigh.
-    set(_libs_always_install_in_libdir "grpc++" "grpc" "gpr" "cares" "z")
+    set(_libs_always_install_in_libdir
+        "grpc++"
+        "grpc"
+        "gpr"
+        "address_sorting"
+        "cares"
+        "z")
 
     if (${_lib} IN_LIST _libs_always_install_in_libdir)
         set(_libpath "${PROJECT_BINARY_DIR}/external/lib/${_libfullname}")
