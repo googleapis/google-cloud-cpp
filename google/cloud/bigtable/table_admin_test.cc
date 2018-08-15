@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -1017,5 +1018,95 @@ TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(tested.ListSnapshots(cluster_id),
                             "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` works in
+ * the easy case.
+ */
+TEST_F(TableAdminTest, CreateTableFromSnapshot_Simple) {
+  using namespace ::testing;
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    btadmin::CreateTableFromSnapshotRequest const& request,
+                    google::longrunning::Operation* response) {
+            auto const project_name =
+                "projects/" + kProjectId + "/instances/the-instance";
+            EXPECT_EQ(project_name, request.parent());
+            EXPECT_EQ("table-1", request.table_id());
+            EXPECT_EQ(
+                project_name + "/clusters/other-cluster/snapshots/snapshot-1",
+                request.source_snapshot());
+
+            return grpc::Status::OK;
+          }));
+
+  std::string expected_text = R"(
+        name: 'the-instance'        
+  )";
+  auto mock_successs = [](grpc::ClientContext* ctx,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+    operation->set_done(false);
+    return grpc::Status::OK;
+  };
+
+  btadmin::Table expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke(mock_successs))
+      .WillOnce(Invoke(mock_successs))
+      .WillOnce(Invoke(
+          [&expected](grpc::ClientContext*,
+                      google::longrunning::GetOperationRequest const& request,
+                      google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+
+  auto actual = future.get();
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` handles
+ * unrecoverable failure.
+ */
+TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
