@@ -201,8 +201,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa491055cd90f7925967ed0722dfef8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09425ba568c1b3e5652e7ae24198096c"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:a09425ba568c1b3e5652e7ae24198096c"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a09425ba568c1b3e5652e7ae24198096c">ListDefaultObjectAcl</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a09425ba568c1b3e5652e7ae24198096c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the list of DefaultObjectAccessControls for a bucket.  <a href="#a09425ba568c1b3e5652e7ae24198096c">More...</a><br /></td></tr>
+<tr class="memdesc:a09425ba568c1b3e5652e7ae24198096c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the default object ACL for a bucket.  <a href="#a09425ba568c1b3e5652e7ae24198096c">More...</a><br /></td></tr>
 <tr class="separator:a09425ba568c1b3e5652e7ae24198096c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88250a3cb07c85e8c905369480ec7be5"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a88250a3cb07c85e8c905369480ec7be5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a88250a3cb07c85e8c905369480ec7be5">CreateDefaultObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, std::string const &amp;role, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a88250a3cb07c85e8c905369480ec7be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new entry in the default object ACL for a bucket.  <a href="#a88250a3cb07c85e8c905369480ec7be5">More...</a><br /></td></tr>
+<tr class="separator:a88250a3cb07c85e8c905369480ec7be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
@@ -555,6 +559,69 @@ template&lt;typename... Options&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string project_id) {</div><div class="line">    gcs::BucketMetadata meta = client.CreateBucketForProject(</div><div class="line">        bucket_name, project_id, gcs::BucketMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Bucket created for project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;.&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="a88250a3cb07c85e8c905369480ec7be5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88250a3cb07c85e8c905369480ec7be5">&#9670;&nbsp;</a></span>CreateDefaultObjectAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::CreateDefaultObjectAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>role</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new entry in the default object ACL for a bucket. </p>
+<p>The default object ACL sets the ACL for any object created in the bucket, unless a different ACL is specified when the object is created.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">entity</td><td>the name of the entity added to the ACL. </td></tr>
+    <tr><td class="paramname">role</td><td>the role of the entity. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity,</div><div class="line">     std::string role) {</div><div class="line">    gcs::ObjectAccessControl result =</div><div class="line">        client.CreateDefaultObjectAcl(bucket_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; will be granted default to &quot;</span></div><div class="line">              &lt;&lt; result.entity() &lt;&lt; <span class="stringliteral">&quot; on any new object created on bucket &quot;</span></div><div class="line">              &lt;&lt; result.bucket() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects">https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects</a> </dd></dl>
 
 </div>
 </div>
@@ -1335,7 +1402,8 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Retrieve the list of DefaultObjectAccessControls for a bucket. </p>
+<p>Retrieves the default object ACL for a bucket. </p>
+<p>The default object ACL sets the ACL for any object created in the bucket, unless a different ACL is specified when the object is created.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
@@ -1343,7 +1411,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACLs for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    <span class="keywordflow">for</span> (gcs::ObjectAccessControl <span class="keyword">const</span>&amp; acl :</div><div class="line">         client.ListDefaultObjectAcl(bucket_name)) {</div><div class="line">      std::cout &lt;&lt; acl.role() &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; acl.entity() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACLs for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    <span class="keywordflow">for</span> (gcs::ObjectAccessControl <span class="keyword">const</span>&amp; acl :</div><div class="line">         client.ListDefaultObjectAcl(bucket_name)) {</div><div class="line">      std::cout &lt;&lt; acl.role() &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; acl.entity() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects">https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects</a> </dd></dl>
 
 </div>
 </div>
