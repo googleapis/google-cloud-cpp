@@ -95,6 +95,8 @@ run_all_default_object_acl_examples() {
 
   run_example ./storage_default_object_acl_samples list-default-object-acl \
       "${bucket_name}"
+  run_example ./storage_default_object_acl_samples create-default-object-acl \
+      "${bucket_name}" allAuthenticatedUsers READER
 }
 
 ################################################

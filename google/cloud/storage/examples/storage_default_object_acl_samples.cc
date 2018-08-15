@@ -63,6 +63,29 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"create-bucket-acl <bucket-name> <entity> <role>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  //! [create default object acl] [START storage_add_default_owner]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity,
+     std::string role) {
+    gcs::ObjectAccessControl result =
+        client.CreateDefaultObjectAcl(bucket_name, entity, role);
+    std::cout << "Role " << result.role() << " will be granted default to "
+              << result.entity() << " on any new object created on bucket "
+              << result.bucket() << "\n"
+              << "Full attributes: " << result << std::endl;
+  }
+  //! [create default object acl] [END storage_add_default_owner]
+  (std::move(client), bucket_name, entity, role);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -74,6 +97,7 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-default-object-acl", &ListDefaultObjectAcl},
+      {"create-default-object-acl", &CreateDefaultObjectAcl},
   };
   for (auto&& kv : commands) {
     try {

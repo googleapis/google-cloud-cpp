@@ -433,6 +433,27 @@ CurlClient::ListDefaultObjectAcl(ListDefaultObjectAclRequest const& request) {
                     std::move(payload)));
 }
 
+std::pair<Status, ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
+    CreateDefaultObjectAclRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/defaultObjectAcl");
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+  nl::json object;
+  object["entity"] = request.entity();
+  object["role"] = request.role();
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(object.dump()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectAccessControl{});
+  }
+  return std::make_pair(Status(),
+                        ObjectAccessControl::ParseFromString(payload.payload));
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

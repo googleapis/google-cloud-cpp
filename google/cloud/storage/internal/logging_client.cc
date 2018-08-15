@@ -197,6 +197,12 @@ LoggingClient::ListDefaultObjectAcl(
                   __func__);
 }
 
+std::pair<Status, ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
+    CreateDefaultObjectAclRequest const& request) {
+  return MakeCall(*client_, &RawClient::CreateDefaultObjectAcl, request,
+                  __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

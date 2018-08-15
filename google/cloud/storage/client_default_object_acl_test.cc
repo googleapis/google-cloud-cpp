@@ -97,6 +97,55 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAclPermanentFailure) {
       "ListDefaultObjectAcl");
 }
 
+TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
+  auto expected = ObjectAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "READER"
+      })""");
+
+  EXPECT_CALL(*mock, CreateDefaultObjectAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(
+          Invoke([&expected](internal::CreateDefaultObjectAclRequest const& r) {
+            EXPECT_EQ("test-bucket", r.bucket_name());
+            EXPECT_EQ("user-test-user-1", r.entity());
+            EXPECT_EQ("READER", r.role());
+
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  ObjectAccessControl actual = client.CreateDefaultObjectAcl(
+      "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
+  // Compare just a few fields because the values for most of the fields are
+  // hard to predict when testing against the production environment.
+  EXPECT_EQ(expected.bucket(), actual.bucket());
+  EXPECT_EQ(expected.entity(), actual.entity());
+  EXPECT_EQ(expected.role(), actual.role());
+}
+
+TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectAccessControl>(
+      mock, EXPECT_CALL(*mock, CreateDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                      "READER");
+      },
+      "CreateDefaultObjectAcl");
+}
+
+TEST_F(DefaultObjectAccessControlsTest,
+       CreateDefaultObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<ObjectAccessControl>(
+      *client, EXPECT_CALL(*mock, CreateDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user",
+                                      "READER");
+      },
+      "CreateDefaultObjectAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

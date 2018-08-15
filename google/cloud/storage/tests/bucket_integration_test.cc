@@ -52,7 +52,7 @@ class BucketIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomBucketName() {
     // The total length of this bucket name must be <= 63 characters,
-    static std::string const prefix = "gcs-cpp-test-bucket";
+    static std::string const prefix = "gcs-cpp-test-bucket-";
     static std::size_t const kMaxBucketNameLength = 63;
     std::size_t const max_random_characters =
         kMaxBucketNameLength - prefix.size();
@@ -215,16 +215,46 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
   Client client;
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+
+  // Create a new bucket to run the test, with the "private"
+  // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
+  // ACL.
+  auto meta = client.CreateBucketForProject(
+      bucket_name, project_id, BucketMetadata(),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
 
   auto entity_name = MakeEntityName();
-  std::vector<ObjectAccessControl> initial_acl =
-      client.ListDefaultObjectAcl(bucket_name);
 
-  // TODO(#833) TODO(#835) - make stronger assertions once we can modify the
-  // ACL.
-  EXPECT_FALSE(initial_acl.empty());
+  auto name_counter = [](std::string const& name,
+                         std::vector<ObjectAccessControl> const& list) {
+    auto name_matcher = [](std::string const& name) {
+      return
+          [name](ObjectAccessControl const& m) { return m.entity() == name; };
+    };
+    return std::count_if(list.begin(), list.end(), name_matcher(name));
+  };
+  ASSERT_FALSE(meta.default_acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_EQ(0, name_counter(entity_name, meta.default_acl()))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
+
+  ObjectAccessControl result =
+      client.CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
+  EXPECT_EQ("OWNER", result.role());
+  auto current_acl = client.ListDefaultObjectAcl(bucket_name);
+  EXPECT_FALSE(current_acl.empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+
+  client.DeleteBucket(bucket_name);
 }
 
 }  // namespace
