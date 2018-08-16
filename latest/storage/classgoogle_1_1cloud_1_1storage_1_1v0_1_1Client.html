@@ -171,6 +171,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab0825ec57728cfe34b27b0ece813e56e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0825ec57728cfe34b27b0ece813e56e">GetBucketAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0825ec57728cfe34b27b0ece813e56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of an existing bucket ACL.  <a href="#ab0825ec57728cfe34b27b0ece813e56e">More...</a><br /></td></tr>
 <tr class="separator:ab0825ec57728cfe34b27b0ece813e56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af181aaa4cf80882abee9fee0749837f5"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:af181aaa4cf80882abee9fee0749837f5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af181aaa4cf80882abee9fee0749837f5">UpdateBucketAcl</a> (std::string const &amp;bucket_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> const &amp;acl, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:af181aaa4cf80882abee9fee0749837f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the value of an existing bucket ACL.  <a href="#af181aaa4cf80882abee9fee0749837f5">More...</a><br /></td></tr>
+<tr class="separator:af181aaa4cf80882abee9fee0749837f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2015fd18d270745e52133f36c4a4364"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:aa2015fd18d270745e52133f36c4a4364"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa2015fd18d270745e52133f36c4a4364">ListObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:aa2015fd18d270745e52133f36c4a4364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the list of ObjectAccessControls for an object.  <a href="#aa2015fd18d270745e52133f36c4a4364">More...</a><br /></td></tr>
@@ -1814,6 +1818,62 @@ template&lt;typename... Options&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string storage_class) {</div><div class="line">    gcs::BucketMetadata meta = client.GetBucketMetadata(bucket_name);</div><div class="line">    meta.set_storage_class(storage_class);</div><div class="line">    gcs::BucketMetadata updated_meta = client.UpdateBucket(bucket_name, meta);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Updated the storage class in &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; to &quot;</span></div><div class="line">              &lt;&lt; storage_class &lt;&lt; <span class="stringliteral">&quot;. The full updated metadata is &quot;</span></div><div class="line">              &lt;&lt; updated_meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="af181aaa4cf80882abee9fee0749837f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af181aaa4cf80882abee9fee0749837f5">&#9670;&nbsp;</a></span>UpdateBucketAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> google::cloud::storage::v0::Client::UpdateBucketAcl </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> const &amp;&#160;</td>
+          <td class="paramname"><em>acl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update the value of an existing bucket ACL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">acl</td><td>the new ACL value. Note that only the writable values of the ACL will be modified by the server. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity,</div><div class="line">     std::string role) {</div><div class="line">    gcs::BucketAccessControl acl =</div><div class="line">        gcs::BucketAccessControl().set_entity(entity).set_role(role);</div><div class="line">    gcs::BucketAccessControl updated = client.UpdateBucketAcl(bucket_name, acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Bucket ACL updated. The ACL entry for &quot;</span> &lt;&lt; entity</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is &quot;</span> &lt;&lt; updated &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls">https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls</a> for additional details on what fields are writeable. </dd></dl>
 
 </div>
 </div>
