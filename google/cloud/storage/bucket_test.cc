@@ -25,6 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::_;
+using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -235,6 +236,56 @@ TEST_F(BucketTest, UpdateBucketPermanentFailure) {
         client.UpdateBucket("test-bucket-name", BucketMetadata());
       },
       "UpdateBucket");
+}
+
+TEST_F(BucketTest, PatchBucket) {
+  std::string text = R"""({
+      "kind": "storage#bucket",
+      "id": "test-bucket-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "projectNumber": "123456789",
+      "name": "test-bucket-name",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": 7,
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
+})""";
+  auto expected = BucketMetadata::ParseFromString(text);
+
+  EXPECT_CALL(*mock, PatchBucket(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Invoke([&expected](internal::PatchBucketRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket());
+        EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.PatchBucket(
+      "test-bucket-name",
+      BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, PatchBucketTooManyFailures) {
+  testing::TooManyFailuresTest<BucketMetadata>(
+      mock, EXPECT_CALL(*mock, PatchBucket(_)),
+      [](Client& client) {
+        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
+      },
+      "PatchBucket");
+}
+
+TEST_F(BucketTest, PatchBucketPermanentFailure) {
+  testing::PermanentFailureTest<BucketMetadata>(
+      *client, EXPECT_CALL(*mock, PatchBucket(_)),
+      [](Client& client) {
+        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
+      },
+      "PatchBucket");
 }
 
 }  // namespace

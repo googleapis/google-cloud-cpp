@@ -121,7 +121,7 @@ BucketMetadata CreateBucketMetadataForTest() {
       "location": "US",
       "logging": {
         "logBucket": "test-log-bucket",
-        "logPrefix": "test-log-prefix"
+        "logObjectPrefix": "test-log-prefix"
       },
       "metageneration": "4",
       "name": "test-bucket",
@@ -207,7 +207,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("US", actual.location());
 
   EXPECT_EQ("test-log-bucket", actual.logging().log_bucket);
-  EXPECT_EQ("test-log-prefix", actual.logging().log_prefix);
+  EXPECT_EQ("test-log-prefix", actual.logging().log_object_prefix);
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
   EXPECT_EQ("project-owners-123456789", actual.owner().entity);
@@ -357,7 +357,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_EQ(1U, actual.count("logging")) << actual;
   ASSERT_TRUE(actual["logging"].is_object()) << actual;
   EXPECT_EQ("test-log-bucket", actual["logging"].value("logBucket", ""));
-  EXPECT_EQ("test-log-prefix", actual["logging"].value("logPrefix", ""));
+  EXPECT_EQ("test-log-prefix", actual["logging"].value("logObjectPrefix", ""));
 
   // name()
   EXPECT_EQ("test-bucket", actual.value("name", ""));
@@ -816,27 +816,6 @@ TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
   ASSERT_TRUE(json["lifecycle"].is_null()) << json;
 }
 
-TEST(BucketMetadataPatchBuilder, SetLocation) {
-  BucketMetadataPatchBuilder builder;
-  builder.SetLocation("EU");
-
-  auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
-  ASSERT_EQ(1U, json.count("location")) << json;
-  ASSERT_TRUE(json["location"].is_string()) << json;
-  EXPECT_EQ("EU", json.value("location", "")) << json;
-}
-
-TEST(BucketMetadataPatchBuilder, ResetLocation) {
-  BucketMetadataPatchBuilder builder;
-  builder.ResetLocation();
-
-  auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
-  ASSERT_EQ(1U, json.count("location")) << json;
-  ASSERT_TRUE(json["location"].is_null()) << json;
-}
-
 TEST(BucketMetadataPatchBuilder, SetLogging) {
   BucketMetadataPatchBuilder builder;
   builder.SetLogging(BucketLogging{"test-log-bucket", "test-log-prefix"});
@@ -846,7 +825,8 @@ TEST(BucketMetadataPatchBuilder, SetLogging) {
   ASSERT_EQ(1U, json.count("logging")) << json;
   ASSERT_TRUE(json["logging"].is_object()) << json;
   EXPECT_EQ("test-log-bucket", json["logging"].value("logBucket", "")) << json;
-  EXPECT_EQ("test-log-prefix", json["logging"].value("logPrefix", "")) << json;
+  EXPECT_EQ("test-log-prefix", json["logging"].value("logObjectPrefix", ""))
+      << json;
 }
 
 TEST(BucketMetadataPatchBuilder, ResetLogging) {

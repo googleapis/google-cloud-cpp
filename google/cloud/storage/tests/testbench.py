@@ -399,6 +399,27 @@ class GcsBucket(object):
         tmp['metageneration'] = tmp.get('metageneration', 0) + 1
         self.metadata = tmp
 
+    def apply_patch(self, patch):
+        """Update from a metadata dictionary.
+
+        :param patch:dict a dictionary with metadata changes.
+        """
+        tmp = self.metadata.copy()
+        writeable_keys = {'acl', 'billing', 'cors', 'defaultObjectAcl',
+                          'encryption', 'labels', 'lifecycle', 'location',
+                          'logging', 'storageClass', 'versioning', 'website'}
+        for key, value in patch.iteritems():
+            if key not in writeable_keys:
+                raise ErrorResponse('Invalid metadata change. %s is not writeable' % key, status_code=503)
+            if value is None:
+                if key in tmp:
+                    del(tmp[key])
+            else:
+                tmp[key] = value
+        tmp['name'] = tmp.get('name', self.name)
+        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
+        self.metadata = tmp
+
     def check_preconditions(self, request):
         """
         Verify that the preconditions in request are met.
@@ -667,6 +688,22 @@ def buckets_delete(bucket_name):
     bucket.check_preconditions(flask.request)
     del (GCS_BUCKETS[bucket_name])
     return json.dumps({})
+
+
+@gcs.route('/b/<bucket_name>', methods=['PATCH'])
+def buckets_patch(bucket_name):
+    """Implement the 'Buckets: patch' API.
+
+      Patch the metadata in a bucket.
+      """
+    bucket = GCS_BUCKETS.get(bucket_name, None)
+    if bucket is None:
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
+    bucket.check_preconditions(flask.request)
+    patch = json.loads(flask.request.data)
+    bucket.apply_patch(patch)
+    return json.dumps(bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>/acl')

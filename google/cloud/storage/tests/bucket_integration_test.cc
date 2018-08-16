@@ -113,10 +113,165 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   BucketMetadata updated_meta = client.UpdateBucket(bucket_name, update);
   EXPECT_EQ(desired_storage_class, updated_meta.storage_class());
 
+  // Patch the metadata to change the storage class, add some lifecycle
+  // rules, and the website settings.
+  BucketMetadata desired_state = updated_meta;
+  LifecycleRule rule(LifecycleRule::ConditionConjunction(
+                         LifecycleRule::MaxAge(30),
+                         LifecycleRule::MatchesStorageClassStandard()),
+                     LifecycleRule::Delete());
+  desired_state.set_storage_class(storage_class::Standard())
+      .set_lifecycle(BucketLifecycle{{rule}})
+      .set_website(BucketWebsite{"index.html", "404.html"});
+
+  BucketMetadata patched =
+      client.PatchBucket(bucket_name, updated_meta, desired_state);
+  EXPECT_EQ(storage_class::Standard(), patched.storage_class());
+  EXPECT_EQ(1U, patched.lifecycle().rule.size());
+
+  // Patch the metadata again, this time remove billing and website settings.
+  patched = client.PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
+  EXPECT_FALSE(patched.has_billing());
+  EXPECT_FALSE(patched.has_website());
+
   client.DeleteBucket(bucket_name);
   buckets = client.ListBucketsForProject(project_id);
   current_buckets.assign(buckets.begin(), buckets.end());
   EXPECT_EQ(0U, name_counter(bucket_name, current_buckets));
+}
+
+TEST_F(BucketIntegrationTest, FullPatch) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // We need to have an available bucket for logging ...
+  std::string logging_name = MakeRandomBucketName();
+  BucketMetadata const logging_meta = client.CreateBucketForProject(
+      logging_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("noAcl"));
+  EXPECT_EQ(logging_name, logging_meta.name());
+
+  // Create a Bucket, use the default settings for most fields, except the
+  // storage class and location. Fetch the full attributes of the bucket.
+  BucketMetadata const insert_meta = client.CreateBucketForProject(
+      bucket_name, project_id,
+      BucketMetadata().set_location("US").set_storage_class(
+          storage_class::MultiRegional()),
+      PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
+      Projection("full"));
+  EXPECT_EQ(bucket_name, insert_meta.name());
+
+  // Patch every possible field in the metadata, to verify they work.
+  BucketMetadata desired_state = insert_meta;
+  // acl()
+  desired_state.mutable_acl().push_back(BucketAccessControl()
+                                            .set_entity("allAuthenticatedUsers")
+                                            .set_role("READER"));
+
+  // billing()
+  if (not desired_state.has_billing()) {
+    desired_state.set_billing(BucketBilling(false));
+  } else {
+    desired_state.set_billing(
+        BucketBilling(not desired_state.billing().requester_pays));
+  }
+
+  // cors()
+  desired_state.mutable_cors().push_back(CorsEntry{
+      google::cloud::internal::optional<std::int64_t>(86400), {"GET"}, {}, {}});
+
+  // default_acl()
+  desired_state.mutable_default_acl().push_back(
+      ObjectAccessControl()
+          .set_entity("allAuthenticatedUsers")
+          .set_role("READER"));
+
+  // encryption()
+  // TODO(#1003) - need a valid KMS entry to set the encryption.
+
+  // labels()
+  desired_state.mutable_labels().emplace("test-label", "testing-full-patch");
+
+  // lifecycle()
+  LifecycleRule rule(LifecycleRule::ConditionConjunction(
+                         LifecycleRule::MaxAge(30),
+                         LifecycleRule::MatchesStorageClassStandard()),
+                     LifecycleRule::Delete());
+  desired_state.set_lifecycle(BucketLifecycle{{rule}});
+
+  // logging()
+  if (desired_state.has_logging()) {
+    desired_state.reset_logging();
+  } else {
+    desired_state.set_logging(BucketLogging{logging_name, "test-log"});
+  }
+
+  // storage_class()
+  desired_state.set_storage_class(storage_class::Coldline());
+
+  // versioning()
+  if (not desired_state.has_versioning()) {
+    desired_state.enable_versioning();
+  } else {
+    desired_state.reset_versioning();
+  }
+
+  // website()
+  if (desired_state.has_website()) {
+    desired_state.reset_website();
+  } else {
+    desired_state.set_website(BucketWebsite{"index.html", "404.html"});
+  }
+
+  BucketMetadata patched =
+      client.PatchBucket(bucket_name, insert_meta, desired_state);
+  // acl() - cannot compare for equality because many fields are updated with
+  // unknown values (entity_id, etag, etc)
+  EXPECT_EQ(1U, std::count_if(patched.acl().begin(), patched.acl().end(),
+                              [](BucketAccessControl const& x) {
+                                return x.entity() == "allAuthenticatedUsers";
+                              }));
+
+  // billing()
+  EXPECT_EQ(desired_state.billing_as_optional(), patched.billing_as_optional());
+
+  // cors()
+  EXPECT_EQ(desired_state.cors(), patched.cors());
+
+  // default_acl() - cannot compare for equality because many fields are updated
+  // with unknown values (entity_id, etag, etc)
+  EXPECT_EQ(1U, std::count_if(patched.default_acl().begin(),
+                              patched.default_acl().end(),
+                              [](ObjectAccessControl const& x) {
+                                return x.entity() == "allAuthenticatedUsers";
+                              }));
+
+  // encryption() - TODO(#1003) - verify the key was correctly used.
+
+  // lifecycle()
+  EXPECT_EQ(desired_state.lifecycle_as_optional(),
+            patched.lifecycle_as_optional());
+
+  // location()
+  EXPECT_EQ(desired_state.location(), patched.location());
+
+  // logging()
+  EXPECT_EQ(desired_state.logging_as_optional(), patched.logging_as_optional())
+      << patched;
+
+  // storage_class()
+  EXPECT_EQ(desired_state.storage_class(), patched.storage_class());
+
+  // versioning()
+  EXPECT_EQ(desired_state.versioning(), patched.versioning());
+
+  // website()
+  EXPECT_EQ(desired_state.website_as_optional(), patched.website_as_optional());
+
+  client.DeleteBucket(bucket_name);
+  client.DeleteBucket(logging_name);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {

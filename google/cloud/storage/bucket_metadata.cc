@@ -78,7 +78,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
   return os << "BucketLogging={log_bucket=" << rhs.log_bucket
-            << ", log_prefix=" << rhs.log_prefix << "}";
+            << ", log_object_prefix=" << rhs.log_object_prefix << "}";
 }
 
 BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
@@ -131,7 +131,7 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     auto logging = json["logging"];
     BucketLogging l;
     l.log_bucket = logging.value("logBucket", "");
-    l.log_prefix = logging.value("logPrefix", "");
+    l.log_object_prefix = logging.value("logObjectPrefix", "");
     result.logging_ = std::move(l);
   }
   result.project_number_ = internal::ParseLongField(json, "projectNumber");
@@ -260,7 +260,7 @@ std::string BucketMetadata::ToJsonString() const {
   if (has_logging()) {
     json l;
     SetIfNotEmpty(l, "logBucket", logging().log_bucket);
-    SetIfNotEmpty(l, "logPrefix", logging().log_prefix);
+    SetIfNotEmpty(l, "logObjectPrefix", logging().log_object_prefix);
     metadata_as_json["logging"] = std::move(l);
   }
 
@@ -565,25 +565,12 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLifecycle() {
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLocation(
-    std::string const& v) {
-  if (v.empty()) {
-    return ResetLocation();
-  }
-  impl_.SetStringField("location", v);
-  return *this;
-}
-
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetLocation() {
-  impl_.RemoveField("location");
-  return *this;
-}
-
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLogging(
     BucketLogging const& v) {
-  impl_.AddSubPatch("logging", internal::PatchBuilder()
-                                   .SetStringField("logBucket", v.log_bucket)
-                                   .SetStringField("logPrefix", v.log_prefix));
+  impl_.AddSubPatch(
+      "logging", internal::PatchBuilder()
+                     .SetStringField("logBucket", v.log_bucket)
+                     .SetStringField("logObjectPrefix", v.log_object_prefix));
   return *this;
 }
 

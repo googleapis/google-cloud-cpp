@@ -171,17 +171,17 @@ inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
  */
 struct BucketLogging {
   std::string log_bucket;
-  std::string log_prefix;
+  std::string log_object_prefix;
 };
 
 inline bool operator==(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::tie(lhs.log_bucket, lhs.log_prefix) ==
-         std::tie(rhs.log_bucket, rhs.log_prefix);
+  return std::tie(lhs.log_bucket, lhs.log_object_prefix) ==
+         std::tie(rhs.log_bucket, rhs.log_object_prefix);
 }
 
 inline bool operator<(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::tie(lhs.log_bucket, lhs.log_prefix) <
-         std::tie(rhs.log_bucket, rhs.log_prefix);
+  return std::tie(lhs.log_bucket, lhs.log_object_prefix) <
+         std::tie(rhs.log_bucket, rhs.log_object_prefix);
 }
 
 inline bool operator!=(BucketLogging const& lhs, BucketLogging const& rhs) {
@@ -645,9 +645,6 @@ class BucketMetadataPatchBuilder {
 
   BucketMetadataPatchBuilder& SetLifecycle(BucketLifecycle const& v);
   BucketMetadataPatchBuilder& ResetLifecycle();
-
-  BucketMetadataPatchBuilder& SetLocation(std::string const& v);
-  BucketMetadataPatchBuilder& ResetLocation();
 
   BucketMetadataPatchBuilder& SetLogging(BucketLogging const& v);
   BucketMetadataPatchBuilder& ResetLogging();

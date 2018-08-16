@@ -175,6 +175,51 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
   //! [update bucket]
   (std::move(client), bucket_name, storage_class);
 }
+
+void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"patch-bucket-storage-class <bucket-name> <storage-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [patch bucket storage class]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class) {
+    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
+    gcs::BucketMetadata desired = original;
+    desired.set_storage_class(storage_class);
+    gcs::BucketMetadata patched =
+        client.PatchBucket(bucket_name, original, desired);
+    std::cout << "Storage class for bucket " << bucket_name
+              << " has been updated to " << storage_class
+              << ". The metadata is " << patched;
+  }
+  //! [patch bucket storage class]
+  (std::move(client), bucket_name, storage_class);
+}
+
+void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
+                                        int& argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "patch-bucket-storage-classwith-builder <bucket-name> <storage-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [patch bucket storage class with builder]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class) {
+    gcs::BucketMetadata patched = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetStorageClass(storage_class));
+    std::cout << "Storage class for bucket " << bucket_name
+              << " has been updated to " << storage_class
+              << ". The metadata is " << patched;
+  }
+  //! [patch bucket storage class with builder]
+  (std::move(client), bucket_name, storage_class);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -193,6 +238,9 @@ int main(int argc, char* argv[]) try {
       {"get-bucket-metadata", &GetBucketMetadata},
       {"delete-bucket", &DeleteBucket},
       {"change-default-storage-class", &ChangeDefaultStorageClass},
+      {"patch-bucket-storage-class", &PatchBucketStorageClass},
+      {"patch-bucket-storage-class-with-builder",
+       &PatchBucketStorageClassWithBuilder},
   };
   for (auto&& kv : commands) {
     try {
