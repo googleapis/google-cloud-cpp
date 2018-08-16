@@ -40,10 +40,14 @@ class ObjectReadStream : public std::basic_istream<char> {
    * Creates a stream associated with the given `streambuf`.
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
-      : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {}
+      : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {
+    peek();
+  }
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : std::basic_istream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {}
+      : std::basic_istream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {
+    peek();
+  }
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);

@@ -46,10 +46,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   current_ios_buffer_.reserve(target_buffer_size_);
   auto response = download_.GetMore(current_ios_buffer_);
   if (response.status_code >= 300) {
-    std::ostringstream os;
-    os << "CurlDownloadRequest reports error: " << response.status_code
-       << ", payload=" << response.payload;
-    google::cloud::internal::RaiseRuntimeError(os.str());
+    return traits_type::eof();
   }
 
   if (not current_ios_buffer_.empty()) {

@@ -12,35 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_
-
-#include "google/cloud/storage/version.h"
-#include <iosfwd>
-#include <map>
-#include <string>
+#include "google/cloud/storage/internal/http_response.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+using ::testing::HasSubstr;
+TEST(HttpResponseTest, OStream) {
+  HttpResponse response{
+      404, "some-payload", {{"header1", "value1"}, {"header2", "value2"}}};
 
-/**
- * Contains the results of a HTTP request.
- */
-struct HttpResponse {
-  long status_code;
-  std::string payload;
-  std::multimap<std::string, std::string> headers;
-};
-
-std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs);
-
+  std::ostringstream os;
+  os << response;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("404"));
+  EXPECT_THAT(actual, HasSubstr("some-payload"));
+  EXPECT_THAT(actual, HasSubstr("header1: value1"));
+  EXPECT_THAT(actual, HasSubstr("header2: value2"));
+}
+}  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_

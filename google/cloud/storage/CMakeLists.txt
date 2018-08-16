@@ -149,6 +149,7 @@ add_library(storage_client
             internal/google_application_default_credentials_file.h
             internal/google_application_default_credentials_file.cc
             internal/http_response.h
+            internal/http_response.cc
             internal/insert_object_media_request.h
             internal/insert_object_media_request.cc
             internal/list_objects_request.h
@@ -252,6 +253,7 @@ set(storage_client_unit_tests
     internal/format_rfc3339_test.cc
     internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
+    internal/http_response_test.cc
     internal/insert_object_media_request_test.cc
     internal/list_objects_request_test.cc
     internal/logging_client_test.cc
