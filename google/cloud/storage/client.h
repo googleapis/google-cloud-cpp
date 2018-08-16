@@ -459,7 +459,7 @@ class Client {
    * @param bucket_name the name of the bucket.
    * @param acl the new ACL value. Note that only the writable values of the ACL
    *   will be modified by the server.
-   * @param options a list of optional query parameters and/or request
+   * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
    * @par Example
