@@ -17,7 +17,6 @@ var searchData=
   ['resetlabel',['ResetLabel',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a247530ede690b5da775a26817ac054ef',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetlabels',['ResetLabels',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#af9cff8245929f87a67e521ccbdb7f891',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetlifecycle',['ResetLifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a57eb61636e258043b3da140dd4a69571',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
-  ['resetlocation',['ResetLocation',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a60df81ec5a22b6b9008f5b9e1f4a24da',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetlogging',['ResetLogging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a3ce92e44f3e659f361b918c6eed8ae35',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetname',['ResetName',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a79a076f9f3f7e02266d1ca6e97d2e7c5',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetstorageclass',['ResetStorageClass',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a5a7c83c43755a48c20001f154d3b8a6f',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],

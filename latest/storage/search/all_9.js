@@ -28,7 +28,7 @@ var searchData=
   ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html',1,'google::cloud::storage::v0::ListObjectsReader'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a923e9a38a0457578746afb7fd85659b2',1,'google::cloud::storage::v0::ListObjectsIterator::ListObjectsReader()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a836063ab73ff658d41eb8fb17615d02c',1,'google::cloud::storage::v0::ListObjectsReader::ListObjectsReader()']]],
   ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af185cafdcd77fb4fe7b0fec350985551',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['log_5fbucket',['log_bucket',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html#ac430b19d6b6a21f8884c4409fb514ede',1,'google::cloud::storage::v0::BucketLogging']]],
-  ['log_5fprefix',['log_prefix',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html#af96cd77e9b48cfc1ddb19890ce759008',1,'google::cloud::storage::v0::BucketLogging']]],
+  ['log_5fobject_5fprefix',['log_object_prefix',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html#a37c67af58b00d6338a090a5e86007aa6',1,'google::cloud::storage::v0::BucketLogging']]],
   ['logging',['logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ac1b4b44777173d93ddb86d0039341172',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['logging_5fas_5foptional',['logging_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aa20931332c058d4b0c6cf1aef65dbbf3',1,'google::cloud::storage::v0::BucketMetadata']]]
 ];
