@@ -75,6 +75,8 @@ run_all_bucket_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers READER
   run_example ./storage_bucket_acl_samples get-bucket-acl \
       "${bucket_name}" allAuthenticatedUsers
+  run_example ./storage_bucket_acl_samples update-bucket-acl \
+      "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_bucket_acl_samples delete-bucket-acl \
       "${bucket_name}" allAuthenticatedUsers
 }

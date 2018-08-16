@@ -295,6 +295,28 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
   return std::make_pair(Status(), internal::EmptyResponse{});
 }
 
+std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
+    UpdateBucketAclRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/acl/" + request.entity());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+  builder.SetMethod("PUT");
+  nl::json patch;
+  patch["entity"] = request.entity();
+  patch["role"] = request.role();
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(patch.dump()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        BucketAccessControl{});
+  }
+  return std::make_pair(Status(),
+                        BucketAccessControl::ParseFromString(payload.payload));
+}
+
 std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.

@@ -240,6 +240,14 @@ std::pair<Status, ListObjectAclResponse> RetryClient::ListObjectAcl(
                   &RawClient::ListObjectAcl, request, __func__);
 }
 
+std::pair<Status, BucketAccessControl> RetryClient::UpdateBucketAcl(
+    UpdateBucketAclRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::UpdateBucketAcl, request, __func__);
+}
+
 std::pair<Status, ObjectAccessControl> RetryClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();

@@ -64,6 +64,8 @@ class LoggingClient : public RawClient {
       DeleteBucketAclRequest const&) override;
   std::pair<Status, BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) override;
+  std::pair<Status, BucketAccessControl> UpdateBucketAcl(
+      UpdateBucketAclRequest const&) override;
 
   std::pair<Status, ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;

@@ -214,6 +214,54 @@ TEST_F(BucketAccessControlsTest, GetBucketAclPermanentFailure) {
       "GetBucketAcl");
 }
 
+TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
+  BucketAccessControl expected = BucketAccessControl::ParseFromString(R"""({
+          "bucket": "test-bucket",
+          "entity": "user-test-user-1",
+          "role": "OWNER"
+      })""");
+
+  EXPECT_CALL(*mock, UpdateBucketAcl(_))
+      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Invoke([&expected](internal::UpdateBucketAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        EXPECT_EQ("OWNER", r.role());
+
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  BucketAccessControl actual = client.UpdateBucketAcl(
+      "test-bucket",
+      BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketAccessControlsTest, UpdateBucketAclTooManyFailures) {
+  testing::TooManyFailuresTest<BucketAccessControl>(
+      mock, EXPECT_CALL(*mock, UpdateBucketAcl(_)),
+      [](Client& client) {
+        client.UpdateBucketAcl("test-bucket",
+                               BucketAccessControl()
+                                   .set_entity("user-test-user-1")
+                                   .set_role("OWNER"));
+      },
+      "UpdateBucketAcl");
+}
+
+TEST_F(BucketAccessControlsTest, UpdateBucketAclPermanentFailure) {
+  testing::PermanentFailureTest<BucketAccessControl>(
+      *client, EXPECT_CALL(*mock, UpdateBucketAcl(_)),
+      [](Client& client) {
+        client.UpdateBucketAcl("test-bucket",
+                               BucketAccessControl()
+                                   .set_entity("user-test-user-1")
+                                   .set_role("OWNER"));
+      },
+      "UpdateBucketAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
