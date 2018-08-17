@@ -83,11 +83,7 @@ class CurlRequestBuilder {
     if (not p.has_value()) {
       return *this;
     }
-    if (p.value()) {
-      AddQueryParameter(p.parameter_name(), "true");
-    } else {
-      AddQueryParameter(p.parameter_name(), "false");
-    }
+    AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
     return *this;
   }
 

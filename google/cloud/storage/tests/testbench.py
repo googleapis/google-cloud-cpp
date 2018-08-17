@@ -589,9 +589,11 @@ def insert_magic_bucket(base_url):
     if len(GCS_BUCKETS) == 0:
         bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
         bucket = GcsBucket(base_url, bucket_name)
-        # Get the metageneration to 4, the value expected by the integration
-        # tests.
-        bucket.update_from_metadata({})
+        # Enable versioning in the Bucket, the integration tests expect this to
+        # be the case, this brings the metageneration number to 2.
+        bucket.update_from_metadata({'versioning': {'enabled': True}})
+        # Perform trivial updates that bring the metageneration to 4, the value
+        # expected by the integration tests.
         bucket.update_from_metadata({})
         bucket.update_from_metadata({})
         GCS_BUCKETS[bucket_name] = bucket
