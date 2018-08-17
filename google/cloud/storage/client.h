@@ -493,7 +493,7 @@ class Client {
   }
 
   /**
-   * Get the value of an existing bucket ACL.
+   * Gets the value of an existing bucket ACL.
    *
    * @param bucket_name the name of the bucket to query.
    * @param entity the name of the entity to query.
@@ -811,7 +811,7 @@ class Client {
   }
 
   /**
-   * Get the value of a default object ACL in a bucket.
+   * Gets the value of a default object ACL in a bucket.
    *
    * The default object ACL sets the ACL for any object created in the bucket,
    * unless a different ACL is specified when the object is created.
