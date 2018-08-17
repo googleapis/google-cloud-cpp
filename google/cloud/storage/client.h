@@ -493,7 +493,7 @@ class Client {
   }
 
   /**
-   * Get the value of an existing bucket ACL.
+   * Gets the value of an existing bucket ACL.
    *
    * @param bucket_name the name of the bucket to query.
    * @param entity the name of the entity to query.
@@ -808,6 +808,32 @@ class Client {
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteDefaultObjectAcl(request);
+  }
+
+  /**
+   * Gets the value of a default object ACL in a bucket.
+   *
+   * The default object ACL sets the ACL for any object created in the bucket,
+   * unless a different ACL is specified when the object is created.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param entity the name of the entity.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_default_object_acl_samples.cc get default object acl
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   */
+  template <typename... Options>
+  ObjectAccessControl GetDefaultObjectAcl(std::string const& bucket_name,
+                                          std::string const& entity,
+                                          Options&&... options) {
+    internal::GetDefaultObjectAclRequest request(bucket_name, entity);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetDefaultObjectAcl(request).second;
   }
 
  private:
