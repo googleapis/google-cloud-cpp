@@ -34,9 +34,9 @@ if (NOT TARGET gprc_project)
         EXCLUDE_FROM_ALL ON
         PREFIX "external/grpc"
         INSTALL_DIR "external"
-        URL https://github.com/grpc/grpc/archive/v1.14.0.tar.gz
+        URL https://github.com/grpc/grpc/archive/v1.14.1.tar.gz
         URL_HASH
-            SHA256=ad7686301cf828e2119c66571031bd8d18f93240ae05d81adaa279e1cc91c301
+            SHA256=16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
                           $ENV{CMAKE_FLAGS}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
