@@ -50,12 +50,12 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         native.http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.14.0",
+            strip_prefix = "grpc-1.14.1",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.14.0.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.14.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.14.1.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.14.1.tar.gz",
             ],
-            sha256 = "ad7686301cf828e2119c66571031bd8d18f93240ae05d81adaa279e1cc91c301",
+            sha256 = "16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70",
         )
 
     # We need the nlohmann_json library
