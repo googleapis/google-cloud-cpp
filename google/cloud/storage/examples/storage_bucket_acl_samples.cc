@@ -92,7 +92,6 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
   //! [delete bucket acl] [START storage_delete_bucket_acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string entity) {

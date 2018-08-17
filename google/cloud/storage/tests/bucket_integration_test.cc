@@ -421,6 +421,10 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result.entity(), current_acl));
 
+  client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  current_acl = client.ListDefaultObjectAcl(bucket_name);
+  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+
   client.DeleteBucket(bucket_name);
 }
 

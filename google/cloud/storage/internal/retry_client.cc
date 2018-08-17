@@ -312,6 +312,14 @@ std::pair<Status, ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
                   &RawClient::CreateDefaultObjectAcl, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
+    DeleteDefaultObjectAclRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteDefaultObjectAcl, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

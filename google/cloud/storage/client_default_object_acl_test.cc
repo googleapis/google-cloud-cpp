@@ -146,6 +146,41 @@ TEST_F(DefaultObjectAccessControlsTest,
       "CreateDefaultObjectAcl");
 }
 
+TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
+  EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::DeleteDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user", r.entity());
+
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
+  SUCCEED();
+}
+
+TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+      },
+      "DeleteDefaultObjectAcl");
+}
+
+TEST_F(DefaultObjectAccessControlsTest,
+       DeleteDefaultObjectAclPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
+      [](Client& client) {
+        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+      },
+      "DeleteDefaultObjectAcl");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -117,6 +117,8 @@ class RawClient {
       ListDefaultObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
       CreateDefaultObjectAclRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteDefaultObjectAcl(
+      DeleteDefaultObjectAclRequest const&) = 0;
   //@}
 };
 
