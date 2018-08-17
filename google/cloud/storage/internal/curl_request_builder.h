@@ -77,6 +77,20 @@ class CurlRequestBuilder {
     return *this;
   }
 
+  /// Add one of the well-known parameters as a query parameter
+  template <typename P>
+  CurlRequestBuilder& AddOption(WellKnownParameter<P, bool> const& p) {
+    if (not p.has_value()) {
+      return *this;
+    }
+    if (p.value()) {
+      AddQueryParameter(p.parameter_name(), "true");
+    } else {
+      AddQueryParameter(p.parameter_name(), "false");
+    }
+    return *this;
+  }
+
   /// Add one of the well-known headers to the request.
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownHeader<P, std::string> const& p) {

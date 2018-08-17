@@ -141,6 +141,11 @@ struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
   static char const* well_known_parameter_name() { return "predefinedAcl"; }
 };
 
+struct Versions : public WellKnownParameter<Versions, bool> {
+  using WellKnownParameter<Versions, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "versions"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

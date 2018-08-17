@@ -840,12 +840,18 @@ def bucket_default_object_acl_update(bucket_name, entity):
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     result = {'next_page_token': '', 'items': []}
+    versions_parameter = flask.request.args.get('versions')
+    all_versions = (versions_parameter is not None and bool(versions_parameter))
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
             continue
         if o.get_latest() is None:
             continue
-        result['items'].append(o.get_latest().metadata)
+        if all_versions:
+            for object_version in o.revisions.itervalues():
+                result['items'].append(object_version.metadata)
+        else:
+            result['items'].append(o.get_latest().metadata)
     return json.dumps(result)
 
 

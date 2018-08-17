@@ -358,7 +358,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`, `Prefix`.
+   *     `Projection`, `Prefix`, and `Versions`.
    *
    * @throw std::runtime_error if the operation cannot be completed using the
    *   current policies.

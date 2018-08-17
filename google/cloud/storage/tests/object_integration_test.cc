@@ -112,6 +112,44 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0U, name_counter(object_name, current_list));
 }
 
+TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  Client client;
+  // Make sure the Bucket is configured to have multiple versions of each
+  // object.
+  client.PatchBucket(bucket_name, BucketMetadataPatchBuilder().SetVersioning(
+                                      BucketVersioning(true)));
+
+  auto create_small_object = [&client, &bucket_name, this] {
+    auto object_name = MakeRandomObjectName();
+    auto meta = client.InsertObject(bucket_name, object_name,
+                                    "contents for the first revision",
+                                    storage::IfGenerationMatch(0));
+    client.InsertObject(bucket_name, object_name,
+                        "contents for the second revision");
+    client.InsertObject(bucket_name, object_name,
+                        "contents for the final revision");
+    return meta.name();
+  };
+
+  std::vector<std::string> expected(3);
+  std::generate_n(expected.begin(), expected.size(), create_small_object);
+
+  ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
+  std::vector<std::string> actual;
+  for (auto it = reader.begin(); it != reader.end(); ++it) {
+    auto const& meta = *it;
+    EXPECT_EQ(bucket_name, meta.bucket());
+    actual.push_back(meta.name());
+  }
+  // There may be a lot of other objects in the bucket, so we want to verify
+  // that any objects we created are found there, but cannot expect a perfect
+  // match.
+  for (auto const& name : expected) {
+    EXPECT_EQ(3, std::count(actual.begin(), actual.end(), name));
+  }
+}
+
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
