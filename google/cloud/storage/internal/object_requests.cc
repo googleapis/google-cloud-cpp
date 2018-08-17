@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/read_object_range_request.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
-#include <iostream>
+#include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/object_metadata.h"
 #include <sstream>
 
 namespace google {
@@ -22,6 +23,58 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
+  os << "ListObjectsRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+ListObjectsResponse ListObjectsResponse::FromHttpResponse(
+    HttpResponse&& response) {
+  auto json = storage::internal::nl::json::parse(response.payload);
+
+  ListObjectsResponse result;
+  result.next_page_token = json.value("nextPageToken", "");
+
+  for (auto const& kv : json["items"].items()) {
+    result.items.emplace_back(ObjectMetadata::ParseFromJson(kv.value()));
+  }
+
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r) {
+  os << "ListObjectsResponse={next_page_token=" << r.next_page_token
+     << ", items={";
+  std::copy(r.items.begin(), r.items.end(),
+            std::ostream_iterator<ObjectMetadata>(os, "\n  "));
+  return os << "}}";
+}
+
+std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
+  os << "GetObjectMetadataRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
+  os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  os << ", contents=\n"
+     << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
+  return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         InsertObjectStreamingRequest const& r) {
+  os << "InsertObjectStreamingRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", begin=" << r.begin()
@@ -90,6 +143,13 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
             << r.last_byte << "/" << r.object_size << ", contents=\n"
             << BinaryDataAsDebugString(r.contents.data(), r.contents.size())
             << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r) {
+  os << "DeleteObjectRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
 }
 
 }  // namespace internal
