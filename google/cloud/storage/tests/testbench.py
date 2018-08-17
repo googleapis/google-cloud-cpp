@@ -361,9 +361,9 @@ class GcsBucket(object):
             'storageClass': 'STANDARD',
             'etag': 'XYZ=',
             'labels': {
-                 'foo': 'bar',
-                 'baz': 'qux'
-             }
+                'foo': 'bar',
+                'baz': 'qux'
+            }
         }
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
@@ -416,11 +416,15 @@ class GcsBucket(object):
 
         if metageneration_not_match is not None \
                 and int(metageneration_not_match) == metageneration:
-            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
+            raise ErrorResponse(
+                'Precondition Failed (metageneration = %s)' % metageneration,
+                status_code=412)
 
         if metageneration_match is not None \
                 and int(metageneration_match) != metageneration:
-            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
+            raise ErrorResponse(
+                'Precondition Failed (metageneration = %s)' % metageneration,
+                status_code=412)
 
     def insert_acl(self, entity, role):
         """
@@ -606,11 +610,12 @@ def buckets_insert():
     payload = json.loads(flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
-        raise ErrorResponse('Missing bucket name in `Buckets: insert`',
-                            status_code=412)
+        raise ErrorResponse(
+            'Missing bucket name in `Buckets: insert`', status_code=412)
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is not None:
-        raise ErrorResponse('Bucket %s already exists' % bucket_name, status_code=503)
+        raise ErrorResponse(
+            'Bucket %s already exists' % bucket_name, status_code=503)
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
     GCS_BUCKETS[bucket_name] = bucket
@@ -625,11 +630,12 @@ def buckets_update(bucket_name):
     payload = json.loads(flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
-        raise ErrorResponse('Missing bucket name in `Buckets: update`',
-                            status_code=412)
+        raise ErrorResponse(
+            'Missing bucket name in `Buckets: update`', status_code=412)
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is None:
-        raise ErrorResponse('Bucket %s does not exist' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s does not exist' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
     return json.dumps(bucket.metadata)
@@ -649,7 +655,8 @@ def buckets_get(bucket_name):
     bucket = GCS_BUCKETS.setdefault(bucket_name, bucket)
     # end of TODO(#821)
     if bucket is None:
-        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     return json.dumps(bucket.metadata)
 
