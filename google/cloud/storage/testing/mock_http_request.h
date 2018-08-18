@@ -82,11 +82,7 @@ class MockHttpRequestBuilder {
     if (not p.has_value()) {
       return;
     }
-    if (p.value()) {
-      mock->AddQueryParameter(p.parameter_name(), "true");
-    } else {
-      mock->AddQueryParameter(p.parameter_name(), "false");
-    }
+    mock->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
   }
 
   MockHttpRequest BuildRequest(std::string payload) {
