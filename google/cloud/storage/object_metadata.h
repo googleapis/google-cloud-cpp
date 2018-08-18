@@ -73,6 +73,8 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   static ObjectMetadata ParseFromJson(internal::nl::json const& json);
   static ObjectMetadata ParseFromString(std::string const& payload);
 
+  std::string ToJsonString() const;
+
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
   std::vector<ObjectAccessControl> const& acl() const { return acl_; }
@@ -167,6 +169,11 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     }
     return *this;
   }
+
+  std::map<std::string, std::string> const& metadata() const {
+    return metadata_;
+  }
+  std::map<std::string, std::string>& mutable_metadata() { return metadata_; }
   //@}
 
   using CommonMetadata::metageneration;

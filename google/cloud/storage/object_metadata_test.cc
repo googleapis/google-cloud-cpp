@@ -170,6 +170,35 @@ TEST(ObjectMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("size=102400"));
 }
 
+/// @test Verify we can convert a ObjectMetadata object to a JSON string.
+TEST(ObjectMetadataTest, ToJsonString) {
+  auto tested = CreateObjectMetadataForTest();
+  auto actual_string = tested.ToJsonString();
+  // Verify that the produced string can be parsed as a JSON object.
+  internal::nl::json actual = internal::nl::json::parse(actual_string);
+
+  // Create a JSON object with only the writeable fields, because this is what
+  // will be encoded in ToJsonString().
+  internal::nl::json expected = {
+      {"acl",
+       internal::nl::json{
+           {{"entity", "user-qux"}, {"role", "OWNER"}},
+           {{"entity", "user-quux"}, {"role", "READER"}},
+       }},
+      {"cacheControl", "no-cache"},
+      {"contentDisposition", "a-disposition"},
+      {"contentEncoding", "an-encoding"},
+      {"contentLanguage", "a-language"},
+      {"contentType", "application/octet-stream"},
+      {"metadata",
+       internal::nl::json{
+           {"foo", "bar"},
+           {"baz", "qux"},
+       }},
+  };
+  EXPECT_EQ(expected, actual);
+}
+
 /// @test Verify we can make changes to one Acl in ObjectMetadata.
 TEST(ObjectMetadataTest, MutableAcl) {
   auto expected = CreateObjectMetadataForTest();

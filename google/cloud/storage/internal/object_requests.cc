@@ -152,6 +152,13 @@ std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
+  os << "UpdateObjectRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", metadata=" << r.metadata();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
