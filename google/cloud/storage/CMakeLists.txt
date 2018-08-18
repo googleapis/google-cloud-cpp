@@ -136,24 +136,16 @@ add_library(storage_client
             internal/curl_streambuf.cc
             internal/default_object_acl_requests.h
             internal/default_object_acl_requests.cc
-            internal/delete_object_request.h
-            internal/delete_object_request.cc
             internal/empty_response.h
             internal/empty_response.cc
             internal/format_rfc3339.h
             internal/format_rfc3339.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/get_object_metadata_request.h
-            internal/get_object_metadata_request.cc
             internal/google_application_default_credentials_file.h
             internal/google_application_default_credentials_file.cc
             internal/http_response.h
             internal/http_response.cc
-            internal/insert_object_media_request.h
-            internal/insert_object_media_request.cc
-            internal/list_objects_request.h
-            internal/list_objects_request.cc
             internal/logging_client.h
             internal/logging_client.cc
             internal/metadata_parser.h
@@ -162,14 +154,14 @@ add_library(storage_client
             internal/openssl_util.h
             internal/object_acl_requests.h
             internal/object_acl_requests.cc
+            internal/object_requests.h
+            internal/object_requests.cc
             internal/object_streambuf.h
             internal/object_streambuf.cc
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/patch_builder.h
             internal/raw_client.h
-            internal/read_object_range_request.h
-            internal/read_object_range_request.cc
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_credentials.h
@@ -249,21 +241,17 @@ set(storage_client_unit_tests
     internal/bucket_acl_requests_test.cc
     internal/bucket_requests_test.cc
     internal/default_object_acl_requests_test.cc
-    internal/delete_object_request_test.cc
     internal/format_rfc3339_test.cc
-    internal/get_object_metadata_request_test.cc
     internal/google_application_default_credentials_file_test.cc
     internal/http_response_test.cc
-    internal/insert_object_media_request_test.cc
-    internal/list_objects_request_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/object_acl_requests_test.cc
+    internal/object_requests_test.cc
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
     internal/retry_client_test.cc
-    internal/read_object_range_request_test.cc
     internal/service_account_credentials_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
