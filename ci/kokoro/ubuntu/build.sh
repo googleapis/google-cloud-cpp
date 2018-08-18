@@ -115,7 +115,7 @@ echo "Running Google Cloud Bigtable Integration Tests"
 (cd $(bazel info bazel-bin)/google/cloud/bigtable/tests && \
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
 # TODO(#730) - the example scripts require running out of `tests`, ugh.
-(cd $(bazel info bazel-bin)/google/cloud/bigtable/tests && \
+(cd $(bazel info bazel-bin)/google/cloud/bigtable/examples && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
 
 echo "Running Google Cloud Storage Integration Tests"
