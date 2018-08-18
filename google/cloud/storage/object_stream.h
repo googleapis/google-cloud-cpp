@@ -41,13 +41,14 @@ class ObjectReadStream : public std::basic_istream<char> {
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
       : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {
+    // Prime the iostream machinery with a peek().  This will trigger a call to
+    // underflow(), and will detect if the download failed. Without it, the
+    // eof() bit is not initialized properly.
     peek();
   }
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : std::basic_istream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {
-    peek();
-  }
+      : ObjectReadStream(std::move(rhs.buf_)) {}
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
