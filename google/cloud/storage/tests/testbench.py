@@ -589,9 +589,11 @@ def insert_magic_bucket(base_url):
     if len(GCS_BUCKETS) == 0:
         bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
         bucket = GcsBucket(base_url, bucket_name)
-        # Get the metageneration to 4, the value expected by the integration
-        # tests.
-        bucket.update_from_metadata({})
+        # Enable versioning in the Bucket, the integration tests expect this to
+        # be the case, this brings the metageneration number to 2.
+        bucket.update_from_metadata({'versioning': {'enabled': True}})
+        # Perform trivial updates that bring the metageneration to 4, the value
+        # expected by the integration tests.
         bucket.update_from_metadata({})
         bucket.update_from_metadata({})
         GCS_BUCKETS[bucket_name] = bucket
@@ -840,12 +842,18 @@ def bucket_default_object_acl_update(bucket_name, entity):
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     result = {'next_page_token': '', 'items': []}
+    versions_parameter = flask.request.args.get('versions')
+    all_versions = (versions_parameter is not None and bool(versions_parameter))
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
             continue
         if o.get_latest() is None:
             continue
-        result['items'].append(o.get_latest().metadata)
+        if all_versions:
+            for object_version in o.revisions.itervalues():
+                result['items'].append(object_version.metadata)
+        else:
+            result['items'].append(o.get_latest().metadata)
     return json.dumps(result)
 
 

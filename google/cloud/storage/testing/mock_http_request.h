@@ -77,6 +77,14 @@ class MockHttpRequestBuilder {
     }
   }
 
+  template <typename P>
+  void AddWellKnownParameter(WellKnownParameter<P, bool> const& p) {
+    if (not p.has_value()) {
+      return;
+    }
+    mock->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
+  }
+
   MockHttpRequest BuildRequest(std::string payload) {
     return mock->BuildRequest(std::move(payload));
   }

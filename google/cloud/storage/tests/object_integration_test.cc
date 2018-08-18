@@ -112,6 +112,62 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0U, name_counter(object_name, current_list));
 }
 
+TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  Client client;
+
+  // This test requires the bucket to be configured with versioning. The buckets
+  // used by the CI build are already configured with versioning enabled. The
+  // bucket created in the testbench also has versioning. Regardless, check here
+  // first to produce a better error message if there is a configuration
+  // problem.
+  auto bucket_meta = client.GetBucketMetadata(bucket_name);
+  ASSERT_TRUE(bucket_meta.versioning().has_value());
+  ASSERT_TRUE(bucket_meta.versioning().value().enabled);
+
+  auto create_object_with_3_versions = [&client, &bucket_name, this] {
+    auto object_name = MakeRandomObjectName();
+    auto meta = client.InsertObject(bucket_name, object_name,
+                                    "contents for the first revision",
+                                    storage::IfGenerationMatch(0));
+    client.InsertObject(bucket_name, object_name,
+                        "contents for the second revision");
+    client.InsertObject(bucket_name, object_name,
+                        "contents for the final revision");
+    return meta.name();
+  };
+
+  std::vector<std::string> expected(4);
+  std::generate_n(expected.begin(), expected.size(),
+                  create_object_with_3_versions);
+
+  ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
+  std::vector<std::string> actual;
+  for (auto it = reader.begin(); it != reader.end(); ++it) {
+    auto const& meta = *it;
+    EXPECT_EQ(bucket_name, meta.bucket());
+    actual.push_back(meta.name());
+  }
+  auto produce_joined_list = [&actual] {
+    std::string joined;
+    for (auto const& x : actual) {
+      joined += "  ";
+      joined += x;
+      joined += "\n";
+    }
+    return joined;
+  };
+  // There may be a lot of other objects in the bucket, so we want to verify
+  // that any objects we created are found there, but cannot expect a perfect
+  // match.
+
+  for (auto const& name : expected) {
+    EXPECT_EQ(3, std::count(actual.begin(), actual.end(), name))
+        << "Expected to find 3 copies of " << name << " in the object list:\n"
+        << produce_joined_list();
+  }
+}
+
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
