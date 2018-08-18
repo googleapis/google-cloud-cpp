@@ -112,35 +112,6 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0U, name_counter(object_name, current_list));
 }
 
-TEST_F(ObjectIntegrationTest, ListObjects) {
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  Client client;
-
-  auto create_small_object = [&client, &bucket_name, this] {
-    auto object_name = MakeRandomObjectName();
-    auto meta = client.InsertObject(bucket_name, object_name, "blah blah",
-                                    storage::IfGenerationMatch(0));
-    return meta.name();
-  };
-
-  std::vector<std::string> expected(3);
-  std::generate_n(expected.begin(), expected.size(), create_small_object);
-
-  ListObjectsReader reader = client.ListObjects(bucket_name);
-  std::vector<std::string> actual;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = *it;
-    EXPECT_EQ(bucket_name, meta.bucket());
-    actual.push_back(meta.name());
-  }
-  // There may be a lot of other objects in the bucket, so we want to verify
-  // that any objects we created are found there, but cannot expect a perfect
-  // match.
-  for (auto const& name : expected) {
-    EXPECT_EQ(1, std::count(actual.begin(), actual.end(), name));
-  }
-}
-
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -160,6 +131,17 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   EXPECT_EQ(expected, actual);
 
   client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, ReadNotFound) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  EXPECT_TRUE(stream.eof());
+  EXPECT_FALSE(stream.IsOpen());
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWrite) {
@@ -281,48 +263,6 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   client.DeleteObjectAcl(bucket_name, object_name, entity_name);
   current_acl = client.ListObjectAcl(bucket_name, object_name);
   EXPECT_EQ(0, name_counter(result.entity(), current_acl));
-
-  client.DeleteObject(bucket_name, object_name);
-}
-
-TEST_F(ObjectIntegrationTest, InsertObjectMediaIfGenerationMatch) {
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  Client client;
-  auto object_name = MakeRandomObjectName();
-
-  auto original = client.InsertObject(bucket_name, object_name, "blah blah",
-                                      storage::IfGenerationMatch(0));
-  EXPECT_EQ(bucket_name, original.bucket());
-  EXPECT_EQ(object_name, original.name());
-  EXPECT_EQ("storage#object", original.kind());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(client.InsertObject(bucket_name, object_name, "blah blah",
-                                   storage::IfGenerationMatch(0)),
-               std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.InsertObject(bucket_name, object_name, "blah blah",
-                          storage::IfGenerationMatch(0)),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST_F(ObjectIntegrationTest, InsertObjectMediaIfGenerationNotMatch) {
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  Client client;
-  auto object_name = MakeRandomObjectName();
-
-  auto original = client.InsertObject(bucket_name, object_name, "blah blah",
-                                      storage::IfGenerationMatch(0));
-  EXPECT_EQ(bucket_name, original.bucket());
-  EXPECT_EQ(object_name, original.name());
-  EXPECT_EQ("storage#object", original.kind());
-
-  auto metadata =
-      client.InsertObject(bucket_name, object_name, "more blah blah",
-                          storage::IfGenerationNotMatch(0));
-  EXPECT_EQ(object_name, metadata.name());
-  EXPECT_NE(original.generation(), metadata.generation());
 
   client.DeleteObject(bucket_name, object_name);
 }

@@ -47,7 +47,7 @@ ObjectReadStream::~ObjectReadStream() {
 internal::HttpResponse ObjectReadStream::Close() {
   if (not IsOpen()) {
     google::cloud::internal::RaiseRuntimeError(
-        "Attempting to Close() closed ObjectWriteStream");
+        "Attempting to Close() closed ObjectReadStream");
   }
   return buf_->Close();
 }

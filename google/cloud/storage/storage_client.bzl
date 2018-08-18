@@ -82,6 +82,7 @@ storage_client_SRCS = [
     "internal/format_rfc3339.cc",
     "internal/get_object_metadata_request.cc",
     "internal/google_application_default_credentials_file.cc",
+    "internal/http_response.cc",
     "internal/insert_object_media_request.cc",
     "internal/list_objects_request.cc",
     "internal/logging_client.cc",

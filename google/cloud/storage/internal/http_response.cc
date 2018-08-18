@@ -12,13 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_
-
-#include "google/cloud/storage/version.h"
-#include <iosfwd>
-#include <map>
-#include <string>
+#include "google/cloud/storage/internal/http_response.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -26,21 +21,18 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-/**
- * Contains the results of a HTTP request.
- */
-struct HttpResponse {
-  long status_code;
-  std::string payload;
-  std::multimap<std::string, std::string> headers;
-};
-
-std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs);
+std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
+  os << "status_code=" << rhs.status_code << ", {";
+  char const* sep = "";
+  for (auto const& kv : rhs.headers) {
+    os << sep << kv.first << ": " << kv.second;
+    sep = ", ";
+  }
+  return os << "}, payload=<" << rhs.payload << ">";
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H_
