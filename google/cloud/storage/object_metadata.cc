@@ -179,6 +179,132 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << ", updated=" << rhs.updated().time_since_epoch().count() << "}";
   return os;
 }
+
+std::string ObjectMetadataPatchBuilder::BuildPatch() const {
+  internal::PatchBuilder tmp = impl_;
+  if (metadata_subpatch_dirty_) {
+    if (metadata_subpatch_.empty()) {
+      tmp.RemoveField("metadata");
+    } else {
+      tmp.AddSubPatch("metadata", metadata_subpatch_);
+    }
+  }
+  return tmp.ToString();
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetAcl(
+    std::vector<ObjectAccessControl> const& v) {
+  if (v.empty()) {
+    return ResetAcl();
+  }
+  std::vector<internal::nl::json> array;
+  array.reserve(v.size());
+  for (auto const& a : v) {
+    array.emplace_back(internal::nl::json{
+        {"entity", a.entity()},
+        {"role", a.role()},
+    });
+  }
+  impl_.SetArrayField("acl", array);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetAcl() {
+  impl_.RemoveField("acl");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetCacheControl(
+    std::string const& v) {
+  if (v.empty()) {
+    return ResetCacheControl();
+  }
+  impl_.SetStringField("cacheControl", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetCacheControl() {
+  impl_.RemoveField("cacheControl");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContentDisposition(
+    std::string const& v) {
+  if (v.empty()) {
+    return ResetContentDisposition();
+  }
+  impl_.SetStringField("contentDisposition", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder&
+ObjectMetadataPatchBuilder::ResetContentDisposition() {
+  impl_.RemoveField("contentDisposition");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContentEncoding(
+    std::string const& v) {
+  if (v.empty()) {
+    return ResetContentEncoding();
+  }
+  impl_.SetStringField("contentEncoding", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContentEncoding() {
+  impl_.RemoveField("contentEncoding");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContentLanguage(
+    std::string const& v) {
+  if (v.empty()) {
+    return ResetContentLanguage();
+  }
+  impl_.SetStringField("contentLanguage", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContentLanguage() {
+  impl_.RemoveField("contentLanguage");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContentType(
+    std::string const& v) {
+  if (v.empty()) {
+    return ResetContentType();
+  }
+  impl_.SetStringField("contentType", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContentType() {
+  impl_.RemoveField("contentType");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetMetadata(
+    std::string const& key, std::string const& value) {
+  metadata_subpatch_.SetStringField(key.c_str(), value);
+  metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata(
+    std::string const& key) {
+  metadata_subpatch_.RemoveField(key.c_str());
+  metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
+  metadata_subpatch_.clear();
+  metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

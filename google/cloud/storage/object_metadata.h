@@ -230,6 +230,55 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
 
+/**
+ * Prepare a patch for the Bucket resource.
+ *
+ * The Bucket resource has many modifiable fields. The application may send a
+ * patch request to change (or delete) a small fraction of these fields by using
+ * this object.
+ *
+ * @see
+ * https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch
+ *     for general information on PATCH requests for the Google Cloud Storage
+ *     JSON API.
+ */
+class ObjectMetadataPatchBuilder {
+ public:
+  ObjectMetadataPatchBuilder() : metadata_subpatch_dirty_(false) {}
+
+  std::string BuildPatch() const;
+
+  ObjectMetadataPatchBuilder& SetAcl(std::vector<ObjectAccessControl> const& v);
+
+  /**
+   * Clear the ACL for the Bucket.
+   *
+   * @warning Currently the server ignores requests to reset the full ACL.
+   */
+  ObjectMetadataPatchBuilder& ResetAcl();
+
+  ObjectMetadataPatchBuilder& SetCacheControl(std::string const& v);
+  ObjectMetadataPatchBuilder& ResetCacheControl();
+  ObjectMetadataPatchBuilder& SetContentDisposition(std::string const& v);
+  ObjectMetadataPatchBuilder& ResetContentDisposition();
+  ObjectMetadataPatchBuilder& SetContentEncoding(std::string const& v);
+  ObjectMetadataPatchBuilder& ResetContentEncoding();
+  ObjectMetadataPatchBuilder& SetContentLanguage(std::string const& v);
+  ObjectMetadataPatchBuilder& ResetContentLanguage();
+  ObjectMetadataPatchBuilder& SetContentType(std::string const& v);
+  ObjectMetadataPatchBuilder& ResetContentType();
+
+  ObjectMetadataPatchBuilder& SetMetadata(std::string const& key,
+                                          std::string const& value);
+  ObjectMetadataPatchBuilder& ResetMetadata(std::string const& key);
+  ObjectMetadataPatchBuilder& ResetMetadata();
+
+ private:
+  internal::PatchBuilder impl_;
+  bool metadata_subpatch_dirty_;
+  internal::PatchBuilder metadata_subpatch_;
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

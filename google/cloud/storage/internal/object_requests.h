@@ -212,6 +212,28 @@ class UpdateObjectRequest
 
 std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
 
+/**
+ * Represents a request to the `Buckets: patch` API.
+ */
+class PatchObjectRequest
+    : public GenericObjectRequest<
+          PatchObjectRequest, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
+ public:
+  PatchObjectRequest() = default;
+  explicit PatchObjectRequest(std::string bucket_name, std::string object_name,
+                              ObjectMetadata const& original,
+                              ObjectMetadata const& updated);
+  explicit PatchObjectRequest(std::string bucket_name, std::string object_name,
+                              ObjectMetadataPatchBuilder const& patch);
+
+  std::string const& payload() const { return payload_; }
+
+ private:
+  std::string payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, PatchObjectRequest const& r);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

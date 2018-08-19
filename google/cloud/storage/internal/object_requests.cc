@@ -159,6 +159,79 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
   return os << "}";
 }
 
+PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
+                                       std::string object_name,
+                                       ObjectMetadata const& original,
+                                       ObjectMetadata const& updated)
+    : GenericObjectRequest(std::move(bucket_name), std::move(object_name)) {
+  // Compare each writeable field to build the patch.
+  ObjectMetadataPatchBuilder builder;
+
+  if (original.acl() != updated.acl()) {
+    builder.SetAcl(updated.acl());
+  }
+  if (original.cache_control() != updated.cache_control()) {
+    builder.SetCacheControl(updated.cache_control());
+  }
+  if (original.content_disposition() != updated.content_disposition()) {
+    builder.SetContentDisposition(updated.content_disposition());
+  }
+  if (original.content_encoding() != updated.content_encoding()) {
+    builder.SetContentEncoding(updated.content_encoding());
+  }
+  if (original.content_language() != updated.content_language()) {
+    builder.SetContentLanguage(updated.content_language());
+  }
+  if (original.content_type() != updated.content_type()) {
+    builder.SetContentType(updated.content_type());
+  }
+
+  if (original.metadata() != updated.metadata()) {
+    if (updated.metadata().empty()) {
+      builder.ResetMetadata();
+    } else {
+      std::map<std::string, std::string> difference;
+      // Find the keys in the original map that are not in the new map:
+      std::set_difference(original.metadata().begin(),
+                          original.metadata().end(), updated.metadata().begin(),
+                          updated.metadata().end(),
+                          std::inserter(difference, difference.end()),
+                          // We want to compare just keys and ignore values, the
+                          // map class provides such a function, so use it:
+                          original.metadata().value_comp());
+      for (auto&& d : difference) {
+        builder.ResetMetadata(d.first);
+      }
+
+      // Find the elements (comparing key and value) in the updated map that
+      // are not in the original map:
+      difference.clear();
+      std::set_difference(updated.metadata().begin(), updated.metadata().end(),
+                          original.metadata().begin(),
+                          original.metadata().end(),
+                          std::inserter(difference, difference.end()));
+      for (auto&& d : difference) {
+        builder.SetMetadata(d.first, d.second);
+      }
+    }
+  }
+
+  payload_ = builder.BuildPatch();
+}
+
+PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
+                                       std::string object_name,
+                                       ObjectMetadataPatchBuilder const& patch)
+    : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
+      payload_(patch.BuildPatch()) {}
+
+std::ostream& operator<<(std::ostream& os, PatchObjectRequest const& r) {
+  os << "PatchObjectRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.payload() << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

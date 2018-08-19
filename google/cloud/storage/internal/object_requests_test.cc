@@ -263,6 +263,291 @@ TEST(ObjectRequestsTest, Update) {
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
 }
 
+ObjectMetadata CreateObjectMetadataForTest() {
+  // This metadata object has some impossible combination of fields in it. The
+  // goal is to fully test the parsing, not to simulate valid objects.
+  std::string text = R"""({
+      "acl": [{
+        "kind": "storage#objectAccessControl",
+        "id": "acl-id-0",
+        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-qux",
+        "bucket": "foo-bar",
+        "object": "foo",
+        "generation": 12345,
+        "entity": "user-qux",
+        "role": "OWNER",
+        "email": "qux@example.com",
+        "entityId": "user-qux-id-123",
+        "domain": "example.com",
+        "projectTeam": {
+          "projectNumber": "4567",
+          "team": "owners"
+        },
+        "etag": "AYX="
+      }, {
+        "kind": "storage#objectAccessControl",
+        "id": "acl-id-1",
+        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-quux",
+        "bucket": "foo-bar",
+        "object": "foo",
+        "generation": 12345,
+        "entity": "user-quux",
+        "role": "READER",
+        "email": "qux@example.com",
+        "entityId": "user-quux-id-123",
+        "domain": "example.com",
+        "projectTeam": {
+          "projectNumber": "4567",
+          "team": "viewers"
+        },
+        "etag": "AYX="
+      }
+      ],
+      "bucket": "foo-bar",
+      "cacheControl": "no-cache",
+      "componentCount": 7,
+      "contentDisposition": "a-disposition",
+      "contentEncoding": "an-encoding",
+      "contentLanguage": "a-language",
+      "contentType": "application/octet-stream",
+      "crc32c": "deadbeef",
+      "customerEncryption": {
+        "encryptionAlgorithm": "some-algo",
+        "keySha256": "abc123"
+      },
+      "etag": "XYZ=",
+      "generation": "12345",
+      "id": "foo-bar/baz/12345",
+      "kind": "storage#object",
+      "kmsKeyName": "/foo/bar/baz/key",
+      "md5Hash": "deaderBeef=",
+      "mediaLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz?generation=12345&alt=media",
+      "metadata": {
+        "foo": "bar",
+        "baz": "qux"
+      },
+      "metageneration": "4",
+      "name": "baz",
+      "owner": {
+        "entity": "user-qux",
+        "entityId": "user-qux-id-123"
+      },
+      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
+      "size": 102400,
+      "storageClass": "STANDARD",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "timeDeleted": "2018-05-19T19:32:24Z",
+      "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
+      "updated": "2018-05-19T19:31:24Z"
+})""";
+  return ObjectMetadata::ParseFromString(text);
+}
+
+TEST(PatchObjectRequestTest, DiffSetAcl) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_acl({});
+  ObjectMetadata updated = original;
+  updated.set_acl({ObjectAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "acl": [{"entity": "user-test-user", "role": "OWNER"}]
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetAcl) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_acl({ObjectAccessControl::ParseFromString(R"""({
+    "entity": "user-test-user",
+    "role": "OWNER"})""")});
+  ObjectMetadata updated = original;
+  updated.set_acl({});
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"acl": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetCacheControl) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_cache_control("");
+  ObjectMetadata updated = original;
+  updated.set_cache_control("no-cache");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"cacheControl": "no-cache"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetCacheControl) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_cache_control("no-cache");
+  ObjectMetadata updated = original;
+  updated.set_cache_control("");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"cacheControl": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetContentDisposition) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_disposition("");
+  ObjectMetadata updated = original;
+  updated.set_content_disposition("test-value");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected =
+      nl::json::parse(R"""({"contentDisposition": "test-value"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetContentDisposition) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_disposition("test-value");
+  ObjectMetadata updated = original;
+  updated.set_content_disposition("");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"contentDisposition": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetContentEncoding) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_encoding("");
+  ObjectMetadata updated = original;
+  updated.set_content_encoding("test-value");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected =
+      nl::json::parse(R"""({"contentEncoding": "test-value"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetContentEncoding) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_encoding("test-value");
+  ObjectMetadata updated = original;
+  updated.set_content_encoding("");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"contentEncoding": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetContentLanguage) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_language("");
+  ObjectMetadata updated = original;
+  updated.set_content_language("test-value");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected =
+      nl::json::parse(R"""({"contentLanguage": "test-value"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetContentLanguage) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_language("test-value");
+  ObjectMetadata updated = original;
+  updated.set_content_language("");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"contentLanguage": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetContentType) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_type("");
+  ObjectMetadata updated = original;
+  updated.set_content_type("test-value");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"contentType": "test-value"})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetContentType) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_content_type("test-value");
+  ObjectMetadata updated = original;
+  updated.set_content_type("");
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"contentType": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetLabels) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.mutable_metadata() = {
+      {"label1", "v1"},
+      {"label2", "v2"},
+  };
+  ObjectMetadata updated = original;
+  updated.mutable_metadata().erase("label2");
+  updated.mutable_metadata().insert({"label3", "v3"});
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "metadata": {"label2": null, "label3": "v3"}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetLabels) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.mutable_metadata() = {
+      {"label1", "v1"},
+      {"label2", "v2"},
+  };
+  ObjectMetadata updated = original;
+  updated.mutable_metadata().clear();
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"metadata": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, Builder) {
+  PatchObjectRequest request(
+      "test-bucket", "test-object",
+      ObjectMetadataPatchBuilder().SetContentType("application/json"));
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
+                               UserProject("my-project"));
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(actual, HasSubstr("contentType"));
+  EXPECT_THAT(actual, HasSubstr("application/json"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
