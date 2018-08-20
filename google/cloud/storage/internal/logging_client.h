@@ -59,6 +59,8 @@ class LoggingClient : public RawClient {
       DeleteObjectRequest const&) override;
   std::pair<Status, ObjectMetadata> UpdateObject(
       UpdateObjectRequest const& request) override;
+  std::pair<Status, ObjectMetadata> PatchObject(
+      PatchObjectRequest const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

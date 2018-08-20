@@ -76,6 +76,8 @@ class CurlClient : public RawClient {
       DeleteObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> UpdateObject(
       UpdateObjectRequest const& request) override;
+  std::pair<Status, ObjectMetadata> PatchObject(
+      PatchObjectRequest const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

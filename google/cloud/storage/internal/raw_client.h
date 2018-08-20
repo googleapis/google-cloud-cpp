@@ -79,6 +79,8 @@ class RawClient {
       DeleteObjectRequest const&) = 0;
   virtual std::pair<Status, ObjectMetadata> UpdateObject(
       UpdateObjectRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> PatchObject(
+      PatchObjectRequest const&) = 0;
   //@}
 
   //@{

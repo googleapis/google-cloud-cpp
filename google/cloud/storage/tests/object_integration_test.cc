@@ -149,11 +149,88 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(update.content_type(), updated_meta.content_type()) << updated_meta;
   EXPECT_EQ(update.metadata(), updated_meta.metadata()) << updated_meta;
 
+  ObjectMetadata desired_patch = updated_meta;
+  desired_patch.set_content_language("en");
+  desired_patch.mutable_metadata().erase("updated");
+  desired_patch.mutable_metadata().emplace("patched", "true");
+  ObjectMetadata patched_meta =
+      client.PatchObject(bucket_name, object_name, updated_meta, desired_patch);
+  EXPECT_EQ(desired_patch.metadata(), patched_meta.metadata()) << patched_meta;
+  EXPECT_EQ(desired_patch.content_language(), patched_meta.content_language())
+      << patched_meta;
+
   client.DeleteObject(bucket_name, object_name);
   objects = client.ListObjects(bucket_name);
   current_list.assign(objects.begin(), objects.end());
 
   EXPECT_EQ(0U, name_counter(object_name, current_list));
+}
+
+TEST_F(ObjectIntegrationTest, FullPatch) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata original =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection("full"));
+
+  ObjectMetadata desired = original;
+  desired.mutable_acl().push_back(ObjectAccessControl()
+                                      .set_entity("allAuthenticatedUsers")
+                                      .set_role("READER"));
+  if (original.cache_control() != "no-cache") {
+    desired.set_cache_control("no-cache");
+  } else {
+    desired.set_cache_control("");
+  }
+  if (original.content_disposition() != "inline") {
+    desired.set_content_disposition("inline");
+  } else {
+    desired.set_content_disposition("attachment; filename=test.txt");
+  }
+  if (original.content_encoding() != "identity") {
+    desired.set_content_encoding("identity");
+  } else {
+    desired.set_content_encoding("");
+  }
+  // Use 'en' and 'fr' as test languages because they are known to be supported.
+  // The server rejects private tags such as 'x-pig-latin'.
+  if (original.content_language() != "en") {
+    desired.set_content_language("en");
+  } else {
+    desired.set_content_language("fr");
+  }
+  if (original.content_type() != "application/octet-stream") {
+    desired.set_content_type("application/octet-stream");
+  } else {
+    desired.set_content_type("application/text");
+  }
+
+  if (original.has_metadata("test-label")) {
+    original.mutable_metadata().erase("test-label");
+  } else {
+    original.mutable_metadata().emplace("test-label", "test-value");
+  }
+
+  ObjectMetadata patched =
+      client.PatchObject(bucket_name, object_name, original, desired);
+
+  // acl() - cannot compare for equality because many fields are updated with
+  // unknown values (entity_id, etag, etc)
+  EXPECT_EQ(1U, std::count_if(patched.acl().begin(), patched.acl().end(),
+                              [](ObjectAccessControl const& x) {
+                                return x.entity() == "allAuthenticatedUsers";
+                              }));
+
+  EXPECT_EQ(desired.cache_control(), patched.cache_control());
+  EXPECT_EQ(desired.content_disposition(), patched.content_disposition());
+  EXPECT_EQ(desired.content_encoding(), patched.content_encoding());
+  EXPECT_EQ(desired.content_language(), patched.content_language());
+  EXPECT_EQ(desired.content_type(), patched.content_type());
+  EXPECT_EQ(desired.metadata(), patched.metadata());
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsVersions) {

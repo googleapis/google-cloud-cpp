@@ -465,6 +465,76 @@ class Client {
   }
 
   /**
+   * Patch the metadata in a Google Cloud Storage Object.
+   *
+   * This function creates a patch request to change the writeable attributes in
+   * @p original to the values in @p updated.  Non-writeable attributes are
+   * ignored, and attributes not present in @p updated are removed. Typically
+   * this function is used after the application obtained a value with
+   * `GetObjectMetadata` and has modified these parameters.
+   *
+   * @param bucket_name the bucket that contains the object to be updated.
+   * @param object_name the object to be updated.
+   * @param original the initial value of the object metadata.
+   * @param updated the updated value for the object metadata.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
+   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc patch object delete metadata
+   */
+  template <typename... Options>
+  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
+                             ObjectMetadata const& original,
+                             ObjectMetadata const& updated,
+                             Options&&... options) {
+    internal::PatchObjectRequest request(
+        std::move(bucket_name), std::move(object_name), original, updated);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchObject(request).second;
+  }
+
+  /**
+   * Patch the metadata in a Google Cloud Storage Object.
+   *
+   * This function creates a patch request to change the writeable attributes in
+   * @p original to the values in @p updated.  Non-writeable attributes are
+   * ignored, and attributes not present in @p updated are removed. Typically
+   * this function is used after the application obtained a value with
+   * `GetObjectMetadata` and has modified these parameters.
+   *
+   * @param bucket_name the bucket that contains the object to be updated.
+   * @param object_name the object to be updated.
+   * @param builder the set of updates to perform in the Object metadata.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
+   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the metadata cannot be fetched using the
+   * current policies.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc patch object content type
+   */
+  template <typename... Options>
+  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
+                             ObjectMetadataPatchBuilder const& builder,
+                             Options&&... options) {
+    internal::PatchObjectRequest request(std::move(bucket_name),
+                                         std::move(object_name), builder);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->PatchObject(request).second;
+  }
+
+  /**
    * Retrieves the list of BucketAccessControls for a bucket.
    *
    * @param bucket_name the name of the bucket.
