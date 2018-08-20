@@ -25,6 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::_;
+using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -188,6 +189,73 @@ TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
         client.DeleteObject("test-bucket-name", "test-object-name");
       },
       "DeleteObject");
+}
+
+TEST_F(ObjectTest, UpdateObject) {
+  std::string text = R"""({
+      "bucket": "test-bucket-name",
+      "contentDisposition": "new-disposition",
+      "contentLanguage": "new-language",
+      "contentType": "application/octet-stream",
+      "crc32c": "d1e2f3",
+      "etag": "XYZ=",
+      "generation": "12345",
+      "id": "test-bucket-name/test-object-name/12345",
+      "kind": "storage#object",
+      "md5Hash": "xa1b2c3==",
+      "mediaLink": "https://www.googleapis.com/download/storage/v1/b/test-bucket-name/o/test-object-name?generation=12345&alt=media",
+      "metageneration": "4",
+      "name": "test-object-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name/o/test-object-name",
+      "size": 1024,
+      "storageClass": "STANDARD",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "timeDeleted": "2018-05-19T19:32:24Z",
+      "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
+      "updated": "2018-05-19T19:31:24Z"
+})""";
+  auto expected = ObjectMetadata::ParseFromString(text);
+
+  EXPECT_CALL(*mock, UpdateObject(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Invoke([&expected](internal::UpdateObjectRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        EXPECT_EQ("test-object-name", r.object_name());
+        EXPECT_THAT(r.json_payload(), HasSubstr("new-disposition"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("new-language"));
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual =
+      client.UpdateObject("test-bucket-name", "test-object-name",
+                          ObjectMetadata()
+                              .set_content_disposition("new-disposition")
+                              .set_content_language("new-language"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectMetadata>(
+      mock, EXPECT_CALL(*mock, UpdateObject(_)),
+      [](Client& client) {
+        client.UpdateObject(
+            "test-bucket-name", "test-object-name",
+            ObjectMetadata().set_content_language("new-language"));
+      },
+      "UpdateObject");
+}
+
+TEST_F(ObjectTest, UpdateObjectPermanentFailure) {
+  testing::PermanentFailureTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, UpdateObject(_)),
+      [](Client& client) {
+        client.UpdateObject(
+            "test-bucket-name", "test-object-name",
+            ObjectMetadata().set_content_language("new-language"));
+      },
+      "UpdateObject");
 }
 
 }  // namespace

@@ -174,6 +174,32 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, desired_line_count);
 }
 
+void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "update-object-metadata <bucket-name> <object-name> <key> <value>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto key = ConsumeArg(argc, argv);
+  auto value = ConsumeArg(argc, argv);
+  //! [update object metadata] [START storage_set_metadata]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string key, std::string value) {
+    gcs::ObjectMetadata meta =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata desired = meta;
+    desired.mutable_metadata().emplace(key, value);
+    gcs::ObjectMetadata updated = client.UpdateObject(
+        bucket_name, object_name, desired, gcs::IfMatchEtag(meta.etag()));
+    std::cout << "Object updated. The full metadata after the update is: "
+              << updated << std::endl;
+  }
+  //! [update object metadata] [END storage_set_metadata]
+  (std::move(client), bucket_name, object_name, key, value);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -191,6 +217,7 @@ int main(int argc, char* argv[]) try {
       {"read-object", &ReadObject},
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
+      {"update-object-metadata", &UpdateObjectMetadata},
   };
   for (auto&& kv : commands) {
     try {

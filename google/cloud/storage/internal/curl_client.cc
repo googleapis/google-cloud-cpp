@@ -249,6 +249,25 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
   return std::make_pair(Status(), internal::EmptyResponse{});
 }
 
+std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
+    UpdateObjectRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name());
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type: application/json");
+  builder.SetMethod("PUT");
+  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectMetadata{});
+  }
+  return std::make_pair(Status(),
+                        ObjectMetadata::ParseFromString(payload.payload));
+}
+
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +

@@ -75,6 +75,8 @@ class RawClient {
       ListObjectsRequest const&) = 0;
   virtual std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> UpdateObject(
+      UpdateObjectRequest const&) = 0;
   //@}
 
   //@{

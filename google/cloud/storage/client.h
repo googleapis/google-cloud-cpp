@@ -436,6 +436,33 @@ class Client {
   }
 
   /**
+   * Updates the metadata in a Google Cloud Storage Object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object.
+   * @param metadata the new metadata for the Ojbect.  The `bucket` and `name`
+   *     fields are ignored in favor of @p bucket_name and @p object_name.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
+   *     `Projection`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc update object metadata
+   */
+  template <typename... Options>
+  ObjectMetadata UpdateObject(std::string bucket_name, std::string object_name,
+                              ObjectMetadata metadata, Options&&... options) {
+    internal::UpdateObjectRequest request(
+        std::move(bucket_name), std::string(object_name), std::move(metadata));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->UpdateObject(request).second;
+  }
+
+  /**
    * Retrieves the list of BucketAccessControls for a bucket.
    *
    * @param bucket_name the name of the bucket.

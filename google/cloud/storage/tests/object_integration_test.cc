@@ -107,6 +107,12 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
       bucket_name, object_name, Generation(insert_meta.generation()));
   EXPECT_EQ(get_meta, insert_meta);
 
+  ObjectMetadata update = get_meta;
+  update.mutable_metadata().emplace("updated", "true");
+  ObjectMetadata updated_meta =
+      client.UpdateObject(bucket_name, object_name, update);
+  EXPECT_EQ(update.metadata(), updated_meta.metadata()) << updated_meta;
+
   client.DeleteObject(bucket_name, object_name);
   objects = client.ListObjects(bucket_name);
   current_list.assign(objects.begin(), objects.end());
