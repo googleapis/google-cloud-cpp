@@ -53,14 +53,15 @@ std::ostream& operator<<(std::ostream& os,
   return os << rhs.parameter_name() << "=<not set>";
 }
 
-struct Projection : public WellKnownParameter<Projection, std::string> {
-  using WellKnownParameter<Projection, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "projection"; }
+struct ContentEncoding
+    : public WellKnownParameter<ContentEncoding, std::string> {
+  using WellKnownParameter<ContentEncoding, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "contentEncoding"; }
 };
 
-struct UserProject : public WellKnownParameter<UserProject, std::string> {
-  using WellKnownParameter<UserProject, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "userProject"; }
+struct Generation : public WellKnownParameter<Generation, std::int64_t> {
+  using WellKnownParameter<Generation, std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "generation"; }
 };
 
 struct IfGenerationMatch
@@ -96,14 +97,19 @@ struct IfMetaGenerationNotMatch
   }
 };
 
-struct Generation : public WellKnownParameter<Generation, std::int64_t> {
-  using WellKnownParameter<Generation, std::int64_t>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "generation"; }
+struct KmsKeyName : public WellKnownParameter<KmsKeyName, std::string> {
+  using WellKnownParameter<KmsKeyName, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "kmsKeyName"; }
 };
 
-struct Prefix : public WellKnownParameter<Prefix, std::string> {
-  using WellKnownParameter<Prefix, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "prefix"; }
+struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
+  using WellKnownParameter<MaxResults, std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "maxResults"; }
+};
+
+struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
+  using WellKnownParameter<PredefinedAcl, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "predefinedAcl"; }
 };
 
 struct PredefinedDefaultObjectAcl
@@ -115,9 +121,14 @@ struct PredefinedDefaultObjectAcl
   }
 };
 
-struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
-  using WellKnownParameter<MaxResults, std::int64_t>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "maxResults"; }
+struct Prefix : public WellKnownParameter<Prefix, std::string> {
+  using WellKnownParameter<Prefix, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "prefix"; }
+};
+
+struct Projection : public WellKnownParameter<Projection, std::string> {
+  using WellKnownParameter<Projection, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "projection"; }
 };
 
 struct UploadType : public WellKnownParameter<UploadType, std::string> {
@@ -125,20 +136,9 @@ struct UploadType : public WellKnownParameter<UploadType, std::string> {
   static char const* well_known_parameter_name() { return "uploadType"; }
 };
 
-struct ContentEncoding
-    : public WellKnownParameter<ContentEncoding, std::string> {
-  using WellKnownParameter<ContentEncoding, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "contentEncoding"; }
-};
-
-struct KmsKeyName : public WellKnownParameter<KmsKeyName, std::string> {
-  using WellKnownParameter<KmsKeyName, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "kmsKeyName"; }
-};
-
-struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
-  using WellKnownParameter<PredefinedAcl, std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "predefinedAcl"; }
+struct UserProject : public WellKnownParameter<UserProject, std::string> {
+  using WellKnownParameter<UserProject, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "userProject"; }
 };
 
 struct Versions : public WellKnownParameter<Versions, bool> {
