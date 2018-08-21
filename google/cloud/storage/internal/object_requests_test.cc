@@ -121,6 +121,27 @@ TEST(ObjectRequestsTest, InsertObjectMedia) {
   EXPECT_THAT(str, HasSubstr("predefinedAcl=authenticatedRead"));
 }
 
+TEST(ObjectRequestsTest, Copy) {
+  CopyObjectRequest request("my-bucket", "my-object", "source-bucket",
+                            "source-object",
+                            ObjectMetadata().set_content_type("text/plain"));
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
+                               DestinationPredefinedAcl("private"),
+                               UserProject("my-project"));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("my-object"));
+  EXPECT_THAT(actual, HasSubstr("source-bucket"));
+  EXPECT_THAT(actual, HasSubstr("source-object"));
+  EXPECT_THAT(actual, HasSubstr("text/plain"));
+  EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
 TEST(ObjectRequestsTest, InsertObjectStreaming) {
   InsertObjectStreamingRequest request("my-bucket", "my-object");
   request.set_multiple_options(

@@ -82,6 +82,15 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    */
   std::string JsonPayloadForUpdate() const;
 
+  /**
+   * Return the payload for a call to `Objects: copy`.
+   *
+   * The `Objects: copy` API only accepts a subset of the writeable fields in
+   * the object resource. This function selects the relevant fields and formats
+   * them as a JSON string.
+   */
+  std::string JsonPayloadForCopy() const;
+
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
   std::vector<ObjectAccessControl> const& acl() const { return acl_; }
@@ -206,6 +215,8 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool operator!=(ObjectMetadata const& rhs) const { return not(*this == rhs); }
 
  private:
+  internal::nl::json JsonForUpdate() const;
+
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<ObjectAccessControl> acl_;

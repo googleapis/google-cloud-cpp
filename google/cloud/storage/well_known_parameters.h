@@ -59,6 +59,15 @@ struct ContentEncoding
   static char const* well_known_parameter_name() { return "contentEncoding"; }
 };
 
+struct DestinationPredefinedAcl
+    : public WellKnownParameter<DestinationPredefinedAcl, std::string> {
+  using WellKnownParameter<DestinationPredefinedAcl,
+                           std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "destinationPredefinedAcl";
+  }
+};
+
 /**
  * Define the `fields` parameter.
  *
@@ -113,6 +122,42 @@ struct IfMetagenerationNotMatch
   }
 };
 
+struct IfSourceGenerationMatch
+    : public WellKnownParameter<IfSourceGenerationMatch, std::int64_t> {
+  using WellKnownParameter<IfSourceGenerationMatch,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "ifSourceGenerationMatch";
+  }
+};
+
+struct IfSourceGenerationNotMatch
+    : public WellKnownParameter<IfSourceGenerationNotMatch, std::int64_t> {
+  using WellKnownParameter<IfSourceGenerationNotMatch,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "ifSourceGenerationNotMatch";
+  }
+};
+
+struct IfSourceMetagenerationMatch
+    : public WellKnownParameter<IfSourceMetagenerationMatch, std::int64_t> {
+  using WellKnownParameter<IfSourceMetagenerationMatch,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "ifSourceMetagenerationMatch";
+  }
+};
+
+struct IfSourceMetagenerationNotMatch
+    : public WellKnownParameter<IfSourceMetagenerationNotMatch, std::int64_t> {
+  using WellKnownParameter<IfSourceMetagenerationNotMatch,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "ifSourceMetagenerationNotMatch";
+  }
+};
+
 struct KmsKeyName : public WellKnownParameter<KmsKeyName, std::string> {
   using WellKnownParameter<KmsKeyName, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "kmsKeyName"; }
@@ -150,6 +195,12 @@ struct Projection : public WellKnownParameter<Projection, std::string> {
 struct QuotaUser : public WellKnownParameter<QuotaUser, std::string> {
   using WellKnownParameter<QuotaUser, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "quotaUser"; }
+};
+
+struct SourceGeneration
+    : public WellKnownParameter<SourceGeneration, std::int64_t> {
+  using WellKnownParameter<SourceGeneration, std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "sourceGeneration"; }
 };
 
 struct UploadType : public WellKnownParameter<UploadType, std::string> {

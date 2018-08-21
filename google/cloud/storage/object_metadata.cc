@@ -84,6 +84,21 @@ ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
 }
 
 std::string ObjectMetadata::JsonPayloadForUpdate() const {
+  auto json = JsonForUpdate();
+  return json.dump();
+}
+
+std::string ObjectMetadata::JsonPayloadForCopy() const {
+  auto json = JsonForUpdate();
+  // TODO(#564) - add checksums if applicable.
+  // Only crc32c and md5Hash are writeable fields that could be included in a
+  // copy but are not included in an update.  The server has the checksums for
+  // a copy though, so it does not seem necessary to send them. When we
+  // implement #564 we should revisit this decision.
+  return json.dump();
+}
+
+internal::nl::json ObjectMetadata::JsonForUpdate() const {
   using internal::nl::json;
   json metadata_as_json;
   if (not acl().empty()) {
@@ -109,7 +124,7 @@ std::string ObjectMetadata::JsonPayloadForUpdate() const {
     metadata_as_json["metadata"] = std::move(meta_as_json);
   }
 
-  return metadata_as_json.dump();
+  return metadata_as_json;
 }
 
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
