@@ -237,12 +237,12 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
 }
 
-/// @test Verify that the IfMetaGenerationMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
+/// @test Verify that the IfMetagenerationMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddOption(storage::IfMetaGenerationMatch(42));
+  request.AddOption(storage::IfMetagenerationMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -257,12 +257,12 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationMatch) {
   EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
 }
 
-/// @test Verify that the IfMetaGenerationNotMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfMetaGenerationNotMatch) {
+/// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
+TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
   storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
-  request.AddOption(storage::IfMetaGenerationNotMatch(42));
+  request.AddOption(storage::IfMetagenerationNotMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();
   EXPECT_EQ(200, response.status_code);
@@ -283,7 +283,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::UserProject("user-project-id"));
-  request.AddOption(storage::IfMetaGenerationMatch(7));
+  request.AddOption(storage::IfMetagenerationMatch(7));
   request.AddOption(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest(std::string{}).MakeRequest();

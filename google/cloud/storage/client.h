@@ -222,8 +222,8 @@ class Client {
    * @param metadata the new metadata for the Bucket.  The `name` field is
    *     ignored in favor of @p bucket_name.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.

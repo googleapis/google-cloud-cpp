@@ -79,18 +79,18 @@ struct IfGenerationNotMatch
   }
 };
 
-struct IfMetaGenerationMatch
-    : public WellKnownParameter<IfMetaGenerationMatch, std::int64_t> {
-  using WellKnownParameter<IfMetaGenerationMatch,
+struct IfMetagenerationMatch
+    : public WellKnownParameter<IfMetagenerationMatch, std::int64_t> {
+  using WellKnownParameter<IfMetagenerationMatch,
                            std::int64_t>::WellKnownParameter;
   static char const* well_known_parameter_name() {
     return "ifMetagenerationMatch";
   }
 };
 
-struct IfMetaGenerationNotMatch
-    : public WellKnownParameter<IfMetaGenerationNotMatch, std::int64_t> {
-  using WellKnownParameter<IfMetaGenerationNotMatch,
+struct IfMetagenerationNotMatch
+    : public WellKnownParameter<IfMetagenerationNotMatch, std::int64_t> {
+  using WellKnownParameter<IfMetagenerationNotMatch,
                            std::int64_t>::WellKnownParameter;
   static char const* well_known_parameter_name() {
     return "ifMetagenerationNotMatch";
