@@ -33,7 +33,7 @@ TEST(GetBucketMetadataRequestTest, OStreamBasic) {
 
 TEST(GetBucketMetadataRequestTest, OStreamParameter) {
   GetBucketMetadataRequest request("my-bucket");
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   std::ostringstream os;
   os << request;
@@ -120,7 +120,7 @@ TEST(CreateBucketsRequestTest, Basic) {
 
 TEST(DeleteBucketRequestTest, OStream) {
   DeleteBucketRequest request("my-bucket");
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   EXPECT_EQ("my-bucket", request.bucket_name());
 
@@ -152,7 +152,7 @@ TEST(UpdateBucketRequestTest, Simple) {
   BucketMetadata metadata = CreateBucketMetadataForTest();
   metadata.set_name("my-bucket");
   UpdateBucketRequest request(metadata);
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   EXPECT_EQ(metadata, request.metadata());
 
@@ -516,7 +516,7 @@ TEST(PatchBucketRequestTest, DiffOStream) {
   BucketMetadata updated = original;
   updated.set_storage_class("NEARLINE");
   PatchBucketRequest request("test-bucket", original, updated);
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   EXPECT_EQ("test-bucket", request.bucket());
 
@@ -534,7 +534,7 @@ TEST(PatchBucketRequestTest, Builder) {
   PatchBucketRequest request("test-bucket", BucketMetadataPatchBuilder()
                                                 .SetStorageClass("NEARLINE")
                                                 .ResetDefaultAcl());
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   EXPECT_EQ("test-bucket", request.bucket());
 

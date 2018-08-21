@@ -64,8 +64,8 @@ std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r);
  * Request the metadata for a bucket.
  */
 class GetBucketMetadataRequest
-    : public GenericRequest<GetBucketMetadataRequest, IfMetaGenerationMatch,
-                            IfMetaGenerationNotMatch, Projection, UserProject> {
+    : public GenericRequest<GetBucketMetadataRequest, IfMetagenerationMatch,
+                            IfMetagenerationNotMatch, Projection, UserProject> {
  public:
   GetBucketMetadataRequest() = default;
   explicit GetBucketMetadataRequest(std::string bucket_name)
@@ -117,8 +117,8 @@ std::ostream& operator<<(std::ostream& os, CreateBucketRequest const& r);
  * Represents a request to the `Buckets: delete` API.
  */
 class DeleteBucketRequest
-    : public GenericRequest<DeleteBucketRequest, IfMetaGenerationMatch,
-                            IfMetaGenerationNotMatch, UserProject> {
+    : public GenericRequest<DeleteBucketRequest, IfMetagenerationMatch,
+                            IfMetagenerationNotMatch, UserProject> {
  public:
   DeleteBucketRequest() = default;
   explicit DeleteBucketRequest(std::string bucket_name)
@@ -137,7 +137,7 @@ std::ostream& operator<<(std::ostream& os, DeleteBucketRequest const& r);
  */
 class UpdateBucketRequest
     : public GenericRequest<
-          UpdateBucketRequest, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          UpdateBucketRequest, IfMetagenerationMatch, IfMetagenerationNotMatch,
           PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
  public:
   UpdateBucketRequest() = default;
@@ -160,7 +160,7 @@ std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r);
  */
 class PatchBucketRequest
     : public GenericRequest<
-          PatchBucketRequest, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          PatchBucketRequest, IfMetagenerationMatch, IfMetagenerationNotMatch,
           PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
  public:
   PatchBucketRequest() = default;

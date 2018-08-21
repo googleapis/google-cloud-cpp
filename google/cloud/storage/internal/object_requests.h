@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r);
 class GetObjectMetadataRequest
     : public GenericObjectRequest<
           GetObjectMetadataRequest, Generation, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
           Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
@@ -84,7 +84,7 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
 class InsertObjectMediaRequest
     : public GenericObjectRequest<
           InsertObjectMediaRequest, ContentEncoding, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
           KmsKeyName, PredefinedAcl, Projection, UserProject> {
  public:
   InsertObjectMediaRequest() : GenericObjectRequest(), contents_() {}
@@ -114,7 +114,7 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 class InsertObjectStreamingRequest
     : public GenericObjectRequest<
           InsertObjectStreamingRequest, ContentEncoding, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetaGenerationMatch, IfMetaGenerationNotMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
           KmsKeyName, PredefinedAcl, Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
@@ -129,8 +129,8 @@ std::ostream& operator<<(std::ostream& os,
 class ReadObjectRangeRequest
     : public GenericObjectRequest<ReadObjectRangeRequest, Generation,
                                   IfGenerationMatch, IfGenerationNotMatch,
-                                  IfMetaGenerationMatch,
-                                  IfMetaGenerationNotMatch, UserProject> {
+                                  IfMetagenerationMatch,
+                                  IfMetagenerationNotMatch, UserProject> {
  public:
   ReadObjectRangeRequest() : GenericObjectRequest(), begin_(0), end_(0) {}
 
@@ -176,8 +176,8 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r);
 class DeleteObjectRequest
     : public GenericObjectRequest<DeleteObjectRequest, Generation,
                                   IfGenerationMatch, IfGenerationNotMatch,
-                                  IfMetaGenerationMatch,
-                                  IfMetaGenerationNotMatch, UserProject> {
+                                  IfMetagenerationMatch,
+                                  IfMetagenerationNotMatch, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

@@ -93,7 +93,7 @@ TEST(ObjectRequestsTest, ParseListResponse) {
 
 TEST(ObjectRequestsTest, Get) {
   GetObjectMetadataRequest request("my-bucket", "my-object");
-  request.set_multiple_options(Generation(1), IfMetaGenerationMatch(3));
+  request.set_multiple_options(Generation(1), IfMetagenerationMatch(3));
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -239,7 +239,7 @@ TEST(ObjectRequestsTest, RangeResponseParseErrors) {
 
 TEST(ObjectRequestsTest, Delete) {
   DeleteObjectRequest request("my-bucket", "my-object");
-  request.set_multiple_options(IfMetaGenerationNotMatch(7),
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
                                UserProject("my-project"));
   std::ostringstream os;
   os << request;
