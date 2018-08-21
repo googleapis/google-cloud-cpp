@@ -58,6 +58,10 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   unset GOOGLE_CLOUD_PROJECT
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_bucket_samples
 }
 
 ################################################
@@ -88,6 +92,10 @@ run_all_bucket_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_bucket_acl_samples delete-bucket-acl \
       "${bucket_name}" allAuthenticatedUsers
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_bucket_acl_samples
 }
 
 ################################################
@@ -118,6 +126,10 @@ run_all_default_object_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_default_object_acl_samples delete-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_default_object_acl_samples
 }
 
 ################################################
@@ -162,7 +174,9 @@ run_all_object_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 
-  run_example ./storage_object_samples generate-encryption-key
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_object_samples
 }
 
 ################################################
@@ -195,13 +209,17 @@ run_all_object_acl_examples() {
       "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
   run_example ./storage_object_acl_samples patch-object-acl \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
-  run_example ./storage_object_acl_samples patch-object-acl \
+  run_example ./storage_object_acl_samples patch-object-acl-no-read \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
   run_example ./storage_object_acl_samples delete-object-acl \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_object_acl_samples
 }
 
 ################################################

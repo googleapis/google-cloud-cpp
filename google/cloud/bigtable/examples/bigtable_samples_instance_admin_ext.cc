@@ -33,22 +33,15 @@ char const* ConsumeArg(int& argc, char* argv[]) {
   return result;
 }
 
+std::string command_usage;
+
 void PrintUsage(int argc, char* argv[], std::string const& msg) {
   std::string const cmd = argv[0];
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program
-            << " <command> <project_id> [arguments]\n\n"
-            << "Examples:\n";
-  for (auto example :
-       {"run my-project my-instance my-cluster us-central1-f",
-        "create-dev-instance my-project my-instance us-central1-f",
-        "delete-instance my-project my-instance",
-        "create-cluster my-project my-instance my-cluster us-central1-a",
-        "delete-cluster my-project my-instance my-cluster"}) {
-    std::cerr << "  " << program << " " << example << "\n";
-  }
-  std::cerr << std::flush;
+  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
+            << "Commands:\n"
+            << command_usage << std::endl;
 }
 
 // This full example demonstrate various instance operations
@@ -275,6 +268,18 @@ int main(int argc, char* argv[]) try {
       {"create-cluster", &CreateCluster},
       {"delete-cluster", &DeleteCluster},
   };
+
+  for (auto&& kv : commands) {
+    try {
+      std::string unused;
+      int fake_argc = 0;
+      kv.second(unused, fake_argc, argv);
+    } catch (Usage const& u) {
+      command_usage += "    ";
+      command_usage += u.msg;
+      command_usage += "\n";
+    }
+  }
 
   if (argc < 3) {
     PrintUsage(argc, argv, "Missing command and/or project-id");

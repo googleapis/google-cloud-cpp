@@ -35,22 +35,15 @@ char const* ConsumeArg(int& argc, char* argv[]) {
   return result;
 }
 
+std::string command_usage;
+
 void PrintUsage(int argc, char* argv[], std::string const& msg) {
   std::string const cmd = argv[0];
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program
-            << " <command> <project_id> [arguments]\n\n"
-            << "Examples:\n";
-  for (auto example :
-       {"run my-project my-instance my-cluster us-central1-f",
-        "create-dev-instance my-project my-instance us-central1-f",
-        "delete-instance my-project my-instance",
-        "create-cluster my-project my-instance my-cluster us-central1-a",
-        "delete-cluster my-project my-instance my-cluster"}) {
-    std::cerr << "  " << program << " " << example << "\n";
-  }
-  std::cerr << std::flush;
+  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
+            << "Commands:\n"
+            << command_usage << std::endl;
 }
 
 //! [create instance]
@@ -143,6 +136,9 @@ void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [list instances]
 void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"list-instances: <project-id>"};
+  }
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances) {
     std::cout << instance.name() << std::endl;
@@ -230,24 +226,20 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 //! [update cluster]
 void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
-  if (argc != 2) {
+  if (argc != 3) {
     throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
   }
-  // CreateCluster or GetCluster first and then modify it
+  // GetCluster first and then modify it.
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  auto cluster_config = google::cloud::bigtable::ClusterConfig(
-      "us-central1-f", 0, google::cloud::bigtable::ClusterConfig::HDD);
-  auto cluster =
-      instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)
-          .get();
+  auto cluster = instance_admin.GetCluster(instance_id, cluster_id);
 
-  // Modify the cluster
-  cluster.set_serve_nodes(2);
+  // Modify the cluster.
+  cluster.set_serve_nodes(4);
   auto modified_config =
       google::cloud::bigtable::ClusterConfig(std::move(cluster));
 
-  auto modified_cluster = instance_admin.UpdateCluster(cluster_config).get();
+  auto modified_cluster = instance_admin.UpdateCluster(modified_config).get();
 
   std::string cluster_detail;
   google::protobuf::TextFormat::PrintToString(modified_cluster,
@@ -387,7 +379,7 @@ void UpdateAppProfileDescription(
   if (argc != 4) {
     throw Usage{
         "update-app-profile-description: <project-id> <instance-id>"
-        " <profile-id> <cluster-id>"};
+        " <profile-id> <new-description>"};
   }
   google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
   google::cloud::bigtable::AppProfileId profile_id(ConsumeArg(argc, argv));
@@ -527,7 +519,7 @@ void SetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw Usage{
         "set-iam-policy: <project-id> <instance-id>"
         " <permission> <new-member>\n"
-        "    Example: set-iam-policy my-project my-instance"
+        "        Example: set-iam-policy my-project my-instance"
         " roles/bigtable.user user:my-user@example.com"};
   }
   std::string instance_id = ConsumeArg(argc, argv);
@@ -607,6 +599,22 @@ int main(int argc, char* argv[]) try {
       {"run", &RunInstanceOperations},
       {"create-dev-instance", &CreateDevInstance},
   };
+
+  {
+    google::cloud::bigtable::InstanceAdmin unused(
+        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
+            "unused-project", google::cloud::bigtable::ClientOptions()));
+    for (auto&& kv : commands) {
+      try {
+        int fake_argc = 0;
+        kv.second(unused, fake_argc, argv);
+      } catch (Usage const& u) {
+        command_usage += "    ";
+        command_usage += u.msg;
+        command_usage += "\n";
+      }
+    }
+  }
 
   if (argc < 3) {
     PrintUsage(argc, argv, "Missing command and/or project-id");
