@@ -96,7 +96,7 @@ ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
 
 std::string ObjectMetadata::JsonPayloadForUpdate() const {
   auto json = JsonForUpdate();
-  return json.dump();
+  return json.empty() ? "{}" : json.dump();
 }
 
 std::string ObjectMetadata::JsonPayloadForCopy() const {
@@ -106,7 +106,7 @@ std::string ObjectMetadata::JsonPayloadForCopy() const {
   // copy but are not included in an update.  The server has the checksums for
   // a copy though, so it does not seem necessary to send them. When we
   // implement #564 we should revisit this decision.
-  return json.dump();
+  return json.empty() ? "{}" : json.dump();
 }
 
 internal::nl::json ObjectMetadata::JsonForUpdate() const {

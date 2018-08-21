@@ -65,6 +65,8 @@ class RawClient {
   /// @name Object resource operations
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> CopyObject(
+      CopyObjectRequest const&) = 0;
   virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
   virtual std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(

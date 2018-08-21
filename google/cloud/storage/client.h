@@ -326,6 +326,57 @@ class Client {
   }
 
   /**
+   * Copies an existing object.
+   *
+   * Use `CopyObject` to copy between objects in the same location and storage
+   * class.  Copying objects across locations or storage classes can fail for
+   * large objects and retrying the operation will not succeed.
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
+   *   a full description of the advantages of `RewriteObject` over
+   *   `CopyObject`.
+   *
+   * @param source_bucket_name the name of the bucket that contains the object
+   *     to be copied.
+   * @param source_object_name the name of the object to copy.
+   * @param destination_bucket_name the name of the bucket that will contain the
+   *     new object.
+   * @param destination_object_name the name of the new object.
+   * @param metadata additional metadata attributes that you want to set in the
+   *     new object.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationPredefinedAcl`,
+   *     `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
+   *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *     `Projection`, `SourceGeneration`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc copy object
+   *
+   * @snippet storage_object_samples.cc copy encrypted object
+   */
+  template <typename... Options>
+  ObjectMetadata CopyObject(std::string source_bucket_name,
+                            std::string source_object_name,
+                            std::string destination_bucket_name,
+                            std::string destination_object_name,
+                            ObjectMetadata const& metadata,
+                            Options&&... options) {
+    internal::CopyObjectRequest request(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CopyObject(request).second;
+  }
+
+  /**
    * Fetches the object metadata.
    *
    * @param bucket_name the bucket containing the object.
@@ -479,8 +530,8 @@ class Client {
    * @param updated the updated value for the object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
@@ -513,8 +564,8 @@ class Client {
    * @param builder the set of updates to perform in the Object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
