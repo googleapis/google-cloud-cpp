@@ -915,7 +915,7 @@ class Client {
   }
 
   /**
-   * Update the value of an existing default object ACL.
+   * Updates the value of an existing default object ACL.
    *
    * The default object ACL sets the ACL for any object created in the bucket,
    * unless a different ACL is specified when the object is created.
