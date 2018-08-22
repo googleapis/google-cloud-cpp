@@ -91,4 +91,5 @@ storage_client_SRCS = [
     "object_metadata.cc",
     "object_stream.cc",
     "version.cc",
+    "well_known_headers.cc",
 ]

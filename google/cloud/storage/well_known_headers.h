@@ -16,8 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_HEADERS_H_
 
 #include "google/cloud/internal/optional.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/storage/version.h"
 #include <cstdint>
+#include <iostream>
+#include <limits>
+#include <random>
 #include <string>
 
 namespace google {
@@ -67,6 +71,82 @@ struct IfNoneMatchEtag : public WellKnownHeader<IfNoneMatchEtag, std::string> {
   static char const* header_name() { return "If-None-Match"; }
 };
 
+struct EncryptionKeyData {
+  std::string algorithm;
+  std::string key;
+  std::string sha256;
+};
+
+// Compute the encryption data given a (binary) AES256 key.
+EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key);
+
+struct EncryptionKey
+    : public WellKnownHeader<EncryptionKey, EncryptionKeyData> {
+  using WellKnownHeader<EncryptionKey, EncryptionKeyData>::WellKnownHeader;
+
+  /**
+   * Create an encryption key parameter from a binary key.
+   *
+   * @param key a binary key, must have exactly 8 bytes.
+   */
+  static EncryptionKey FromBinaryKey(std::string const& key);
+
+  static char const* prefix() { return "X-Goog-Encryption-"; }
+};
+
+std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs);
+
+struct SourceEncryptionKey
+    : public WellKnownHeader<SourceEncryptionKey, EncryptionKeyData> {
+  using WellKnownHeader<SourceEncryptionKey,
+                        EncryptionKeyData>::WellKnownHeader;
+
+  /**
+   * Create a source encryption key parameter from a binary key.
+   *
+   * @param key a binary key, must have exactly 8 bytes.
+   */
+  static SourceEncryptionKey FromBinaryKey(std::string const& key);
+
+  static char const* prefix() { return "X-Copy-Source-Goog-Encryption-"; }
+};
+
+std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
+
+/**
+ * Create an encryption key parameter from a pseudo-random number generator.
+ *
+ * @tparam Generator the pseudo-random number generator type, it must meet the
+ *   `UniformRandomBitGenerator` requirements.
+ * @param gen the pseudo-random number generator.
+ *
+ * @snippet storage_object_samples.cc generate encryption key
+ *
+ * @see https://en.cppreference.com/w/cpp/numeric/random for a general
+ *     overview of C++ pseudo-random number support.
+ *
+ * @see
+ * https://en.cppreference.com/w/cpp/numeric/random/UniformRandomBitGenerator
+ *     for a more detailed overview of the requirements for generators.
+ */
+template <typename Generator>
+static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
+  static_assert(
+      std::numeric_limits<unsigned char>::digits == 8,
+      "The Google Cloud Storage C++ library is only supported on platforms\n"
+      "with 8-bit chars.  Please file a bug on\n"
+      "    https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues\n"
+      "describing your platform details to request support for it.");
+  constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
+
+  constexpr auto minchar = std::numeric_limits<char>::min();
+  constexpr auto maxchar = std::numeric_limits<char>::max();
+  std::uniform_int_distribution<int> uni(minchar, maxchar);
+  std::string key(static_cast<std::size_t>(kKeySize), ' ');
+  std::generate_n(key.begin(), key.size(),
+                  [&uni, &gen] { return static_cast<char>(uni(gen)); });
+  return EncryptionDataFromBinaryKey(key);
+}
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -83,7 +83,7 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  */
 class InsertObjectMediaRequest
     : public GenericObjectRequest<InsertObjectMediaRequest, ContentEncoding,
-                                  ContentType, IfGenerationMatch,
+                                  ContentType, EncryptionKey, IfGenerationMatch,
                                   IfGenerationNotMatch, IfMetagenerationMatch,
                                   IfMetagenerationNotMatch, KmsKeyName,
                                   PredefinedAcl, Projection, UserProject> {
@@ -114,7 +114,7 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
  */
 class InsertObjectStreamingRequest
     : public GenericObjectRequest<InsertObjectStreamingRequest, ContentEncoding,
-                                  ContentType, IfGenerationMatch,
+                                  ContentType, EncryptionKey, IfGenerationMatch,
                                   IfGenerationNotMatch, IfMetagenerationMatch,
                                   IfMetagenerationNotMatch, KmsKeyName,
                                   PredefinedAcl, Projection, UserProject> {
@@ -129,9 +129,9 @@ std::ostream& operator<<(std::ostream& os,
  * Represents a request to the `Objects: get` API with `alt=media`.
  */
 class ReadObjectRangeRequest
-    : public GenericObjectRequest<ReadObjectRangeRequest, Generation,
-                                  IfGenerationMatch, IfGenerationNotMatch,
-                                  IfMetagenerationMatch,
+    : public GenericObjectRequest<ReadObjectRangeRequest, EncryptionKey,
+                                  Generation, IfGenerationMatch,
+                                  IfGenerationNotMatch, IfMetagenerationMatch,
                                   IfMetagenerationNotMatch, UserProject> {
  public:
   ReadObjectRangeRequest() : GenericObjectRequest(), begin_(0), end_(0) {}

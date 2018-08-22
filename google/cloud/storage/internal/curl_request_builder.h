@@ -99,6 +99,26 @@ class CurlRequestBuilder {
     return *this;
   }
 
+  /// Add one of the well-known encryption header groups to the request.
+  CurlRequestBuilder& AddOption(EncryptionKey const& p) {
+    if (p.has_value()) {
+      AddHeader(std::string(p.prefix()) + "Algorithm: " + p.value().algorithm);
+      AddHeader(std::string(p.prefix()) + "Key: " + p.value().key);
+      AddHeader(std::string(p.prefix()) + "Key-Sha256: " + p.value().sha256);
+    }
+    return *this;
+  }
+
+  /// Add one of the well-known encryption header groups to the request.
+  CurlRequestBuilder& AddOption(SourceEncryptionKey const& p) {
+    if (p.has_value()) {
+      AddHeader(std::string(p.prefix()) + "Algorithm: " + p.value().algorithm);
+      AddHeader(std::string(p.prefix()) + "Key: " + p.value().key);
+      AddHeader(std::string(p.prefix()) + "Key-Sha256: " + p.value().sha256);
+    }
+    return *this;
+  }
+
   /// Add a prefix to the user-agent string.
   CurlRequestBuilder& AddUserAgentPrefix(std::string const& prefix);
 

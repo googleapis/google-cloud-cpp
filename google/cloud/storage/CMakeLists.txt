@@ -183,6 +183,7 @@ add_library(storage_client
             version.h
             version.cc
             well_known_headers.h
+            well_known_headers.cc
             well_known_parameters.h)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
@@ -262,7 +263,8 @@ set(storage_client_unit_tests
     retry_policy_test.cc
     storage_class_test.cc
     storage_client_options_test.cc
-    link_test.cc)
+    link_test.cc
+    well_known_headers_test.cc)
 
 foreach (fname ${storage_client_unit_tests})
     string(REPLACE "/"

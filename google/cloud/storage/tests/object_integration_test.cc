@@ -233,6 +233,44 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create a pseudo-random number generator, initialized using the default
+  // entropy source. WARNING: this PRNG has not gone through a security audit,
+  // it is possible that the random numbers are sufficiently predictable to make
+  // them unusable for security purposes.  Application developers should consult
+  // with their security team before relying on this (or any other) source for
+  // encryption keys.
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+
+  // Applications should save the key in a secure location after creating them,
+  // Google Cloud Storage does not save customer-supplied keys, and if lost the
+  // encrypted data cannot be decrypted.
+  EncryptionKeyData key = CreateKeyFromGenerator(generator);
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, expected,
+                          IfGenerationMatch(0), EncryptionKey(key));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  ASSERT_TRUE(meta.has_customer_encryption());
+  EXPECT_EQ("AES256", meta.customer_encryption().encryption_algorithm);
+  EXPECT_EQ(key.sha256, meta.customer_encryption().key_sha256);
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name, EncryptionKey(key));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
