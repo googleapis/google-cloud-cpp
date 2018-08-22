@@ -110,6 +110,8 @@ run_all_default_object_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers READER
   run_example ./storage_default_object_acl_samples get-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
+  run_example ./storage_default_object_acl_samples update-default-object-acl \
+      "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_default_object_acl_samples delete-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
 }

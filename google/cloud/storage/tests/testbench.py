@@ -571,7 +571,7 @@ class GcsBucket(object):
         :param role:str the new role for the entity.
         :return:dict with the contents of the ObjectAccessControl.
         """
-        return self.insert_acl(entity, role)
+        return self.insert_default_object_acl(entity, role)
 
 
 # Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>

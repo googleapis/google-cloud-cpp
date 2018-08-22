@@ -914,6 +914,34 @@ class Client {
     return raw_client_->GetDefaultObjectAcl(request).second;
   }
 
+  /**
+   * Updates the value of an existing default object ACL.
+   *
+   * The default object ACL sets the ACL for any object created in the bucket,
+   * unless a different ACL is specified when the object is created.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param acl the new ACL value. Note that only the writable values of the ACL
+   *   will be modified by the server.
+   * @param options a list of optional query parameters and/or request
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_default_object_acl_samples.cc update default object acl
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   */
+  template <typename... Options>
+  ObjectAccessControl UpdateDefaultObjectAcl(std::string const& bucket_name,
+                                             ObjectAccessControl const& acl,
+                                             Options&&... options) {
+    internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
+                                                    acl.role());
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->UpdateDefaultObjectAcl(request).second;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

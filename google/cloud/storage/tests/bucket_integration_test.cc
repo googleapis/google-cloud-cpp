@@ -430,6 +430,13 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   auto get_result = client.GetDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_EQ(get_result, result);
 
+  ObjectAccessControl new_acl = get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client.UpdateDefaultObjectAcl(bucket_name, new_acl);
+  EXPECT_EQ(updated_result.role(), "READER");
+  get_result = client.GetDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_EQ(get_result, updated_result);
+
   client.DeleteDefaultObjectAcl(bucket_name, entity_name);
   current_acl = client.ListDefaultObjectAcl(bucket_name);
   EXPECT_EQ(0, name_counter(result.entity(), current_acl));
