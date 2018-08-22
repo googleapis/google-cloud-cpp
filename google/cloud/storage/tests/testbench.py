@@ -361,9 +361,9 @@ class GcsBucket(object):
             'storageClass': 'STANDARD',
             'etag': 'XYZ=',
             'labels': {
-                 'foo': 'bar',
-                 'baz': 'qux'
-             }
+                'foo': 'bar',
+                'baz': 'qux'
+            }
         }
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
@@ -437,11 +437,15 @@ class GcsBucket(object):
 
         if metageneration_not_match is not None \
                 and int(metageneration_not_match) == metageneration:
-            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
+            raise ErrorResponse(
+                'Precondition Failed (metageneration = %s)' % metageneration,
+                status_code=412)
 
         if metageneration_match is not None \
                 and int(metageneration_match) != metageneration:
-            raise ErrorResponse('Precondition Failed (metageneration = %s)' % metageneration, status_code=412)
+            raise ErrorResponse(
+                'Precondition Failed (metageneration = %s)' % metageneration,
+                status_code=412)
 
     def insert_acl(self, entity, role):
         """
@@ -629,11 +633,12 @@ def buckets_insert():
     payload = json.loads(flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
-        raise ErrorResponse('Missing bucket name in `Buckets: insert`',
-                            status_code=412)
+        raise ErrorResponse(
+            'Missing bucket name in `Buckets: insert`', status_code=412)
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is not None:
-        raise ErrorResponse('Bucket %s already exists' % bucket_name, status_code=503)
+        raise ErrorResponse(
+            'Bucket %s already exists' % bucket_name, status_code=503)
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
     GCS_BUCKETS[bucket_name] = bucket
@@ -648,11 +653,12 @@ def buckets_update(bucket_name):
     payload = json.loads(flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
-        raise ErrorResponse('Missing bucket name in `Buckets: update`',
-                            status_code=412)
+        raise ErrorResponse(
+            'Missing bucket name in `Buckets: update`', status_code=412)
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is None:
-        raise ErrorResponse('Bucket %s does not exist' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s does not exist' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
     return json.dumps(bucket.metadata)
@@ -672,7 +678,8 @@ def buckets_get(bucket_name):
     bucket = GCS_BUCKETS.setdefault(bucket_name, bucket)
     # end of TODO(#821)
     if bucket is None:
-        raise ErrorResponse('Bucket %s not found' % bucket_name, status_code=404)
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     return json.dumps(bucket.metadata)
 
@@ -681,8 +688,8 @@ def buckets_get(bucket_name):
 def buckets_delete(bucket_name):
     """Implement the 'Buckets: delete' API.
 
-      Delete a Bucket.
-      """
+    Delete a Bucket.
+    """
     bucket = GCS_BUCKETS.get(bucket_name, None)
     if bucket is None:
         raise ErrorResponse(
@@ -712,8 +719,8 @@ def buckets_patch(bucket_name):
 def bucket_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API.
 
-     List Bucket Access Controls.
-     """
+    List Bucket Access Controls.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     if gcs_bucket is None:
         raise ErrorResponse(
@@ -729,8 +736,8 @@ def bucket_acl_list(bucket_name):
 def bucket_acl_create(bucket_name):
     """Implement the 'BucketAccessControls: create' API.
 
-     Create a Bucket Access Control.
-     """
+    Create a Bucket Access Control.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
     return json.dumps(
@@ -742,8 +749,8 @@ def bucket_acl_create(bucket_name):
 def bucket_acl_delete(bucket_name, entity):
     """Implement the 'BucketAccessControls: delete' API.
 
-      Delete a Bucket Access Control.
-      """
+    Delete a Bucket Access Control.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.delete_acl(entity)
     return json.dumps({})
@@ -753,8 +760,8 @@ def bucket_acl_delete(bucket_name, entity):
 def bucket_acl_get(bucket_name, entity):
     """Implement the 'BucketAccessControls: get' API.
 
-      Get the access control configuration for a particular entity.
-      """
+    Get the access control configuration for a particular entity.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     acl = gcs_bucket.get_acl(entity)
     return json.dumps(acl)
@@ -764,8 +771,21 @@ def bucket_acl_get(bucket_name, entity):
 def bucket_acl_update(bucket_name, entity):
     """Implement the 'BucketAccessControls: update' API.
 
-      Update the access control configuration for a particular entity.
-      """
+    Update the access control configuration for a particular entity.
+    """
+    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
+    payload = json.loads(flask.request.data)
+    acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
+    return json.dumps(acl)
+
+
+@gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
+def bucket_acl_patch(bucket_name, entity):
+    """Implement the 'BucketAccessControls: patch' API.
+
+    Patch the access control configuration for a particular entity.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
@@ -777,8 +797,8 @@ def bucket_acl_update(bucket_name, entity):
 def bucket_default_object_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API.
 
-     List Bucket Access Controls.
-     """
+    List Bucket Access Controls.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     if gcs_bucket is None:
         raise ErrorResponse(
@@ -794,8 +814,8 @@ def bucket_default_object_acl_list(bucket_name):
 def bucket_default_object_acl_create(bucket_name):
     """Implement the 'BucketAccessControls: create' API.
 
-     Create a Bucket Access Control.
-     """
+    Create a Bucket Access Control.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
     return json.dumps(
@@ -807,8 +827,8 @@ def bucket_default_object_acl_create(bucket_name):
 def bucket_default_object_acl_delete(bucket_name, entity):
     """Implement the 'BucketAccessControls: delete' API.
 
-      Delete a Bucket Access Control.
-      """
+    Delete a Bucket Access Control.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.delete_default_object_acl(entity)
     return json.dumps({})
@@ -818,8 +838,8 @@ def bucket_default_object_acl_delete(bucket_name, entity):
 def bucket_default_object_acl_get(bucket_name, entity):
     """Implement the 'BucketAccessControls: get' API.
 
-      Get the access control configuration for a particular entity.
-      """
+    Get the access control configuration for a particular entity.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     acl = gcs_bucket.get_default_object_acl(entity)
     return json.dumps(acl)
@@ -829,8 +849,8 @@ def bucket_default_object_acl_get(bucket_name, entity):
 def bucket_default_object_acl_update(bucket_name, entity):
     """Implement the 'DefaultObjectAccessControls: update' API.
 
-      Update the access control configuration for a particular entity.
-      """
+    Update the access control configuration for a particular entity.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
@@ -897,8 +917,8 @@ def objects_delete(bucket_name, object_name):
 def objects_acl_list(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: list' API.
 
-     List Object Access Controls.
-     """
+    List Object Access Controls.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -914,8 +934,8 @@ def objects_acl_list(bucket_name, object_name):
 def objects_acl_create(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: create' API.
 
-     Create an Object Access Control.
-     """
+    Create an Object Access Control.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -931,8 +951,8 @@ def objects_acl_create(bucket_name, object_name):
 def objects_acl_delete(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: delete' API.
 
-      Delete an Object Access Control.
-      """
+    Delete an Object Access Control.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -946,8 +966,8 @@ def objects_acl_delete(bucket_name, object_name, entity):
 def objects_acl_get(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: get' API.
 
-      Get the access control configuration for a particular entity.
-      """
+    Get the access control configuration for a particular entity.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -961,8 +981,8 @@ def objects_acl_get(bucket_name, object_name, entity):
 def objects_acl_update(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: update' API.
 
-      Update the access control configuration for a particular entity.
-      """
+    Update the access control configuration for a particular entity.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -977,8 +997,8 @@ def objects_acl_update(bucket_name, object_name, entity):
 def objects_acl_patch(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: patch' API.
 
-      Patch the access control configuration for a particular entity.
-      """
+    Patch the access control configuration for a particular entity.
+    """
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
@@ -1025,7 +1045,6 @@ application = wsgi.DispatcherMiddleware(root, {
     GCS_HANDLER_PATH: gcs,
     UPLOAD_HANDLER_PATH: upload,
 })
-
 
 
 def main():
