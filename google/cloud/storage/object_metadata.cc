@@ -20,6 +20,22 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+/**
+ * Set a string field in @p json when @p value is not empty.
+ *
+ * This simplifies the implementation of ToJsonString() because we repeat this
+ * check for many attributes.
+ */
+void SetIfNotEmpty(internal::nl::json& json, char const* key,
+                   std::string const& value) {
+  if (value.empty()) {
+    return;
+  }
+  json[key] = value;
+}
+}  // namespace
+
 ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   ObjectMetadata result{};
   static_cast<CommonMetadata<ObjectMetadata>&>(result) =
@@ -65,6 +81,35 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
 ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
   auto json = internal::nl::json::parse(payload);
   return ParseFromJson(json);
+}
+
+std::string ObjectMetadata::ToJsonString() const {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (not acl().empty()) {
+    for (ObjectAccessControl const& a : acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition", content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", content_type());
+
+  if (not metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json.dump();
 }
 
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {

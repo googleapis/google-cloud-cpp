@@ -26,7 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Request the metadata for a bucket.
+ * Represents a request to the `Objects: list` API.
  */
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Projection,
@@ -183,6 +183,32 @@ class DeleteObjectRequest
 };
 
 std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r);
+
+/**
+ * Represents a request to the `Objects: update` API.
+ */
+class UpdateObjectRequest
+    : public GenericObjectRequest<
+          UpdateObjectRequest, Generation, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          PredefinedAcl, Projection, UserProject> {
+ public:
+  UpdateObjectRequest() = default;
+  explicit UpdateObjectRequest(std::string bucket_name, std::string object_name,
+                               ObjectMetadata metadata)
+      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
+        metadata_(std::move(metadata)) {}
+
+  /// Returns the request as the JSON API payload.
+  std::string json_payload() const { return metadata_.ToJsonString(); }
+
+  ObjectMetadata const& metadata() const { return metadata_; }
+
+ private:
+  ObjectMetadata metadata_;
+};
+
+std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

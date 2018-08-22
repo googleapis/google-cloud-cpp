@@ -249,6 +249,20 @@ TEST(ObjectRequestsTest, Delete) {
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
 }
 
+TEST(ObjectRequestsTest, Update) {
+  ObjectMetadata meta = ObjectMetadata().set_content_type("application/json");
+  UpdateObjectRequest request("my-bucket", "my-object", std::move(meta));
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
+                               UserProject("my-project"));
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
+  EXPECT_THAT(os.str(), HasSubstr("my-object"));
+  EXPECT_THAT(os.str(), HasSubstr("content_type=application/json"));
+  EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
