@@ -83,6 +83,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4075216f99c1d4e59126cc620cc861ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4075216f99c1d4e59126cc620cc861ba">ObjectMetadata</a> ()</td></tr>
 <tr class="separator:a4075216f99c1d4e59126cc620cc861ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12756d91fdd49a56b729bd3047684c7d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a12756d91fdd49a56b729bd3047684c7d">ToJsonString</a> () const</td></tr>
+<tr class="separator:a12756d91fdd49a56b729bd3047684c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45d2ede154740321b656889b2d741a79"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a45d2ede154740321b656889b2d741a79">acl</a> () const</td></tr>
 <tr class="separator:a45d2ede154740321b656889b2d741a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd732268b8ef32c067c551312a650079"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#abd732268b8ef32c067c551312a650079">mutable_acl</a> ()</td></tr>
@@ -150,6 +152,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5d90005732160ea2fe0fd0477be1e554"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a5d90005732160ea2fe0fd0477be1e554">upsert_metadata</a> (std::string key, std::string value)</td></tr>
 <tr class="memdesc:a5d90005732160ea2fe0fd0477be1e554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert or update the metadata entry.  <a href="#a5d90005732160ea2fe0fd0477be1e554">More...</a><br /></td></tr>
 <tr class="separator:a5d90005732160ea2fe0fd0477be1e554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada2a3c949a324df084d85556fbf2b98"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::string &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aada2a3c949a324df084d85556fbf2b98">metadata</a> () const</td></tr>
+<tr class="separator:aada2a3c949a324df084d85556fbf2b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e5cdc470ddd731a2039f97fc3706f37"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a6e5cdc470ddd731a2039f97fc3706f37">mutable_metadata</a> ()</td></tr>
+<tr class="separator:a6e5cdc470ddd731a2039f97fc3706f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -622,7 +628,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a3d00d25f1eaa7147592b38140c760718"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d00d25f1eaa7147592b38140c760718">&#9670;&nbsp;</a></span>metadata()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d00d25f1eaa7147592b38140c760718">&#9670;&nbsp;</a></span>metadata() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -635,6 +641,31 @@ Friends</h2></td></tr>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aada2a3c949a324df084d85556fbf2b98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aada2a3c949a324df084d85556fbf2b98">&#9670;&nbsp;</a></span>metadata() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string, std::string&gt; const&amp; google::cloud::storage::v0::ObjectMetadata::metadata </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -683,6 +714,31 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt;&amp; google::cloud::storage::v0::ObjectMetadata::mutable_acl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e5cdc470ddd731a2039f97fc3706f37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e5cdc470ddd731a2039f97fc3706f37">&#9670;&nbsp;</a></span>mutable_metadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string, std::string&gt;&amp; google::cloud::storage::v0::ObjectMetadata::mutable_metadata </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1020,6 +1076,23 @@ Friends</h2></td></tr>
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12756d91fdd49a56b729bd3047684c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12756d91fdd49a56b729bd3047684c7d">&#9670;&nbsp;</a></span>ToJsonString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage::v0::ObjectMetadata::ToJsonString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
