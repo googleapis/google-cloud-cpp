@@ -156,6 +156,8 @@ class TableAdmin {
 
   //@}
 
+  // TODO(#1017) - Need to keep function, in common place for InstanceAdmin and
+  // TableAdmin
   template <typename ResultType>
   ResultType PollLongRunningOperation(google::longrunning::Operation& operation,
                                       char const* error_message,

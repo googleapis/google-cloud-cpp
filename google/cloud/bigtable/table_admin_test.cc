@@ -1107,4 +1107,53 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
   // After all the setup, make the actual call we want to test.
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
+
+/// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
+/// failure.
+TEST_F(TableAdminTest, CreateTableFromSnapshot_PollReturnsFailure) {
+  using ::testing::Invoke;
+  using ::testing::_;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    btadmin::CreateTableFromSnapshotRequest const& request,
+                    google::longrunning::Operation* response) {
+            return grpc::Status::OK;
+          }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
+            error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
+            error->set_message("something is broken");
+            operation->set_allocated_error(error.release());
+            return grpc::Status::OK;
+          }));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
