@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_BACKOFF_POLICY_H_
 
+#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include <grpcpp/grpcpp.h>
@@ -69,14 +70,15 @@ class RPCBackoffPolicy {
 };
 
 /// Return an instance of the default RPCBackoffPolicy.
-std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy();
+std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
+    internal::RPCPolicyDefaults defaults);
 
 /**
  * Implement a simple exponential backoff policy.
  */
 class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
-  ExponentialBackoffPolicy();
+  ExponentialBackoffPolicy(internal::RPCPolicyDefaults defaults);
   template <typename duration_t1, typename duration_t2>
   ExponentialBackoffPolicy(duration_t1 initial_delay, duration_t2 maximum_delay)
       : impl_(initial_delay / 2, maximum_delay, 2.0) {}

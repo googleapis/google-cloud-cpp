@@ -14,33 +14,20 @@
 
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 
-namespace {
-// Define the defaults using a pre-processor macro, this allows the application
-// developers to change the defaults for their application by compiling with
-// different values.
-#ifndef BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY std::chrono::milliseconds(10)
-#endif  // BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY std::chrono::minutes(5)
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY
-
-auto const DEFAULT_INITIAL_DELAY = BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY;
-auto const DEFAULT_MAXIMUM_DELAY = BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY;
-}  // anonymous namespace
-
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy() {
+std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
+    internal::RPCPolicyDefaults defaults) {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(
-      DEFAULT_INITIAL_DELAY, DEFAULT_MAXIMUM_DELAY));
+      defaults.initial_delay, defaults.maximum_delay));
 }
 
-ExponentialBackoffPolicy::ExponentialBackoffPolicy()
-    : ExponentialBackoffPolicy(DEFAULT_INITIAL_DELAY, DEFAULT_MAXIMUM_DELAY) {}
+ExponentialBackoffPolicy::ExponentialBackoffPolicy(
+    internal::RPCPolicyDefaults defaults)
+    : ExponentialBackoffPolicy(defaults.initial_delay, defaults.maximum_delay) {
+}
 
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(*this));

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
@@ -45,9 +46,12 @@ class InstanceAdmin {
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
         project_name_("projects/" + project_id()),
-        rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
-        polling_policy_(DefaultPollingPolicy()),
+        rpc_retry_policy_(
+            DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
+        rpc_backoff_policy_(
+            DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
+        polling_policy_(
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
         metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /**

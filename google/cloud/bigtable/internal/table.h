@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -79,8 +80,10 @@ class Table {
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(bigtable::TableId(TableName(client_, table_id))),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
+        rpc_retry_policy_(
+            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+        rpc_backoff_policy_(
+            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}

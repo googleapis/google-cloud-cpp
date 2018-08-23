@@ -18,11 +18,13 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_config.h"
+
 #include <future>
 #include <memory>
 
@@ -50,10 +52,13 @@ class TableAdmin {
       : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
+        rpc_retry_policy_(
+            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+        rpc_backoff_policy_(
+            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(DefaultPollingPolicy()) {}
+        polling_policy_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.

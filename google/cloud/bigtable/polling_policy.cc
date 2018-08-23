@@ -18,8 +18,9 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
-  return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy<>());
+std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
+    internal::RPCPolicyDefaults defaults) {
+  return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy<>(defaults));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

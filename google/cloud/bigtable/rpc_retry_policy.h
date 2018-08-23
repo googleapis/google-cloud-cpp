@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_RETRY_POLICY_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_RETRY_POLICY_H_
 
+#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/retry_policy.h"
 #include <grpcpp/grpcpp.h>
@@ -92,7 +93,8 @@ class RPCRetryPolicy {
 };
 
 /// Return an instance of the default RPCRetryPolicy.
-std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy();
+std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
+    internal::RPCPolicyDefaults defaults);
 
 /**
  * Implement a simple "count errors and then stop" retry policy.
@@ -118,7 +120,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  */
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
-  LimitedTimeRetryPolicy();
+  LimitedTimeRetryPolicy(internal::RPCPolicyDefaults defaults);
   template <typename duration_t>
   explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
       : impl_(maximum_duration) {}
