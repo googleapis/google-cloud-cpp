@@ -13,14 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
+#include <regex>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+using ::testing::HasSubstr;
 namespace {
 /// Store the project and instance captured from the command-line arguments.
 class ObjectTestEnvironment : public ::testing::Environment {
@@ -71,7 +74,6 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
 };
-}  // anonymous namespace
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectIntegrationTest, BasicCRUD) {
@@ -322,6 +324,65 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   client.DeleteObject(bucket_name, object_name);
 }
+
+class CaptureSendHeaderBackend : public LogBackend {
+ public:
+  std::vector<std::string> log_lines;
+
+  void Process(LogRecord const& lr) override {
+    // Break the records in lines, because we will analyze the output per line.
+    std::istringstream is(lr.message);
+    while (not is.eof()) {
+      std::string line;
+      std::getline(is, line);
+      log_lines.emplace_back(std::move(line));
+    }
+  }
+
+  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
+};
+
+/**
+ * @test Verify that `QuotaUser` inserts the correct query parameter.
+ *
+ * Testing for `QuotaUser` is less straightforward that most other parameters.
+ * This parameter typically has no effect, so we simply verify that the
+ * parameter appears in the request, and that the parameter is not rejected by
+ * the server.  To verify that the parameter appears in the request we rely
+ * on the logging facilities in the library, which is ugly to do.
+ */
+TEST_F(ObjectIntegrationTest, InsertWithQuotaUser) {
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), QuotaUser("test-quota-user"));
+  LogSink::Instance().RemoveBackend(id);
+
+  // Create the regular expression we want to match.
+  std::regex re = [&bucket_name] {
+    std::string regex = ".* POST .*";
+    regex += "/b/" + bucket_name + "/o";
+    regex += ".*quotaUser=test-quota-user.*";
+    return std::regex(regex, std::regex_constants::egrep);
+  }();
+
+  long count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [&re](std::string const& line) { return std::regex_match(line, re); });
+  EXPECT_LT(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+}  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -131,6 +131,11 @@ struct Projection : public WellKnownParameter<Projection, std::string> {
   static char const* well_known_parameter_name() { return "projection"; }
 };
 
+struct QuotaUser : public WellKnownParameter<QuotaUser, std::string> {
+  using WellKnownParameter<QuotaUser, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "quotaUser"; }
+};
+
 struct UploadType : public WellKnownParameter<UploadType, std::string> {
   using WellKnownParameter<UploadType, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "uploadType"; }
