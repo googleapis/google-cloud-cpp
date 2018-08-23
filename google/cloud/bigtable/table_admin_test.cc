@@ -1111,8 +1111,8 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
 /// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
 /// failure.
 TEST_F(TableAdminTest, CreateTableFromSnapshot_PollReturnsFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
