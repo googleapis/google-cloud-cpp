@@ -862,8 +862,8 @@ def bucket_default_object_acl_update(bucket_name, entity):
 def bucket_default_object_acl_patch(bucket_name, entity):
     """Implement the 'DefaultObjectAccessControls: patch' API.
 
-      Patch the default access control configuration for a particular entity.
-      """
+    Patch the default access control configuration for a particular entity.
+    """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)

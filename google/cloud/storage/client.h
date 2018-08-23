@@ -540,7 +540,7 @@ class Client {
   /**
    * Patch the value of an existing bucket ACL.
    *
-   * Compute the delta between a previous value for an BucketAccessControl and
+   * Computes the delta between a previous value for an BucketAccessControl and
    * the new value for an BucketAccessControl and apply that delta.
    *
    * @par Notes
