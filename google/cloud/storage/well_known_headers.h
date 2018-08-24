@@ -77,7 +77,12 @@ struct EncryptionKeyData {
   std::string sha256;
 };
 
-// Compute the encryption data given a (binary) AES256 key.
+/**
+ * Format a (potentially binary) encryption key in the format required by the
+ * Google Cloud Storage API.
+ *
+ * @param key a binary key, must have exactly 32 bytes.
+ */
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key);
 
 struct EncryptionKey
@@ -87,7 +92,7 @@ struct EncryptionKey
   /**
    * Create an encryption key parameter from a binary key.
    *
-   * @param key a binary key, must have exactly 8 bytes.
+   * @param key a binary key, must have exactly 32 bytes.
    */
   static EncryptionKey FromBinaryKey(std::string const& key);
 
@@ -104,7 +109,7 @@ struct SourceEncryptionKey
   /**
    * Create a source encryption key parameter from a binary key.
    *
-   * @param key a binary key, must have exactly 8 bytes.
+   * @param key a binary key, must have exactly 32 bytes.
    */
   static SourceEncryptionKey FromBinaryKey(std::string const& key);
 
