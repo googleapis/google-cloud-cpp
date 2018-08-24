@@ -232,6 +232,10 @@ class GcsObjectVersion(object):
         try:
             keybase64 = request.headers.get('x-goog-encryption-key')
             key = base64.standard_b64decode(keybase64)
+            if key is None or len(key) != 256 / 8:
+                print("\n\n%s\nLEN=%d\n\n" % (keybase64, len(key)))
+                raise_csek_error()
+
             algo = request.headers.get('x-goog-encryption-algorithm')
             if algo is None or algo != 'AES256':
                 raise ErrorResponse(
@@ -454,6 +458,8 @@ class GcsObject(object):
                 raise ErrorResponse('Precondition Failed', status_code=412)
         else:
             current = self.revisions.get(self.generation)
+            if current is None:
+                raise ErrorResponse('Object not found', status_code=404)
             metageneration = current.metadata.get('metageneration')
 
             if metageneration_not_match is not None \
