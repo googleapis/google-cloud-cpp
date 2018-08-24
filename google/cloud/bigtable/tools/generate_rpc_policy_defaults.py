@@ -61,6 +61,7 @@ def print_preprocessor():
     print "#ifndef " + FILENAME_HEADER.lstrip()
     print "#define " + FILENAME_HEADER.lstrip()
     print ""
+    print '#include "google/cloud/bigtable/version.h"'
     print "#include <chrono>"
 
 def print_namespaces():

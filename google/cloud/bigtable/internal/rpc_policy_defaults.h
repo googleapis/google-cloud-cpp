@@ -18,6 +18,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RPC_POLICY_DEFAULTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RPC_POLICY_DEFAULTS_H_
 
+#include "google/cloud/bigtable/version.h"
 #include <chrono>
 
 namespace google {
