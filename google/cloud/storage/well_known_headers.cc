@@ -48,9 +48,9 @@ EncryptionKey EncryptionKey::FromBinaryKey(std::string const& key) {
 std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs) {
   char const* prefix = EncryptionKey::prefix();
   if (rhs.has_value()) {
-    return os << prefix << "Algorithm: " << rhs.value().algorithm << "\n"
-              << prefix << "Key: " << rhs.value().key << "\n"
-              << prefix << "Key-Sha256: " << rhs.value().sha256;
+    return os << prefix << "algorithm: " << rhs.value().algorithm << "\n"
+              << prefix << "key: " << rhs.value().key << "\n"
+              << prefix << "key-sha256: " << rhs.value().sha256;
   }
   return os << prefix << "*: <not set>";
 }
@@ -62,9 +62,9 @@ SourceEncryptionKey SourceEncryptionKey::FromBinaryKey(std::string const& key) {
 std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs) {
   char const* prefix = SourceEncryptionKey::prefix();
   if (rhs.has_value()) {
-    return os << prefix << "Algorithm: " << rhs.value().algorithm << "\n"
-              << prefix << "Key: " << rhs.value().key << "\n"
-              << prefix << "Key-Sha256: " << rhs.value().sha256;
+    return os << prefix << "algorithm: " << rhs.value().algorithm << "\n"
+              << prefix << "key: " << rhs.value().key << "\n"
+              << prefix << "key-sha256: " << rhs.value().sha256;
   }
   return os << prefix << "*: <not set>";
 }

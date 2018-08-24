@@ -91,7 +91,7 @@ struct EncryptionKey
    */
   static EncryptionKey FromBinaryKey(std::string const& key);
 
-  static char const* prefix() { return "X-Goog-Encryption-"; }
+  static char const* prefix() { return "x-goog-encryption-"; }
 };
 
 std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs);
@@ -108,7 +108,7 @@ struct SourceEncryptionKey
    */
   static SourceEncryptionKey FromBinaryKey(std::string const& key);
 
-  static char const* prefix() { return "X-Copy-Source-Goog-Encryption-"; }
+  static char const* prefix() { return "x-goog-copy-source-encryption-"; }
 };
 
 std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);

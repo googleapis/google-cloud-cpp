@@ -29,10 +29,10 @@ TEST(WellKnownHeader, EncryptionKey) {
   std::ostringstream os;
   os << header;
   auto actual = os.str();
-  std::string prefix = "X-Goog-Encryption";
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Algorithm: test-algo"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Key: test-fake-key"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Key-Sha256: test-sha"));
+  std::string prefix = "x-goog-encryption";
+  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key: test-fake-key"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key-sha256: test-sha"));
 }
 
 /// @test Verify that EncryptionKey::FromBinaryKey works as expected.
@@ -71,10 +71,10 @@ TEST(WellKnownHeader, SourceEncryptionKey) {
   std::ostringstream os;
   os << header;
   auto actual = os.str();
-  std::string prefix = "X-Copy-Source-Goog-Encryption";
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Algorithm: test-algo"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Key: test-fake-key"));
-  EXPECT_THAT(actual, HasSubstr(prefix + "-Key-Sha256: test-sha"));
+  std::string prefix = "x-goog-copy-source-encryption";
+  EXPECT_THAT(actual, HasSubstr(prefix + "-algorithm: test-algo"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key: test-fake-key"));
+  EXPECT_THAT(actual, HasSubstr(prefix + "-key-sha256: test-sha"));
 }
 
 /// @test Verify that EncryptionKey::FromBinaryKey works as expected.

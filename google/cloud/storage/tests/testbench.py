@@ -227,18 +227,18 @@ class GcsObjectVersion(object):
         :param request:flask.Request the http request.
         :return:NoneType
         """
-        if request.headers.get('X-Goog-Encryption-Key') is None:
+        if request.headers.get('x-goog-encryption-key') is None:
             return
         try:
-            keybase64 = request.headers.get('X-Goog-Encryption-Key')
+            keybase64 = request.headers.get('x-goog-encryption-key')
             key = base64.standard_b64decode(keybase64)
-            algo = request.headers.get('X-Goog-Encryption-Algorithm')
+            algo = request.headers.get('x-goog-encryption-algorithm')
             if algo is None or algo != 'AES256':
                 raise ErrorResponse(
                     'Invalid or missing algorithm %s for CSEK' % algo,
                     status_code=400)
 
-            actual = request.headers.get('X-Goog-Encryption-Key-Sha256')
+            actual = request.headers.get('x-goog-encryption-key-sha256')
             h = hashlib.sha256()
             h.update(key)
             expected = base64.standard_b64encode(h.digest())
