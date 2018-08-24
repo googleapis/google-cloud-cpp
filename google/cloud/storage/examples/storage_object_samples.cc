@@ -209,13 +209,13 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
   //! [generate encryption key] [START generate_encryption_key_base64]
   // Create a pseudo-random number generator (PRNG), this is included for
   // demonstration purposes only. You should consult your security team about
-  // best practices to initialize PRNG with enough entropy to satisfy the
-  // security policies within your organization. In particular, you should
-  // audit if the C++ library and operating system provide enough entropy for
-  // your purposes.
+  // best practices to initialize PRNG. In particular, you should verify that
+  // the C++ library and operating system provide enough entropy to meet the
+  // security policies in your organization.
 
   // Use the Mersenne-Twister Engine in this example:
   //   https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
+  // Any C++ PRNG can be used below, the choice is arbitrary.
   using GeneratorType = std::mt19937_64;
 
   // Create the default random device to fetch entropy.
@@ -311,7 +311,7 @@ int main(int argc, char* argv[]) try {
   };
   for (auto&& kv : commands) {
     try {
-      int fake_argc = 1;
+      int fake_argc = 0;
       kv.second(client, fake_argc, argv);
     } catch (Usage const& u) {
       command_usage += "    ";
