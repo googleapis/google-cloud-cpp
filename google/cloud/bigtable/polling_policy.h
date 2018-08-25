@@ -70,7 +70,7 @@ template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
 class GenericPollingPolicy : public PollingPolicy {
  public:
-  GenericPollingPolicy(internal::RPCPolicyDefaults defaults)
+  GenericPollingPolicy(internal::RPCPolicyParameters defaults)
       : rpc_retry_policy_(Retry(defaults)),
         rpc_backoff_policy_(Backoff(defaults)) {}
   GenericPollingPolicy(Retry retry, Backoff backoff)
@@ -101,7 +101,7 @@ class GenericPollingPolicy : public PollingPolicy {
 };
 
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
-    internal::RPCPolicyDefaults defaults);
+    internal::RPCPolicyParameters defaults);
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

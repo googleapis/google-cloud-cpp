@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
-#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"

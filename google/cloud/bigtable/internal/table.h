@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"

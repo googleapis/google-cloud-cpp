@@ -19,13 +19,13 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
-    internal::RPCPolicyDefaults defaults) {
+    internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(
       defaults.initial_delay, defaults.maximum_delay));
 }
 
 ExponentialBackoffPolicy::ExponentialBackoffPolicy(
-    internal::RPCPolicyDefaults defaults)
+    internal::RPCPolicyParameters defaults)
     : ExponentialBackoffPolicy(defaults.initial_delay, defaults.maximum_delay) {
 }
 

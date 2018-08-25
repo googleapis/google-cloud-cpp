@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/internal/rpc_policy_defaults.h"
 #include <sstream>
 
 namespace google {
@@ -21,7 +20,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
-    internal::RPCPolicyDefaults defaults) {
+    internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<RPCRetryPolicy>(
       new LimitedTimeRetryPolicy(defaults.maximum_retry_period));
 }
@@ -39,7 +38,7 @@ bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy(
-    internal::RPCPolicyDefaults defaults)
+    internal::RPCPolicyParameters defaults)
     : impl_(defaults.maximum_retry_period) {}
 
 std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {

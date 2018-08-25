@@ -12,18 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/polling_policy.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RPC_POLICY_PARAMETERS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RPC_POLICY_PARAMETERS_H_
+
+#include "google/cloud/bigtable/version.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
-    internal::RPCPolicyParameters defaults) {
-  return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy<>(defaults));
-}
+namespace internal {
 
+struct RPCPolicyParameters {
+  std::chrono::milliseconds initial_delay;
+  std::chrono::milliseconds maximum_delay;
+  std::chrono::milliseconds maximum_retry_period;
+};
+
+#include "google/cloud/bigtable/internal/rpc_policy_parameters.inc"
+
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RPC_POLICY_PARAMETERS_H_
