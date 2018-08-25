@@ -202,7 +202,7 @@ class UpdateObjectRequest
         metadata_(std::move(metadata)) {}
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const { return metadata_.ToJsonString(); }
+  std::string json_payload() const { return metadata_.UpdatePayload(); }
 
   ObjectMetadata const& metadata() const { return metadata_; }
 

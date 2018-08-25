@@ -171,14 +171,15 @@ TEST(ObjectMetadataTest, IOStream) {
 }
 
 /// @test Verify we can convert a ObjectMetadata object to a JSON string.
-TEST(ObjectMetadataTest, ToJsonString) {
+TEST(ObjectMetadataTest, UpdatePayload) {
   auto tested = CreateObjectMetadataForTest();
-  auto actual_string = tested.ToJsonString();
+  auto actual_string = tested.UpdatePayload();
   // Verify that the produced string can be parsed as a JSON object.
   internal::nl::json actual = internal::nl::json::parse(actual_string);
 
   // Create a JSON object with only the writeable fields, because this is what
-  // will be encoded in ToJsonString().
+  // will be encoded in UpdatePayload(). Before adding a new field, verify that
+  // it is used by `Objects: update`.
   internal::nl::json expected = {
       {"acl",
        internal::nl::json{

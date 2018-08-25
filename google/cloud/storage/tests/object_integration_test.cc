@@ -96,21 +96,57 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
       << "This is unexpected as the test generates a random object name.";
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata insert_meta = client.InsertObject(
-      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection("full"));
   objects = client.ListObjects(bucket_name);
 
   std::vector<ObjectMetadata> current_list(objects.begin(), objects.end());
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
   ObjectMetadata get_meta = client.GetObjectMetadata(
-      bucket_name, object_name, Generation(insert_meta.generation()));
+      bucket_name, object_name, Generation(insert_meta.generation()),
+      Projection("full"));
   EXPECT_EQ(get_meta, insert_meta);
 
   ObjectMetadata update = get_meta;
+  update.mutable_acl().emplace_back(
+      ObjectAccessControl().set_role("READER").set_entity(
+          "allAuthenticatedUsers"));
+  update.set_cache_control("no-cache")
+      .set_content_disposition("inline")
+      .set_content_encoding("identity")
+      .set_content_language("en")
+      .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
   ObjectMetadata updated_meta =
-      client.UpdateObject(bucket_name, object_name, update);
+      client.UpdateObject(bucket_name, object_name, update, Projection("full"));
+
+  // Because some of the ACL values are not predictable we convert the values we
+  // care about to strings and compare that.
+  {
+    auto acl_to_string_vector =
+        [](std::vector<ObjectAccessControl> const& acl) {
+          std::vector<std::string> v;
+          std::transform(acl.begin(), acl.end(), std::back_inserter(v),
+                         [](ObjectAccessControl const& x) {
+                           return x.entity() + " = " + x.role();
+                         });
+          return v;
+        };
+    auto expected = acl_to_string_vector(update.acl());
+    auto actual = acl_to_string_vector(updated_meta.acl());
+    EXPECT_THAT(expected, ::testing::UnorderedElementsAreArray(actual));
+  }
+  EXPECT_EQ(update.cache_control(), updated_meta.cache_control())
+      << updated_meta;
+  EXPECT_EQ(update.content_disposition(), updated_meta.content_disposition())
+      << updated_meta;
+  EXPECT_EQ(update.content_encoding(), updated_meta.content_encoding())
+      << updated_meta;
+  EXPECT_EQ(update.content_language(), updated_meta.content_language())
+      << updated_meta;
+  EXPECT_EQ(update.content_type(), updated_meta.content_type()) << updated_meta;
   EXPECT_EQ(update.metadata(), updated_meta.metadata()) << updated_meta;
 
   client.DeleteObject(bucket_name, object_name);

@@ -352,7 +352,6 @@ class GcsObject(object):
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
-        print("\n\n\nUPDATE REVISION %s\n\n" % request.data)
         generation = request.args.get('generation')
         if generation is None:
             version = self.get_latest()
@@ -362,7 +361,6 @@ class GcsObject(object):
                 raise ErrorResponse(
                     'Precondition Failed: generation %s not found' % generation)
         metadata = json.loads(request.data)
-        print("\n\n\nUPDATE REVISION U %s\n\n" % request.data)
         version.update_from_metadata(metadata)
         return version
 

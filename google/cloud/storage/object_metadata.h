@@ -73,7 +73,14 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   static ObjectMetadata ParseFromJson(internal::nl::json const& json);
   static ObjectMetadata ParseFromString(std::string const& payload);
 
-  std::string ToJsonString() const;
+  /**
+   * Return the payload for a call to `Objects: update`.
+   *
+   * The `Objects: update` API only accepts a subset of the writeable fields in
+   * the object resource. This function selects the relevant fields and formats
+   * them as a JSON string.
+   */
+  std::string UpdatePayload() const;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.

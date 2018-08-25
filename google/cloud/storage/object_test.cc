@@ -221,18 +221,41 @@ TEST_F(ObjectTest, UpdateObject) {
       .WillOnce(Invoke([&expected](internal::UpdateObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
-        EXPECT_THAT(r.json_payload(), HasSubstr("new-disposition"));
-        EXPECT_THAT(r.json_payload(), HasSubstr("new-language"));
+        internal::nl::json actual_payload =
+            internal::nl::json::parse(r.json_payload());
+        internal::nl::json expected_payload = {
+            {"acl",
+             internal::nl::json{
+                 {{"entity", "user-test-user"}, {"role", "READER"}},
+             }},
+            {"cacheControl", "no-cache"},
+            {"contentDisposition", "new-disposition"},
+            {"contentEncoding", "new-encoding"},
+            {"contentLanguage", "new-language"},
+            {"contentType", "new-type"},
+            {"metadata",
+             internal::nl::json{
+                 {"test-label", "test-value"},
+             }},
+
+        };
+        EXPECT_EQ(expected_payload, actual_payload);
         return std::make_pair(Status(), expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
+  ObjectMetadata update;
+  update.mutable_acl().push_back(
+      ObjectAccessControl().set_entity("user-test-user").set_role("READER"));
+  update.set_cache_control("no-cache")
+      .set_content_disposition("new-disposition")
+      .set_content_encoding("new-encoding")
+      .set_content_language("new-language")
+      .set_content_type("new-type");
+  update.mutable_metadata().emplace("test-label", "test-value");
   auto actual =
-      client.UpdateObject("test-bucket-name", "test-object-name",
-                          ObjectMetadata()
-                              .set_content_disposition("new-disposition")
-                              .set_content_language("new-language"));
+      client.UpdateObject("test-bucket-name", "test-object-name", update);
   EXPECT_EQ(expected, actual);
 }
 

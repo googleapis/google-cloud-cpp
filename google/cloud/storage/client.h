@@ -440,8 +440,10 @@ class Client {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
-   * @param metadata the new metadata for the Ojbect.  The `bucket` and `name`
-   *     fields are ignored in favor of @p bucket_name and @p object_name.
+   * @param metadata the new metadata for the Object.  Only the writeable fields
+   *     accepted by the `Objects: update` API are used, all other fields are
+   *     ignored. In particular, note that `bucket` and `name` are ignored in
+   *     favor of @p bucket_name and @p object_name.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
