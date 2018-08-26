@@ -31,7 +31,7 @@ function cleanup_instance {
   if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
     setenv="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
   fi
-  ${setenv} ../examples/bigtable_samples_instance_admin delete-instance "${project}" "${instance}"
+  ${setenv} ./bigtable_samples_instance_admin delete-instance "${project}" "${instance}"
 }
 
 function exit_handler {
@@ -67,7 +67,7 @@ function reset_trap {
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
 function run_all_instance_admin_examples {
-  if [ ! -x ../examples/bigtable_samples_instance_admin ]; then
+  if [ ! -x ./bigtable_samples_instance_admin ]; then
     echo "Will not run the examples as the examples were not built"
     return
   fi
@@ -87,40 +87,40 @@ function run_all_instance_admin_examples {
 
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
-
-  run_example ../examples/bigtable_samples_instance_admin create-instance \
+  
+  run_example ./bigtable_samples_instance_admin create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  run_example ../examples/bigtable_samples_instance_admin list-instances \
+  run_example ./bigtable_samples_instance_admin list-instances \
       "${project_id}"
-  run_example ../examples/bigtable_samples_instance_admin get-instance \
+  run_example ./bigtable_samples_instance_admin get-instance \
       "${project_id}" "${INSTANCE}"
-  run_example ../examples/bigtable_samples_instance_admin list-clusters \
+  run_example ./bigtable_samples_instance_admin list-clusters \
       "${project_id}" "${INSTANCE}"
-  run_example ../examples/bigtable_samples_instance_admin list-all-clusters \
+  run_example ./bigtable_samples_instance_admin list-all-clusters \
       "${project_id}"
-  run_example ../examples/bigtable_samples_instance_admin create-cluster \
+  run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
-  run_example ../examples/bigtable_samples_instance_admin create-app-profile \
+  run_example ./bigtable_samples_instance_admin create-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
-  run_example ../examples/bigtable_samples_instance_admin \
+  run_example ./bigtable_samples_instance_admin \
       create-app-profile-cluster "${project_id}" "${INSTANCE}" "profile-c2" \
       "${INSTANCE}-c2"
-  run_example ../examples/bigtable_samples_instance_admin list-app-profiles \
+  run_example ./bigtable_samples_instance_admin list-app-profiles \
       "${project_id}" "${INSTANCE}"
-  run_example ../examples/bigtable_samples_instance_admin get-app-profile \
+  run_example ./bigtable_samples_instance_admin get-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-  run_example ../examples/bigtable_samples_instance_admin delete-app-profile \
+  run_example ./bigtable_samples_instance_admin delete-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-  run_example ../examples/bigtable_samples_instance_admin get-iam-policy \
+  run_example ./bigtable_samples_instance_admin get-iam-policy \
       "${project_id}" "${INSTANCE}"
-  run_example ../examples/bigtable_samples_instance_admin set-iam-policy \
+  run_example ./bigtable_samples_instance_admin set-iam-policy \
       "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
-  run_example ../examples/bigtable_samples_instance_admin test-iam-permissions \
+  run_example ./bigtable_samples_instance_admin test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
 
   cleanup_instance "${project_id}" "${INSTANCE}"
 
-  run_example ../examples/bigtable_samples_instance_admin run \
+  run_example ./bigtable_samples_instance_admin run \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
 }
 
@@ -130,7 +130,7 @@ function run_all_instance_admin_examples {
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
 function run_all_table_admin_examples {
-  if [ ! -x ../examples/bigtable_samples ]; then
+  if [ ! -x ./bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"
     return
   fi
@@ -147,17 +147,17 @@ function run_all_table_admin_examples {
   # Use the same table in all the tests.
   local -r TABLE="sample-table-for-admin"
 
-  run_example ../examples/bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ../examples/bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 }
 
 ################################################
@@ -181,7 +181,7 @@ function run_all_table_admin_examples {
 # listed. We want to run these examples in the continuous integration builds
 # because they rot otherwise.
 run_all_data_examples() {
-  if [ ! -x ../examples/bigtable_samples ]; then
+  if [ ! -x ./bigtable_samples ]; then
     echo "Will not run the examples as the examples were not built"
     return
   fi
@@ -195,23 +195,23 @@ run_all_data_examples() {
   # Use the same table in all the tests.
   local -r TABLE="data-examples-tbl-${RANDOM}"
 
-  run_example ../examples/bigtable_samples create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples scan "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples sample-rows "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ../examples/bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples create-table "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples scan "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples sample-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
 }
