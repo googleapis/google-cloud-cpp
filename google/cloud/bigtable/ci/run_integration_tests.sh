@@ -53,7 +53,7 @@ if [ "${success}" != "yes" ]; then
 fi
 set -e
 
-(cd "${BTDIR}/tests" && \
+(cd "${BTDIR}/examples" && \
     "${BINDIR}/../examples/run_examples_emulator.sh")
 
 # To improve coverage (and avoid bitrot), run the Bigtable benchmarks using the
