@@ -53,8 +53,8 @@ if [ "${success}" != "yes" ]; then
 fi
 set -e
 
-(cd "${BTDIR}/tests" && \
-    "${BINDIR}/../examples/run_examples_emulator.sh")
+(cd "${BTDIR}/examples" && \
+    "${BINDIR}/run_examples_emulator.sh")
 
 # To improve coverage (and avoid bitrot), run the Bigtable benchmarks using the
 # embedded server.  The performance in the Travis and AppVeyor CI builds is not
