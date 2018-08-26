@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/retry_policy.h"
-
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <memory>

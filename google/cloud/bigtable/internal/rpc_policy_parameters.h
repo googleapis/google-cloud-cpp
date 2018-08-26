@@ -24,6 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+/// Configuration parameters for retry and backoff policies.
 struct RPCPolicyParameters {
   std::chrono::milliseconds initial_delay;
   std::chrono::milliseconds maximum_delay;
