@@ -82,10 +82,11 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  * objects.
  */
 class InsertObjectMediaRequest
-    : public GenericObjectRequest<
-          InsertObjectMediaRequest, ContentEncoding, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          KmsKeyName, PredefinedAcl, Projection, UserProject> {
+    : public GenericObjectRequest<InsertObjectMediaRequest, ContentEncoding,
+                                  ContentType, IfGenerationMatch,
+                                  IfGenerationNotMatch, IfMetagenerationMatch,
+                                  IfMetagenerationNotMatch, KmsKeyName,
+                                  PredefinedAcl, Projection, UserProject> {
  public:
   InsertObjectMediaRequest() : GenericObjectRequest(), contents_() {}
 
@@ -112,10 +113,11 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
  * application.
  */
 class InsertObjectStreamingRequest
-    : public GenericObjectRequest<
-          InsertObjectStreamingRequest, ContentEncoding, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          KmsKeyName, PredefinedAcl, Projection, UserProject> {
+    : public GenericObjectRequest<InsertObjectStreamingRequest, ContentEncoding,
+                                  ContentType, IfGenerationMatch,
+                                  IfGenerationNotMatch, IfMetagenerationMatch,
+                                  IfMetagenerationNotMatch, KmsKeyName,
+                                  PredefinedAcl, Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

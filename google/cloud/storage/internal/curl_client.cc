@@ -137,10 +137,14 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
                              "/o");
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  // Set the content type of a sensible value, the application can override this
+  // in the options for the request.
+  if (not request.HasOption<ContentType>()) {
+    builder.AddHeader("content-type: application/octet-stream");
+  }
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
-  builder.AddHeader("Content-Type: application/octet-stream");
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.contents().size()));
   auto payload = builder.BuildRequest(request.contents()).MakeRequest();
@@ -191,10 +195,14 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   CurlRequestBuilder builder(url);
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  // Set the content type of a sensible value, the application can override this
+  // in the options for the request.
+  if (not request.HasOption<ContentType>()) {
+    builder.AddHeader("content-type: application/octet-stream");
+  }
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
-  builder.AddHeader("Content-Type: application/octet-stream");
   // TODO(#937) - use client options to configure buffer size.
   std::unique_ptr<internal::CurlStreambuf> buf(
       new internal::CurlStreambuf(builder.BuildUpload(), 128 * 1024));

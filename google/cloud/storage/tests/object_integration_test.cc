@@ -382,6 +382,40 @@ TEST_F(ObjectIntegrationTest, InsertWithQuotaUser) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectIntegrationTest, InsertWithContentType) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), ContentType("text/plain"));
+  EXPECT_EQ("text/plain", meta.content_type());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, WriteWithContentType) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               ContentType("text/plain"));
+  os << LoremIpsum();
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  EXPECT_EQ("text/plain", meta.content_type());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

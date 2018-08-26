@@ -52,6 +52,11 @@ std::ostream& operator<<(std::ostream& os, WellKnownHeader<H, T> const& rhs) {
   return os << rhs.header_name() << ": <not set>";
 }
 
+struct ContentType : public WellKnownHeader<ContentType, std::string> {
+  using WellKnownHeader<ContentType, std::string>::WellKnownHeader;
+  static char const* header_name() { return "content-type"; }
+};
+
 struct IfMatchEtag : public WellKnownHeader<IfMatchEtag, std::string> {
   using WellKnownHeader<IfMatchEtag, std::string>::WellKnownHeader;
   static char const* header_name() { return "If-Match"; }

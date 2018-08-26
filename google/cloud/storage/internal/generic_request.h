@@ -58,6 +58,14 @@ class GenericRequestBase<Derived, Option> {
     }
   }
 
+  template <typename O>
+  bool HasOption() const {
+    if (std::is_same<O, Option>::value) {
+      return option_.has_value();
+    }
+    return false;
+  }
+
  private:
   Option option_;
 };
@@ -91,6 +99,14 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
     } else {
       GenericRequestBase<Derived, Options...>::DumpOptions(os, sep);
     }
+  }
+
+  template <typename O>
+  bool HasOption() const {
+    if (std::is_same<O, Option>::value) {
+      return option_.has_value();
+    }
+    return GenericRequestBase<Derived, Options...>::template HasOption<O>();
   }
 
  private:
@@ -155,6 +171,11 @@ class GenericRequest
   }
 
   Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
+
+  template <typename Option>
+  bool HasOption() const {
+    return Super::template HasOption<Option>();
+  }
 };
 
 }  // namespace internal
