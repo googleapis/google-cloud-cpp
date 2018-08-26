@@ -284,6 +284,16 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
   EXPECT_EQ("storage#bucket", metadata.kind());
 }
 
+TEST_F(BucketIntegrationTest, GetMetadataFields) {
+  auto bucket_name = BucketTestEnvironment::bucket_name();
+  Client client;
+
+  auto metadata = client.GetBucketMetadata(bucket_name, Fields("name"));
+  EXPECT_EQ(bucket_name, metadata.name());
+  EXPECT_TRUE(metadata.id().empty());
+  EXPECT_TRUE(metadata.kind().empty());
+}
+
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
   auto bucket_name = BucketTestEnvironment::bucket_name();
   Client client;

@@ -142,11 +142,11 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  */
 template <typename Derived, typename... Options>
 class GenericRequest
-    : public GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag,
+    : public GenericRequestBase<Derived, Fields, IfMatchEtag, IfNoneMatchEtag,
                                 QuotaUser, Options...> {
  public:
-  using Super = GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag,
-                                   QuotaUser, Options...>;
+  using Super = GenericRequestBase<Derived, Fields, IfMatchEtag,
+                                   IfNoneMatchEtag, QuotaUser, Options...>;
 
   template <typename H, typename... T>
   Derived& set_multiple_options(H&& h, T&&... tail) {

@@ -59,6 +59,22 @@ struct ContentEncoding
   static char const* well_known_parameter_name() { return "contentEncoding"; }
 };
 
+/**
+ * Define the `fields` parameter.
+ *
+ * The `fields` parameter can be used to limit the fields returned by a request,
+ * saving bandwidth and possibly improving performance for applications that do
+ * not need a full response from the server.
+ *
+ * @see
+ * https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#partial-response
+ *     for general documentation on how to use this parameter.
+ */
+struct Fields : public WellKnownParameter<Fields, std::string> {
+  using WellKnownParameter<Fields, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "fields"; }
+};
+
 struct Generation : public WellKnownParameter<Generation, std::int64_t> {
   using WellKnownParameter<Generation, std::int64_t>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "generation"; }

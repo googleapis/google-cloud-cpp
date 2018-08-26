@@ -107,6 +107,26 @@ def index_acl(acl):
     return indexed
 
 
+def filtered_response(request, response):
+    """
+    Format the response as a JSON string, using any filtering included in
+    the request.
+
+    :param request:flask.Request the original HTTP request.
+    :param response:dict a dictionary to be formatted as a JSON string.
+    :return:str the response formatted as a string.
+    """
+    fields = request.args.get('fields')
+    if fields is None:
+        return json.dumps(response)
+    tmp = {}
+    # TODO(#1037) - support full filter expressions
+    for key in fields.split(','):
+        if key in response:
+            tmp[key] = response[key]
+    return json.dumps(tmp)
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -206,8 +226,8 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -405,15 +425,19 @@ class GcsBucket(object):
         :param patch:dict a dictionary with metadata changes.
         """
         tmp = self.metadata.copy()
-        writeable_keys = {'acl', 'billing', 'cors', 'defaultObjectAcl',
-                          'encryption', 'labels', 'lifecycle', 'location',
-                          'logging', 'storageClass', 'versioning', 'website'}
+        writeable_keys = {
+            'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
+            'labels', 'lifecycle', 'location', 'logging', 'storageClass',
+            'versioning', 'website'
+        }
         for key, value in patch.iteritems():
             if key not in writeable_keys:
-                raise ErrorResponse('Invalid metadata change. %s is not writeable' % key, status_code=503)
+                raise ErrorResponse(
+                    'Invalid metadata change. %s is not writeable' % key,
+                    status_code=503)
             if value is None:
                 if key in tmp:
-                    del(tmp[key])
+                    del (tmp[key])
             else:
                 tmp[key] = value
         tmp['name'] = tmp.get('name', self.name)
@@ -497,8 +521,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -560,8 +584,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_default_object_acl(self, entity, role):
         """
@@ -622,7 +646,7 @@ def buckets_list():
     result = {'next_page_token': '', 'items': []}
     for name, b in GCS_BUCKETS.items():
         result['items'].append(b.metadata)
-    return json.dumps(result)
+    return filtered_response(flask.request, result)
 
 
 @gcs.route('/b', methods=['POST'])
@@ -642,7 +666,7 @@ def buckets_insert():
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
     GCS_BUCKETS[bucket_name] = bucket
-    return json.dumps(bucket.metadata)
+    return filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>', methods=['PUT'])
@@ -661,7 +685,7 @@ def buckets_update(bucket_name):
             'Bucket %s does not exist' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
-    return json.dumps(bucket.metadata)
+    return filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>')
@@ -681,7 +705,7 @@ def buckets_get(bucket_name):
         raise ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
-    return json.dumps(bucket.metadata)
+    return filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>', methods=['DELETE'])
@@ -696,7 +720,7 @@ def buckets_delete(bucket_name):
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     del (GCS_BUCKETS[bucket_name])
-    return json.dumps({})
+    return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>', methods=['PATCH'])
@@ -712,7 +736,7 @@ def buckets_patch(bucket_name):
     bucket.check_preconditions(flask.request)
     patch = json.loads(flask.request.data)
     bucket.apply_patch(patch)
-    return json.dumps(bucket.metadata)
+    return filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>/acl')
@@ -729,7 +753,7 @@ def bucket_acl_list(bucket_name):
     result = {
         'items': gcs_bucket.metadata.get('acl', []),
     }
-    return json.dumps(result)
+    return filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/acl', methods=['POST'])
@@ -740,9 +764,10 @@ def bucket_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return json.dumps(
-        gcs_bucket.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
@@ -753,7 +778,7 @@ def bucket_acl_delete(bucket_name, entity):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.delete_acl(entity)
-    return json.dumps({})
+    return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>')
@@ -764,7 +789,7 @@ def bucket_acl_get(bucket_name, entity):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     acl = gcs_bucket.get_acl(entity)
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PUT'])
@@ -777,7 +802,7 @@ def bucket_acl_update(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
@@ -790,7 +815,7 @@ def bucket_acl_patch(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl')
@@ -807,7 +832,7 @@ def bucket_default_object_acl_list(bucket_name):
     result = {
         'items': gcs_bucket.metadata.get('defaultObjectAcl', []),
     }
-    return json.dumps(result)
+    return filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl', methods=['POST'])
@@ -818,9 +843,10 @@ def bucket_default_object_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return json.dumps(
-        gcs_bucket.insert_default_object_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_default_object_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
@@ -831,7 +857,7 @@ def bucket_default_object_acl_delete(bucket_name, entity):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     gcs_bucket.delete_default_object_acl(entity)
-    return json.dumps({})
+    return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>')
@@ -842,7 +868,7 @@ def bucket_default_object_acl_get(bucket_name, entity):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     acl = gcs_bucket.get_default_object_acl(entity)
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PUT'])
@@ -855,7 +881,7 @@ def bucket_default_object_acl_update(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PATCH'])
@@ -868,7 +894,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/o')
@@ -876,7 +902,8 @@ def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     result = {'next_page_token': '', 'items': []}
     versions_parameter = flask.request.args.get('versions')
-    all_versions = (versions_parameter is not None and bool(versions_parameter))
+    all_versions = (versions_parameter is not None
+                    and bool(versions_parameter))
     for name, o in GCS_OBJECTS.items():
         if name.find(bucket_name + '/o') != 0:
             continue
@@ -887,7 +914,7 @@ def objects_list(bucket_name):
                 result['items'].append(object_version.metadata)
         else:
             result['items'].append(o.get_latest().metadata)
-    return json.dumps(result)
+    return filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>')
@@ -909,7 +936,7 @@ def objects_get(bucket_name, object_name):
                                                                length)
         return response
 
-    return json.dumps(revision.metadata)
+    return filtered_response(flask.request, revision.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
@@ -923,7 +950,7 @@ def objects_delete(bucket_name, object_name):
     if remove:
         GCS_OBJECTS.pop(object_path)
 
-    return json.dumps({})
+    return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl')
@@ -940,7 +967,7 @@ def objects_acl_list(bucket_name, object_name):
     result = {
         'items': revision.metadata.get('acl', []),
     }
-    return json.dumps(result)
+    return filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
@@ -955,9 +982,10 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return json.dumps(
-        revision.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             revision.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
@@ -972,7 +1000,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
-    return json.dumps({})
+    return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
@@ -987,7 +1015,7 @@ def objects_acl_get(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.get_acl(entity)
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
@@ -1003,7 +1031,7 @@ def objects_acl_update(bucket_name, object_name, entity):
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
     acl = revision.update_acl(entity, payload.get('role', ''))
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
@@ -1018,7 +1046,7 @@ def objects_acl_patch(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
-    return json.dumps(acl)
+    return filtered_response(flask.request, acl)
 
 
 # Define the WSGI application to handle bucket requests.
@@ -1050,7 +1078,7 @@ def objects_insert(bucket_name):
     gcs_object.insert(gcs_url, flask.request)
     current_version = gcs_object.get_latest()
 
-    return json.dumps(current_version.metadata)
+    return filtered_response(flask.request, current_version.metadata)
 
 
 application = wsgi.DispatcherMiddleware(root, {
