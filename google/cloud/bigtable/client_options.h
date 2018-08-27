@@ -83,6 +83,15 @@ class ClientOptions {
     return *this;
   }
 
+  /// Return the current endpoint for instance admin RPCs.
+  std::string const& instance_admin_endpoint() const {
+    return instance_admin_endpoint_;
+  }
+  ClientOptions& set_instance_admin_endpoint(std::string endpoint) {
+    instance_admin_endpoint_ = std::move(endpoint);
+    return *this;
+  }
+
   /**
    * Set the name of the connection pool.
    *
@@ -292,6 +301,7 @@ class ClientOptions {
   std::size_t connection_pool_size_;
   std::string data_endpoint_;
   std::string admin_endpoint_;
+  std::string instance_admin_endpoint_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

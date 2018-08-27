@@ -27,11 +27,7 @@ function cleanup_instance {
 
   echo
   echo "Cleaning up test instance projects/${project}/instances/${instance}"
-  local setenv="env"
-  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    setenv="env BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
-  fi
-  ${setenv} ./bigtable_samples_instance_admin delete-instance "${project}" "${instance}"
+  ./bigtable_samples_instance_admin delete-instance "${project}" "${instance}"
 }
 
 function exit_handler {
@@ -43,21 +39,6 @@ function exit_handler {
     kill_emulators
   else
     cleanup_instance "${project}" "${instance}"
-  fi
-}
-
-# When we finish running a series of examples we want to explicitly cleanup the
-# instance.  We cannot just let the exit handler do it because when running
-# on the emulator the exit handler would kill the emulator.  And when running
-# in production we create a different instance in each group of examples, and
-# there is only one trap at a time.
-function reset_trap {
-  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    # If the test is running against the emulator there is no need to cleanup
-    # the instance, just kill the emulators.
-    trap kill_emulators EXIT
-  else
-    trap - EXIT
   fi
 }
 
@@ -83,7 +64,6 @@ function run_all_instance_admin_examples {
         " against production."
     exit 1
   fi
-  export BIGTABLE_EMULATOR_HOST="${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}"
 
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"

@@ -30,8 +30,7 @@ readonly PROJECT_ID="emulated-${NONCE}"
 
 echo
 echo "Running bigtable::InstanceAdmin integration test."
-  env "BIGTABLE_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" \
-     ./instance_admin_integration_test "${PROJECT_ID}";
+./instance_admin_integration_test "${PROJECT_ID}";
 
 echo
 echo "Running bigtable::TableAdmin integration test."

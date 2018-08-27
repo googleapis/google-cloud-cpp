@@ -38,7 +38,7 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
   // the public interface, it should not be part of the public interface.
   struct AdminTraits {
     static std::string const& Endpoint(bigtable::ClientOptions& options) {
-      return options.admin_endpoint();
+      return options.instance_admin_endpoint();
     }
   };
 

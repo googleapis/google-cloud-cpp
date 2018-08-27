@@ -53,7 +53,8 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
     : credentials_(std::move(creds)),
       connection_pool_size_(CalculateDefaultConnectionPoolSize()),
       data_endpoint_("bigtable.googleapis.com"),
-      admin_endpoint_("bigtableadmin.googleapis.com") {
+      admin_endpoint_("bigtableadmin.googleapis.com"),
+      instance_admin_endpoint_("bigtableadmin.googleapis.com") {
   static std::string const user_agent_prefix = "cbt-c++/" + version_string();
   channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
 }
@@ -63,6 +64,12 @@ ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
   if (emulator != nullptr) {
     data_endpoint_ = emulator;
     admin_endpoint_ = emulator;
+    instance_admin_endpoint_ = emulator;
+  }
+  char const* instance_admin_emulator =
+      std::getenv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
+  if (instance_admin_emulator != nullptr) {
+    instance_admin_endpoint_ = instance_admin_emulator;
   }
 }
 
