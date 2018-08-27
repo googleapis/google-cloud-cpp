@@ -23,6 +23,7 @@ bigtable_client_HDRS = [
     "internal/instance_admin.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
+    "internal/rpc_policy_parameters.inc",
     "internal/rpc_policy_parameters.h",
     "internal/rowreaderiterator.h",
     "internal/strong_type.h",

@@ -155,6 +155,7 @@ add_library(bigtable_client
             internal/prefix_range_end.cc
             internal/readrowsparser.h
             internal/readrowsparser.cc
+            internal/rpc_policy_parameters.inc
             internal/rpc_policy_parameters.h
             internal/rowreaderiterator.h
             internal/rowreaderiterator.cc
@@ -372,6 +373,7 @@ install(TARGETS bigtable_client
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY . DESTINATION include/google/cloud/bigtable
         FILES_MATCHING
+        PATTERN "*.inc"
         PATTERN "*.h"
         PATTERN "testing/*"
         EXCLUDE)
