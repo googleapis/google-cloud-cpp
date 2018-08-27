@@ -83,15 +83,6 @@ class ClientOptions {
     return *this;
   }
 
-  /// Return the current endpoint for instance admin RPCs.
-  std::string const& instance_admin_endpoint() const {
-    return instance_admin_endpoint_;
-  }
-  ClientOptions& set_instance_admin_endpoint(std::string endpoint) {
-    instance_admin_endpoint_ = std::move(endpoint);
-    return *this;
-  }
-
   /**
    * Set the name of the connection pool.
    *
@@ -295,6 +286,13 @@ class ClientOptions {
   }
 
  private:
+  /// Return the current endpoint for instance admin RPCs.
+  friend struct InstanceAdminTraits;
+  friend struct ClientOptionsTestTraits;
+  std::string const& instance_admin_endpoint() const {
+    return instance_admin_endpoint_;
+  }
+
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
   std::string connection_pool_name_;

@@ -18,7 +18,18 @@
 #include <gmock/gmock.h>
 #include <cstdlib>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+struct ClientOptionsTestTraits {
+  static std::string const& InstanceAdminEndpoint(
+      bigtable::ClientOptions const& options) {
+    return options.instance_admin_endpoint();
+  }
+};
+
+namespace {
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
@@ -53,6 +64,10 @@ class ClientOptionsEmulatorTest : public ::testing::Test {
     bigtable_instance_admin_emulator_host_.TearDown();
   }
 
+  std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
+    return ClientOptionsTestTraits::InstanceAdminEndpoint(options);
+  }
+
  protected:
   google::cloud::testing_util::EnvironmentVariableRestore
       bigtable_emulator_host_;
@@ -67,7 +82,7 @@ TEST_F(ClientOptionsEmulatorTest, Default) {
   EXPECT_EQ("testendpoint.googleapis.com",
             client_options_object.admin_endpoint());
   EXPECT_EQ("testendpoint.googleapis.com",
-            client_options_object.instance_admin_endpoint());
+            GetInstanceAdminEndpoint(client_options_object));
 }
 
 TEST_F(ClientOptionsEmulatorTest, WithCredentials) {
@@ -86,7 +101,7 @@ TEST_F(ClientOptionsEmulatorTest, DefaultNoEmulator) {
   bigtable::ClientOptions tested(credentials);
   EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
   EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com", tested.instance_admin_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", GetInstanceAdminEndpoint(tested));
 }
 
 TEST_F(ClientOptionsEmulatorTest, SeparateEmulators) {
@@ -98,7 +113,7 @@ TEST_F(ClientOptionsEmulatorTest, SeparateEmulators) {
   bigtable::ClientOptions actual = bigtable::ClientOptions();
   EXPECT_EQ("emulator-host:8000", actual.data_endpoint());
   EXPECT_EQ("emulator-host:8000", actual.admin_endpoint());
-  EXPECT_EQ("instance-emulator-host:9000", actual.instance_admin_endpoint());
+  EXPECT_EQ("instance-emulator-host:9000", GetInstanceAdminEndpoint(actual));
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {
@@ -113,14 +128,6 @@ TEST(ClientOptionsTest, EditAdminEndpoint) {
   client_options_object =
       client_options_object.set_admin_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
-}
-
-TEST(ClientOptionsTest, EditInstanceAdminEndpoint) {
-  bigtable::ClientOptions client_options_object;
-  client_options_object =
-      client_options_object.set_instance_admin_endpoint("customendpoint.com");
-  EXPECT_EQ("customendpoint.com",
-            client_options_object.instance_admin_endpoint());
 }
 
 TEST(ClientOptionsTest, EditCredentials) {
@@ -292,3 +299,9 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
             grpc::string(test_args.args[1].key));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
