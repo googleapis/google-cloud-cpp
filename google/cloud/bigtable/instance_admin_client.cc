@@ -20,7 +20,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 struct InstanceAdminTraits {
   static std::string const& Endpoint(bigtable::ClientOptions& options) {
     return options.instance_admin_endpoint();
