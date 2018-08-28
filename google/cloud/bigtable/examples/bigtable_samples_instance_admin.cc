@@ -601,6 +601,10 @@ int main(int argc, char* argv[]) try {
   };
 
   {
+    // Force each command to generate its Usage string, so we can provide a good
+    // usage string for the whole program. We need to create an InstanceAdmin
+    // object to do this, but that object is never used, it is passed to the
+    // commands, without any calls made to it.
     google::cloud::bigtable::InstanceAdmin unused(
         google::cloud::bigtable::CreateDefaultInstanceAdminClient(
             "unused-project", google::cloud::bigtable::ClientOptions()));

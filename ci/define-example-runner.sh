@@ -57,17 +57,17 @@ run_example() {
   fi
   log="$(mktemp -t "run_example.XXXXXX")"
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "${program_name} ${example} running"
+      " ${program_name} ${example} running"
   echo ${program_path} ${example} ${arguments} >"${log}"
   set +e
   ${program_path} ${example} ${arguments} >>"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        "${program_name} ${example}"
+        " ${program_name} ${example}"
   else
     EXIT_STATUS=1
     echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        "${program_name} ${example}"
+        " ${program_name} ${example}"
     echo
     echo "================ [begin ${log}] ================"
     cat "${log}"
@@ -110,17 +110,17 @@ run_example_usage() {
   fi
   log="$(mktemp -t "run_example.XXXXXX")"
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      "${program_name} running"
+      " ${program_name} running"
   echo ${program_path} >"${log}"
   set +e
   ${program_path} >>"${log}" 2>&1 </dev/null
   if [ $? != 0 ] && grep -q 'Usage' "${log}"; then
     echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        "${program_name}"
+        " ${program_name}"
   else
     EXIT_STATUS=1
     echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        "${program_name}"
+        " ${program_name}"
     echo
     echo "================ [begin ${log}] ================"
     cat "${log}"
