@@ -43,7 +43,7 @@ matrix:
       os: osx
       compiler: clang
       env:
-        CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl
+        CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/libressl
       install:
         - git submodule update --init
         - ci/install-retry.sh ci/travis/install-macosx.sh

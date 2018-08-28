@@ -202,7 +202,7 @@ sudo make install
 #### macOS (using brew)
 
 ```bash
-brew install curl cmake
+brew install curl libressl c-ares
 ```
 
 #### Windows (using vcpkg)
@@ -217,11 +217,28 @@ powershell -exec bypass .\ci\install-windows.ps1
 To build all available libraries and run the tests, run the following commands
 after cloning this repo:
 
-#### Linux and macOS
+#### Linux
 
 ```bash
 git submodule update --init
 cmake -H. -Bbuild-output
+
+# Adjust the number of threads used by modifying parameter for `-j 4`
+cmake --build build-output -- -j 4
+
+# Verify build by running tests
+(cd build-output && ctest --output-on-failure)
+```
+
+You will find compiled binaries in `build-output/` respective to their source paths.
+
+#### macOS
+
+```bash
+git submodule update --init
+export CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/libressl
+cmake -H. -Bbuild-output ${CMAKE_FLAGS}
+
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build build-output -- -j 4
