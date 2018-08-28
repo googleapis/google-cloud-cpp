@@ -14,10 +14,22 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+struct ClientOptionsTestTraits {
+  static std::string const& InstanceAdminEndpoint(
+      bigtable::ClientOptions const& options) {
+    return options.instance_admin_endpoint();
+  }
+};
+
+namespace {
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
@@ -34,18 +46,33 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
 }
 
 class ClientOptionsEmulatorTest : public ::testing::Test {
+ public:
+  ClientOptionsEmulatorTest()
+      : bigtable_emulator_host_("BIGTABLE_EMULATOR_HOST"),
+        bigtable_instance_admin_emulator_host_(
+            "BIGTABLE_INSTANCE_EMULATOR_HOST") {}
+
  protected:
   void SetUp() override {
-    previous_ = std::getenv("BIGTABLE_EMULATOR_HOST");
+    bigtable_emulator_host_.SetUp();
+    bigtable_instance_admin_emulator_host_.SetUp();
     google::cloud::internal::SetEnv("BIGTABLE_EMULATOR_HOST",
                                     "testendpoint.googleapis.com");
   }
   void TearDown() override {
-    google::cloud::internal::SetEnv("BIGTABLE_EMULATOR_HOST", previous_);
+    bigtable_emulator_host_.TearDown();
+    bigtable_instance_admin_emulator_host_.TearDown();
+  }
+
+  std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
+    return ClientOptionsTestTraits::InstanceAdminEndpoint(options);
   }
 
  protected:
-  char const* previous_ = nullptr;
+  google::cloud::testing_util::EnvironmentVariableRestore
+      bigtable_emulator_host_;
+  google::cloud::testing_util::EnvironmentVariableRestore
+      bigtable_instance_admin_emulator_host_;
 };
 
 TEST_F(ClientOptionsEmulatorTest, Default) {
@@ -54,6 +81,8 @@ TEST_F(ClientOptionsEmulatorTest, Default) {
             client_options_object.data_endpoint());
   EXPECT_EQ("testendpoint.googleapis.com",
             client_options_object.admin_endpoint());
+  EXPECT_EQ("testendpoint.googleapis.com",
+            GetInstanceAdminEndpoint(client_options_object));
 }
 
 TEST_F(ClientOptionsEmulatorTest, WithCredentials) {
@@ -67,10 +96,24 @@ TEST_F(ClientOptionsEmulatorTest, WithCredentials) {
 TEST_F(ClientOptionsEmulatorTest, DefaultNoEmulator) {
   // Change the environment variable, TearDown() will restore it.
   google::cloud::internal::UnsetEnv("BIGTABLE_EMULATOR_HOST");
+  google::cloud::internal::UnsetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   auto credentials = grpc::GoogleDefaultCredentials();
   bigtable::ClientOptions tested(credentials);
   EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
   EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", GetInstanceAdminEndpoint(tested));
+}
+
+TEST_F(ClientOptionsEmulatorTest, SeparateEmulators) {
+  // Change the environment variables, TearDown() will restore them.
+  google::cloud::internal::SetEnv("BIGTABLE_EMULATOR_HOST",
+                                  "emulator-host:8000");
+  google::cloud::internal::SetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST",
+                                  "instance-emulator-host:9000");
+  bigtable::ClientOptions actual = bigtable::ClientOptions();
+  EXPECT_EQ("emulator-host:8000", actual.data_endpoint());
+  EXPECT_EQ("emulator-host:8000", actual.admin_endpoint());
+  EXPECT_EQ("instance-emulator-host:9000", GetInstanceAdminEndpoint(actual));
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {
@@ -256,3 +299,9 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
             grpc::string(test_args.args[1].key));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

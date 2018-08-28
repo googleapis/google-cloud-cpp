@@ -286,12 +286,20 @@ class ClientOptions {
   }
 
  private:
+  /// Return the current endpoint for instance admin RPCs.
+  friend struct InstanceAdminTraits;
+  friend struct ClientOptionsTestTraits;
+  std::string const& instance_admin_endpoint() const {
+    return instance_admin_endpoint_;
+  }
+
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
   std::string connection_pool_name_;
   std::size_t connection_pool_size_;
   std::string data_endpoint_;
   std::string admin_endpoint_;
+  std::string instance_admin_endpoint_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

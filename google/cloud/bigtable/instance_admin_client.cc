@@ -16,7 +16,15 @@
 #include "google/cloud/bigtable/internal/common_client.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+struct InstanceAdminTraits {
+  static std::string const& Endpoint(bigtable::ClientOptions& options) {
+    return options.instance_admin_endpoint();
+  }
+};
 
 namespace {
 /**
@@ -32,24 +40,18 @@ namespace {
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
+class DefaultInstanceAdminClient : public InstanceAdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
-  struct AdminTraits {
-    static std::string const& Endpoint(bigtable::ClientOptions& options) {
-      return options.admin_endpoint();
-    }
-  };
-
-  using Impl = bigtable::internal::CommonClient<
-      AdminTraits, ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
+  using Impl = internal::CommonClient<
+      InstanceAdminTraits,
+      ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
 
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  DefaultInstanceAdminClient(std::string project,
-                             bigtable::ClientOptions options)
+  DefaultInstanceAdminClient(std::string project, ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -198,10 +200,6 @@ class DefaultInstanceAdminClient : public bigtable::InstanceAdminClient {
 };
 }  // anonymous namespace
 
-namespace google {
-namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
     std::string project, ClientOptions options) {
   return std::make_shared<DefaultInstanceAdminClient>(std::move(project),
