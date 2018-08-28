@@ -210,10 +210,13 @@ run_all_data_examples() {
 
   EMULATOR_LOG="instance-admin-emulator.log"
 
+  # Use a different table for the full example test, if we use the same table
+  # as the other tests this can fail with timeouts.
+  local -r FULL_TABLE="data-examples-full-${RANDOM}"
+  run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${FULL_TABLE}"
+
   # Use the same table in all the tests.
   local -r TABLE="data-examples-tbl-${RANDOM}"
-
-  run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./bigtable_samples create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./bigtable_samples apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./bigtable_samples bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
