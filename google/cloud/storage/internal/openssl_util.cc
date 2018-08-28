@@ -33,7 +33,8 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
   using UniqueBioChainPtr = std::unique_ptr<BIO, decltype(&BIO_free_all)>;
   using UniqueBioPtr = std::unique_ptr<BIO, decltype(&BIO_free)>;
 
-  UniqueBioPtr source(BIO_new_mem_buf(str.data(), static_cast<int>(str.size())),
+  UniqueBioPtr source(BIO_new_mem_buf(const_cast<char*>(str.data()),
+                                      static_cast<int>(str.size())),
                       &BIO_free);
   if (not source) {
     std::ostringstream os;
