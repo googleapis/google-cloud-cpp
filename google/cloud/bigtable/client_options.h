@@ -299,6 +299,10 @@ class ClientOptions {
   std::size_t connection_pool_size_;
   std::string data_endpoint_;
   std::string admin_endpoint_;
+  // The endpoint for instance admin operations, in most scenarios this should
+  // have the same value as `admin_endpoint_`. The most common exception is
+  // testing, where the emulator for instance admin operations may be different
+  // than the emulator for admin and data operations.
   std::string instance_admin_endpoint_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
