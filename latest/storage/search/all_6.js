@@ -1,14 +1,15 @@
 var searchData=
 [
-  ['has_5fbilling',['has_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a4871aa9a4409a3776d27943daab33742',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5fcustomer_5fencryption',['has_customer_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa0724175f83a69b8b0df6cd121e85c7f',1,'google::cloud::storage::v0::ObjectMetadata']]],
-  ['has_5fencryption',['has_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a330cfc7a05cd54335a7f4cdfadb459de',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5flabel',['has_label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a8bd70ae38d1dcfbbe172d60d165f9cd7',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5flifecycle',['has_lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a870a4d47bdf58d4b85dcde0a742212d0',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5flogging',['has_logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a08d05b49607fc67bbbede20a1a0532c0',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5fmetadata',['has_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a41fcb258ecc7e898420fcdaf5cdd3a80',1,'google::cloud::storage::v0::ObjectMetadata']]],
-  ['has_5fvalue',['has_value',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html#ace811a4aad8c55fe1f9a0d845f982d23',1,'google::cloud::storage::v0::WellKnownHeader::has_value()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html#af434a9af42408ea70103f8c17d93dcf4',1,'google::cloud::storage::v0::WellKnownParameter::has_value()']]],
-  ['has_5fversioning',['has_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a0c2e4ce254b5478664e0d21937df0db7',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['has_5fwebsite',['has_website',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a731cdd4231ce6b5799f65595f61ff168',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['header_5fname',['header_name',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html#ac68ed6dc4928b058eaf29ef6dc77fa36',1,'google::cloud::storage::v0::WellKnownHeader::header_name()'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMatchEtag.html#abf215d5265f6b67ecb32bb2e257f8156',1,'google::cloud::storage::v0::IfMatchEtag::header_name()'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfNoneMatchEtag.html#ab4930b89ac1402c036f332a996a9bf53',1,'google::cloud::storage::v0::IfNoneMatchEtag::header_name()']]]
+  ['cloud',['cloud',['../namespacegoogle_1_1cloud.html',1,'google']]],
+  ['generation',['Generation',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1Generation.html',1,'google::cloud::storage::v0::Generation'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html#afaa207745303ee266de015e5ef939cac',1,'google::cloud::storage::v0::ObjectAccessControl::generation()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4f6ad145cc00911852513bf8d0b33151',1,'google::cloud::storage::v0::ObjectMetadata::generation()']]],
+  ['getbucketacl',['GetBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0825ec57728cfe34b27b0ece813e56e',1,'google::cloud::storage::v0::Client']]],
+  ['getbucketmetadata',['GetBucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd704ed4ade663686872c1ee994511cd',1,'google::cloud::storage::v0::Client']]],
+  ['getdefaultobjectacl',['GetDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a96e4926587eb3a41c4a33d62dcdf82f4',1,'google::cloud::storage::v0::Client']]],
+  ['getobjectacl',['GetObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afc4ed4cf90ae7d99abec5acaaf8795cb',1,'google::cloud::storage::v0::Client']]],
+  ['getobjectmetadata',['GetObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae7451d0183db3656e2b1f0f4106e6996',1,'google::cloud::storage::v0::Client']]],
+  ['google',['google',['../namespacegoogle.html',1,'']]],
+  ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9209a78c76703abaf6c57365bdbc0f9d',1,'google::cloud::storage::v0']]],
+  ['storage',['storage',['../namespacegoogle_1_1cloud_1_1storage.html',1,'google::cloud']]],
+  ['storage_5fclass',['storage_class',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html',1,'google::cloud::storage::v0']]],
+  ['v0',['v0',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html',1,'google::cloud::storage']]]
 ];
