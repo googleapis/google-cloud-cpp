@@ -62,7 +62,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">rpc_backoff_policy.cc File Reference</div>  </div>
@@ -83,48 +82,12 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1bigtable_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab383d4c12c7ab0838ad7be89fb03ca38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpc__backoff__policy_8cc.html#ab383d4c12c7ab0838ad7be89fb03ca38">BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY</a>&#160;&#160;&#160;std::chrono::milliseconds(10)</td></tr>
-<tr class="separator:ab383d4c12c7ab0838ad7be89fb03ca38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3273acbdec1d5d5b3330c34428ca2da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpc__backoff__policy_8cc.html#ad3273acbdec1d5d5b3330c34428ca2da">BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY</a>&#160;&#160;&#160;std::chrono::minutes(5)</td></tr>
-<tr class="separator:ad3273acbdec1d5d5b3330c34428ca2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaac5b9cf9c168c19193103ddcb4042a2"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; RPCBackoffPolicy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aaac5b9cf9c168c19193103ddcb4042a2">google::cloud::bigtable::v0::DefaultRPCBackoffPolicy</a> ()</td></tr>
-<tr class="memdesc:aaac5b9cf9c168c19193103ddcb4042a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an instance of the default <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a>.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aaac5b9cf9c168c19193103ddcb4042a2">More...</a><br /></td></tr>
-<tr class="separator:aaac5b9cf9c168c19193103ddcb4042a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ced19b02427a6fde27d622a6cd9f1a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; RPCBackoffPolicy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a37ced19b02427a6fde27d622a6cd9f1a">google::cloud::bigtable::v0::DefaultRPCBackoffPolicy</a> (internal::RPCPolicyParameters defaults)</td></tr>
+<tr class="memdesc:a37ced19b02427a6fde27d622a6cd9f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an instance of the default <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations...">RPCBackoffPolicy</a>.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a37ced19b02427a6fde27d622a6cd9f1a">More...</a><br /></td></tr>
+<tr class="separator:a37ced19b02427a6fde27d622a6cd9f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ab383d4c12c7ab0838ad7be89fb03ca38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab383d4c12c7ab0838ad7be89fb03ca38">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_DEFAULT_INITIAL_DELAY&#160;&#160;&#160;std::chrono::milliseconds(10)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad3273acbdec1d5d5b3330c34428ca2da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3273acbdec1d5d5b3330c34428ca2da">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_DEFAULT_MAXIMUM_DELAY&#160;&#160;&#160;std::chrono::minutes(5)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
