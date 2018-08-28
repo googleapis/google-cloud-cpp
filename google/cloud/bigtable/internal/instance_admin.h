@@ -45,9 +45,12 @@ class InstanceAdmin {
   InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
         project_name_("projects/" + project_id()),
-        rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
-        polling_policy_(DefaultPollingPolicy()),
+        rpc_retry_policy_(
+            DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
+        rpc_backoff_policy_(
+            DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
+        polling_policy_(
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
         metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
 
   /**

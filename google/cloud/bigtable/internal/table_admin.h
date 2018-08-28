@@ -50,10 +50,13 @@ class TableAdmin {
       : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_(DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(DefaultRPCBackoffPolicy()),
+        rpc_retry_policy_(
+            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+        rpc_backoff_policy_(
+            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(DefaultPollingPolicy()) {}
+        polling_policy_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.

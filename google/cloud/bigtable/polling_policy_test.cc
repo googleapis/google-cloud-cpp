@@ -52,7 +52,8 @@ void CheckLimitedTime(bigtable::PollingPolicy& tested) {
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Simple) {
   bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff;
+  bigtable::ExponentialBackoffPolicy backoff(
+      bigtable::internal::kBigtableLimits);
   bigtable::GenericPollingPolicy<> tested(retry, backoff);
   CheckLimitedTime(tested);
 }
@@ -60,7 +61,8 @@ TEST(GenericPollingPolicy, Simple) {
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Clone) {
   bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff;
+  bigtable::ExponentialBackoffPolicy backoff(
+      bigtable::internal::kBigtableLimits);
   bigtable::GenericPollingPolicy<> original(retry, backoff);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
@@ -69,7 +71,8 @@ TEST(GenericPollingPolicy, Clone) {
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(GenericPollingPolicy, OnNonRetryable) {
   bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff;
+  bigtable::ExponentialBackoffPolicy backoff(
+      bigtable::internal::kBigtableLimits);
   bigtable::GenericPollingPolicy<> tested(retry, backoff);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }

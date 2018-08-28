@@ -79,8 +79,10 @@ class Table {
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(bigtable::TableId(TableName(client_, table_id))),
-        rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy()),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy()),
+        rpc_retry_policy_(
+            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+        rpc_backoff_policy_(
+            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
         metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}

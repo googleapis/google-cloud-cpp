@@ -36,6 +36,8 @@ function (create_bazel_config TARGET)
         if ("${in_binary_dir}" EQUAL 0)
             # Skip files in the binary directory, they are generated and handled
             # differently by our Bazel BUILD files.
+        elseif("${src}" MATCHES "\.inc$")
+            list(APPEND H ${src})
         elseif("${src}" MATCHES "\.h$")
             list(APPEND H ${src})
         elseif("${src}" MATCHES "\.cc$")
