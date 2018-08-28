@@ -1160,8 +1160,8 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_PollReturnsFailure) {
 /// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
 /// exhaust polling policy failure.
 TEST_F(TableAdminTest, CreateTableFromSnapshot_ExhaustPollingPolicyFailure) {
-  using ::testing::Invoke;
   using ::testing::_;
+  using ::testing::Invoke;
   using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::TableAdmin tested(
