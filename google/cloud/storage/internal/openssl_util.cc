@@ -64,8 +64,7 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
   int len = BIO_read(bio.get(), &result[0], static_cast<int>(str.size()));
   if (len < 0) {
     std::ostringstream os;
-    os << "Error parsing Base64 string [" << len << "], string=<" << str
-       << ">";
+    os << "Error parsing Base64 string [" << len << "], string=<" << str << ">";
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
 

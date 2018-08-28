@@ -60,7 +60,8 @@ TEST(WellKnownHeader, EncryptionKeyFromBase64) {
   ASSERT_TRUE(expected.has_value());
   // Generated with:
   //     /bin/echo -n 0123456789-ABCDEFGHIJ-0123456789 | openssl base64
-  EXPECT_EQ("MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=", expected.value().key);
+  EXPECT_EQ("MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=",
+            expected.value().key);
   auto actual = EncryptionKey::FromBase64Key(expected.value().key);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(expected.value().algorithm, actual.value().algorithm);
