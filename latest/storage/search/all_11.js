@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['updatebucket',['UpdateBucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7909a3ddbb72678ca9d9eb159234a16c',1,'google::cloud::storage::v0::Client']]],
-  ['updatebucketacl',['UpdateBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af181aaa4cf80882abee9fee0749837f5',1,'google::cloud::storage::v0::Client']]],
-  ['updatedefaultobjectacl',['UpdateDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a86b2abd5f3b2ded4e05309768891c709',1,'google::cloud::storage::v0::Client']]],
-  ['updateobjectacl',['UpdateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab620fb3cd2c62c990f8191449e1478b0',1,'google::cloud::storage::v0::Client']]],
-  ['uploadtype',['UploadType',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1UploadType.html',1,'google::cloud::storage::v0']]],
-  ['upsert_5fmetadata',['upsert_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a5d90005732160ea2fe0fd0477be1e554',1,'google::cloud::storage::v0::ObjectMetadata']]],
-  ['userproject',['UserProject',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html',1,'google::cloud::storage::v0']]]
+  ['time_5fdeleted',['time_deleted',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a6941888b59bab3ba8ba476bba4bfebdc',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['time_5fstorage_5fclass_5fupdated',['time_storage_class_updated',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab4191088c6f9a5704bc13d54c2fc6a8e',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['tojsonstring',['ToJsonString',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af30bbfd04003ebc94a4779f31782f341',1,'google::cloud::storage::v0::BucketMetadata::ToJsonString()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a12756d91fdd49a56b729bd3047684c7d',1,'google::cloud::storage::v0::ObjectMetadata::ToJsonString()']]],
+  ['type',['type',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html#ac10447994761d1e0460a9d1c7e75a606',1,'google::cloud::storage::v0::LifecycleRuleAction']]]
 ];
