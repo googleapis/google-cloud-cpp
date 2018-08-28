@@ -15,10 +15,14 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include <openssl/crypto.h>
+#include <openssl/opensslv.h>
 #include <algorithm>
 #include <cctype>
 #include <iostream>
 #include <string>
+#include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -26,10 +30,127 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+// The Google Cloud Storage C++ client library depends on libcurl, which depends
+// on many different SSL libraries, depending on the library the library needs
+// to take action to be thread-safe. More details can be found here:
+//
+//     https://curl.haxx.se/libcurl/c/threadsafe.html
+//
+std::once_flag ssl_locking_initialized;
+#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
+// OpenSSL before 1.1.0, and LibreSSL require the application to set locks
+// explicitly.  Both report OPENSSL_VERSION_NUMBER.
+std::vector<std::mutex> ssl_locks;
+
+// A callback to lock and unlock the mutexes needed by the SSL library.
+extern "C" void ssl_locking_cb(int mode, int type, char const* file, int line) {
+  if (mode & CRYPTO_LOCK) {
+    ssl_locks[type].lock();
+  } else {
+    ssl_locks[type].unlock();
+  }
+}
+
+bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
+  // Based on:
+  //    https://curl.haxx.se/libcurl/c/threadsafe.html
+  // Only these library prefixes require special configuration for using safely
+  // with multiple threads.
+  return (curl_ssl_id.find("OpenSSL/1.0") == 0 or
+          curl_ssl_id.find("LibreSSL/2") == 0);
+}
+
+void InitializeSslLocking() {
+  auto vinfo = curl_version_info(CURLVERSION_NOW);
+  std::string curl_ssl = vinfo->ssl_version;
+  // Only enable the lock callbacks if needed. We need to look at what SSL
+  // library is used by libcurl.  Many of them work fine without any additional
+  // setup.
+  if (not SslLibraryNeedsLocking(curl_ssl)) {
+    return;
+  }
+  // If we need to configure locking, make sure the library we linked against is
+  // the same library that libcurl is using. In environments where both
+  // OpenSSL/1.0.2 are OpenSSL/1.1.0 are available it is easy to link the wrong
+  // one, and that does not work because they have completely different symbols,
+  // despite the version numbers suggesting otherwise.
+  std::string expected_prefix = curl_ssl;
+  std::transform(expected_prefix.begin(), expected_prefix.end(),
+                 expected_prefix.begin(),
+                 [](char x) { return x == '/' ? ' ' : x; });
+  // LibreSSL seems to be using semantic versioning, so just check the major
+  // version.
+  if (expected_prefix.find("LibreSSL 2") == 0) {
+    expected_prefix = "LibreSSL 2";
+  }
+#ifdef OPENSSL_VERSION
+  std::string openssl_v = OpenSSL_version(OPENSSL_VERSION);
+#else
+  std::string openssl_v = SSLeay_version(SSLEAY_VERSION);
+#endif  // OPENSSL_VERSION
+  // We check the prefix for two reasons: (a) for some libraries it is enough
+  // that the major version matches (e.g. LibreSSL), and (b) because the
+  // `openssl_v` string sometimes reads `OpenSSL 1.1.0 May 2018` while the
+  // string reported by libcurl would be `OpenSSL/1.1.0`, sigh...
+  if (openssl_v.find(expected_prefix) != 0) {
+    std::ostringstream os;
+    os << "Mismatched versions of OpenSSL linked in libcurl vs. the version"
+       << " linked by the Google Cloud Storage C++ library.\n"
+       << "libcurl is linked against " << curl_ssl
+       << "\nwhile the google cloud storage library links against " << openssl_v
+       << "\nMismatched versions are not supported.  The Google Cloud Storage"
+       << "\nC++ library needs to configure the OpenSSL library used by libcurl"
+       << "\nand this is not possible if you link different versions.";
+    // This is a case where printing to stderr is justified, this happens during
+    // the library initialization, nothing else may get reported to the
+    // application developer.
+    std::cerr << os.str() << std::endl;
+    google::cloud::internal::RaiseRuntimeError(os.str());
+  }
+
+  // If we get to this point, we need to initialize the OpenSSL library to have
+  // a callback, the documentation:
+  //     https://www.openssl.org/docs/man1.0.2/crypto/threads.html
+  // is a bit hard to parse, but basically one must create CRYPTO_num_lock()
+  // mutexes, and a single callback for all of them.
+  //
+  ssl_locks = std::vector<std::mutex>(CRYPTO_num_locks());
+  CRYPTO_set_locking_callback(ssl_locking_cb);
+
+  // The documentation also recommends calling CRYPTO_THREADID_set_callback() to
+  // setup a function to return thread ids as integers (or pointers). Writing a
+  // portable function like that would be non-trivial, C++ thread identifiers
+  // are opaque, they cannot be converted to integers, pointers or the native
+  // thread type.
+  //
+  // Fortunately the documentation also states that a default version is
+  // provided:
+  //    "If the application does not register such a callback using
+  //     CRYPTO_THREADID_set_callback(), then a default implementation
+  //     is used"
+  // then goes on to describe how this default version works:
+  //    "on Windows and BeOS this uses the system's default thread identifying
+  //     APIs, and on all other platforms it uses the address of errno."
+  // Luckily, the C++11 standard guarantees that `errno` is a thread-specific
+  // object:
+  //     https://en.cppreference.com/w/cpp/error/errno
+  // There are no guarantees (as far as I know) that the errno used by a
+  // C-library like OpenSSL is the same errno as the one used by C++. But such
+  // an implementation would be terribly broken: it would be impossible to call
+  // C functions from C++. In my (coryan@google.com) opinion, we can rely on the
+  // default version.
+}
+#else
+void InitializeSslLocking() {}
+#endif  // OPENSSL_VERSION_NUMBER < 0x10100000L
+
 /// Automatically initialize (and cleanup) the libcurl library.
 class CurlInitializer {
  public:
-  CurlInitializer() { curl_global_init(CURL_GLOBAL_ALL); }
+  CurlInitializer() {
+    std::call_once(ssl_locking_initialized, InitializeSslLocking);
+    curl_global_init(CURL_GLOBAL_ALL);
+  }
   ~CurlInitializer() { curl_global_cleanup(); }
 };
 

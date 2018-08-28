@@ -26,6 +26,7 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 # can use the same testbench.
 export PROJECT_ID="fake-project-$(date +%s)"
 export BUCKET_NAME="fake-bucket-$(date +%s)"
+export LOCATION="fake-region1"
 
 echo
 echo "Running Storage integration tests against local servers."
@@ -56,8 +57,8 @@ echo "Running GCS Object APIs integration tests."
 ./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
-echo "Running storage::internal::CurlRequest integration test."
-./curl_request_integration_test
+echo "Running GCS multi-threaded integration test."
+./thread_integration_test "${PROJECT_ID}" "${LOCATION}"
 
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.

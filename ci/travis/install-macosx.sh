@@ -22,4 +22,4 @@ if [ "${TRAVIS_OS_NAME}" != "osx" ]; then
 fi
 
 brew update
-brew install curl openssl c-ares ccache
+brew install curl libressl c-ares ccache
