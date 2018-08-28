@@ -41,6 +41,11 @@ TEST(LinkTest, CurlVsOpenSSL) {
   std::transform(expected_prefix.begin(), expected_prefix.end(),
                  expected_prefix.begin(),
                  [](char x) { return x == '/' ? ' ' : x; });
+  // LibreSSL seems to be using semantic versioning, so just check the major
+  // version.
+  if (expected_prefix.find("LibreSSL 2") == 0) {
+    expected_prefix = "LibreSSL 2";
+  }
 #ifdef OPENSSL_VERSION
   std::string openssl_v = OpenSSL_version(OPENSSL_VERSION);
 #else
