@@ -152,6 +152,7 @@ add_library(storage_client
             internal/metadata_parser.cc
             internal/nljson.h
             internal/openssl_util.h
+            internal/openssl_util.cc
             internal/object_acl_requests.h
             internal/object_acl_requests.cc
             internal/object_requests.h

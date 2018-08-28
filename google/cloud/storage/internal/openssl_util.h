@@ -43,6 +43,11 @@ namespace internal {
 struct OpenSslUtils {
  public:
   /**
+   * Decodes a Base64-encoded string.
+   */
+  static std::string Base64Decode(std::string const& str);
+
+  /**
    * Encodes a string using Base64.
    */
   static std::string Base64Encode(std::string const& str) {

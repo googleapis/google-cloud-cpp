@@ -41,8 +41,17 @@ EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
                            Sha256AsBase64(key)};
 }
 
+EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key) {
+  std::string binary_key = internal::OpenSslUtils::Base64Decode(key);
+  return EncryptionKeyData{"AES256", key, Sha256AsBase64(binary_key)};
+}
+
 EncryptionKey EncryptionKey::FromBinaryKey(std::string const& key) {
   return EncryptionKey(EncryptionDataFromBinaryKey(key));
+}
+
+EncryptionKey EncryptionKey::FromBase64Key(std::string const& key) {
+  return EncryptionKey(EncryptionDataFromBase64Key(key));
 }
 
 std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs) {
@@ -57,6 +66,10 @@ std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs) {
 
 SourceEncryptionKey SourceEncryptionKey::FromBinaryKey(std::string const& key) {
   return SourceEncryptionKey(EncryptionDataFromBinaryKey(key));
+}
+
+SourceEncryptionKey SourceEncryptionKey::FromBase64Key(std::string const& key) {
+  return SourceEncryptionKey(EncryptionDataFromBase64Key(key));
 }
 
 std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs) {

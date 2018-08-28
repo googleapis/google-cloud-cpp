@@ -85,6 +85,14 @@ struct EncryptionKeyData {
  */
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key);
 
+/**
+ * Format an encryption key in base64 format to the data structure required by
+ * the Google Cloud Storage API.
+ *
+ * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
+ */
+EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key);
+
 struct EncryptionKey
     : public WellKnownHeader<EncryptionKey, EncryptionKeyData> {
   using WellKnownHeader<EncryptionKey, EncryptionKeyData>::WellKnownHeader;
@@ -95,6 +103,13 @@ struct EncryptionKey
    * @param key a binary key, must have exactly 32 bytes.
    */
   static EncryptionKey FromBinaryKey(std::string const& key);
+
+  /**
+   * Create an encryption key parameter from a key in base64 format.
+   *
+   * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
+   */
+  static EncryptionKey FromBase64Key(std::string const& key);
 
   static char const* prefix() { return "x-goog-encryption-"; }
 };
@@ -112,6 +127,13 @@ struct SourceEncryptionKey
    * @param key a binary key, must have exactly 32 bytes.
    */
   static SourceEncryptionKey FromBinaryKey(std::string const& key);
+
+  /**
+   * Create an encryption key parameter from a key in base64 format.
+   *
+   * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
+   */
+  static SourceEncryptionKey FromBase64Key(std::string const& key);
 
   static char const* prefix() { return "x-goog-copy-source-encryption-"; }
 };

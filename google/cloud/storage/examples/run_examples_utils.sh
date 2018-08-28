@@ -152,11 +152,9 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}"
 
   local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
-  # This is included for demonstration purposes only. You should consult your
-  # security team about best practices to create encryption keys.
-  local key="$(printf "%-32s" "KEY-${RANDOM}-${RANDOM}-${RANDOM}-${RANDOM}" |
-      tr ' ' '=')"
 
+  local key="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
   run_example ./storage_object_samples write-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
   run_example ./storage_object_samples read-encrypted-object \

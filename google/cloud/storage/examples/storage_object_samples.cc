@@ -232,7 +232,11 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
 
   // Create the PRNG with the fetched entropy.
   std::seed_seq seed(entropy.begin(), entropy.end());
-  GeneratorType gen(seed);
+
+  // initialized with enough entropy such that the encryption keys are not
+  // predictable. Note that the default constructor for all the generators in
+  // the C++ standard library produce predictable keys.
+  std::mt19937_64 gen(seed);
 
   namespace gcs = google::cloud::storage;
   gcs::EncryptionKeyData data = gcs::CreateKeyFromGenerator(gen);
@@ -246,46 +250,48 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "write-encrypted-object <bucket-name> <object-name> <raw-aes256-key>"};
+        "write-encrypted-object <bucket-name> <object-name>"
+        " <base64-encoded-aes256-key>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  auto raw_aes256_key = ConsumeArg(argc, argv);
+  auto base64_aes256_key = ConsumeArg(argc, argv);
   //! [insert encrypted object] [START storage_upload_encrypted_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string raw_aes256_key) {
-    gcs::ObjectMetadata meta =
-        client.InsertObject(bucket_name, object_name, "top secret",
-                            gcs::EncryptionKey::FromBinaryKey(raw_aes256_key));
+     std::string base64_aes256_key) {
+    gcs::ObjectMetadata meta = client.InsertObject(
+        bucket_name, object_name, "top secret",
+        gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
     std::cout << "The object was created. The new object metadata is " << meta
               << std::endl;
   }
   //! [insert encrypted object] [END storage_upload_encrypted_file]
-  (std::move(client), bucket_name, object_name, raw_aes256_key);
+  (std::move(client), bucket_name, object_name, base64_aes256_key);
 }
 
 void ReadEncryptedObject(google::cloud::storage::Client client, int& argc,
                          char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "read-encrypted-object <bucket-name> <object-name> <raw-aes256-key>"};
+        "read-encrypted-object <bucket-name> <object-name>"
+        " <base64-encoded-aes256-key>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  auto raw_aes256_key = ConsumeArg(argc, argv);
+  auto base64_aes256_key = ConsumeArg(argc, argv);
   //! [read encrypted object] [START storage_download_encrypted_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string raw_aes256_key) {
+     std::string base64_aes256_key) {
     gcs::ObjectReadStream stream =
         client.ReadObject(bucket_name, object_name,
-                          gcs::EncryptionKey::FromBinaryKey(raw_aes256_key));
+                          gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
     std::string data(std::istreambuf_iterator<char>{stream}, {});
     std::cout << "The object contents are: " << data << std::endl;
   }
   //! [read encrypted object] [END storage_download_encrypted_file]
-  (std::move(client), bucket_name, object_name, raw_aes256_key);
+  (std::move(client), bucket_name, object_name, base64_aes256_key);
 }
 }  // anonymous namespace
 
