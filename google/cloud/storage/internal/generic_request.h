@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
 
 #include "google/cloud/storage/well_known_headers.h"
+#include "google/cloud/storage/well_known_parameters.h"
 #include <iostream>
 #include <utility>
 
@@ -140,11 +141,12 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  * @tparam Options the list of options that the Request class will support.
  */
 template <typename Derived, typename... Options>
-class GenericRequest : public GenericRequestBase<Derived, IfMatchEtag,
-                                                 IfNoneMatchEtag, Options...> {
+class GenericRequest
+    : public GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag,
+                                QuotaUser, Options...> {
  public:
-  using Super =
-      GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag, Options...>;
+  using Super = GenericRequestBase<Derived, IfMatchEtag, IfNoneMatchEtag,
+                                   QuotaUser, Options...>;
 
   template <typename H, typename... T>
   Derived& set_multiple_options(H&& h, T&&... tail) {
