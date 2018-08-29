@@ -83,8 +83,9 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4075216f99c1d4e59126cc620cc861ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4075216f99c1d4e59126cc620cc861ba">ObjectMetadata</a> ()</td></tr>
 <tr class="separator:a4075216f99c1d4e59126cc620cc861ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12756d91fdd49a56b729bd3047684c7d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a12756d91fdd49a56b729bd3047684c7d">ToJsonString</a> () const</td></tr>
-<tr class="separator:a12756d91fdd49a56b729bd3047684c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1cbb5fea5504306112135c8a1ac10f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a0d1cbb5fea5504306112135c8a1ac10f">JsonPayloadForUpdate</a> () const</td></tr>
+<tr class="memdesc:a0d1cbb5fea5504306112135c8a1ac10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the payload for a call to <code>Objects: update</code>.  <a href="#a0d1cbb5fea5504306112135c8a1ac10f">More...</a><br /></td></tr>
+<tr class="separator:a0d1cbb5fea5504306112135c8a1ac10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45d2ede154740321b656889b2d741a79"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a45d2ede154740321b656889b2d741a79">acl</a> () const</td></tr>
 <tr class="separator:a45d2ede154740321b656889b2d741a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd732268b8ef32c067c551312a650079"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#abd732268b8ef32c067c551312a650079">mutable_acl</a> ()</td></tr>
@@ -549,6 +550,26 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d1cbb5fea5504306112135c8a1ac10f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d1cbb5fea5504306112135c8a1ac10f">&#9670;&nbsp;</a></span>JsonPayloadForUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage::v0::ObjectMetadata::JsonPayloadForUpdate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the payload for a call to <code>Objects: update</code>. </p>
+<p>The <code>Objects: update</code> API only accepts a subset of the writeable fields in the object resource. This function selects the relevant fields and formats them as a JSON string. </p>
 
 </div>
 </div>
@@ -1076,23 +1097,6 @@ Friends</h2></td></tr>
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a12756d91fdd49a56b729bd3047684c7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12756d91fdd49a56b729bd3047684c7d">&#9670;&nbsp;</a></span>ToJsonString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string google::cloud::storage::v0::ObjectMetadata::ToJsonString </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
 </div><div class="memdoc">
 
 </div>

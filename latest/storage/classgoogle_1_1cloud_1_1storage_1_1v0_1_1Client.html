@@ -163,6 +163,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0c9ed0e219ba99dce6024e326d7c9708"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0c9ed0e219ba99dce6024e326d7c9708">DeleteObject</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:a0c9ed0e219ba99dce6024e326d7c9708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete an object.  <a href="#a0c9ed0e219ba99dce6024e326d7c9708">More...</a><br /></td></tr>
 <tr class="separator:a0c9ed0e219ba99dce6024e326d7c9708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38ab992504196fd553cf47bdd2646e99"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a38ab992504196fd553cf47bdd2646e99"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a38ab992504196fd553cf47bdd2646e99">UpdateObject</a> (std::string bucket_name, std::string object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a38ab992504196fd553cf47bdd2646e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the metadata in a Google Cloud Storage Object.  <a href="#a38ab992504196fd553cf47bdd2646e99">More...</a><br /></td></tr>
+<tr class="separator:a38ab992504196fd553cf47bdd2646e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0030af74c45749f6178f160728d8ef6"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ab0030af74c45749f6178f160728d8ef6"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0030af74c45749f6178f160728d8ef6">ListBucketAcl</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0030af74c45749f6178f160728d8ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of BucketAccessControls for a bucket.  <a href="#ab0030af74c45749f6178f160728d8ef6">More...</a><br /></td></tr>
@@ -2486,6 +2490,74 @@ template&lt;typename... Options&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity,</div><div class="line">     std::string role) {</div><div class="line">    gcs::ObjectAccessControl current_acl =</div><div class="line">        client.GetDefaultObjectAcl(bucket_name, entity);</div><div class="line">    current_acl.set_role(role);</div><div class="line">    gcs::ObjectAccessControl acl =</div><div class="line">        client.UpdateDefaultObjectAcl(bucket_name, current_acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Default Object ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects">https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects</a> </dd></dl>
+
+</div>
+</div>
+<a id="a38ab992504196fd553cf47bdd2646e99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38ab992504196fd553cf47bdd2646e99">&#9670;&nbsp;</a></span>UpdateObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> google::cloud::storage::v0::Client::UpdateObject </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the metadata in a Google Cloud Storage Object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket that contains the object. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object. </td></tr>
+    <tr><td class="paramname">metadata</td><td>the new metadata for the Object. Only the writeable fields accepted by the <code>Objects: update</code> API are used, all other fields are ignored. In particular, note that <code>bucket</code> and <code>name</code> are ignored in favor of <code>bucket_name</code> and <code>object_name</code>. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Generation.html">Generation</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationMatch.html">IfGenerationMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationNotMatch.html">IfGenerationNotMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetagenerationMatch.html">IfMetagenerationMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetagenerationNotMatch.html">IfMetagenerationNotMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PredefinedAcl.html">PredefinedAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Projection.html">Projection</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string key, std::string value) {</div><div class="line">    gcs::ObjectMetadata meta =</div><div class="line">        client.GetObjectMetadata(bucket_name, object_name);</div><div class="line">    gcs::ObjectMetadata desired = meta;</div><div class="line">    desired.mutable_metadata().emplace(key, value);</div><div class="line">    gcs::ObjectMetadata updated = client.UpdateObject(</div><div class="line">        bucket_name, object_name, desired, gcs::IfMatchEtag(meta.etag()));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Object updated. The full metadata after the update is: &quot;</span></div><div class="line">              &lt;&lt; updated &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
