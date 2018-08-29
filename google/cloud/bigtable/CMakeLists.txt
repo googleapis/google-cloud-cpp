@@ -118,6 +118,7 @@ add_library(bigtable_client
             admin_client.cc
             app_profile_config.h
             app_profile_config.cc
+            async_operation.h
             bigtable_strong_types.h
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
             cell.h
@@ -126,6 +127,8 @@ add_library(bigtable_client
             cluster_config.h
             cluster_config.cc
             column_family.h
+            completion_queue.h
+            completion_queue.cc
             data_client.h
             data_client.cc
             filters.h
@@ -141,6 +144,8 @@ add_library(bigtable_client
             instance_update_config.cc
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
+            internal/completion_queue_impl.h
+            internal/completion_queue_impl.cc
             internal/common_client.h
             internal/common_client.cc
             internal/conjunction.h
@@ -252,6 +257,7 @@ set(bigtable_client_unit_tests
     client_options_test.cc
     cluster_config_test.cc
     column_family_test.cc
+    completion_queue_test.cc
     data_client_test.cc
     filters_test.cc
     force_sanitizer_failures_test.cc
