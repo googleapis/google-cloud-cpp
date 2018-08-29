@@ -80,7 +80,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    * the object resource. This function selects the relevant fields and formats
    * them as a JSON string.
    */
-  std::string UpdatePayload() const;
+  std::string JsonPayloadForUpdate() const;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
