@@ -48,15 +48,10 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
 
-  UniqueBioChainPtr bio(BIO_push(filter.get(), source.get()), &BIO_free_all);
-  if (not bio) {
-    std::ostringstream os;
-    os << __func__ << ": cannot create BIO chain for Base64 decoding";
-    google::cloud::internal::RaiseRuntimeError(os.str());
-  }
-  // Only after bio is successfully constructed we can release ownership.
-  (void)source.release();
-  (void)filter.release();
+  // Based on the documentation this never fails, so we can transfer ownership
+  // of `filter` and `source` and do not need to check the result.
+  UniqueBioChainPtr bio(BIO_push(filter.release(), source.release()),
+                        &BIO_free_all);
   BIO_set_flags(bio.get(), BIO_FLAGS_BASE64_NO_NL);
 
   // We do not retry, just make one call because the full stream is blocking.
