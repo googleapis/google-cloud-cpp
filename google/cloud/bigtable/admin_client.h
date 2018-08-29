@@ -130,6 +130,14 @@ class AdminClient {
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       google::protobuf::Empty* response) = 0;
   //@}
+
+  //@{
+  /// @name The `google.longrunning.Operations` wrappers.
+  virtual grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.

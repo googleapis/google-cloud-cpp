@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
 namespace cloud {
@@ -104,6 +105,10 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       google::protobuf::Empty* response) override;
+  virtual grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) override;
   //@}
 
  private:

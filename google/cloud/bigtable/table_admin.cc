@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <sstream>
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -144,6 +145,49 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
+}
+
+std::future<btadmin::Table> TableAdmin::CreateTableFromSnapshot(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, std::string table_id) {
+  return std::async(std::launch::async,
+                    &TableAdmin::CreateTableFromSnapshotImpl, this, cluster_id,
+                    snapshot_id, table_id);
+}
+
+btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, std::string table_id) {
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  // Build the RPC request, try to minimize copying.
+  btadmin::Table result;
+  btadmin::CreateTableFromSnapshotRequest request;
+  request.set_parent(instance_name());
+  request.set_source_snapshot(impl_.SnapshotName(cluster_id, snapshot_id));
+  request.set_table_id(std::move(table_id));
+
+  grpc::Status status;
+  using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
+
+  auto operation = ClientUtils::MakeCall(
+      *impl_.client_, *rpc_policy, *backoff_policy,
+      impl_.metadata_update_policy_, &AdminClient::CreateTableFromSnapshot,
+      request, "TableAdmin", status, true);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status,
+                                      "unrecoverable error in MakeCall()");
+  }
+
+  result = impl_.PollLongRunningOperation<btadmin::Table>(
+      operation, "TableAdmin::CreateTableFromSnapshot", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status,
+        "while polling operation in TableAdmin::CreateTableFromSnapshot");
+  }
+  return result;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

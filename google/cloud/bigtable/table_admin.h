@@ -281,6 +281,25 @@ class TableAdmin {
    */
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
+
+  /**
+   * Create table from snapshot.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
+   *
+   * @param cluster_id the id of the cluster to which snapshot belongs.
+   * @param snapshot_id the id of the snapshot to which table belongs.
+   * @param table_id the id of the table which needs to be created.
+   * @throws std::exception if the operation cannot be completed.
+   */
+  std::future<google::bigtable::admin::v2::Table> CreateTableFromSnapshot(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id, std::string table_id);
+
   //@}
 
   /**
@@ -309,6 +328,11 @@ class TableAdmin {
   bool WaitForConsistencyCheckImpl(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
+
+  /// Implement CreateTableFromSnapshot() with a separate thread.
+  google::bigtable::admin::v2::Table CreateTableFromSnapshotImpl(
+      bigtable::ClusterId const& cluster_id,
+      bigtable::SnapshotId const& snapshot_id, std::string table_id);
 
  private:
   noex::TableAdmin impl_;

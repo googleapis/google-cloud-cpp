@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -1019,3 +1020,202 @@ TEST_F(TableAdminTest, ListSnapshots_UnrecoverableFailures) {
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` works in
+ * the easy case.
+ */
+TEST_F(TableAdminTest, CreateTableFromSnapshot_Simple) {
+  using namespace ::testing;
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    btadmin::CreateTableFromSnapshotRequest const& request,
+                    google::longrunning::Operation* response) {
+            auto const project_name =
+                "projects/" + kProjectId + "/instances/the-instance";
+            EXPECT_EQ(project_name, request.parent());
+            EXPECT_EQ("table-1", request.table_id());
+            EXPECT_EQ(
+                project_name + "/clusters/other-cluster/snapshots/snapshot-1",
+                request.source_snapshot());
+
+            return grpc::Status::OK;
+          }));
+
+  std::string expected_text = R"(
+        name: 'the-instance'        
+  )";
+  auto mock_successs = [](grpc::ClientContext* ctx,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+    operation->set_done(false);
+    return grpc::Status::OK;
+  };
+
+  btadmin::Table expected;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke(mock_successs))
+      .WillOnce(Invoke(mock_successs))
+      .WillOnce(Invoke(
+          [&expected](grpc::ClientContext*,
+                      google::longrunning::GetOperationRequest const& request,
+                      google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto any =
+                google::cloud::internal::make_unique<google::protobuf::Any>();
+            any->PackFrom(expected);
+            operation->set_allocated_response(any.release());
+            return grpc::Status::OK;
+          }));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+
+  auto actual = future.get();
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` handles
+ * unrecoverable failure.
+ */
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
+  using namespace ::testing;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
+/// failure.
+TEST_F(TableAdminTest, CreateTableFromSnapshot_PollReturnsFailure) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    btadmin::CreateTableFromSnapshotRequest const& request,
+                    google::longrunning::Operation* response) {
+            return grpc::Status::OK;
+          }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
+            error->set_code(grpc::StatusCode::FAILED_PRECONDITION);
+            error->set_message("something is broken");
+            operation->set_allocated_error(error.release());
+            return grpc::Status::OK;
+          }));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+
+/// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
+/// exhaust polling policy failure.
+TEST_F(TableAdminTest, CreateTableFromSnapshot_ExhaustPollingPolicyFailure) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  bigtable::TableAdmin tested(
+      client_, "the-instance",
+      bigtable::GenericPollingPolicy<bigtable::LimitedErrorCountRetryPolicy,
+                                     bigtable::ExponentialBackoffPolicy>(
+          bigtable::LimitedErrorCountRetryPolicy(3),
+          bigtable::ExponentialBackoffPolicy(10_ms, 10_min)));
+
+  EXPECT_CALL(*client_, CreateTableFromSnapshot(_, _, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    btadmin::CreateTableFromSnapshotRequest const& request,
+                    google::longrunning::Operation* response) {
+            return grpc::Status::OK;
+          }));
+
+  EXPECT_CALL(*client_, GetOperation(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          google::longrunning::GetOperationRequest const&,
+                          google::longrunning::Operation* operation) {
+        operation->set_done(false);
+        return grpc::Status::OK;
+      }))
+      .WillOnce(
+          Invoke([](grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    google::longrunning::Operation* operation) {
+            operation->set_done(true);
+            auto error =
+                google::cloud::internal::make_unique<google::rpc::Status>();
+            error->set_code(grpc::StatusCode::UNKNOWN);
+            error->set_message("Polling policy exhausted");
+            operation->set_allocated_error(error.release());
+            return grpc::Status::OK;
+          }));
+
+  std::string table_id = "table-1";
+  auto future = tested.CreateTableFromSnapshot(
+      bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
+      table_id);
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THROW(future.get(), bigtable::GRpcError);
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
