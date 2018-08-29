@@ -28,6 +28,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+/// Hold a CURL* handle and automatically clean it up.
+using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
+
 /// Hold a CURLM* handle and automatically clean it up.
 using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
 
@@ -39,6 +42,8 @@ using CurlHeaders = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
 using CurlReceivedHeaders = std::multimap<std::string, std::string>;
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                                  char const* data, std::size_t size);
+
+using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

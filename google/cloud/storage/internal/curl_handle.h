@@ -171,6 +171,8 @@ class CurlHandle {
   void FlushDebug(char const* where);
 
  private:
+  explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
+
   friend class CurlDownloadRequest;
   friend class CurlRequest;
   friend class CurlUploadRequest;
@@ -190,7 +192,6 @@ class CurlHandle {
     RaiseSetOptionError(e, opt, param.c_str());
   }
 
-  using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   CurlPtr handle_;
   std::string debug_buffer_;
 

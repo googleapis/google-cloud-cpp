@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 
+#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/credentials.h"
 
 namespace google {
@@ -77,6 +78,16 @@ class ClientOptions {
     return *this;
   }
 
+  std::size_t connection_pool_size() const { return connection_pool_size_; }
+  ClientOptions& set_connection_pool_size(std::size_t size) {
+    if (size == 0) {
+      google::cloud::internal::RaiseInvalidArgument(
+          "Cannot set connection pool size to 0");
+    }
+    connection_pool_size_ = size;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -87,6 +98,7 @@ class ClientOptions {
   bool enable_http_tracing_;
   bool enable_raw_client_tracing_;
   std::string project_id_;
+  std::size_t connection_pool_size_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

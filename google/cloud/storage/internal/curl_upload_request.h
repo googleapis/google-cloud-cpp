@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_UPLOAD_REQUEST_H_
 
 #include "google/cloud/log.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 
@@ -38,6 +39,14 @@ class CurlUploadRequest {
  public:
   explicit CurlUploadRequest(std::size_t initial_buffer_size);
 
+  ~CurlUploadRequest() {
+    if (not factory_) {
+      return;
+    }
+    factory_->CleanupHandle(std::move(handle_.handle_));
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
+
   CurlUploadRequest(CurlUploadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
         headers_(std::move(rhs.headers_)),
@@ -45,6 +54,7 @@ class CurlUploadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        factory_(std::move(rhs.factory_)),
         buffer_(std::move(rhs.buffer_)),
         buffer_rdptr_(rhs.buffer_rdptr_),
         closing_(rhs.closing_),
@@ -59,6 +69,7 @@ class CurlUploadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    factory_ = std::move(rhs.factory_);
     buffer_ = std::move(rhs.buffer_);
     buffer_rdptr_ = rhs.buffer_rdptr_;
     closing_ = rhs.closing_;
@@ -138,8 +149,8 @@ class CurlUploadRequest {
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
   CurlHandle handle_;
-  using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
   CurlMulti multi_;
+  std::shared_ptr<CurlHandleFactory> factory_;
 
   std::string buffer_;
   std::string::iterator buffer_rdptr_;

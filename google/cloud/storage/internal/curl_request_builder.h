@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_BUILDER_H_
 
 #include "google/cloud/storage/internal/curl_download_request.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/curl_upload_request.h"
 #include "google/cloud/storage/well_known_headers.h"
@@ -33,7 +34,9 @@ class CurlRequestBuilder {
   using RequestType = CurlRequest;
   using UploadType = CurlUploadRequest;
 
-  explicit CurlRequestBuilder(std::string base_url);
+  explicit CurlRequestBuilder(std::string base_url,
+                              std::shared_ptr<CurlHandleFactory> factory =
+                                  GetDefaultCurlHandleFactory());
 
   /**
    * Create a http request with the given payload.
@@ -134,6 +137,8 @@ class CurlRequestBuilder {
 
   CurlRequestBuilder& SetDebugLogging(bool enabled);
 
+  CurlRequestBuilder& SetCurlShare(CURLSH* share);
+
   CurlRequestBuilder& SetInitialBufferSize(std::size_t size);
 
   /// Get the user-agent suffix.
@@ -146,6 +151,8 @@ class CurlRequestBuilder {
 
  private:
   void ValidateBuilderState(char const* where) const;
+
+  std::shared_ptr<CurlHandleFactory> factory_;
 
   CurlHandle handle_;
   CurlHeaders headers_;

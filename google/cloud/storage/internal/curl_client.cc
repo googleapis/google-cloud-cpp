@@ -21,25 +21,54 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+extern "C" void CurlShareLockCallback(CURL* handle, curl_lock_data data,
+                                      curl_lock_access access, void* userptr) {
+  auto* client = reinterpret_cast<CurlClient*>(userptr);
+  client->LockShared();
+}
+
+extern "C" void CurlShareUnlockCallback(CURL* handle, curl_lock_data data,
+                                        void* userptr) {
+  auto* client = reinterpret_cast<CurlClient*>(userptr);
+  client->UnlockShared();
+}
+
+}  // namespace
 
 template <typename Request>
 void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
                               Request const& request, char const* method) {
-  builder.SetMethod(method);
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  builder.SetMethod(method)
+      .SetDebugLogging(options_.enable_http_tracing())
+      .SetCurlShare(share_.get())
+      .AddHeader(options_.credentials()->AuthorizationHeader());
   request.AddOptionsToHttpRequest(builder);
 }
 
-CurlClient::CurlClient(ClientOptions options) : options_(std::move(options)) {
+CurlClient::CurlClient(ClientOptions options)
+    : options_(std::move(options)),
+      storage_factory_(
+          new PooledCurlHandleFactory(options_.connection_pool_size())),
+      upload_factory_(
+          new PooledCurlHandleFactory(options_.connection_pool_size())),
+      share_(curl_share_init(), &curl_share_cleanup) {
   storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
   upload_endpoint_ =
       options_.endpoint() + "/upload/storage/" + options_.version();
+
+  curl_share_setopt(share_.get(), CURLSHOPT_LOCKFUNC, CurlShareLockCallback);
+  curl_share_setopt(share_.get(), CURLSHOPT_UNLOCKFUNC,
+                    CurlShareUnlockCallback);
+  curl_share_setopt(share_.get(), CURLSHOPT_USERDATA, this);
+  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
+  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
 }
 
 std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
     ListBucketsRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b");
+  CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
   SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("project", request.project_id());
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
@@ -55,7 +84,7 @@ std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
 std::pair<Status, BucketMetadata> CurlClient::CreateBucket(
     CreateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b");
+  CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
   SetupBuilder(builder, request, "POST");
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type: application/json");
@@ -72,7 +101,8 @@ std::pair<Status, BucketMetadata> CurlClient::CreateBucket(
 std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (200 != payload.status_code) {
@@ -87,7 +117,8 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
 std::pair<Status, EmptyResponse> CurlClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -101,8 +132,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucket(
 std::pair<Status, BucketMetadata> CurlClient::UpdateBucket(
     UpdateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
-                             request.metadata().name());
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.metadata().name(), storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
@@ -118,7 +149,8 @@ std::pair<Status, BucketMetadata> CurlClient::UpdateBucket(
 std::pair<Status, BucketMetadata> CurlClient::PatchBucket(
     PatchBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket());
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
@@ -134,8 +166,8 @@ std::pair<Status, BucketMetadata> CurlClient::PatchBucket(
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(upload_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o");
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   SetupBuilder(builder, request, "POST");
   // Set the content type of a sensible value, the application can override this
   // in the options for the request.
@@ -159,7 +191,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
 std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name());
+                                 "/o/" + request.object_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -175,7 +208,8 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name());
+                                 "/o/" + request.object_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("alt", "media");
   // TODO(#937) - use client options to configure buffer size.
@@ -188,7 +222,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
 std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
 CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
-  CurlRequestBuilder builder(url);
+  CurlRequestBuilder builder(url, upload_factory_);
   SetupBuilder(builder, request, "POST");
   // Set the content type of a sensible value, the application can override this
   // in the options for the request.
@@ -208,8 +242,9 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
 std::pair<Status, ListObjectsResponse> CurlClient::ListObjects(
     ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o");
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/o",
+      storage_factory_);
   SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("pageToken", request.page_token());
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
@@ -227,7 +262,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
     DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name());
+                                 "/o/" + request.object_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -241,7 +277,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
 std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
     UpdateObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name());
+                                 "/o/" + request.object_name(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
@@ -256,8 +293,9 @@ std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
 
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl");
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/acl",
+      storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -273,7 +311,8 @@ std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl/" + request.entity());
+                                 "/acl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -287,8 +326,9 @@ std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
 
 std::pair<Status, BucketAccessControl> CurlClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl");
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/acl",
+      storage_factory_);
   SetupBuilder(builder, request, "POST");
   builder.AddHeader("Content-Type: application/json");
   nl::json object;
@@ -307,7 +347,8 @@ std::pair<Status, BucketAccessControl> CurlClient::CreateBucketAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl/" + request.entity());
+                                 "/acl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -321,7 +362,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl/" + request.entity());
+                                 "/acl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   nl::json patch;
@@ -340,7 +382,8 @@ std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/acl/" + request.entity());
+                                 "/acl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
@@ -357,7 +400,8 @@ std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl");
+                                 "/o/" + request.object_name() + "/acl",
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -373,7 +417,8 @@ std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl");
+                                 "/o/" + request.object_name() + "/acl",
+                             storage_factory_);
   SetupBuilder(builder, request, "POST");
   builder.AddHeader("Content-Type: application/json");
   nl::json object;
@@ -392,8 +437,9 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl/" +
-                             request.entity());
+                                 "/o/" + request.object_name() + "/acl/" +
+                                 request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -407,8 +453,9 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl/" +
-                             request.entity());
+                                 "/o/" + request.object_name() + "/acl/" +
+                                 request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -423,8 +470,9 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl/" +
-                             request.entity());
+                                 "/o/" + request.object_name() + "/acl/" +
+                                 request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   nl::json object;
@@ -443,8 +491,9 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/acl/" +
-                             request.entity());
+                                 "/o/" + request.object_name() + "/acl/" +
+                                 request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
@@ -460,8 +509,9 @@ std::pair<Status, ObjectAccessControl> CurlClient::PatchObjectAcl(
 std::pair<Status, ListDefaultObjectAclResponse>
 CurlClient::ListDefaultObjectAcl(ListDefaultObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl");
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/defaultObjectAcl",
+      storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -476,8 +526,9 @@ CurlClient::ListDefaultObjectAcl(ListDefaultObjectAclRequest const& request) {
 
 std::pair<Status, ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl");
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/defaultObjectAcl",
+      storage_factory_);
   SetupBuilder(builder, request, "POST");
   nl::json object;
   object["entity"] = request.entity();
@@ -496,7 +547,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl/" + request.entity());
+                                 "/defaultObjectAcl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -510,7 +562,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl/" + request.entity());
+                                 "/defaultObjectAcl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -525,7 +578,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl/" + request.entity());
+                                 "/defaultObjectAcl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   nl::json object;
@@ -544,7 +598,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/defaultObjectAcl/" + request.entity());
+                                 "/defaultObjectAcl/" + request.entity(),
+                             storage_factory_);
   SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
@@ -556,6 +611,10 @@ std::pair<Status, ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
   return std::make_pair(Status(),
                         ObjectAccessControl::ParseFromString(payload.payload));
 }
+
+void CurlClient::LockShared() { mu_.lock(); }
+
+void CurlClient::UnlockShared() { mu_.unlock(); }
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

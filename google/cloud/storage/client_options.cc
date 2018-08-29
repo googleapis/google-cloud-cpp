@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <set>
 #include <sstream>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -32,6 +33,14 @@ StorageDefaultCredentials() {
   return google::cloud::storage::GoogleDefaultCredentials();
 }
 
+std::size_t DefaultConnectionPoolSize() {
+  std::size_t nthreads = std::thread::hardware_concurrency();
+  if (nthreads == 0) {
+    return 4;
+  }
+  return 4 * nthreads;
+}
+
 }  // namespace
 
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
@@ -41,7 +50,8 @@ ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
       endpoint_("https://www.googleapis.com"),
       version_("v1"),
       enable_http_tracing_(false),
-      enable_raw_client_tracing_(false) {
+      enable_raw_client_tracing_(false),
+      connection_pool_size_(DefaultConnectionPoolSize()) {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     endpoint_ = emulator;

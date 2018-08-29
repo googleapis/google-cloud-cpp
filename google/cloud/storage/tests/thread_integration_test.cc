@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -149,7 +150,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
       Projection("full"));
   EXPECT_EQ(bucket_name, bucket.name());
 
-  constexpr int kObjectCount = 10000;
+  constexpr int kObjectCount = 2000;
   std::vector<std::string> objects;
   objects.reserve(kObjectCount);
   std::generate_n(std::back_inserter(objects), kObjectCount,
@@ -160,7 +161,6 @@ TEST_F(ThreadIntegrationTest, Unshared) {
     thread_count = 4;
   }
 
-  std::cout << "Creating " << kObjectCount << " objects " << std::flush;
   auto groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks;
   for (auto const& g : groups) {
@@ -169,11 +169,8 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   }
   for (auto& t : tasks) {
     t.get();
-    std::cout << '.' << std::flush;
   }
-  std::cout << " DONE" << std::endl;
 
-  std::cout << "Deleting " << kObjectCount << " objects " << std::flush;
   tasks.clear();
   for (auto const& g : groups) {
     tasks.emplace_back(
@@ -181,12 +178,98 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   }
   for (auto& t : tasks) {
     t.get();
-    std::cout << '.' << std::flush;
   }
-  std::cout << " DONE" << std::endl;
 
-  std::cout << "Deleting " << bucket_name << std::endl;
   client.DeleteBucket(bucket_name);
+  // This is basically a smoke test, if the test does not crash it was
+  // successful.
+  SUCCEED();
+}
+
+class CaptureSendHeaderBackend : public LogBackend {
+ public:
+  std::vector<std::string> log_lines;
+
+  void Process(LogRecord const& lr) override {
+    // Break the records in lines, because we will analyze the output per line.
+    std::istringstream is(lr.message);
+    while (not is.eof()) {
+      std::string line;
+      std::getline(is, line);
+      log_lines.emplace_back(std::move(line));
+    }
+  }
+
+  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
+};
+
+TEST_F(ThreadIntegrationTest, ReuseConnections) {
+  auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+
+  auto project_id = ThreadTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+
+  auto id = LogSink::Instance().AddBackend(log_backend);
+  auto bucket = client.CreateBucketForProject(
+      bucket_name, project_id,
+      BucketMetadata()
+          .set_storage_class(storage_class::Regional())
+          .set_location(ThreadTestEnvironment::location())
+          .disable_versioning(),
+      PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
+      Projection("full"));
+  EXPECT_EQ(bucket_name, bucket.name());
+
+  constexpr int kObjectCount = 100;
+  std::vector<std::string> objects;
+  objects.reserve(kObjectCount);
+  std::generate_n(std::back_inserter(objects), kObjectCount,
+                  [this] { return MakeRandomObjectName(); });
+
+  std::vector<std::chrono::steady_clock::duration> create_elapsed;
+  std::vector<std::chrono::steady_clock::duration> delete_elapsed;
+  for (auto const& name : objects) {
+    auto start = std::chrono::steady_clock::now();
+    (void)client.InsertObject(bucket_name, name, LoremIpsum(),
+                              IfGenerationMatch(0));
+    create_elapsed.emplace_back(std::chrono::steady_clock::now() - start);
+  }
+  for (auto const& name : objects) {
+    auto start = std::chrono::steady_clock::now();
+    (void)client.DeleteObject(bucket_name, name);
+    delete_elapsed.emplace_back(std::chrono::steady_clock::now() - start);
+  }
+  LogSink::Instance().RemoveBackend(id);
+  client.DeleteBucket(bucket_name);
+
+  std::set<std::string> connected;
+  std::copy_if(
+      log_backend->log_lines.begin(), log_backend->log_lines.end(),
+      std::inserter(connected, connected.end()), [](std::string const& line) {
+        // libcurl prints established connections using this format:
+        //   Connected to <hostname> (<ipaddress>) port <num> (#<connection>)
+        // We capturing the different lines in that form tells us how many
+        // different connections were used.
+        return line.find("== curl(Info): Connected to ") != std::string::npos;
+      });
+  // We expect that at most 5% of the requests required a new connection,
+  // ideally it should be 1 connection, but anything small is acceptable. Recall
+  // that we make two requests per connection, so:
+  std::size_t max_expected_connections = kObjectCount * 2 * 5 / 100;
+  EXPECT_GE(max_expected_connections, connected.size()) << [&log_backend] {
+    return std::accumulate(log_backend->log_lines.begin(),
+                           log_backend->log_lines.end(), std::string{},
+                           [](std::string const& x, std::string const& y) {
+                             return x + "\n" + y;
+                           });
+  }();
+  // Zero connections indicates a bug in the test, the client should have
+  // connected at least once.
+  EXPECT_LT(0U, connected.size());
 }
 
 }  // namespace STORAGE_CLIENT_NS

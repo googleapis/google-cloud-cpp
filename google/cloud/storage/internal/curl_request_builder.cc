@@ -24,8 +24,11 @@ namespace internal {
 #define GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE (128 * 1024)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 
-CurlRequestBuilder::CurlRequestBuilder(std::string base_url)
-    : headers_(nullptr, &curl_slist_free_all),
+CurlRequestBuilder::CurlRequestBuilder(
+    std::string base_url, std::shared_ptr<CurlHandleFactory> factory)
+    : factory_(std::move(factory)),
+      handle_(factory_->CreateHandle()),
+      headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
       logging_enabled_(false),
@@ -39,6 +42,7 @@ CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.payload_ = std::move(payload);
   request.handle_ = std::move(handle_);
+  request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;
   request.ResetOptions();
   return request;
@@ -51,7 +55,8 @@ CurlUploadRequest CurlRequestBuilder::BuildUpload() {
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.handle_ = std::move(handle_);
-  request.multi_.reset(curl_multi_init());
+  request.multi_ = factory_->CreateMultiHandle();
+  request.factory_ = factory_;
   request.logging_enabled_ = logging_enabled_;
   request.SetOptions();
   return request;
@@ -66,7 +71,8 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
   request.payload_ = std::move(payload);
   request.handle_ = std::move(handle_);
-  request.multi_.reset(curl_multi_init());
+  request.multi_ = factory_->CreateMultiHandle();
+  request.factory_ = factory_;
   request.logging_enabled_ = logging_enabled_;
   request.SetOptions();
   return request;
@@ -102,6 +108,11 @@ CurlRequestBuilder& CurlRequestBuilder::AddQueryParameter(
 CurlRequestBuilder& CurlRequestBuilder::SetMethod(std::string const& method) {
   ValidateBuilderState(__func__);
   handle_.SetOption(CURLOPT_CUSTOMREQUEST, method.c_str());
+  return *this;
+}
+
+CurlRequestBuilder& CurlRequestBuilder::SetCurlShare(CURLSH* share) {
+  handle_.SetOption(CURLOPT_SHARE, share);
   return *this;
 }
 
