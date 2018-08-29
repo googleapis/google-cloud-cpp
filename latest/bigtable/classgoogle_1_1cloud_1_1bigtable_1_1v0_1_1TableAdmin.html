@@ -138,6 +138,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aab28023ef177d6be489fdac177bffb28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aab28023ef177d6be489fdac177bffb28">DeleteSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:aab28023ef177d6be489fdac177bffb28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a snapshot.  <a href="#aab28023ef177d6be489fdac177bffb28">More...</a><br /></td></tr>
 <tr class="separator:aab28023ef177d6be489fdac177bffb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2dcf28d547643156730e8fb38f35977"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad2dcf28d547643156730e8fb38f35977">CreateTableFromSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id, std::string table_id)</td></tr>
+<tr class="memdesc:ad2dcf28d547643156730e8fb38f35977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create table from snapshot.  <a href="#ad2dcf28d547643156730e8fb38f35977">More...</a><br /></td></tr>
+<tr class="separator:ad2dcf28d547643156730e8fb38f35977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
@@ -364,6 +367,57 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa4437cea54fbcb2a9b4b83f2301a8c6e">CreateTable</a>(google::cloud::bigtable::TableAdmin admin,</div><div class="line">                 std::string <span class="keyword">const</span>&amp; table_id) {</div><div class="line">  <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">      table_id,</div><div class="line">      google::cloud::bigtable::TableConfig(</div><div class="line">          {{<span class="stringliteral">&quot;fam&quot;</span>, google::cloud::bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">           {<span class="stringliteral">&quot;foo&quot;</span>,</div><div class="line">            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">          {}));</div><div class="line">}</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="ad2dcf28d547643156730e8fb38f35977"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2dcf28d547643156730e8fb38f35977">&#9670;&nbsp;</a></span>CreateTableFromSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; btadmin::Table &gt; google::cloud::bigtable::v0::TableAdmin::CreateTableFromSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::SnapshotId const &amp;&#160;</td>
+          <td class="paramname"><em>snapshot_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>table_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create table from snapshot. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is a private alpha release of Cloud Bigtable snapshots. This feature is not currently available to most Cloud Bigtable customers. This feature might be changed in backward-incompatible ways and is not recommended for production use. It is not subject to any SLA or deprecation policy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the id of the cluster to which snapshot belongs. </td></tr>
+    <tr><td class="paramname">snapshot_id</td><td>the id of the snapshot to which table belongs. </td></tr>
+    <tr><td class="paramname">table_id</td><td>the id of the table which needs to be created. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
