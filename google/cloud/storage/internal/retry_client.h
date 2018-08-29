@@ -58,20 +58,18 @@ class RetryClient : public RawClient {
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
-
   std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
-
   std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) override;
   std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) override;
-
   std::pair<Status, ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) override;
-
   std::pair<Status, EmptyResponse> DeleteObject(
       DeleteObjectRequest const&) override;
+  std::pair<Status, ObjectMetadata> UpdateObject(
+      UpdateObjectRequest const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

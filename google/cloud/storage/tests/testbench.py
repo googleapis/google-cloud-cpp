@@ -140,6 +140,7 @@ class GcsObjectVersion(object):
         :param generation:int the generation number for this object.
         :param request:flask.Request the contents of the HTTP request.
         """
+        self.gcs_url = gcs_url
         self.bucket_name = bucket_name
         self.name = name
         self.generation = generation
@@ -151,15 +152,9 @@ class GcsObjectVersion(object):
         else:
             self.media = request.data
         self.metadata = {
-            'kind': 'storage#object',
-            'id': self.object_id,
-            'selfLink': gcs_url + self.object_id,
-            'projectNumber': '123456789',
-            'bucket': bucket_name,
-            'name': name,
             'timeCreated': timestamp,
             'updated': timestamp,
-            'metageneration': 1,
+            'metageneration': 0,
             'generation': generation,
             'location': 'US',
             'storageClass': 'STANDARD',
@@ -168,12 +163,38 @@ class GcsObjectVersion(object):
         }
         if request.headers.get('content-type') is not None:
             self.metadata['contentType'] = request.headers.get('content-type')
+        # Update the derived metadata attributes (e.g.: id, kind, selfLink)
+        self.update_from_metadata({})
+        # Insert the well-known values for the ACL.
         self.insert_acl(
             canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_acl(
             canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_acl(
             canonical_entity_name('project-viewers-123456789'), 'READER')
+
+    def update_from_metadata(self, metadata):
+        """Update from a metadata dictionary.
+        :param metadata:dic a dictionary with new metadata values.
+        """
+        tmp = self.metadata.copy()
+        tmp.update(metadata)
+        tmp['bucket'] = tmp.get('bucket', self.name)
+        tmp['name'] = tmp.get('name', self.name)
+        now = time.gmtime(time.time())
+        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        # Some values cannot be changed via updates, so we always reset them.
+        tmp.update({
+            'kind': 'storage#object',
+            'bucket': self.bucket_name,
+            'name': self.name,
+            'id': self.object_id,
+            'selfLink': self.gcs_url + self.name,
+            'projectNumber': '123456789',
+            'updated': timestamp,
+        })
+        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
+        self.metadata = tmp
 
     def insert_acl(self, entity, role):
         """
@@ -321,6 +342,27 @@ class GcsObject(object):
         if generation == self.generation:
             self.generation = sorted(self.revisions.keys())[-1]
         return False
+
+    def update_revision(self, request):
+        """
+        Update the metadata of particular object revision or raise.
+
+        :param request:flask.Request
+        :return:GcsObjectRevision the object revision.
+        :raises:ErrorResponse if the request contains an invalid generation
+            number.
+        """
+        generation = request.args.get('generation')
+        if generation is None:
+            version = self.get_latest()
+        else:
+            version = self.revisions.get(int(generation))
+            if version is None:
+                raise ErrorResponse(
+                    'Precondition Failed: generation %s not found' % generation)
+        metadata = json.loads(request.data)
+        version.update_from_metadata(metadata)
+        return version
 
     def get_latest(self):
         return self.revisions.get(self.generation, None)
@@ -953,6 +995,17 @@ def objects_delete(bucket_name, object_name):
         GCS_OBJECTS.pop(object_path)
 
     return filtered_response(flask.request, {})
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
+def objects_update(bucket_name, object_name):
+    """Implement the 'Objects: update' API: update an existing Object."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.update_revision(flask.request)
+    return json.dumps(revision.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl')

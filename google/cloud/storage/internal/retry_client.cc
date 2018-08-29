@@ -208,6 +208,14 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteObject(
                   &RawClient::DeleteObject, request, __func__);
 }
 
+std::pair<Status, ObjectMetadata> RetryClient::UpdateObject(
+    UpdateObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::UpdateObject, request, __func__);
+}
+
 std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();

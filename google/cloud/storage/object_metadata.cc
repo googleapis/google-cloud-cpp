@@ -83,7 +83,7 @@ ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
   return ParseFromJson(json);
 }
 
-std::string ObjectMetadata::ToJsonString() const {
+std::string ObjectMetadata::JsonPayloadForUpdate() const {
   using internal::nl::json;
   json metadata_as_json;
   if (not acl().empty()) {
