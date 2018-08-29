@@ -202,7 +202,7 @@ sudo make install
 #### macOS (using brew)
 
 ```bash
-brew install curl libressl c-ares
+brew install curl cmake libressl c-ares
 ```
 
 #### Windows (using vcpkg)
