@@ -56,8 +56,8 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
   //    https://curl.haxx.se/libcurl/c/threadsafe.html
   // Only these library prefixes require special configuration for using safely
   // with multiple threads.
-  return (curl_ssl_id.find("OpenSSL/1.0") == 0 or
-          curl_ssl_id.find("LibreSSL/2") == 0);
+  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 or
+          curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
 }
 
 void InitializeSslLocking() {
@@ -80,7 +80,7 @@ void InitializeSslLocking() {
                  [](char x) { return x == '/' ? ' ' : x; });
   // LibreSSL seems to be using semantic versioning, so just check the major
   // version.
-  if (expected_prefix.find("LibreSSL 2") == 0) {
+  if (expected_prefix.rfind("LibreSSL 2", 0) == 0) {
     expected_prefix = "LibreSSL 2";
   }
 #ifdef OPENSSL_VERSION
@@ -92,7 +92,7 @@ void InitializeSslLocking() {
   // that the major version matches (e.g. LibreSSL), and (b) because the
   // `openssl_v` string sometimes reads `OpenSSL 1.1.0 May 2018` while the
   // string reported by libcurl would be `OpenSSL/1.1.0`, sigh...
-  if (openssl_v.find(expected_prefix) != 0) {
+  if (openssl_v.rfind(expected_prefix, 0) != 0) {
     std::ostringstream os;
     os << "Mismatched versions of OpenSSL linked in libcurl vs. the version"
        << " linked by the Google Cloud Storage C++ library.\n"
