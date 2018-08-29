@@ -166,6 +166,8 @@ class GcsObjectVersion(object):
             'size': len(self.media),
             'etag': 'XYZ='
         }
+        if request.headers.get('content-type') is not None:
+            self.metadata['contentType'] = request.headers.get('content-type')
         self.insert_acl(
             canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_acl(
