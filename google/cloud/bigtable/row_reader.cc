@@ -23,9 +23,20 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // RowReader::iterator must satisfy the requirements of an InputIterator.
-static_assert(std::is_base_of<std::iterator<std::input_iterator_tag, Row>,
-                              RowReader::iterator>::value,
-              "RowReader::iterator must be an InputIterator");
+static_assert(
+    std::is_same<std::iterator_traits<RowReader::iterator>::iterator_category,
+                 std::input_iterator_tag>::value,
+    "RowReader::iterator should be an InputIterator");
+static_assert(
+    std::is_same<std::iterator_traits<RowReader::iterator>::value_type,
+                 Row>::value,
+    "RowReader::iterator should be an InputIterator of Row");
+static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::pointer,
+                           Row*>::value,
+              "RowReader::iterator should be an InputIterator of Row");
+static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::reference,
+                           Row&>::value,
+              "RowReader::iterator should be an InputIterator of Row");
 static_assert(std::is_copy_constructible<RowReader::iterator>::value,
               "RowReader::iterator must be CopyConstructible");
 static_assert(std::is_move_constructible<RowReader::iterator>::value,

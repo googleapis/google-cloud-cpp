@@ -28,9 +28,17 @@ class ListObjectsReader;
 /**
  * A class meeting C++'s InputIterator requirements for listing objects.
  */
-class ListObjectsIterator
-    : public std::iterator<std::input_iterator_tag, ObjectMetadata> {
+class ListObjectsIterator {
  public:
+  //@{
+  /// @name Iterator traits
+  using iterator_category = std::input_iterator_tag;
+  using value_type = ObjectMetadata;
+  using difference_type = std::ptrdiff_t;
+  using pointer = ObjectMetadata*;
+  using reference = ObjectMetadata&;
+  //@}
+
   ListObjectsIterator() : owner_(nullptr) {}
 
   ListObjectsIterator& operator++();
