@@ -17,27 +17,16 @@
 
 #include "google/cloud/bigtable/async_operation.h"
 #include <grpcpp/alarm.h>
-#include <grpcpp/grpcpp.h>
 #include <grpcpp/support/async_unary_call.h>
 #include <atomic>
-#include <chrono>
 #include <unordered_map>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-/**
- * The result of an async timer operation.
- *
- * Callbacks for async timers will receive an object of this class.
- */
-struct AsyncTimerResult {
-  std::chrono::system_clock::time_point deadline;
-};
-
+class CompletionQueue;
 namespace internal {
-class CompletionQueueImpl;
 
 /**
  * Wrap a timer callback into an `AsyncOperation`.
@@ -57,9 +46,9 @@ class AsyncTimerFunctor : public AsyncOperation {
   explicit AsyncTimerFunctor(Functor&& functor)
       : functor_(std::move(functor)), alarm_(new grpc::Alarm) {}
 
-  void Notify(Disposition d) override {
+  void Notify(CompletionQueue& cq, Disposition d) override {
     alarm_.reset();
-    functor_(timer_, d);
+    functor_(cq, timer_, d);
   }
 
   void Set(grpc::CompletionQueue& cq,
@@ -81,6 +70,66 @@ class AsyncTimerFunctor : public AsyncOperation {
 };
 
 /**
+ * Wrap a unary RPC callback into a `AsyncOperation`.
+ *
+ * Applications (or more likely other components in the client library) will
+ * associate callbacks of many different types with a completion queue. This
+ * class is created by the completion queue implementation to type-erase the
+ * callbacks, and thus be able to treat them homogenously in the completion
+ * queue. Note that this class lives in the `internal` namespace and thus is
+ * not intended for general use.
+ *
+ * @tparam Request the type of the RPC request.
+ * @tparam Response the type of the RPC response.
+ * @tparam Functor the callback type.
+ */
+template <typename Request, typename Response, typename Functor>
+class AsyncUnaryRpcFunctor : public AsyncOperation {
+ public:
+  explicit AsyncUnaryRpcFunctor(Functor&& functor)
+      : functor_(std::forward<Functor>(functor)) {}
+
+  void Notify(CompletionQueue& cq, Disposition d) override {
+    functor_(cq, result_, d);
+  }
+
+  void Cancel() override { result_.context->TryCancel(); }
+
+  /// Make the RPC request and prepare the response callback.
+  template <typename Client, typename MemberFunction>
+  void Set(Client& client, MemberFunction Client::*call,
+           std::unique_ptr<grpc::ClientContext> context, Request const& request,
+           grpc::CompletionQueue* cq, void* tag) {
+    result_.context = std::move(context);
+    auto rpc = (client.*call)(result_.context.get(), request, cq);
+    rpc->Finish(&result_.response, &result_.status, tag);
+  }
+
+ private:
+  Functor functor_;
+  AsyncUnaryRpcResult<Response> result_;
+};  // namespace internal
+
+/// Determine the Request and Response parameter for an RPC based on the Stub
+/// signature - mismatch case.
+template <typename MemberFunction>
+struct CheckAsyncUnaryRpcSignature : public std::false_type {
+  using RequestType = void;
+  using ResponseType = void;
+};
+
+/// Determine the Request and Response parameter for an RPC based on the Stub
+/// signature - match case.
+template <typename Request, typename Response>
+struct CheckAsyncUnaryRpcSignature<
+    std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>(
+        grpc::ClientContext*, Request const&, grpc::CompletionQueue*)>
+    : public std::true_type {
+  using RequestType = Request;
+  using ResponseType = Response;
+};
+
+/**
  * The implementation details for `CompletionQueue`.
  *
  * `CompletionQueue` is implemented using the PImpl idiom:
@@ -92,9 +141,18 @@ class CompletionQueueImpl {
   CompletionQueueImpl() : cq_(), shutdown_(false) {}
   virtual ~CompletionQueueImpl() = default;
 
-  void Run();
+  /**
+   * Run the event loop until Shutdown() is called.
+   *
+   * @param cq the completion queue wrapping this implementation class, used to
+   *   notify any asynchronous operation that completes.
+   */
+  void Run(CompletionQueue& cq);
+
+  /// Terminate the event loop.
   void Shutdown();
 
+  /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() { return cq_; }
 
   /// Add a new asynchronous operation to the completion queue.
@@ -105,7 +163,8 @@ class CompletionQueueImpl {
 
  protected:
   /// Simulate a completed operation, provided only to support unit tests.
-  void SimulateCompletion(AsyncOperation* op, AsyncOperation::Disposition d);
+  void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
+                          AsyncOperation::Disposition d);
 
  private:
   grpc::CompletionQueue cq_;
