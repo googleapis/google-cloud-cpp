@@ -7,6 +7,7 @@ bigtable_client_testing_HDRS = [
     "testing/mock_instance_admin_client.h",
     "testing/inprocess_data_client.h",
     "testing/inprocess_admin_client.h",
+    "testing/mock_completion_queue.h",
     "testing/mock_mutate_rows_reader.h",
     "testing/mock_read_rows_reader.h",
     "testing/mock_response_reader.h",

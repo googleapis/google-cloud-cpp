@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/testing/mock_completion_queue.h"
+#include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -73,14 +75,6 @@ TEST(CompletionQueueTest, CancelAlarm) {
   t.join();
 }
 
-class MockAsyncResponseReader : public grpc::ClientAsyncResponseReaderInterface<
-                                    btproto::MutateRowResponse> {
- public:
-  MOCK_METHOD0(StartCall, void());
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD3(Finish, void(btproto::MutateRowResponse*, grpc::Status*, void*));
-};
-
 class MockClient {
  public:
   MOCK_METHOD3(
@@ -91,20 +85,12 @@ class MockClient {
           grpc::CompletionQueue* cq));
 };
 
-class MockCompletionQueue : public internal::CompletionQueueImpl {
- public:
-  using internal::CompletionQueueImpl::empty;
-  using internal::CompletionQueueImpl::SimulateCompletion;
-  using internal::CompletionQueueImpl::size;
-};
-
 /// @test Verify that completion queues can create async operations.
 TEST(CompletionQueueTest, AyncRpcSimple) {
   MockClient client;
 
-  auto reader = google::cloud::internal::make_unique<MockAsyncResponseReader>();
-  // Save the raw pointer as we will need it later.
-  auto* saved_reader_pointer = reader.get();
+  auto reader =
+      google::cloud::internal::make_unique<testing::MockAsyncApplyReader>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(
           Invoke([](btproto::MutateRowResponse*, grpc::Status* status, void*) {
@@ -116,10 +102,11 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
                                  btproto::MutateRowRequest const&,
                                  grpc::CompletionQueue*) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-            btproto::MutateRowResponse>>(reader.release());
+            // This is safe, see comments in MockAsyncResponseReader.
+            btproto::MutateRowResponse>>(reader.get());
       }));
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
   // In this unit test we do not need to initialize the request parameter.
@@ -142,22 +129,6 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   EXPECT_TRUE(completion_called);
 
   EXPECT_TRUE(impl->empty());
-
-  // This is a terrible, horrible, no good, very bad hack: the gRPC library
-  // specializes
-  // `std::default_delete<grpc::ClientAsyncResponseReaderInterface<R>>`, the
-  // implementation in this specialization does nothing:
-  //
-  //     https://github.com/grpc/grpc/blob/608188c680961b8506847c135b5170b41a9081e8/include/grpcpp/impl/codegen/async_unary_call.h#L305
-  //
-  // No delete, no destructor, nothing. The gRPC library expects all
-  // `grpc::ClientAsyncResponseReader<R>` objects to be allocated from a
-  // per-call arena, and deleted in bulk with other objects when the call
-  // completes and the full arena is released.  Unfortunately, our mocks are
-  // allocated from the global heap, as they do not have an associated call or
-  // arena. The override in the gRPC library results in a leak, unless we manage
-  // the memory explicitly.
-  if (not reader) reader.reset(saved_reader_pointer);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

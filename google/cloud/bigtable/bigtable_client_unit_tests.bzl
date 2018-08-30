@@ -21,6 +21,7 @@ bigtable_client_unit_tests = [
     "internal/grpc_error_delegate_test.cc",
     "internal/prefix_range_end_test.cc",
     "internal/table_admin_test.cc",
+    "internal/table_async_apply_test.cc",
     "internal/table_test.cc",
     "mutations_test.cc",
     "table_admin_test.cc",

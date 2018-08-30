@@ -58,11 +58,6 @@ class AsyncTimerFunctor : public AsyncOperation {
   explicit AsyncTimerFunctor(Functor&& functor)
       : functor_(std::move(functor)), alarm_(new grpc::Alarm) {}
 
-  void Notify(CompletionQueue& cq, Disposition d) override {
-    alarm_.reset();
-    functor_(cq, timer_, d);
-  }
-
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     timer_.deadline = deadline;
@@ -76,6 +71,13 @@ class AsyncTimerFunctor : public AsyncOperation {
   }
 
  private:
+  void Notify(CompletionQueue& cq, Disposition d) override {
+    alarm_.reset();
+    functor_(cq, timer_, d);
+  }
+
+  void SimulateNotify() override { Cancel(); }
+
   Functor functor_;
   AsyncTimerResult timer_;
   std::unique_ptr<grpc::Alarm> alarm_;
@@ -110,12 +112,6 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
       : functor_(std::forward<Functor>(functor)) {}
 
-  void Notify(CompletionQueue& cq, Disposition d) override {
-    functor_(cq, result_, d);
-  }
-
-  void Cancel() override { result_.context->TryCancel(); }
-
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>
   void Set(Client& client, MemberFunction Client::*call,
@@ -126,17 +122,38 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
     rpc->Finish(&result_.response, &result_.status, tag);
   }
 
+  void Cancel() override { result_.context->TryCancel(); }
+
  private:
+  void Notify(CompletionQueue& cq, Disposition d) override {
+    functor_(cq, result_, d);
+  }
+
+  void SimulateNotify() override { result_.context->TryCancel(); }
+
   Functor functor_;
   AsyncUnaryRpcResult<Response> result_;
 };  // namespace internal
+
+template <typename T>
+struct ExtractMemberFunctionType : public std::false_type {
+  using ClassType = void;
+  using MemberFunctionType = void;
+};
+
+template <typename ClassType, typename MemberFunctionType>
+struct ExtractMemberFunctionType<MemberFunctionType ClassType::*>
+    : public std::true_type {
+  using Class = ClassType;
+  using MemberFunction = MemberFunctionType;
+};
 
 /// Determine the Request and Response parameter for an RPC based on the Stub
 /// signature - mismatch case.
 template <typename MemberFunction>
 struct CheckAsyncUnaryRpcSignature : public std::false_type {
-  using RequestType = void;
-  using ResponseType = void;
+  using RequestType = int;
+  using ResponseType = int;
 };
 
 /// Determine the Request and Response parameter for an RPC based on the Stub
@@ -186,6 +203,10 @@ class CompletionQueueImpl {
   /// Simulate a completed operation, provided only to support unit tests.
   void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
                           AsyncOperation::Disposition d);
+
+  /// Simulate completion of all pending operations, provided only to support
+  /// unit tests.
+  void SimulateCompletion(CompletionQueue& cq, AsyncOperation::Disposition d);
 
   bool empty() const {
     std::unique_lock<std::mutex> lk(mu_);

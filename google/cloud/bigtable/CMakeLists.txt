@@ -138,6 +138,7 @@ add_library(bigtable_client
             instance_config.cc
             instance_update_config.h
             instance_update_config.cc
+            internal/async_retry_unary_rpc.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/completion_queue_impl.h
@@ -226,6 +227,7 @@ add_library(bigtable_client_testing
             testing/inprocess_data_client.cc
             testing/inprocess_admin_client.h
             testing/inprocess_admin_client.cc
+            testing/mock_completion_queue.h
             testing/mock_mutate_rows_reader.h
             testing/mock_read_rows_reader.h
             testing/mock_response_reader.h
@@ -268,6 +270,7 @@ set(bigtable_client_unit_tests
     internal/grpc_error_delegate_test.cc
     internal/prefix_range_end_test.cc
     internal/table_admin_test.cc
+    internal/table_async_apply_test.cc
     internal/table_test.cc
     mutations_test.cc
     table_admin_test.cc

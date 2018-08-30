@@ -88,7 +88,24 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
                                              AsyncOperation* op,
                                              AsyncOperation::Disposition d) {
   auto internal_op = CompletedOperation(op);
+  internal_op->Cancel();
   internal_op->Notify(cq, d);
+}
+
+void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, AsyncOperation::Disposition d) {
+  // Make a copy to avoid race conditions or iterator invalidation.
+  std::vector<void*> tags;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    tags.reserve(pending_ops_.size());
+    for (auto&& kv : pending_ops_) {
+      tags.push_back(reinterpret_cast<void*>(kv.first));
+    }
+  }
+  for (void* tag : tags) {
+    auto internal_op = CompletedOperation(tag);
+    internal_op->Notify(cq, d);
+  }
 }
 
 }  // namespace internal
