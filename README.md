@@ -237,8 +237,7 @@ You will find compiled binaries in `build-output/` respective to their source pa
 ```bash
 git submodule update --init
 export CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local/opt/libressl
-cmake -H. -Bbuild-output ${CMAKE_FLAGS}
-
+cmake -H. -Bbuild-output ${CMAKE_FLAGS?}
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build build-output -- -j 4
