@@ -302,6 +302,161 @@ TEST(ObjectMetadataTest, InsertMetadata) {
   EXPECT_NE(expected, copy);
 }
 
+TEST(ObjectMetadataPatchBuilder, SetAcl) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetAcl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+
+  // This is easier to express as a string than as a brace-initialized nl::json
+  // object.
+  internal::nl::json expected = internal::nl::json::parse(R"""({
+    "acl":[{ "entity": "user-test-user", "role": "OWNER" }]
+  })""");
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetAcl) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetAcl();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"acl", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetCacheControl) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetCacheControl("no-cache");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"cacheControl", "no-cache"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetCacheControl) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetCacheControl();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"cacheControl", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetContentDisposition) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetContentDisposition("test-value");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentDisposition", "test-value"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetContentDisposition) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetContentDisposition();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentDisposition", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetContentEncoding) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetContentEncoding("test-value");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentEncoding", "test-value"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetContentEncoding) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetContentEncoding();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentEncoding", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetContentLanguage) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetContentLanguage("test-value");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentLanguage", "test-value"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetContentLanguage) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetContentLanguage();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentLanguage", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetContentType) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetContentType("test-value");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentType", "test-value"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetContentType) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetContentType();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"contentType", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetMetadata) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetMetadata("test-label1", "v1");
+  builder.SetMetadata("test-label2", "v2");
+  builder.ResetMetadata("test-label3");
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  auto json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"metadata", internal::nl::json{
+                                               {"test-label1", "v1"},
+                                               {"test-label2", "v2"},
+                                               {"test-label3", nullptr},
+                                           }}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, Resetmetadata) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetMetadata();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{
+      {"metadata", nullptr},
+  };
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
