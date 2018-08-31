@@ -49,7 +49,7 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
 
   result.bucket_ = json.value("bucket", "");
   result.cache_control_ = json.value("cacheControl", "");
-  result.component_count_ = internal::ParseLongField(json, "componentCount");
+  result.component_count_ = internal::ParseIntField(json, "componentCount");
   result.content_disposition_ = json.value("contentDisposition", "");
   result.content_encoding_ = json.value("contentEncoding", "");
   result.content_language_ = json.value("contentLanguage", "");
