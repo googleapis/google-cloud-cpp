@@ -79,6 +79,7 @@ storage_client_SRCS = [
     "internal/http_response.cc",
     "internal/logging_client.cc",
     "internal/metadata_parser.cc",
+    "internal/openssl_util.cc",
     "internal/object_acl_requests.cc",
     "internal/object_requests.cc",
     "internal/object_streambuf.cc",
@@ -91,4 +92,5 @@ storage_client_SRCS = [
     "object_metadata.cc",
     "object_stream.cc",
     "version.cc",
+    "well_known_headers.cc",
 ]

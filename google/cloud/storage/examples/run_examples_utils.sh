@@ -150,6 +150,19 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}" "test-label" "test-value"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  local key="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples write-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_object_name}"
+
+  run_example ./storage_object_samples generate-encryption-key
 }
 
 ################################################

@@ -181,6 +181,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
                              "/o/" + request.object_name());
   builder.SetDebugLogging(options_.enable_http_tracing());
   builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("alt", "media");
   // TODO(#937) - use client options to configure buffer size.
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(

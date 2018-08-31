@@ -37,4 +37,5 @@ storage_client_unit_tests = [
     "storage_class_test.cc",
     "storage_client_options_test.cc",
     "link_test.cc",
+    "well_known_headers_test.cc",
 ]
