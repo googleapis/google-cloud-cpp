@@ -21,9 +21,22 @@ inline namespace STORAGE_CLIENT_NS {
 // ListObjectsReader::iterator must satisfy the requirements of an
 // InputIterator.
 static_assert(
-    std::is_base_of<std::iterator<std::input_iterator_tag, ObjectMetadata>,
-                    ListObjectsReader::iterator>::value,
-    "ListObjectsReader::iterator must be an InputIterator");
+    std::is_same<
+        std::iterator_traits<ListObjectsReader::iterator>::iterator_category,
+        std::input_iterator_tag>::value,
+    "ListObjectsReader::iterator should be an InputIterator");
+static_assert(
+    std::is_same<std::iterator_traits<ListObjectsReader::iterator>::value_type,
+                 ObjectMetadata>::value,
+    "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
+static_assert(
+    std::is_same<std::iterator_traits<ListObjectsReader::iterator>::pointer,
+                 ObjectMetadata*>::value,
+    "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
+static_assert(
+    std::is_same<std::iterator_traits<ListObjectsReader::iterator>::reference,
+                 ObjectMetadata&>::value,
+    "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(std::is_copy_constructible<ListObjectsReader::iterator>::value,
               "ListObjectsReader::iterator must be CopyConstructible");
 static_assert(std::is_move_constructible<ListObjectsReader::iterator>::value,

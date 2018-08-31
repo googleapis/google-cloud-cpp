@@ -38,8 +38,17 @@ using OptionalRow = google::cloud::internal::optional<Row>;
 /**
  * The input iterator used to scan the rows in a RowReader.
  */
-class RowReaderIterator : public std::iterator<std::input_iterator_tag, Row> {
+class RowReaderIterator {
  public:
+  //@{
+  /// @name Iterator traits
+  using iterator_category = std::input_iterator_tag;
+  using value_type = Row;
+  using difference_type = std::ptrdiff_t;
+  using pointer = Row*;
+  using reference = Row&;
+  //@}
+
   RowReaderIterator(RowReader* owner, bool is_end) : owner_(owner), row_() {}
 
   RowReaderIterator& operator++();

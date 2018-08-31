@@ -28,9 +28,17 @@ class ListBucketsReader;
 /**
  * A class meeting C++'s InputIterator requirements for listing buckets.
  */
-class ListBucketsIterator
-    : public std::iterator<std::input_iterator_tag, BucketMetadata> {
+class ListBucketsIterator {
  public:
+  //@{
+  /// @name Iterator traits
+  using iterator_category = std::input_iterator_tag;
+  using value_type = BucketMetadata;
+  using difference_type = std::ptrdiff_t;
+  using pointer = BucketMetadata*;
+  using reference = BucketMetadata&;
+  //@}
+
   ListBucketsIterator() : owner_(nullptr) {}
 
   ListBucketsIterator& operator++();

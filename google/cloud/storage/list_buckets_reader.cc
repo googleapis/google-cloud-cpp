@@ -21,9 +21,22 @@ inline namespace STORAGE_CLIENT_NS {
 // ListBucketsReader::iterator must satisfy the requirements of an
 // InputIterator.
 static_assert(
-    std::is_base_of<std::iterator<std::input_iterator_tag, BucketMetadata>,
-                    ListBucketsReader::iterator>::value,
-    "ListBucketsReader::iterator must be an InputIterator");
+    std::is_same<
+        std::iterator_traits<ListBucketsReader::iterator>::iterator_category,
+        std::input_iterator_tag>::value,
+    "ListBucketsReader::iterator should be an InputIterator");
+static_assert(
+    std::is_same<std::iterator_traits<ListBucketsReader::iterator>::value_type,
+                 BucketMetadata>::value,
+    "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
+static_assert(
+    std::is_same<std::iterator_traits<ListBucketsReader::iterator>::pointer,
+                 BucketMetadata*>::value,
+    "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
+static_assert(
+    std::is_same<std::iterator_traits<ListBucketsReader::iterator>::reference,
+                 BucketMetadata&>::value,
+    "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
 static_assert(std::is_copy_constructible<ListBucketsReader::iterator>::value,
               "ListBucketsReader::iterator must be CopyConstructible");
 static_assert(std::is_move_constructible<ListBucketsReader::iterator>::value,
