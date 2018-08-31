@@ -99,7 +99,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     return *this;
   }
 
-  long component_count() const { return component_count_; }
+  std::int32_t component_count() const { return component_count_; }
 
   std::string content_disposition() const { return content_disposition_; }
   ObjectMetadata& set_content_disposition(std::string value) {
@@ -211,7 +211,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::vector<ObjectAccessControl> acl_;
   std::string bucket_;
   std::string cache_control_;
-  std::int64_t component_count_;
+  std::int32_t component_count_;
   std::string content_disposition_;
   std::string content_encoding_;
   std::string content_language_;
