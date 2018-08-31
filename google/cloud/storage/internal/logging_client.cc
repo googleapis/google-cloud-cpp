@@ -246,6 +246,11 @@ std::pair<Status, ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
                   __func__);
 }
 
+std::pair<Status, ServiceAccount> LoggingClient::GetServiceAccount(
+    GetProjectServiceAccountRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetServiceAccount, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -220,6 +220,41 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   //! [patch bucket storage class with builder]
   (std::move(client), bucket_name, storage_class);
 }
+
+void GetServiceAccount(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"get-service-account"};
+  }
+  //! [get service account] [START storage_get_service_account]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client) {
+    gcs::ServiceAccount details = client.GetServiceAccount();
+    std::cout << "The service account details are " << details << std::endl;
+  }
+  //! [get service account] [END storage_get_service_account]
+  (std::move(client));
+}
+
+void GetServiceAccountForProject(google::cloud::storage::Client client,
+                                 int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-service-account-for-project <project-id>"};
+  }
+  auto project_id = ConsumeArg(argc, argv);
+  //! [get service account for project]
+  // [START storage_get_service_account_for_project]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string project_id) {
+    gcs::ServiceAccount details =
+        client.GetServiceAccountForProject(project_id);
+    std::cout << "The service account details for project " << project_id
+              << " are " << details << std::endl;
+  }
+  // [END storage_get_service_account_for_project]
+  //! [get service account for project]
+  (std::move(client), project_id);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -241,6 +276,8 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class", &PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
+      {"get-service-account", &GetServiceAccount},
+      {"get-service-account-for-project", &GetServiceAccountForProject},
   };
   for (auto&& kv : commands) {
     try {

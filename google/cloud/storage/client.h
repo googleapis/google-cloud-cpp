@@ -1051,6 +1051,73 @@ class Client {
     return raw_client_->PatchDefaultObjectAcl(request).second;
   }
 
+  /**
+   * Get the GCS service account for a given project.
+   *
+   * A service account is a special Google account that belongs to your
+   * application, virtual machine, or to a Google service when acting on your
+   * behalf.  This API allows you to discover the GCS service account for the
+   * @p project_id project.
+   *
+   * @param project_id the project to query.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc get service account for project
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  ServiceAccount GetServiceAccountForProject(std::string const& project_id,
+                                             Options&&... options) {
+    internal::GetProjectServiceAccountRequest request(project_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetServiceAccount(request).second;
+  }
+
+  /**
+   * Get the GCS service account for the default project.
+   *
+   * A service account is a special Google account that belongs to your
+   * application, virtual machine, or to a Google service when acting on your
+   * behalf.  This API allows you to discover the GCS service account for the
+   * default project associated with this object.
+   *
+   * The default project is configured in the `ClientOptions` used to construct
+   * this object. If the application does not set the project id in the
+   * `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is used. If
+   * neither the environment variable is set, nor a value is set explicitly by
+   * the application this function raises an exception.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::logic_error if the function is called without a default
+   *     project id set.
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc get service account
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  ServiceAccount GetServiceAccount(Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    if (project_id.empty()) {
+      std::string msg = "Default project id not set in ";
+      msg += __func__;
+      google::cloud::internal::RaiseLogicError(msg);
+    }
+    return GetServiceAccountForProject(project_id,
+                                       std::forward<Options>(options)...);
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);

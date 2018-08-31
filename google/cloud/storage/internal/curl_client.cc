@@ -612,6 +612,22 @@ std::pair<Status, ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
                         ObjectAccessControl::ParseFromString(payload.payload));
 }
 
+std::pair<Status, ServiceAccount> CurlClient::GetServiceAccount(
+    GetProjectServiceAccountRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
+                                 request.project_id() + "/serviceAccount",
+                             storage_factory_);
+  SetupBuilder(builder, request, "PATCH");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ServiceAccount{});
+  }
+  return std::make_pair(Status(),
+                        ServiceAccount::ParseFromString(payload.payload));
+}
+
 void CurlClient::LockShared() { mu_.lock(); }
 
 void CurlClient::UnlockShared() { mu_.unlock(); }
