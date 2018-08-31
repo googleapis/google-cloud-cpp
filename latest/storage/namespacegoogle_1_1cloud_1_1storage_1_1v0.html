@@ -133,6 +133,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html">CustomerEncryption</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple representation for the customerEncryption field.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html">EncryptionKey</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Fields.html">Fields</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the <code>fields</code> parameter.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Fields.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +204,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Projection.html">Projection</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1QuotaUser.html">QuotaUser</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html">Status</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the status code and message returned by the underlying transport.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#details">More...</a><br /></td></tr>
@@ -372,11 +378,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a618c9e6a59ba784108f824501f9493c3"><td class="memItemLeft" align="right" valign="top">int constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a618c9e6a59ba784108f824501f9493c3">version</a> ()</td></tr>
 <tr class="memdesc:a618c9e6a59ba784108f824501f9493c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single integer representing the Major/Minor/Patch version.  <a href="#a618c9e6a59ba784108f824501f9493c3">More...</a><br /></td></tr>
 <tr class="separator:a618c9e6a59ba784108f824501f9493c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acdc213c26a2348d39840aff09839f0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4acdc213c26a2348d39840aff09839f0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
-<tr class="separator:a4acdc213c26a2348d39840aff09839f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4418a63d224c7b1d893b3983709ab3e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4418a63d224c7b1d893b3983709ab3e0">EncryptionDataFromBinaryKey</a> (std::string const  &amp;key)</td></tr>
+<tr class="memdesc:a4418a63d224c7b1d893b3983709ab3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a (potentially binary) encryption key in the format required by the Google Cloud Storage API.  <a href="#a4418a63d224c7b1d893b3983709ab3e0">More...</a><br /></td></tr>
+<tr class="separator:a4418a63d224c7b1d893b3983709ab3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f7eaeec26085a446f829b2f13b7eeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa6f7eaeec26085a446f829b2f13b7eeb">EncryptionDataFromBase64Key</a> (std::string const  &amp;key)</td></tr>
+<tr class="memdesc:aa6f7eaeec26085a446f829b2f13b7eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format an encryption key in base64 format to the data structure required by the Google Cloud Storage API.  <a href="#aa6f7eaeec26085a446f829b2f13b7eeb">More...</a><br /></td></tr>
+<tr class="separator:aa6f7eaeec26085a446f829b2f13b7eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b84b51f78f0e92b307fbf71b60c922"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ac2b84b51f78f0e92b307fbf71b60c922">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html">EncryptionKey</a> const &amp;rhs)</td></tr>
+<tr class="separator:ac2b84b51f78f0e92b307fbf71b60c922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76e1eacccfbd6dbfe9673bc06a514e94"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a76e1eacccfbd6dbfe9673bc06a514e94">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a> const &amp;rhs)</td></tr>
+<tr class="separator:a76e1eacccfbd6dbfe9673bc06a514e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48156304eaad73970178d3959528e4bd"><td class="memTemplParams" colspan="2">template&lt;typename H , typename T &gt; </td></tr>
 <tr class="memitem:a48156304eaad73970178d3959528e4bd"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a48156304eaad73970178d3959528e4bd">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html">WellKnownHeader</a>&lt; H, T &gt; const &amp;rhs)</td></tr>
 <tr class="separator:a48156304eaad73970178d3959528e4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca1cce326f7aa9912580588c4517e70"><td class="memTemplParams" colspan="2">template&lt;typename Generator &gt; </td></tr>
+<tr class="memitem:abca1cce326f7aa9912580588c4517e70"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70">CreateKeyFromGenerator</a> (Generator &amp;gen)</td></tr>
+<tr class="memdesc:abca1cce326f7aa9912580588c4517e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an encryption key parameter from a pseudo-random number generator.  <a href="#abca1cce326f7aa9912580588c4517e70">More...</a><br /></td></tr>
+<tr class="separator:abca1cce326f7aa9912580588c4517e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4acdc213c26a2348d39840aff09839f0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4acdc213c26a2348d39840aff09839f0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
+<tr class="separator:a4acdc213c26a2348d39840aff09839f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a742432941ef51d18a927810b93fc7a8f"><td class="memTemplParams" colspan="2">template&lt;typename P , typename T &gt; </td></tr>
 <tr class="memitem:a742432941ef51d18a927810b93fc7a8f"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a742432941ef51d18a927810b93fc7a8f">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html">WellKnownParameter</a>&lt; P, T &gt; const &amp;rhs)</td></tr>
 <tr class="separator:a742432941ef51d18a927810b93fc7a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -515,6 +535,103 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="abca1cce326f7aa9912580588c4517e70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abca1cce326f7aa9912580588c4517e70">&#9670;&nbsp;</a></span>CreateKeyFromGenerator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Generator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a> google::cloud::storage::v0::CreateKeyFromGenerator </td>
+          <td>(</td>
+          <td class="paramtype">Generator &amp;&#160;</td>
+          <td class="paramname"><em>gen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create an encryption key parameter from a pseudo-random number generator. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Generator</td><td>the pseudo-random number generator type, it must meet the <code>UniformRandomBitGenerator</code> requirements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gen</td><td>the pseudo-random number generator.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line">  <span class="comment">// Create a pseudo-random number generator (PRNG), this is included for</span></div><div class="line">  <span class="comment">// demonstration purposes only. You should consult your security team about</span></div><div class="line">  <span class="comment">// best practices to initialize PRNG. In particular, you should verify that</span></div><div class="line">  <span class="comment">// the C++ library and operating system provide enough entropy to meet the</span></div><div class="line">  <span class="comment">// security policies in your organization.</span></div><div class="line"></div><div class="line">  <span class="comment">// Use the Mersenne-Twister Engine in this example:</span></div><div class="line">  <span class="comment">//   https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine</span></div><div class="line">  <span class="comment">// Any C++ PRNG can be used below, the choice is arbitrary.</span></div><div class="line">  <span class="keyword">using</span> GeneratorType = std::mt19937_64;</div><div class="line"></div><div class="line">  <span class="comment">// Create the default random device to fetch entropy.</span></div><div class="line">  std::random_device rd;</div><div class="line"></div><div class="line">  <span class="comment">// Compute how much entropy we need to initialize the GeneratorType:</span></div><div class="line">  constexpr <span class="keyword">auto</span> kRequiredEntropyWords =</div><div class="line">      GeneratorType::state_size *</div><div class="line">      (GeneratorType::word_size / std::numeric_limits&lt;unsigned int&gt;::digits);</div><div class="line"></div><div class="line">  <span class="comment">// Capture the entropy bits into a vector.</span></div><div class="line">  std::vector&lt;unsigned long&gt; entropy(kRequiredEntropyWords);</div><div class="line">  std::generate(entropy.begin(), entropy.end(), [&amp;rd] { <span class="keywordflow">return</span> rd(); });</div><div class="line"></div><div class="line">  <span class="comment">// Create the PRNG with the fetched entropy.</span></div><div class="line">  std::seed_seq seed(entropy.begin(), entropy.end());</div><div class="line"></div><div class="line">  <span class="comment">// initialized with enough entropy such that the encryption keys are not</span></div><div class="line">  <span class="comment">// predictable. Note that the default constructor for all the generators in</span></div><div class="line">  <span class="comment">// the C++ standard library produce predictable keys.</span></div><div class="line">  std::mt19937_64 gen(seed);</div><div class="line"></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  gcs::EncryptionKeyData data = <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70">gcs::CreateKeyFromGenerator</a>(gen);</div><div class="line"></div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Base64 encoded key = &quot;</span> &lt;&lt; data.key &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">            &lt;&lt; <span class="stringliteral">&quot;Base64 encoded SHA256 of key = &quot;</span> &lt;&lt; data.sha256 &lt;&lt; std::endl;</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a href="https://en.cppreference.com/w/cpp/numeric/random">https://en.cppreference.com/w/cpp/numeric/random</a> for a general overview of C++ pseudo-random number support.</dd>
+<dd>
+<a href="https://en.cppreference.com/w/cpp/numeric/random/UniformRandomBitGenerator">https://en.cppreference.com/w/cpp/numeric/random/UniformRandomBitGenerator</a> for a more detailed overview of the requirements for generators. </dd></dl>
+
+</div>
+</div>
+<a id="aa6f7eaeec26085a446f829b2f13b7eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f7eaeec26085a446f829b2f13b7eeb">&#9670;&nbsp;</a></span>EncryptionDataFromBase64Key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a> google::cloud::storage::v0::EncryptionDataFromBase64Key </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Format an encryption key in base64 format to the data structure required by the Google Cloud Storage API. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>a base64-encoded key, must have exactly 32 bytes when decoded. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4418a63d224c7b1d893b3983709ab3e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4418a63d224c7b1d893b3983709ab3e0">&#9670;&nbsp;</a></span>EncryptionDataFromBinaryKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a> google::cloud::storage::v0::EncryptionDataFromBinaryKey </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Format a (potentially binary) encryption key in the format required by the Google Cloud Storage API. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>a binary key, must have exactly 32 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1256,7 +1373,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7b9a40689d5dff874b53c8bb958c9286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b9a40689d5dff874b53c8bb958c9286">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b9a40689d5dff874b53c8bb958c9286">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1284,7 +1401,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac5e1d14dba2e50ddaa63c13c5a46c368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5e1d14dba2e50ddaa63c13c5a46c368">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5e1d14dba2e50ddaa63c13c5a46c368">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1312,7 +1429,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2853d016c5621a676d8986b01e473c6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2853d016c5621a676d8986b01e473c6f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2853d016c5621a676d8986b01e473c6f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1339,38 +1456,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a48156304eaad73970178d3959528e4bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48156304eaad73970178d3959528e4bd">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[4/12]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename H , typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; google::cloud::storage::v0::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html">WellKnownHeader</a>&lt; H, T &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a742432941ef51d18a927810b93fc7a8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a742432941ef51d18a927810b93fc7a8f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a742432941ef51d18a927810b93fc7a8f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[4/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1399,8 +1486,38 @@ template&lt;typename P , typename T &gt; </div>
 
 </div>
 </div>
+<a id="a48156304eaad73970178d3959528e4bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48156304eaad73970178d3959528e4bd">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename H , typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; google::cloud::storage::v0::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html">WellKnownHeader</a>&lt; H, T &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a135c438f75bd59f11ddba23746118089"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a135c438f75bd59f11ddba23746118089">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a135c438f75bd59f11ddba23746118089">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1427,8 +1544,36 @@ template&lt;typename P , typename T &gt; </div>
 
 </div>
 </div>
+<a id="ac2b84b51f78f0e92b307fbf71b60c922"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b84b51f78f0e92b307fbf71b60c922">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; google::cloud::storage::v0::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html">EncryptionKey</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="adf7f0487f39f062755323ce7bd932b51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf7f0487f39f062755323ce7bd932b51">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adf7f0487f39f062755323ce7bd932b51">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1455,8 +1600,36 @@ template&lt;typename P , typename T &gt; </div>
 
 </div>
 </div>
+<a id="a76e1eacccfbd6dbfe9673bc06a514e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e1eacccfbd6dbfe9673bc06a514e94">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; google::cloud::storage::v0::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a4acdc213c26a2348d39840aff09839f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1492,7 +1665,7 @@ template&lt;typename P , typename T &gt; </div>
 </div>
 </div>
 <a id="abda4ac5af9c7e1f33aadbc491b014125"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abda4ac5af9c7e1f33aadbc491b014125">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abda4ac5af9c7e1f33aadbc491b014125">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1520,7 +1693,7 @@ template&lt;typename P , typename T &gt; </div>
 </div>
 </div>
 <a id="ac3deb3121b3bd5d27a5e23824a5315a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3deb3121b3bd5d27a5e23824a5315a7">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3deb3121b3bd5d27a5e23824a5315a7">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1548,7 +1721,7 @@ template&lt;typename P , typename T &gt; </div>
 </div>
 </div>
 <a id="a43c0febed41579ba67fd4138a287168e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43c0febed41579ba67fd4138a287168e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c0febed41579ba67fd4138a287168e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[13/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1576,7 +1749,7 @@ template&lt;typename P , typename T &gt; </div>
 </div>
 </div>
 <a id="ababa626e8b146ee5e8a4e9511e0acd41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ababa626e8b146ee5e8a4e9511e0acd41">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ababa626e8b146ee5e8a4e9511e0acd41">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[14/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

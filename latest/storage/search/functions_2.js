@@ -21,6 +21,7 @@ var searchData=
   ['createdbefore',['CreatedBefore',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a039d417bd85e9d6fde3486ad56690583',1,'google::cloud::storage::v0::LifecycleRule::CreatedBefore(std::string const &amp;timestamp)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5127a8475955925f4b5f9cc0ce4a7830',1,'google::cloud::storage::v0::LifecycleRule::CreatedBefore(std::chrono::system_clock::time_point date)']]],
   ['createdefaultobjectacl',['CreateDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a88250a3cb07c85e8c905369480ec7be5',1,'google::cloud::storage::v0::Client']]],
   ['createinsecurecredentials',['CreateInsecureCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a851db5698c3bbebcfbd62dbc18e9c1a7',1,'google::cloud::storage::v0']]],
+  ['createkeyfromgenerator',['CreateKeyFromGenerator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70',1,'google::cloud::storage::v0']]],
   ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac904a4ac065a12f7cab583457b3bb636',1,'google::cloud::storage::v0::Client']]],
   ['credentials',['credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a13cf2d9979726b861aa436d5d625e1cc',1,'google::cloud::storage::v0::ClientOptions']]],
   ['customer_5fencryption',['customer_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a806a95b1455e9eb20f35e8f2e706ae77',1,'google::cloud::storage::v0::ObjectMetadata']]]

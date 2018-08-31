@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['fields',['Fields',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1Fields.html',1,'google::cloud::storage::v0']]]
+  ['encryptionkey',['EncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html',1,'google::cloud::storage::v0']]],
+  ['encryptionkeydata',['EncryptionKeyData',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html',1,'google::cloud::storage::v0']]]
 ];
