@@ -34,9 +34,9 @@ if (NOT TARGET c_ares_project)
         URL_HASH
             SHA256=62dd12f0557918f89ad6f5b759f0bf4727174ae9979499f5452c02be38d9d3e8
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          $ENV{CMAKE_FLAGS}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Release
+                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -H<SOURCE_DIR>
                           -B<BINARY_DIR>/Release

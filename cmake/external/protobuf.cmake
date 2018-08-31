@@ -37,17 +37,18 @@ if (NOT TARGET protobuf_project)
         URL_HASH
             SHA256=4ffd420f39f226e96aebc3554f9c66a912f6cad6261f39f194f16af8a1f6dab2
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          $ENV{CMAKE_FLAGS}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Debug
+                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                           -Dprotobuf_BUILD_TESTS=OFF
                           -H<SOURCE_DIR>/cmake
                           -B<BINARY_DIR>/Debug
-        COMMAND ${CMAKE_COMMAND} $ENV{CMAKE_FLAGS}
-                ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                -DCMAKE_BUILD_TYPE=Release
+                -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                 -DCMAKE_PREFIX_PATH=<INSTALL_DIR> -Dprotobuf_BUILD_TESTS=OFF
                 -H<SOURCE_DIR>/cmake -B<BINARY_DIR>/Release
         BUILD_COMMAND ${CMAKE_COMMAND}

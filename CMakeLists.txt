@@ -44,22 +44,29 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif ()
 endif ()
 
+option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
+       "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"
+       ON)
 if (APPLE)
     # This is an easy mistake to make, and the error messages are very
     # confusing. Help our users by giving them some guidance.
-    if (NOT DEFINED ENV{CMAKE_FLAGS})
-        message(
-            FATAL_ERROR
-                "The google-cloud-cpp CMake files use the CMAKE_FLAGS"
-                " environment variable to configure external projects. In most"
-                " macOS systems, this environment variable should contain any"
-                " definitions required to find the OpenSSL libraries, e.g.,"
-                "     `-DOPENSSL_ROOT_DIR=/usr/local/opt/libressl`."
-                " You have not set this environment variable. Most likely, this"
-                " will result in a broken build with fairly obscure error"
-                " messages. Set CMAKE_FLAGS to an empty string to silence this"
-                " error if your environment does not require additional"
-                " settings to find the OpenSSL libraries.")
+    if ("${GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK}"
+        AND
+        NOT DEFINED ENV{OPENSSL_ROOT_DIR})
+        message(FATAL_ERROR [===[
+The Google Cloud C++ client libraries use the native OpenSSL library. In most
+macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
+this dependency, for example:
+
+export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
+
+You have not set this environment variable. Most likely, this will result in a
+broken build with fairly obscure error messages. If your environment does not
+require setting OPENSSL_ROOT_DIR, you can disable this check using:
+
+cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...
+
+]===])
     endif ()
 endif (APPLE)
 
