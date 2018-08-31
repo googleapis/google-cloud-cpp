@@ -191,7 +191,9 @@ PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
       builder.ResetMetadata();
     } else {
       std::map<std::string, std::string> difference;
-      // Find the keys in the original map that are not in the new map:
+      // Find the keys in the original map that are not in the new map. Using
+      // `std::set_difference()` works because, unlike `std::unordered_map` the
+      // `std::map` iterators return elements ordered by key:
       std::set_difference(original.metadata().begin(),
                           original.metadata().end(), updated.metadata().begin(),
                           updated.metadata().end(),
