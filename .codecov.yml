@@ -23,7 +23,5 @@ ignore:
   # Ignore the benchmarks, they are not important for the experience for our
   # users.
   - "/google/cloud/bigtable/benchmarks/**"
-  # TODO(#492) - temporarily ignore the examples, they are not running yet.
-  - "/google/cloud/bigtable/examples/**"
   # Also ignore the unit tests.
   - "**/*_test.cc$"

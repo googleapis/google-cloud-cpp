@@ -527,6 +527,8 @@ int main(int argc, char* argv[]) try {
     ReadModifyWrite(table);
   } else if (command == "sample-rows") {
     SampleRows(table);
+  } else if (command == "sample-rows-collections") {
+    SampleRowsCollections(table);
   } else if (command == "run-full-example") {
     RunFullExample(admin, table_id);
   } else {

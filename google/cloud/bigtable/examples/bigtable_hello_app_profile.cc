@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) try {
     //     https://cloud.google.com/bigtable/docs/schema-design
     std::string row_key = "key-" + std::to_string(i);
     write.Apply(cbt::SingleRowMutation(std::move(row_key),
-                                       cbt::SetCell("family", "c0", greeting)));
+                                       cbt::SetCell("fam", "c0", greeting)));
     ++i;
   }
 
@@ -75,8 +75,8 @@ int main(int argc, char* argv[]) try {
   //! [read with app profile]
   cbt::Table read(data_client, cbt::AppProfileId(profile_id), table_id);
 
-  auto result = read.ReadRow(
-      "key-0", cbt::Filter::ColumnRangeClosed("family", "c0", "c0"));
+  auto result =
+      read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
   if (not result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table_id
               << std::endl;
