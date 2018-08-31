@@ -44,6 +44,25 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif ()
 endif ()
 
+if (APPLE)
+    # This is an easy mistake to make, and the error messages are very
+    # confusing. Help our users by giving them some guidance.
+    if (NOT DEFINED ENV{CMAKE_FLAGS})
+        message(
+            FATAL_ERROR
+                "The google-cloud-cpp CMake files use the CMAKE_FLAGS"
+                " environment variable to configure external projects. In most"
+                " macOS systems, this environment variable should contain any"
+                " definitions required to find the OpenSSL libraries, e.g.,"
+                "     `-DOPENSSL_ROOT_DIR=/usr/local/opt/libressl`."
+                " You have not set this environment variable. Most likely, this"
+                " will result in a broken build with fairly obscure error"
+                " messages. Set CMAKE_FLAGS to an empty string to silence this"
+                " error if your environment does not require additional"
+                " settings to find the OpenSSL libraries.")
+    endif ()
+endif (APPLE)
+
 # If ccache is installed use it for the build. This makes the Travis
 # configuration agnostic as to wether ccache is installed or not.
 option(
