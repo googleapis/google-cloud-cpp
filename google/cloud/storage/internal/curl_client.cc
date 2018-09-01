@@ -21,13 +21,27 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+template <typename Request>
+void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
+                              Request const& request, char const* method) {
+  builder.SetMethod(method);
+  builder.SetDebugLogging(options_.enable_http_tracing());
+  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  request.AddOptionsToHttpRequest(builder);
+}
+
+CurlClient::CurlClient(ClientOptions options) : options_(std::move(options)) {
+  storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
+  upload_endpoint_ =
+      options_.endpoint() + "/upload/storage/" + options_.version();
+}
+
 std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
     ListBucketsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("project", request.project_id());
-  request.AddOptionsToHttpRequest(builder);
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -42,10 +56,8 @@ std::pair<Status, BucketMetadata> CurlClient::CreateBucket(
     CreateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b");
+  SetupBuilder(builder, request, "POST");
   builder.AddQueryParameter("project", request.project_id());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
   if (payload.status_code >= 300) {
@@ -61,9 +73,7 @@ std::pair<Status, BucketMetadata> CurlClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (200 != payload.status_code) {
     return std::make_pair(
@@ -78,10 +88,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("DELETE");
+  SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -96,11 +103,8 @@ std::pair<Status, BucketMetadata> CurlClient::UpdateBucket(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" +
                              request.metadata().name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
-  builder.SetMethod("PUT");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -115,11 +119,8 @@ std::pair<Status, BucketMetadata> CurlClient::PatchBucket(
     PatchBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
-  builder.SetMethod("PATCH");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -135,14 +136,12 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(upload_endpoint_ + "/b/" + request.bucket_name() +
                              "/o");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  SetupBuilder(builder, request, "POST");
   // Set the content type of a sensible value, the application can override this
   // in the options for the request.
   if (not request.HasOption<ContentType>()) {
     builder.AddHeader("content-type: application/octet-stream");
   }
-  request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Length: " +
@@ -161,9 +160,7 @@ std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -179,9 +176,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("alt", "media");
   // TODO(#937) - use client options to configure buffer size.
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
@@ -194,14 +189,12 @@ std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
 CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
   CurlRequestBuilder builder(url);
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
+  SetupBuilder(builder, request, "POST");
   // Set the content type of a sensible value, the application can override this
   // in the options for the request.
   if (not request.HasOption<ContentType>()) {
     builder.AddHeader("content-type: application/octet-stream");
   }
-  request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   // TODO(#937) - use client options to configure buffer size.
@@ -217,9 +210,7 @@ std::pair<Status, ListObjectsResponse> CurlClient::ListObjects(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("pageToken", request.page_token());
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (200 != payload.status_code) {
@@ -237,10 +228,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("DELETE");
+  SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -254,11 +242,8 @@ std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
     UpdateObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
-  builder.SetMethod("PUT");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -273,9 +258,7 @@ std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -291,9 +274,7 @@ std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -308,13 +289,11 @@ std::pair<Status, BucketAccessControl> CurlClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "POST");
+  builder.AddHeader("Content-Type: application/json");
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(object.dump()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -329,10 +308,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("DELETE");
+  SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -346,14 +322,11 @@ std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PUT");
+  SetupBuilder(builder, request, "PUT");
+  builder.AddHeader("Content-Type: application/json");
   nl::json patch;
   patch["entity"] = request.entity();
   patch["role"] = request.role();
-  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(patch.dump()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -368,10 +341,7 @@ std::pair<Status, BucketAccessControl> CurlClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/acl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PATCH");
+  SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
   if (payload.status_code >= 300) {
@@ -388,9 +358,7 @@ std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -406,13 +374,11 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "POST");
+  builder.AddHeader("Content-Type: application/json");
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(object.dump()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -428,10 +394,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("DELETE");
+  SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -446,9 +409,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -464,14 +425,11 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PUT");
+  SetupBuilder(builder, request, "PUT");
+  builder.AddHeader("Content-Type: application/json");
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(object.dump()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -487,10 +445,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::PatchObjectAcl(
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/o/" + request.object_name() + "/acl/" +
                              request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PATCH");
+  SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
   if (payload.status_code >= 300) {
@@ -507,9 +462,7 @@ CurlClient::ListDefaultObjectAcl(ListDefaultObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -525,9 +478,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl");
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "POST");
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
@@ -546,10 +497,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("DELETE");
+  SetupBuilder(builder, request, "DELETE");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -563,9 +511,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -580,14 +526,11 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PUT");
+  SetupBuilder(builder, request, "PUT");
+  builder.AddHeader("Content-Type: application/json");
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(object.dump()).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -602,10 +545,7 @@ std::pair<Status, ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                              "/defaultObjectAcl/" + request.entity());
-  builder.SetDebugLogging(options_.enable_http_tracing());
-  builder.AddHeader(options_.credentials()->AuthorizationHeader());
-  request.AddOptionsToHttpRequest(builder);
-  builder.SetMethod("PATCH");
+  SetupBuilder(builder, request, "PATCH");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.payload()).MakeRequest();
   if (payload.status_code >= 300) {

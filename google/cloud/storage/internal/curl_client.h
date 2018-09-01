@@ -22,6 +22,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+class CurlRequestBuilder;
+
 /**
  * Implement storage::Client using the libcurl wrapppers.
  *
@@ -32,11 +34,12 @@ class CurlClient : public RawClient {
   explicit CurlClient(std::shared_ptr<Credentials> credentials)
       : CurlClient(ClientOptions(std::move(credentials))) {}
 
-  explicit CurlClient(ClientOptions options) : options_(std::move(options)) {
-    storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
-    upload_endpoint_ =
-        options_.endpoint() + "/upload/storage/" + options_.version();
-  }
+  explicit CurlClient(ClientOptions options);
+
+  CurlClient(CurlClient const& rhs) = delete;
+  CurlClient(CurlClient&& rhs) = delete;
+  CurlClient& operator=(CurlClient const& rhs) = delete;
+  CurlClient& operator=(CurlClient&& rhs) = delete;
 
   ClientOptions const& client_options() const override { return options_; }
 
@@ -108,6 +111,11 @@ class CurlClient : public RawClient {
       PatchDefaultObjectAclRequest const&) override;
 
  private:
+  /// Applies the common configuration parameters to @p builder.
+  template <typename Request>
+  void SetupBuilder(CurlRequestBuilder& builder, Request const& request,
+                    char const* method);
+
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
