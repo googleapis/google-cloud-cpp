@@ -28,4 +28,4 @@ echo "Running GCS Object APIs integration tests."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./thread_integration_test "${PROJECT_ID}""
+./thread_integration_test "${PROJECT_ID}"
