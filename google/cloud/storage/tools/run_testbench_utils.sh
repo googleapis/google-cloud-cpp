@@ -38,13 +38,20 @@ TESTBENCH_DUMP_LOG=yes
 kill_testbench() {
   echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
   echo -n "Killing testbench server [${TESTBENCH_PID}] ... "
-  curl -d "please shutdown" "${SHUTDOWN_ENDPOINT}"
   kill "${TESTBENCH_PID}"
   wait >/dev/null 2>&1
   echo "done."
-  if [ "${TESTBENCH_DUMP_LOG}" = "yes" ]; then
+  if [ "${TESTBENCH_DUMP_LOG}" = "yes" -a "testbench.log" ]; then
     echo "================ [begin testbench.log] ================"
-    cat "testbench.log"
+    # Travis has a limit of ~10,000 lines, and sometimes the
+    # emulator log gets too long, just print the interesting bits:
+    if [ "$(wc -l "testbench.log" | awk '{print $1}')" -lt 1000 ]; then
+      cat "testbench.log"
+    else
+      head -500 "testbench.log"
+      echo "        [snip snip snip]        "
+      tail -500 "testbench.log"
+    fi
     echo "================ [end testbench.log] ================"
   fi
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."

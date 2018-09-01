@@ -21,6 +21,11 @@ if [ "${BUILD_TYPE:-Release}" != "Coverage" ]; then
     exit 0
 fi
 
+if [ -z "${PROJECT_ROOT+x}" ]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
 readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
@@ -29,8 +34,4 @@ sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c "/bin/bash <(curl -s https://codecov.io/bash)"
 
-echo "================================================================"
-head -1000 codecov.log
-echo "================================================================"
-tail -1000 codecov.log
-echo "================================================================"
+ci_dump_log codecov.log

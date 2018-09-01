@@ -16,14 +16,16 @@
 
 set -eu
 
+if [ -z "${PROJECT_ROOT+x}" ]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
 readonly BUILD_OUTPUT="build-output/cached-${DISTRO}-${DISTRO_VERSION}"
 # Dump the emulator log file. Tests run in the google/cloud/bigtable/tests directory.
 echo
-echo "================ emulator.log ================"
-cat "${BUILD_OUTPUT}/google/cloud/bigtable/tests/emulator.log" >&2 || true
-echo
-echo "================ instance-admin-emulator.log ================"
-cat "${BUILD_OUTPUT}/google/cloud/bigtable/tests/instance-admin-emulator.log" >&2 || true
+dump_log "${BUILD_OUTPUT}/google/cloud/bigtable/tests/emulator.log"
+dump_log "${BUILD_OUTPUT}/google/cloud/bigtable/tests/instance-admin-emulator.log"
 
 # This script runs on macOS and Linux, there are no analysis steps executed by
 # the macOS builds, so we can safely exit here unless we are running Linux.
