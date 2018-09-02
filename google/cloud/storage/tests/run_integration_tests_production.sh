@@ -16,7 +16,13 @@
 
 set -eu
 
-# The CI environment must provide PROJECT_ID and BUCKET_NAME.
+# The CI environment must provide the following environment variables:
+# - PROJECT_ID: the name of a Google Cloud Platform project, the integration
+#   tests should have Storage.Admin access to this project.
+# - BUCKET_NAME: the name of a Google Cloud Storage Bucket, the integration
+#   tests should have read/write access to this bucket.
+# - STORAGE_REGION_ID: the name of of Google Cloud Storage region, ideally close
+#   to the VMs running the integration tests.
 
 echo
 echo "Running GCS Bucket APIs integration tests."
@@ -28,4 +34,8 @@ echo "Running GCS Object APIs integration tests."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./thread_integration_test "${PROJECT_ID}"
+./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
+
+echo
+echo "Running GCS Projects.serviceAccount integration tests."
+./service_account_integration_test "${PROJECT_ID}"

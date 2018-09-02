@@ -617,7 +617,7 @@ std::pair<Status, ServiceAccount> CurlClient::GetServiceAccount(
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/serviceAccount",
                              storage_factory_);
-  SetupBuilder(builder, request, "PATCH");
+  SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
     return std::make_pair(
