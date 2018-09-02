@@ -101,11 +101,12 @@ class Table {
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
         Policies&&... policies)
-      : Table(std::move(client), bigtable::AppProfileId(""), table_id) {
+      : Table(std::move(client), std::move(app_profile_id), table_id) {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
 
   std::string const& table_name() const { return table_name_.get(); }
+  std::string const& app_profile_id() const { return app_profile_id_.get(); }
 
   //@{
   /**

@@ -172,10 +172,11 @@ class Table {
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
         Policies&&... policies)
-      : impl_(std::move(client), app_profile_id, table_id,
+      : impl_(std::move(client), std::move(app_profile_id), table_id,
               std::forward<Policies>(policies)...) {}
 
   std::string const& table_name() const { return impl_.table_name(); }
+  std::string const& app_profile_id() const { return impl_.app_profile_id(); }
 
   /**
    * Attempts to apply the mutation to a row.
