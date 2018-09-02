@@ -60,16 +60,6 @@ def index():
     return 'OK'
 
 
-@root.route('/shutdown', methods=['POST'])
-def shutdown():
-    """Gracefully shutdown the test bench."""
-    func = flask.request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
-    return 'Server shutting down...'
-
-
 def canonical_entity_name(entity):
     """
     Convert entity names to their canonical form.

@@ -27,8 +27,6 @@ TESTBENCH_DUMP_LOG=yes
 # Globals:
 #   TESTBENCH_PID: the process id for the test bench
 #   TESTBENCH_DUMP_LOG: if set to 'yes' the testbench log is dumped
-#   SHUTDOWN_ENDPOINT: sending a http POST to this endpoint shuts down
-#                      the test bench
 #   COLOR_*: colorize output messages, defined in colors.sh
 # Arguments:
 #   None
@@ -64,7 +62,6 @@ kill_testbench() {
 #   TESTBENCH_PORT: the listening port for the test bench, 8000 if not set.
 #   HTTPBIN_ENDPOINT: the httpbin endpoint on the test bench.
 #   TESTBENCH_PID: the process id for the test bench.
-#   SHUTDOWN_ENDPOINT: posting to this endpoint will shut down the test bench.
 #   CLOUD_STORAGE_TESTBENCH_ENDPOINT: the google cloud storage endpoint for the
 #       test bench.
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -91,7 +88,6 @@ start_testbench() {
   TESTBENCH_PID=$!
 
   export HTTPBIN_ENDPOINT="http://localhost:${PORT}/httpbin"
-  export SHUTDOWN_ENDPOINT="http://localhost:${PORT}/shutdown"
   export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${PORT}"
 
   delay=1
