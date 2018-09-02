@@ -40,7 +40,8 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   // that.
   constexpr int kDownloadedLines = 100;
   storage::internal::CurlRequestBuilder request(
-      HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines));
+      HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
+      storage::internal::GetDefaultCurlHandleFactory());
 
   auto download = request.BuildDownloadRequest(std::string{});
 

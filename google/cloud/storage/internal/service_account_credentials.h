@@ -98,7 +98,9 @@ class ServiceAccountCredentials : public storage::Credentials {
         // Resulting access token should be expire after one hour.
         {"exp", expiration_time}};
 
-    HttpRequestBuilderType request_builder(std::move(oauth_server));
+    HttpRequestBuilderType request_builder(
+        std::move(oauth_server),
+        storage::internal::GetDefaultCurlHandleFactory());
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
     // This is the value of grant_type for JSON-formatted service account

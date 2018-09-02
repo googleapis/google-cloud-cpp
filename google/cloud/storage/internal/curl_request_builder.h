@@ -35,8 +35,7 @@ class CurlRequestBuilder {
   using UploadType = CurlUploadRequest;
 
   explicit CurlRequestBuilder(std::string base_url,
-                              std::shared_ptr<CurlHandleFactory> factory =
-                                  GetDefaultCurlHandleFactory());
+                              std::shared_ptr<CurlHandleFactory> factory);
 
   /**
    * Create a http request with the given payload.

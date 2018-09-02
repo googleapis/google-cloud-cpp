@@ -58,7 +58,9 @@ class AuthorizedUserCredentials : public storage::Credentials {
   explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string oauth_server)
       : expiration_time_() {
-    HttpRequestBuilderType request_builder(std::move(oauth_server));
+    HttpRequestBuilderType request_builder(
+        std::move(oauth_server),
+        storage::internal::GetDefaultCurlHandleFactory());
     auto credentials = nl::json::parse(content);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";

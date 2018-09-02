@@ -34,7 +34,8 @@ std::string HttpBinEndpoint() {
 }
 
 TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
-  internal::CurlRequestBuilder builder(HttpBinEndpoint() + "/post");
+  internal::CurlRequestBuilder builder(HttpBinEndpoint() + "/post",
+                                       internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   std::unique_ptr<internal::CurlStreambuf> buf(
       new internal::CurlStreambuf(builder.BuildUpload(), 128 * 1024));
