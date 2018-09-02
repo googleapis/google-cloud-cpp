@@ -70,6 +70,7 @@ struct MockRpcFactory {
 TEST_F(NoexTableTest, ChangeOnePolicy) {
   bigtable::noex::Table table(client_, "some-table",
                               bigtable::AlwaysRetryMutationPolicy());
+  EXPECT_EQ("", table.app_profile_id());
   EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
 }
 
@@ -77,6 +78,16 @@ TEST_F(NoexTableTest, ChangePolicies) {
   bigtable::noex::Table table(client_, "some-table",
                               bigtable::AlwaysRetryMutationPolicy(),
                               bigtable::LimitedErrorCountRetryPolicy(42));
+  EXPECT_EQ("", table.app_profile_id());
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+}
+
+TEST_F(NoexTableTest, ConstructorWithAppProfileAndPolicies) {
+  bigtable::noex::Table table(
+      client_, bigtable::AppProfileId("test-profile-id"), "some-table",
+      bigtable::AlwaysRetryMutationPolicy(),
+      bigtable::LimitedErrorCountRetryPolicy(42));
+  EXPECT_EQ("test-profile-id", table.app_profile_id());
   EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
 }
 
