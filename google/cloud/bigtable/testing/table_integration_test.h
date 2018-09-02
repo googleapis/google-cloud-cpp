@@ -36,12 +36,21 @@ class TableTestEnvironment : public ::testing::Environment {
     instance_id_ = std::move(instance);
   }
 
+  TableTestEnvironment(std::string project, std::string instance,
+                       std::string cluster) {
+    project_id_ = std::move(project);
+    instance_id_ = std::move(instance);
+    cluster_id_ = std::move(cluster);
+  }
+
   static std::string const& project_id() { return project_id_; }
   static std::string const& instance_id() { return instance_id_; }
+  static std::string const& cluster_id() { return cluster_id_; }
 
  private:
   static std::string project_id_;
   static std::string instance_id_;
+  static std::string cluster_id_;
 };
 
 /**
@@ -61,6 +70,10 @@ class TableIntegrationTest : public ::testing::Test {
 
   /// Return all the cells in @p table that pass @p filter.
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                       bigtable::Filter filter);
+
+  /// Return all the cells in @p table that pass @p filter.
+  std::vector<bigtable::Cell> ReadRows(std::string table_name,
                                        bigtable::Filter filter);
 
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,

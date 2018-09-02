@@ -21,7 +21,8 @@ set(bigtable_client_integration_tests
     data_integration_test.cc
     filters_integration_test.cc
     instance_admin_integration_test.cc
-    mutations_integration_test.cc)
+    mutations_integration_test.cc
+    snapshot_integration_test.cc)
 
 include(CreateBazelConfig)
 export_list_to_bazel("bigtable_client_integration_tests.bzl"
