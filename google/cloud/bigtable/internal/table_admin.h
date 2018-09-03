@@ -18,11 +18,13 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_config.h"
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <future>
 #include <memory>
 #include <sstream>
@@ -104,21 +106,72 @@ class TableAdmin {
    * `bigtable::TableAdmin` class, but do not raise exceptions on errors,
    * instead they return the error on the status parameter.
    */
-  ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
-                                                   TableConfig config,
-                                                   grpc::Status& status);
+  google::bigtable::admin::v2::Table CreateTable(std::string table_id,
+                                                 TableConfig config,
+                                                 grpc::Status& status);
 
-  std::vector<::google::bigtable::admin::v2::Table> ListTables(
-      ::google::bigtable::admin::v2::Table::View view, grpc::Status& status);
+  std::vector<google::bigtable::admin::v2::Table> ListTables(
+      google::bigtable::admin::v2::Table::View view, grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Table GetTable(
+  google::bigtable::admin::v2::Table GetTable(
       std::string const& table_id, grpc::Status& status,
-      ::google::bigtable::admin::v2::Table::View view =
-          ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
+      google::bigtable::admin::v2::Table::View view =
+          google::bigtable::admin::v2::Table::SCHEMA_VIEW);
+
+  /**
+   * Make an asynchronous request to get the table metadata.
+   *
+   * @param mut the mutation to apply.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @return A handle to the asynchronous operation, applications can request
+   *   the operation to be canceled.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&,
+                    google::bigtable::admin::v2::Table&, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncGetTable(std::string const& table_id,
+                     google::bigtable::admin::v2::Table::View view,
+                     CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::admin::v2::GetTableRequest request;
+    request.set_name(TableName(table_id));
+    request.set_view(view);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncGetTable)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncGetTable)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &AdminClient::AsyncGetTable, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
 
   void DeleteTable(std::string const& table_id, grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
+  google::bigtable::admin::v2::Table ModifyColumnFamilies(
       std::string const& table_id,
       std::vector<ColumnFamilyModification> modifications,
       grpc::Status& status);
@@ -128,7 +181,7 @@ class TableAdmin {
 
   void DropAllRows(std::string const& table_id, grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Snapshot GetSnapshot(
+  google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id, grpc::Status& status);
 
@@ -144,7 +197,7 @@ class TableAdmin {
                       grpc::Status& status);
 
   template <template <typename...> class Collection = std::vector>
-  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
+  Collection<google::bigtable::admin::v2::Snapshot> ListSnapshots(
       grpc::Status& status,
       bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-")) {
     Collection<::google::bigtable::admin::v2::Snapshot> result;
