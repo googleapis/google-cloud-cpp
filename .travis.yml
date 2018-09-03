@@ -131,7 +131,6 @@ matrix:
       os: linux
       compiler: gcc
       env:
-        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         DISTRO=fedora
         DISTRO_VERSION=27
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
