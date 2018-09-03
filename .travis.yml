@@ -132,7 +132,7 @@ matrix:
       compiler: gcc
       env:
         DISTRO=fedora
-        DISTRO_VERSION=27
+        DISTRO_VERSION=28
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Compile on CentOS.
       os: linux
