@@ -48,11 +48,11 @@ void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
 
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
+      share_(curl_share_init(), &curl_share_cleanup),
       storage_factory_(
           new PooledCurlHandleFactory(options_.connection_pool_size())),
       upload_factory_(
-          new PooledCurlHandleFactory(options_.connection_pool_size())),
-      share_(curl_share_init(), &curl_share_cleanup) {
+          new PooledCurlHandleFactory(options_.connection_pool_size())) {
   storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
   upload_endpoint_ =
       options_.endpoint() + "/upload/storage/" + options_.version();

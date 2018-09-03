@@ -128,11 +128,17 @@ class CurlClient : public RawClient {
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
-  std::shared_ptr<CurlHandleFactory> storage_factory_;
-  std::shared_ptr<CurlHandleFactory> upload_factory_;
 
   std::mutex mu_;
-  CurlShare share_;
+  CurlShare share_ /* GUARDER_BY(mu_) */;
+
+  // The factories must be listed *after* the CurlShare. libcurl keeps a
+  // usage count on each CURLSH* handle, which is only released once the CURL*
+  // handle is *closed*. So we want the order of destruction to be (1)
+  // factories, as that will delete all the CURL* handles, and then (2) CURLSH*.
+  // To guarantee this order just list the members in the opposite order.
+  std::shared_ptr<CurlHandleFactory> storage_factory_;
+  std::shared_ptr<CurlHandleFactory> upload_factory_;
 };
 
 }  // namespace internal
