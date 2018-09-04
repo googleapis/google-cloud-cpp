@@ -491,6 +491,8 @@ class GcsBucket(object):
                 'baz': 'qux'
             }
         }
+        self.notification_id = 1
+        self.notifications = {}
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
         self.insert_acl(
@@ -703,6 +705,63 @@ class GcsBucket(object):
         """
         return self.insert_default_object_acl(entity, role)
 
+    def list_notifications(self):
+        """
+        List the notifications associated with this Bucket.
+
+        :return:list of dict with the notification definitions.
+        """
+        return self.notifications.values()
+
+    def insert_notification(self, request):
+        """
+        Insert a new notification into this Bucket.
+
+        :param gcs_url:str the URL for the service.
+        :return: dict the new notification value.
+        """
+        id = 'notification-%d' % self.notification_id
+        link = '%s/b/%s/notificationConfigs/%s' % (self.gcs_url, self.name, id)
+        self.notification_id += 1
+        dict = json.loads(request.data)
+        dict.update({
+            'id': id,
+            'selfLink': link,
+            'etag': 'XYZ=',
+            'kind': 'storage#notification',
+        })
+        self.notifications[id] = dict
+        return dict
+
+    def delete_notification(self, notification_id):
+        """
+        Delete a notification in this Bucket.
+
+        :param notification_id:str the id of the notification.
+        :return:None
+        """
+        if self.notifications.get(notification_id) is None:
+            raise ErrorResponse(
+                'Notification %d not found in %s' % (notification_id,
+                                                     self.name),
+                status_code=404)
+        del (self.notifications[notification_id])
+
+    def get_notification(self, notification_id):
+        """
+        Get the details of a given notification in this Bucket.
+
+        :param notification_id:str the id of the notification.
+        :return:dict the details of the notification.
+        """
+        details = self.notifications.get(notification_id)
+        if details is None:
+            raise ErrorResponse(
+                'Notification %d not found in %s' % (notification_id,
+                                                     self.name),
+                status_code=404)
+        return details
+
 
 # Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
 GCS_OBJECTS = dict()
@@ -731,6 +790,21 @@ def insert_magic_bucket(base_url):
         bucket.update_from_metadata({})
         bucket.update_from_metadata({})
         GCS_BUCKETS[bucket_name] = bucket
+
+
+def lookup_bucket(bucket_name):
+    """
+    Lookup a bucket by name in GCS_BUCKETS.
+
+    :param bucket_name:str the name of the Bucket.
+    :return:GcsBucket the bucket matching the name.
+    :raises:ErrorResponse if the bucket is not found.
+    """
+    bucket = GCS_BUCKETS.get(bucket_name)
+    if bucket is None:
+        raise ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
+    return bucket
 
 
 @gcs.route('/')
@@ -1001,6 +1075,42 @@ def bucket_default_object_acl_patch(bucket_name, entity):
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
     return filtered_response(flask.request, acl)
+
+
+@gcs.route('/b/<bucket_name>/notificationConfigs')
+def bucket_notification_list(bucket_name):
+    """Implement the 'Notifications: list' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    return filtered_response(flask.request, {
+        'kind': 'storage#notifications',
+        'items': gcs_bucket.list_notifications()
+    })
+
+
+@gcs.route('/b/<bucket_name>/notificationConfigs', methods=['POST'])
+def bucket_notification_create(bucket_name):
+    """Implement the 'Notifications: insert' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    notification = gcs_bucket.insert_notification(flask.request)
+    return filtered_response(flask.request, notification)
+
+
+@gcs.route(
+    '/b/<bucket_name>/notificationConfigs/<notification_id>',
+    methods=['DELETE'])
+def bucket_notification_delete(bucket_name, notification_id):
+    """Implement the 'Notifications: delete' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.delete_notification(notification_id)
+    return filtered_response(flask.request, {})
+
+
+@gcs.route('/b/<bucket_name>/notificationConfigs/<notification_id>')
+def bucket_notification_get(bucket_name, notification_id):
+    """Implement the 'Notifications: get' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    notification = gcs_bucket.get_notification(notification_id)
+    return filtered_response(flask.request, notification)
 
 
 @gcs.route('/b/<bucket_name>/o')
