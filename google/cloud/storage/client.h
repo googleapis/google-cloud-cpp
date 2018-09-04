@@ -534,6 +534,40 @@ class Client {
   }
 
   /**
+   * Concatenates a list of existing objects into a new object in the same
+   * bucket.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param destination_object_name the destination .
+   * @param destination_object_metadata the new metadata for the Object.  Only the writeable fields
+   *     accepted by the `Objects: update` API are used, all other fields are
+   *     ignored. In particular, note that `bucket` and `name` are ignored in
+   *     favor of @p bucket_name and @p object_name.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `Generation`,
+   *     `IfGenerationMatch``, `IfMetagenerationMatch`,
+   *     ` `PredefinedAcl`,and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc update object metadata
+   */
+  template <typename... Options>
+  ObjectMetadata ComposeObject(std::string bucket_name,
+                              std::string destination_object_name,
+                              std::vector<ComposeSourceObject> source_objects,
+                              ObjectMetadata destination_object_metadata,
+                              Options&&... options) {
+    internal::ComposeObjectRequest request(
+        std::move(bucket_name), std::string(destination_object_name),
+        source_objects,
+        std::move(destination_object_metadata));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ComposeObject(request).second;
+  }
+
+  /**
    * Retrieves the list of BucketAccessControls for a bucket.
    *
    * @param bucket_name the name of the bucket.

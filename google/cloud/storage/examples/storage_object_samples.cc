@@ -341,6 +341,71 @@ void ReadEncryptedObject(google::cloud::storage::Client client, int& argc,
   //! [read encrypted object] [END storage_download_encrypted_file]
   (std::move(client), bucket_name, object_name, base64_aes256_key);
 }
+
+void ComposeObject(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc < 5) {
+    throw Usage{
+        "compose-object <bucket-name> <destination-object-name>"
+        " <object_1> <object_2> ..."};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
+  while (argc > 1) {
+    auto object_name = ConsumeArg(argc, argv);
+    compose_objects.push_back({object_name});
+  }
+  //! [compose object]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, 
+     std::string destination_object_name,
+     std::vector<gcs::ComposeSourceObject> compose_objects) {
+    gcs::ObjectMetadata composed_object =
+        client.ComposeObject(bucket_name, destination_object_name, 
+                             compose_objects, gcs::ObjectMetadata());
+    std::cout << "Composed new object " << destination_object_name
+              << " Metadata: " << composed_object << std::endl;
+  }
+  //! [compose object]
+  (std::move(client), bucket_name, destination_object_name, compose_objects);
+}
+void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client, 
+                         int& argc, char* argv[]) {
+  if (argc < 7) {
+    throw Usage{
+        "compose-object-from-encrypted-objects <bucket-name>"
+        " <destination-object-name> <source-base64-encoded-aes256-key>"
+        " <destination-base64-encoded-aes256-key> <object_1> <object_2> ..."};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  auto source_base64_aes256_key = ConsumeArg(argc, argv);
+  auto destination_base64_aes256_key = ConsumeArg(argc, argv);
+  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
+  while (argc > 1) {
+    auto object_name = ConsumeArg(argc, argv);
+    compose_objects.push_back({object_name});
+  }
+  //! [compose object from encrypted objects]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name,
+     std::string destination_object_name,
+     std::string source_base64_aes256_key,
+     std::string destination_base64_aes256_key,
+     std::vector<gcs::ComposeSourceObject> compose_objects) {
+    gcs::ObjectMetadata composed_object =
+        client.ComposeObject(bucket_name, destination_object_name, 
+            compose_objects, gcs::ObjectMetadata(),
+            gcs::SourceEncryptionKey::FromBase64Key(source_base64_aes256_key),
+            gcs::EncryptionKey::FromBase64Key(destination_base64_aes256_key));
+    std::cout << "Composed new object " << destination_object_name
+              << " Metadata: " << composed_object << std::endl;
+  }
+  //! [compose object from encrypted objects]
+  (std::move(client), bucket_name, destination_object_name, 
+    source_base64_aes256_key, destination_base64_aes256_key, compose_objects);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -364,6 +429,9 @@ int main(int argc, char* argv[]) try {
       {"generate-encryption-key", &GenerateEncryptionKey},
       {"write-encrypted-object", &WriteEncryptedObject},
       {"read-encrypted-object", &ReadEncryptedObject},
+      {"compose-object", &ComposeObject},
+      {"compose-object-from-encrypted-objects", 
+       &ComposeObjectFromEncryptedObjects}
   };
   for (auto&& kv : commands) {
     try {

@@ -79,6 +79,8 @@ class RawClient {
       UpdateObjectRequest const&) = 0;
   virtual std::pair<Status, ObjectMetadata> PatchObject(
       PatchObjectRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> ComposeObject(
+      ComposeObjectRequest const&) = 0;
   //@}
 
   //@{

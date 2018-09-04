@@ -127,6 +127,37 @@ internal::nl::json ObjectMetadata::JsonForUpdate() const {
   return metadata_as_json;
 }
 
+// TODO(frank): An exact copy of JsonPayloadForUpdate (verify correctness)
+std::string ObjectMetadata::JsonPayloadForCompose() const {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (not acl().empty()) {
+    for (ObjectAccessControl const& a : acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition", content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", content_type());
+
+  if (not metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json.dump();
+}
+
+
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(*this) ==
              rhs and

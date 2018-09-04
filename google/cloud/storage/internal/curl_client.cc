@@ -308,6 +308,23 @@ std::pair<Status, ObjectMetadata> CurlClient::PatchObject(
                         ObjectMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, ObjectMetadata> CurlClient::ComposeObject(
+    ComposeObjectRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/o/" + request.object_name() + "/compose",
+                             storage_factory_);
+  SetupBuilder(builder, request, "POST");
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectMetadata{});
+  }
+  return std::make_pair(Status(),
+                        ObjectMetadata::ParseFromString(payload.payload));
+}
+
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(

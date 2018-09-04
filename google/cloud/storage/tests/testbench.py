@@ -416,6 +416,23 @@ class GcsObject(object):
                 'Precondition Failed: generation %s not found' % generation)
         return version
 
+    def get_revision_by_generation(self, generation):
+        """
+        Get the information about a particular object revision or raise.
+
+        :param generation:int
+        :return:GcsObjectRevision the object revision.
+        :raises:ErrorResponse if the request contains an invalid generation
+            number.
+        """
+        if generation is None:
+            return self.get_latest()
+        version = self.revisions.get(int(generation))
+        if version is None:
+            raise ErrorResponse(
+                'Precondition Failed: generation %s not found' % generation)
+        return version
+
     def del_revision(self, request):
         """
         Delete a version of a fake GCS Blob.
@@ -1235,6 +1252,30 @@ def objects_update(bucket_name, object_name):
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.update_revision(flask.request)
+    return json.dumps(revision.metadata)
+
+@gcs.route('/b/<bucket_name>/o/<object_name>/compose', methods=['POST'])
+def objects_compose(bucket_name, object_name):
+    """Implement the 'Objects: compose' API: concatenate existing Objects."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    payload = json.loads(flask.request.data)
+    source_objects = payload["sourceObjects"] 
+    object_body = ""
+    if source_objects not None:
+        for source_object in source_objects:
+            compose_object = GCS_OBJECTS.get(object_path,
+                                         GcsObject(bucket_name, object_name))
+            if source_object["generation"] not None:
+                compose_object = compose_object.get_revision_by_generation(
+                    source_object["generation"])
+            object_body += compose_object.media
+            
+    else:
+        raise ErrorResponse('At least one object' % media)
     revision = gcs_object.update_revision(flask.request)
     return json.dumps(revision.metadata)
 
