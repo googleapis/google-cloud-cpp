@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/empty_response.h"
+#include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
@@ -134,6 +135,11 @@ class RawClient {
   //@{
   virtual std::pair<Status, ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) = 0;
+  //@}
+
+  //@{
+  virtual std::pair<Status, ListNotificationsResponse> ListNotifications(
+      ListNotificationsRequest const&) = 0;
   //@}
 };
 

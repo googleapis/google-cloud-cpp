@@ -376,6 +376,14 @@ std::pair<Status, ServiceAccount> RetryClient::GetServiceAccount(
                   &RawClient::GetServiceAccount, request, __func__);
 }
 
+std::pair<Status, ListNotificationsResponse> RetryClient::ListNotifications(
+    ListNotificationsRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::ListNotifications, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

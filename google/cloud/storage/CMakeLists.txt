@@ -247,6 +247,7 @@ set(storage_client_unit_tests
     client_default_object_acl_test.cc
     client_object_acl_test.cc
     client_service_account_test.cc
+    client_notifications_test.cc
     client_test.cc
     client_write_object_test.cc
     credentials_test.cc

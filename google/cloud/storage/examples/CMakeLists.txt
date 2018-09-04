@@ -33,3 +33,6 @@ target_link_libraries(storage_object_samples storage_client)
 
 add_executable(storage_object_acl_samples storage_object_acl_samples.cc)
 target_link_libraries(storage_object_acl_samples storage_client)
+
+add_executable(storage_notification_samples storage_notification_samples.cc)
+target_link_libraries(storage_notification_samples storage_client)

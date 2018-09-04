@@ -461,6 +461,24 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   client.DeleteBucket(bucket_name);
 }
 
+TEST_F(BucketIntegrationTest, NotificationsCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a new bucket to run the test.
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+
+  auto current_notifications = client.ListNotifications(bucket_name);
+  EXPECT_TRUE(current_notifications.empty())
+      << "Test aborted. Non-empty notification list returned from newly"
+      << " created bucket <" << bucket_name
+      << ">. This is unexpected because the bucket name is chosen at random.";
+
+  client.DeleteBucket(bucket_name);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

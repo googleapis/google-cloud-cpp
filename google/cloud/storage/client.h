@@ -1187,6 +1187,24 @@ class Client {
                                        std::forward<Options>(options)...);
   }
 
+  /**
+   * Retrieves the list of Notifications for a Bucket.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc list notifications
+   */
+  template <typename... Options>
+  std::vector<NotificationMetadata> ListNotifications(
+      std::string const& bucket_name, Options&&... options) {
+    internal::ListNotificationsRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ListNotifications(request).second.items;
+  }
+
  private:
   BucketMetadata GetBucketMetadataImpl(
       internal::GetBucketMetadataRequest const& request);
