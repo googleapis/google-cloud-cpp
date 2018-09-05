@@ -163,6 +163,10 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}" 100000
   run_example ./storage_object_samples update-object-metadata \
       "${bucket_name}" "${object_name}" "test-label" "test-value"
+  run_example ./storage_object_samples patch-object-content-type \
+      "${bucket_name}" "${object_name}" "application/text"
+  run_example ./storage_object_samples patch-object-delete-metadata \
+      "${bucket_name}" "${object_name}" "test-label"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 

@@ -139,6 +139,41 @@ def raise_csek_error(code=400):
     raise ErrorResponse(json.dumps(error), status_code=code)
 
 
+def json_api_patch(original, patch, recurse_on={}):
+    """Patch a dictionary using the JSON API semantics.
+
+    Patches are applied using the following algorithm:
+    - patch is a dictionary representing a JSON object. JSON `null` values are
+      represented by None).
+    - For fields that are not in `recursive_fields`:
+      - If patch contains {field: None} the field is erased from `original`.
+      - Otherwise `patch[field]` replaces `original[field]`.
+    - For fields that are in `recursive_fields`:
+      - If patch contains {field: None} the field is erased from `original`.
+      - If patch contains {field: {}} the field is left untouched in `original`,
+        note that if the field does not exist in original this means it is not
+        created.
+      - Otherwise patch[field] is treated as a patch and applied to
+        `original[field]`, potentially creating the new field.
+
+    :param original:dict the dictionary to patch
+    :param patch:dict the patch to apply. Elements pointing to None are removed,
+        other elements are replaced.
+    :param recurse_on:set of strings, the names of fields for which the patch
+        is applied recursively.
+    :return:dict the updated dictionary
+    """
+    tmp = original.copy()
+    for key, value in patch.iteritems():
+        if value is None:
+            tmp.pop(key, None)
+        elif key not in recurse_on:
+            tmp[key] = value
+        elif len(value) != 0:
+            tmp[key] = json_api_patch(original.get(key, {}), value)
+    return tmp
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -223,7 +258,6 @@ class GcsObjectVersion(object):
             keybase64 = request.headers.get('x-goog-encryption-key')
             key = base64.standard_b64decode(keybase64)
             if key is None or len(key) != 256 / 8:
-                print("\n\n%s\nLEN=%d\n\n" % (keybase64, len(key)))
                 raise_csek_error()
 
             algo = request.headers.get('x-goog-encryption-algorithm')
@@ -237,8 +271,6 @@ class GcsObjectVersion(object):
             h.update(key)
             expected = base64.standard_b64encode(h.digest())
             if expected != actual:
-                print("\n\n\n MISMATCHED HASH %s != %s\n\n" % (expected,
-                                                               actual))
                 raise_csek_error(400)
 
             self.metadata['customerEncryption'] = {
@@ -424,6 +456,39 @@ class GcsObject(object):
         version.update_from_metadata(metadata)
         return version
 
+    def patch_revision(self, request):
+        """
+        Patch the metadata of particular object revision or raise.
+
+        :param request:flask.Request
+        :return:GcsObjectRevision the object revision.
+        :raises:ErrorResponse if the request contains an invalid generation
+            number.
+        """
+        generation = request.args.get('generation')
+        if generation is None:
+            version = self.get_latest()
+        else:
+            version = self.revisions.get(int(generation))
+            if version is None:
+                raise ErrorResponse(
+                    'Precondition Failed: generation %s not found' %
+                    generation)
+        patch = json.loads(request.data)
+        writeable_keys = {
+            'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
+            'contentLanguage', 'contentType', 'metadata'
+        }
+        for key, value in patch.iteritems():
+            if key not in writeable_keys:
+                raise ErrorResponse(
+                    'Invalid metadata change. %s is not writeable' % key,
+                    status_code=503)
+        patched = json_api_patch(version.metadata, patch, recurse_on={'metadata'})
+        patched['metageneration'] = patched.get('metageneration', 0) + 1
+        version.metadata = patched
+        return version
+
     def get_latest(self):
         return self.revisions.get(self.generation, None)
 
@@ -530,7 +595,6 @@ class GcsBucket(object):
 
         :param patch:dict a dictionary with metadata changes.
         """
-        tmp = self.metadata.copy()
         writeable_keys = {
             'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
             'labels', 'lifecycle', 'location', 'logging', 'storageClass',
@@ -541,14 +605,9 @@ class GcsBucket(object):
                 raise ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-            if value is None:
-                if key in tmp:
-                    del (tmp[key])
-            else:
-                tmp[key] = value
-        tmp['name'] = tmp.get('name', self.name)
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
-        self.metadata = tmp
+        patched = json_api_patch(self.metadata, patch, recurse_on={'labels'})
+        patched['metageneration'] = patched.get('metageneration', 0) + 1
+        self.metadata = patched
 
     def check_preconditions(self, request):
         """
@@ -825,7 +884,7 @@ def buckets_delete(bucket_name):
         raise ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
-    del (GCS_BUCKETS[bucket_name])
+    GCS_BUCKETS.pop(bucket_name, None)
     return filtered_response(flask.request, {})
 
 
@@ -1067,6 +1126,17 @@ def objects_update(bucket_name, object_name):
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.update_revision(flask.request)
+    return json.dumps(revision.metadata)
+
+
+@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
+def objects_patch(bucket_name, object_name):
+    """Implement the 'Objects: patch' API: update an existing Object."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    gcs_object.check_preconditions(flask.request)
+    revision = gcs_object.patch_revision(flask.request)
     return json.dumps(revision.metadata)
 
 

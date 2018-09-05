@@ -201,6 +201,54 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, key, value);
 }
 
+void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"update-object-metadata <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto key = ConsumeArg(argc, argv);
+  //! [patch object delete metadata]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string key) {
+    gcs::ObjectMetadata original =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata updated = original;
+    updated.mutable_metadata().erase(key);
+    gcs::ObjectMetadata result =
+        client.PatchObject(bucket_name, object_name, original, updated);
+    std::cout << "Object updated. The full metadata after the update is: "
+              << result << std::endl;
+  }
+  //! [patch object delete metadata]
+  (std::move(client), bucket_name, object_name, key);
+}
+
+void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "update-object-metadata <bucket-name> <object-name> <content-type>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto content_type = ConsumeArg(argc, argv);
+  //! [patch object content type]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string content_type) {
+    gcs::ObjectMetadata updated = client.PatchObject(
+        bucket_name, object_name,
+        gcs::ObjectMetadataPatchBuilder().SetContentType(content_type));
+    std::cout << "Object updated. The full metadata after the update is: "
+              << updated << std::endl;
+  }
+  //! [patch object content type]
+  (std::move(client), bucket_name, object_name, content_type);
+}
+
 void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
                            char* argv[]) {
   if (argc != 1) {
@@ -311,6 +359,8 @@ int main(int argc, char* argv[]) try {
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
       {"update-object-metadata", &UpdateObjectMetadata},
+      {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
+      {"patch-object-content-type", &PatchObjectContentType},
       {"generate-encryption-key", &GenerateEncryptionKey},
       {"write-encrypted-object", &WriteEncryptedObject},
       {"read-encrypted-object", &ReadEncryptedObject},
