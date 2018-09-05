@@ -38,6 +38,14 @@ class CurlDownloadRequest {
  public:
   explicit CurlDownloadRequest(std::size_t initial_buffer_size);
 
+  ~CurlDownloadRequest() {
+    if (not factory_) {
+      return;
+    }
+    factory_->CleanupHandle(std::move(handle_.handle_));
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
+
   CurlDownloadRequest(CurlDownloadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
         headers_(std::move(rhs.headers_)),
@@ -46,6 +54,7 @@ class CurlDownloadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        factory_(std::move(rhs.factory_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
         initial_buffer_size_(rhs.initial_buffer_size_) {
@@ -60,6 +69,7 @@ class CurlDownloadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    factory_ = std::move(rhs.factory_);
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
     initial_buffer_size_ = rhs.initial_buffer_size_;
@@ -131,8 +141,8 @@ class CurlDownloadRequest {
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
   CurlHandle handle_;
-  using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
   CurlMulti multi_;
+  std::shared_ptr<CurlHandleFactory> factory_;
 
   std::string buffer_;
   // Closing the handle happens in two steps.

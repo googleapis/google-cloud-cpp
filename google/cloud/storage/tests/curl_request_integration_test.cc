@@ -34,7 +34,9 @@ std::string HttpBinEndpoint() {
 }  // namespace
 
 TEST(CurlRequestTest, SimpleGET) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
   request.AddHeader("Accept: application/json");
@@ -51,7 +53,8 @@ TEST(CurlRequestTest, SimpleGET) {
 TEST(CurlRequestTest, FailedGET) {
   // This test fails if somebody manages to run a https server on port 0 (you
   // can't, but just documenting the assumptions in this test).
-  storage::internal::CurlRequestBuilder request("https://localhost:0/");
+  storage::internal::CurlRequestBuilder request(
+      "https://localhost:0/", storage::internal::GetDefaultCurlHandleFactory());
 
   auto req = request.BuildRequest(std::string{});
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -62,7 +65,9 @@ TEST(CurlRequestTest, FailedGET) {
 }
 
 TEST(CurlRequestTest, RepeatedGET) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddQueryParameter("foo", "foo1&&&foo2");
   request.AddQueryParameter("bar", "bar1==bar2=");
   request.AddHeader("Accept: application/json");
@@ -86,7 +91,9 @@ TEST(CurlRequestTest, RepeatedGET) {
 }
 
 TEST(CurlRequestTest, SimplePOST) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/post");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/post",
+      storage::internal::GetDefaultCurlHandleFactory());
   std::vector<std::pair<std::string, std::string>> form_parameters = {
       {"foo", "foo1&foo2 foo3"},
       {"bar", "bar1-bar2"},
@@ -115,8 +122,9 @@ TEST(CurlRequestTest, SimplePOST) {
 }
 
 TEST(CurlRequestTest, Handle404) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() +
-                                                "/status/404");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/status/404",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
@@ -126,8 +134,9 @@ TEST(CurlRequestTest, Handle404) {
 
 /// @test Verify the payload for error status is included in the return value.
 TEST(CurlRequestTest, HandleTeapot) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() +
-                                                "/status/418");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/status/418",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
@@ -142,10 +151,12 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   // because some versions of httpbin capitalize and others do not, in real
   // code (as opposed to a test), we should search for headers in a
   // case-insensitive manner, but that is not the purpose of this test.
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() +
-                                                "/response-headers"
-                                                "?X-Test-Foo=bar"
-                                                "&X-Test-Empty");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() +
+          "/response-headers"
+          "?X-Test-Foo=bar"
+          "&X-Test-Empty",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
 
@@ -159,7 +170,9 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
 
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::Projection("full"));
@@ -179,7 +192,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
 
 /// @test Verify that the UserProject parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::UserProject("a-project"));
@@ -199,7 +214,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
 
 /// @test Verify that the IfGenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::IfGenerationMatch(42));
@@ -219,7 +236,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
 
 /// @test Verify that the IfGenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::IfGenerationNotMatch(42));
@@ -239,7 +258,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
 
 /// @test Verify that the IfMetagenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::IfMetagenerationMatch(42));
@@ -259,7 +280,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
 
 /// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::IfMetagenerationNotMatch(42));
@@ -279,7 +302,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
 
 /// @test Verify that the well-known query parameters are included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
-  storage::internal::CurlRequestBuilder request(HttpBinEndpoint() + "/get");
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/get",
+      storage::internal::GetDefaultCurlHandleFactory());
   request.AddHeader("Accept: application/json");
   request.AddHeader("charsets: utf-8");
   request.AddOption(storage::UserProject("user-project-id"));
@@ -322,8 +347,9 @@ TEST(CurlRequestTest, Logging) {
       }));
 
   {
-    storage::internal::CurlRequestBuilder request(HttpBinEndpoint() +
-                                                  "/post?foo=bar");
+    storage::internal::CurlRequestBuilder request(
+        HttpBinEndpoint() + "/post?foo=bar",
+        storage::internal::GetDefaultCurlHandleFactory());
     request.SetDebugLogging(true);
     request.AddHeader("Accept: application/json");
     request.AddHeader("charsets: utf-8");

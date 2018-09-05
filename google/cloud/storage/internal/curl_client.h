@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H_
 
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -40,6 +42,10 @@ class CurlClient : public RawClient {
   CurlClient(CurlClient&& rhs) = delete;
   CurlClient& operator=(CurlClient const& rhs) = delete;
   CurlClient& operator=(CurlClient&& rhs) = delete;
+
+  using LockFunction =
+      std::function<void(CURL*, curl_lock_data, curl_lock_access)>;
+  using UnlockFunction = std::function<void(CURL*, curl_lock_data)>;
 
   ClientOptions const& client_options() const override { return options_; }
 
@@ -110,6 +116,9 @@ class CurlClient : public RawClient {
   std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) override;
 
+  void LockShared();
+  void UnlockShared();
+
  private:
   /// Applies the common configuration parameters to @p builder.
   template <typename Request>
@@ -119,6 +128,17 @@ class CurlClient : public RawClient {
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
+
+  std::mutex mu_;
+  CurlShare share_ /* GUARDER_BY(mu_) */;
+
+  // The factories must be listed *after* the CurlShare. libcurl keeps a
+  // usage count on each CURLSH* handle, which is only released once the CURL*
+  // handle is *closed*. So we want the order of destruction to be (1)
+  // factories, as that will delete all the CURL* handles, and then (2) CURLSH*.
+  // To guarantee this order just list the members in the opposite order.
+  std::shared_ptr<CurlHandleFactory> storage_factory_;
+  std::shared_ptr<CurlHandleFactory> upload_factory_;
 };
 
 }  // namespace internal

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_HTTP_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_HTTP_REQUEST_H_
 
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <gmock/gmock.h>
@@ -57,7 +58,8 @@ class MockHttpRequest {
  */
 class MockHttpRequestBuilder {
  public:
-  explicit MockHttpRequestBuilder(std::string url) {
+  explicit MockHttpRequestBuilder(
+      std::string url, std::shared_ptr<internal::CurlHandleFactory> factory) {
     mock->Constructor(std::move(url));
   }
 

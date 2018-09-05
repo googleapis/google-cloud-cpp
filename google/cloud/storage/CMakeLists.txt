@@ -120,6 +120,8 @@ add_library(storage_client
             internal/credential_constants.h
             internal/curl_handle.h
             internal/curl_handle.cc
+            internal/curl_handle_factory.h
+            internal/curl_handle_factory.cc
             internal/curl_download_request.h
             internal/curl_download_request.cc
             internal/curl_request.h

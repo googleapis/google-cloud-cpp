@@ -83,6 +83,7 @@ start_testbench() {
   readonly PORT=${TESTBENCH_PORT:-8000}
 
   gunicorn --bind 0.0.0.0:${PORT} \
+      --worker-class gevent \
       --access-logfile - \
       --pythonpath "${PROJECT_ROOT}/google/cloud/storage/tests" \
       testbench:application \

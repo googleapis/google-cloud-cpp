@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H_
 
 #include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/http_response.h"
 
 namespace google {
@@ -34,7 +35,12 @@ class CurlRequest {
  public:
   CurlRequest();
 
-  ~CurlRequest() = default;
+  ~CurlRequest() {
+    if (not factory_) {
+      return;
+    }
+    factory_->CleanupHandle(std::move(handle_.handle_));
+  }
 
   CurlRequest(CurlRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
@@ -44,7 +50,8 @@ class CurlRequest {
         response_payload_(std::move(rhs.response_payload_)),
         received_headers_(std::move(rhs.received_headers_)),
         logging_enabled_(rhs.logging_enabled_),
-        handle_(std::move(rhs.handle_)) {
+        handle_(std::move(rhs.handle_)),
+        factory_(std::move(rhs.factory_)) {
     ResetOptions();
   }
 
@@ -57,6 +64,7 @@ class CurlRequest {
     received_headers_ = std::move(rhs.received_headers_);
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
+    factory_ = std::move(rhs.factory_);
 
     ResetOptions();
     return *this;
@@ -85,6 +93,7 @@ class CurlRequest {
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
   CurlHandle handle_;
+  std::shared_ptr<CurlHandleFactory> factory_;
 };
 
 }  // namespace internal

@@ -38,7 +38,8 @@ std::string HttpBinEndpoint() {
 }
 
 TEST(CurlUploadRequestTest, UploadPartial) {
-  CurlRequestBuilder builder(HttpBinEndpoint() + "/post");
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/post",
+                             storage::internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   CurlUploadRequest upload = builder.BuildUpload();
 
