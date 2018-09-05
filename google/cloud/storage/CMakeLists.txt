@@ -174,6 +174,10 @@ add_library(storage_client
             list_buckets_reader.cc
             list_objects_reader.h
             list_objects_reader.cc
+            notification_event_type.h
+            notification_metadata.h
+            notification_metadata.cc
+            notification_payload_format.h
             object_access_control.h
             object_access_control.cc
             object_metadata.h
@@ -263,6 +267,7 @@ set(storage_client_unit_tests
     object_access_control_test.cc
     object_metadata_test.cc
     object_test.cc
+    notification_metadata_test.cc
     retry_policy_test.cc
     storage_class_test.cc
     storage_client_options_test.cc
