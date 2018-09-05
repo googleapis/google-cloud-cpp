@@ -25,7 +25,9 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/status.h"
 
 namespace google {
@@ -125,6 +127,11 @@ class RawClient {
       UpdateDefaultObjectAclRequest const&) = 0;
   virtual std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) = 0;
+  //@}
+
+  //@{
+  virtual std::pair<Status, ServiceAccount> GetServiceAccount(
+      GetProjectServiceAccountRequest const&) = 0;
   //@}
 };
 

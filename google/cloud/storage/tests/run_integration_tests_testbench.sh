@@ -60,6 +60,10 @@ echo
 echo "Running GCS multi-threaded integration test."
 ./thread_integration_test "${PROJECT_ID}" "${LOCATION}"
 
+echo
+echo "Running GCS Projects.serviceAccount integration tests."
+./service_account_integration_test "${PROJECT_ID}"
+
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
 TESTBENCH_DUMP_LOG=no

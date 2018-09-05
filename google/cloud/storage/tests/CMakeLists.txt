@@ -21,6 +21,7 @@ set(storage_client_integration_tests
     curl_request_integration_test.cc
     curl_streambuf_integration_test.cc
     object_integration_test.cc
+    service_account_integration_test.cc
     thread_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})

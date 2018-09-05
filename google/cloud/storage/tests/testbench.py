@@ -237,8 +237,8 @@ class GcsObjectVersion(object):
             h.update(key)
             expected = base64.standard_b64encode(h.digest())
             if expected != actual:
-                print(
-                    "\n\n\n MISMATCHED HASH %s != %s\n\n" % (expected, actual))
+                print("\n\n\n MISMATCHED HASH %s != %s\n\n" % (expected,
+                                                               actual))
                 raise_csek_error(400)
 
             self.metadata['customerEncryption'] = {
@@ -308,8 +308,8 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -418,7 +418,8 @@ class GcsObject(object):
             version = self.revisions.get(int(generation))
             if version is None:
                 raise ErrorResponse(
-                    'Precondition Failed: generation %s not found' % generation)
+                    'Precondition Failed: generation %s not found' %
+                    generation)
         metadata = json.loads(request.data)
         version.update_from_metadata(metadata)
         return version
@@ -626,8 +627,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -689,8 +690,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_default_object_acl(self, entity, role):
         """
@@ -869,10 +870,10 @@ def bucket_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        gcs_bucket.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
@@ -948,10 +949,10 @@ def bucket_default_object_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        gcs_bucket.insert_default_object_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_default_object_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
@@ -1098,10 +1099,10 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        revision.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             revision.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
@@ -1163,6 +1164,18 @@ def objects_acl_patch(bucket_name, object_name, entity):
     revision = gcs_object.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
     return filtered_response(flask.request, acl)
+
+
+@gcs.route('/projects/<project_id>/serviceAccount')
+def projects_get(project_id):
+    """Implement the `Projects.serviceAccount: get` API."""
+    return filtered_response(
+        flask.request, {
+            'kind':
+            'storage#serviceAccount',
+            'email_address':
+            'service-123456789@gs-project-accounts.iam.gserviceaccount.com'
+        })
 
 
 # Define the WSGI application to handle bucket requests.

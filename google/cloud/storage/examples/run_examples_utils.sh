@@ -49,6 +49,8 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
       "${bucket_name}" "COLDLINE"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+  run_example ./storage_bucket_samples get-service-account-for-project \
+      "${PROJECT_ID}"
 
   # Run the examples where the project id is obtained from the environment:
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
@@ -57,6 +59,7 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+  run_example ./storage_bucket_samples get-service-account
   unset GOOGLE_CLOUD_PROJECT
 
   # Verify that calling without a command produces the right exit status and

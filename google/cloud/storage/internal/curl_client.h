@@ -116,6 +116,9 @@ class CurlClient : public RawClient {
   std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) override;
 
+  std::pair<Status, ServiceAccount> GetServiceAccount(
+      GetProjectServiceAccountRequest const&) override;
+
   void LockShared();
   void UnlockShared();
 

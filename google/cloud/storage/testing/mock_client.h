@@ -109,6 +109,10 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(PatchDefaultObjectAcl,
                ResponseWrapper<ObjectAccessControl>(
                    internal::PatchDefaultObjectAclRequest const&));
+
+  MOCK_METHOD1(GetServiceAccount,
+               ResponseWrapper<ServiceAccount>(
+                   internal::GetProjectServiceAccountRequest const&));
 };
 }  // namespace testing
 }  // namespace storage
