@@ -16,6 +16,7 @@
 if [ -z "${PROJECT_ROOT+x}" ]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/.."; pwd)"
 fi
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 # If an example fails, this is set to 1 and the program exits with failure.
@@ -69,13 +70,9 @@ run_example() {
     echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
         " ${program_name} ${example}"
     echo
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
+    dump_log ${log}
     if [ -f "${EMULATOR_LOG}" ]; then
-      echo "================ [begin ${EMULATOR_LOG} ================"
-      cat "${EMULATOR_LOG}"
-      echo "================ [end ${EMULATOR_LOG} ================"
+      dump_log "${EMULATOR_LOG}"
     fi
   fi
   set -e
@@ -122,13 +119,9 @@ run_example_usage() {
     echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
         " ${program_name}"
     echo
-    echo "================ [begin ${log}] ================"
-    cat "${log}"
-    echo "================ [end ${log}] ================"
+    dump_log ${log}
     if [ -f "${EMULATOR_LOG}" ]; then
-      echo "================ [begin ${EMULATOR_LOG} ================"
-      cat "${EMULATOR_LOG}"
-      echo "================ [end ${EMULATOR_LOG} ================"
+      dump_log "${EMULATOR_LOG}"
     fi
   fi
   set -e
