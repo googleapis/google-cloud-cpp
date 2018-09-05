@@ -81,9 +81,9 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
 
 // This function is used in unit tests to simulate the completion of an
 // operation. The unit test is expected to create a class derived from
-// CompletionQueueImpl, wrap it in a CompletionQueue and call this function to
-// simulate the operation lifecycle. Note that the unit test must simulate the
-// operation results separately.
+// `CompletionQueueImpl`, wrap it in a `CompletionQueue` and call this function
+// to simulate the operation lifecycle. Note that the unit test must simulate
+// the operation results separately.
 void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op,
                                              AsyncOperation::Disposition d) {
   auto internal_op = CompletedOperation(op);
