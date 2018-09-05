@@ -23,8 +23,6 @@ fi
 
 export PATH="/usr/local/opt/ccache/libexec:$PATH"
 
-cmake -H. -B.build \
-  -DCMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}" \
-  ${CMAKE_FLAGS}
+cmake -H. -B.build -DCMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}"
 cmake --build .build -- -j "${NCPU:-2}"
 (cd .build && ctest --output-on-failure)

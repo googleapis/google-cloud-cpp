@@ -34,9 +34,9 @@ if (NOT TARGET zlib_project)
         URL_HASH
             SHA256=629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          $ENV{CMAKE_FLAGS}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Release
+                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                           -H<SOURCE_DIR>

@@ -38,9 +38,9 @@ if (NOT TARGET gprc_project)
         URL_HASH
             SHA256=16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          $ENV{CMAKE_FLAGS}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Release
+                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                           -DgRPC_BUILD_TESTS=OFF
