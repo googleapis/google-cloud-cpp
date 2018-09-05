@@ -57,7 +57,7 @@ void* CompletionQueueImpl::RegisterOperation(
   std::unique_lock<std::mutex> lk(mu_);
   auto ins =
       pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag), std::move(op));
-  // After this point we no longer need the lock, release it.
+  // After this point we no longer need the lock, so release it.
   lk.unlock();
   if (ins.second) {
     return tag;
@@ -80,7 +80,10 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
 }
 
 // This function is used in unit tests to simulate the completion of an
-// operation, the unit test is expected to
+// operation. The unit test is expected to create a class derived from
+// CompletionQueueImpl, wrap it in a CompletionQueue and call this function to
+// simulate the operation lifecycle. Note that the unit test must simulate the
+// operation results separately.
 void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op,
                                              AsyncOperation::Disposition d) {
   auto internal_op = CompletedOperation(op);

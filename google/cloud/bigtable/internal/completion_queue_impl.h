@@ -40,9 +40,9 @@ namespace internal {
 class CompletionQueueImpl;
 
 /**
- * Wrap a timer callback into a `AsyncOperation`.
+ * Wrap a timer callback into an `AsyncOperation`.
  *
- * Applications (or more likely other components in the client library) will
+ * Applications (or more likely, other components in the client library) will
  * associate callbacks of many different types with a completion queue. This
  * class is created by the completion queue implementation to type-erase the
  * callbacks, and thus be able to treat them homogenously in the completion

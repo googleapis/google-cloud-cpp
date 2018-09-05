@@ -42,8 +42,8 @@ class AsyncOperation {
   /**
    * Requests that the operation be canceled.
    *
-   * The result of canceling the operation is reported via the callback
-   * registered when the operation was created.
+   * The result of canceling the operation is reported via `Notify()`, which
+   * invokes the callback registered when the operation was created.
    */
   virtual void Cancel() = 0;
 
@@ -60,8 +60,8 @@ class AsyncOperation {
    * Derived classes wrap the callbacks provided by the application and invoke
    * the callback when this virtual member function is called.
    *
-   * @param ok true if the operation completed, false if the operation was
-   *   canceled. Note that errors are a "normal" completion.
+   * @param disposition `COMPLETED` if the operation completed, `CANCELED` if
+   *   the operation were canceled. Note that errors are a "normal" completion.
    */
   virtual void Notify(Disposition disposition) = 0;
 };
