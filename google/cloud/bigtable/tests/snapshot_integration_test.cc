@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -24,6 +25,7 @@
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
+using namespace google::cloud::testing_util::chrono_literals;
 
 class SnapshotIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -40,17 +42,6 @@ class SnapshotIntegrationTest : public bigtable::testing::TableIntegrationTest {
   }
 
   void TearDown() {}
-
-  int CountMatchingTables(std::string const& table_id,
-                          std::vector<btadmin::Table> const& tables) {
-    std::string table_name =
-        table_admin_->instance_name() + "/tables/" + table_id;
-    auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](btadmin::Table const& t) {
-                                 return table_name == t.name();
-                               });
-    return static_cast<int>(count);
-  }
 };
 }  // namespace
 
@@ -62,8 +53,6 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
   google::cloud::bigtable::ClusterId cluster_id(
       bigtable::testing::TableTestEnvironment::cluster_id());
   google::cloud::bigtable::SnapshotId snapshot_id(table_id.get() + "-snapshot");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(36000);
 
   std::string const column_family1 = "family1";
   std::string const column_family2 = "family2";
@@ -75,8 +64,8 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
       {});
   auto table = CreateTable(table_id.get(), table_config);
   // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key1 = "DropRowKey1";
-  std::string const row_key2 = "DropRowKey2";
+  std::string const row_key1 = "row1";
+  std::string const row_key2 = "row2";
   std::vector<bigtable::Cell> created_cells{
       {row_key1, column_family1, "column_id1", 1000, "v-c-0-0", {}},
       {row_key1, column_family1, "column_id2", 1000, "v-c-0-1", {}},
@@ -88,7 +77,7 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
   // Create records
   CreateCells(*table, created_cells);
   auto snapshot =
-      table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, duration)
+      table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
   auto table_ =
       table_admin_

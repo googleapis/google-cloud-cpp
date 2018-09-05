@@ -20,11 +20,12 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
-
+using namespace google::cloud::testing_util::chrono_literals;
 using MockAdminClient = bigtable::testing::MockAdminClient;
 
 std::string const kProjectId = "the-project";
@@ -966,10 +967,7 @@ TEST_F(TableAdminTest, SnapshotTableSimple) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
 
   std::string delta;
@@ -1009,10 +1007,7 @@ TEST_F(TableAdminTest, SnapshotTableImmediatelyReady) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
 
   std::string delta;
@@ -1067,10 +1062,7 @@ TEST_F(TableAdminTest, SnapshotTablePollRecoverableFailures) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
 
   std::string delta;
@@ -1079,12 +1071,12 @@ TEST_F(TableAdminTest, SnapshotTablePollRecoverableFailures) {
   EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Failure when polling exhausted for
 /// `bigtable::TableAdmin::SnapshotTable`.
 TEST_F(TableAdminTest, SnapshotTablePollingExhausted) {
   using ::testing::_;
   using ::testing::Invoke;
-  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::TableAdmin tested(
       client_, "the-instance",
@@ -1109,25 +1101,15 @@ TEST_F(TableAdminTest, SnapshotTablePollingExhausted) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
 
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // After all the setup, make the actual call we want to test.
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test `bigtable::TableAdmin::SnapshotTable` call has permanent failure.
 TEST_F(TableAdminTest, SnapshotTablePermanentFailure) {
   using ::testing::_;
   using ::testing::Invoke;
-  using namespace google::cloud::testing_util::chrono_literals;
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, SnapshotTable(_, _, _))
@@ -1147,21 +1129,11 @@ TEST_F(TableAdminTest, SnapshotTablePermanentFailure) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
 
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // After all the setup, make the actual call we want to test.
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   EXPECT_THROW(future.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(future.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Failures in `bigtable::TableAdmin::SnapshotTable`.
 TEST_F(TableAdminTest, SnapshotTableRequestFailure) {
   using namespace ::testing;
@@ -1174,11 +1146,7 @@ TEST_F(TableAdminTest, SnapshotTableRequestFailure) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
-
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -1200,11 +1168,7 @@ TEST_F(TableAdminTest, SnapshotTablePollUnrecoverableFailure) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
-
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 
@@ -1250,10 +1214,8 @@ TEST_F(TableAdminTest, SnapshotTablePollReturnsFailure) {
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
-  ::google::protobuf::Duration duration;
-  duration.set_seconds(100);
-  auto future =
-      tested.SnapshotTable(cluster_id, snapshot_id, table_id, duration);
+
+  auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   EXPECT_THROW(future.get(), bigtable::GRpcError);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

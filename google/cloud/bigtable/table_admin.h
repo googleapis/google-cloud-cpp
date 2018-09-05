@@ -273,8 +273,7 @@ class TableAdmin {
   std::future<google::bigtable::admin::v2::Snapshot> SnapshotTable(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id,
-      bigtable::TableId const& table_id,
-      ::google::protobuf::Duration duration_ttl);
+      bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
 
   /**
    * Get information about a single snapshot.
@@ -365,8 +364,7 @@ class TableAdmin {
   google::bigtable::admin::v2::Snapshot SnapshotTableImpl(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id,
-      bigtable::TableId const& table_id,
-      ::google::protobuf::Duration duration_ttl);
+      bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
 
   /// Implement CreateTableFromSnapshot() with a separate thread.
   google::bigtable::admin::v2::Table CreateTableFromSnapshotImpl(

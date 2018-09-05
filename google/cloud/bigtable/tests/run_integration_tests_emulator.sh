@@ -36,6 +36,11 @@ echo
 echo "Running bigtable::TableAdmin integration test."
 ./admin_integration_test "${PROJECT_ID}" "admin-test"
 
+# TODO(#151) - Cleanup integration tests after emulator bugs are fixed. 
+#echo
+#echo "Running bigtable::TableAdmin snapshot integration test."
+#./snapshot_integration_test "${PROJECT_ID}" "admin-test" "admin-test-cl1"
+
 echo
 echo "Running bigtable::Table integration test."
 ./data_integration_test "${PROJECT_ID}" "data-test"

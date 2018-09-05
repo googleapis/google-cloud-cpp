@@ -65,14 +65,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
     std::string table_name, bigtable::Filter filter) {
   bigtable::Table table(data_client_, table_name);
-  auto reader = table.ReadRows(
-      bigtable::RowSet(bigtable::RowRange::InfiniteRange()), std::move(filter));
-  std::vector<bigtable::Cell> result;
-  for (auto const& row : reader) {
-    std::copy(row.cells().begin(), row.cells().end(),
-              std::back_inserter(result));
-  }
-  return result;
+  return ReadRows(table, std::move(filter));
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(

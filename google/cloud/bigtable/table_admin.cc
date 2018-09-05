@@ -99,7 +99,7 @@ void TableAdmin::DropAllRows(std::string const& table_id) {
 std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
-    ::google::protobuf::Duration duration_ttl) {
+    std::chrono::seconds duration_ttl) {
   return std::async(std::launch::async, &TableAdmin::SnapshotTableImpl, this,
                     cluster_id, snapshot_id, table_id, duration_ttl);
 }
@@ -107,18 +107,14 @@ std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
 btadmin::Snapshot TableAdmin::SnapshotTableImpl(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
-    ::google::protobuf::Duration duration_ttl) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-
+    std::chrono::seconds duration_ttl) {
   using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
 
   btadmin::SnapshotTableRequest request;
   request.set_name(impl_.TableName(table_id.get()));
   request.set_cluster(impl_.ClusterName(cluster_id));
   request.set_snapshot_id(snapshot_id.get());
-  request.mutable_ttl()->Swap(&duration_ttl);
+  request.mutable_ttl()->set_seconds(duration_ttl.count());
 
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
