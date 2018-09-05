@@ -42,7 +42,7 @@ void CompletionQueueImpl::Run() {
           "unexpected status from AsyncNext()");
     }
     auto op = CompletedOperation(tag);
-    op->Notify(ok);
+    op->Notify(ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED);
   }
 }
 
@@ -54,9 +54,11 @@ void CompletionQueueImpl::Shutdown() {
 void* CompletionQueueImpl::RegisterOperation(
     std::shared_ptr<AsyncOperation> op) {
   void* tag = op.get();
-  std::lock_guard<std::mutex> lk(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   auto ins =
       pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag), std::move(op));
+  // After this point we no longer need the lock, release it.
+  lk.unlock();
   if (ins.second) {
     return tag;
   }
@@ -79,9 +81,10 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
 
 // This function is used in unit tests to simulate the completion of an
 // operation, the unit test is expected to
-void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op, bool ok) {
+void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op,
+                                             AsyncOperation::Disposition d) {
   auto internal_op = CompletedOperation(op);
-  internal_op->Notify(ok);
+  internal_op->Notify(d);
 }
 
 }  // namespace internal

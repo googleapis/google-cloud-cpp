@@ -57,9 +57,9 @@ class AsyncTimerFunctor : public AsyncOperation {
   explicit AsyncTimerFunctor(Functor&& functor)
       : functor_(std::move(functor)), alarm_(new grpc::Alarm) {}
 
-  void Notify(bool ok) override {
+  void Notify(Disposition d) override {
     alarm_.reset();
-    functor_(timer_, ok);
+    functor_(timer_, d);
   }
 
   void Set(grpc::CompletionQueue& cq,
@@ -105,7 +105,7 @@ class CompletionQueueImpl {
 
  protected:
   /// Simulate a completed operation, provided only to support unit tests.
-  void SimulateCompletion(AsyncOperation* op, bool ok);
+  void SimulateCompletion(AsyncOperation* op, AsyncOperation::Disposition d);
 
  private:
   grpc::CompletionQueue cq_;

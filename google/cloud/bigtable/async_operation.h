@@ -29,7 +29,11 @@ class CompletionQueueImpl;
  * Represents a pending asynchronous operation.
  *
  * When applications create an asynchronous operations with a `CompletionQueue`
- * they provide a callback to be invoked , and provide a
+ * they provide a callback to be invoked when the operation completes
+ * (successfully or not). The completion queue type-erases the callback and
+ * hides it in a class derived from `AsyncOperation`.  A shared pointer to the
+ * `AsyncOperation` is returned by the completion queue so library developers
+ * can cancel the operation if needed.
  */
 class AsyncOperation {
  public:
@@ -43,6 +47,11 @@ class AsyncOperation {
    */
   virtual void Cancel() = 0;
 
+  enum Disposition {
+    CANCELLED,
+    COMPLETED,
+  };
+
  private:
   friend class internal::CompletionQueueImpl;
   /**
@@ -54,7 +63,7 @@ class AsyncOperation {
    * @param ok true if the operation completed, false if the operation was
    *   canceled. Note that errors are a "normal" completion.
    */
-  virtual void Notify(bool ok) = 0;
+  virtual void Notify(Disposition disposition) = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
