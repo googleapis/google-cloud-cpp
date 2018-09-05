@@ -138,21 +138,38 @@ def raise_csek_error(code=400):
     raise ErrorResponse(json.dumps(error), status_code=code)
 
 
-def patch_dict(original, patch):
+def json_api_patch(original, patch, recurse_on={}):
     """Patch a dictionary using the JSON API semantics.
+
+    Patches are applied using the following algorithm:
+    - patch is a dictionary representing a JSON object. JSON `null` values are
+      represented by None).
+    - For fields that are not in `recursive_fields`:
+      - If patch contains {field: None} the field is erased from `original`.
+      - Otherwise `patch[field]` replaces `original[field]`.
+    - For fields that are in `recursive_fields`:
+      - If patch contains {field: None} the field is erased from `original`.
+      - If patch contains {field: {}} the field is left untouched in `original`,
+        note that if the field does not exist in original this means it is not
+        created.
+      - Otherwise patch[field] is treated as a patch and applied to
+        `original[field]`, potentially creating the new field.
 
     :param original:dict the dictionary to patch
     :param patch:dict the patch to apply. Elements pointing to None are removed,
         other elements are replaced.
+    :param recurse_on:set of strings, the names of fields for which the patch
+        is applied recursively.
     :return:dict the updated dictionary
     """
     tmp = original.copy()
     for key, value in patch.iteritems():
         if value is None:
-            if key in tmp:
-                del (tmp[key])
-        else:
+            tmp.pop(key, None)
+        elif key not in recurse_on:
             tmp[key] = value
+        elif len(value) != 0:
+            tmp[key] = json_api_patch(original.get(key, {}), value)
     return tmp
 
 
@@ -466,13 +483,9 @@ class GcsObject(object):
                 raise ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-        # Recursively apply the patch to 'labels' because it is special.
-        if patch.get('metadata') is not None:
-            patch['metadata'] = patch_dict(
-                version.metadata.get('metadata', {}), patch['metadata'])
-        tmp = patch_dict(version.metadata, patch)
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
-        version.metadata = tmp
+        patched = json_api_patch(version.metadata, patch, recurse_on={'metadata'})
+        patched['metageneration'] = patched.get('metageneration', 0) + 1
+        version.metadata = patched
         return version
 
     def get_latest(self):
@@ -581,7 +594,6 @@ class GcsBucket(object):
 
         :param patch:dict a dictionary with metadata changes.
         """
-        tmp = self.metadata.copy()
         writeable_keys = {
             'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
             'labels', 'lifecycle', 'location', 'logging', 'storageClass',
@@ -592,14 +604,9 @@ class GcsBucket(object):
                 raise ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-        # Recursively apply the patch to 'labels' because it is special.
-        if patch.get('labels') is not None:
-            patch['labels'] = patch_dict(
-                self.metadata.get('labels', {}), patch['labels'])
-        tmp = patch_dict(self.metadata, patch)
-        tmp['name'] = tmp.get('name', self.name)
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
-        self.metadata = tmp
+        patched = json_api_patch(self.metadata, patch, recurse_on={'labels'})
+        patched['metageneration'] = patched.get('metageneration', 0) + 1
+        self.metadata = patched
 
     def check_preconditions(self, request):
         """
@@ -876,7 +883,7 @@ def buckets_delete(bucket_name):
         raise ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
-    del (GCS_BUCKETS[bucket_name])
+    GCS_BUCKETS.pop(bucket_name, None)
     return filtered_response(flask.request, {})
 
 

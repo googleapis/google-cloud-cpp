@@ -503,11 +503,10 @@ class Client {
   /**
    * Patch the metadata in a Google Cloud Storage Object.
    *
-   * This function creates a patch request to change the writeable attributes in
-   * @p original to the values in @p updated.  Non-writeable attributes are
-   * ignored, and attributes not present in @p updated are removed. Typically
-   * this function is used after the application obtained a value with
-   * `GetObjectMetadata` and has modified these parameters.
+   * This function creates a patch request based on the given @p builder.
+   * Typically this function is used when the application needs to set an
+   * object's metadata fields regardless of their previous value (i.e. when
+   * calling GetObjectMetadata first is not necessary).
    *
    * @param bucket_name the bucket that contains the object to be updated.
    * @param object_name the object to be updated.

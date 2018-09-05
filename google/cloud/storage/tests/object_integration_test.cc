@@ -207,10 +207,12 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
     desired.set_content_type("application/text");
   }
 
+  // We want to create a diff that modifies the metadata, so either erase or
+  // insert a value for `test-label` depending on the initial state.
   if (original.has_metadata("test-label")) {
-    original.mutable_metadata().erase("test-label");
+    desired.mutable_metadata().erase("test-label");
   } else {
-    original.mutable_metadata().emplace("test-label", "test-value");
+    desired.mutable_metadata().emplace("test-label", "test-value");
   }
 
   ObjectMetadata patched =
