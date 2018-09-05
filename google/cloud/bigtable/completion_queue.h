@@ -51,7 +51,9 @@ class CompletionQueue {
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
    */
-  template <typename Functor>
+  template <typename Functor,
+            typename std::enable_if<
+                internal::CheckTimerCallback<Functor>::value, int>::type = 0>
   std::shared_ptr<AsyncOperation> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline, Functor&& functor) {
     auto op = std::make_shared<internal::AsyncTimerFunctor<Functor>>(
@@ -81,7 +83,9 @@ class CompletionQueue {
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
    */
-  template <typename Rep, typename Period, typename Functor>
+  template <typename Rep, typename Period, typename Functor,
+            typename std::enable_if<
+                internal::CheckTimerCallback<Functor>::value, int>::type = 0>
   std::shared_ptr<AsyncOperation> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration, Functor&& functor) {
     auto deadline = std::chrono::system_clock::now() + duration;
@@ -113,15 +117,18 @@ class CompletionQueue {
    * @return an AsyncOperation instance that can be used to request cancelation
    *   of the pending operation.
    */
-  template <typename Client, typename MemberFunction, typename Request,
-            typename Functor>
-  typename std::enable_if<
-      internal::CheckAsyncUnaryRpcSignature<MemberFunction>::value,
-      std::shared_ptr<AsyncOperation>>::type
-  MakeUnaryRpc(Client& client, MemberFunction Client::*call,
-               Request const& request,
-               std::unique_ptr<grpc::ClientContext> context, Functor&& f) {
-    using Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunction>;
+  template <
+      typename Client, typename MemberFunction, typename Request,
+      typename Functor,
+      typename Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunction>,
+      typename std::enable_if<Sig::value, int>::type
+          valid_member_function_type = 0,
+      typename std::enable_if<internal::CheckUnaryRpcCallback<
+                                  Functor, typename Sig::ResponseType>::value,
+                              int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> MakeUnaryRpc(
+      Client& client, MemberFunction Client::*call, Request const& request,
+      std::unique_ptr<grpc::ClientContext> context, Functor&& f) {
     static_assert(std::is_same<typename Sig::RequestType,
                                typename std::decay<Request>::type>::value,
                   "Mismatched pointer to member function and request types");
