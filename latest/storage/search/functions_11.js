@@ -1,6 +1,7 @@
 var searchData=
 [
   ['self_5flink',['self_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aebb942e0698bf2f516a98f1f9c4901af',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['serviceaccount',['ServiceAccount',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html#a897c415ddfd4dfff0c7ca9d0c4929155',1,'google::cloud::storage::v0::ServiceAccount']]],
   ['set_5facl',['set_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2155f3bab626434f6954ed30919f4e37',1,'google::cloud::storage::v0::BucketMetadata::set_acl()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#af45cf4734d99b2e34db381de2f3d8672',1,'google::cloud::storage::v0::ObjectMetadata::set_acl()']]],
   ['set_5fbilling',['set_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5b90231c6ac2b2e5a704c8d271e0ecc3',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fcache_5fcontrol',['set_cache_control',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ae2e2cd66575c689bf9f3c5d35e352b20',1,'google::cloud::storage::v0::ObjectMetadata']]],

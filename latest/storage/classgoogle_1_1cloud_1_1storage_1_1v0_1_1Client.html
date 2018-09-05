@@ -251,6 +251,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afabe618ed004a307710741c73d6c5978"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afabe618ed004a307710741c73d6c5978">PatchDefaultObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;entity, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html">ObjectAccessControlPatchBuilder</a> const &amp;builder, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:afabe618ed004a307710741c73d6c5978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the value of an existing default object ACL.  <a href="#afabe618ed004a307710741c73d6c5978">More...</a><br /></td></tr>
 <tr class="separator:afabe618ed004a307710741c73d6c5978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd8129fecaf20d72ccd078c77dae6d39"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:afd8129fecaf20d72ccd078c77dae6d39"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd8129fecaf20d72ccd078c77dae6d39">GetServiceAccountForProject</a> (std::string const &amp;project_id, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:afd8129fecaf20d72ccd078c77dae6d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the GCS service account for a given project.  <a href="#afd8129fecaf20d72ccd078c77dae6d39">More...</a><br /></td></tr>
+<tr class="separator:afd8129fecaf20d72ccd078c77dae6d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a60b75719e0b7d19eea3cdaa97796d35e">GetServiceAccount</a> (Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a60b75719e0b7d19eea3cdaa97796d35e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the GCS service account for the default project.  <a href="#a60b75719e0b7d19eea3cdaa97796d35e">More...</a><br /></td></tr>
+<tr class="separator:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
@@ -1305,6 +1313,109 @@ template&lt;typename... Options&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    gcs::ObjectMetadata meta =</div><div class="line">        client.GetObjectMetadata(bucket_name, object_name);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The metadata is &quot;</span> &lt;&lt; meta &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="a60b75719e0b7d19eea3cdaa97796d35e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60b75719e0b7d19eea3cdaa97796d35e">&#9670;&nbsp;</a></span>GetServiceAccount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> google::cloud::storage::v0::Client::GetServiceAccount </td>
+          <td>(</td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the GCS service account for the default project. </p>
+<p>A service account is a special Google account that belongs to your application, virtual machine, or to a Google service when acting on your behalf. This API allows you to discover the GCS service account for the default project associated with this object.</p>
+<p>The default project is configured in the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html" title="Control the configuration for a storage::Client object. ">ClientOptions</a></code> used to construct this object. If the application does not set the project id in the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html" title="Control the configuration for a storage::Client object. ">ClientOptions</a></code>, the value of the <code>GOOGLE_CLOUD_PROJECT</code> is used. If neither the environment variable is set, nor a value is set explicitly by the application this function raises an exception.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::logic_error</td><td>if the function is called without a default project id set. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client) {</div><div class="line">    gcs::ServiceAccount details = client.GetServiceAccount();</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details are &quot;</span> &lt;&lt; details &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
+
+</div>
+</div>
+<a id="afd8129fecaf20d72ccd078c77dae6d39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd8129fecaf20d72ccd078c77dae6d39">&#9670;&nbsp;</a></span>GetServiceAccountForProject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> google::cloud::storage::v0::Client::GetServiceAccountForProject </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>project_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the GCS service account for a given project. </p>
+<p>A service account is a special Google account that belongs to your application, virtual machine, or to a Google service when acting on your behalf. This API allows you to discover the GCS service account for the <code>project_id</code> project.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">project_id</td><td>the project to query. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START storage_get_service_account_for_project]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string project_id) {</div><div class="line">    gcs::ServiceAccount details =</div><div class="line">        client.GetServiceAccountForProject(project_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details for project &quot;</span> &lt;&lt; project_id</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; are &quot;</span> &lt;&lt; details &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_get_service_account_for_project]</span></div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
 
 </div>
 </div>
