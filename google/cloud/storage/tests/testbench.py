@@ -23,6 +23,7 @@ import hashlib
 import httpbin
 import os
 from werkzeug import serving
+from werkzeug import wsgi
 
 
 class ErrorResponse(Exception):
