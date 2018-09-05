@@ -22,6 +22,7 @@ storage_client_unit_tests = [
     "internal/logging_client_test.cc",
     "internal/metadata_parser_test.cc",
     "internal/nljson_test.cc",
+    "internal/notification_requests_test.cc",
     "internal/object_acl_requests_test.cc",
     "internal/object_requests_test.cc",
     "internal/parse_rfc3339_test.cc",
