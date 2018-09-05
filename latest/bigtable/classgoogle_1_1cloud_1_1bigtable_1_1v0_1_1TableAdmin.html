@@ -132,6 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Snapshot APIs.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><dl class="section warning"><dt>Warning</dt><dd>This is a private alpha release of Cloud Bigtable snapshots. This feature is not currently available to most Cloud Bigtable customers. This feature might be changed in backward-incompatible ways and is not recommended for production use. It is not subject to any SLA or deprecation policy. </dd></dl>
 </div></td></tr>
+<tr class="memitem:aaf9e940ed58a8d14fac50728106064ad"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Snapshot &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aaf9e940ed58a8d14fac50728106064ad">SnapshotTable</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id, bigtable::TableId const &amp;table_id, std::chrono::seconds duration_ttl)</td></tr>
+<tr class="memdesc:aaf9e940ed58a8d14fac50728106064ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new snapshot in the specified cluster from the specified source table.  <a href="#aaf9e940ed58a8d14fac50728106064ad">More...</a><br /></td></tr>
+<tr class="separator:aaf9e940ed58a8d14fac50728106064ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa48cf28cde93d92def9a89ad10d03baf"><td class="memItemLeft" align="right" valign="top">google::bigtable::admin::v2::Snapshot&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa48cf28cde93d92def9a89ad10d03baf">GetSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:aa48cf28cde93d92def9a89ad10d03baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single snapshot.  <a href="#aa48cf28cde93d92def9a89ad10d03baf">More...</a><br /></td></tr>
 <tr class="separator:aa48cf28cde93d92def9a89ad10d03baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -923,6 +926,59 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf9e940ed58a8d14fac50728106064ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf9e940ed58a8d14fac50728106064ad">&#9670;&nbsp;</a></span>SnapshotTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; btadmin::Snapshot &gt; google::cloud::bigtable::v0::TableAdmin::SnapshotTable </td>
+          <td>(</td>
+          <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::SnapshotId const &amp;&#160;</td>
+          <td class="paramname"><em>snapshot_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::TableId const &amp;&#160;</td>
+          <td class="paramname"><em>table_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::seconds&#160;</td>
+          <td class="paramname"><em>duration_ttl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new snapshot in the specified cluster from the specified source table. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is a private alpha release of Cloud Bigtable snapshots. This feature is not currently available to most Cloud Bigtable customers. This feature might be changed in backward-incompatible ways and is not recommended for production use. It is not subject to any SLA or deprecation policy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the cluster id to which snapshot is created. </td></tr>
+    <tr><td class="paramname">snapshot_id</td><td>the id of the snapshot. </td></tr>
+    <tr><td class="paramname">table_id</td><td>the id of the table for which snapshot is created. </td></tr>
+    <tr><td class="paramname">duration_ttl</td><td>time to live for snapshot being created. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when (a) the operation has completed successfully, in which case it returns a proto with the Snapshot details, (b) the operation has failed, in which case the future contains an exception (typically <code>bigtable::GrpcError</code>) with the details of the failure, or (c) the state of the operation is unknown after the time allocated by the retry policies has expired, in which case the future contains an exception of type <code>bigtable::PollTimeout</code>. </dd></dl>
 
 </div>
 </div>
