@@ -1,7 +1,7 @@
 var searchData=
 [
   ['calculatedefaultconnectionpoolsize',['CalculateDefaultConnectionPoolSize',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a41ef56720f310ab4ea29ea08b5efcbf5',1,'google::cloud::bigtable::v0']]],
-  ['cancel',['Cancel',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#a17e25bb619e64399b4af0ebf7c5fd63d',1,'google::cloud::bigtable::v0::RowReader']]],
+  ['cancel',['Cancel',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#a17e25bb619e64399b4af0ebf7c5fd63d',1,'google::cloud::bigtable::v0::RowReader::Cancel()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a944f17c499ac01e1d7998fd585b31e2e',1,'google::cloud::bigtable::v0::AsyncOperation::Cancel()']]],
   ['cell',['Cell',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ab0c97330011260c79c3dc04ecb2e8add',1,'google::cloud::bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, std::string value, std::vector&lt; std::string &gt; labels)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ac508056931f9757cb13c558599f9bf7a',1,'google::cloud::bigtable::v0::Cell::Cell(std::string row_key, std::string family_name, std::string column_qualifier, std::int64_t timestamp, bigendian64_t value, std::vector&lt; std::string &gt; labels)']]],
   ['cells',['cells',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Row.html#acf5bfab3427bce2c1feda03a2a39154d',1,'google::cloud::bigtable::v0::Row']]],
   ['cellsrowlimit',['CellsRowLimit',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#aeb6a453646ef7fc4a5da574b642beb56',1,'google::cloud::bigtable::v0::Filter']]],
@@ -24,6 +24,7 @@ var searchData=
   ['columnrangeopen',['ColumnRangeOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a331d7da70f3686c6cbfbd728c916dbcf',1,'google::cloud::bigtable::v0::Filter']]],
   ['columnrangerightopen',['ColumnRangeRightOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#afc89c150565c30461f31c56d6737e610',1,'google::cloud::bigtable::v0::Filter']]],
   ['columnregex',['ColumnRegex',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a65a56b80a7439759d3a363acdfaa5f31',1,'google::cloud::bigtable::v0::Filter']]],
+  ['completionqueue',['CompletionQueue',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a73890ff278f4a37365a94d998d3541aa',1,'google::cloud::bigtable::v0::CompletionQueue::CompletionQueue()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a03924d27ec5d3869c489a0b1c0003f66',1,'google::cloud::bigtable::v0::CompletionQueue::CompletionQueue(std::shared_ptr&lt; internal::CompletionQueueImpl &gt; impl)']]],
   ['condition',['Condition',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a0e95012ee1b41214d6a29514b152db28',1,'google::cloud::bigtable::v0::Filter']]],
   ['connection_5fpool_5fname',['connection_pool_name',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a4ff88219eba1498f2d570c7f1d4ccfdf',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['connection_5fpool_5fsize',['connection_pool_size',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aae8980b3ed9b22795ee04ab8bde9d574',1,'google::cloud::bigtable::v0::ClientOptions']]],

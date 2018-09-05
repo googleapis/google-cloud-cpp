@@ -1,6 +1,7 @@
 var searchData=
 [
   ['bulkmutator',['BulkMutator',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a11832689f7ea53c6447c901e8a442139',1,'google::cloud::bigtable::v0::DataClient']]],
+  ['completionqueueimpl',['CompletionQueueImpl',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#aa978ea85a96e5e301ce76c1cc861cef7',1,'google::cloud::bigtable::v0::AsyncOperation']]],
   ['idempotent_5fmutation_5fpolicy_2ecc',['idempotent_mutation_policy.cc',['../idempotent__mutation__policy_8cc.html',1,'']]],
   ['idempotent_5fmutation_5fpolicy_2eh',['idempotent_mutation_policy.h',['../idempotent__mutation__policy_8h.html',1,'']]],
   ['idempotentmutationpolicy',['IdempotentMutationPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html',1,'google::cloud::bigtable::v0']]],
