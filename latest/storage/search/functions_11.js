@@ -1,8 +1,10 @@
 var searchData=
 [
+  ['self_5flink',['self_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aebb942e0698bf2f516a98f1f9c4901af',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['set_5facl',['set_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2155f3bab626434f6954ed30919f4e37',1,'google::cloud::storage::v0::BucketMetadata::set_acl()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#af45cf4734d99b2e34db381de2f3d8672',1,'google::cloud::storage::v0::ObjectMetadata::set_acl()']]],
   ['set_5fbilling',['set_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5b90231c6ac2b2e5a704c8d271e0ecc3',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fcache_5fcontrol',['set_cache_control',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ae2e2cd66575c689bf9f3c5d35e352b20',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['set_5fconnection_5fpool_5fsize',['set_connection_pool_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#ab01273524879e6c1bee8090289dd7670',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5fcontent_5fdisposition',['set_content_disposition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a9d534229a05e36cc2e9d3d65b674a278',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5fencoding',['set_content_encoding',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a0f43cda6640bf7eb1875053c4c282b17',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['set_5fcontent_5flanguage',['set_content_language',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a99cf068a428b87cbf8e30ed95a033d2e',1,'google::cloud::storage::v0::ObjectMetadata']]],
@@ -19,9 +21,12 @@ var searchData=
   ['set_5flocation',['set_location',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5c75f1196d77653be4673105fef5b91b',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5flogging',['set_logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2376d47750cbb2e774b425822b69f681',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fname',['set_name',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ad66b4ed2f6fe8636950357d74605215d',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['set_5fobject_5fname_5fprefix',['set_object_name_prefix',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#ab2c1e0c0717d798def3a0fc05853b179',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['set_5fpayload_5fformat',['set_payload_format',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a7b79e40630e65b2374f0ddaef5329edd',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['set_5fproject_5fid',['set_project_id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a4c448fdec42f88aad15e0d9688cd9650',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5frole',['set_role',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#aa1eff6ee5f045856e19b0bd8df520a05',1,'google::cloud::storage::v0::BucketAccessControl::set_role()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControlPatchBuilder.html#ae61073a66ecd8770dd74b6e422081aa5',1,'google::cloud::storage::v0::BucketAccessControlPatchBuilder::set_role()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html#a422acb3d9b205ebab41843ccca061327',1,'google::cloud::storage::v0::ObjectAccessControl::set_role()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html#a545f238bcbf05c2789822d967c9ad4d3',1,'google::cloud::storage::v0::ObjectAccessControlPatchBuilder::set_role()']]],
   ['set_5fstorage_5fclass',['set_storage_class',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aea9e3439314d0d614f671274772fd61c',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['set_5ftopic',['set_topic',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#ac21801406448c19fa268222728dda061',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['set_5fversion',['set_version',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a2c5a40f9590e20a3ddf93f02f0b1c648',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5fversioning',['set_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a9df76f7afb0a4cb0c5624c79fe77fe0f',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fwebsite',['set_website',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2e9f6b5c5ee87f6effbbc0130135562c',1,'google::cloud::storage::v0::BucketMetadata']]],

@@ -15,5 +15,9 @@ var searchData=
   ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a2c1f7f1dd4a7d1bd7168786178ee673c',1,'google::cloud::storage::v0::ClientOptions']]],
   ['error_5fdetails',['error_details',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a34970fcb5fbd560f8f8265e384dd962b',1,'google::cloud::storage::v0::Status']]],
   ['error_5fmessage',['error_message',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a47beef28fe82234204cc8f94c0b84f44',1,'google::cloud::storage::v0::Status']]],
+  ['etag',['etag',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a3b4dca33f52e64d0099010db656fb18f',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['event_5ftype',['event_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a490539df25124d80b6eaff5f57202c91',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['event_5ftype_5fsize',['event_type_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a616410cfc69ab8372353bbb76cd29512',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['event_5ftypes',['event_types',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a107401780b14fcbec78ee66fb4e6fcd1',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6271071b268ae795cb94cb628a4fc24c',1,'google::cloud::storage::v0']]]
 ];
