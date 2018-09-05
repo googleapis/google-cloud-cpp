@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
+#include <google/protobuf/duration.pb.h>
 #include <sstream>
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -93,6 +94,50 @@ void TableAdmin::DropAllRows(std::string const& table_id) {
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
+}
+
+std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
+    std::chrono::seconds duration_ttl) {
+  return std::async(std::launch::async, &TableAdmin::SnapshotTableImpl, this,
+                    cluster_id, snapshot_id, table_id, duration_ttl);
+}
+
+btadmin::Snapshot TableAdmin::SnapshotTableImpl(
+    bigtable::ClusterId const& cluster_id,
+    bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
+    std::chrono::seconds duration_ttl) {
+  using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
+
+  btadmin::SnapshotTableRequest request;
+  request.set_name(impl_.TableName(table_id.get()));
+  request.set_cluster(impl_.ClusterName(cluster_id));
+  request.set_snapshot_id(snapshot_id.get());
+  request.mutable_ttl()->set_seconds(duration_ttl.count());
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+
+  grpc::Status status;
+  auto operation = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+      &AdminClient::SnapshotTable, request, "SnapshotTable", status, true);
+
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(status,
+                                      "unrecoverable error in MakeCall()");
+  }
+
+  auto result = impl_.PollLongRunningOperation<btadmin::Snapshot>(
+      operation, "TableAdmin::SnapshotTable", status);
+  if (not status.ok()) {
+    bigtable::internal::RaiseRpcError(
+        status, "while polling operation in TableAdmin::SnapshotTable");
+  }
+
+  return result;
 }
 
 btadmin::Snapshot TableAdmin::GetSnapshot(

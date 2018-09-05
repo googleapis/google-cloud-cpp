@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <cctype>
 
+namespace btadmin = ::google::bigtable::admin::v2;
+
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -25,6 +27,7 @@ namespace testing {
 
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
+std::string TableTestEnvironment::cluster_id_;
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
@@ -57,6 +60,12 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
               std::back_inserter(result));
   }
   return result;
+}
+
+std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
+    std::string table_name, bigtable::Filter filter) {
+  bigtable::Table table(data_client_, table_name);
+  return ReadRows(table, std::move(filter));
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
