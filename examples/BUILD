@@ -19,6 +19,8 @@ licenses(["notice"])  # Apache 2.0
 cc_binary(
     name = "gcs2cbt",
     srcs = ["gcs2cbt.cc"],
-    deps = ["//google/cloud/storage:storage_client",
-    "//google/cloud/bigtable:bigtable_client"],
+    deps = [
+        "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/storage:storage_client",
+    ],
 )

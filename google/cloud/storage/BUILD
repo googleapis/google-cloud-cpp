@@ -50,9 +50,9 @@ cc_library(
     deps = [
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
-        "@com_github_curl_curl//:curl",
-        "@boringssl//:ssl",
         "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@com_github_curl_curl//:curl",
     ],
 )
 
@@ -63,13 +63,13 @@ cc_library(
     srcs = storage_client_testing_SRCS,
     hdrs = storage_client_testing_HDRS,
     deps = [
-        "@com_github_curl_curl//:curl",
-        "@boringssl//:ssl",
-        "@boringssl//:crypto",
         ":nlohmann_json",
         ":storage_client",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_testing",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@com_github_curl_curl//:curl",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -82,14 +82,14 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = ["-lpthread"],
     deps = [
-        "@com_github_curl_curl//:curl",
-        "@boringssl//:ssl",
-        "@boringssl//:crypto",
         ":nlohmann_json",
         ":storage_client",
         ":storage_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_testing",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@com_github_curl_curl//:curl",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],

@@ -303,8 +303,8 @@ int main(int argc, char* argv[]) try {
     try {
       task.get();
     } catch (std::exception const& ex) {
-      std::cerr << "Exception raised by worker " << worker_count
-                << ": " << ex.what() << std::endl;
+      std::cerr << "Exception raised by worker " << worker_count << ": "
+                << ex.what() << std::endl;
     }
     ++worker_count;
     std::cout << '.' << std::flush;
