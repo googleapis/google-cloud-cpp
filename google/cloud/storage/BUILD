@@ -27,36 +27,6 @@ sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/0/' \
 """,
 )
 
-cc_library(
-    name = "libcurl",
-    srcs = [],
-    hdrs = [],
-    linkopts = [
-        # TODO(#666) - will not work with MSVC.
-        "-lcurl",
-    ],
-)
-
-cc_library(
-    name = "libopenssl",
-    srcs = [],
-    hdrs = [],
-    linkopts = [
-        # TODO(#666) - will not work with MSVC.
-        "-lssl",
-    ],
-)
-
-cc_library(
-    name = "libcrypto",
-    srcs = [],
-    hdrs = [],
-    linkopts = [
-        # TODO(#666) - will not work with MSVC.
-        "-lcrypto",
-    ],
-)
-
 genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
@@ -78,11 +48,11 @@ cc_library(
     srcs = storage_client_SRCS,
     hdrs = storage_client_HDRS + ["version_info.h"],
     deps = [
-        ":libcrypto",
-        ":libcurl",
-        ":libopenssl",
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
+        "@com_github_curl_curl//:curl",
+        "@boringssl//:ssl",
+        "@boringssl//:crypto",
     ],
 )
 
@@ -93,7 +63,9 @@ cc_library(
     srcs = storage_client_testing_SRCS,
     hdrs = storage_client_testing_HDRS,
     deps = [
-        ":libcurl",
+        "@com_github_curl_curl//:curl",
+        "@boringssl//:ssl",
+        "@boringssl//:crypto",
         ":nlohmann_json",
         ":storage_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -110,7 +82,9 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = ["-lpthread"],
     deps = [
-        ":libcurl",
+        "@com_github_curl_curl//:curl",
+        "@boringssl//:ssl",
+        "@boringssl//:crypto",
         ":nlohmann_json",
         ":storage_client",
         ":storage_client_testing",

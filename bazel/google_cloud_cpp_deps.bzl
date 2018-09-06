@@ -58,6 +58,19 @@ def google_cloud_cpp_deps():
             sha256 = "16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70",
         )
 
+    # We need libcurl for the Google Cloud Storage client.
+    if "com_github_curl_curl" not in native.existing_rules():
+        native.new_http_archive(
+            name = "com_github_curl_curl",
+            urls = [
+                "https://mirror.bazel.build/curl.haxx.se/download/curl-7.60.0.tar.gz",
+                "https://curl.haxx.se/download/curl-7.60.0.tar.gz",
+            ],
+            strip_prefix = "curl-7.60.0",
+            sha256 = "e9c37986337743f37fd14fe8737f246e97aec94b39d1b71e8a5973f72a9fc4f5",
+            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:curl.BUILD",
+        )
+
     # We need the nlohmann_json library
     if "com_github_nlohmann_json_single_header" not in native.existing_rules():
         native.http_file(
