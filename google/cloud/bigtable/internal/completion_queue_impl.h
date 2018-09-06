@@ -166,10 +166,20 @@ class CompletionQueueImpl {
   void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
                           AsyncOperation::Disposition d);
 
+  bool empty() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_.empty();
+  }
+
+  std::size_t size() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_.size();
+  }
+
  private:
   grpc::CompletionQueue cq_;
   std::atomic<bool> shutdown_;
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::unordered_map<std::intptr_t, std::shared_ptr<AsyncOperation>>
       pending_ops_;
 };

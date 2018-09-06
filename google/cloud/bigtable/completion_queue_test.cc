@@ -73,33 +73,12 @@ TEST(CompletionQueueTest, CancelAlarm) {
   t.join();
 }
 
-// We cannot use googlemock directly in this class. The base class has a
-// overloaded `operator new` and `operator delete`, which does not call the
-// destructor (that is probably a bug in gRPC). Since the destructor is not
-// called googlemock thinks the mock is never deleted and the test fails.
-// The solution is to delegate on a `Impl` class that is actually deleted.
 class MockAsyncResponseReader : public grpc::ClientAsyncResponseReaderInterface<
                                     btproto::MutateRowResponse> {
  public:
-  struct Impl {
-    MOCK_METHOD0(StartCall, void());
-    MOCK_METHOD1(ReadInitialMetadata, void(void*));
-    MOCK_METHOD3(Finish,
-                 void(btproto::MutateRowResponse*, grpc::Status*, void*));
-  };
-
-  MockAsyncResponseReader() : impl(new Impl) {}
-
-  void StartCall() { impl->StartCall(); }
-  void ReadInitialMetadata(void* p) { impl->ReadInitialMetadata(p); }
-  void Finish(btproto::MutateRowResponse* response, grpc::Status* status,
-              void* tag) {
-    impl->Finish(response, status, tag);
-    // After Finish, we can release the mock implementation.
-    impl.reset();
-  }
-
-  std::unique_ptr<Impl> impl;
+  MOCK_METHOD0(StartCall, void());
+  MOCK_METHOD1(ReadInitialMetadata, void(void*));
+  MOCK_METHOD3(Finish, void(btproto::MutateRowResponse*, grpc::Status*, void*));
 };
 
 class MockClient {
@@ -114,7 +93,9 @@ class MockClient {
 
 class MockCompletionQueue : public internal::CompletionQueueImpl {
  public:
+  using internal::CompletionQueueImpl::empty;
   using internal::CompletionQueueImpl::SimulateCompletion;
+  using internal::CompletionQueueImpl::size;
 };
 
 /// @test Verify that completion queues can create async operations.
@@ -122,7 +103,9 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   MockClient client;
 
   auto reader = google::cloud::internal::make_unique<MockAsyncResponseReader>();
-  EXPECT_CALL(*reader->impl, Finish(_, _, _))
+  // Save the raw pointer as we will need it later.
+  auto* saved_reader_pointer = reader.get();
+  EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(
           Invoke([](btproto::MutateRowResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
@@ -154,8 +137,27 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
         EXPECT_EQ("mocked-status", result.status.error_message());
         completion_called = true;
       });
+  EXPECT_EQ(1U, impl->size());
   impl->SimulateCompletion(cq, op.get(), AsyncOperation::COMPLETED);
   EXPECT_TRUE(completion_called);
+
+  EXPECT_TRUE(impl->empty());
+
+  // This is a terrible, horrible, no good, very bad hack: the gRPC library
+  // specializes
+  // `std::default_delete<grpc::ClientAsyncResponseReaderInterface<R>>`, the
+  // implementation in this specialization does nothing:
+  //
+  //     https://github.com/grpc/grpc/blob/608188c680961b8506847c135b5170b41a9081e8/include/grpcpp/impl/codegen/async_unary_call.h#L305
+  //
+  // No delete, no destructor, nothing. The gRPC library expects all
+  // `grpc::ClientAsyncResponseReader<R>` objects to be allocated from a
+  // per-call arena, and deleted in bulk with other objects when the call
+  // completes and the full arena is released.  Unfortunately, our mocks are
+  // allocated from the global heap, as they do not have an associated call or
+  // arena. The override in the gRPC library results in a leak, unless we manage
+  // the memory explicitly.
+  if (not reader) reader.reset(saved_reader_pointer);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
