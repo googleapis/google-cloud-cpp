@@ -111,3 +111,4 @@ add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)
+add_subdirectory(examples)
