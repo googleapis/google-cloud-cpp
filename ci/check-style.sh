@@ -43,10 +43,7 @@ find . \( -path ./.git \
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-find . \( -path ./.git -prune -o -path ./third_party -prune \
-          -o -path './cmake-build-*' -o -path ./build-output -prune \
-          -o -name '*.pb.h' -prune -o -name '*.pb.cc' -prune \) \
-     -o \( -name '*.cc' -o -name '*.h' \) -print0 \
+find google/cloud -name '*.cc' -o -name '*.h' -print0 \
      | xargs -0 clang-format -i
 
 # Apply several transformations that cannot be enforced by clang-format:
@@ -72,9 +69,14 @@ done
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-find . \( -path ./.git -prune -o -path ./third_party -prune \
-          -o -path './cmake-build-*' -o -path ./build-output -prune \) \
-     -o \( -name BUILD -o -name '*.bzl' \) -print0 \
+find . \( -path ./.git \
+          -o -path ./third_party \
+          -o -path './cmake-build-*' \
+          -o -path ./build-output \
+       \) -prune \
+     -o \( -name BUILD \
+           -o -name '*.bzl' \
+        \) -print0 \
      | xargs -0 buildifier -mode=fix
 
 # Report any differences created by running clang-format.
