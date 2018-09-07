@@ -534,9 +534,10 @@ class Client {
   }
 
   /**
-   * Compose existing objects into a new object in the same bucket.
+   * Composes existing objects into a new object in the same bucket.
    *
-   * @param bucket_name the name of the bucket that contains the object.
+   * @param bucket_name the name of the bucket used for source object and
+   *     destination object.
    * @param destination_object_name the composed object name.
    * @param source_objects objects used to compose `destination_object_name`.
    * @param destination_object_metadata the new metadata for the Object. Only
@@ -545,13 +546,16 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
    *      `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *      `IfMetagenerationMatch`, `PredefinedAcl`,
+   *      `IfMetagenerationMatch`, `DestinationPredefinedAcl`,
    *      `SourceEncryptionKey`, `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   * @snippet storage_object_samples.cc compose object metadata
+   *
+   * @snippet storage_object_samples.cc compose object
+   *
+   * @snippet storage_object_samples.cc compose object from encrypted objects
    */
   template <typename... Options>
   ObjectMetadata ComposeObject(
@@ -559,7 +563,7 @@ class Client {
       std::vector<ComposeSourceObject> const& source_objects,
       ObjectMetadata destination_object_metadata, Options&&... options) {
     internal::ComposeObjectRequest request(
-        std::move(bucket_name), std::string(destination_object_name),
+        std::move(bucket_name), std::move(destination_object_name),
         source_objects, std::move(destination_object_metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ComposeObject(request).second;

@@ -581,9 +581,7 @@ TEST(ComposeObjectRequestTest, SimpleCompose) {
   object2.object_name = "object2";
   object2.generation.emplace(2L);
   object2.if_generation_match.emplace(2L);
-  std::vector<ComposeSourceObject> source_objects;
-  source_objects.push_back(object1);
-  source_objects.push_back(object2);
+  std::vector<ComposeSourceObject> source_objects = {object1, object2};
 
   ComposeObjectRequest request("test-bucket", "test-object", source_objects,
                                ObjectMetadata());
@@ -597,10 +595,10 @@ TEST(ComposeObjectRequestTest, SimpleCompose) {
   EXPECT_THAT(actual, HasSubstr("test-object"));
   EXPECT_THAT(actual, HasSubstr("object1"));
   EXPECT_THAT(actual, HasSubstr("object2"));
-  EXPECT_THAT(actual, HasSubstr("generation=1"));
-  EXPECT_THAT(actual, HasSubstr("generation=2"));
-  EXPECT_THAT(actual, HasSubstr("if_generation_match=1"));
-  EXPECT_THAT(actual, HasSubstr("if_generation_match=2"));
+  EXPECT_THAT(actual, HasSubstr("\"generation\":1"));
+  EXPECT_THAT(actual, HasSubstr("\"generation\":2"));
+  EXPECT_THAT(actual, HasSubstr("\"ifGenerationMatch\":1"));
+  EXPECT_THAT(actual, HasSubstr("\"ifGenerationMatch\":2"));
 }
 
 }  // namespace

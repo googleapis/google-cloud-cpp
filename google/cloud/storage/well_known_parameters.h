@@ -173,6 +173,15 @@ struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
   static char const* well_known_parameter_name() { return "predefinedAcl"; }
 };
 
+struct DestinationPredefinedAcl
+    : public WellKnownParameter<DestinationPredefinedAcl, std::string> {
+  using WellKnownParameter<DestinationPredefinedAcl,
+                           std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "destinationPredefinedAcl";
+  }
+};
+
 struct PredefinedDefaultObjectAcl
     : public WellKnownParameter<PredefinedDefaultObjectAcl, std::string> {
   using WellKnownParameter<PredefinedDefaultObjectAcl,

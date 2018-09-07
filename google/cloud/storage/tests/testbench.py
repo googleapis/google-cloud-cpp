@@ -420,9 +420,6 @@ class GcsObject(object):
                 'Precondition Failed: generation %s not found' % generation)
         return version
 
-    def get_revision_by_generation(self, generation):
-        return self.revisions.get(generation, None)
-
     def del_revision(self, request):
         """
         Delete a version of a fake GCS Blob.
@@ -495,6 +492,15 @@ class GcsObject(object):
         patched['metageneration'] = patched.get('metageneration', 0) + 1
         version.metadata = patched
         return version
+
+    def get_revision_by_generation(self, generation):
+        """
+        Get object revision by generation or None if not found.
+
+        :param generation:int
+        :return:GcsObjectRevision the object revision by generation or None.
+        """
+        return self.revisions.get(generation, None)
 
     def get_latest(self):
         return self.revisions.get(self.generation, None)
@@ -1312,7 +1318,7 @@ def objects_compose(bucket_name, object_name):
     base_url = flask.url_for('gcs_index', _external=True)
     current_version = gcs_object.compose_from(base_url, flask.request,
         composed_media)
-    return json.dumps(current_version.metadata)
+    return filtered_response(flask.request, current_version.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])

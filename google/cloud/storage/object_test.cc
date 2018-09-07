@@ -382,8 +382,7 @@ TEST_F(ObjectTest, ComposeObject) {
             internal::nl::json::parse(r.json_payload());
         internal::nl::json expected_payload = {
             {"kind", "storage#composeRequest"},
-            {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}},
-            {"destination", nullptr}};
+            {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
         EXPECT_EQ(expected_payload, actual_payload);
         return std::make_pair(Status(), expected);
       }));

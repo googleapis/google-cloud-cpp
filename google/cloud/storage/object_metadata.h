@@ -32,7 +32,7 @@ struct CustomerEncryption {
   std::string key_sha256;
 };
 
-/// A Compose operation source object representation
+/// Defines one of the source objects for a compose operation.
 struct ComposeSourceObject {
   std::string object_name;
   google::cloud::internal::optional<long> generation;
@@ -105,7 +105,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   /**
    * Return the payload for a call to `Objects: compose`.
    */
-  std::string JsonPayloadForCompose() const;
+  internal::nl::json JsonPayloadForCompose() const;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
