@@ -50,41 +50,7 @@ struct OpenSslUtils {
   /**
    * Encodes a string using Base64.
    */
-  static std::string Base64Encode(std::string const& str) {
-    auto bio_chain = MakeBioChainForBase64Transcoding();
-    int retval = 0;
-
-    while (true) {
-      retval = BIO_write(static_cast<BIO*>(bio_chain.get()), str.c_str(),
-                         static_cast<int>(str.length()));
-      if (retval > 0) break;  // Positive value == successful write.
-      if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-        std::ostringstream err_builder;
-        err_builder << "Permanent error in " << __func__ << ": "
-                    << "BIO_write returned non-retryable value of " << retval;
-        google::cloud::internal::RaiseRuntimeError(err_builder.str());
-      }
-    }
-    // Tell the b64 encoder that we're done writing data, thus prompting it to
-    // add trailing '=' characters for padding if needed.
-    while (true) {
-      retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
-      if (retval > 0) break;  // Positive value == successful flush.
-      if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-        std::ostringstream err_builder;
-        err_builder << "Permanent error in " << __func__ << ": "
-                    << "BIO_flush returned non-retryable value of " << retval;
-        google::cloud::internal::RaiseRuntimeError(err_builder.str());
-      }
-    }
-
-    // This buffer belongs to the BIO chain and is freed upon its destruction.
-    BUF_MEM* buf_mem;
-    BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
-    // Return a string copy of the buffer's bytes, as the buffer will be freed
-    // upon this method's exit.
-    return std::string(buf_mem->data, buf_mem->length);
-  }
+  static std::string Base64Encode(std::string const& str);
 
   /**
    * Transforms a string in-place, removing trailing occurrences of a character.
