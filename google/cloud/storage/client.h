@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/notification_event_type.h"
+#include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/storage/object_stream.h"
 
 namespace google {
@@ -1228,6 +1230,9 @@ class Client {
   /**
    * Retrieves the list of Notifications for a Bucket.
    *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service.
+   *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
@@ -1241,6 +1246,47 @@ class Client {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ListNotifications(request).second.items;
+  }
+
+  /**
+   * Creates a new notification config for a Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param topic_name the Google Cloud Pub/Sub topic that will receive the
+   *     notifications. This requires the full name of the topic, i.e.:
+   *     `projects/<PROJECT_ID>/topics/<TOPIC_ID>`.
+   * @param payload_format how will the data be formatted in the notifications,
+   *     consider using the helpers in the `payload_format` namespace, or
+   *     specify one of the valid formats defined in:
+   *     https://cloud.google.com/storage/docs/json_api/v1/notifications
+   * @param metadata define any optional parameters for the notification, such
+   *     as the list of event types, or any custom attributes.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc create notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  NotificationMetadata CreateNotification(std::string const& bucket_name,
+                                          std::string const& topic_name,
+                                          std::string const& payload_format,
+                                          NotificationMetadata metadata,
+                                          Options&&... options) {
+    metadata.set_topic(topic_name).set_payload_format(payload_format);
+    internal::CreateNotificationRequest request(bucket_name, metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CreateNotification(request).second;
   }
 
  private:

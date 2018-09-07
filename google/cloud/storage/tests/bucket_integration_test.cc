@@ -27,21 +27,26 @@ using ::testing::HasSubstr;
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {
  public:
-  BucketTestEnvironment(std::string project, std::string instance) {
+  BucketTestEnvironment(std::string project, std::string instance,
+                        std::string topic) {
     project_id_ = std::move(project);
     bucket_name_ = std::move(instance);
+    topic_ = std::move(topic);
   }
 
   static std::string const& project_id() { return project_id_; }
   static std::string const& bucket_name() { return bucket_name_; }
+  static std::string const& topic() { return topic_; }
 
  private:
   static std::string project_id_;
   static std::string bucket_name_;
+  static std::string topic_;
 };
 
 std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
+std::string BucketTestEnvironment::topic_;
 
 class BucketIntegrationTest : public ::testing::Test {
  protected:
@@ -476,6 +481,22 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
 
+  auto create = client.CreateNotification(
+      bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+
+  EXPECT_EQ(payload_format::JsonApiV1(), create.payload_format());
+  EXPECT_THAT(create.topic(), HasSubstr(BucketTestEnvironment::topic()));
+
+  current_notifications = client.ListNotifications(bucket_name);
+  auto count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(1U, count) << create;
+  std::cout << create << std::endl;
+
   client.DeleteBucket(bucket_name);
 }
 
@@ -489,19 +510,20 @@ int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 3) {
+  if (argc != 4) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <bucket>" << std::endl;
+              << " <project> <bucket> <topic>" << std::endl;
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const bucket_name = argv[2];
+  std::string const topic = argv[3];
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::BucketTestEnvironment(project_id,
-                                                        bucket_name));
+      new google::cloud::storage::BucketTestEnvironment(project_id, bucket_name,
+                                                        topic));
 
   return RUN_ALL_TESTS();
 }

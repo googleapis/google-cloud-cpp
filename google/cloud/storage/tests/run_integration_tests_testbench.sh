@@ -26,6 +26,7 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 # can use the same testbench.
 export PROJECT_ID="fake-project-$(date +%s)"
 export BUCKET_NAME="fake-bucket-$(date +%s)"
+export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-$(date +%s)"
 export LOCATION="fake-region1"
 
 echo
@@ -50,7 +51,7 @@ echo "Running storage::internal::CurlStreambuf integration test."
 
 echo
 echo "Running GCS Bucket APIs integration tests."
-./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 
 echo
 echo "Running GCS Object APIs integration tests."
