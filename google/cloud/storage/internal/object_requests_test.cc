@@ -573,6 +573,29 @@ TEST(PatchObjectRequestTest, Builder) {
   EXPECT_THAT(actual, HasSubstr("application/json"));
 }
 
+TEST(ComposeObjectRequestTest, SimpleCompose) {
+  std::vector<ComposeSourceObject> source_objects = {
+    {{"object1"}, OptionalLong(1L), OptionalLong(1L)},
+    {{"object2"}, OptionalLong(2L), OptionalLong(2L)}};
+  
+  ComposeObjectRequest request(
+      "test-bucket", "test-object", source_objects, ObjectMetadata());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("test-object"));
+  EXPECT_THAT(actual, HasSubstr("object1"));
+  EXPECT_THAT(actual, HasSubstr("object2"));
+  EXPECT_THAT(actual, HasSubstr("generation=1"));
+  EXPECT_THAT(actual, HasSubstr("generation=2"));
+  EXPECT_THAT(actual, HasSubstr("if_generation_match=1"));
+  EXPECT_THAT(actual, HasSubstr("if_generation_match=2"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

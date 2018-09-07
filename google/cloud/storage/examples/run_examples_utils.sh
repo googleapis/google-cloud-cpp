@@ -169,7 +169,7 @@ run_all_object_examples() {
   run_example ./storage_object_samples patch-object-delete-metadata \
       "${bucket_name}" "${object_name}" "test-label"
   run_example ./storage_object_samples compose-object \
-      "${bucket_name}" "${compose_object_name}" "${object_name}"
+      "${bucket_name}" "${composed_object_name}" "${object_name}" \
       "${object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${composed_object_name}"
@@ -177,8 +177,7 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}"
 
   local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
-  local encrypted_composed_object_name=\
-      "composed-object-$(date +%s)-${RANDOM}.txt"
+  local encrypted_composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
 
   local key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
@@ -186,9 +185,9 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_object_name}" "${key}"
   run_example ./storage_object_samples read-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
-  run_example ./ read-encrypted-object compose-object-from-encrypted-objects \
-      "${bucket_name}" "${encrypted_object_name}" "${key}" "${key}"
-      "${object_name}" "${object_name}"
+  run_example ./storage_object_samples compose-object-from-encrypted-objects \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" "${key}" \
+      "${encrypted_object_name}" "${encrypted_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 

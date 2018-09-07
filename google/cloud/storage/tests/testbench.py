@@ -177,7 +177,8 @@ def json_api_patch(original, patch, recurse_on={}):
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
-    def __init__(self, gcs_url, bucket_name, name, generation, request):
+    def __init__(self, gcs_url, bucket_name, name, generation, request,
+                 media=None):
         """
         Initialize a new object revision.
 
@@ -186,6 +187,7 @@ class GcsObjectVersion(object):
         :param name:str the name of the object.
         :param generation:int the generation number for this object.
         :param request:flask.Request the contents of the HTTP request.
+        :param media:str the contents of the object.
         """
         self.gcs_url = gcs_url
         self.bucket_name = bucket_name
@@ -194,7 +196,9 @@ class GcsObjectVersion(object):
         self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
-        if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
+        if media is not None:
+            self.media = media
+        elif request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
             self.media = request.environ.get('wsgi.input').read()
         else:
             self.media = request.data
@@ -417,21 +421,7 @@ class GcsObject(object):
         return version
 
     def get_revision_by_generation(self, generation):
-        """
-        Get the information about a particular object revision or raise.
-
-        :param generation:int
-        :return:GcsObjectRevision the object revision.
-        :raises:ErrorResponse if the request contains an invalid generation
-            number.
-        """
-        if generation is None:
-            return self.get_latest()
-        version = self.revisions.get(int(generation))
-        if version is None:
-            raise ErrorResponse(
-                'Precondition Failed: generation %s not found' % generation)
-        return version
+        return self.revisions.get(generation, None)
 
     def del_revision(self, request):
         """
@@ -555,6 +545,23 @@ class GcsObject(object):
         self.revisions[self.generation] = GcsObjectVersion(
             gcs_url, self.bucket_name, self.name, self.generation, request)
 
+    def compose_from(self, gcs_url, request, composed_media):
+        """
+        Compose a new revision based on the give flask request.
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :param composed_media:str contents of the composed object
+        :return:GcsObjectVersion the newly created object version.
+        """
+        self.generation += 1
+        revision = GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media=composed_media)
+        payload = json.loads(request.data)
+        if payload.get('destination') is not None:
+            revision.update_from_metadata(payload.get('destination'))
+        self.revisions[self.generation] = revision
+        return revision
 
 class GcsBucket(object):
     """Represent a GCS Bucket."""
@@ -1257,27 +1264,55 @@ def objects_update(bucket_name, object_name):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/compose', methods=['POST'])
 def objects_compose(bucket_name, object_name):
-    """Implement the 'Objects: compose' API: concatenate existing Objects."""
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
+    """Implement the 'Objects: compose' API: concatenate Objects."""
+    composed_object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(composed_object_path,
                                  GcsObject(bucket_name, object_name))
-    gcs_object.check_preconditions(flask.request)
+    if gcs_object is not None:
+        gcs_object.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     source_objects = payload["sourceObjects"] 
-    object_body = ""
-    if source_objects not None:
-        for source_object in source_objects:
-            compose_object = GCS_OBJECTS.get(object_path,
-                                         GcsObject(bucket_name, object_name))
-            if source_object["generation"] not None:
-                compose_object = compose_object.get_revision_by_generation(
-                    source_object["generation"])
-            object_body += compose_object.media
-            
-    else:
-        raise ErrorResponse('At least one object' % media)
-    revision = gcs_object.update_revision(flask.request)
-    return json.dumps(revision.metadata)
+    if source_objects is None:
+        raise ErrorResponse('You must provide at least one source component.',
+                            status_code=400)
+    if len(source_objects) > 32:
+        raise ErrorResponse('The number of source components provided'
+                            ' (%d) exceeds the maximum (32)' %
+                                len(source_objects), status_code=400)
+    composed_media = ""
+    for source_object in source_objects:
+        source_object_name = source_object.get('name')
+        if source_object_name is None:
+            raise ErrorResponse('Required.', status_code=400)
+        source_object_path = bucket_name + '/o/' + source_object_name
+        source_gcs_object = GCS_OBJECTS.get(source_object_path,
+                                           GcsObject(bucket_name,
+                                                     source_object_name))
+        if source_gcs_object is None:
+            raise ErrorResponse('No such object: %s' % source_object_path,
+                                status_code=404)
+        source_revision = source_gcs_object.get_latest()
+        generation = source_object.get('generation')
+        if generation is not None:
+            source_revision = source_gcs_object.get_revision_by_generation(
+                generation)
+            if source_revision is None:
+                raise ErrorResponse('No such object: %s' % source_object_path,
+                                    status_code=404)
+        object_preconditions = source_object.get('objectPreconditions')
+        if object_preconditions is not None:
+            if_generation_match = object_preconditions.get('ifGenerationMatch')
+            if if_generation_match is not None:
+                if source_gcs_object.generation != if_generation_match:
+                    raise ErrorResponse('Precondition Failed', status_code=412)
+        composed_media += source_revision.media
+    gcs_object = GCS_OBJECTS.setdefault(composed_object_path,
+                                        GcsObject(bucket_name, object_name))
+    GCS_OBJECTS[composed_object_path] = gcs_object
+    base_url = flask.url_for('gcs_index', _external=True)
+    current_version = gcs_object.compose_from(base_url, flask.request,
+        composed_media)
+    return json.dumps(current_version.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])

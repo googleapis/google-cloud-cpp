@@ -347,6 +347,75 @@ TEST_F(ObjectTest, PatchObjectPermanentFailure) {
       "PatchObject");
 }
 
+TEST_F(ObjectTest, ComposeObject) {
+  std::string response = R"""({
+      "bucket": "test-bucket-name",
+      "contentDisposition": "new-disposition",
+      "contentLanguage": "new-language",
+      "contentType": "application/octet-stream",
+      "crc32c": "d1e2f3",
+      "etag": "XYZ=",
+      "generation": "12345",
+      "id": "test-bucket-name/test-object-name/1",
+      "kind": "storage#object",
+      "md5Hash": "xa1b2c3==",
+      "mediaLink": "https://www.googleapis.com/download/storage/v1/b/test-bucket-name/o/test-object-name?generation=12345&alt=media",
+      "metageneration": "1",
+      "name": "test-object-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name/o/test-object-name",
+      "size": 1024,
+      "storageClass": "STANDARD",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "timeDeleted": "2018-05-19T19:32:24Z",
+      "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "componentCount": 2
+})""";
+  auto expected = ObjectMetadata::ParseFromString(response);
+
+  EXPECT_CALL(*mock, ComposeObject(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Invoke([&expected](internal::ComposeObjectRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        EXPECT_EQ("test-object-name", r.object_name());
+        internal::nl::json actual_payload =
+            internal::nl::json::parse(r.json_payload());
+        internal::nl::json expected_payload = {
+            {"kind", "storage#composeRequest"},
+            {"sourceObjects", {{{"name", "object1"}},{{"name", "object2"}}}},
+            {"destination", nullptr}
+        };
+        EXPECT_EQ(expected_payload, actual_payload);
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.ComposeObject("test-bucket-name", "test-object-name",
+          {{"object1"}, {"object2"}}, ObjectMetadata());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectTest, ComposeObjectTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectMetadata>(
+      mock, EXPECT_CALL(*mock, ComposeObject(_)),
+      [](Client& client) {
+        client.ComposeObject("test-bucket-name", "test-object-name",
+          {{"object1"}, {"object2"}}, ObjectMetadata());
+      },
+      "ComposeObject");
+}
+
+TEST_F(ObjectTest, ComposeObjectPermanentFailure) {
+  testing::PermanentFailureTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, ComposeObject(_)),
+      [](Client& client) {
+        client.ComposeObject("test-bucket-name", "test-object-name",
+          {{"object1"}, {"object2"}}, ObjectMetadata());
+      },
+      "ComposeObject");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

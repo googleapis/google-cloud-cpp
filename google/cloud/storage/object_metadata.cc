@@ -35,6 +35,16 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
   json[key] = value;
 }
 }  // namespace
+std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
+  os << "ComposeSourceObject={bucket_name=" << r.object_name;
+  if(r.generation.has_value()) {
+    os << ", generation=" << r.generation.value();
+  }
+  if(r.if_generation_match.has_value()) {
+    os << ", if_generation_match=" << r.if_generation_match.value();
+  }
+  return os << "}";
+}
 
 ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   ObjectMetadata result{};
@@ -127,7 +137,6 @@ internal::nl::json ObjectMetadata::JsonForUpdate() const {
   return metadata_as_json;
 }
 
-// TODO(frank): An exact copy of JsonPayloadForUpdate (verify correctness)
 std::string ObjectMetadata::JsonPayloadForCompose() const {
   using internal::nl::json;
   json metadata_as_json;
@@ -145,6 +154,10 @@ std::string ObjectMetadata::JsonPayloadForCompose() const {
   SetIfNotEmpty(metadata_as_json, "contentEncoding", content_encoding());
   SetIfNotEmpty(metadata_as_json, "contentLanguage", content_language());
   SetIfNotEmpty(metadata_as_json, "contentType", content_type());
+  SetIfNotEmpty(metadata_as_json, "crc32c", crc32c());
+  SetIfNotEmpty(metadata_as_json, "md5Hash", md5_hash());
+  SetIfNotEmpty(metadata_as_json, "name", name());
+  SetIfNotEmpty(metadata_as_json, "storageClass", storage_class());
 
   if (not metadata().empty()) {
     json meta_as_json;

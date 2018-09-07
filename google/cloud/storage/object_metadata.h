@@ -33,10 +33,11 @@ struct CustomerEncryption {
 };
 
 /// A Compose operation source object representation
+typedef google::cloud::internal::optional<long> OptionalLong;
 struct ComposeSourceObject {
     std::string object_name;
-    google::cloud::internal::optional<long> generation;
-    google::cloud::internal::optional<long> if_generation_match;
+    OptionalLong generation;
+    OptionalLong if_generation_match;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);

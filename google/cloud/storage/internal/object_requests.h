@@ -256,7 +256,7 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
 class ComposeObjectRequest
     : public GenericObjectRequest<
           ComposeObjectRequest, EncryptionKey, Generation,
-          IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, PredefinedAcl,
+          IfGenerationMatch, IfMetagenerationMatch, PredefinedAcl,
           SourceEncryptionKey, UserProject> {
  public:
   ComposeObjectRequest() = default;

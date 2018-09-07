@@ -534,19 +534,19 @@ class Client {
   }
 
   /**
-   * Concatenates a list of existing objects into a new object in the same
-   * bucket.
+   * Compose existing objects into a new object in the same bucket.
    *
    * @param bucket_name the name of the bucket that contains the object.
-   * @param destination_object_name the destination .
-   * @param destination_object_metadata the new metadata for the Object.  Only the writeable fields
-   *     accepted by the `Objects: update` API are used, all other fields are
-   *     ignored. In particular, note that `bucket` and `name` are ignored in
-   *     favor of @p bucket_name and @p object_name.
+   * @param destination_object_name the composed object name.
+   * @param source_objects objects used to compose `destination_object_name`.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: compose` API are used,
+   *     all other fields are ignored.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch``, `IfMetagenerationMatch`,
-   *     ` `PredefinedAcl`,and `UserProject`.
+   *     Valid types for this operation include `ComposeObjectRequest`,
+   *      `EncryptionKey`, `Generation`, `IfGenerationMatch`,
+   *      `IfMetagenerationMatch`, `PredefinedAcl`,
+   *      `SourceEncryptionKey`, `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.
    *
