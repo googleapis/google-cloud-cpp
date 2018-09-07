@@ -382,17 +382,17 @@ TEST_F(ObjectTest, ComposeObject) {
             internal::nl::json::parse(r.json_payload());
         internal::nl::json expected_payload = {
             {"kind", "storage#composeRequest"},
-            {"sourceObjects", {{{"name", "object1"}},{{"name", "object2"}}}},
-            {"destination", nullptr}
-        };
+            {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}},
+            {"destination", nullptr}};
         EXPECT_EQ(expected_payload, actual_payload);
         return std::make_pair(Status(), expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto actual = client.ComposeObject("test-bucket-name", "test-object-name",
-          {{"object1"}, {"object2"}}, ObjectMetadata());
+  auto actual =
+      client.ComposeObject("test-bucket-name", "test-object-name",
+                           {{"object1"}, {"object2"}}, ObjectMetadata());
   EXPECT_EQ(expected, actual);
 }
 
@@ -401,7 +401,7 @@ TEST_F(ObjectTest, ComposeObjectTooManyFailures) {
       mock, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         client.ComposeObject("test-bucket-name", "test-object-name",
-          {{"object1"}, {"object2"}}, ObjectMetadata());
+                             {{"object1"}, {"object2"}}, ObjectMetadata());
       },
       "ComposeObject");
 }
@@ -411,7 +411,7 @@ TEST_F(ObjectTest, ComposeObjectPermanentFailure) {
       *client, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         client.ComposeObject("test-bucket-name", "test-object-name",
-          {{"object1"}, {"object2"}}, ObjectMetadata());
+                             {{"object1"}, {"object2"}}, ObjectMetadata());
       },
       "ComposeObject");
 }

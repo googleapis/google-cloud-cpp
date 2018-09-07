@@ -37,10 +37,10 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
 }  // namespace
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
   os << "ComposeSourceObject={bucket_name=" << r.object_name;
-  if(r.generation.has_value()) {
+  if (r.generation.has_value()) {
     os << ", generation=" << r.generation.value();
   }
-  if(r.if_generation_match.has_value()) {
+  if (r.if_generation_match.has_value()) {
     os << ", if_generation_match=" << r.if_generation_match.value();
   }
   return os << "}";
@@ -169,7 +169,6 @@ std::string ObjectMetadata::JsonPayloadForCompose() const {
 
   return metadata_as_json.dump();
 }
-
 
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(*this) ==

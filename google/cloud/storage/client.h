@@ -543,7 +543,7 @@ class Client {
    *     the writeable fields accepted by the `Objects: compose` API are used,
    *     all other fields are ignored.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `ComposeObjectRequest`,
+   *     Valid types for this operation include
    *      `EncryptionKey`, `Generation`, `IfGenerationMatch`,
    *      `IfMetagenerationMatch`, `PredefinedAcl`,
    *      `SourceEncryptionKey`, `UserProject`.
@@ -551,18 +551,16 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   * @snippet storage_object_samples.cc update object metadata
+   * @snippet storage_object_samples.cc compose object metadata
    */
   template <typename... Options>
-  ObjectMetadata ComposeObject(std::string bucket_name,
-                        std::string destination_object_name,
-                        std::vector<ComposeSourceObject> const& source_objects,
-                        ObjectMetadata destination_object_metadata,
-                        Options&&... options) {
+  ObjectMetadata ComposeObject(
+      std::string bucket_name, std::string destination_object_name,
+      std::vector<ComposeSourceObject> const& source_objects,
+      ObjectMetadata destination_object_metadata, Options&&... options) {
     internal::ComposeObjectRequest request(
         std::move(bucket_name), std::string(destination_object_name),
-        source_objects,
-        std::move(destination_object_metadata));
+        source_objects, std::move(destination_object_metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ComposeObject(request).second;
   }

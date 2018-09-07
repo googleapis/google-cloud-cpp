@@ -584,9 +584,9 @@ TEST(ComposeObjectRequestTest, SimpleCompose) {
   std::vector<ComposeSourceObject> source_objects;
   source_objects.push_back(object1);
   source_objects.push_back(object2);
-  
-  ComposeObjectRequest request(
-      "test-bucket", "test-object", source_objects, ObjectMetadata());
+
+  ComposeObjectRequest request("test-bucket", "test-object", source_objects,
+                               ObjectMetadata());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
 

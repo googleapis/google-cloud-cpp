@@ -76,9 +76,9 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     // make them unusable for security purposes.  Application developers should
     // consult with their security team before relying on this (or any other)
     // source for encryption keys.
-    // Applications should save the key in a secure location after creating them,
-    // Google Cloud Storage does not save customer-supplied keys, and if lost the
-    // encrypted data cannot be decrypted.
+    // Applications should save the key in a secure location after creating
+    // them, Google Cloud Storage does not save customer-supplied keys, and if
+    // lost the encrypted data cannot be decrypted.
     return CreateKeyFromGenerator(generator_);
   }
 
@@ -581,9 +581,8 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0));
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name,
+                                            LoremIpsum(), IfGenerationMatch(0));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -591,11 +590,11 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta = client.ComposeObject(bucket_name,
-      composed_object_name, source_objects,
-      ObjectMetadata().set_content_type("plain/text"));
+  ObjectMetadata composed_meta =
+      client.ComposeObject(bucket_name, composed_object_name, source_objects,
+                           ObjectMetadata().set_content_type("plain/text"));
 
-  EXPECT_EQ(meta.size()*2, composed_meta.size());
+  EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);
   client.DeleteObject(bucket_name, object_name);
 }
@@ -622,12 +621,12 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta = client.ComposeObject(bucket_name,
-      composed_object_name, source_objects,
-      ObjectMetadata().set_content_type("plain/text"), SourceEncryptionKey(key),
-      EncryptionKey(key));
+  ObjectMetadata composed_meta =
+      client.ComposeObject(bucket_name, composed_object_name, source_objects,
+                           ObjectMetadata().set_content_type("plain/text"),
+                           SourceEncryptionKey(key), EncryptionKey(key));
 
-  EXPECT_EQ(meta.size()*2, composed_meta.size());
+  EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);
   client.DeleteObject(bucket_name, object_name);
 }

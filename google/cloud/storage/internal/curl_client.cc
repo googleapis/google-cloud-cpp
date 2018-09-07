@@ -311,7 +311,7 @@ std::pair<Status, ObjectMetadata> CurlClient::PatchObject(
 std::pair<Status, ObjectMetadata> CurlClient::ComposeObject(
     ComposeObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/o/" + request.object_name() + "/compose",
+                                 "/o/" + request.object_name() + "/compose",
                              storage_factory_);
   SetupBuilder(builder, request, "POST");
   builder.AddHeader("Content-Type: application/json");
