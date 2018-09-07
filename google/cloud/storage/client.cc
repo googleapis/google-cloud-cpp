@@ -33,16 +33,6 @@ Client::Client(ClientOptions options)
     : Client(std::shared_ptr<internal::RawClient>(
           new internal::CurlClient(std::move(options)))) {}
 
-BucketMetadata Client::GetBucketMetadataImpl(
-    internal::GetBucketMetadataRequest const& request) {
-  return raw_client_->GetBucketMetadata(request).second;
-}
-
-ObjectMetadata Client::InsertObjectMediaImpl(
-    internal::InsertObjectMediaRequest const& request) {
-  return raw_client_->InsertObjectMedia(request).second;
-}
-
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
