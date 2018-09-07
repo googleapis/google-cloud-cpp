@@ -14,9 +14,7 @@
 # limitations under the License.
 # ~~~
 
-# While it is tempting create these targets using a function or a loop, we want
-# to keep this particular file as simple as possible, as it is intended to be
-# part of the examples.
+include(GoogleCloudCppCommon)
 
 add_executable(gcs2cbt gcs2cbt.cc)
 target_link_libraries(gcs2cbt
