@@ -21,6 +21,10 @@ set(PACKAGE_BUGREPORT
     "https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
+# Configure the Compiler options, we will be using C++11 features.
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
     # gcc-4.8 C++11 support has bugs preventing us from using it.
@@ -111,4 +115,6 @@ add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)
-add_subdirectory(examples)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(examples)
+endif ()

@@ -19,10 +19,6 @@ set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
 set(FIRESTORE_CLIENT_VERSION_MINOR 0)
 set(FIRESTORE_CLIENT_VERSION_PATCH 1)
 
-# Configure the Compiler options, we will be using C++11 features.
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
 set(

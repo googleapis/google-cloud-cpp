@@ -19,10 +19,6 @@ set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
 set(BIGTABLE_CLIENT_VERSION_MINOR 3)
 set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 
-# Configure the Compiler options, we will be using C++11 features.
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(

@@ -21,10 +21,6 @@ set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in internal/version_info.h)
 
-# Configure the Compiler options, we will be using C++11 features.
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(
