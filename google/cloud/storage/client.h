@@ -555,10 +555,10 @@ class Client {
    */
   template <typename... Options>
   ObjectMetadata ComposeObject(std::string bucket_name,
-                              std::string destination_object_name,
-                              std::vector<ComposeSourceObject> source_objects,
-                              ObjectMetadata destination_object_metadata,
-                              Options&&... options) {
+                        std::string destination_object_name,
+                        std::vector<ComposeSourceObject> const& source_objects,
+                        ObjectMetadata destination_object_metadata,
+                        Options&&... options) {
     internal::ComposeObjectRequest request(
         std::move(bucket_name), std::string(destination_object_name),
         source_objects,

@@ -574,9 +574,16 @@ TEST(PatchObjectRequestTest, Builder) {
 }
 
 TEST(ComposeObjectRequestTest, SimpleCompose) {
-  std::vector<ComposeSourceObject> source_objects = {
-    {{"object1"}, OptionalLong(1L), OptionalLong(1L)},
-    {{"object2"}, OptionalLong(2L), OptionalLong(2L)}};
+  ComposeSourceObject object1{"object1"}, object2{"object2"};
+  object1.object_name = "object1";
+  object1.generation.emplace(1L);
+  object1.if_generation_match.emplace(1L);
+  object2.object_name = "object2";
+  object2.generation.emplace(2L);
+  object2.if_generation_match.emplace(2L);
+  std::vector<ComposeSourceObject> source_objects;
+  source_objects.push_back(object1);
+  source_objects.push_back(object2);
   
   ComposeObjectRequest request(
       "test-bucket", "test-object", source_objects, ObjectMetadata());
