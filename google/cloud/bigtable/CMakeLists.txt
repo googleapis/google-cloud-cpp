@@ -98,6 +98,13 @@ target_include_directories(bigtable_protos
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_protos
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+set_target_properties(
+    bigtable_protos
+    PROPERTIES
+        VERSION
+        ${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}
+        SOVERSION
+        ${BIGTABLE_CLIENT_VERSION_MAJOR})
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
@@ -208,6 +215,13 @@ target_include_directories(bigtable_client
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(bigtable_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+set_target_properties(
+    bigtable_client
+    PROPERTIES
+        VERSION
+        ${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}
+        SOVERSION
+        ${BIGTABLE_CLIENT_VERSION_MAJOR})
 add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)

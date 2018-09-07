@@ -214,6 +214,13 @@ target_include_directories(storage_client
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+set_target_properties(
+    storage_client
+    PROPERTIES
+        VERSION
+        ${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}
+        SOVERSION
+        ${STORAGE_CLIENT_VERSION_MAJOR})
 
 add_library(storage_client_testing
             testing/canonical_errors.h
@@ -333,7 +340,7 @@ install(TARGETS storage_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/storage/client
+install(DIRECTORY . DESTINATION include/google/cloud/storage/client
         FILES_MATCHING
         PATTERN "*.h"
         PATTERN "testing/*"
