@@ -69,7 +69,7 @@ Reformatting all the files in a specific directory should be safe too, for
 example:
 
 ```console
-$ find bigtable -o -name '*.h' -o -name '*.cc' -print0 \
+$ find google/cloud -o -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 clang-format -i
 ```
 
@@ -78,12 +78,12 @@ advised that `clang-format` has been known to generate slightly different
 formatting in different versions, we use version 4.0, use the same version if
 you run into problems.
 
-If you have prepared a Docker image for `ubuntu:17.10` (see below), you can
+If you have prepared a Docker image for `ubuntu:18.04` (see below), you can
 verify and fix the format of your code using:
 
 ```console
 # Run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=17.10 \
+$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 \
       CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/travis/build-linux.sh
 ```
 
