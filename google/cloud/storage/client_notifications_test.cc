@@ -37,19 +37,19 @@ using testing::canonical_errors::TransientError;
 class NotificationsTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{std::shared_ptr<internal::RawClient>(mock_)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options = ClientOptions(CreateInsecureCredentials());
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ = ClientOptions(CreateInsecureCredentials());
 };
 
 TEST_F(NotificationsTest, ListNotifications) {
@@ -64,7 +64,7 @@ TEST_F(NotificationsTest, ListNotifications) {
       })"""),
   };
 
-  EXPECT_CALL(*mock, ListNotifications(_))
+  EXPECT_CALL(*mock_, ListNotifications(_))
       .WillOnce(Return(std::make_pair(TransientError(),
                                       internal::ListNotificationsResponse{})))
       .WillOnce(
@@ -74,7 +74,7 @@ TEST_F(NotificationsTest, ListNotifications) {
             return std::make_pair(
                 Status(), internal::ListNotificationsResponse{expected});
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
+  Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
   std::vector<NotificationMetadata> actual =
       client.ListNotifications("test-bucket");
@@ -83,14 +83,14 @@ TEST_F(NotificationsTest, ListNotifications) {
 
 TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
   testing::TooManyFailuresTest<internal::ListNotificationsResponse>(
-      mock, EXPECT_CALL(*mock, ListNotifications(_)),
+      mock_, EXPECT_CALL(*mock_, ListNotifications(_)),
       [](Client& client) { client.ListNotifications("test-bucket-name"); },
       "ListNotifications");
 }
 
 TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
   testing::PermanentFailureTest<internal::ListNotificationsResponse>(
-      *client, EXPECT_CALL(*mock, ListNotifications(_)),
+      *client_, EXPECT_CALL(*mock_, ListNotifications(_)),
       [](Client& client) { client.ListNotifications("test-bucket-name"); },
       "ListNotifications");
 }
