@@ -115,6 +115,3 @@ add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_subdirectory(examples)
-endif ()

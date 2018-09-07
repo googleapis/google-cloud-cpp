@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(GoogleCloudCppCommon)
-
 add_executable(gcs2cbt gcs2cbt.cc)
 target_link_libraries(gcs2cbt
                       bigtable_client
