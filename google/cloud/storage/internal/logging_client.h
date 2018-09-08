@@ -104,6 +104,9 @@ class LoggingClient : public RawClient {
   std::pair<Status, ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) override;
 
+  std::pair<Status, ListNotificationsResponse> ListNotifications(
+      ListNotificationsRequest const&) override;
+
   std::shared_ptr<RawClient> client() const { return client_; }
 
  private:

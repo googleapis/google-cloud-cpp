@@ -121,6 +121,9 @@ class CurlClient : public RawClient {
   std::pair<Status, ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) override;
 
+  std::pair<Status, ListNotificationsResponse> ListNotifications(
+      ListNotificationsRequest const&) override;
+
   void LockShared();
   void UnlockShared();
 

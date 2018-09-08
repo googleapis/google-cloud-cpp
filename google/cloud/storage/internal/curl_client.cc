@@ -645,6 +645,24 @@ std::pair<Status, ServiceAccount> CurlClient::GetServiceAccount(
                         ServiceAccount::ParseFromString(payload.payload));
 }
 
+std::pair<Status, ListNotificationsResponse> CurlClient::ListNotifications(
+    ListNotificationsRequest const& request) {
+  // Assume the bucket name is validated by the caller.
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                                 "/notificationConfigs",
+                             storage_factory_);
+  SetupBuilder(builder, request, "GET");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        internal::ListNotificationsResponse{});
+  }
+  return std::make_pair(Status(),
+                        internal::ListNotificationsResponse::FromHttpResponse(
+                            std::move(payload)));
+}
+
 void CurlClient::LockShared() { mu_.lock(); }
 
 void CurlClient::UnlockShared() { mu_.unlock(); }
