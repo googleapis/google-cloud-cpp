@@ -1027,10 +1027,11 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afa70c28dd2ff12117a9576604b43ea09">WaitForConsistencyCheck</a>(google::cloud::bigtable::TableAdmin admin,</div><div class="line">                             std::string <span class="keyword">const</span>&amp; table_id_param) {</div><div class="line">  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">google::cloud::bigtable::ConsistencyToken</a> consistency_token(</div><div class="line">      admin.GenerateConsistencyToken(table_id.get()));</div><div class="line">  <span class="keyword">auto</span> result = admin.WaitForConsistencyCheck(table_id, consistency_token);</div><div class="line">  <span class="keywordflow">if</span> (result.get()) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent&quot;</span> &lt;&lt; std::endl;</div><div class="line">  } <span class="keywordflow">else</span> {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not consistent&quot;</span> &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
