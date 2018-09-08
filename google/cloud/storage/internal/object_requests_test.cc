@@ -122,9 +122,13 @@ TEST(ObjectRequestsTest, InsertObjectMedia) {
 }
 
 TEST(ObjectRequestsTest, Copy) {
-  CopyObjectRequest request("my-bucket", "my-object", "source-bucket",
-                            "source-object",
+  CopyObjectRequest request("source-bucket", "source-object", "my-bucket",
+                            "my-object",
                             ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ("source-bucket", request.source_bucket());
+  EXPECT_EQ("source-object", request.source_object());
+  EXPECT_EQ("my-bucket", request.destination_bucket());
+  EXPECT_EQ("my-object", request.destination_object());
   request.set_multiple_options(IfMetagenerationNotMatch(7),
                                DestinationPredefinedAcl("private"),
                                UserProject("my-project"));
@@ -135,7 +139,7 @@ TEST(ObjectRequestsTest, Copy) {
   EXPECT_THAT(actual, HasSubstr("my-bucket"));
   EXPECT_THAT(actual, HasSubstr("my-object"));
   EXPECT_THAT(actual, HasSubstr("source-bucket"));
-  EXPECT_THAT(actual, HasSubstr("source-object"));
+  EXPECT_THAT(actual, HasSubstr("=source-object"));
   EXPECT_THAT(actual, HasSubstr("text/plain"));
   EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
   EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
