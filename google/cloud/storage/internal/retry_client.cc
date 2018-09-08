@@ -416,6 +416,14 @@ std::pair<Status, NotificationMetadata> RetryClient::GetNotification(
                   &RawClient::GetNotification, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> RetryClient::DeleteNotification(
+    DeleteNotificationRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteNotification, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

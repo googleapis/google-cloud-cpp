@@ -195,6 +195,39 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
       "GetNotification");
 }
 
+TEST_F(NotificationsTest, DeleteNotification) {
+  EXPECT_CALL(*mock_, DeleteNotification(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-notification-1", r.notification_id());
+
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock_)};
+
+  client.DeleteNotification("test-bucket", "test-notification-1");
+}
+
+TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      [](Client& client) {
+        client.DeleteNotification("test-bucket-name", "test-notification-1");
+      },
+      "DeleteNotification");
+}
+
+TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client_, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      [](Client& client) {
+        client.DeleteNotification("test-bucket-name", "test-notification-1");
+      },
+      "DeleteNotification");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

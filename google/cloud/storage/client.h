@@ -1373,6 +1373,37 @@ class Client {
     return raw_client_->GetNotification(request).second;
   }
 
+  /**
+   * Delete an existing notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function deletes one of the notification configs.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc delete notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  void DeleteNotification(std::string const& bucket_name,
+                          std::string const& notification_id,
+                          Options&&... options) {
+    internal::DeleteNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->DeleteNotification(request);
+  }
+
  private:
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(

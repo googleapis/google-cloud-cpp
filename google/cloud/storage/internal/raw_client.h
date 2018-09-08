@@ -145,6 +145,8 @@ class RawClient {
       CreateNotificationRequest const&) = 0;
   virtual std::pair<Status, NotificationMetadata> GetNotification(
       GetNotificationRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteNotification(
+      DeleteNotificationRequest const&) = 0;
   //@}
 };
 

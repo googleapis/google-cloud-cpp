@@ -125,6 +125,8 @@ class RetryClient : public RawClient {
       CreateNotificationRequest const&) override;
   std::pair<Status, NotificationMetadata> GetNotification(
       GetNotificationRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteNotification(
+      DeleteNotificationRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 
