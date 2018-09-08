@@ -12,6 +12,7 @@ var searchData=
   ['listbucketsiterator',['ListBucketsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a177d68ada24c43cc52775d7603abd207',1,'google::cloud::storage::v0::ListBucketsIterator']]],
   ['listbucketsreader',['ListBucketsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a7bce9f9472b9073b76e197e86fa44f2c',1,'google::cloud::storage::v0::ListBucketsReader']]],
   ['listdefaultobjectacl',['ListDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a09425ba568c1b3e5652e7ae24198096c',1,'google::cloud::storage::v0::Client']]],
+  ['listnotifications',['ListNotifications',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa030befa65aa1cd12a7c6b3cfaac05be',1,'google::cloud::storage::v0::Client']]],
   ['listobjectacl',['ListObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa2015fd18d270745e52133f36c4a4364',1,'google::cloud::storage::v0::Client']]],
   ['listobjects',['ListObjects',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6f18342a0d51ecb3a95aa5e121eee0f5',1,'google::cloud::storage::v0::Client']]],
   ['listobjectsiterator',['ListObjectsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a8d7670b2b6b44ac9bded178e95235bb8',1,'google::cloud::storage::v0::ListObjectsIterator']]],

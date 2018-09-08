@@ -71,6 +71,7 @@ var searchData=
   ['storage_5fclass_2eh',['storage_class.h',['../storage__class_8h.html',1,'']]],
   ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]],
   ['storage_5fdefault_5fobject_5facl_5fsamples_2ecc',['storage_default_object_acl_samples.cc',['../storage__default__object__acl__samples_8cc.html',1,'']]],
+  ['storage_5fnotification_5fsamples_2ecc',['storage_notification_samples.cc',['../storage__notification__samples_8cc.html',1,'']]],
   ['storage_5fobject_5facl_5fsamples_2ecc',['storage_object_acl_samples.cc',['../storage__object__acl__samples_8cc.html',1,'']]],
   ['storage_5fobject_5fsamples_2ecc',['storage_object_samples.cc',['../storage__object__samples_8cc.html',1,'']]]
 ];
