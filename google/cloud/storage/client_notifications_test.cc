@@ -152,6 +152,49 @@ TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
       "CreateNotification");
 }
 
+TEST_F(NotificationsTest, GetNotification) {
+  NotificationMetadata expected = NotificationMetadata::ParseFromString(R"""({
+          "id": "test-notification-1",
+          "topic": "test-topic-1",
+          "payload_format": "JSON_API_V1",
+          "object_prefix": "test-object-prefix-",
+          "event_type": [ "OBJECT_FINALIZE" ]
+      })""");
+
+  EXPECT_CALL(*mock_, GetNotification(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+      .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("test-notification-1", r.notification_id());
+
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock_)};
+
+  NotificationMetadata actual =
+      client.GetNotification("test-bucket", "test-notification-1");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
+  testing::TooManyFailuresTest<NotificationMetadata>(
+      mock_, EXPECT_CALL(*mock_, GetNotification(_)),
+      [](Client& client) {
+        client.GetNotification("test-bucket-name", "test-notification-1");
+      },
+      "GetNotification");
+}
+
+TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
+  testing::PermanentFailureTest<NotificationMetadata>(
+      *client_, EXPECT_CALL(*mock_, GetNotification(_)),
+      [](Client& client) {
+        client.GetNotification("test-bucket-name", "test-notification-1");
+      },
+      "GetNotification");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

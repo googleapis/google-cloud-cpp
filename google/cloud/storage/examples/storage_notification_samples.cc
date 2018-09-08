@@ -84,6 +84,24 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, topic_name);
 }
 
+void GetNotification(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"get-notification <bucket-name> <notification-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto notification_id = ConsumeArg(argc, argv);
+  //! [get notification] [START storage_print_pubsub_bucket_notification]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string notification_id) {
+    auto notification = client.GetNotification(bucket_name, notification_id);
+    std::cout << "Notification " << notification.id() << " for bucket "
+              << bucket_name << " details=" << notification << std::endl;
+  }
+  //! [get notification] [END storage_print_pubsub_bucket_notification]
+  (std::move(client), bucket_name, notification_id);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -96,6 +114,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-notifications", &ListNotifications},
       {"create-notification", &CreateNotification},
+      {"get-notification", &GetNotification},
   };
   for (auto&& kv : commands) {
     try {

@@ -259,6 +259,13 @@ run_all_notification_examples() {
       "${bucket_name}"
   run_example ./storage_notification_samples create-notification \
       "${bucket_name}" "${topic_name}"
+  # The notifications ids are assigned by the server, so we need to discover it
+  # here. Parse the output from the list-notifications command to extract what
+  # we need.
+  local id="$(./storage_notification_samples list-notifications \
+      "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
+  run_example ./storage_notification_samples create-notification \
+      "${bucket_name}" "${id}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.

@@ -697,6 +697,23 @@ std::pair<Status, NotificationMetadata> CurlClient::CreateNotification(
                         NotificationMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, NotificationMetadata> CurlClient::GetNotification(
+    GetNotificationRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                                 "/notificationConfigs/" +
+                                 request.notification_id(),
+                             storage_factory_);
+  SetupBuilder(builder, request, "GET");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        NotificationMetadata{});
+  }
+  return std::make_pair(Status(),
+                        NotificationMetadata::ParseFromString(payload.payload));
+}
+
 void CurlClient::LockShared() { mu_.lock(); }
 
 void CurlClient::UnlockShared() { mu_.unlock(); }

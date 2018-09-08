@@ -127,6 +127,8 @@ class CurlClient : public RawClient {
       ListNotificationsRequest const&) override;
   std::pair<Status, NotificationMetadata> CreateNotification(
       CreateNotificationRequest const&) override;
+  std::pair<Status, NotificationMetadata> GetNotification(
+      GetNotificationRequest const&) override;
 
   void LockShared();
   void UnlockShared();
