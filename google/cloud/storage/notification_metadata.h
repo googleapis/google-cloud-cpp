@@ -43,7 +43,7 @@ class NotificationMetadata {
   static NotificationMetadata ParseFromString(std::string const& payload);
 
   /**
-   * Return the payload for a call to `Notifications: insert`.
+   * Returns the payload for a call to `Notifications: insert`.
    */
   std::string JsonPayloadForInsert() const;
 

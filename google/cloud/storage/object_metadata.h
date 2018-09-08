@@ -74,7 +74,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   static ObjectMetadata ParseFromString(std::string const& payload);
 
   /**
-   * Return the payload for a call to `Objects: update`.
+   * Returns the payload for a call to `Objects: update`.
    *
    * The `Objects: update` API only accepts a subset of the writeable fields in
    * the object resource. This function selects the relevant fields and formats
@@ -231,7 +231,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
 
 /**
- * Prepare a patch for the Bucket resource.
+ * Prepares a patch for the Bucket resource.
  *
  * The Bucket resource has many modifiable fields. The application may send a
  * patch request to change (or delete) a small fraction of these fields by using
@@ -251,7 +251,7 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& SetAcl(std::vector<ObjectAccessControl> const& v);
 
   /**
-   * Clear the ACL for the Bucket.
+   * Clears the ACL.
    *
    * @warning Currently the server ignores requests to reset the full ACL.
    */

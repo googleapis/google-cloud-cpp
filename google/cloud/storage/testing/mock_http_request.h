@@ -46,10 +46,10 @@ class MockHttpRequest {
 };
 
 /**
- * Mock a CurlRequestBuilder.
+ * Mocks a `CurlRequestBuilder`.
  *
  * The structure of this mock is unusual. The classes under test create a
- * concrete instance of CurlRequestBuilder, mostly because (a) the class has
+ * concrete instance of `CurlRequestBuilder`, mostly because (a) the class has
  * template member functions, so we cannot use a pure interface and a factor,
  * and (b) using a factory purely for testing seemed like overkill. Instead the
  * mock is implemented using a modified version of the PImpl idiom

@@ -24,8 +24,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Parse a boolean field, even if it is represented by a string type in the JSON
- * object.
+ * Parses a boolean field, even if it is represented by a string type in the
+ * JSON object.
  *
  * @return the value of @p field_name in @p json, or `false` if the field is not
  * present.
@@ -33,20 +33,20 @@ namespace internal {
 bool ParseBoolField(nl::json const& json, char const* field_name);
 
 /**
- * Parse an integer field, even if it is represented by a string type in the
+ * Parses an integer field, even if it is represented by a string type in the
  * JSON object.
  */
 std::int32_t ParseIntField(nl::json const& json, char const* field_name);
 
 /**
- * Parse an unsigned integer field, even if it is represented by a string type
+ * Parses an unsigned integer field, even if it is represented by a string type
  * in the JSON object.
  */
 std::uint32_t ParseUnsignedIntField(nl::json const& json,
                                     char const* field_name);
 
 /**
- * Parse a long integer field, even if it is represented by a string type in
+ * Parses a long integer field, even if it is represented by a string type in
  * the JSON object.
  *
  * @return the value of @p field_name in @p json, or `0` if the field is not
@@ -55,7 +55,7 @@ std::uint32_t ParseUnsignedIntField(nl::json const& json,
 std::int64_t ParseLongField(nl::json const& json, char const* field_name);
 
 /**
- * Parse an unsigned long integer field, even if it is represented by a string
+ * Parses an unsigned long integer field, even if it is represented by a string
  * type in the JSON object.
  *
  * @return the value of @p field_name in @p json, or `0` if the field is not
@@ -65,7 +65,7 @@ std::uint64_t ParseUnsignedLongField(nl::json const& json,
                                      char const* field_name);
 
 /**
- * Parse a RFC 3339 timestamp.
+ * Parses a RFC 3339 timestamp.
  *
  * @return the value of @p field_name in @p json, or the epoch if the field is
  * not present.

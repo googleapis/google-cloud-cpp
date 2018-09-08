@@ -24,7 +24,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * A `std::basic_streambuf` to read from a GCS Object.
+ * Defines a compilation barrier for libcurl.
+ *
+ * We do not want to expose the libcurl objects through `ObjectReadStream`,
+ * this class abstracts away the implementation so applications are not impacted
+ * by the implementation details.
  */
 class ObjectReadStreambuf : public std::basic_streambuf<char> {
  public:
@@ -41,7 +45,11 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 };
 
 /**
- * A `std::basic_streambuf` that writes to a GCS Object.
+ * Defines a compilation barrier for libcurl.
+ *
+ * We do not want to expose the libcurl objects through `ObjectWriteStream`,
+ * this class abstracts away the implementation so applications are not impacted
+ * by the implementation details.
  */
 class ObjectWriteStreambuf : public std::basic_streambuf<char> {
  public:

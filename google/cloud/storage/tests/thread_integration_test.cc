@@ -88,7 +88,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 using ObjectNameList = std::vector<std::string>;
 
 /**
- * Divide @p source in to @p count groups of approximately equal size.
+ * Divides @p source in to @p count groups of approximately equal size.
  */
 std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
     ObjectNameList const& source, int count) {

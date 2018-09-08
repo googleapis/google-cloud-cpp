@@ -36,10 +36,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Define the interface used to communicate with Google Cloud Storage.
- *
- * This is a dependency injection point so higher-level abstractions (like
- * `storage::Bucket` or `storage::Object`) can be effectively tested.
+ * Defines the interface used to communicate with Google Cloud Storage.
  */
 class RawClient {
  public:

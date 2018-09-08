@@ -100,7 +100,7 @@ struct OpenSslUtils {
   }
 
   /**
-   * Sign a string with the private key from a PEM container.
+   * Signs a string with the private key from a PEM container.
    */
   static std::string SignStringWithPem(
       std::string const& str, std::string const& pem_contents,

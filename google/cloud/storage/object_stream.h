@@ -25,7 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * A `std::basic_istream<char>` to read from a GCS Object.
+ * Defines a `std::basic_istream<char>` to read from a GCS Object.
  */
 class ObjectReadStream : public std::basic_istream<char> {
  public:
@@ -70,7 +70,7 @@ class ObjectReadStream : public std::basic_istream<char> {
 };
 
 /**
- * A `std::basic_istream<char>` to read from a GCS Object.
+ * Defines a `std::basic_ostream<char>` to write to a GCS Object.
  */
 class ObjectWriteStream : public std::basic_ostream<char> {
  public:

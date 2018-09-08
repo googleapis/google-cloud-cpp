@@ -21,12 +21,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-/**
- * Define functions with the well-know storage classes.
- *
- * These functions are provided to avoid typos when setting or comparing storage
- * classes.
- */
+/// Contains functions to return well-known notification payload format names.
 namespace payload_format {
 inline char const* JsonApiV1() {
   static constexpr char kPayloadFormat[] = "JSON_API_V1";

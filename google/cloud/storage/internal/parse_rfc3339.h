@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Parse @p timestamp as RFC-3339 format.
+ * Parses @p timestamp assuming it is in RFC-3339 format.
  *
  * Google Cloud Storage uses RFC-3339 for timestamps, this function is used to
  * parse them and convert to `std::chrono::system_clock::time_point`, the C++

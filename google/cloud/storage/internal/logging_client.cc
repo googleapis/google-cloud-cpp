@@ -25,7 +25,7 @@ namespace internal {
 namespace {
 using raw_client_wrapper_utils::CheckSignature;
 /**
- * Call a RawClient operation logging both the input and the result.
+ * Logs the input and results of each `RawClient` operation.
  *
  * @tparam MemberFunction the signature of the member function.
  * @param client the storage::RawClient object to make the call through.
@@ -49,7 +49,7 @@ MakeCall(RawClient& client, MemberFunction function,
 }
 
 /**
- * Call a RawClient operation logging only the input.
+ * Calls a `RawClient` operation logging only the input.
  *
  * This is useful when the result is not something you can easily log, such as
  * a pointer of some kind.

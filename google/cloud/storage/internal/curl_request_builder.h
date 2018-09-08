@@ -27,7 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Implement the Builder pattern for CurlRequest, and CurlUploadRequest.
+ * Implements the Builder pattern for CurlRequest, and CurlUploadRequest.
  */
 class CurlRequestBuilder {
  public:
@@ -38,7 +38,7 @@ class CurlRequestBuilder {
                               std::shared_ptr<CurlHandleFactory> factory);
 
   /**
-   * Create a http request with the given payload.
+   * Creates a http request with the given payload.
    *
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
@@ -54,14 +54,14 @@ class CurlRequestBuilder {
   CurlUploadRequest BuildUpload();
 
   /**
-   * Create a non-blocking http request.
+   * Creates a non-blocking http request.
    *
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
   CurlDownloadRequest BuildDownloadRequest(std::string payload);
 
-  /// Add one of the well-known parameters as a query parameter
+  /// Adds one of the well-known parameters as a query parameter
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
@@ -70,7 +70,7 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add one of the well-known parameters as a query parameter
+  /// Adds one of the well-known parameters as a query parameter
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
@@ -79,7 +79,7 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add one of the well-known parameters as a query parameter
+  /// Adds one of the well-known parameters as a query parameter
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownParameter<P, bool> const& p) {
     if (not p.has_value()) {
@@ -89,7 +89,7 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add one of the well-known headers to the request.
+  /// Adds one of the well-known headers to the request.
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownHeader<P, std::string> const& p) {
     if (p.has_value()) {
@@ -101,7 +101,7 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add one of the well-known encryption header groups to the request.
+  /// Adds one of the well-known encryption header groups to the request.
   CurlRequestBuilder& AddOption(EncryptionKey const& p) {
     if (p.has_value()) {
       AddHeader(std::string(p.prefix()) + "algorithm: " + p.value().algorithm);
@@ -111,7 +111,7 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add one of the well-known encryption header groups to the request.
+  /// Adds one of the well-known encryption header groups to the request.
   CurlRequestBuilder& AddOption(SourceEncryptionKey const& p) {
     if (p.has_value()) {
       AddHeader(std::string(p.prefix()) + "Algorithm: " + p.value().algorithm);
@@ -121,29 +121,31 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Add a prefix to the user-agent string.
+  /// Adds a prefix to the user-agent string.
   CurlRequestBuilder& AddUserAgentPrefix(std::string const& prefix);
 
-  /// Add request headers.
+  /// Adds request headers.
   CurlRequestBuilder& AddHeader(std::string const& header);
 
-  /// Add a parameter for a request.
+  /// Adds a parameter for a request.
   CurlRequestBuilder& AddQueryParameter(std::string const& key,
                                         std::string const& value);
 
-  /// Change the http method used for this request
+  /// Changes the http method used for this request.
   CurlRequestBuilder& SetMethod(std::string const& method);
 
+  /// Enables (or disables) debug logging.
   CurlRequestBuilder& SetDebugLogging(bool enabled);
 
+  /// Sets the CURLSH* handle to share resources.
   CurlRequestBuilder& SetCurlShare(CURLSH* share);
 
   CurlRequestBuilder& SetInitialBufferSize(std::size_t size);
 
-  /// Get the user-agent suffix.
+  /// Gets the user-agent suffix.
   std::string UserAgentSuffix() const;
 
-  /// URL-escape a string.
+  /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
     return handle_.MakeEscapedString(s);
   }

@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Make RPC-like requests using CURL.
+ * Makes RPC-like requests using CURL.
  *
  * The Google Cloud Storage Client library using libcurl to make http requests,
  * this class manages the resources and workflow to make a simple RPC-like
@@ -71,7 +71,7 @@ class CurlRequest {
   }
 
   /**
-   * Make the prepared request.
+   * Makes the prepared request.
    *
    * This function can be called multiple times on the same request.
    *

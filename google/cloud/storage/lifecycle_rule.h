@@ -117,7 +117,10 @@ inline bool operator>=(LifecycleRuleCondition const& lhs,
 std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs);
 
 /**
- * Implement wrappers for Lifecycle Rule.
+ * Defines objects to read, create, and modify Object Lifecycle Rules.
+ *
+ * Object Lifecycle Rules allow to configure a Bucket to automatically delete
+ * or change the storage class of objects as they go through lifecycle events.
  *
  * @see https://cloud.google.com/storage/docs/lifecycle for general information
  *     on Object Lifecycle Management in Google Cloud Storage.
@@ -161,7 +164,7 @@ class LifecycleRule {
 
   //@{
   /**
-   * @name Create different types of LifecycleRule actions.
+   * @name Creates different types of LifecycleRule actions.
    */
   static LifecycleRuleAction Delete();
   static LifecycleRuleAction SetStorageClassStandard();
@@ -175,7 +178,7 @@ class LifecycleRule {
 
   //@{
   /**
-   * @name Create different types of LifecycleRule actions.
+   * @name Creates different types of LifecycleRule rules.
    */
   static LifecycleRuleCondition MaxAge(std::int32_t days) {
     LifecycleRuleCondition result;
@@ -260,7 +263,7 @@ class LifecycleRule {
   //@}
 
   /**
-   * Combine multiple LifecycleRule conditions using conjunction.
+   * Combines multiple LifecycleRule conditions using conjunction.
    *
    * Create a condition that require all the @p condition parameters to be met
    * to take effect.

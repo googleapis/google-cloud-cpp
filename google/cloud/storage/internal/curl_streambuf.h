@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Implement a wrapper for libcurl-based streaming downloads.
+ * Makes streaming download requests using libcurl.
  */
 class CurlReadStreambuf : public ObjectReadStreambuf {
  public:

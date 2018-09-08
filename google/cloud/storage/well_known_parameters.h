@@ -25,7 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Refactor definition of well-known query parameters using the CRTP.
+ * Defines well-known request headers using the CRTP.
  *
  * @tparam P the type we will use to represent the query parameter.
  * @tparam T the C++ type of the query parameter
@@ -60,7 +60,7 @@ struct ContentEncoding
 };
 
 /**
- * Define the `fields` parameter.
+ * Defines the `fields` query parameter.
  *
  * The `fields` parameter can be used to limit the fields returned by a request,
  * saving bandwidth and possibly improving performance for applications that do

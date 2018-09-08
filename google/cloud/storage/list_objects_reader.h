@@ -26,7 +26,7 @@ inline namespace STORAGE_CLIENT_NS {
 class ListObjectsReader;
 
 /**
- * A class meeting C++'s InputIterator requirements for listing objects.
+ * Implements a C++ iterator for listing objects.
  */
 class ListObjectsIterator {
  public:
@@ -80,6 +80,9 @@ class ListObjectsIterator {
   google::cloud::internal::optional<ObjectMetadata> value_;
 };
 
+/**
+ * Represents the result of listing a set of Objects.
+ */
 class ListObjectsReader {
  public:
   template <typename... Parameters>
@@ -118,7 +121,7 @@ class ListObjectsReader {
  private:
   friend class ListObjectsIterator;
   /**
-   * Fetch (or return if already fetched) the next object from the stream.
+   * Fetches (or returns if already fetched) the next object from the stream.
    *
    * @return an unset optional if there are no more objects in the stream.
    */

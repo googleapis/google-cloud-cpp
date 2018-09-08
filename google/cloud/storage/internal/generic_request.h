@@ -31,7 +31,7 @@ template <typename Derived, typename Option, typename... Options>
 class GenericRequestBase;
 
 /**
- * Refactor common functions that manipulate list of parameters in a request.
+ * Refactors common functions that manipulate list of parameters in a request.
  *
  * This class is used in the implementation of `RequestParameters`, it is the
  * base class for a hierarchy of `GenericRequestBase<Parameters...>` when the
@@ -71,7 +71,7 @@ class GenericRequestBase<Derived, Option> {
 };
 
 /**
- * Refactor common functions that manipulate list of parameters in a request.
+ * Refactors common functions that manipulate list of parameters in a request.
  *
  * This class is used in the implementation of `RequestParameters` see below for
  * more details.
@@ -114,7 +114,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
 };
 
 /**
- * Refactor common functions to operate on optional request parameters.
+ * Refactors common functions to operate on optional request parameters.
  *
  * Each operation in the client library has its own `*Request` class, and each
  * of these classes needs to define functions to change the optional parameters

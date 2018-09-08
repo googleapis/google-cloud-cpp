@@ -26,7 +26,7 @@ inline namespace STORAGE_CLIENT_NS {
 class ListBucketsReader;
 
 /**
- * A class meeting C++'s InputIterator requirements for listing buckets.
+ * Implements a C++ iterator for listing buckets.
  */
 class ListBucketsIterator {
  public:
@@ -80,6 +80,9 @@ class ListBucketsIterator {
   google::cloud::internal::optional<BucketMetadata> value_;
 };
 
+/**
+ * Represents the result of listing a set of Buckets.
+ */
 class ListBucketsReader {
  public:
   template <typename... Parameters>
@@ -97,7 +100,7 @@ class ListBucketsReader {
   using iterator = ListBucketsIterator;
 
   /**
-   * Return an iterator over the list of buckets.
+   * Returns an iterator over the list of buckets.
    *
    * The returned iterator is a single-pass input iterator that reads bucket
    * metadata from the BucketListReader when incremented.
@@ -112,13 +115,13 @@ class ListBucketsReader {
    */
   iterator begin();
 
-  /// Return an iterator pointing to the end of the stream.
+  /// Returns an iterator pointing to the end of the stream.
   iterator end() { return ListBucketsIterator(); }
 
  private:
   friend class ListBucketsIterator;
   /**
-   * Fetch (or return if already fetched) the next bucket from the stream.
+   * Fetches (or returns if already fetched) the next bucket from the stream.
    *
    * @return an unset optional if there are no more buckets in the stream.
    */

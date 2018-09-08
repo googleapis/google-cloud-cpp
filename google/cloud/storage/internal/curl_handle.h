@@ -24,7 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * A wrapper around CURL* handles.
+ * Wraps CURL* handles in a safer C++ interface.
  *
  * This is a fairly straightforward wrapper around the CURL* handle. It provides
  * nicer C++-style API for the curl_*() functions, and some helpers to ease
@@ -87,7 +87,7 @@ class CurlHandle {
       char* contents, std::size_t size, std::size_t nitems)>;
 
   /**
-   * Set the reader callback.
+   * Sets the reader callback.
    *
    * @param callback this function must remain valid until either
    *     `ResetReaderCallback` returns, or this object is destroyed.
@@ -96,7 +96,7 @@ class CurlHandle {
    */
   void SetReaderCallback(ReaderCallback callback);
 
-  /// Reset the reader callback.
+  /// Resets the reader callback.
   void ResetReaderCallback();
 
   /**
@@ -109,11 +109,11 @@ class CurlHandle {
    */
   void SetWriterCallback(WriterCallback callback);
 
-  /// Reset the reader callback.
+  /// Resets the reader callback.
   void ResetWriterCallback();
 
   /**
-   * Set the header callback.
+   * Sets the header callback.
    *
    * @param callback this function must remain valid until either
    *    `ResetHeaderCallback` returns, or this object is destroyed
@@ -122,10 +122,10 @@ class CurlHandle {
    */
   void SetHeaderCallback(HeaderCallback callback);
 
-  /// Reset the reader callback.
+  /// Resets the reader callback.
   void ResetHeaderCallback();
 
-  /// URL-escape a string.
+  /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
     return CurlString(
         curl_easy_escape(handle_.get(), s.data(), static_cast<int>(s.length())),
@@ -167,7 +167,7 @@ class CurlHandle {
 
   void EnableLogging(bool enabled);
 
-  /// Flush any debug data using GCP_LOG().
+  /// Flushes any debug data using GCP_LOG().
   void FlushDebug(char const* where);
 
  private:

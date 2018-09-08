@@ -24,7 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Format a block of data for debug printing.
+ * Formats a block of data for debug printing.
  *
  * Takes a block of data, possible with non-printable characters and creates
  * a string with two columns.  The first column is 24 characters wide and has
