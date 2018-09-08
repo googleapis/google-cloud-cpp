@@ -126,6 +126,44 @@ std::ostream& operator<<(std::ostream& os,
                          InsertObjectStreamingRequest const& r);
 
 /**
+ * Represents a request to the `Objects: copy` API.
+ */
+class CopyObjectRequest
+    : public GenericRequest<
+          CopyObjectRequest, DestinationPredefinedAcl, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          IfSourceGenerationMatch, IfSourceGenerationNotMatch,
+          IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
+          Projection, SourceGeneration, UserProject> {
+ public:
+  CopyObjectRequest() = default;
+  CopyObjectRequest(std::string source_bucket, std::string source_object,
+                    std::string destination_bucket,
+                    std::string destination_object,
+                    ObjectMetadata const& metadata)
+      : source_bucket_(std::move(source_bucket)),
+        source_object_(std::move(source_object)),
+        destination_bucket_(std::move(destination_bucket)),
+        destination_object_(std::move(destination_object)),
+        json_payload_(metadata.JsonPayloadForCopy()) {}
+
+  std::string const& source_bucket() const { return source_bucket_; }
+  std::string const& source_object() const { return source_object_; }
+  std::string const& destination_bucket() const { return destination_bucket_; }
+  std::string const& destination_object() const { return destination_object_; }
+  std::string const& json_payload() const { return json_payload_; }
+
+ private:
+  std::string source_bucket_;
+  std::string source_object_;
+  std::string destination_bucket_;
+  std::string destination_object_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
+
+/**
  * Represents a request to the `Objects: get` API with `alt=media`.
  */
 class ReadObjectRangeRequest

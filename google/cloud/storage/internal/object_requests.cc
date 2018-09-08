@@ -75,6 +75,15 @@ std::ostream& operator<<(std::ostream& os,
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
+  os << "CopyObjectRequest={destination_bucket=" << r.destination_bucket()
+     << ", destination_object=" << r.destination_object()
+     << ", source_bucket=" << r.source_bucket()
+     << ", source_object=" << r.source_object();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", begin=" << r.begin()
