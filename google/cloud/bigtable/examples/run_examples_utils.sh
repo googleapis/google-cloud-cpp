@@ -173,6 +173,7 @@ function run_all_table_admin_examples {
   run_example ./bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./bigtable_samples wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./bigtable_samples check-consistency "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"

@@ -203,6 +203,9 @@ class TableAdmin {
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet bigtable_samples.cc check consistency
    */
   bool CheckConsistency(bigtable::TableId const& table_id,
                         bigtable::ConsistencyToken const& consistency_token);
