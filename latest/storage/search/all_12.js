@@ -60,6 +60,7 @@ var searchData=
   ['sha256',['sha256',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a6151c273153473b834590873b9afcf6a',1,'google::cloud::storage::v0::EncryptionKeyData']]],
   ['size',['size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa3bc2d054c4f030bcbe4a781f4271925',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['sourceencryptionkey',['SourceEncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html',1,'google::cloud::storage::v0']]],
+  ['sourcegeneration',['SourceGeneration',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceGeneration.html',1,'google::cloud::storage::v0']]],
   ['standard',['Standard',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a1081cb6e857d3069bf270600a592998d',1,'google::cloud::storage::v0::storage_class']]],
   ['status',['Status',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html',1,'google::cloud::storage::v0::Status'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#aea06085f90a913947b63f79ccb3a0dc9',1,'google::cloud::storage::v0::Status::Status()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#ae56f51130ba11338dd74df2fd4d017b4',1,'google::cloud::storage::v0::Status::Status(long status_code, std::string error_message)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a8147d56f93efa5a4034ce67bbcb00998',1,'google::cloud::storage::v0::Status::Status(long status_code, std::string error_message, std::string error_details)']]],
   ['status_2eh',['status.h',['../status_8h.html',1,'']]],

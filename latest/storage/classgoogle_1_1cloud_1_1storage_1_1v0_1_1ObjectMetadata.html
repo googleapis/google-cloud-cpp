@@ -86,6 +86,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d1cbb5fea5504306112135c8a1ac10f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a0d1cbb5fea5504306112135c8a1ac10f">JsonPayloadForUpdate</a> () const</td></tr>
 <tr class="memdesc:a0d1cbb5fea5504306112135c8a1ac10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the payload for a call to <code>Objects: update</code>.  <a href="#a0d1cbb5fea5504306112135c8a1ac10f">More...</a><br /></td></tr>
 <tr class="separator:a0d1cbb5fea5504306112135c8a1ac10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c8f856d25e4103e2a3ca24943592eca"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a6c8f856d25e4103e2a3ca24943592eca">JsonPayloadForCopy</a> () const</td></tr>
+<tr class="memdesc:a6c8f856d25e4103e2a3ca24943592eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the payload for a call to <code>Objects: copy</code>.  <a href="#a6c8f856d25e4103e2a3ca24943592eca">More...</a><br /></td></tr>
+<tr class="separator:a6c8f856d25e4103e2a3ca24943592eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45d2ede154740321b656889b2d741a79"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a45d2ede154740321b656889b2d741a79">acl</a> () const</td></tr>
 <tr class="separator:a45d2ede154740321b656889b2d741a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd732268b8ef32c067c551312a650079"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#abd732268b8ef32c067c551312a650079">mutable_acl</a> ()</td></tr>
@@ -550,6 +553,26 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6c8f856d25e4103e2a3ca24943592eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c8f856d25e4103e2a3ca24943592eca">&#9670;&nbsp;</a></span>JsonPayloadForCopy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage::v0::ObjectMetadata::JsonPayloadForCopy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the payload for a call to <code>Objects: copy</code>. </p>
+<p>The <code>Objects: copy</code> API only accepts a subset of the writeable fields in the object resource. This function selects the relevant fields and formats them as a JSON string. </p>
 
 </div>
 </div>
