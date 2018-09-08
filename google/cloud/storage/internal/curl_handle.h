@@ -100,7 +100,7 @@ class CurlHandle {
   void ResetReaderCallback();
 
   /**
-   * Set the writer callback.
+   * Sets the writer callback.
    *
    * @param callback this function must remain valid until either
    *     `ResetWriterCallback` returns, or this object is destroyed.
