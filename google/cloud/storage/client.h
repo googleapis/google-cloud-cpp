@@ -538,15 +538,15 @@ class Client {
    *
    * @param bucket_name the name of the bucket used for source object and
    *     destination object.
-   * @param destination_object_name the composed object name.
    * @param source_objects objects used to compose `destination_object_name`.
+   * @param destination_object_name the composed object name.
    * @param destination_object_metadata the new metadata for the Object. Only
    *     the writeable fields accepted by the `Objects: compose` API are used,
    *     all other fields are ignored.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
-   *      `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *      `IfMetagenerationMatch`, `DestinationPredefinedAcl`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
+   *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
    *      `SourceEncryptionKey`, `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.
@@ -559,12 +559,14 @@ class Client {
    */
   template <typename... Options>
   ObjectMetadata ComposeObject(
-      std::string bucket_name, std::string destination_object_name,
+      std::string bucket_name,
       std::vector<ComposeSourceObject> const& source_objects,
+      std::string destination_object_name,
       ObjectMetadata destination_object_metadata, Options&&... options) {
     internal::ComposeObjectRequest request(
-        std::move(bucket_name), std::move(destination_object_name),
-        source_objects, std::move(destination_object_metadata));
+        std::move(bucket_name), source_objects,
+        std::move(destination_object_name),
+        std::move(destination_object_metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->ComposeObject(request).second;
   }

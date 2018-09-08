@@ -169,8 +169,9 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
 }
 
 ComposeObjectRequest::ComposeObjectRequest(
-    std::string bucket_name, std::string destination_object_name,
+    std::string bucket_name,
     std::vector<ComposeSourceObject> const& source_objects,
+    std::string destination_object_name,
     ObjectMetadata destination_object_metadata)
     : GenericObjectRequest(std::move(bucket_name),
                            std::move(destination_object_name)),

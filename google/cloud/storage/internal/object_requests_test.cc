@@ -583,7 +583,7 @@ TEST(ComposeObjectRequestTest, SimpleCompose) {
   object2.if_generation_match.emplace(2L);
   std::vector<ComposeSourceObject> source_objects = {object1, object2};
 
-  ComposeObjectRequest request("test-bucket", "test-object", source_objects,
+  ComposeObjectRequest request("test-bucket", source_objects, "test-object",
                                ObjectMetadata());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());

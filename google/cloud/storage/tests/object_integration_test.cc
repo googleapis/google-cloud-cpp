@@ -591,7 +591,7 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
   ObjectMetadata composed_meta =
-      client.ComposeObject(bucket_name, composed_object_name, source_objects,
+      client.ComposeObject(bucket_name, source_objects, composed_object_name,
                            ObjectMetadata().set_content_type("plain/text"));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
@@ -622,7 +622,7 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
   ObjectMetadata composed_meta =
-      client.ComposeObject(bucket_name, composed_object_name, source_objects,
+      client.ComposeObject(bucket_name, source_objects, composed_object_name,
                            ObjectMetadata().set_content_type("plain/text"),
                            SourceEncryptionKey(key), EncryptionKey(key));
 

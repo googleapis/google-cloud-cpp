@@ -390,8 +390,8 @@ TEST_F(ObjectTest, ComposeObject) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual =
-      client.ComposeObject("test-bucket-name", "test-object-name",
-                           {{"object1"}, {"object2"}}, ObjectMetadata());
+      client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                           "test-object-name", ObjectMetadata());
   EXPECT_EQ(expected, actual);
 }
 
@@ -399,8 +399,8 @@ TEST_F(ObjectTest, ComposeObjectTooManyFailures) {
   testing::TooManyFailuresTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
-        client.ComposeObject("test-bucket-name", "test-object-name",
-                             {{"object1"}, {"object2"}}, ObjectMetadata());
+        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                             "test-object-name", ObjectMetadata());
       },
       "ComposeObject");
 }
@@ -409,8 +409,8 @@ TEST_F(ObjectTest, ComposeObjectPermanentFailure) {
   testing::PermanentFailureTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
-        client.ComposeObject("test-bucket-name", "test-object-name",
-                             {{"object1"}, {"object2"}}, ObjectMetadata());
+        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                             "test-object-name", ObjectMetadata());
       },
       "ComposeObject");
 }

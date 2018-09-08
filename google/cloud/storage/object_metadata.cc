@@ -35,6 +35,7 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
   json[key] = value;
 }
 }  // namespace
+
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
   os << "ComposeSourceObject={bucket_name=" << r.object_name;
   if (r.generation.has_value()) {
