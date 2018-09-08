@@ -299,9 +299,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
   } else {
     std::cout << "Table is not consistent" << std::endl;
   }
-  std::cout << std::flush;
 }
-
 //! [wait for consistency check]
 
 //! [sample row keys]
