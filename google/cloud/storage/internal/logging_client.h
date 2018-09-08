@@ -23,7 +23,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * A decorator for `storage::Client` that retries operations using policies.
+ * A decorator for `RawClient` that logs each operation.
  */
 class LoggingClient : public RawClient {
  public:

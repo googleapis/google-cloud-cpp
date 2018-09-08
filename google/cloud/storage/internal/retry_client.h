@@ -24,7 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * A decorator for `storage::Client` that retries operations using policies.
+ * Decorates a `RawClient` to retry each operation.
  */
 class RetryClient : public RawClient {
  public:

@@ -23,7 +23,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Represents the metadata for a Google Cloud Storage Object.
+ * Represents the metadata for a Google Cloud Storage service account.
  */
 class ServiceAccount {
  public:

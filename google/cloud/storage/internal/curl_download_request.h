@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Make streaming download requests using libcurl.
+ * Makes streaming download requests using libcurl.
  *
  * This class manages the resources and workflow to make requests where the
  * payload is streamed, and the total size is not known. Under the hood this
@@ -81,7 +81,7 @@ class CurlDownloadRequest {
   HttpResponse Close();
 
   /**
-   * Wait for additional data or the end of the transfer.
+   * Waits for additional data or the end of the transfer.
    *
    * This operation blocks until `initial_buffer_size` data has been received or
    * the transfer is completed.

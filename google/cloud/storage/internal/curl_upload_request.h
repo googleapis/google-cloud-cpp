@@ -26,7 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Make streaming upload requests using libcurl.
+ * Makes streaming upload requests using libcurl.
  *
  * This class manages the resources and workflow to make requests where the
  * payload is streamed, and the total size is not known. Under the hood this
@@ -80,14 +80,14 @@ class CurlUploadRequest {
 
   bool IsOpen() const { return not closing_; }
 
-  /// Block until the current buffer has been transferred.
+  /// Blocks until the current buffer has been transferred.
   void Flush();
 
-  /// Close the transfer and wait for the server's response.
+  /// Closes the transfer and wait for the server's response.
   HttpResponse Close();
 
   /**
-   * Flush the current buffer and swap the current buffer with @p next_buffer.
+   * Flushes the current buffer and swap the current buffer with @p next_buffer.
    *
    * Swapping the buffer permits double buffering in users of this class, and
    * avoid copies between the layers of abstraction.
@@ -96,16 +96,16 @@ class CurlUploadRequest {
 
  private:
   friend class CurlRequestBuilder;
-  /// Set the underlying CurlHandle options initially.
+  /// Sets the underlying CurlHandle options initially.
   void SetOptions();
 
-  /// Reset the underlying CurlHandle options after a move operation.
+  /// Resets the underlying CurlHandle options after a move operation.
   void ResetOptions();
 
-  /// Called by libcurl to transfer some of the data out of the internal buffer.
+  /// Transfers the data out of libcurl internal buffer.
   std::size_t ReadCallback(char* ptr, std::size_t size, std::size_t nmemb);
 
-  /// Wait until a condition is met.
+  /// Waits until a condition is met.
   template <typename Predicate>
   void Wait(Predicate&& predicate) {
     // We can assert that the current thread is the leader, because the
@@ -130,16 +130,16 @@ class CurlUploadRequest {
     }
   }
 
-  /// Use libcurl to perform at least part of the transfer.
+  /// Uses libcurl to perform at least part of the transfer.
   int PerformWork();
 
-  /// Use libcurl to wait until the underlying data can perform work.
+  /// Uses libcurl to wait until the underlying data can perform work.
   void WaitForHandles();
 
-  /// Simplify handling of errors in the curl_multi_* API.
+  /// Simplifies handling of errors in the curl_multi_* API.
   void RaiseOnError(char const* where, CURLMcode result);
 
-  /// Raise an exception if the application tries to use a closed request.
+  /// Raises an exception if the application tries to use a closed request.
   void ValidateOpen(char const* where);
 
   std::string url_;

@@ -33,29 +33,29 @@ inline namespace STORAGE_CLIENT_NS {
 class Client {
  public:
   /**
-   * Create the default client type given the options.
+   * Creates the default client type given the options.
    */
   explicit Client(ClientOptions options);
 
   /**
-   * Create the default client type with the default configuration.
+   * Creates the default client type with the default configuration.
    */
   explicit Client() : Client(ClientOptions()) {}
 
   /**
-   * Create the default client type given the credentials.
+   * Creates the default client type given the credentials.
    */
   explicit Client(std::shared_ptr<Credentials> credentials)
       : Client(ClientOptions(std::move(credentials))) {}
 
-  /// Build a client and maybe override the retry and/or backoff policies.
+  /// Builds a client and maybe override the retry and/or backoff policies.
   template <typename... Policies>
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
       : raw_client_(
             Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
 
-  /// Build a client with an specific RawClient, without decorations.
+  /// Builds a client with an specific RawClient, without decorations.
   struct NoDecorations {};
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
@@ -65,7 +65,7 @@ class Client {
   }
 
   /**
-   * Fetch the list of buckets for a given project.
+   * Fetches the list of buckets for a given project.
    *
    * @param project_id the project to query.
    * @param options a list of optional query parameters and/or request headers.
@@ -85,7 +85,7 @@ class Client {
   }
 
   /**
-   * Fetch the list of buckets for the default project.
+   * Fetches the list of buckets for the default project.
    *
    * The default project is configured in the `ClientOptions` used to construct
    * this object. If the application does not set the project id in the
@@ -173,7 +173,7 @@ class Client {
   }
 
   /**
-   * Fetch the bucket metadata and return it.
+   * Fetches the bucket metadata.
    *
    * @param bucket_name query metadata information about this bucket.
    * @param options a list of optional query parameters and/or request headers.
@@ -241,7 +241,7 @@ class Client {
   }
 
   /**
-   * Patch the metadata in a Google Cloud Storage Bucket.
+   * Patches the metadata in a Google Cloud Storage Bucket.
    *
    * This function creates a patch request to change the writeable attributes in
    * @p original to the values in @p updated.  Non-writeable attributes are
@@ -274,7 +274,7 @@ class Client {
   }
 
   /**
-   * Patch the metadata in a Google Cloud Storage Bucket.
+   * Patches the metadata in a Google Cloud Storage Bucket.
    *
    * This function creates a patch request based on the given @p builder.
    *
@@ -300,7 +300,7 @@ class Client {
   }
 
   /**
-   * Create an object given its name and media (contents).
+   * Creates an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
@@ -326,7 +326,7 @@ class Client {
   }
 
   /**
-   * Fetch the object metadata and return it.
+   * Fetches the object metadata.
    *
    * @param bucket_name the bucket containing the object.
    * @param object_name the object name.
@@ -352,7 +352,7 @@ class Client {
   }
 
   /**
-   * List the objects in a bucket.
+   * Lists the objects in a bucket.
    *
    * @param bucket_name the name of the bucket to list.
    * @param options a list of optional query parameters and/or request headers.
@@ -374,7 +374,7 @@ class Client {
   }
 
   /**
-   * Read the contents of an object.
+   * Reads the contents of an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -396,7 +396,7 @@ class Client {
   }
 
   /**
-   * Write contents into an object.
+   * Writes contents into an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -415,7 +415,7 @@ class Client {
   }
 
   /**
-   * Delete an object.
+   * Deletes an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
@@ -465,7 +465,7 @@ class Client {
   }
 
   /**
-   * Patch the metadata in a Google Cloud Storage Object.
+   * Patches the metadata in a Google Cloud Storage Object.
    *
    * This function creates a patch request to change the writeable attributes in
    * @p original to the values in @p updated.  Non-writeable attributes are
@@ -501,7 +501,7 @@ class Client {
   }
 
   /**
-   * Patch the metadata in a Google Cloud Storage Object.
+   * Patches the metadata in a Google Cloud Storage Object.
    *
    * This function creates a patch request based on the given @p builder.
    * Typically this function is used when the application needs to set an
@@ -611,7 +611,7 @@ class Client {
   }
 
   /**
-   * Update the value of an existing bucket ACL.
+   * Updates the value of an existing bucket ACL.
    *
    * @param bucket_name the name of the bucket.
    * @param acl the new ACL value. Note that only the writable values of the ACL
@@ -636,7 +636,7 @@ class Client {
   }
 
   /**
-   * Patch the value of an existing bucket ACL.
+   * Patches the value of an existing bucket ACL.
    *
    * Computes the delta between a previous value for an BucketAccessControl and
    * the new value for an BucketAccessControl and apply that delta.
@@ -677,7 +677,7 @@ class Client {
   }
 
   /**
-   * Patch the value of an existing bucket ACL.
+   * Patches the value of an existing bucket ACL.
    *
    * This API allows the application to patch an BucketAccessControl without
    * having to read the current value.
@@ -714,7 +714,7 @@ class Client {
   }
 
   /**
-   * Retrieve the list of ObjectAccessControls for an object.
+   * Retrieves the list of ObjectAccessControls for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
@@ -734,7 +734,7 @@ class Client {
   }
 
   /**
-   * Create a new entry in the object ACL.
+   * Creates a new entry in the object ACL.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
@@ -759,7 +759,7 @@ class Client {
   }
 
   /**
-   * Delete one access control entry in one object.
+   * Deletes one access control entry in one object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
@@ -781,7 +781,7 @@ class Client {
   }
 
   /**
-   * Get the value of an existing object ACL.
+   * Gets the value of an existing object ACL.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
@@ -803,7 +803,7 @@ class Client {
   }
 
   /**
-   * Update the value of an existing object ACL.
+   * Updates the value of an existing object ACL.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
@@ -830,7 +830,7 @@ class Client {
   }
 
   /**
-   * Patch the value of an existing object ACL.
+   * Patches the value of an existing object ACL.
    *
    * Compute the delta between a previous value for an ObjectAccessControl and
    * the new value for an ObjectAccessControl and apply that delta.
@@ -873,7 +873,7 @@ class Client {
   }
 
   /**
-   * Patch the value of an existing object ACL.
+   * Patches the value of an existing object ACL.
    *
    * This API allows the application to patch an ObjectAccessControl without
    * having to read the current value.
@@ -1121,7 +1121,7 @@ class Client {
   }
 
   /**
-   * Get the GCS service account for a given project.
+   * Gets the GCS service account for a given project.
    *
    * A service account is a special Google account that belongs to your
    * application, virtual machine, or to a Google service when acting on your
@@ -1149,7 +1149,7 @@ class Client {
   }
 
   /**
-   * Get the GCS service account for the default project.
+   * Gets the GCS service account for the default project.
    *
    * A service account is a special Google account that belongs to your
    * application, virtual machine, or to a Google service when acting on your

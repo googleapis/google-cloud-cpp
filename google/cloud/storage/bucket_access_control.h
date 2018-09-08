@@ -23,11 +23,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * A wrapper for the bucketAccessControl resource in Google Cloud Storage.
+ * Wraps the bucketAccessControl resource in Google Cloud Storage.
+ *
+ * bucketAccessControl describes the access to a bucket for a single entity,
+ * where the entity might be a user, group, or other role.
  *
  * @see
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls for
- * an authoritative source of field definitions.
+ *     an authoritative source of field definitions.
  */
 class BucketAccessControl : private internal::AccessControlCommon {
  public:
@@ -78,7 +81,7 @@ class BucketAccessControl : private internal::AccessControlCommon {
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);
 
 /**
- * Prepare a patch for a BucketAccessControl resource.
+ * Prepares a patch for a BucketAccessControl resource.
  *
  * The BucketAccessControl resource only has two modifiable fields: entity
  * and role. This class allows application developers to setup a PATCH message,

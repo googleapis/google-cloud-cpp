@@ -24,7 +24,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Wrap the status code and message returned by the underlying transport.
+ * Reports error code and details from a remote request.
  *
  * This class is modeled after `grpc::Status`, it contains the status code and
  * error message (if applicable) from a JSON request.

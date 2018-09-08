@@ -60,7 +60,7 @@ inline bool operator>=(Owner const& lhs, Owner const& rhs) {
 
 namespace internal {
 /**
- * Refactor common functionality in BucketMetadata and ObjectMetadata.
+ * Defines common attributes to both `BucketMetadata` and `ObjectMetadata`.
  *
  * @tparam Derived a class derived from CommonMetadata<Derived>. This class uses
  *     the Curiously recurring template pattern.

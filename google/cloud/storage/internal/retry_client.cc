@@ -46,7 +46,7 @@ namespace {
 using raw_client_wrapper_utils::CheckSignature;
 
 /**
- * Call a client operation with retries borrowing the RPC policies.
+ * Calls a client operation with retries borrowing the RPC policies.
  *
  * @tparam MemberFunction the signature of the member function.
  * @param client the storage::Client object to make the call through.

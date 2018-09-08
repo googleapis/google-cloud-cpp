@@ -26,7 +26,7 @@ namespace cloud {
 namespace storage {
 namespace testing {
 /**
- * A generic test function for the "too many failures" case.
+ * Tests the "too many failures" case for a `Client::*` member function.
  *
  * We need to verify that each API in the client library handles "too many
  * errors" correctly. The tests are quite repetitive, and all have the same
@@ -88,7 +88,7 @@ void TooManyFailuresTest(std::shared_ptr<testing::MockClient> mock,
 }
 
 /**
- * A generic test function for the "permanent failure" case.
+ * Tests the "permanent failure" case for a `Client::*` member function.
  *
  * We need to verify that each API in the client library handles permanent
  * failures correctly. The tests are quite repetitive, and all have the same

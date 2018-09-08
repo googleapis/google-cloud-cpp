@@ -24,14 +24,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Base class for the credential objects.
+ * Represents a credential to access Google Cloud Storage.
  */
 class Credentials {
  public:
   virtual ~Credentials() = default;
 
   /**
-   * Return the value for the Authorization header in HTTP requests.
+   * Returns the value for the Authorization header in HTTP requests.
    */
   virtual std::string AuthorizationHeader() = 0;
 };
@@ -39,7 +39,7 @@ class Credentials {
 std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
 /**
- * Credentials to access Google Cloud Storage anonymously.
+ * Defines credentials to access Google Cloud Storage anonymously.
  *
  * This is only useful in two cases: (a) in testing, where you want to access
  * a test bench without having to worry about authentication or SSL setup, and

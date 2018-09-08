@@ -27,7 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Request the list of buckets for a project.
+ * Requests the list of buckets for a project.
  */
 class ListBucketsRequest
     : public GenericRequest<ListBucketsRequest, MaxResults, Prefix, Projection,
@@ -61,7 +61,7 @@ struct ListBucketsResponse {
 std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r);
 
 /**
- * Request the metadata for a bucket.
+ * Requests the metadata for a bucket.
  */
 class GetBucketMetadataRequest
     : public GenericRequest<GetBucketMetadataRequest, IfMetagenerationMatch,

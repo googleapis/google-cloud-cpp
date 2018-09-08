@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Request the metadata for a bucket.
+ * Requests the Google Cloud Storage service account for a project.
  */
 class GetProjectServiceAccountRequest
     : public GenericRequest<GetProjectServiceAccountRequest, UserProject> {

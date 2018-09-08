@@ -25,7 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Implement the Factory Pattern for CURL handles (and multi-handles).
+ * Implements the Factory Pattern for CURL handles (and multi-handles).
  */
 class CurlHandleFactory {
  public:
@@ -41,9 +41,11 @@ class CurlHandleFactory {
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 
 /**
- * The default CurlHandleFactory: always init and cleanup.
+ * Implements the default CurlHandleFactory.
  *
- * This implementation of the CurlHandleFactory does not
+ * This implementation of the CurlHandleFactory does not save handles, it
+ * creates a new handle on each call to `CreateHandle()` and releases the
+ * handle on `CleanupHandle()`.
  */
 class DefaultCurlHandleFactory : public CurlHandleFactory {
  public:
@@ -57,9 +59,10 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 };
 
 /**
- * The default CurlHandleFactory: always init and cleanup.
+ * Implements a CurlHandleFactory that pools handles.
  *
- * This implementation of the CurlHandleFactory does not
+ * This implementation keeps up to N handles in memory, they are only released
+ * when the factory is destructed.
  */
 class PooledCurlHandleFactory : public CurlHandleFactory {
  public:

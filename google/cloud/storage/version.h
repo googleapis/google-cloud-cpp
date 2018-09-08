@@ -23,11 +23,11 @@
   GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
                          STORAGE_CLIENT_VERSION_MINOR)
 
+namespace google {
+namespace cloud {
 /**
  * Contains all the Google Cloud Storage C++ client APIs.
  */
-namespace google {
-namespace cloud {
 namespace storage {
 /**
  * The Google Cloud Storage C++ client APIs inlined, versioned namespace.
@@ -43,32 +43,32 @@ namespace storage {
  */
 inline namespace STORAGE_CLIENT_NS {
 /**
- * The Google Cloud Storage C++ Client major version.
+ * Returns the Google Cloud Storage C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_major() { return STORAGE_CLIENT_VERSION_MAJOR; }
 
 /**
- * The Google Cloud Storage C++ Client minor version.
+ * Returns the Google Cloud Storage C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_minor() { return STORAGE_CLIENT_VERSION_MINOR; }
 
 /**
- * The Google Cloud Storage C++ Client patch version.
+ * Returns the Google Cloud Storage C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
 
-/// A single integer representing the Major/Minor/Patch version.
+/// Returns a single integer representing the Major/Minor/Patch version.
 int constexpr version() {
   return 100 * (100 * version_major() + version_minor()) + version_patch();
 }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
 }  // namespace STORAGE_CLIENT_NS

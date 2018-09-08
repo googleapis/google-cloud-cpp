@@ -25,7 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * A simple representation for the projectTeam field in *AcccessControls.
+ * Represents the projectTeam field in *AcccessControls.
  *
  * @see
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
@@ -64,7 +64,7 @@ inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
 
 namespace internal {
 /**
- * Refactor common code to both BucketAccessControl and ObjectAccessControl.
+ * Defines common code to both `BucketAccessControl` and `ObjectAccessControl`.
  *
  * @see
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls

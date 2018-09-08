@@ -22,7 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 /**
- * Set a string field in @p json when @p value is not empty.
+ * Sets a string field in @p json when @p value is not empty.
  *
  * This simplifies the implementation of ToJsonString() because we repeat this
  * check for many attributes.

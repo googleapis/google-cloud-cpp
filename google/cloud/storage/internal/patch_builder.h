@@ -28,7 +28,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
- * Prepare a patch for the '<Resource Type>: patch' APIs in Google Cloud
+ * Prepares a patch for the '<Resource Type>: patch' APIs in Google Cloud
  * Storage.
  *
  * There are multiple APIs in Google Cloud Storage that receive patches. The
@@ -95,7 +95,7 @@ class PatchBuilder {
   }
 
   /**
-   * Add a patch for a field of type @p T represented by C++ optionals.
+   * Adds a patch for a field of type @p T represented by C++ optionals.
    *
    * @tparam T the type of the field, typically `std::string`, `bool`, or some
    *     integral type.
@@ -119,7 +119,7 @@ class PatchBuilder {
   }
 
   /**
-   * Add a patch for a array fields.
+   * Adds a patch for a array fields.
    *
    * @tparam T the type of the field, typically `std::string`, `bool`, or
    *     some integral type.

@@ -27,7 +27,7 @@ namespace internal {
 class CurlRequestBuilder;
 
 /**
- * Implement storage::Client using the libcurl wrapppers.
+ * Implements the low-level RPCs to Google Cloud Storage using libcurl.
  *
  * TODO(#717) - document the CurlRequest interface as a concept.
  */

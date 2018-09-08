@@ -21,12 +21,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-/**
- * Define functions with the well-know storage classes.
- *
- * These functions are provided to avoid typos when setting or comparing storage
- * classes.
- */
+/// Contains functions to return well-known storage class names.
 namespace storage_class {
 inline char const* Standard() {
   static constexpr char kStorageClass[] = "STANDARD";

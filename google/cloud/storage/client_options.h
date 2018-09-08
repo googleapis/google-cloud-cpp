@@ -23,7 +23,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Control the configuration for a `storage::Client` object.
+ * Describes the configuration for a `storage::Client` object.
  *
  * By default read several environment variables to configure the client:
  *

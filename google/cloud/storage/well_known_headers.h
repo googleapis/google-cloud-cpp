@@ -29,7 +29,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Refactor definition of well-known request headers using the CRTP.
+ * Defines well-known request headers using the CRTP.
  *
  * @tparam H the type we will use to represent the header.
  * @tparam T the C++ type of the query parameter
@@ -78,7 +78,7 @@ struct EncryptionKeyData {
 };
 
 /**
- * Format a (potentially binary) encryption key in the format required by the
+ * Formats a (potentially binary) encryption key in the format required by the
  * Google Cloud Storage API.
  *
  * @param key a binary key, must have exactly 32 bytes.
@@ -86,7 +86,7 @@ struct EncryptionKeyData {
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key);
 
 /**
- * Format an encryption key in base64 format to the data structure required by
+ * Formats an encryption key in base64 format to the data structure required by
  * the Google Cloud Storage API.
  *
  * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
@@ -105,7 +105,7 @@ struct EncryptionKey
   static EncryptionKey FromBinaryKey(std::string const& key);
 
   /**
-   * Create an encryption key parameter from a key in base64 format.
+   * Creates an encryption key parameter from a key in base64 format.
    *
    * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
    */
@@ -122,14 +122,14 @@ struct SourceEncryptionKey
                         EncryptionKeyData>::WellKnownHeader;
 
   /**
-   * Create a source encryption key parameter from a binary key.
+   * Creates a source encryption key parameter from a binary key.
    *
    * @param key a binary key, must have exactly 32 bytes.
    */
   static SourceEncryptionKey FromBinaryKey(std::string const& key);
 
   /**
-   * Create an encryption key parameter from a key in base64 format.
+   * Creates an encryption key parameter from a key in base64 format.
    *
    * @param key a base64-encoded key, must have exactly 32 bytes when decoded.
    */
@@ -141,7 +141,7 @@ struct SourceEncryptionKey
 std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
 
 /**
- * Create an encryption key parameter from a pseudo-random number generator.
+ * Creates an encryption key parameter from a pseudo-random number generator.
  *
  * @tparam Generator the pseudo-random number generator type, it must meet the
  *   `UniformRandomBitGenerator` requirements.
