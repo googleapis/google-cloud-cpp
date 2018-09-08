@@ -74,6 +74,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Represents the result of listing a set of Buckets.  
+ <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="list__buckets__reader_8h_source.html">google/cloud/storage/list_buckets_reader.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -88,10 +91,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7bce9f9472b9073b76e197e86fa44f2c"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a7bce9f9472b9073b76e197e86fa44f2c">ListBucketsReader</a> (std::shared_ptr&lt; internal::RawClient &gt; client, std::string project_id, Parameters &amp;&amp;... parameters)</td></tr>
 <tr class="separator:a7bce9f9472b9073b76e197e86fa44f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bad7171015ee092d9a124b39139c167"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ab31328af451b194cb24b08844579daac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a6bad7171015ee092d9a124b39139c167">begin</a> ()</td></tr>
-<tr class="memdesc:a6bad7171015ee092d9a124b39139c167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an iterator over the list of buckets.  <a href="#a6bad7171015ee092d9a124b39139c167">More...</a><br /></td></tr>
+<tr class="memdesc:a6bad7171015ee092d9a124b39139c167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator over the list of buckets.  <a href="#a6bad7171015ee092d9a124b39139c167">More...</a><br /></td></tr>
 <tr class="separator:a6bad7171015ee092d9a124b39139c167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafeb095023c09d6ecfd720e3783f6c4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ab31328af451b194cb24b08844579daac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#aafeb095023c09d6ecfd720e3783f6c4a">end</a> ()</td></tr>
-<tr class="memdesc:aafeb095023c09d6ecfd720e3783f6c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an iterator pointing to the end of the stream.  <a href="#aafeb095023c09d6ecfd720e3783f6c4a">More...</a><br /></td></tr>
+<tr class="memdesc:aafeb095023c09d6ecfd720e3783f6c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator pointing to the end of the stream.  <a href="#aafeb095023c09d6ecfd720e3783f6c4a">More...</a><br /></td></tr>
 <tr class="separator:aafeb095023c09d6ecfd720e3783f6c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -99,7 +102,9 @@ Friends</h2></td></tr>
 <tr class="memitem:ae06e1a4082cb3a1b5538a39c1f4e5b24"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ae06e1a4082cb3a1b5538a39c1f4e5b24">ListBucketsIterator</a></td></tr>
 <tr class="separator:ae06e1a4082cb3a1b5538a39c1f4e5b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents the result of listing a set of Buckets. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="ab31328af451b194cb24b08844579daac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab31328af451b194cb24b08844579daac">&#9670;&nbsp;</a></span>iterator</h2>
 
@@ -177,7 +182,7 @@ template&lt;typename... Parameters&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Return an iterator over the list of buckets. </p>
+<p>Returns an iterator over the list of buckets. </p>
 <p>The returned iterator is a single-pass input iterator that reads bucket metadata from the BucketListReader when incremented.</p>
 <p>Creating, and particularly incrementing, multiple iterators on the same RowReader is unsupported and can produce incorrect results.</p>
 <p>Retry and backoff policies are honored.</p>
@@ -213,7 +218,7 @@ template&lt;typename... Parameters&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Return an iterator pointing to the end of the stream. </p>
+<p>Returns an iterator pointing to the end of the stream. </p>
 
 </div>
 </div>

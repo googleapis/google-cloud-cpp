@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Implement wrappers for Lifecycle Rule.  
+<p>Defines objects to read, create, and modify Object Lifecycle Rules.  
  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="lifecycle__rule_8h_source.html">google/cloud/storage/lifecycle_rule.h</a>&gt;</code></p>
@@ -107,9 +107,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a736fd7df90ebd29cb63d24b20b882e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a304a74b58658f9c5b8ac77cff82495"><td class="memTemplParams" colspan="2">template&lt;typename... Condition&gt; </td></tr>
 <tr class="memitem:a5a304a74b58658f9c5b8ac77cff82495"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495">ConditionConjunction</a> (Condition &amp;&amp;... <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f">condition</a>)</td></tr>
-<tr class="memdesc:a5a304a74b58658f9c5b8ac77cff82495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combine multiple <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html" title="Implement wrappers for Lifecycle Rule. ">LifecycleRule</a> conditions using conjunction.  <a href="#a5a304a74b58658f9c5b8ac77cff82495">More...</a><br /></td></tr>
+<tr class="memdesc:a5a304a74b58658f9c5b8ac77cff82495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines multiple <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html" title="Defines objects to read, create, and modify Object Lifecycle Rules. ">LifecycleRule</a> conditions using conjunction.  <a href="#a5a304a74b58658f9c5b8ac77cff82495">More...</a><br /></td></tr>
 <tr class="separator:a5a304a74b58658f9c5b8ac77cff82495"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Create different types of LifecycleRule actions.</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Creates different types of LifecycleRule actions.</div></td></tr>
 <tr class="memitem:a4158d50ef84091b3a8a74671628f2472"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html">LifecycleRuleAction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a4158d50ef84091b3a8a74671628f2472">Delete</a> ()</td></tr>
 <tr class="separator:a4158d50ef84091b3a8a74671628f2472"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a122209462b5d4b91a7e4dd71ac5ca2b8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html">LifecycleRuleAction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a122209462b5d4b91a7e4dd71ac5ca2b8">SetStorageClassStandard</a> ()</td></tr>
@@ -126,6 +126,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:abc90ab0b81977cea4eb5f2ee1a551e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9325344a3f1887f4c2e0442612b81d5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html">LifecycleRuleAction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ac9325344a3f1887f4c2e0442612b81d5">SetStorageClass</a> (std::string storage_class)</td></tr>
 <tr class="separator:ac9325344a3f1887f4c2e0442612b81d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Creates different types of LifecycleRule rules.</div></td></tr>
 <tr class="memitem:a93883230f52887e9aa84bcada3992c41"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a93883230f52887e9aa84bcada3992c41">MaxAge</a> (std::int32_t days)</td></tr>
 <tr class="separator:a93883230f52887e9aa84bcada3992c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a039d417bd85e9d6fde3486ad56690583"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a039d417bd85e9d6fde3486ad56690583">CreatedBefore</a> (std::string const &amp;timestamp)</td></tr>
@@ -157,7 +158,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a7aef17f40367ef52de7f3fc52f2efa19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implement wrappers for Lifecycle Rule. </p>
+<div class="textblock"><p>Defines objects to read, create, and modify Object Lifecycle Rules. </p>
+<p>Object Lifecycle Rules allow to configure a Bucket to automatically delete or change the storage class of objects as they go through lifecycle events.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/lifecycle">https://cloud.google.com/storage/docs/lifecycle</a> for general information on Object Lifecycle Management in Google Cloud Storage. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af9645e330d7b20ff0aa7a423b77f6601"></a>
@@ -273,7 +275,7 @@ template&lt;typename... Condition&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Combine multiple <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html" title="Implement wrappers for Lifecycle Rule. ">LifecycleRule</a> conditions using conjunction. </p>
+<p>Combines multiple <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html" title="Defines objects to read, create, and modify Object Lifecycle Rules. ">LifecycleRule</a> conditions using conjunction. </p>
 <p>Create a condition that require all the <code>condition</code> parameters to be met to take effect.</p>
 <dl class="section user"><dt>Example</dt><dd></dd></dl>
 <div class="fragment"><div class="line"><span class="comment">// Affect objects that are in the MULTI_REGIONAL storage class, have at</span></div><div class="line"><span class="comment">// least 2 new versions, are at least 7 days old, and are alive.</span></div><div class="line">LifecycleRuleCondition <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f">condition</a> = <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495">LifecycleRule::ConditionConjunction</a>(</div><div class="line">    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a7aef17f40367ef52de7f3fc52f2efa19">LifecycleRule::NumNewerVersions</a>(2),</div><div class="line">    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a7a87aa169d23c8523bd44f8010dd2a5f">LifecycleRule::MatchesStorageClassMultiRegional</a>(),</div><div class="line">    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a93883230f52887e9aa84bcada3992c41">LifecycleRule::MaxAge</a>(7), <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ab35f7e79a289ab9959fae5733c144e2e">LifecycleRule::IsLive</a>(<span class="keyword">true</span>));</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
