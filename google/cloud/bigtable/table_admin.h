@@ -292,6 +292,9 @@ class TableAdmin {
    * @return the information about the snapshot.
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
+   *
+   * @par Example
+   * @snippet bigtable_samples.cc get snapshot
    */
   google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
