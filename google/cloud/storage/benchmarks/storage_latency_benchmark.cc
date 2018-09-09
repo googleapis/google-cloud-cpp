@@ -72,11 +72,13 @@ struct Options {
   long object_count;
   int thread_count;
   bool enable_connection_pool;
+  bool enable_xml_api;
 
   Options()
       : duration(kDefaultDuration),
         object_count(kDefaultObjectCount),
-        enable_connection_pool(true) {
+        enable_connection_pool(true),
+        enable_xml_api(true) {
     thread_count = std::thread::hardware_concurrency();
     if (thread_count == 0) {
       thread_count = 1;
@@ -157,6 +159,7 @@ int main(int argc, char* argv[]) try {
             << "\n# Object Count: " << options.object_count
             << "\n# Thread Count: " << options.thread_count
             << "\n# Enable connection pool: " << options.enable_connection_pool
+            << "\n# Enable XML API: " << options.enable_xml_api
             << "\n# Build info: " << notes << std::endl;
 
   std::vector<std::string> object_names =
@@ -246,7 +249,12 @@ IterationResult WriteCommon(gcs::Client client, std::string const& bucket_name,
                             std::string const& random_data,
                             Options const& options, OpType op_type) {
   auto start = std::chrono::steady_clock::now();
-  (void)client.InsertObject(bucket_name, object_name, random_data);
+  if (options.enable_xml_api) {
+    (void)client.InsertObject(bucket_name, object_name, random_data,
+                              gcs::Fields(""));
+  } else {
+    (void)client.InsertObject(bucket_name, object_name, random_data);
+  }
   auto elapsed = std::chrono::steady_clock::now() - start;
   using std::chrono::milliseconds;
   return IterationResult{op_type, true,
@@ -275,7 +283,13 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
                          std::string const& object_name,
                          Options const& options) {
   auto start = std::chrono::steady_clock::now();
-  gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+  gcs::ObjectReadStream stream;
+  if (options.enable_xml_api) {
+    stream = client.ReadObject(bucket_name, object_name);
+  } else {
+    stream = client.ReadObject(bucket_name, object_name,
+                               gcs::IfGenerationNotMatch(0));
+  }
   std::size_t total_size = 0;
   while (not stream.eof()) {
     char buf[4096];
@@ -450,6 +464,7 @@ std::string Options::ConsumeArg(int& argc, char* argv[], char const* arg_name) {
   std::string const object_count = "--object-count=";
   std::string const thread_count = "--thread-count=";
   std::string const enable_connection_pool = "--enable-connection-pool=";
+  std::string const enable_xml_api = "--enable-xml-api=";
 
   std::string const usage = R""(
 [options] <region>
@@ -459,6 +474,7 @@ The options are:
     --object-count: the number of objects to use in the benchmark.
     --thread-count: the number of threads to use in the benchmark.
     --enable-connection-pool: reuse connections across requests.
+    --enable-xml-api: configure read+write operations to use XML API.
 
     region: a Google Cloud Storage region where all the objects used in this
        test will be located.
@@ -497,6 +513,16 @@ The options are:
         this->enable_connection_pool = false;
       } else {
         error = "Invalid enable-connection-pool argument (" + arg + ")";
+        break;
+      }
+    } else if (0 == argument.rfind(enable_xml_api, 0)) {
+      auto arg = argument.substr(enable_xml_api.size());
+      if (arg == "true" or arg == "yes" or arg == "1") {
+        this->enable_xml_api = true;
+      } else if (arg == "false" or arg == "no" or arg == "0") {
+        this->enable_xml_api = false;
+      } else {
+        error = "Invalid enable-xml-api argument (" + arg + ")";
         break;
       }
     } else {

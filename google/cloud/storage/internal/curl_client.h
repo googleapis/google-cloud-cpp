@@ -151,9 +151,18 @@ class CurlClient : public RawClient {
   void SetupBuilder(CurlRequestBuilder& builder, Request const& request,
                     char const* method);
 
+  std::pair<Status, ObjectMetadata> InsertObjectMediaXml(
+      InsertObjectMediaRequest const& request);
+  std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObjectXml(
+      ReadObjectRangeRequest const& request);
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectXml(
+      InsertObjectStreamingRequest const& request);
+
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
+  std::string xml_upload_endpoint_;
+  std::string xml_download_endpoint_;
 
   std::mutex mu_;
   CurlShare share_ /* GUARDED_BY(mu_) */;
@@ -165,6 +174,8 @@ class CurlClient : public RawClient {
   // To guarantee this order just list the members in the opposite order.
   std::shared_ptr<CurlHandleFactory> storage_factory_;
   std::shared_ptr<CurlHandleFactory> upload_factory_;
+  std::shared_ptr<CurlHandleFactory> xml_upload_factory_;
+  std::shared_ptr<CurlHandleFactory> xml_download_factory_;
 };
 
 }  // namespace internal
