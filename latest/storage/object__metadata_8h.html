@@ -68,7 +68,8 @@ $(function() {
 <div class="title">object_metadata.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;google/cloud/storage/internal/common_metadata.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/internal/optional.h&quot;</code><br />
+<code>#include &quot;google/cloud/storage/internal/common_metadata.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="object__access__control_8h_source.html">google/cloud/storage/object_access_control.h</a>&quot;</code><br />
 <code>#include &lt;map&gt;</code><br />
 </div>
@@ -78,6 +79,9 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html">google::cloud::storage::v0::CustomerEncryption</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple representation for the customerEncryption field.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html">google::cloud::storage::v0::ComposeSourceObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines one of the source objects for a compose operation.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">google::cloud::storage::v0::ObjectMetadata</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the metadata for a Google Cloud Storage Object.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#details">More...</a><br /></td></tr>
@@ -101,6 +105,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a39553998e5dcc4ff40ab2eb06b0a5c2d"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a39553998e5dcc4ff40ab2eb06b0a5c2d">google::cloud::storage::v0::operator&lt;&lt;</a> (std::ostream &amp;os, ComposeSourceObject const &amp;r)</td></tr>
+<tr class="separator:a39553998e5dcc4ff40ab2eb06b0a5c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aada0475ac8e7388977e1007f31598c64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aada0475ac8e7388977e1007f31598c64">google::cloud::storage::v0::operator==</a> (CustomerEncryption const &amp;lhs, CustomerEncryption const &amp;rhs)</td></tr>
 <tr class="separator:aada0475ac8e7388977e1007f31598c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eef1c667af4eff47f39f07407e8f345"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9eef1c667af4eff47f39f07407e8f345">google::cloud::storage::v0::operator&lt;</a> (CustomerEncryption const &amp;lhs, CustomerEncryption const &amp;rhs)</td></tr>

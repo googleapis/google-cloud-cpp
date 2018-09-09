@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['sha256',['sha256',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a6151c273153473b834590873b9afcf6a',1,'google::cloud::storage::v0::EncryptionKeyData']]],
-  ['storage_5fclass',['storage_class',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html#ac88d973c159493c6b421f7669698b53c',1,'google::cloud::storage::v0::LifecycleRuleAction']]]
+  ['requester_5fpays',['requester_pays',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketBilling.html#ac118ae6b3b540d0eaafa1a46b37c875c',1,'google::cloud::storage::v0::BucketBilling']]],
+  ['response_5fheader',['response_header',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a2177e95854c311ffc4f34ae74be279b8',1,'google::cloud::storage::v0::CorsEntry']]],
+  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['id',['id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aa92a5069c76822c1f65eac63b60e7113',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['if_5fgeneration_5fmatch',['if_generation_match',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html#a799685dca6f6fb216ea5ebb230e29a2b',1,'google::cloud::storage::v0::ComposeSourceObject']]],
   ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationMatch.html',1,'google::cloud::storage::v0']]],
   ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v0']]],
   ['ifmatchetag',['IfMatchEtag',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMatchEtag.html',1,'google::cloud::storage::v0']]],

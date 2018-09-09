@@ -175,6 +175,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf3198e98c655a164ba4518ddd82dac3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aaf3198e98c655a164ba4518ddd82dac3">PatchObject</a> (std::string bucket_name, std::string object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> const &amp;builder, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:aaf3198e98c655a164ba4518ddd82dac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the metadata in a Google Cloud Storage Object.  <a href="#aaf3198e98c655a164ba4518ddd82dac3">More...</a><br /></td></tr>
 <tr class="separator:aaf3198e98c655a164ba4518ddd82dac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294901ed4bc568fd7b3934d42dc9b2e0"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a294901ed4bc568fd7b3934d42dc9b2e0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a294901ed4bc568fd7b3934d42dc9b2e0">ComposeObject</a> (std::string bucket_name, std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html">ComposeSourceObject</a> &gt; const &amp;source_objects, std::string destination_object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> destination_object_metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a294901ed4bc568fd7b3934d42dc9b2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Composes existing objects into a new object in the same bucket.  <a href="#a294901ed4bc568fd7b3934d42dc9b2e0">More...</a><br /></td></tr>
+<tr class="separator:a294901ed4bc568fd7b3934d42dc9b2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0030af74c45749f6178f160728d8ef6"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ab0030af74c45749f6178f160728d8ef6"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0030af74c45749f6178f160728d8ef6">ListBucketAcl</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ab0030af74c45749f6178f160728d8ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of BucketAccessControls for a bucket.  <a href="#ab0030af74c45749f6178f160728d8ef6">More...</a><br /></td></tr>
@@ -436,6 +440,81 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a294901ed4bc568fd7b3934d42dc9b2e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a294901ed4bc568fd7b3934d42dc9b2e0">&#9670;&nbsp;</a></span>ComposeObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> google::cloud::storage::v0::Client::ComposeObject </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html">ComposeSourceObject</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>source_objects</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>destination_object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>&#160;</td>
+          <td class="paramname"><em>destination_object_metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Composes existing objects into a new object in the same bucket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket used for source object and destination object. </td></tr>
+    <tr><td class="paramname">source_objects</td><td>objects used to compose <code>destination_object_name</code>. </td></tr>
+    <tr><td class="paramname">destination_object_name</td><td>the composed object name. </td></tr>
+    <tr><td class="paramname">destination_object_metadata</td><td>the new metadata for the Object. Only the writeable fields accepted by the <code>Objects: compose</code> API are used, all other fields are ignored. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationPredefinedAcl.html">DestinationPredefinedAcl</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html">EncryptionKey</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Generation.html">Generation</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationMatch.html">IfGenerationMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetagenerationMatch.html">IfMetagenerationMatch</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1KmsKeyName.html">KmsKeyName</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd></dd></dl>
+<div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name,</div><div class="line">     std::string destination_object_name,</div><div class="line">     std::vector&lt;gcs::ComposeSourceObject&gt; compose_objects) {</div><div class="line">    gcs::ObjectMetadata composed_object =</div><div class="line">        client.ComposeObject(bucket_name, compose_objects,</div><div class="line">                             destination_object_name, gcs::ObjectMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Composed new object &quot;</span> &lt;&lt; destination_object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; Metadata: &quot;</span> &lt;&lt; composed_object &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> <div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name,</div><div class="line">     std::string destination_object_name, std::string source_base64_aes256_key,</div><div class="line">     std::string destination_base64_aes256_key,</div><div class="line">     std::vector&lt;gcs::ComposeSourceObject&gt; compose_objects) {</div><div class="line">    gcs::ObjectMetadata composed_object = client.ComposeObject(</div><div class="line">        bucket_name, compose_objects, destination_object_name,</div><div class="line">        gcs::ObjectMetadata(),</div><div class="line">        gcs::SourceEncryptionKey::FromBase64Key(source_base64_aes256_key),</div><div class="line">        gcs::EncryptionKey::FromBase64Key(destination_base64_aes256_key));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Composed new object &quot;</span> &lt;&lt; destination_object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; Metadata: &quot;</span> &lt;&lt; composed_object &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment -->
+</div>
+</div>
 <a id="a6a6ee60923a239c22709c8ada263672a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6a6ee60923a239c22709c8ada263672a">&#9670;&nbsp;</a></span>CreateBucket()</h2>
 
