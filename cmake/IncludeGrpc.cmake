@@ -58,10 +58,12 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     add_dependencies(protobuf::libprotobuf protobuf_project)
     set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
-    set_library_properties_for_external_project(protobuf::libprotobuf z)
+    find_package(ZLIB REQUIRED)
     set_property(TARGET protobuf::libprotobuf
                  APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          protobuf::libprotobuf
+                          ZLIB::ZLIB
                           Threads::Threads)
 
     add_library(c-ares::cares INTERFACE IMPORTED)
