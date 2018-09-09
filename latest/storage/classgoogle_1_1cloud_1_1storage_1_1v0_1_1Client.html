@@ -275,6 +275,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa030befa65aa1cd12a7c6b3cfaac05be">ListNotifications</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of Notifications for a Bucket.  <a href="#aa030befa65aa1cd12a7c6b3cfaac05be">More...</a><br /></td></tr>
 <tr class="separator:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee88ffcd20360f41ad616606737c279"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a4ee88ffcd20360f41ad616606737c279"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4ee88ffcd20360f41ad616606737c279">CreateNotification</a> (std::string const &amp;bucket_name, std::string const &amp;topic_name, std::string const &amp;payload_format, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a4ee88ffcd20360f41ad616606737c279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new notification config for a Bucket.  <a href="#a4ee88ffcd20360f41ad616606737c279">More...</a><br /></td></tr>
+<tr class="separator:a4ee88ffcd20360f41ad616606737c279"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html" title="The Google Cloud Storage Client. ">Client</a>. </p>
@@ -765,6 +769,79 @@ template&lt;typename... Options&gt; </div>
   </dd>
 </dl>
 <div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string entity,</div><div class="line">     std::string role) {</div><div class="line">    gcs::ObjectAccessControl result =</div><div class="line">        client.CreateDefaultObjectAcl(bucket_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; will be granted default to &quot;</span></div><div class="line">              &lt;&lt; result.entity() &lt;&lt; <span class="stringliteral">&quot; on any new object created on bucket &quot;</span></div><div class="line">              &lt;&lt; result.bucket() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects">https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects</a> </dd></dl>
+
+</div>
+</div>
+<a id="a4ee88ffcd20360f41ad616606737c279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ee88ffcd20360f41ad616606737c279">&#9670;&nbsp;</a></span>CreateNotification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> google::cloud::storage::v0::Client::CreateNotification </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>topic_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>payload_format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new notification config for a Bucket. </p>
+<p>Cloud Pub/Sub Notifications sends information about changes to objects in your buckets to Google Cloud Pub/Sub service. You can create multiple notifications per Bucket, with different topics and filtering options.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">topic_name</td><td>the Google Cloud Pub/Sub topic that will receive the notifications. This requires the full name of the topic, i.e.: <code>projects/&lt;PROJECT_ID&gt;/topics/&lt;TOPIC_ID&gt;</code>. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html" title="Contains functions to return well-known notification payload format names. ">payload_format</a></td><td>how will the data be formatted in the notifications, consider using the helpers in the <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html" title="Contains functions to return well-known notification payload format names. ">payload_format</a></code> namespace, or specify one of the valid formats defined in: <a href="https://cloud.google.com/storage/docs/json_api/v1/notifications">https://cloud.google.com/storage/docs/json_api/v1/notifications</a> </td></tr>
+    <tr><td class="paramname">metadata</td><td>define any optional parameters for the notification, such as the list of event types, or any custom attributes. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string topic_name) {</div><div class="line">    gcs::NotificationMetadata notification = client.CreateNotification(</div><div class="line">        bucket_name, topic_name, <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html#acdee1af9140fab11956dd246e1fc9d7f">gcs::payload_format::JsonApiV1</a>(),</div><div class="line">        gcs::NotificationMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully created notification &quot;</span> &lt;&lt; notification.id()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\nfull details=&quot;</span> &lt;&lt; notification &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for general information on Cloud Pub/Sub Notifications for Google Cloud Storage.</dd>
+<dd>
+<a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
 </div>
 </div>
@@ -1812,6 +1889,7 @@ template&lt;typename... Options&gt; </div>
 </div><div class="memdoc">
 
 <p>Retrieves the list of Notifications for a Bucket. </p>
+<p>Cloud Pub/Sub Notifications sends information about changes to objects in your buckets to Google Cloud Pub/Sub service.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
