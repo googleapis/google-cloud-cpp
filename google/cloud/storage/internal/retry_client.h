@@ -72,6 +72,8 @@ class RetryClient : public RawClient {
       UpdateObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> PatchObject(
       PatchObjectRequest const& request) override;
+  std::pair<Status, ObjectMetadata> ComposeObject(
+      ComposeObjectRequest const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

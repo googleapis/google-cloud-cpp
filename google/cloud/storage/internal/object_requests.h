@@ -251,6 +251,36 @@ class UpdateObjectRequest
 std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
 
 /**
+ * Represents a request to the `Objects: compose` API.
+ */
+class ComposeObjectRequest
+    : public GenericObjectRequest<
+          ComposeObjectRequest, EncryptionKey, Generation,
+          DestinationPredefinedAcl, KmsKeyName, IfGenerationMatch,
+          IfMetagenerationMatch, SourceEncryptionKey, UserProject> {
+ public:
+  ComposeObjectRequest() = default;
+  explicit ComposeObjectRequest(
+      std::string bucket_name,
+      std::vector<ComposeSourceObject> const& source_objects,
+      std::string destination_object_name,
+      ObjectMetadata destination_object_metadata);
+
+  /// Returns the request as the JSON API payload.
+  std::string json_payload() const { return json_payload_; }
+
+  ObjectMetadata const& destination_metadata() const {
+    return destination_metadata_;
+  }
+
+ private:
+  ObjectMetadata destination_metadata_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r);
+
+/**
  * Represents a request to the `Buckets: patch` API.
  */
 class PatchObjectRequest

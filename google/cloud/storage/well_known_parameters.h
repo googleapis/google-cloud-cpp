@@ -59,15 +59,6 @@ struct ContentEncoding
   static char const* well_known_parameter_name() { return "contentEncoding"; }
 };
 
-struct DestinationPredefinedAcl
-    : public WellKnownParameter<DestinationPredefinedAcl, std::string> {
-  using WellKnownParameter<DestinationPredefinedAcl,
-                           std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() {
-    return "destinationPredefinedAcl";
-  }
-};
-
 /**
  * Defines the `fields` query parameter.
  *
@@ -171,6 +162,15 @@ struct MaxResults : public WellKnownParameter<MaxResults, std::int64_t> {
 struct PredefinedAcl : public WellKnownParameter<PredefinedAcl, std::string> {
   using WellKnownParameter<PredefinedAcl, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "predefinedAcl"; }
+};
+
+struct DestinationPredefinedAcl
+    : public WellKnownParameter<DestinationPredefinedAcl, std::string> {
+  using WellKnownParameter<DestinationPredefinedAcl,
+                           std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "destinationPredefinedAcl";
+  }
 };
 
 struct PredefinedDefaultObjectAcl
