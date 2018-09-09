@@ -153,7 +153,6 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
   // get snapshot
   auto snapshot_check = table_admin_->GetSnapshot(cluster_id, snapshot_id);
   auto const npos = std::string::npos;
-  // EXPECT_NE(npos, snapshot_check.name().find(table_admin_->project_name()));
   EXPECT_NE(npos, snapshot_check.name().find(snapshot_id_str));
 
   // Delete snapshot
