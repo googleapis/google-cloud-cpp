@@ -191,7 +191,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return GetBucketMetadataImpl(request);
+    return raw_client_->GetBucketMetadata(request).second;
   }
 
   /**
@@ -322,7 +322,7 @@ class Client {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return InsertObjectMediaImpl(request);
+    return raw_client_->InsertObjectMedia(request).second;
   }
 
   /**
@@ -1244,12 +1244,6 @@ class Client {
   }
 
  private:
-  BucketMetadata GetBucketMetadataImpl(
-      internal::GetBucketMetadataRequest const& request);
-
-  ObjectMetadata InsertObjectMediaImpl(
-      internal::InsertObjectMediaRequest const& request);
-
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(
       std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
@@ -1259,7 +1253,6 @@ class Client {
     return retry;
   }
 
- private:
   std::shared_ptr<internal::RawClient> raw_client_;
 };
 
