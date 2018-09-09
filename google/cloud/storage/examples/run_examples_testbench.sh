@@ -30,6 +30,7 @@ start_testbench
 # can use the same testbench.
 readonly PROJECT_ID="fake-project-$(date +%s)"
 readonly BUCKET_NAME="fake-bucket-$(date +%s)"
+readonly TOPIC_NAME="fake-topic-$(date +%s)"
 
 # Most of the examples assume a bucket already exists, create one for them.
 run_example ./storage_bucket_samples create-bucket-for-project \

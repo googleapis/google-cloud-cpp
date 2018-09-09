@@ -246,15 +246,19 @@ run_all_object_acl_examples() {
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   bucket_name: the name of the bucket to run the examples against.
+#   topic_name: the topic used to create notifications.
 # Returns:
 #   None
 ################################################
 run_all_notification_examples() {
   local bucket_name=$1
+  local topic_name=$2
   shift
 
   run_example ./storage_notification_samples list-notifications \
       "${bucket_name}"
+  run_example ./storage_notification_samples create-notification \
+      "${bucket_name}" "${topic_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -280,7 +284,7 @@ run_all_storage_examples() {
   run_all_default_object_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_notification_examples "${BUCKET_NAME}"
+  run_all_notification_examples "${BUCKET_NAME}" "${TOPIC_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then

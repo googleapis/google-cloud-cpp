@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/notification_event_type.h"
+#include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -25,6 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::_;
+using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -93,6 +96,60 @@ TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
       *client_, EXPECT_CALL(*mock_, ListNotifications(_)),
       [](Client& client) { client.ListNotifications("test-bucket-name"); },
       "ListNotifications");
+}
+
+TEST_F(NotificationsTest, CreateNotification) {
+  NotificationMetadata expected = NotificationMetadata::ParseFromString(R"""({
+          "id": "test-notification-1",
+          "topic": "test-topic-1",
+          "payload_format": "JSON_API_V1",
+          "object_prefix": "test-object-prefix-",
+          "event_type": [ "OBJECT_FINALIZE" ]
+      })""");
+
+  EXPECT_CALL(*mock_, CreateNotification(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+      .WillOnce(
+          Invoke([&expected](internal::CreateNotificationRequest const& r) {
+            EXPECT_EQ("test-bucket", r.bucket_name());
+            EXPECT_THAT(r.json_payload(), HasSubstr("test-topic-1"));
+            EXPECT_THAT(r.json_payload(), HasSubstr("JSON_API_V1"));
+            EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
+            EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
+
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock_)};
+
+  NotificationMetadata actual = client.CreateNotification(
+      "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
+      NotificationMetadata()
+          .set_object_name_prefix("test-object-prefix-")
+          .append_event_type(event_type::ObjectFinalize()));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
+  testing::TooManyFailuresTest<NotificationMetadata>(
+      mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
+      [](Client& client) {
+        client.CreateNotification("test-bucket-name", "test-topic-1",
+                                  payload_format::JsonApiV1(),
+                                  NotificationMetadata());
+      },
+      "CreateNotification");
+}
+
+TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
+  testing::PermanentFailureTest<NotificationMetadata>(
+      *client_, EXPECT_CALL(*mock_, CreateNotification(_)),
+      [](Client& client) {
+        client.CreateNotification("test-bucket-name", "test-topic-1",
+                                  payload_format::JsonApiV1(),
+                                  NotificationMetadata());
+      },
+      "CreateNotification");
 }
 
 }  // namespace
