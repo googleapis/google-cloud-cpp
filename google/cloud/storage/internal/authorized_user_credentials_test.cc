@@ -53,19 +53,21 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
     "expires_in": 1234
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest())
-      .WillOnce(Return(HttpResponse{200, response, {}}));
+  EXPECT_CALL(*mock_request, MakeRequest(_))
+      .WillOnce(Invoke([response](std::string const& payload) {
+        EXPECT_THAT(payload, HasSubstr("grant_type=refresh_token"));
+        EXPECT_THAT(payload, HasSubstr("client_id=a-client-id.example.com"));
+        EXPECT_THAT(payload, HasSubstr("client_secret=a-123456ABCDEF"));
+        EXPECT_THAT(payload, HasSubstr("refresh_token=1/THETOKEN"));
+        return HttpResponse{200, response, {}};
+      }));
 
   auto mock_builder = MockHttpRequestBuilder::mock;
   EXPECT_CALL(*mock_builder,
               Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
       .Times(1);
-  EXPECT_CALL(*mock_builder, BuildRequest(_))
-      .WillOnce(Invoke([mock_request](std::string payload) {
-        EXPECT_THAT(payload, HasSubstr("grant_type=refresh_token"));
-        EXPECT_THAT(payload, HasSubstr("client_id=a-client-id.example.com"));
-        EXPECT_THAT(payload, HasSubstr("client_secret=a-123456ABCDEF"));
-        EXPECT_THAT(payload, HasSubstr("refresh_token=1/THETOKEN"));
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce(Invoke([mock_request]() {
         MockHttpRequest result;
         result.mock = mock_request;
         return result;
@@ -108,14 +110,14 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
     "expires_in": 1000
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest())
+  EXPECT_CALL(*mock_request, MakeRequest(_))
       .WillOnce(Return(HttpResponse{200, r1, {}}))
       .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest(_))
-      .WillOnce(Invoke([mock_request](std::string unused) {
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce(Invoke([mock_request] {
         MockHttpRequest request;
         request.mock = mock_request;
         return request;

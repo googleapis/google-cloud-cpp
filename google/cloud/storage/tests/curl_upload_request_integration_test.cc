@@ -41,6 +41,7 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   CurlRequestBuilder builder(HttpBinEndpoint() + "/post",
                              storage::internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
+  builder.SetMethod("POST");
   CurlUploadRequest upload = builder.BuildUpload();
 
   // A small function to generate random data.

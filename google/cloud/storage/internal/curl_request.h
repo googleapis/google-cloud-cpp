@@ -46,7 +46,6 @@ class CurlRequest {
       : url_(std::move(rhs.url_)),
         headers_(std::move(rhs.headers_)),
         user_agent_(std::move(rhs.user_agent_)),
-        payload_(std::move(rhs.payload_)),
         response_payload_(std::move(rhs.response_payload_)),
         received_headers_(std::move(rhs.received_headers_)),
         logging_enabled_(rhs.logging_enabled_),
@@ -59,7 +58,6 @@ class CurlRequest {
     url_ = std::move(rhs.url_);
     headers_ = std::move(rhs.headers_);
     user_agent_ = std::move(rhs.user_agent_);
-    payload_ = std::move(rhs.payload_);
     response_payload_ = std::move(rhs.response_payload_);
     received_headers_ = std::move(rhs.received_headers_);
     logging_enabled_ = rhs.logging_enabled_;
@@ -79,7 +77,7 @@ class CurlRequest {
    *
    * @throw std::runtime_error if the request cannot be made at all.
    */
-  HttpResponse MakeRequest();
+  HttpResponse MakeRequest(std::string const& payload);
 
  private:
   friend class CurlRequestBuilder;
@@ -88,7 +86,6 @@ class CurlRequest {
   std::string url_;
   CurlHeaders headers_;
   std::string user_agent_;
-  std::string payload_;
   std::string response_payload_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;

@@ -152,7 +152,7 @@ class CurlClient : public RawClient {
   std::string upload_endpoint_;
 
   std::mutex mu_;
-  CurlShare share_ /* GUARDER_BY(mu_) */;
+  CurlShare share_ /* GUARDED_BY(mu_) */;
 
   // The factories must be listed *after* the CurlShare. libcurl keeps a
   // usage count on each CURLSH* handle, which is only released once the CURL*
