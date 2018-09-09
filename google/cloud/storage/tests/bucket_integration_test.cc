@@ -495,7 +495,6 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                       return x.id() == create.id();
                     });
   EXPECT_EQ(1U, count) << create;
-  std::cout << create << std::endl;
 
   client.DeleteBucket(bucket_name);
 }
