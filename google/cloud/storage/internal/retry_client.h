@@ -57,6 +57,8 @@ class RetryClient : public RawClient {
       PatchBucketRequest const& request) override;
   std::pair<Status, IamPolicy> GetBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
+  std::pair<Status, IamPolicy> SetBucketIamPolicy(
+      SetBucketIamPolicyRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;

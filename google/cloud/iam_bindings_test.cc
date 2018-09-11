@@ -127,8 +127,10 @@ TEST(IamBindingsTest, RemoveMemberTest) {
 
   auto temp_binding = iam_bindings.bindings();
   auto it = temp_binding[role].find("abc@gmail.com");
-
   EXPECT_EQ(temp_binding[role].end(), it);
+
+  iam_bindings.RemoveMember("writer", "xyz@gmail.com");
+  EXPECT_TRUE(iam_bindings.end() == iam_bindings.find(role));
 }
 
 TEST(IamBindingsTest, RemoveMembersTest) {
@@ -144,16 +146,11 @@ TEST(IamBindingsTest, RemoveMembersTest) {
   iam_bindings.RemoveMembers(role, member_list);
 
   auto temp_binding = iam_bindings.bindings();
-  bool has_removed_member = false;
+  EXPECT_TRUE(temp_binding[role].end() ==
+              temp_binding[role].find("abc@gmail.com"));
 
-  for (auto it : temp_binding[role]) {
-    if (it == *member_list.begin()) {
-      has_removed_member = true;
-      break;
-    }
-  }
-
-  EXPECT_FALSE(has_removed_member);
+  iam_bindings.RemoveMembers(role, std::set<std::string>{"xyz@gmail.com"});
+  EXPECT_TRUE(iam_bindings.end() == iam_bindings.find(role));
 }
 
 TEST(IamBindingsTest, RemoveMembersTestIamBindingParam) {

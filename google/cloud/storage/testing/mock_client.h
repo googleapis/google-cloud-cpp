@@ -48,6 +48,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(
       GetBucketIamPolicy,
       ResponseWrapper<IamPolicy>(internal::GetBucketIamPolicyRequest const&));
+  MOCK_METHOD1(
+      SetBucketIamPolicy,
+      ResponseWrapper<IamPolicy>(internal::SetBucketIamPolicyRequest const&));
 
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(

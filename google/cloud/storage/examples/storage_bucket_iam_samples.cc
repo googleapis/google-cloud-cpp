@@ -60,6 +60,52 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
   //! [get bucket iam policy] [END storage_view_bucket_iam_members]
   (std::move(client), bucket_name);
 }
+
+void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"add-bucket-iam-member <bucket_name> <role> <member>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  auto member = ConsumeArg(argc, argv);
+  //! [add bucket iam member] [START storage_add_bucket_iam_member]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string role,
+     std::string member) {
+    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
+    policy.bindings.AddMember(role, member);
+    google::cloud::IamPolicy updated_policy =
+        client.SetBucketIamPolicy(bucket_name, policy);
+    std::cout << "Updated IAM policy bucket " << bucket_name
+              << ". The new policy is " << updated_policy << std::endl;
+  }
+  //! [add bucket iam member] [END storage_add_bucket_iam_member]
+  (std::move(client), bucket_name, role, member);
+}
+
+void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"remove-bucket-iam-member <bucket_name> <role> <member>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  auto member = ConsumeArg(argc, argv);
+  //! [remove bucket iam member] [START storage_remove_bucket_iam_member]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string role,
+     std::string member) {
+    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
+    policy.bindings.RemoveMember(role, member);
+    google::cloud::IamPolicy updated_policy =
+        client.SetBucketIamPolicy(bucket_name, policy);
+    std::cout << "Updated IAM policy bucket " << bucket_name
+              << ". The new policy is " << updated_policy << std::endl;
+  }
+  //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
+  (std::move(client), bucket_name, role, member);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -72,6 +118,8 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-iam-policy", &GetBucketIamPolicy},
+      {"add-bucket-iam-member", &AddBucketIamMember},
+      {"remove-bucket-iam-member", &RemoveBucketIamMember},
   };
   for (auto&& kv : commands) {
     try {

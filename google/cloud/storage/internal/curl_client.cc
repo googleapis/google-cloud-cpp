@@ -184,6 +184,21 @@ std::pair<Status, IamPolicy> CurlClient::GetBucketIamPolicy(
   return std::make_pair(Status(), ParseIamPolicyFromString(payload.payload));
 }
 
+std::pair<Status, IamPolicy> CurlClient::SetBucketIamPolicy(
+    SetBucketIamPolicyRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                                 "/iam",
+                             storage_factory_);
+  SetupBuilder(builder, request, "PUT");
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)}, IamPolicy{});
+  }
+  return std::make_pair(Status(), ParseIamPolicyFromString(payload.payload));
+}
+
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.

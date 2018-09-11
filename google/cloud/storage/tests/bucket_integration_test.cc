@@ -542,6 +542,14 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       bindings.at("roles/storage.legacyBucketOwner");
   EXPECT_EQ(expected_owners.size(), actual_owners.size());
 
+  IamPolicy update = policy;
+  update.bindings.AddMember("roles/storage.objectViewer",
+                            "allAuthenticatedUsers");
+
+  IamPolicy updated_policy = client.SetBucketIamPolicy(bucket_name, update);
+  EXPECT_EQ(update.bindings, updated_policy.bindings);
+  EXPECT_NE(update.etag, updated_policy.etag);
+
   client.DeleteBucket(bucket_name);
 }
 
