@@ -106,6 +106,42 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
   //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
 }
+
+void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "test-bucket-iam-permissions <bucket_name> <permission>"
+        " [permission ...]"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  std::vector<std::string> permissions;
+  while (argc >= 2) {
+    permissions.emplace_back(ConsumeArg(argc, argv));
+  }
+  //! [test bucket iam permissions]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name,
+     std::vector<std::string> permissions) {
+    std::vector<std::string> actual_permissions =
+        client.TestBucketIamPermissions(bucket_name, permissions);
+
+    if (actual_permissions.empty()) {
+      std::cout << "The caller does not hold any of the tested permissions the"
+                << " bucket " << bucket_name << std::endl;
+      return;
+    }
+    std::cout << "The caller is authorized for the following permissions on "
+              << bucket_name << ": ";
+    for (auto const& p : actual_permissions) {
+      std::cout << "\n    " << p;
+    }
+    std::cout << std::endl;
+  }
+  //! [test bucket iam permissions]
+  (std::move(client), bucket_name, permissions);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -115,11 +151,12 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-iam-policy", &GetBucketIamPolicy},
       {"add-bucket-iam-member", &AddBucketIamMember},
       {"remove-bucket-iam-member", &RemoveBucketIamMember},
+      {"test-bucket-iam-permissions", &TestBucketIamPermissions},
   };
   for (auto&& kv : commands) {
     try {

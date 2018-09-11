@@ -123,6 +123,13 @@ std::pair<Status, IamPolicy> LoggingClient::SetBucketIamPolicy(
   return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
+std::pair<Status, TestBucketIamPermissionsResponse>
+LoggingClient::TestBucketIamPermissions(
+    TestBucketIamPermissionsRequest const& request) {
+  return MakeCall(*client_, &RawClient::TestBucketIamPermissions, request,
+                  __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);

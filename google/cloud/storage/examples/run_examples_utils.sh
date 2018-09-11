@@ -351,6 +351,8 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples remove-bucket-iam-member \
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
+      "${bucket_name}" "storage.objects.list" "storage.objects.delete"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.

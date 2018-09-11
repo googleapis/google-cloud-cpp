@@ -388,6 +388,42 @@ class Client {
   }
 
   /**
+   * Tests the IAM permissions of the caller against a Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation tests the permissions of the caller
+   * for a Bucket. You must provide a list of permissions, this API will return
+   * the subset of those permissions that the current caller has in the given
+   * Bucket.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param permissions the list of permissions to check.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
+   */
+  template <typename... Options>
+  std::vector<std::string> TestBucketIamPermissions(
+      std::string bucket_name, std::vector<std::string> permissions,
+      Options&&... options) {
+    internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
+                                                      std::move(permissions));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->TestBucketIamPermissions(request).second.permissions;
+  }
+
+  /**
    * Creates an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.

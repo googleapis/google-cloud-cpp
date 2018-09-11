@@ -172,9 +172,9 @@ std::pair<Status, BucketMetadata> CurlClient::PatchBucket(
 
 std::pair<Status, IamPolicy> CurlClient::GetBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                             "/iam",
-                             storage_factory_);
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
+      storage_factory_);
   SetupBuilder(builder, request, "GET");
   auto payload = builder.BuildRequest(std::string{}).MakeRequest();
   if (payload.status_code >= 300) {
@@ -186,9 +186,9 @@ std::pair<Status, IamPolicy> CurlClient::GetBucketIamPolicy(
 
 std::pair<Status, IamPolicy> CurlClient::SetBucketIamPolicy(
     SetBucketIamPolicyRequest const& request) {
-  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/iam",
-                             storage_factory_);
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
+      storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
   auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
@@ -197,6 +197,27 @@ std::pair<Status, IamPolicy> CurlClient::SetBucketIamPolicy(
         Status{payload.status_code, std::move(payload.payload)}, IamPolicy{});
   }
   return std::make_pair(Status(), ParseIamPolicyFromString(payload.payload));
+}
+
+std::pair<Status, TestBucketIamPermissionsResponse>
+CurlClient::TestBucketIamPermissions(
+    google::cloud::storage::internal::TestBucketIamPermissionsRequest const&
+        request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                                 "/iam/testPermissions",
+                             storage_factory_);
+  SetupBuilder(builder, request, "GET");
+  for (auto const& perm : request.permissions()) {
+    builder.AddQueryParameter("permissions", perm);
+  }
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        TestBucketIamPermissionsResponse{});
+  }
+  return std::make_pair(
+      Status(), TestBucketIamPermissionsResponse::FromHttpResponse(payload));
 }
 
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(

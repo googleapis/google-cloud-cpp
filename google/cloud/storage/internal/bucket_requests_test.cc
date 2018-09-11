@@ -21,6 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -596,8 +597,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
       {"etag", "XYZ="},
       {"bindings",
        std::vector<nl::json>{
-           nl::json{
-               {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"members", std::vector<std::string>{"test-user-1"}}},
 
        }},
   };
@@ -745,6 +745,36 @@ TEST(BucketRequestsTest, TestIamPermissions) {
   EXPECT_THAT(actual, HasSubstr("storage.buckets.get"));
   EXPECT_THAT(actual, HasSubstr("storage.buckets.setIamPolicy"));
   EXPECT_THAT(actual, HasSubstr("storage.objects.update"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissionsResponse) {
+  std::string text = R"""({
+      "permissions": [
+          "storage.buckets.get",
+          "storage.buckets.setIamPolicy",
+          "storage.objects.update"
+      ]})""";
+
+  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
+      HttpResponse{200, text, {}});
+  EXPECT_THAT(actual.permissions,
+              ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
+                          "storage.objects.update"));
+
+  std::ostringstream os;
+  os << actual;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("storage.buckets.get"));
+  EXPECT_THAT(str, HasSubstr("storage.buckets.setIamPolicy"));
+  EXPECT_THAT(str, HasSubstr("storage.objects.update"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
+  std::string text = R"""({})""";
+
+  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
+      HttpResponse{200, text, {}});
+  EXPECT_TRUE(actual.permissions.empty());
 }
 }  // namespace
 }  // namespace internal

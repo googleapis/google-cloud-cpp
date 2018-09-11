@@ -244,6 +244,16 @@ class TestBucketIamPermissionsRequest
 std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsRequest const& r);
 
+struct TestBucketIamPermissionsResponse {
+  static TestBucketIamPermissionsResponse FromHttpResponse(
+      HttpResponse const& response);
+
+  std::vector<std::string> permissions;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsResponse const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
