@@ -15,6 +15,10 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include <gmock/gmock.h>
 
+namespace google_cloud_storage_internal_nlohmann_3_1_2 {
+inline void PrintTo(json const& json, std::ostream* os) { *os << json.dump(); }
+}  // namespace google_cloud_storage_internal_nlohmann_3_1_2
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -549,6 +553,73 @@ TEST(PatchBucketRequestTest, Builder) {
   EXPECT_THAT(actual, HasSubstr("defaultObjectAcl"));
 }
 
+TEST(BucketRequestsTest, GetIamPolicy) {
+  GetBucketIamPolicyRequest request("my-bucket");
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, SetIamPolicy) {
+  google::cloud::IamBindings bindings;
+  bindings.AddMember("storage.buckets.list", "test-user-1");
+  bindings.AddMember("storage.objects.get", "test-user-2");
+  bindings.AddMember("storage.objects.get", "test-user-3");
+  google::cloud::IamPolicy policy{1, bindings, "XYZ="};
+
+  SetBucketIamPolicyRequest request("my-bucket", policy);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+
+  internal::nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       {
+           // The order of these elements matters, SetBucketIamPolicyRequest
+           // generates them sorted by role. If we ever change that, we will
+           // need to change this test, and it will be a bit more difficult to
+           // write it.
+           internal::nl::json{
+               {"role", "storage.buckets.list"},
+               {"members", std::vector<std::string>{"test-user-1"}}},
+           internal::nl::json{
+               {"role", "storage.objects.get"},
+               {"members",
+                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+       }},
+  };
+  auto actual_payload = internal::nl::json::parse(request.json_payload());
+  EXPECT_EQ(expected_payload, actual_payload)
+      << internal::nl::json::diff(expected_payload, actual_payload);
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissions) {
+  std::vector<std::string> permissions{"storage.buckets.get",
+                                       "storage.buckets.setIamPolicy",
+                                       "storage.objects.update"};
+  TestBucketIamPermissionsRequest request("my-bucket", permissions);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ(permissions, request.permissions());
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+  EXPECT_THAT(actual, HasSubstr("storage.buckets.get"));
+  EXPECT_THAT(actual, HasSubstr("storage.buckets.setIamPolicy"));
+  EXPECT_THAT(actual, HasSubstr("storage.objects.update"));
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
