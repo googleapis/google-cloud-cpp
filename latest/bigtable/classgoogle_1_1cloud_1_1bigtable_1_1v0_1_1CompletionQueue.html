@@ -97,6 +97,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf54f6d51d45ea9b89ce19b819d11b76"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#abf54f6d51d45ea9b89ce19b819d11b76">MakeRelativeTimer</a> (std::chrono::duration&lt; Rep, Period &gt; duration, Functor &amp;&amp;functor)</td></tr>
 <tr class="memdesc:abf54f6d51d45ea9b89ce19b819d11b76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires after the <code>duration</code>.  <a href="#abf54f6d51d45ea9b89ce19b819d11b76">More...</a><br /></td></tr>
 <tr class="separator:abf54f6d51d45ea9b89ce19b819d11b76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7607d674dc0b8b987671f96092d331a2"><td class="memTemplParams" colspan="2">template&lt;typename Client , typename MemberFunction , typename Request , typename Functor &gt; </td></tr>
+<tr class="memitem:a7607d674dc0b8b987671f96092d331a2"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; internal::CheckAsyncUnaryRpcSignature&lt; MemberFunction &gt;::value, std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt; &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a7607d674dc0b8b987671f96092d331a2">MakeUnaryRpc</a> (Client &amp;client, MemberFunction Client::*call, Request const &amp;request, std::unique_ptr&lt; grpc::ClientContext &gt; context, Functor &amp;&amp;f)</td></tr>
+<tr class="memdesc:a7607d674dc0b8b987671f96092d331a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous unary RPC.  <a href="#a7607d674dc0b8b987671f96092d331a2">More...</a><br /></td></tr>
+<tr class="separator:a7607d674dc0b8b987671f96092d331a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Call the functor associated with asynchronous operations when they complete. </p>
@@ -252,6 +256,84 @@ template&lt;typename Rep , typename Period , typename Functor &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an asynchronous operation wrapping the functor and timer, can be used to cancel the pending timer. </dd></dl>
+
+</div>
+</div>
+<a id="a7607d674dc0b8b987671f96092d331a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7607d674dc0b8b987671f96092d331a2">&#9670;&nbsp;</a></span>MakeUnaryRpc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Client , typename MemberFunction , typename Request , typename Functor &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::enable_if&lt; internal::CheckAsyncUnaryRpcSignature&lt;MemberFunction&gt;::value, std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a>&gt; &gt;::type google::cloud::bigtable::v0::CompletionQueue::MakeUnaryRpc </td>
+          <td>(</td>
+          <td class="paramtype">Client &amp;&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MemberFunction Client::*&#160;</td>
+          <td class="paramname"><em>call</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Request const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; grpc::ClientContext &gt;&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Functor &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make an asynchronous unary RPC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>the object implementing the asynchronous API. </td></tr>
+    <tr><td class="paramname">call</td><td>the pointer to the member function to invoke. </td></tr>
+    <tr><td class="paramname">request</td><td>the contents of the request. </td></tr>
+    <tr><td class="paramname">context</td><td>an initialized request context to make the call. </td></tr>
+    <tr><td class="paramname">f</td><td>the callback to report completion of the call.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Client</td><td>the type of the class to call. Typically this would be a wrapper like <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs. ">DataClient</a> or <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a>. </td></tr>
+    <tr><td class="paramname">MemberFunction</td><td>the type of the member function in the <code>Client</code> to call. It must meet the requirements for <code>internal::CheckAsyncUnaryRpcSignature&lt;&gt;</code>. </td></tr>
+    <tr><td class="paramname">Request</td><td>the type of the request parameter in the gRPC. </td></tr>
+    <tr><td class="paramname">Functor</td><td>the type of the callback provided by the application. It must satisfy (using C++17 classes): <div class="fragment"><div class="line">static_assert(std::is_invocable_v&lt;</div><div class="line">    Functor, internal::AsyncUnaryRpc&lt;RequestType,ResponseType&gt;&amp;, <span class="keywordtype">bool</span>&gt;)</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html" title="Represents a pending asynchronous operation. ">AsyncOperation</a> instance that can be used to request cancelation of the pending operation. </dd></dl>
 
 </div>
 </div>
