@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_TABLE_H_
 
 #include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
@@ -117,6 +118,54 @@ class Table {
    * they return the error on the status parameter.
    */
   std::vector<FailedMutation> Apply(SingleRowMutation&& mut);
+
+  /**
+   * Make an asynchronous request to mutate a single row.
+   *
+   * @param mut the mutation to apply.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @return A handle to the asynchronous operation, applications can request
+   *   the operation to be canceled.
+   */
+  template <typename Functor>
+  std::shared_ptr<AsyncOperation> AsyncApply(SingleRowMutation&& mut,
+                                             CompletionQueue& cq,
+                                             Functor&& callback) {
+    using AsyncOpResult =
+        AsyncUnaryRpcResult<google::bigtable::v2::MutateRowResponse>;
+
+    auto rpc_policy = rpc_retry_policy_->clone();
+    auto backoff_policy = rpc_backoff_policy_->clone();
+    auto idempotent_policy = idempotent_mutation_policy_->clone();
+
+    google::bigtable::v2::MutateRowRequest request;
+    internal::SetCommonTableOperationRequest<
+        google::bigtable::v2::MutateRowRequest>(request, app_profile_id_.get(),
+                                                table_name_.get());
+    mut.MoveTo(request);
+    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    return cq.MakeUnaryRpc(
+        *client_, &DataClient::AsyncMutateRow, request, std::move(context),
+        [callback](CompletionQueue& cq, AsyncOpResult& result, bool ok) {
+          if (not ok) {
+            callback(result.response,
+                     grpc::Status(grpc::StatusCode::CANCELLED,
+                                  result.status.error_message()));
+          } else {
+            callback(result.response, result.status);
+          }
+        });
+  }
 
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
                                         grpc::Status& status);

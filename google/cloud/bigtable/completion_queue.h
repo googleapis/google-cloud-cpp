@@ -88,6 +88,51 @@ class CompletionQueue {
     return MakeDeadlineTimer(deadline, std::forward<Functor>(functor));
   }
 
+  /**
+   * Make an asynchronous unary RPC.
+   *
+   * @param client the object implementing the asynchronous API.
+   * @param call the pointer to the member function to invoke.
+   * @param request the contents of the request.
+   * @param context an initialized request context to make the call.
+   * @param f the callback to report completion of the call.
+   *
+   * @tparam Client the type of the class to call.  Typically this would be a
+   *   wrapper like DataClient or AdminClient.
+   * @tparam MemberFunction the type of the member function in the @p Client
+   *     to call. It must meet the requirements for
+   *     `internal::CheckAsyncUnaryRpcSignature<>`.
+   * @tparam Request the type of the request parameter in the gRPC.
+   * @tparam Functor the type of the callback provided by the application. It
+   *     must satisfy (using C++17 classes):
+   *     @code
+   *     static_assert(std::is_invocable_v<
+   *         Functor, internal::AsyncUnaryRpc<RequestType,ResponseType>&, bool>)
+   *     @endcode
+   *
+   * @return an AsyncOperation instance that can be used to request cancelation
+   *   of the pending operation.
+   */
+  template <typename Client, typename MemberFunction, typename Request,
+            typename Functor>
+  typename std::enable_if<
+      internal::CheckAsyncUnaryRpcSignature<MemberFunction>::value,
+      std::shared_ptr<AsyncOperation>>::type
+  MakeUnaryRpc(Client& client, MemberFunction Client::*call,
+               Request const& request,
+               std::unique_ptr<grpc::ClientContext> context, Functor&& f) {
+    using Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunction>;
+    static_assert(std::is_same<typename Sig::RequestType,
+                               typename std::decay<Request>::type>::value,
+                  "Mismatched pointer to member function and request types");
+    auto op = std::make_shared<internal::AsyncUnaryRpcFunctor<
+        typename Sig::RequestType, typename Sig::ResponseType, Functor>>(
+        std::forward<Functor>(f));
+    void* tag = impl_->RegisterOperation(op);
+    op->Set(client, call, std::move(context), request, &impl_->cq(), tag);
+    return op;
+  }
+
  private:
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
