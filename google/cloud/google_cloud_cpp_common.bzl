@@ -18,6 +18,7 @@ google_cloud_cpp_common_HDRS = [
 
 google_cloud_cpp_common_SRCS = [
     "iam_bindings.cc",
+    "iam_policy.cc",
     "internal/backoff_policy.cc",
     "internal/random.cc",
     "internal/setenv.cc",

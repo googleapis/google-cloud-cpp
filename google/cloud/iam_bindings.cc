@@ -14,6 +14,7 @@
 
 #include "google/cloud/iam_bindings.h"
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 
 namespace google {
@@ -82,6 +83,22 @@ void IamBindings::RemoveMembers(std::string const& role,
       binding_members.erase(member_loc);
     }
   }
+}
+
+std::ostream& operator<<(std::ostream& os, IamBindings const& rhs) {
+  os << "IamBindings={";
+  char const* sep = "";
+  for (auto const& kv : rhs) {
+    os << sep << kv.first << ": [";
+    char const* sep2 = "";
+    for (auto const& member : kv.second) {
+      os << sep2 << member;
+      sep2 = ", ";
+    }
+    os << "]";
+    sep = ", ";
+  }
+  return os << "}";
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

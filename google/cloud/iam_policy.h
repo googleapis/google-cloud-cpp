@@ -38,6 +38,34 @@ struct IamPolicy {
   std::string etag;
 };
 
+inline bool operator==(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::tie(lhs.version, lhs.bindings, lhs.etag) ==
+         std::tie(rhs.version, rhs.bindings, rhs.etag);
+}
+
+inline bool operator<(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::tie(lhs.version, lhs.bindings, lhs.etag) <
+         std::tie(rhs.version, rhs.bindings, rhs.etag);
+}
+
+inline bool operator!=(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(IamPolicy const& lhs, IamPolicy const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, IamPolicy const& rhs);
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

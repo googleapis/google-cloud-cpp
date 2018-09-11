@@ -199,6 +199,8 @@ class GetBucketIamPolicyRequest
 
 std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r);
 
+IamPolicy ParseIamPolicyFromString(std::string const& payload);
+
 /**
  * Represents a request to the `Buckets: getIamPolicy` API.
  */

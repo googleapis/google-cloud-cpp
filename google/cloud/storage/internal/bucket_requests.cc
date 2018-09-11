@@ -196,6 +196,41 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
   return os << "}";
 }
 
+IamPolicy ParseIamPolicyFromString(std::string const& payload) {
+  auto json = nl::json::parse(payload);
+  IamPolicy policy;
+  policy.version = 0;
+  policy.etag = json.value("etag", "");
+  if (json.count("bindings") != 0U) {
+    if (not json["bindings"].is_array()) {
+      std::ostringstream os;
+      os << "Invalid IamPolicy payload, expected array for 'bindings' field."
+         << "  payload=" << payload;
+      google::cloud::internal::RaiseInvalidArgument(os.str());
+    }
+    for (auto const& kv : json["bindings"].items()) {
+      auto binding = kv.value();
+      if (binding.count("role") == 0U or binding.count("members") == 0U) {
+        std::ostringstream os;
+        os << "Invalid IamPolicy payload, expected 'role' and 'members'"
+           << " fields for element #" << kv.key() << ". payload=" << payload;
+        google::cloud::internal::RaiseInvalidArgument(os.str());
+      }
+      if (not binding["members"].is_array()) {
+        std::ostringstream os;
+        os << "Invalid IamPolicy payload, expected array for 'members'"
+           << " fields for element #" << kv.key() << ". payload=" << payload;
+        google::cloud::internal::RaiseInvalidArgument(os.str());
+      }
+      std::string role = binding.value("role", "");
+      for (auto const& member : binding["members"].items()) {
+        policy.bindings.AddMember(role, member.value());
+      }
+    }
+  }
+  return policy;
+}  // namespace internal
+
 SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
     std::string bucket_name, google::cloud::IamPolicy const& policy)
     : bucket_name_(std::move(bucket_name)) {
