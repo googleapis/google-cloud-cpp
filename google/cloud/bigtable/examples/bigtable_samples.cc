@@ -302,7 +302,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 }
 //! [wait for consistency check]
 
-//! [list snapshot]
+//! [list snapshots]
 void ListSnapshots(google::cloud::bigtable::TableAdmin admin,
                    std::string const& cluster_id_str) {
   google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
@@ -313,7 +313,7 @@ void ListSnapshots(google::cloud::bigtable::TableAdmin admin,
     std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
   }
 }
-//! [list snapshot]
+//! [list snapshots]
 
 //! [sample row keys]
 void SampleRows(google::cloud::bigtable::Table table) {
