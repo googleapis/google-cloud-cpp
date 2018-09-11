@@ -304,15 +304,18 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 
 //! [check consistency]
 void CheckConsistency(google::cloud::bigtable::TableAdmin admin,
-                      std::string const& table_id_param) {
+                      std::string const& table_id_param,
+                      std::string const& consistency_token_param) {
   google::cloud::bigtable::TableId table_id(table_id_param);
   google::cloud::bigtable::ConsistencyToken consistency_token(
-      admin.GenerateConsistencyToken(table_id.get()));
+      consistency_token_param);
   auto result = admin.CheckConsistency(table_id, consistency_token);
   if (result) {
     std::cout << "Table is consistent" << std::endl;
   } else {
-    std::cout << "Table is not consistent" << std::endl;
+    std::cout << "Table is not yet consistent, Please Try again Later with the "
+                 "same Token!"
+              << std::endl;
   }
   std::cout << std::flush;
 }
@@ -565,7 +568,7 @@ int main(int argc, char* argv[]) try {
   } else if (command == "wait-for-consistency-check") {
     WaitForConsistencyCheck(admin, table_id);
   } else if (command == "check-consistency") {
-    CheckConsistency(admin, table_id);
+    CheckConsistency(admin, table_id, "test-token");
   } else {
     std::cerr << "Unknown command: " << command << std::endl;
     print_usage();
