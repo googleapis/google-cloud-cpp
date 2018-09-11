@@ -302,6 +302,43 @@ class Client {
   }
 
   /**
+   * Fetches the IamPolicy for a Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorized who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation allows you to query the IAM policies
+   * for a Bucket. IAM policies are a superset of the Bucket ACL, changes
+   * to the Bucket ACL are reflected in the IAM policy, and vice-versa. The
+   * documentation describes
+   * [the
+   * mapping](https://cloud.google.com/storage/docs/access-control/iam#acls)
+   * between legacy Bucket ACLs and IAM policies.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`, `Projection`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_iam_samples.cc get bucket iam policy
+   *
+   */
+  template <typename... Options>
+  IamPolicy GetBucketIamPolicy(std::string const& bucket_name,
+                               Options&&... options) {
+    internal::GetBucketIamPolicyRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetBucketIamPolicy(request).second;
+  }
+
+  /**
    * Creates an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.

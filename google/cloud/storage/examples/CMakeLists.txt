@@ -24,6 +24,9 @@ target_link_libraries(storage_bucket_samples storage_client)
 add_executable(storage_bucket_acl_samples storage_bucket_acl_samples.cc)
 target_link_libraries(storage_bucket_acl_samples storage_client)
 
+add_executable(storage_bucket_iam_samples storage_bucket_iam_samples.cc)
+target_link_libraries(storage_bucket_iam_samples storage_client)
+
 add_executable(storage_default_object_acl_samples
                storage_default_object_acl_samples.cc)
 target_link_libraries(storage_default_object_acl_samples storage_client)

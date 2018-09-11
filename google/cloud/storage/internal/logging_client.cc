@@ -113,6 +113,11 @@ std::pair<Status, BucketMetadata> LoggingClient::PatchBucket(
   return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
 }
 
+std::pair<Status, IamPolicy> LoggingClient::GetBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);

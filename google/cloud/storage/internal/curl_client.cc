@@ -163,6 +163,20 @@ std::pair<Status, BucketMetadata> CurlClient::PatchBucket(
                         BucketMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, IamPolicy> CurlClient::GetBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                             "/iam",
+                             storage_factory_);
+  SetupBuilder(builder, request, "GET");
+  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)}, IamPolicy{});
+  }
+  return std::make_pair(Status(), ParseIamPolicyFromString(payload.payload));
+}
+
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   // Assume the bucket name is validated by the caller.
