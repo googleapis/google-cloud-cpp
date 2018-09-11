@@ -100,11 +100,11 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    gcs::ObjectMetadata copy = client.CopyObject(
+    gcs::ObjectMetadata new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::ObjectMetadata());
-    std::cout << "Object copy. The full metadata after the copy is: " << copy
-              << std::endl;
+    std::cout << "Object copied. The full metadata after the copy is: "
+              << new_copy_meta << std::endl;
   }
   //! [copy object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -116,8 +116,8 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
   if (argc != 6) {
     throw Usage{
         "copy-encrypted-object <source-bucket-name> <source-object-name>"
-        " <destination-bucket-name>"
-        " <destination-object-name> <destination-object-key>"};
+        " <destination-bucket-name> <destination-object-name>"
+        " <encryption-key-base64>"};
   }
   auto source_bucket_name = ConsumeArg(argc, argv);
   auto source_object_name = ConsumeArg(argc, argv);
@@ -127,16 +127,14 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
   //! [copy encrypted object]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name,
-     std::string destination_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name, std::string key_base64) {
-    gcs::ObjectMetadata copy = client.CopyObject(
+    gcs::ObjectMetadata new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name,
-        gcs::ObjectMetadata(),
+        destination_object_name, gcs::ObjectMetadata(),
         gcs::EncryptionKey::FromBase64Key(key_base64));
-    std::cout << "Object copy. The full metadata after the copy is: " << copy
-              << std::endl;
+    std::cout << "Object copied. The full metadata after the copy is: "
+    << new_copy_meta << std::endl;
   }
   //! [copy encrypted object]
   (std::move(client), source_bucket_name, source_object_name,

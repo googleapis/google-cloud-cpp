@@ -333,8 +333,10 @@ class Client {
    * large objects and retrying the operation will not succeed.
    *
    * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
-   *   a full description of the advantages of `RewriteObject` over
-   *   `CopyObject`.
+   *   a full description of the advantages of `Objects: rewrite` over
+   *   `Objects: copy`.
+   *
+   * TODO(#816) - reference the RewriteObject() member function here.
    *
    * @param source_bucket_name the name of the bucket that contains the object
    *     to be copied.
