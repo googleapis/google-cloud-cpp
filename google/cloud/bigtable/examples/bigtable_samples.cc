@@ -302,6 +302,17 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 }
 //! [wait for consistency check]
 
+//! [get snapshot]
+void GetSnapshot(google::cloud::bigtable::TableAdmin admin,
+                 std::string const& cluster_id_str,
+                 std::string const& snapshot_id_str) {
+  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+  google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
+  auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
+  std::cout << "GetSnapshot name : " << snapshot.name() << std::endl;
+}
+//! [get snapshot]
+
 //! [sample row keys]
 void SampleRows(google::cloud::bigtable::Table table) {
   auto samples = table.SampleRows<>();
