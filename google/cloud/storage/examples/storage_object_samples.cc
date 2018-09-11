@@ -373,7 +373,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
 
 void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
                                        int& argc, char* argv[]) {
-  if (argc < 6) {
+  if (argc < 5) {
     throw Usage{
         "compose-object-from-encrypted-objects <bucket-name>"
         " <destination-object-name> <base64-encoded-aes256-key>"
