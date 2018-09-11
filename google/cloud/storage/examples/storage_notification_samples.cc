@@ -94,7 +94,8 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
   //! [get notification] [START storage_print_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
-    auto notification = client.GetNotification(bucket_name, notification_id);
+    gcs::NotificationMetadata notification =
+        client.GetNotification(bucket_name, notification_id);
     std::cout << "Notification " << notification.id() << " for bucket "
               << bucket_name << " details=" << notification << std::endl;
   }
