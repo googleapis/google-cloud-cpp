@@ -15,10 +15,6 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include <gmock/gmock.h>
 
-namespace google_cloud_storage_internal_nlohmann_3_1_2 {
-inline void PrintTo(json const& json, std::ostream* os) { *os << json.dump(); }
-}  // namespace google_cloud_storage_internal_nlohmann_3_1_2
-
 namespace google {
 namespace cloud {
 namespace storage {
