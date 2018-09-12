@@ -22,6 +22,7 @@ var searchData=
   ['content_5ftype',['content_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a8b77cb0213112cf29ab1a753ee0235b2',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['contentencoding',['ContentEncoding',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentEncoding.html',1,'google::cloud::storage::v0']]],
   ['contenttype',['ContentType',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html',1,'google::cloud::storage::v0']]],
+  ['copyobject',['CopyObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a1c38c743e57bc81c97026d40d1122e96',1,'google::cloud::storage::v0::Client']]],
   ['cors',['cors',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a9df467448efc7f652fb78a2f27514f3a',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['corsentry',['CorsEntry',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html',1,'google::cloud::storage::v0']]],
   ['crc32c',['crc32c',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a018b732e33a7dde44671f40137318180',1,'google::cloud::storage::v0::ObjectMetadata']]],
