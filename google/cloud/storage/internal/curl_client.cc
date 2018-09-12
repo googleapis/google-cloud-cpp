@@ -188,6 +188,25 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
                         ObjectMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, ObjectMetadata> CurlClient::CopyObject(
+    CopyObjectRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
+          request.source_object() + "/copyTo/b/" +
+          request.destination_bucket() + "/o/" + request.destination_object(),
+      storage_factory_);
+  SetupBuilder(builder, request, "POST");
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectMetadata{});
+  }
+  return std::make_pair(Status(),
+                        ObjectMetadata::ParseFromString(payload.payload));
+}
+
 std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +

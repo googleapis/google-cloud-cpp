@@ -167,6 +167,14 @@ std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
                   &RawClient::InsertObjectMedia, request, __func__);
 }
 
+std::pair<Status, ObjectMetadata> RetryClient::CopyObject(
+    CopyObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::CopyObject, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> RetryClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   auto retry_policy = retry_policy_->clone();

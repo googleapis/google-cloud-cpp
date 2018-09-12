@@ -139,6 +139,46 @@ def raise_csek_error(code=400):
     raise ErrorResponse(json.dumps(error), status_code=code)
 
 
+def validate_customer_encryption_headers(key_header_value, hash_header_value,
+                                         algo_header_value):
+    """Verify that the encryption headers are internally consistent.
+
+    :param key_header_value: str the value of the x-goog-*-key header
+    :param hash_header_value: str the value of the x-goog-*-key-sha256 header
+    :param algo_header_value: str the value of the x-goog-*-key-algorithm header
+    :return: NoneType
+    """
+    if key_header_value:
+        print("\n\nKEY = %s\n", key_header_value)
+    if hash_header_value:
+        print("\n\nHASH = %s\n", hash_header_value)
+    if algo_header_value:
+        print("\n\nALGO = %s\n", algo_header_value)
+    try:
+        if algo_header_value is None or algo_header_value != 'AES256':
+            raise ErrorResponse(
+                'Invalid or missing algorithm %s for CSEK' % algo_header_value,
+                status_code=400)
+
+        key = base64.standard_b64decode(key_header_value)
+        if key is None or len(key) != 256 / 8:
+            raise_csek_error()
+
+        h = hashlib.sha256()
+        h.update(key)
+        expected = base64.standard_b64encode(h.digest())
+        if hash_header_value is None or expected != hash_header_value:
+            raise_csek_error()
+    except ErrorResponse:
+        # ErrorResponse indicates that the request was invalid, just pass
+        # that exception through.
+        raise
+    except Exception as ex:
+        # Many of the functions above may raise, convert those to an
+        # ErrorResponse with the right format.
+        raise_csek_error()
+
+
 def json_api_patch(original, patch, recurse_on={}):
     """Patch a dictionary using the JSON API semantics.
 
@@ -177,7 +217,12 @@ def json_api_patch(original, patch, recurse_on={}):
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
-    def __init__(self, gcs_url, bucket_name, name, generation, request,
+    def __init__(self,
+                 gcs_url,
+                 bucket_name,
+                 name,
+                 generation,
+                 request,
                  media=None):
         """
         Initialize a new object revision.
@@ -229,7 +274,7 @@ class GcsObjectVersion(object):
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
-        :param metadata:dic a dictionary with new metadata values.
+        :param metadata:dict a dictionary with new metadata values.
         """
         tmp = self.metadata.copy()
         tmp.update(metadata)
@@ -250,46 +295,59 @@ class GcsObjectVersion(object):
         tmp['metageneration'] = tmp.get('metageneration', 0) + 1
         self.metadata = tmp
 
+    def validate_encryption_for_read(self, request,
+                                     prefix='x-goog-encryption'):
+        """Verify that the request includes the correct encryption keys.
+
+        :param request:flask.Request the http request.
+        :param prefix: str the prefix shared by the encryption headers,
+            typically 'x-goog-encryption', but for rewrite requests it can be
+            'x-good-copy-source-encryption'.
+        :return:NoneType
+        """
+        key_header = prefix + '-key'
+        hash_header = prefix + '-key-sha256'
+        algo_header = prefix + '-algorithm'
+        encryption = self.metadata.get('customerEncryption')
+        if encryption is None:
+            # The object is not encrypted, no key is needed.
+            if request.headers.get(key_header) is None:
+                return
+            else:
+                # The data is not encrypted, sending an encryption key is an
+                # error.
+                raise_csek_error()
+        # The data is encrypted, the key must be present, match, and match its
+        # hash.
+        key_header_value = request.headers.get(key_header)
+        hash_header_value = request.headers.get(hash_header)
+        algo_header_value = request.headers.get(algo_header)
+        validate_customer_encryption_headers(
+            key_header_value, hash_header_value, algo_header_value)
+        if encryption.get('keySha256') != hash_header_value:
+            raise_csek_error()
+
     def _capture_customer_encryption(self, request):
         """Capture the customer-supplied encryption key, if any.
 
         :param request:flask.Request the http request.
-        :return:NoneType
+        :return: NoneType
         """
         if request.headers.get('x-goog-encryption-key') is None:
             return
-        try:
-            keybase64 = request.headers.get('x-goog-encryption-key')
-            key = base64.standard_b64decode(keybase64)
-            if key is None or len(key) != 256 / 8:
-                raise_csek_error()
-
-            algo = request.headers.get('x-goog-encryption-algorithm')
-            if algo is None or algo != 'AES256':
-                raise ErrorResponse(
-                    'Invalid or missing algorithm %s for CSEK' % algo,
-                    status_code=400)
-
-            actual = request.headers.get('x-goog-encryption-key-sha256')
-            h = hashlib.sha256()
-            h.update(key)
-            expected = base64.standard_b64encode(h.digest())
-            if expected != actual:
-                raise_csek_error(400)
-
-            self.metadata['customerEncryption'] = {
-                "encryptionAlgorithm": algo,
-                "keySha256": actual,
-            }
-        except ErrorResponse:
-            # ErrorResponse indicates that the request was invalid, just pass
-            # that exception through.
-            raise
-        except Exception as ex:
-            print("\n\n\n Exception %s\n\n" % ex)
-            # Many of the functions above may raise, convert those to an
-            # ErrorResponse with the right format.
-            raise raise_csek_error()
+        prefix = 'x-goog-encryption'
+        key_header = prefix + '-key'
+        hash_header = prefix + '-key-sha256'
+        algo_header = prefix + '-algorithm'
+        key_header_value = request.headers.get(key_header)
+        hash_header_value = request.headers.get(hash_header)
+        algo_header_value = request.headers.get(algo_header)
+        validate_customer_encryption_headers(
+            key_header_value, hash_header_value, algo_header_value)
+        self.metadata['customerEncryption'] = {
+            "encryptionAlgorithm": algo_header_value,
+            "keySha256": hash_header_value,
+        }
 
     def insert_acl(self, entity, role):
         """
@@ -402,16 +460,18 @@ class GcsObject(object):
         self.generation = 0
         self.revisions = {}
 
-    def get_revision(self, request):
+    def get_revision(self, request, version_field_name='generation'):
         """
         Get the information about a particular object revision or raise.
 
-        :param request:flask.Request
+        :param request:flask.Request the contents of the http request.
+        :param generation_parameter_name:str the name of the generation
+            parameter, typically 'generation', but sometimes 'sourceGeneration'.
         :return:GcsObjectRevision the object revision.
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
-        generation = request.args.get('generation')
+        generation = request.args.get(version_field_name)
         if generation is None:
             return self.get_latest()
         version = self.revisions.get(int(generation))
@@ -488,7 +548,8 @@ class GcsObject(object):
                 raise ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-        patched = json_api_patch(version.metadata, patch, recurse_on={'metadata'})
+        patched = json_api_patch(
+            version.metadata, patch, recurse_on={'metadata'})
         patched['metageneration'] = patched.get('metageneration', 0) + 1
         version.metadata = patched
         return version
@@ -505,22 +566,44 @@ class GcsObject(object):
     def get_latest(self):
         return self.revisions.get(self.generation, None)
 
-    def check_preconditions(self, request):
-        """Verify that the preconditions in request are met."""
+    def check_preconditions(
+            self,
+            request,
+            if_generation_match='ifGenerationMatch',
+            if_generation_not_match='ifGenerationNotMatch',
+            if_metageneration_match='ifMetagenerationMatch',
+            if_metageneration_not_match='ifMetagenerationNotMatch'):
+        """Verify that the preconditions in request are met.
 
-        generation_match = request.args.get('ifGenerationMatch')
+        :param request:flask.Request the http request.
+        :param if_generation_match:str the name of the generation match
+            parameter name, typically 'ifGenerationMatch', but sometimes
+            'ifSourceGenerationMatch'.
+        :param if_generation_not_match:str the name of the generation not-match
+            parameter name, typically 'ifGenerationNotMatch', but sometimes
+            'ifSourceGenerationNotMatch'.
+        :param if_metageneration_match:str the name of the metageneration match
+            parameter name, typically 'ifMetagenerationMatch', but sometimes
+            'ifSourceMetagenerationMatch'.
+        :param if_metageneration_not_match:str the name of the metageneration
+            not-match parameter name, typically 'ifMetagenerationNotMatch', but
+            sometimes 'ifSourceMetagenerationNotMatch'.
+        """
+
+        generation_match = request.args.get(if_generation_match)
         if generation_match is not None \
                 and int(generation_match) != self.generation:
             raise ErrorResponse('Precondition Failed', status_code=412)
 
         # This object does not exist (yet), testing in this case is special.
-        generation_not_match = request.args.get('ifGenerationNotMatch')
+        generation_not_match = request.args.get(if_generation_not_match)
         if generation_not_match is not None \
                 and int(generation_not_match) == self.generation:
             raise ErrorResponse('Precondition Failed', status_code=412)
 
-        metageneration_match = request.args.get('ifMetagenerationMatch')
-        metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
+        metageneration_match = request.args.get(if_metageneration_match)
+        metageneration_not_match = request.args.get(
+            if_metageneration_not_match)
         if self.generation == 0:
             if metageneration_match is not None \
                     or metageneration_not_match is not None:
@@ -545,11 +628,37 @@ class GcsObject(object):
 
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
-        :return:None
+        :return:GcsObjectVersion the newly created object version.
         """
         self.generation += 1
-        self.revisions[self.generation] = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request)
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request)
+        self.revisions[self.generation] = revision
+        return revision
+
+    def copy_from(self, gcs_url, request, source_revision):
+        """
+        Insert a new revision based on the give flask request.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :param source_revision:GcsObjectVersion the source object version to
+            copy from.
+        :return:GcsObjectVersion the newly created object version.
+        """
+        self.generation += 1
+        source_revision.validate_encryption_for_read(flask.request)
+        revision = GcsObjectVersion(
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation,
+            request,
+            media=source_revision.media)
+        metadata = json.loads(request.data)
+        revision.update_from_metadata(metadata)
+        self.revisions[self.generation] = revision
+        return revision
 
     def compose_from(self, gcs_url, request, composed_media):
         """
@@ -896,6 +1005,23 @@ def lookup_bucket(bucket_name):
     return bucket
 
 
+def lookup_object(bucket_name, object_name):
+    """
+    Lookup an object by name in GCS_OBJECTS.
+
+    :param bucket_name:str the name of the Bucket that contains the object.
+    :param object_name:str the name of the Object.
+    :return: (str,GcsObject) tuple the object path and the object.
+    :raises:ErrorResponse if the object is not found.
+    """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path)
+    if gcs_object is None:
+        raise ErrorResponse('Object %s in %s not found' % (object_name, bucket_name),
+                            status_code=404)
+    return (object_path, gcs_object)
+
+
 @gcs.route('/')
 def gcs_index():
     """The default handler for GCS requests."""
@@ -1222,34 +1348,59 @@ def objects_list(bucket_name):
     return filtered_response(flask.request, result)
 
 
+@gcs.route(
+    '/b/<source_bucket>/o/<source_object>/copyTo/b/<destination_bucket>/o/<destination_object>',
+    methods=['POST'])
+def objects_copy(source_bucket, source_object,
+                 destination_bucket, destination_object):
+    """Implement the 'Objects: copy' API, copy an object."""
+    object_path, gcs_object = lookup_object(source_bucket, source_object)
+    gcs_object.check_preconditions(
+        flask.request,
+        if_generation_match='ifSourceGenerationMatch',
+        if_generation_not_match='ifSourceGenerationNotMatch',
+        if_metageneration_match='ifSourceMetagenerationMatch',
+        if_metageneration_not_match='ifSourceMetagenerationNotMatch')
+    source_revision = gcs_object.get_revision(flask.request,
+                                              'sourceGeneration')
+    if source_revision is None:
+        raise ErrorResponse(
+            'Revision not found %s' % object_path, status_code=404)
+
+    destination_path = destination_bucket + "/o/" + destination_object
+    gcs_object = GCS_OBJECTS.setdefault(destination_path,
+                                        GcsObject(destination_bucket,
+                                                  destination_object))
+    base_url = flask.url_for('gcs_index', _external=True)
+    current_version = gcs_object.copy_from(base_url, flask.request,
+                                           source_revision)
+    return filtered_response(flask.request, current_version.metadata)
+
+
 @gcs.route('/b/<bucket_name>/o/<object_name>')
 def objects_get(bucket_name, object_name):
     """Implement the 'Objects: get' API.  Read objects or their metadata."""
-    media = flask.request.args.get('alt', None)
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
 
-    if media is not None:
-        if media != 'media':
-            raise ErrorResponse('Invalid alt=%s parameter' % media)
-        response = flask.make_response(revision.media)
-        length = len(revision.media)
-        response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1,
-                                                               length)
-        return response
-
-    return filtered_response(flask.request, revision.metadata)
+    media = flask.request.args.get('alt', None)
+    if media is None or media == 'json':
+        return filtered_response(flask.request, revision.metadata)
+    if media != 'media':
+        raise ErrorResponse('Invalid alt=%s parameter' % media)
+    revision.validate_encryption_for_read(flask.request)
+    response = flask.make_response(revision.media)
+    length = len(revision.media)
+    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1,
+                                                           length)
+    return response
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
 def objects_delete(bucket_name, object_name):
     """Implement the 'Objects: delete' API.  Delete objects."""
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    object_path, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     remove = gcs_object.del_revision(flask.request)
     if remove:
@@ -1261,12 +1412,11 @@ def objects_delete(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
 def objects_update(bucket_name, object_name):
     """Implement the 'Objects: update' API: update an existing Object."""
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.update_revision(flask.request)
     return json.dumps(revision.metadata)
+
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/compose', methods=['POST'])
 def objects_compose(bucket_name, object_name):
@@ -1324,9 +1474,7 @@ def objects_compose(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
 def objects_patch(bucket_name, object_name):
     """Implement the 'Objects: patch' API: update an existing Object."""
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.patch_revision(flask.request)
     return json.dumps(revision.metadata)
@@ -1338,9 +1486,7 @@ def objects_acl_list(bucket_name, object_name):
 
     List Object Access Controls.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     result = {
@@ -1355,9 +1501,7 @@ def objects_acl_create(bucket_name, object_name):
 
     Create an Object Access Control.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
@@ -1373,9 +1517,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
 
     Delete an Object Access Control.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
@@ -1388,9 +1530,7 @@ def objects_acl_get(bucket_name, object_name, entity):
 
     Get the access control configuration for a particular entity.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.get_acl(entity)
@@ -1403,9 +1543,7 @@ def objects_acl_update(bucket_name, object_name, entity):
 
     Update the access control configuration for a particular entity.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
@@ -1419,9 +1557,7 @@ def objects_acl_patch(bucket_name, object_name, entity):
 
     Patch the access control configuration for a particular entity.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
@@ -1466,9 +1602,7 @@ def objects_insert(bucket_name):
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
     GCS_OBJECTS[object_path] = gcs_object
-    gcs_object.insert(gcs_url, flask.request)
-    current_version = gcs_object.get_latest()
-
+    current_version = gcs_object.insert(gcs_url, flask.request)
     return filtered_response(flask.request, current_version.metadata)
 
 

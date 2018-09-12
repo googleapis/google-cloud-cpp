@@ -97,6 +97,52 @@ TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
       "InsertObjectMedia");
 }
 
+TEST_F(ObjectTest, CopyObject) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = storage::ObjectMetadata::ParseFromString(text);
+
+  EXPECT_CALL(*mock, CopyObject(_))
+      .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.destination_bucket());
+        EXPECT_EQ("test-object-name", request.destination_object());
+        EXPECT_EQ("source-bucket-name", request.source_bucket());
+        EXPECT_EQ("source-object-name", request.source_object());
+        EXPECT_THAT(request.json_payload(), HasSubstr("text/plain"));
+        return std::make_pair(storage::Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  ObjectMetadata actual = client.CopyObject(
+      "source-bucket-name", "source-object-name", "test-bucket-name",
+      "test-object-name", ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectTest, CopyObjectTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectMetadata>(
+      mock, EXPECT_CALL(*mock, CopyObject(_)),
+      [](Client& client) {
+        client.CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name",
+                          ObjectMetadata());
+      },
+      "CopyObject");
+}
+
+TEST_F(ObjectTest, CopyObjectPermanentFailure) {
+  testing::PermanentFailureTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, CopyObject(_)),
+      [](Client& client) {
+        client.CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name",
+                          ObjectMetadata());
+      },
+      "CopyObject");
+}
+
 TEST_F(ObjectTest, GetObjectMetadata) {
   std::string text = R"""({
       "bucket": "test-bucket-name",

@@ -49,6 +49,8 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::InsertObjectMediaRequest const&));
+  MOCK_METHOD1(CopyObject, ResponseWrapper<storage::ObjectMetadata>(
+                               internal::CopyObjectRequest const&));
   MOCK_METHOD1(GetObjectMetadata,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::GetObjectMetadataRequest const&));

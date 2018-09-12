@@ -47,6 +47,8 @@ class LoggingClient : public RawClient {
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
+  std::pair<Status, ObjectMetadata> CopyObject(
+      CopyObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
   std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(

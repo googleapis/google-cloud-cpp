@@ -151,6 +151,7 @@ run_all_object_examples() {
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
+  local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -173,11 +174,17 @@ run_all_object_examples() {
       "${object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${composed_object_name}"
+  run_example ./storage_object_samples copy-object \
+      "${bucket_name}" "${object_name}" \
+      "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
-  local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
-  local encrypted_composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
+  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_composed_object_name="composed-enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_copied_object_name="copied-enc-obj-$(date +%s)-${RANDOM}.txt"
 
   local key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
@@ -188,6 +195,15 @@ run_all_object_examples() {
   run_example ./storage_object_samples compose-object-from-encrypted-objects \
       "${bucket_name}" "${encrypted_composed_object_name}" "${key}" \
       "${encrypted_object_name}" "${encrypted_object_name}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}"
+  run_example ./storage_object_samples copy-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 
