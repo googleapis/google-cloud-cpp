@@ -624,7 +624,7 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   ObjectMetadata composed_meta =
       client.ComposeObject(bucket_name, source_objects, composed_object_name,
                            ObjectMetadata().set_content_type("plain/text"),
-                           SourceEncryptionKey(key), EncryptionKey(key));
+                          EncryptionKey(key));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);

@@ -186,7 +186,7 @@ run_all_object_examples() {
   run_example ./storage_object_samples read-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
   run_example ./storage_object_samples compose-object-from-encrypted-objects \
-      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" "${key}" \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" \
       "${encrypted_object_name}" "${encrypted_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"

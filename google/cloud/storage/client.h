@@ -549,7 +549,7 @@ class Client {
    *     Valid types for this operation include
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
    *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
-   *      `SourceEncryptionKey`, `UserProject`.
+   *      `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.
    *
