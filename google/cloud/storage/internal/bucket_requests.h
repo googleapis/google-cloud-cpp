@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H_
 
+#include "google/cloud/iam_policy.h"
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
@@ -179,6 +180,68 @@ class PatchBucketRequest
 };
 
 std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: getIamPolicy` API.
+ */
+class GetBucketIamPolicyRequest
+    : public GenericRequest<GetBucketIamPolicyRequest, UserProject> {
+ public:
+  GetBucketIamPolicyRequest() = default;
+  explicit GetBucketIamPolicyRequest(std::string bucket_name)
+      : bucket_name_(std::move(bucket_name)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+
+ private:
+  std::string bucket_name_;
+};
+
+std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: getIamPolicy` API.
+ */
+class SetBucketIamPolicyRequest
+    : public GenericRequest<SetBucketIamPolicyRequest, UserProject> {
+ public:
+  SetBucketIamPolicyRequest() = default;
+  explicit SetBucketIamPolicyRequest(std::string bucket_name,
+                                     google::cloud::IamPolicy const& policy);
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::string const& json_payload() const { return json_payload_; }
+
+ private:
+  std::string bucket_name_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r);
+
+/**
+ * Represents a request to the `Buckets: testIamPolicyPermissions` API.
+ */
+class TestBucketIamPermissionsRequest
+    : public GenericRequest<TestBucketIamPermissionsRequest, UserProject> {
+ public:
+  TestBucketIamPermissionsRequest() = default;
+  explicit TestBucketIamPermissionsRequest(std::string bucket_name,
+                                           std::vector<std::string> permissions)
+      : bucket_name_(std::move(bucket_name)),
+        permissions_(std::move(permissions)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::vector<std::string> const& permissions() const { return permissions_; }
+
+ private:
+  std::string bucket_name_;
+  std::vector<std::string> permissions_;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <iostream>
 
 namespace google {
@@ -187,6 +188,55 @@ std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r) {
   os << "PatchBucketRequest={bucket_name=" << r.bucket();
   r.DumpOptions(os, ", ");
   return os << ", payload=" << r.payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
+  os << "GetBucketIamPolicyRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
+    std::string bucket_name, google::cloud::IamPolicy const& policy)
+    : bucket_name_(std::move(bucket_name)) {
+  internal::nl::json iam{
+      {"kind", "storage#policy"},
+      {"etag", policy.etag},
+  };
+  internal::nl::json bindings;
+  for (auto const& binding : policy.bindings) {
+    internal::nl::json b{
+        {"role", binding.first},
+    };
+    internal::nl::json m;
+    for (auto const& member : binding.second) {
+      m.emplace_back(member);
+    }
+    b["members"] = std::move(m);
+    bindings.emplace_back(std::move(b));
+  }
+  iam["bindings"] = std::move(bindings);
+  json_payload_ = iam.dump();
+}
+
+std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
+  os << "GetBucketIamPolicyRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << ", json_payload=" << r.json_payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsRequest const& r) {
+  os << "TestBucketIamPermissionsREquest={bucket_name=" << r.bucket_name()
+     << ", permissions=[";
+  char const* sep = "";
+  for (auto const& p : r.permissions()) {
+    os << sep << p;
+    sep = ", ";
+  }
+  os << "]";
+  r.DumpOptions(os, ", ");
+  return os << "}";
 }
 
 }  // namespace internal
