@@ -34,6 +34,7 @@ source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 ################################################
 run_all_bucket_examples() {
   local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
 
   EMULATOR_LOG="testbench.log"
   run_example ./storage_bucket_samples list-buckets-for-project \
@@ -55,6 +56,16 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples remove-bucket-label \
       "${bucket_name}" "test-label"
   run_example ./storage_bucket_samples get-bucket-labels \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples get-billing \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples enable-requester-pays \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples write-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples read-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples disable-requester-pays \
       "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   run_example ./storage_bucket_samples get-service-account-for-project \
