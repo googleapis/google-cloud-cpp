@@ -214,6 +214,24 @@ def json_api_patch(original, patch, recurse_on={}):
     return tmp
 
 
+def extract_media(request):
+    """Extract the media from a flask Request.
+
+    To avoid race conditions when using greenlets we cannot perform I/O in the
+    constructor of GcsObjectVersion, or in any of the operations that modify
+    the state of the service.  Because sometimes the media is uploaded with
+    chunked encoding, we need to do I/O before finishing the GcsObjectVersion
+    creation. If we do this I/O after the GcsObjectVersion creation started,
+    the the state of the application may change due to other I/O.
+
+    :param request:flask.Request the HTTP request.
+    :return str:the full media of the request.
+    """
+    if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
+        return request.environ.get('wsgi.input').read()
+    return request.data
+
+
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
@@ -223,7 +241,7 @@ class GcsObjectVersion(object):
                  name,
                  generation,
                  request,
-                 media=None):
+                 media):
         """
         Initialize a new object revision.
 
@@ -241,12 +259,7 @@ class GcsObjectVersion(object):
         self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
-        if media is not None:
-            self.media = media
-        elif request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
-            self.media = request.environ.get('wsgi.input').read()
-        else:
-            self.media = request.data
+        self.media = media
 
         self.metadata = {
             'timeCreated': timestamp,
@@ -485,12 +498,12 @@ class GcsObject(object):
         Delete a version of a fake GCS Blob.
 
         :param request:flask.Request the contents of the HTTP request.
-        :return: None
+        :return: True if the object entry in the Bucket should be deleted.
         """
         generation = request.args.get('generation')
         if generation is None:
             generation = self.generation
-        self.revisions.pop(generation)
+        self.revisions.pop(int(generation))
         if len(self.revisions) == 0:
             self.generation = None
             return True
@@ -630,10 +643,19 @@ class GcsObject(object):
         :param request:flask.Request the contents of the HTTP request.
         :return:GcsObjectVersion the newly created object version.
         """
+        media = extract_media(request)
         self.generation += 1
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request)
-        self.revisions[self.generation] = revision
+        revision = GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
+        update = {
+            self.generation: revision
+        }
+        bucket = lookup_bucket(self.bucket_name)
+        if not bucket.versioning_enabled():
+            self.revisions = update
+        else:
+            self.revisions.update(update)
         return revision
 
     def copy_from(self, gcs_url, request, source_revision):
@@ -654,7 +676,7 @@ class GcsObject(object):
             self.name,
             self.generation,
             request,
-            media=source_revision.media)
+            source_revision.media)
         metadata = json.loads(request.data)
         revision.update_from_metadata(metadata)
         self.revisions[self.generation] = revision
@@ -675,7 +697,7 @@ class GcsObject(object):
             self.name,
             self.generation,
             request,
-            media=composed_media)
+            composed_media)
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
@@ -723,6 +745,13 @@ class GcsBucket(object):
         """Increase the current metageneration number."""
         new = self.metadata.get('metageneration', 0) + 1
         self.metadata['metageneration'] = new
+
+    def versioning_enabled(self):
+        """Return True if versioning is enabled for this Bucket."""
+        v = self.metadata.get('versioning', None)
+        if v is None:
+            return False
+        return v.get('enabled', False)
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
