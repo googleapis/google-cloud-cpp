@@ -35,6 +35,7 @@ class WellKnownParameter {
  public:
   WellKnownParameter() : value_{} {}
   explicit WellKnownParameter(T&& value) : value_(std::forward<T>(value)) {}
+  explicit WellKnownParameter(T const& value) : value_(value) {}
 
   char const* parameter_name() const { return P::well_known_parameter_name(); }
   bool has_value() const { return value_.has_value(); }

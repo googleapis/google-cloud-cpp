@@ -206,10 +206,36 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
+}
 
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_object_samples
+################################################
+# Run all Customer-managed Encryption Keys examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   cmek: the name of the Customer-managed Encryption Key used in the tests.
+# Returns:
+#   None
+################################################
+run_all_cmek_examples() {
+  local cmek=$1
+
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_object_samples write-object-with-kms-key \
+      "${bucket_name}" "${object_name}" "${cmek}"
+  run_example ./storage_object_samples read-object \
+      "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 }
 
 ################################################
@@ -315,6 +341,7 @@ run_all_storage_examples() {
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
+  run_all_cmek_examples "${STORAGE_CMEK_KEY}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then
