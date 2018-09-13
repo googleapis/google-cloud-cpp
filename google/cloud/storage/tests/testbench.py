@@ -402,8 +402,8 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
         """
@@ -670,13 +670,18 @@ class GcsObject(object):
         """
         self.generation += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation,
+            request,
             media=composed_media)
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
         self.revisions[self.generation] = revision
         return revision
+
 
 class GcsBucket(object):
     """Represent a GCS Bucket."""
@@ -697,6 +702,8 @@ class GcsBucket(object):
         }
         self.notification_id = 1
         self.notifications = {}
+        self.iam_version = 1
+        self.iam_bindings = {}
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
         self.insert_acl(
@@ -711,6 +718,11 @@ class GcsBucket(object):
             canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_default_object_acl(
             canonical_entity_name('project-viewers-123456789'), 'READER')
+
+    def increase_metageneration(self):
+        """Increase the current metageneration number."""
+        new = self.metadata.get('metageneration', 0) + 1
+        self.metadata['metageneration'] = new
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -728,8 +740,8 @@ class GcsBucket(object):
             'timeCreated': '2018-05-19T19:31:14Z',
             'updated': '2018-05-19T19:31:24Z',
         })
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
         self.metadata = tmp
+        self.increase_metageneration()
 
     def apply_patch(self, patch):
         """Update from a metadata dictionary.
@@ -747,8 +759,8 @@ class GcsBucket(object):
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
         patched = json_api_patch(self.metadata, patch, recurse_on={'labels'})
-        patched['metageneration'] = patched.get('metageneration', 0) + 1
         self.metadata = patched
+        self.increase_metageneration()
 
     def check_preconditions(self, request):
         """
@@ -777,21 +789,19 @@ class GcsBucket(object):
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
 
-    def insert_acl(self, entity, role):
+    def create_acl_entry(self, entity, role):
         """
-        Insert (or update) a new BucketAccessControl entry for this bucket.
+        Return an ACL entry for the given entity and role.
 
-        :param entity:str the name of the entity to insert.
-        :param role:str the new role
-        :return:dict the dictionary representing the new AccessControl metadata.
+        :param entity: str the user, group or email granted permissions.
+        :param role: str the name of the permissions (READER, WRITER, OWNER).
+        :return: (str,dict) the canonical entity name and the ACL entry.
         """
         entity = canonical_entity_name(entity)
         email = ''
         if entity.startswith('user-'):
             email = entity.replace('user-', '', 1)
-        # Replace or insert the entry.
-        indexed = index_acl(self.metadata.get('acl', []))
-        indexed[entity] = {
+        return (entity, {
             'bucket': self.name,
             'email': email,
             'entity': entity,
@@ -800,9 +810,22 @@ class GcsBucket(object):
             'kind': 'storage#bucketAccessControl',
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
-        }
+        })
+
+    def insert_acl(self, entity, role):
+        """
+        Insert (or update) a new BucketAccessControl entry for this bucket.
+
+        :param entity:str the name of the entity to insert.
+        :param role:str the new role
+        :return:dict the dictionary representing the new AccessControl metadata.
+        """
+        entity, entry = self.create_acl_entry(entity, role)
+        # Replace or insert the entry.
+        indexed = index_acl(self.metadata.get('acl', []))
+        indexed[entity] = entry
         self.metadata['acl'] = indexed.values()
-        return indexed[entity]
+        return entry
 
     def delete_acl(self, entity):
         """
@@ -827,8 +850,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
         """
@@ -890,8 +913,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_default_object_acl(self, entity, role):
         """
@@ -959,6 +982,113 @@ class GcsBucket(object):
                                                      self.name),
                 status_code=404)
         return details
+
+    def iam_policy_as_json(self):
+        """Get the current IamPolicy in the right format for JSON."""
+        role_mapping = {
+            'READER': 'roles/storage.legacyBucketReader',
+            'WRITER': 'roles/storage.legacyBucketWriter',
+            'OWNER': 'roles/storage.legacyBucketOwner',
+        }
+        members_by_role = self.iam_bindings.copy()
+        if self.metadata.get('acl') is not None:
+            # Store the ACLs as IamBindings
+            for entry in self.metadata.get('acl', []):
+                legacy_role = entry.get('role')
+                if legacy_role is None or entry.get('entity') is None:
+                    raise ErrorResponse('Invalid ACL entry', status_code=500)
+                role = role_mapping.get(legacy_role)
+                if role is None:
+                    raise ErrorResponse(
+                        'Invalid legacy role %s' % legacy_role,
+                        status_code=500)
+                members_by_role.setdefault(role, []).append(
+                    entry.get('entity'))
+        bindings = []
+        for k, v in members_by_role.iteritems():
+            bindings.append({'role': k, 'members': v})
+        policy = {
+            'kind': 'storage#policy',
+            'resourceId': 'projects/_/buckets/%s' % self.name,
+            'bindings': bindings,
+            'etag': base64.b64encode(str(self.iam_version))
+        }
+        return policy
+
+    def get_iam_policy(self, request):
+        """Get the IamPolicy associated with this Bucket.
+
+        :param request: flask.Request the http request.
+        :return: dict the IamPolicy as a dictionary, ready for JSON encoding.
+        """
+        self.check_preconditions(request)
+        return self.iam_policy_as_json()
+
+    def set_iam_policy(self, request):
+        """
+        Set the IamPolicy associated with this Bucket.
+
+        :param request: flask.Request the original http request.
+        :return: dict the IamPolicy as a dictionary, ready for JSON encoding.
+        """
+        self.check_preconditions(request)
+        current_etag = base64.b64encode(str(self.iam_version))
+        if request.headers.get('if-match') is not None and \
+                current_etag != request.headers.get('if-match'):
+            raise ErrorResponse(
+                'Mismatched ETag has %s' % current_etag, status_code=412)
+        if request.headers.get('if-none-match') is not None and \
+                current_etag == request.headers.get('if-none-match'):
+            raise ErrorResponse(
+                'Mismatched ETag has %s' % current_etag, status_code=412)
+
+        policy = json.loads(request.data)
+        if policy.get('bindings') is None:
+            raise ErrorResponse('Missing "bindings" field')
+
+        new_acl = []
+        new_iam_bindings = {}
+        role_mapping = {
+            'roles/storage.legacyBucketReader': 'READER',
+            'roles/storage.legacyBucketWriter': 'WRITER',
+            'roles/storage.legacyBucketOwner': 'OWNER'
+        }
+        for binding in policy.get('bindings'):
+            role = binding.get('role')
+            members = binding.get('members')
+            if role is None or members is None:
+                raise ErrorResponse('Missing "role" or "members" fields')
+            if role_mapping.get(role) is None:
+                new_iam_bindings[role] = members
+            else:
+                for m in members:
+                    legacy_role = role_mapping.get(role)
+                    _, entry = self.create_acl_entry(
+                        entity=m, role=legacy_role)
+                    new_acl.append(entry)
+        self.metadata['acl'] = new_acl
+        self.iam_bindings = new_iam_bindings
+        self.iam_version = self.iam_version + 1
+        return self.iam_policy_as_json()
+
+    def test_iam_permissions(self, request):
+        """
+        Test the IAM permissions for the current user.
+
+        Because we do not want to implement a full simulator for IAM, we simply
+        return the permissions matching 'storage.*'
+
+        :param request: flask.Request the current http request.
+        :return: dict formatted for `Buckets: testIamPermissions`
+        """
+        result = {
+            'kind': 'storage#testIamPermissionsResponse',
+            'permissions': []
+        }
+        for p in request.args.getlist('permissions'):
+            if p.startswith('storage.'):
+                result['permissions'].append(p)
+        return result
 
 
 # Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
@@ -1159,10 +1289,10 @@ def bucket_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             gcs_bucket.insert_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        gcs_bucket.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
@@ -1238,10 +1368,10 @@ def bucket_default_object_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             gcs_bucket.insert_default_object_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        gcs_bucket.insert_default_object_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
@@ -1326,6 +1456,30 @@ def bucket_notification_get(bucket_name, notification_id):
     gcs_bucket = lookup_bucket(bucket_name)
     notification = gcs_bucket.get_notification(notification_id)
     return filtered_response(flask.request, notification)
+
+
+@gcs.route('/b/<bucket_name>/iam')
+def bucket_get_iam_policy(bucket_name):
+    """Implement the 'Buckets: getIamPolicy' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    return filtered_response(flask.request,
+                             gcs_bucket.get_iam_policy(flask.request))
+
+
+@gcs.route('/b/<bucket_name>/iam', methods=['PUT'])
+def bucket_set_iam_policy(bucket_name):
+    """Implement the 'Buckets: setIamPolicy' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    return filtered_response(flask.request,
+                             gcs_bucket.set_iam_policy(flask.request))
+
+
+@gcs.route('/b/<bucket_name>/iam/testPermissions')
+def bucket_test_iam_permissions(bucket_name):
+    """Implement the 'Buckets: testIamPermissions' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    return filtered_response(flask.request,
+                             gcs_bucket.test_iam_permissions(flask.request))
 
 
 @gcs.route('/b/<bucket_name>/o')
@@ -1427,34 +1581,34 @@ def objects_compose(bucket_name, object_name):
     if gcs_object is not None:
         gcs_object.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
-    source_objects = payload["sourceObjects"] 
+    source_objects = payload["sourceObjects"]
     if source_objects is None:
-        raise ErrorResponse('You must provide at least one source component.',
-                            status_code=400)
+        raise ErrorResponse(
+            'You must provide at least one source component.', status_code=400)
     if len(source_objects) > 32:
-        raise ErrorResponse('The number of source components provided'
-                            ' (%d) exceeds the maximum (32)' %
-                                len(source_objects), status_code=400)
+        raise ErrorResponse(
+            'The number of source components provided'
+            ' (%d) exceeds the maximum (32)' % len(source_objects),
+            status_code=400)
     composed_media = ""
     for source_object in source_objects:
         source_object_name = source_object.get('name')
         if source_object_name is None:
             raise ErrorResponse('Required.', status_code=400)
         source_object_path = bucket_name + '/o/' + source_object_name
-        source_gcs_object = GCS_OBJECTS.get(source_object_path,
-                                           GcsObject(bucket_name,
-                                                     source_object_name))
+        source_gcs_object = GCS_OBJECTS.get(
+            source_object_path, GcsObject(bucket_name, source_object_name))
         if source_gcs_object is None:
-            raise ErrorResponse('No such object: %s' % source_object_path,
-                                status_code=404)
+            raise ErrorResponse(
+                'No such object: %s' % source_object_path, status_code=404)
         source_revision = source_gcs_object.get_latest()
         generation = source_object.get('generation')
         if generation is not None:
             source_revision = source_gcs_object.get_revision_by_generation(
                 generation)
             if source_revision is None:
-                raise ErrorResponse('No such object: %s' % source_object_path,
-                                    status_code=404)
+                raise ErrorResponse(
+                    'No such object: %s' % source_object_path, status_code=404)
         object_preconditions = source_object.get('objectPreconditions')
         if object_preconditions is not None:
             if_generation_match = object_preconditions.get('ifGenerationMatch')
@@ -1467,7 +1621,7 @@ def objects_compose(bucket_name, object_name):
     GCS_OBJECTS[composed_object_path] = gcs_object
     base_url = flask.url_for('gcs_index', _external=True)
     current_version = gcs_object.compose_from(base_url, flask.request,
-        composed_media)
+                                              composed_media)
     return filtered_response(flask.request, current_version.metadata)
 
 
@@ -1505,10 +1659,10 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             revision.insert_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        revision.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
