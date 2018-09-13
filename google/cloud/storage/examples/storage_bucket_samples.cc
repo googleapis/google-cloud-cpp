@@ -229,7 +229,7 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto label_key = ConsumeArg(argc, argv);
   auto label_value = ConsumeArg(argc, argv);
-  //! [add bucket label] [START add_bucket_label]
+  //! [add bucket label] [START storage_add_bucket_label]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string label_key,
      std::string label_value) {
@@ -248,17 +248,17 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
     }
     std::cout << std::endl;
   }
-  //! [add bucket label] [END add_bucket_label]
+  //! [add bucket label] [END storage_add_bucket_label]
   (std::move(client), bucket_name, label_key, label_value);
 }
 
 void GetBucketLabels(google::cloud::storage::Client client, int& argc,
                      char* argv[]) {
   if (argc != 2) {
-    throw Usage{"get-bucket-label <bucket-name>"};
+    throw Usage{"get-bucket-labels <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket labels] [START get_bucket_labels]
+  //! [get bucket labels] [START storage_get_bucket_labels]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     gcs::BucketMetadata metadata =
@@ -274,18 +274,18 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
     }
     std::cout << std::endl;
   }
-  //! [get bucket label] [END get_bucket_labels]
+  //! [get bucket label] [END storage_get_bucket_labels]
   (std::move(client), bucket_name);
 }
 
 void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 3) {
-    throw Usage{"add-bucket-label <bucket-name> <label-key>"};
+    throw Usage{"remove-bucket-label <bucket-name> <label-key>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto label_key = ConsumeArg(argc, argv);
-  //! [remove bucket label] [START remove_bucket_label]
+  //! [remove bucket label] [START storage_remove_bucket_label]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string label_key) {
     gcs::BucketMetadata updated_metadata = client.PatchBucket(
@@ -302,7 +302,7 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
     }
     std::cout << std::endl;
   }
-  //! [remove bucket label] [END remove_bucket_label]
+  //! [remove bucket label] [END storage_remove_bucket_label]
   (std::move(client), bucket_name, label_key);
 }
 
