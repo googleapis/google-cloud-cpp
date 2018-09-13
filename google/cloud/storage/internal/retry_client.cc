@@ -408,6 +408,14 @@ std::pair<Status, NotificationMetadata> RetryClient::CreateNotification(
                   &RawClient::CreateNotification, request, __func__);
 }
 
+std::pair<Status, NotificationMetadata> RetryClient::GetNotification(
+    GetNotificationRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::GetNotification, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

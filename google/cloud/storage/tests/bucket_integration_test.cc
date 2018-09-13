@@ -496,6 +496,9 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                     });
   EXPECT_EQ(1U, count) << create;
 
+  auto get = client.GetNotification(bucket_name, create.id());
+  EXPECT_EQ(create, get);
+
   client.DeleteBucket(bucket_name);
 }
 

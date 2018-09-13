@@ -1342,6 +1342,37 @@ class Client {
     return raw_client_->CreateNotification(request).second;
   }
 
+  /**
+   * Gets the details about a notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function fetches the detailed information for a given notification config.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc get notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  NotificationMetadata GetNotification(std::string const& bucket_name,
+                                       std::string const& notification_id,
+                                       Options&&... options) {
+    internal::GetNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetNotification(request).second;
+  }
+
  private:
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(

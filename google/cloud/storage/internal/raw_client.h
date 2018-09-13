@@ -143,6 +143,8 @@ class RawClient {
       ListNotificationsRequest const&) = 0;
   virtual std::pair<Status, NotificationMetadata> CreateNotification(
       CreateNotificationRequest const&) = 0;
+  virtual std::pair<Status, NotificationMetadata> GetNotification(
+      GetNotificationRequest const&) = 0;
   //@}
 };
 

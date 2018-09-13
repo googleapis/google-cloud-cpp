@@ -261,20 +261,34 @@ run_all_object_acl_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
 #   topic_name: the topic used to create notifications.
 # Returns:
 #   None
 ################################################
 run_all_notification_examples() {
-  local bucket_name=$1
-  local topic_name=$2
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local topic_name=$1
   shift
 
-  run_example ./storage_notification_samples list-notifications \
-      "${bucket_name}"
+  # Create a new bucket for each run so the list of notifications is initially
+  # empty
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
   run_example ./storage_notification_samples create-notification \
       "${bucket_name}" "${topic_name}"
+  run_example ./storage_notification_samples list-notifications \
+      "${bucket_name}"
+  # The notifications ids are assigned by the server, so we need to discover it
+  # here. Parse the output from the list-notifications command to extract what
+  # we need.
+  local id="$(./storage_notification_samples list-notifications \
+      "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
+  run_example ./storage_notification_samples get-notification \
+      "${bucket_name}" "${id}"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -300,7 +314,7 @@ run_all_storage_examples() {
   run_all_default_object_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_notification_examples "${BUCKET_NAME}" "${TOPIC_NAME}"
+  run_all_notification_examples "${TOPIC_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then
