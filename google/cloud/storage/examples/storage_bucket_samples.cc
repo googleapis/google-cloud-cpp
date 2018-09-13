@@ -221,6 +221,91 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   (std::move(client), bucket_name, storage_class);
 }
 
+void AddBucketLabel(google::cloud::storage::Client client, int& argc,
+                    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"add-bucket-label <bucket-name> <label-key> <label-value>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto label_key = ConsumeArg(argc, argv);
+  auto label_value = ConsumeArg(argc, argv);
+  //! [add bucket label] [START add_bucket_label]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string label_key,
+     std::string label_value) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetLabel(label_key, label_value));
+    std::cout << "Successfully set label " << label_key << " to " << label_value
+              << " on bucket  " << bucket_name << ".";
+    if (updated_metadata.label_count() == 0U) {
+      std::cout << " The bucket now has no labels." << std::endl;
+      return;
+    }
+    std::cout << " The bucket labels are now:";
+    for (auto const& kv : updated_metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [add bucket label] [END add_bucket_label]
+  (std::move(client), bucket_name, label_key, label_value);
+}
+
+void GetBucketLabels(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-label <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get bucket labels] [START get_bucket_labels]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata =
+        client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
+    if (metadata.label_count() == 0U) {
+      std::cout << "The bucket " << bucket_name << " has no labels set."
+                << std::endl;
+      return;
+    }
+    std::cout << "The labels for bucket " << bucket_name << " are:";
+    for (auto const& kv : metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [get bucket label] [END get_bucket_labels]
+  (std::move(client), bucket_name);
+}
+
+void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"add-bucket-label <bucket-name> <label-key>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto label_key = ConsumeArg(argc, argv);
+  //! [remove bucket label] [START remove_bucket_label]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string label_key) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
+    std::cout << "Successfully reset label " << label_key << " on bucket  "
+              << bucket_name << ".";
+    if (updated_metadata.label_count() == 0U) {
+      std::cout << " The bucket now has no labels." << std::endl;
+      return;
+    }
+    std::cout << " The bucket labels are now:";
+    for (auto const& kv : updated_metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [remove bucket label] [END remove_bucket_label]
+  (std::move(client), bucket_name, label_key);
+}
+
 void GetServiceAccount(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 1) {
@@ -276,6 +361,9 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class", &PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
+      {"add-bucket-label", &AddBucketLabel},
+      {"get-bucket-labels", &GetBucketLabels},
+      {"remove-bucket-label", &RemoveBucketLabel},
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
   };
