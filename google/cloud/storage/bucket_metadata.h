@@ -163,7 +163,7 @@ inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
 }
 //@}
 
-/*
+/**
  * The Logging configuration for a Bucket.
  *
  * @see https://cloud.google.com/storage/docs/access-logs for general
