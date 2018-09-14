@@ -1,5 +1,4 @@
-# ~~~
-# Copyright 2018 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# ~~~
 
-add_executable(storage_latency_benchmark storage_latency_benchmark.cc)
-target_link_libraries(storage_latency_benchmark storage_client
-                      google_cloud_cpp_common_options)
+package(default_visibility = ["//visibility:public"])
 
-add_executable(storage_throughput_benchmark storage_throughput_benchmark.cc)
-target_link_libraries(storage_throughput_benchmark storage_client
-                      google_cloud_cpp_common_options)
+licenses(["notice"])  # Apache 2.0
+
+cc_binary(
+    name = "storage_latency_benchmark",
+    srcs = ["storage_latency_benchmark.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
+    name = "storage_throughput_benchmark",
+    srcs = ["storage_throughput_benchmark.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)

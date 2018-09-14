@@ -39,6 +39,12 @@ run_example ./storage_latency_benchmark \
       --object-count=100 \
       "${FAKE_REGION}"
 
+run_example ./storage_throughput_benchmark \
+      --duration=5 \
+      --object-count=8 \
+      --object-chunk-count=20 \
+      "${FAKE_REGION}"
+
 if [ "${EXIT_STATUS}" = "0" ]; then
   TESTBENCH_DUMP_LOG=no
 fi
