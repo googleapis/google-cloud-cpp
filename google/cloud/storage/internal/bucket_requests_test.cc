@@ -571,19 +571,19 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
            // need to change this test, and it will be a bit more difficult to
            // write it.
            nl::json{
-               {"role", "storage.buckets.list"},
+               {"role", "roles/storage.admin"},
                {"members", std::vector<std::string>{"test-user-1"}}},
            nl::json{
-               {"role", "storage.objects.get"},
+               {"role", "roles/storage.objectViewer"},
                {"members",
                 std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
   };
 
   IamBindings expected_bindings;
-  expected_bindings.AddMember("storage.buckets.list", "test-user-1");
-  expected_bindings.AddMember("storage.objects.get", "test-user-2");
-  expected_bindings.AddMember("storage.objects.get", "test-user-3");
+  expected_bindings.AddMember("roles/storage.admin", "test-user-1");
+  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-2");
+  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
   IamPolicy expected{0, expected_bindings, "XYZ="};
 
   auto actual = ParseIamPolicyFromString(expected_payload.dump());
@@ -623,7 +623,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
       {"etag", "XYZ="},
       {"bindings",
        std::vector<nl::json>{nl::json{
-           {"role", "storage.objects.get"},
+           {"role", "roles/storage.objectViewer"},
        }}},
   };
 
@@ -648,7 +648,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
       {"etag", "XYZ="},
       {"bindings",
        std::vector<nl::json>{nl::json{
-           {"role", "storage.objects.get"},
+           {"role", "roles/storage.objectViewer"},
            {"members", "invalid"},
        }}},
   };
@@ -711,10 +711,10 @@ TEST(BucketRequestsTest, SetIamPolicy) {
            // need to change this test, and it will be a bit more difficult to
            // write it.
            nl::json{
-               {"role", "storage.buckets.list"},
+               {"role", "roles/storage.admin"},
                {"members", std::vector<std::string>{"test-user-1"}}},
            nl::json{
-               {"role", "storage.objects.get"},
+               {"role", "roles/storage.objectViewer"},
                {"members",
                 std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
