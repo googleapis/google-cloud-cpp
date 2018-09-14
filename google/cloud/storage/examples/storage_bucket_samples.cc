@@ -238,10 +238,6 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
         gcs::BucketMetadataPatchBuilder().SetLabel(label_key, label_value));
     std::cout << "Successfully set label " << label_key << " to " << label_value
               << " on bucket  " << bucket_name << ".";
-    if (updated_metadata.label_count() == 0U) {
-      std::cout << " The bucket now has no labels." << std::endl;
-      return;
-    }
     std::cout << " The bucket labels are now:";
     for (auto const& kv : updated_metadata.labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
