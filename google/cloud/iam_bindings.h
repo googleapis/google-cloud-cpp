@@ -136,9 +136,35 @@ class IamBindings {
   void RemoveMembers(std::string const& role,
                      std::set<std::string> const& members);
 
+  bool operator==(IamBindings const& rhs) const {
+    return bindings_ == rhs.bindings_;
+  }
+
+  bool operator<(IamBindings const& rhs) const {
+    return bindings_ < rhs.bindings_;
+  }
+
+  bool operator!=(IamBindings const& rhs) const {
+    return std::rel_ops::operator!=(*this, rhs);
+  }
+
+  bool operator>(IamBindings const& rhs) const {
+    return std::rel_ops::operator>(*this, rhs);
+  }
+
+  bool operator<=(IamBindings const& rhs) const {
+    return std::rel_ops::operator<=(*this, rhs);
+  }
+
+  bool operator>=(IamBindings const& rhs) const {
+    return std::rel_ops::operator>=(*this, rhs);
+  }
+
  private:
   std::map<std::string, std::set<std::string>> bindings_;
 };
+
+std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
