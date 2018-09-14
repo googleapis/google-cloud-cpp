@@ -13,6 +13,7 @@ var searchData=
   ['deletenotification',['DeleteNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0bacd7b8c93b9764bdc4a0da46006c9a',1,'google::cloud::storage::v0::Client']]],
   ['deleteobject',['DeleteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0c9ed0e219ba99dce6024e326d7c9708',1,'google::cloud::storage::v0::Client']]],
   ['deleteobjectacl',['DeleteObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adc39fbc4df076ec9f321a61bd0102371',1,'google::cloud::storage::v0::Client']]],
+  ['destinationkmskeyname',['DestinationKmsKeyName',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationKmsKeyName.html',1,'google::cloud::storage::v0']]],
   ['destinationpredefinedacl',['DestinationPredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationPredefinedAcl.html',1,'google::cloud::storage::v0']]],
   ['difference_5ftype',['difference_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#af21904ef1be5aebef06119e40c9ee11a',1,'google::cloud::storage::v0::ListBucketsIterator::difference_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#af4c343b713957dfe7784cf2ffa94e729',1,'google::cloud::storage::v0::ListObjectsIterator::difference_type()']]],
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
