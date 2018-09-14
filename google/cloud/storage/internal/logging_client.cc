@@ -118,6 +118,11 @@ std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
 }
 
+std::pair<Status, ObjectMetadata> LoggingClient::CopyObject(
+    CopyObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::CopyObject, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
@@ -269,6 +274,11 @@ std::pair<Status, ListNotificationsResponse> LoggingClient::ListNotifications(
 std::pair<Status, NotificationMetadata> LoggingClient::CreateNotification(
     CreateNotificationRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateNotification, request, __func__);
+}
+
+std::pair<Status, NotificationMetadata> LoggingClient::GetNotification(
+    GetNotificationRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetNotification, request, __func__);
 }
 
 }  // namespace internal

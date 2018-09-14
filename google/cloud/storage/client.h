@@ -328,6 +328,59 @@ class Client {
   }
 
   /**
+   * Copies an existing object.
+   *
+   * Use `CopyObject` to copy between objects in the same location and storage
+   * class.  Copying objects across locations or storage classes can fail for
+   * large objects and retrying the operation will not succeed.
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
+   *   a full description of the advantages of `Objects: rewrite` over
+   *   `Objects: copy`.
+   *
+   * TODO(#816) - reference the RewriteObject() member function here.
+   *
+   * @param source_bucket_name the name of the bucket that contains the object
+   *     to be copied.
+   * @param source_object_name the name of the object to copy.
+   * @param destination_bucket_name the name of the bucket that will contain the
+   *     new object.
+   * @param destination_object_name the name of the new object.
+   * @param metadata additional metadata attributes that you want to set in the
+   *     new object.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationPredefinedAcl`,
+   *     `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
+   *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *     `Projection`, `SourceGeneration`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc copy object
+   *
+   * @snippet storage_object_samples.cc copy encrypted object
+   */
+  template <typename... Options>
+  ObjectMetadata CopyObject(std::string source_bucket_name,
+                            std::string source_object_name,
+                            std::string destination_bucket_name,
+                            std::string destination_object_name,
+                            ObjectMetadata const& metadata,
+                            Options&&... options) {
+    internal::CopyObjectRequest request(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CopyObject(request).second;
+  }
+
+  /**
    * Fetches the object metadata.
    *
    * @param bucket_name the bucket containing the object.
@@ -481,8 +534,8 @@ class Client {
    * @param updated the updated value for the object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
@@ -515,8 +568,8 @@ class Client {
    * @param builder the set of updates to perform in the Object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
@@ -549,7 +602,7 @@ class Client {
    *     Valid types for this operation include
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
    *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
-   *      `SourceEncryptionKey`, `UserProject`.
+   *      `UserProject`.
    *
    * @throw std::runtime_error if the operation fails.
    *
@@ -1287,6 +1340,37 @@ class Client {
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CreateNotification(request).second;
+  }
+
+  /**
+   * Gets the details about a notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function fetches the detailed information for a given notification config.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc get notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  NotificationMetadata GetNotification(std::string const& bucket_name,
+                                       std::string const& notification_id,
+                                       Options&&... options) {
+    internal::GetNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetNotification(request).second;
   }
 
  private:

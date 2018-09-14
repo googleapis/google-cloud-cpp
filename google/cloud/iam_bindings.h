@@ -52,13 +52,13 @@ class IamBindings {
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  iterator begin() { return bindings_.begin(); }
+  iterator begin() const { return bindings_.begin(); }
 
   /**
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  iterator end() { return bindings_.end(); }
+  iterator end() const { return bindings_.end(); }
 
   /**
    * Returns whether the Bindings container is empty.

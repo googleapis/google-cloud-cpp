@@ -151,6 +151,7 @@ run_all_object_examples() {
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
+  local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -173,11 +174,17 @@ run_all_object_examples() {
       "${object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${composed_object_name}"
+  run_example ./storage_object_samples copy-object \
+      "${bucket_name}" "${object_name}" \
+      "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
-  local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
-  local encrypted_composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
+  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_composed_object_name="composed-enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_copied_object_name="copied-enc-obj-$(date +%s)-${RANDOM}.txt"
 
   local key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
@@ -186,8 +193,17 @@ run_all_object_examples() {
   run_example ./storage_object_samples read-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
   run_example ./storage_object_samples compose-object-from-encrypted-objects \
-      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" "${key}" \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" \
       "${encrypted_object_name}" "${encrypted_object_name}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}"
+  run_example ./storage_object_samples copy-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 
@@ -245,20 +261,34 @@ run_all_object_acl_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
 #   topic_name: the topic used to create notifications.
 # Returns:
 #   None
 ################################################
 run_all_notification_examples() {
-  local bucket_name=$1
-  local topic_name=$2
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local topic_name=$1
   shift
 
-  run_example ./storage_notification_samples list-notifications \
-      "${bucket_name}"
+  # Create a new bucket for each run so the list of notifications is initially
+  # empty
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
   run_example ./storage_notification_samples create-notification \
       "${bucket_name}" "${topic_name}"
+  run_example ./storage_notification_samples list-notifications \
+      "${bucket_name}"
+  # The notifications ids are assigned by the server, so we need to discover it
+  # here. Parse the output from the list-notifications command to extract what
+  # we need.
+  local id="$(./storage_notification_samples list-notifications \
+      "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
+  run_example ./storage_notification_samples get-notification \
+      "${bucket_name}" "${id}"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -284,7 +314,7 @@ run_all_storage_examples() {
   run_all_default_object_acl_examples "${BUCKET_NAME}"
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_notification_examples "${BUCKET_NAME}" "${TOPIC_NAME}"
+  run_all_notification_examples "${TOPIC_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then

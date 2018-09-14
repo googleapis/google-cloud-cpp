@@ -58,6 +58,8 @@ class RetryClient : public RawClient {
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
+  std::pair<Status, ObjectMetadata> CopyObject(
+      CopyObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
   std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
@@ -121,6 +123,8 @@ class RetryClient : public RawClient {
       ListNotificationsRequest const&) override;
   std::pair<Status, NotificationMetadata> CreateNotification(
       CreateNotificationRequest const&) override;
+  std::pair<Status, NotificationMetadata> GetNotification(
+      GetNotificationRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 

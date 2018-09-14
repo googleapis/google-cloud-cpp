@@ -302,6 +302,19 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 }
 //! [wait for consistency check]
 
+//! [list snapshots]
+void ListSnapshots(google::cloud::bigtable::TableAdmin admin,
+                   std::string const& cluster_id_str) {
+  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+
+  auto snapshot_list = admin.ListSnapshots(cluster_id);
+  std::cout << "Snapshot Name List" << std::endl;
+  for (auto const& snapshot : snapshot_list) {
+    std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
+  }
+}
+//! [list snapshots]
+
 //! [delete snapshot]
 void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin,
                     std::string const& cluster_id_str,

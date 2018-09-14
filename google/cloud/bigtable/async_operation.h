@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_OPERATION_H_
 
 #include "google/cloud/bigtable/version.h"
+#include <grpcpp/grpcpp.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -24,6 +26,32 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 class CompletionQueueImpl;
 }  // namespace internal
+class CompletionQueue;
+
+/**
+ * The result of an async timer operation.
+ *
+ * Callbacks for async timers will receive an object of this class.
+ */
+struct AsyncTimerResult {
+  std::chrono::system_clock::time_point deadline;
+};
+
+/**
+ * The result of a unary asynchronous RPC operation.
+ *
+ * Applications provide a callback to be invoked when an asynchronous RPC
+ * completes. The callback receives this parameter as the result of the
+ * operation.
+ *
+ * @tparam Response
+ */
+template <typename Response>
+struct AsyncUnaryRpcResult {
+  Response response;
+  grpc::Status status;
+  std::unique_ptr<grpc::ClientContext> context;
+};
 
 /**
  * Represents a pending asynchronous operation.
@@ -60,10 +88,12 @@ class AsyncOperation {
    * Derived classes wrap the callbacks provided by the application and invoke
    * the callback when this virtual member function is called.
    *
+   * @param cq the completion queue sending the notification, this is useful in
+   *   case the callback needs to retry the operation.
    * @param disposition `COMPLETED` if the operation completed, `CANCELED` if
    *   the operation were canceled. Note that errors are a "normal" completion.
    */
-  virtual void Notify(Disposition disposition) = 0;
+  virtual void Notify(CompletionQueue& cq, Disposition disposition) = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -130,11 +130,12 @@ std::ostream& operator<<(std::ostream& os,
  */
 class CopyObjectRequest
     : public GenericRequest<
-          CopyObjectRequest, DestinationPredefinedAcl, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          IfSourceGenerationMatch, IfSourceGenerationNotMatch,
-          IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
-          Projection, SourceGeneration, UserProject> {
+          CopyObjectRequest, DestinationPredefinedAcl, EncryptionKey,
+          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+          IfMetagenerationNotMatch, IfSourceGenerationMatch,
+          IfSourceGenerationNotMatch, IfSourceMetagenerationMatch,
+          IfSourceMetagenerationNotMatch, Projection, SourceGeneration,
+          UserProject> {
  public:
   CopyObjectRequest() = default;
   CopyObjectRequest(std::string source_bucket, std::string source_object,
@@ -254,10 +255,10 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
  * Represents a request to the `Objects: compose` API.
  */
 class ComposeObjectRequest
-    : public GenericObjectRequest<
-          ComposeObjectRequest, EncryptionKey, Generation,
-          DestinationPredefinedAcl, KmsKeyName, IfGenerationMatch,
-          IfMetagenerationMatch, SourceEncryptionKey, UserProject> {
+    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
+                                  Generation, DestinationPredefinedAcl,
+                                  KmsKeyName, IfGenerationMatch,
+                                  IfMetagenerationMatch, UserProject> {
  public:
   ComposeObjectRequest() = default;
   explicit ComposeObjectRequest(

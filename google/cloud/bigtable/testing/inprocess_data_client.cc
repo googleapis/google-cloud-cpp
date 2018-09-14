@@ -27,6 +27,17 @@ grpc::Status InProcessDataClient::MutateRow(
   return Stub()->MutateRow(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::v2::MutateRowResponse>>
+InProcessDataClient::AsyncMutateRow(
+    grpc::ClientContext* context,
+    google::bigtable::v2::MutateRowRequest const& request,
+    grpc::CompletionQueue* cq) {
+  auto result = Stub()->AsyncMutateRow(context, request, cq);
+  return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::MutateRowResponse>>(result.release());
+}
+
 grpc::Status InProcessDataClient::CheckAndMutateRow(
     grpc::ClientContext* context,
     btproto::CheckAndMutateRowRequest const& request,

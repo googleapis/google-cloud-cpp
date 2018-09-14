@@ -25,7 +25,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-void CompletionQueueImpl::Run() {
+void CompletionQueueImpl::Run(CompletionQueue& cq) {
   while (not shutdown_.load()) {
     void* tag;
     bool ok;
@@ -42,7 +42,7 @@ void CompletionQueueImpl::Run() {
           "unexpected status from AsyncNext()");
     }
     auto op = CompletedOperation(tag);
-    op->Notify(ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED);
+    op->Notify(cq, ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED);
   }
 }
 
@@ -84,10 +84,11 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
 // `CompletionQueueImpl`, wrap it in a `CompletionQueue` and call this function
 // to simulate the operation lifecycle. Note that the unit test must simulate
 // the operation results separately.
-void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op,
+void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
+                                             AsyncOperation* op,
                                              AsyncOperation::Disposition d) {
   auto internal_op = CompletedOperation(op);
-  internal_op->Notify(d);
+  internal_op->Notify(cq, d);
 }
 
 }  // namespace internal

@@ -361,6 +361,34 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
   EXPECT_FALSE(stream.IsOpen());
 }
 
+TEST_F(ObjectIntegrationTest, Copy) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto source_object_name = MakeRandomObjectName();
+  auto destination_object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, source_object_name, expected, IfGenerationMatch(0));
+  EXPECT_EQ(source_object_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, source_object_name, bucket_name, destination_object_name,
+      ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ(destination_object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  EXPECT_EQ("text/plain", meta.content_type());
+
+  auto stream = client.ReadObject(bucket_name, destination_object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, destination_object_name);
+  client.DeleteObject(bucket_name, source_object_name);
+}
+
 TEST_F(ObjectIntegrationTest, StreamingWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -624,7 +652,7 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   ObjectMetadata composed_meta =
       client.ComposeObject(bucket_name, source_objects, composed_object_name,
                            ObjectMetadata().set_content_type("plain/text"),
-                           SourceEncryptionKey(key), EncryptionKey(key));
+                          EncryptionKey(key));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);

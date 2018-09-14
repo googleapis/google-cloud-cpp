@@ -342,6 +342,9 @@ class TableAdmin {
    * listed.
    * @return collection containing the snapshots for the given cluster.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet bigtable_samples.cc list snapshots
    */
   template <template <typename...> class Collection = std::vector>
   Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
