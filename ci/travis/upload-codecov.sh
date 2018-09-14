@@ -22,7 +22,7 @@ if [ "${BUILD_TYPE:-Release}" != "Coverage" ]; then
 fi
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
@@ -34,4 +34,4 @@ sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c "/bin/bash <(curl -s https://codecov.io/bash)"
 
-ci_dump_log codecov.log
+dump_log codecov.log
