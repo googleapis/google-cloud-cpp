@@ -309,6 +309,9 @@ class TableAdmin {
    * @param cluster_id the id of the cluster to which snapshot belongs.
    * @param snapshot_id the id of the snapshot which needs to be deleted.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet bigtable_samples.cc delete snapshot
    */
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
