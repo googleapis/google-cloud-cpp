@@ -288,6 +288,78 @@ TEST(ObjectRequestsTest, Update) {
   EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
 }
 
+TEST(ObjectRequestsTest, Rewrite) {
+  RewriteObjectRequest request("source-bucket", "source-object", "my-bucket",
+                               "my-object", "abcd-test-token",
+                               ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ("source-bucket", request.source_bucket());
+  EXPECT_EQ("source-object", request.source_object());
+  EXPECT_EQ("my-bucket", request.destination_bucket());
+  EXPECT_EQ("my-object", request.destination_object());
+  EXPECT_EQ("abcd-test-token", request.rewrite_token());
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
+                               DestinationPredefinedAcl("private"),
+                               UserProject("my-project"));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("my-object"));
+  EXPECT_THAT(actual, HasSubstr("source-bucket"));
+  EXPECT_THAT(actual, HasSubstr("source-object"));
+  EXPECT_THAT(actual, HasSubstr("abcd-test-token"));
+  EXPECT_THAT(actual, HasSubstr("text/plain"));
+  EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
+TEST(ObjectRequestsTest, RewriteObjectResponse) {
+  std::string object1 = R"""({
+      "kind": "storage#object",
+      "bucket": "test-bucket-name",
+      "etag": "XYZ=",
+      "id": "test-object-name",
+      "generation": 1,
+      "location": "US",
+      "name": "test-object-name",
+      "projectNumber": "123456789",
+      "storageClass": "STANDARD",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z"
+})""";
+
+  std::string text = R"""({
+      "kind": "storage#rewriteResponse",
+      "totalBytesRewritten": 7,
+      "objectSize": 42,
+      "done": false,
+      "rewriteToken": "abcd-test-token",
+      "resource":)""";
+
+  text += object1 + "\n}";
+
+  auto expected_resource = ObjectMetadata::ParseFromString(object1);
+
+  auto actual =
+      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_EQ(7U, actual.total_bytes_rewritten);
+  EXPECT_EQ(42U, actual.object_size);
+  EXPECT_FALSE(actual.done);
+  EXPECT_EQ("abcd-test-token", actual.rewrite_token);
+  EXPECT_EQ(expected_resource, actual.resource);
+
+  std::ostringstream os;
+  os << actual;
+  auto actual_str = os.str();
+  EXPECT_THAT(actual_str, HasSubstr("total_bytes_rewritten=7"));
+  EXPECT_THAT(actual_str, HasSubstr("object_size=42"));
+  EXPECT_THAT(actual_str, HasSubstr("done=false"));
+  EXPECT_THAT(actual_str, HasSubstr("rewrite_token=abcd-test-token"));
+  EXPECT_THAT(actual_str, HasSubstr("test-object-name"));
+}
+
 ObjectMetadata CreateObjectMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
   // goal is to fully test the parsing, not to simulate valid objects.

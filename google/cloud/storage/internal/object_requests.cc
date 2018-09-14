@@ -285,6 +285,37 @@ std::ostream& operator<<(std::ostream& os, PatchObjectRequest const& r) {
   return os << ", payload=" << r.payload() << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
+  os << "RewriteObjectRequest={destination_bucket=" << r.destination_bucket()
+     << ", destination_object=" << r.destination_object()
+     << ", source_bucket=" << r.source_bucket()
+     << ", source_object=" << r.source_object()
+     << ", rewrite_token=" << r.rewrite_token();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
+}
+
+RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  nl::json object = nl::json::parse(response.payload);
+  RewriteObjectResponse result;
+  result.total_bytes_rewritten =
+      object.value("totalBytesRewritten", std::uint64_t(0));
+  result.object_size = object.value("objectSize", std::uint64_t(0));
+  result.done = object.value("done", false);
+  result.rewrite_token = object.value("rewriteToken", "");
+  result.resource = ObjectMetadata::ParseFromJson(object["resource"]);
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r) {
+  return os << "RewriteObjectResponse={total_bytes_rewritten="
+            << r.total_bytes_rewritten << ", object_size=" << r.object_size
+            << ", done=" << std::boolalpha << r.done
+            << ", rewrite_token=" << r.rewrite_token
+            << ", resource=" << r.resource << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
