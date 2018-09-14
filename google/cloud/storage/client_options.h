@@ -80,10 +80,6 @@ class ClientOptions {
 
   std::size_t connection_pool_size() const { return connection_pool_size_; }
   ClientOptions& set_connection_pool_size(std::size_t size) {
-    if (size == 0) {
-      google::cloud::internal::RaiseInvalidArgument(
-          "Cannot set connection pool size to 0");
-    }
     connection_pool_size_ = size;
     return *this;
   }
