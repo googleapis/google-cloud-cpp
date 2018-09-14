@@ -24,14 +24,22 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
 readonly BINDIR="$(dirname $0)"
+readonly GCSDIR="${PROJECT_ROOT}/google/cloud/storage"
 (cd google/cloud/storage/tests && \
-    "${BINDIR}/../tests/run_integration_tests_testbench.sh")
+    "${GCSDIR}/tests/run_integration_tests_testbench.sh")
 
 # In the no-exceptions build this directory does not exist. Note that the script
 # typically runs in ${CMAKE_PROJECT_BINARY_DIR}.
 if [ -d google/cloud/storage/examples ]; then
   (cd google/cloud/storage/examples && \
-      "${BINDIR}/../examples/run_examples_testbench.sh")
+      "${GCSDIR}/examples/run_examples_testbench.sh")
 else
   echo "${COLOR_YELLOW}Skipping google/cloud/storage/examples.${COLOR_RESET}"
+fi
+
+if [ -d google/cloud/storage/benchmarks ]; then
+  (cd google/cloud/storage/benchmarks && \
+      "${GCSDIR}/benchmarks/run_benchmarks_testbench.sh")
+else
+  echo "${COLOR_YELLOW}Skipping google/cloud/storage/benchmarks.${COLOR_RESET}"
 fi
