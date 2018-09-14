@@ -478,10 +478,9 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::KmsKeyName(kms_key_name));
 
-    for (int lineno = 0; lineno != 10; ++lineno) {
-      // Add 1 to the counter, because it is conventional to number lines
-      // starting at 1.
-      stream << (lineno + 1) << ": Someday, I will write creative examples\n";
+    // Line numbers start at 1.
+    for (int lineno = 1; lineno <= 10; ++lineno) {
+      stream << lineno << ": placeholder text for CMEK example.\n";
     }
 
     gcs::ObjectMetadata meta = stream.Close();
