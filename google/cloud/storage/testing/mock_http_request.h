@@ -66,21 +66,23 @@ class MockHttpRequestBuilder {
   using RequestType = MockHttpRequest;
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
+  void AddWellKnownParameter(
+      internal::WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
       mock->AddQueryParameter(p.parameter_name(), p.value());
     }
   }
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
+  void AddWellKnownParameter(
+      internal::WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
       mock->AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
     }
   }
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, bool> const& p) {
+  void AddWellKnownParameter(internal::WellKnownParameter<P, bool> const& p) {
     if (not p.has_value()) {
       return;
     }
