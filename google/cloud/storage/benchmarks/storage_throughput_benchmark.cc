@@ -42,17 +42,17 @@
  * Once the object creation phase is completed, the program starts N threads,
  * each thread executes a simple loop:
  * - Pick one of the objects at random, with equal probability for each Object.
- * - Pick, with equal probably, at action (`read` or `write`) at random.
- * - If the action was `write` then write to the object. Capturing throughput
- *   information (to be reported at the end of the thread).
+ * - Pick, with equal probably, an action (`read` or `write`) at random.
+ * - If the action was `write` then write to the object, capturing throughput
+ *   information, which is reported when the thread finishes running.
  * - If the action was `read` then read the object. Capture the time taken to
  *   read the first 10 MiB, the first 20 MiB, and so forth until the full
  *   object is read.
  *
- * The loop runs for a prescribed number of seconds, at the end of the loop the
+ * The loop runs for a prescribed number of seconds. At the end of the loop the
  * program prints the captured performance data.
  *
- * Then the program removes all the objects in the bucket, and reports the time
+ * Then the program removes all the objects in the bucket and reports the time
  * taken to delete each one.
  *
  * A helper script in this directory can generate pretty graphs from the report.
