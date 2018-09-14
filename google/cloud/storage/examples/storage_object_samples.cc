@@ -134,7 +134,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
         destination_object_name, gcs::ObjectMetadata(),
         gcs::EncryptionKey::FromBase64Key(key_base64));
     std::cout << "Object copied. The full metadata after the copy is: "
-    << new_copy_meta << std::endl;
+              << new_copy_meta << std::endl;
   }
   //! [copy encrypted object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -456,8 +456,38 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
               << " Metadata: " << composed_object << std::endl;
   }
   //! [compose object from encrypted objects]
-  (std::move(client), bucket_name, destination_object_name,
-   base64_aes256_key, std::move(compose_objects));
+  (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
+   std::move(compose_objects));
+}
+
+void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "write-object-with-kms-key <bucket-name> <object-name>"
+        " <kms-key-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto kms_key_name = ConsumeArg(argc, argv);
+
+  //! [write object with kms key] [START storage_upload_with_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string kms_key_name) {
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::KmsKeyName(kms_key_name));
+
+    // Line numbers start at 1.
+    for (int lineno = 1; lineno <= 10; ++lineno) {
+      stream << lineno << ": placeholder text for CMEK example.\n";
+    }
+
+    gcs::ObjectMetadata meta = stream.Close();
+    std::cout << "The resulting object size is: " << meta.size() << std::endl;
+  }
+  //! [write object with kms key] [END storage_upload_with_kms_key]
+  (std::move(client), bucket_name, object_name, kms_key_name);
 }
 }  // anonymous namespace
 
@@ -468,7 +498,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
@@ -486,7 +516,9 @@ int main(int argc, char* argv[]) try {
       {"read-encrypted-object", &ReadEncryptedObject},
       {"compose-object", &ComposeObject},
       {"compose-object-from-encrypted-objects",
-       &ComposeObjectFromEncryptedObjects}};
+       &ComposeObjectFromEncryptedObjects},
+      {"write-object-with-kms-key", &WriteObjectWithKmsKey},
+  };
   for (auto&& kv : commands) {
     try {
       int fake_argc = 0;
