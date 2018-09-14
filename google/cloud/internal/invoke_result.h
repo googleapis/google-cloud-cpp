@@ -57,7 +57,10 @@ using void_t = void;
  * Fortunately, we just need to implement the easy case (function-like things)
  * in the library:
  *
- * @tparam T the decayed (via `std::decay`) type of F.
+ * @tparam T the decayed (via `std::decay`) type of F. Currently unused, but if
+ *     we ever specialize this class to work with pointers to member functions
+ *     and other more complex function-like things it would be used to pick the
+ *     specialization.
  */
 template <typename T>
 struct invoke_impl {
@@ -162,7 +165,7 @@ struct is_invocable_impl<decltype(void(invoker_function(
 /**
  * Implement `std::is_invocable<>` from C++17.
  *
- * `std::is_invocable<>` is a meta-function top discover if
+ * `std::is_invocable<>` is a meta-function to discover if
  * `std::invoke(F&&, ArgTypes&&...)` is valid (roughly: if one can call a
  * function-like object of type `F` with parameters `ArgTypes&&`).
  *

@@ -42,24 +42,24 @@ TEST(ResultOfTest, Function) {
 
   using R1 = decltype(invoker_function(test_function, 7, std::string{}));
   static_assert(std::is_same<R1, std::string>::value,
-                "expected `std::string` in decltype(invoker_function())");
+                "expected `std::string` in R1==decltype(invoker_function())");
 
   using R2 = decltype(invoker_function(test_function, std::declval<int>(),
                                        std::declval<std::string const&>()));
   static_assert(std::is_same<R2, std::string>::value,
-                "expected `std::string` in decltype(invoker_function())");
+                "expected `std::string` in R2==decltype(invoker_function())");
   EXPECT_TRUE((std::is_same<R2, std::string>::value));
 
   using F = decltype(test_function);
   using R3 = decltype(invoker_function(std::declval<F>(), std::declval<int>(),
                                        std::declval<std::string const&>()));
   static_assert(std::is_same<R3, std::string>::value,
-                "expected `std::string` in decltype(invoker_function())");
+                "expected `std::string` in R3==decltype(invoker_function())");
   EXPECT_TRUE((std::is_same<R3, std::string>::value));
 
   using R4 = invoke_result<F, int, std::string const&>;
   static_assert(std::is_same<R4::type, std::string>::value,
-                "expected `std::string` in invoke_result_t<>");
+                "expected `std::string` in R4==invoke_result_t<>");
 
   static_assert(
       is_invocable<F, int, std::string const&>::value,
