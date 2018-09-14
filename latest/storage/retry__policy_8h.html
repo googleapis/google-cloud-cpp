@@ -76,7 +76,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusTraits.html">google::cloud::storage::v0::StatusTraits</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html">google::cloud::storage::v0::internal::StatusTraits</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines what error codes are permanent errors.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -91,18 +92,20 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v0"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html">google::cloud::storage::v0</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1storage_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Google Cloud Storage C++ client APIs inlined, versioned namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal.html">google::cloud::storage::v0::internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a89b2c258bf4be827c64887cd2fd59c92"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a89b2c258bf4be827c64887cd2fd59c92">google::cloud::storage::v0::RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
-<tr class="memdesc:a89b2c258bf4be827c64887cd2fd59c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">The retry policy base class.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a89b2c258bf4be827c64887cd2fd59c92">More...</a><br /></td></tr>
-<tr class="separator:a89b2c258bf4be827c64887cd2fd59c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a40bd53691fd3c8b71e3355e41a17c3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1a40bd53691fd3c8b71e3355e41a17c3">google::cloud::storage::v0::LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
-<tr class="memdesc:a1a40bd53691fd3c8b71e3355e41a17c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until some time has expired.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1a40bd53691fd3c8b71e3355e41a17c3">More...</a><br /></td></tr>
-<tr class="separator:a1a40bd53691fd3c8b71e3355e41a17c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6817bf72f9643a4959f1045b768f32b1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6817bf72f9643a4959f1045b768f32b1">google::cloud::storage::v0::LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; Status, StatusTraits &gt;</td></tr>
-<tr class="memdesc:a6817bf72f9643a4959f1045b768f32b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until the error count has been exceeded.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6817bf72f9643a4959f1045b768f32b1">More...</a><br /></td></tr>
-<tr class="separator:a6817bf72f9643a4959f1045b768f32b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaace8f5837e18aadc16056c76b4a415"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acaace8f5837e18aadc16056c76b4a415">google::cloud::storage::v0::RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; Status, internal::StatusTraits &gt;</td></tr>
+<tr class="memdesc:acaace8f5837e18aadc16056c76b4a415"><td class="mdescLeft">&#160;</td><td class="mdescRight">The retry policy base class.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acaace8f5837e18aadc16056c76b4a415">More...</a><br /></td></tr>
+<tr class="separator:acaace8f5837e18aadc16056c76b4a415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06fcac3a7cae1a4c981f6d1a3d0caf42"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a06fcac3a7cae1a4c981f6d1a3d0caf42">google::cloud::storage::v0::LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; Status, internal::StatusTraits &gt;</td></tr>
+<tr class="memdesc:a06fcac3a7cae1a4c981f6d1a3d0caf42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until some time has expired.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a06fcac3a7cae1a4c981f6d1a3d0caf42">More...</a><br /></td></tr>
+<tr class="separator:a06fcac3a7cae1a4c981f6d1a3d0caf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0162c1f831f7b500df5a1d2da0d23be4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0162c1f831f7b500df5a1d2da0d23be4">google::cloud::storage::v0::LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; Status, internal::StatusTraits &gt;</td></tr>
+<tr class="memdesc:a0162c1f831f7b500df5a1d2da0d23be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep retrying until the error count has been exceeded.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0162c1f831f7b500df5a1d2da0d23be4">More...</a><br /></td></tr>
+<tr class="separator:a0162c1f831f7b500df5a1d2da0d23be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f73bbe5b014de9c6313e2abf756b71e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7f73bbe5b014de9c6313e2abf756b71e">google::cloud::storage::v0::BackoffPolicy</a> = google::cloud::internal::BackoffPolicy</td></tr>
 <tr class="memdesc:a7f73bbe5b014de9c6313e2abf756b71e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The backoff policy base class.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7f73bbe5b014de9c6313e2abf756b71e">More...</a><br /></td></tr>
 <tr class="separator:a7f73bbe5b014de9c6313e2abf756b71e"><td class="memSeparator" colspan="2">&#160;</td></tr>

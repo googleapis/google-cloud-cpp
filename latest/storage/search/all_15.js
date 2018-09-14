@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['value',['value',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownHeader.html#a0c7738d1b3ac177652b85f972136be3a',1,'google::cloud::storage::v0::WellKnownHeader::value()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1WellKnownParameter.html#a287d8c0a9ef7110426cd45645110a02d',1,'google::cloud::storage::v0::WellKnownParameter::value()']]],
+  ['value',['value',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html#af6bb32431aa4d9b3cd6afd63e2d96af9',1,'google::cloud::storage::v0::internal::WellKnownHeader::value()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html#a8731d9e6774cfa069477aa5ffdd283aa',1,'google::cloud::storage::v0::internal::WellKnownParameter::value()']]],
   ['value_5ftype',['value_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a982118097eeaa42b2f0beaeaddd63b65',1,'google::cloud::storage::v0::ListBucketsIterator::value_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a0445aa4dde94c0e3009c84b9d3a61e4f',1,'google::cloud::storage::v0::ListObjectsIterator::value_type()']]],
   ['version',['version',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#af378152dc3205064601d548d7582cae1',1,'google::cloud::storage::v0::ClientOptions::version()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a618c9e6a59ba784108f824501f9493c3',1,'google::cloud::storage::v0::version()']]],
   ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],

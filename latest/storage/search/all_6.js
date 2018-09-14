@@ -13,6 +13,7 @@ var searchData=
   ['getserviceaccountforproject',['GetServiceAccountForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd8129fecaf20d72ccd078c77dae6d39',1,'google::cloud::storage::v0::Client']]],
   ['google',['google',['../namespacegoogle.html',1,'']]],
   ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9209a78c76703abaf6c57365bdbc0f9d',1,'google::cloud::storage::v0']]],
+  ['internal',['internal',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal.html',1,'google::cloud::storage::v0']]],
   ['payload_5fformat',['payload_format',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html',1,'google::cloud::storage::v0']]],
   ['storage',['storage',['../namespacegoogle_1_1cloud_1_1storage.html',1,'google::cloud']]],
   ['storage_5fclass',['storage_class',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html',1,'google::cloud::storage::v0']]],
