@@ -286,6 +286,8 @@ run_all_notification_examples() {
       "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
   run_example ./storage_notification_samples get-notification \
       "${bucket_name}" "${id}"
+  run_example ./storage_notification_samples delete-notification \
+      "${bucket_name}" "${id}"
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"

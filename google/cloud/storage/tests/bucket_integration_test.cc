@@ -499,6 +499,15 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   auto get = client.GetNotification(bucket_name, create.id());
   EXPECT_EQ(create, get);
 
+  client.DeleteNotification(bucket_name, create.id());
+  current_notifications = client.ListNotifications(bucket_name);
+  count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(0U, count) << create;
+
   client.DeleteBucket(bucket_name);
 }
 

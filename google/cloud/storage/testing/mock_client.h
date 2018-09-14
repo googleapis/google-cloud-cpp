@@ -128,6 +128,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                    internal::CreateNotificationRequest const&));
   MOCK_METHOD1(GetNotification, ResponseWrapper<NotificationMetadata>(
                                     internal::GetNotificationRequest const&));
+  MOCK_METHOD1(DeleteNotification,
+               ResponseWrapper<internal::EmptyResponse>(
+                   internal::DeleteNotificationRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

@@ -281,6 +281,11 @@ std::pair<Status, NotificationMetadata> LoggingClient::GetNotification(
   return MakeCall(*client_, &RawClient::GetNotification, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> LoggingClient::DeleteNotification(
+    DeleteNotificationRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteNotification, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
