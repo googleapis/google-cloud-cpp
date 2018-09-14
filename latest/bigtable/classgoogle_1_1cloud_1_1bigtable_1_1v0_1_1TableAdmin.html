@@ -793,10 +793,11 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 <dl class="section return"><dt>Returns</dt><dd>collection containing the snapshots for the given cluster. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a838bd9e8f21e399285fcd0fac68616e0">ListSnapshots</a>(google::cloud::bigtable::TableAdmin admin,</div><div class="line">                   std::string <span class="keyword">const</span>&amp; cluster_id_str) {</div><div class="line">  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line"></div><div class="line">  <span class="keyword">auto</span> snapshot_list = admin.ListSnapshots(cluster_id);</div><div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name List&quot;</span> &lt;&lt; std::endl;</div><div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; snapshot : snapshot_list) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name:&quot;</span> &lt;&lt; snapshot.name() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
