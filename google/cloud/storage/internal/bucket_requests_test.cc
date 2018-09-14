@@ -692,9 +692,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
 
 TEST(BucketRequestsTest, SetIamPolicy) {
   google::cloud::IamBindings bindings;
-  bindings.AddMember("storage.buckets.list", "test-user-1");
-  bindings.AddMember("storage.objects.get", "test-user-2");
-  bindings.AddMember("storage.objects.get", "test-user-3");
+  bindings.AddMember("roles/storage.admin", "test-user-1");
+  bindings.AddMember("roles/storage.objectViewer", "test-user-2");
+  bindings.AddMember("roles/storage.objectViewer", "test-user-3");
   google::cloud::IamPolicy policy{1, bindings, "XYZ="};
 
   SetBucketIamPolicyRequest request("my-bucket", policy);
