@@ -89,18 +89,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9638f87e7c1c699e75670e9356b9e1cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a9638f87e7c1c699e75670e9356b9e1cf">Shutdown</a> ()</td></tr>
 <tr class="memdesc:a9638f87e7c1c699e75670e9356b9e1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate the completion queue event loop.  <a href="#a9638f87e7c1c699e75670e9356b9e1cf">More...</a><br /></td></tr>
 <tr class="separator:a9638f87e7c1c699e75670e9356b9e1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33aaf1a996785b832d7c52f94cc0422d"><td class="memTemplParams" colspan="2">template&lt;typename Functor &gt; </td></tr>
-<tr class="memitem:a33aaf1a996785b832d7c52f94cc0422d"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a33aaf1a996785b832d7c52f94cc0422d">MakeDeadlineTimer</a> (std::chrono::system_clock::time_point deadline, Functor &amp;&amp;functor)</td></tr>
-<tr class="memdesc:a33aaf1a996785b832d7c52f94cc0422d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires at <code>deadline</code>.  <a href="#a33aaf1a996785b832d7c52f94cc0422d">More...</a><br /></td></tr>
-<tr class="separator:a33aaf1a996785b832d7c52f94cc0422d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf54f6d51d45ea9b89ce19b819d11b76"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period , typename Functor &gt; </td></tr>
-<tr class="memitem:abf54f6d51d45ea9b89ce19b819d11b76"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#abf54f6d51d45ea9b89ce19b819d11b76">MakeRelativeTimer</a> (std::chrono::duration&lt; Rep, Period &gt; duration, Functor &amp;&amp;functor)</td></tr>
-<tr class="memdesc:abf54f6d51d45ea9b89ce19b819d11b76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires after the <code>duration</code>.  <a href="#abf54f6d51d45ea9b89ce19b819d11b76">More...</a><br /></td></tr>
-<tr class="separator:abf54f6d51d45ea9b89ce19b819d11b76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7607d674dc0b8b987671f96092d331a2"><td class="memTemplParams" colspan="2">template&lt;typename Client , typename MemberFunction , typename Request , typename Functor &gt; </td></tr>
-<tr class="memitem:a7607d674dc0b8b987671f96092d331a2"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; internal::CheckAsyncUnaryRpcSignature&lt; MemberFunction &gt;::value, std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt; &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a7607d674dc0b8b987671f96092d331a2">MakeUnaryRpc</a> (Client &amp;client, MemberFunction Client::*call, Request const &amp;request, std::unique_ptr&lt; grpc::ClientContext &gt; context, Functor &amp;&amp;f)</td></tr>
-<tr class="memdesc:a7607d674dc0b8b987671f96092d331a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous unary RPC.  <a href="#a7607d674dc0b8b987671f96092d331a2">More...</a><br /></td></tr>
-<tr class="separator:a7607d674dc0b8b987671f96092d331a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915ca9c70cf38e939b1c04f9f42b5095"><td class="memTemplParams" colspan="2">template&lt;typename Functor , typename std::enable_if&lt; internal::CheckTimerCallback&lt; Functor &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a915ca9c70cf38e939b1c04f9f42b5095"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a915ca9c70cf38e939b1c04f9f42b5095">MakeDeadlineTimer</a> (std::chrono::system_clock::time_point deadline, Functor &amp;&amp;functor)</td></tr>
+<tr class="memdesc:a915ca9c70cf38e939b1c04f9f42b5095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires at <code>deadline</code>.  <a href="#a915ca9c70cf38e939b1c04f9f42b5095">More...</a><br /></td></tr>
+<tr class="separator:a915ca9c70cf38e939b1c04f9f42b5095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed4d2e184b0a56f0de1f345f5a3ec9c"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period , typename Functor , typename std::enable_if&lt; internal::CheckTimerCallback&lt; Functor &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a2ed4d2e184b0a56f0de1f345f5a3ec9c"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a2ed4d2e184b0a56f0de1f345f5a3ec9c">MakeRelativeTimer</a> (std::chrono::duration&lt; Rep, Period &gt; duration, Functor &amp;&amp;functor)</td></tr>
+<tr class="memdesc:a2ed4d2e184b0a56f0de1f345f5a3ec9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires after the <code>duration</code>.  <a href="#a2ed4d2e184b0a56f0de1f345f5a3ec9c">More...</a><br /></td></tr>
+<tr class="separator:a2ed4d2e184b0a56f0de1f345f5a3ec9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6eeef14a79b2413928f1200730d9d7e"><td class="memTemplParams" colspan="2">template&lt;typename Client , typename MemberFunction , typename Request , typename Functor , typename Sig  = internal::CheckAsyncUnaryRpcSignature&lt;MemberFunction&gt;, typename std::enable_if&lt; Sig::value, int &gt;::type valid_member_function_type = 0, typename std::enable_if&lt; internal::CheckUnaryRpcCallback&lt; Functor, typename Sig::ResponseType &gt;::value, int &gt;::type valid_callback_type = 0&gt; </td></tr>
+<tr class="memitem:af6eeef14a79b2413928f1200730d9d7e"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af6eeef14a79b2413928f1200730d9d7e">MakeUnaryRpc</a> (Client &amp;client, MemberFunction Client::*call, Request const &amp;request, std::unique_ptr&lt; grpc::ClientContext &gt; context, Functor &amp;&amp;f)</td></tr>
+<tr class="memdesc:af6eeef14a79b2413928f1200730d9d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous unary RPC.  <a href="#af6eeef14a79b2413928f1200730d9d7e">More...</a><br /></td></tr>
+<tr class="separator:af6eeef14a79b2413928f1200730d9d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Call the functor associated with asynchronous operations when they complete. </p>
@@ -149,13 +149,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a33aaf1a996785b832d7c52f94cc0422d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33aaf1a996785b832d7c52f94cc0422d">&#9670;&nbsp;</a></span>MakeDeadlineTimer()</h2>
+<a id="a915ca9c70cf38e939b1c04f9f42b5095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915ca9c70cf38e939b1c04f9f42b5095">&#9670;&nbsp;</a></span>MakeDeadlineTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Functor &gt; </div>
+template&lt;typename Functor , typename std::enable_if&lt; internal::CheckTimerCallback&lt; Functor &gt;::value, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -203,13 +203,13 @@ template&lt;typename Functor &gt; </div>
 
 </div>
 </div>
-<a id="abf54f6d51d45ea9b89ce19b819d11b76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf54f6d51d45ea9b89ce19b819d11b76">&#9670;&nbsp;</a></span>MakeRelativeTimer()</h2>
+<a id="a2ed4d2e184b0a56f0de1f345f5a3ec9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ed4d2e184b0a56f0de1f345f5a3ec9c">&#9670;&nbsp;</a></span>MakeRelativeTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Rep , typename Period , typename Functor &gt; </div>
+template&lt;typename Rep , typename Period , typename Functor , typename std::enable_if&lt; internal::CheckTimerCallback&lt; Functor &gt;::value, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -259,19 +259,19 @@ template&lt;typename Rep , typename Period , typename Functor &gt; </div>
 
 </div>
 </div>
-<a id="a7607d674dc0b8b987671f96092d331a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7607d674dc0b8b987671f96092d331a2">&#9670;&nbsp;</a></span>MakeUnaryRpc()</h2>
+<a id="af6eeef14a79b2413928f1200730d9d7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6eeef14a79b2413928f1200730d9d7e">&#9670;&nbsp;</a></span>MakeUnaryRpc()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Client , typename MemberFunction , typename Request , typename Functor &gt; </div>
+template&lt;typename Client , typename MemberFunction , typename Request , typename Functor , typename Sig  = internal::CheckAsyncUnaryRpcSignature&lt;MemberFunction&gt;, typename std::enable_if&lt; Sig::value, int &gt;::type valid_member_function_type = 0, typename std::enable_if&lt; internal::CheckUnaryRpcCallback&lt; Functor, typename Sig::ResponseType &gt;::value, int &gt;::type valid_callback_type = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if&lt; internal::CheckAsyncUnaryRpcSignature&lt;MemberFunction&gt;::value, std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a>&gt; &gt;::type google::cloud::bigtable::v0::CompletionQueue::MakeUnaryRpc </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a>&gt; google::cloud::bigtable::v0::CompletionQueue::MakeUnaryRpc </td>
           <td>(</td>
           <td class="paramtype">Client &amp;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
