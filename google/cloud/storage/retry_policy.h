@@ -23,22 +23,28 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+/// Defines what error codes are permanent errors.
 struct StatusTraits {
   static bool IsPermanentFailure(Status const& status) {
     return status.status_code() != 429 and status.status_code() < 500;
   }
 };
+}  // namespace internal
 
 /// The retry policy base class
-using RetryPolicy = google::cloud::internal::RetryPolicy<Status, StatusTraits>;
+using RetryPolicy =
+    google::cloud::internal::RetryPolicy<Status, internal::StatusTraits>;
 
 /// Keep retrying until some time has expired.
 using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<Status, StatusTraits>;
+    google::cloud::internal::LimitedTimeRetryPolicy<Status,
+                                                    internal::StatusTraits>;
 
 /// Keep retrying until the error count has been exceeded.
 using LimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<Status, StatusTraits>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<
+        Status, internal::StatusTraits>;
 
 /// The backoff policy base class.
 using BackoffPolicy = google::cloud::internal::BackoffPolicy;

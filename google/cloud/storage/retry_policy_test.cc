@@ -19,6 +19,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
 namespace {
 
 TEST(RetryPolicyTest, PermanentFailure) {
@@ -45,6 +46,7 @@ TEST(RetryPolicyTest, PermanentFailure) {
 }
 
 }  // namespace
+}  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
