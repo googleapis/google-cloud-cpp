@@ -38,9 +38,9 @@ TEST(CompletionQueueTest, LifeCycle) {
 
   std::promise<bool> promise;
   auto alarm = cq.MakeRelativeTimer(
-      2_ms, [&promise](CompletionQueue& cq, AsyncTimerResult&, bool ok) {
-        promise.set_value(true);
-      });
+      2_ms,
+      [&promise](CompletionQueue& cq, AsyncTimerResult&,
+                 AsyncOperation::Disposition d) { promise.set_value(true); });
 
   auto f = promise.get_future();
   auto status = f.wait_for(50_ms);
@@ -56,18 +56,18 @@ TEST(CompletionQueueTest, CancelAlarm) {
 
   std::thread t([&cq]() { cq.Run(); });
 
-  std::promise<bool> promise;
+  std::promise<AsyncOperation::Disposition> promise;
   auto alarm = cq.MakeRelativeTimer(
-      50_ms, [&promise](CompletionQueue& cq, AsyncTimerResult&, bool ok) {
-        promise.set_value(ok);
-      });
+      50_ms,
+      [&promise](CompletionQueue& cq, AsyncTimerResult&,
+                 AsyncOperation::Disposition d) { promise.set_value(d); });
 
   alarm->Cancel();
 
   auto f = promise.get_future();
   auto status = f.wait_for(100_ms);
   EXPECT_EQ(std::future_status::ready, status);
-  EXPECT_FALSE(f.get());
+  EXPECT_EQ(AsyncOperation::CANCELLED, f.get());
 
   cq.Shutdown();
   t.join();

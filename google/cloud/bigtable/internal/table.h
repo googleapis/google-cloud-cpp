@@ -137,7 +137,12 @@ class Table {
    * @return A handle to the asynchronous operation, applications can request
    *   the operation to be canceled.
    */
-  template <typename Functor>
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, google::bigtable::v2::MutateRowResponse&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncApply(SingleRowMutation&& mut,
                                              CompletionQueue& cq,
                                              Functor&& callback) {

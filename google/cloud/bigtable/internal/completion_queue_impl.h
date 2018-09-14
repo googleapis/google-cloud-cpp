@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
 
 #include "google/cloud/bigtable/async_operation.h"
+#include "google/cloud/internal/invoke_result.h"
 #include <grpcpp/alarm.h>
 #include <grpcpp/support/async_unary_call.h>
 #include <atomic>
@@ -29,6 +30,15 @@ class CompletionQueue;
 namespace internal {
 
 /**
+ * Tests if @p Functor meets the requirements for a timer callback.
+ *
+ * @tparam Functor a type the application wants to use as a timer callback.
+ */
+template <typename Functor>
+using CheckTimerCallback = google::cloud::internal::is_invocable<
+    Functor, CompletionQueue&, AsyncTimerResult&, AsyncOperation::Disposition>;
+
+/**
  * Wrap a timer callback into an `AsyncOperation`.
  *
  * Applications (or more likely, other components in the client library) will
@@ -40,7 +50,9 @@ namespace internal {
  *
  * @tparam Functor the callback type.
  */
-template <typename Functor>
+template <
+    typename Functor,
+    typename std::enable_if<CheckTimerCallback<Functor>::value, int>::type = 0>
 class AsyncTimerFunctor : public AsyncOperation {
  public:
   explicit AsyncTimerFunctor(Functor&& functor)
@@ -69,6 +81,13 @@ class AsyncTimerFunctor : public AsyncOperation {
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
+/// Verify that @p Functor meets the requirements for an AsyncUnaryRpc callback.
+template <typename Functor, typename Response>
+using CheckUnaryRpcCallback =
+    google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                          AsyncUnaryRpcResult<Response>&,
+                                          AsyncOperation::Disposition>;
+
 /**
  * Wrap a unary RPC callback into a `AsyncOperation`.
  *
@@ -83,7 +102,9 @@ class AsyncTimerFunctor : public AsyncOperation {
  * @tparam Response the type of the RPC response.
  * @tparam Functor the callback type.
  */
-template <typename Request, typename Response, typename Functor>
+template <typename Request, typename Response, typename Functor,
+          typename std::enable_if<
+              CheckUnaryRpcCallback<Functor, Response>::value, int>::type = 0>
 class AsyncUnaryRpcFunctor : public AsyncOperation {
  public:
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
