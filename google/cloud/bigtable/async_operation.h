@@ -96,8 +96,6 @@ class AsyncOperation {
    *   the operation were canceled. Note that errors are a "normal" completion.
    */
   virtual void Notify(CompletionQueue& cq, Disposition disposition) = 0;
-
-  virtual void SimulateNotify() = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

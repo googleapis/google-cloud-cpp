@@ -55,13 +55,16 @@ template <
     typename std::enable_if<CheckTimerCallback<Functor>::value, int>::type = 0>
 class AsyncTimerFunctor : public AsyncOperation {
  public:
-  explicit AsyncTimerFunctor(Functor&& functor)
-      : functor_(std::move(functor)), alarm_(new grpc::Alarm) {}
+  explicit AsyncTimerFunctor(Functor&& functor,
+                             std::unique_ptr<grpc::Alarm> alarm)
+      : functor_(std::move(functor)), alarm_(std::move(alarm)) {}
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     timer_.deadline = deadline;
-    alarm_->Set(&cq, deadline, tag);
+    if (alarm_) {
+      alarm_->Set(&cq, deadline, tag);
+    }
   }
 
   void Cancel() override {
@@ -75,8 +78,6 @@ class AsyncTimerFunctor : public AsyncOperation {
     alarm_.reset();
     functor_(cq, timer_, d);
   }
-
-  void SimulateNotify() override { Cancel(); }
 
   Functor functor_;
   AsyncTimerResult timer_;
@@ -128,8 +129,6 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   void Notify(CompletionQueue& cq, Disposition d) override {
     functor_(cq, result_, d);
   }
-
-  void SimulateNotify() override { result_.context->TryCancel(); }
 
   Functor functor_;
   AsyncUnaryRpcResult<Response> result_;
@@ -190,16 +189,19 @@ class CompletionQueueImpl {
   /// Terminate the event loop.
   void Shutdown();
 
+  /// Create a new alarm object.
+  virtual std::unique_ptr<grpc::Alarm> CreateAlarm() const;
+
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() { return cq_; }
 
   /// Add a new asynchronous operation to the completion queue.
   void* RegisterOperation(std::shared_ptr<AsyncOperation> op);
 
+ protected:
   /// Return the asynchronous operation associated with @p tag.
   std::shared_ptr<AsyncOperation> CompletedOperation(void* tag);
 
- protected:
   /// Simulate a completed operation, provided only to support unit tests.
   void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
                           AsyncOperation::Disposition d);

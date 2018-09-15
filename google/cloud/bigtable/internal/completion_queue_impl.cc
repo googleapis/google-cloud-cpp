@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 
 // There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
@@ -49,6 +50,10 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
 void CompletionQueueImpl::Shutdown() {
   shutdown_.store(true);
   cq_.Shutdown();
+}
+
+std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
+  return google::cloud::internal::make_unique<grpc::Alarm>();
 }
 
 void* CompletionQueueImpl::RegisterOperation(
@@ -92,7 +97,8 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
   internal_op->Notify(cq, d);
 }
 
-void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, AsyncOperation::Disposition d) {
+void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
+                                             AsyncOperation::Disposition d) {
   // Make a copy to avoid race conditions or iterator invalidation.
   std::vector<void*> tags;
   {
@@ -104,8 +110,19 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, AsyncOperation
   }
   for (void* tag : tags) {
     auto internal_op = CompletedOperation(tag);
+    internal_op->Cancel();
     internal_op->Notify(cq, d);
   }
+
+  // Discard any pending events.
+  grpc::CompletionQueue::NextStatus status;
+  do {
+    void* tag;
+    bool ok;
+    auto deadline =
+        std::chrono::system_clock::now() + std::chrono::milliseconds(1);
+    status = cq_.AsyncNext(&tag, &ok, deadline);
+  } while (status == grpc::CompletionQueue::GOT_EVENT);
 }
 
 }  // namespace internal

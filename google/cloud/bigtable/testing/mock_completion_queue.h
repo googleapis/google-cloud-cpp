@@ -27,6 +27,13 @@ namespace testing {
 class MockCompletionQueue
     : public google::cloud::bigtable::internal::CompletionQueueImpl {
  public:
+  std::unique_ptr<grpc::Alarm> CreateAlarm() const override {
+    // grpc::Alarm objects are really hard to cleanup when mocking their
+    // behavior, so we do not create an alarm, instead we return nullptr, which
+    // the classes that care (AsyncTimerFunctor) know what to do with.
+    return std::unique_ptr<grpc::Alarm>();
+  }
+
   using CompletionQueueImpl::empty;
   using CompletionQueueImpl::SimulateCompletion;
   using CompletionQueueImpl::size;

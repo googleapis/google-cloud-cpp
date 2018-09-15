@@ -187,12 +187,11 @@ TEST_F(NoexTableAsyncApplyTest, PermanentFailure) {
   EXPECT_THAT(capture_status.error_message(), HasSubstr("uh-oh"));
 }
 
-std::vector<std::shared_ptr<MockAsyncApplyReader>>
-SetupMockForMultipleTransients(
-    std::shared_ptr<testing::MockDataClient> client) {
+void SetupMockForMultipleTransients(
+    std::shared_ptr<testing::MockDataClient> client,
+    std::vector<std::shared_ptr<MockAsyncApplyReader>>& readers) {
   // We prepare the client to return multiple readers, all of them returning
   // transient failures.
-  std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
   EXPECT_CALL(*client, AsyncMutateRow(_, _, _))
       .WillRepeatedly(Invoke([&readers](grpc::ClientContext*,
                                         btproto::MutateRowRequest const&,
@@ -209,7 +208,6 @@ SetupMockForMultipleTransients(
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btproto::MutateRowResponse>>(r.get());
       }));
-  return readers;
 }
 
 /// @test Verify that noex::Table::AsyncApply() stops retrying on too many
@@ -218,7 +216,8 @@ TEST_F(NoexTableAsyncApplyTest, TooManyTransientFailures) {
   auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
-  auto readers = SetupMockForMultipleTransients(client_);
+  std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
+  SetupMockForMultipleTransients(client_, readers);
 
   // Create a table that accepts at most 3 failures.
   constexpr int kMaxTransients = 3;
@@ -332,7 +331,8 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnOperationCancel) {
   auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
-  auto readers = SetupMockForMultipleTransients(client_);
+  std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
+  SetupMockForMultipleTransients(client_, readers);
 
   // Create a table that accepts at most 3 failures.
   constexpr int kMaxTransients = 3;
@@ -378,7 +378,8 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
-  auto readers = SetupMockForMultipleTransients(client_);
+  std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
+  SetupMockForMultipleTransients(client_, readers);
 
   // Create a table that accepts at most 3 failures.
   constexpr int kMaxTransients = 3;

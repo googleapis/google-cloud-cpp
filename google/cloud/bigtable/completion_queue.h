@@ -57,7 +57,7 @@ class CompletionQueue {
   std::shared_ptr<AsyncOperation> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline, Functor&& functor) {
     auto op = std::make_shared<internal::AsyncTimerFunctor<Functor>>(
-        std::forward<Functor>(functor));
+        std::forward<Functor>(functor), impl_->CreateAlarm());
     void* tag = impl_->RegisterOperation(op);
     op->Set(impl_->cq(), deadline, tag);
     return op;
