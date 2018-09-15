@@ -771,9 +771,10 @@ class GcsObject(object):
         """Create a new rewrite token for the given operation."""
         return base64.b64encode('/'.join([
             str(operation.get('id')),
-            str(operation.get('bytes_written')), destination_bucket,
+            destination_bucket,
             destination_object,
-            str(generation)
+            str(generation),
+            str(operation.get('bytes_rewritten')),
         ]))
 
     def make_rewrite_operation(self, request, destination_bucket,
@@ -842,7 +843,7 @@ class GcsObject(object):
         :rtype:dict
         """
         body = json.loads(request.data)
-        rewrite_token = body.get('rewriteToken')
+        rewrite_token = request.args.get('rewriteToken')
         if rewrite_token is not None and rewrite_token != '':
             # Note that we remove the rewrite operation, not just look it up.
             # That way if the operation completes in this call, and/or fails,
@@ -872,13 +873,14 @@ class GcsObject(object):
         source.validate_encryption_for_read(
             request, prefix='x-goog-copy-source-encryption')
         bytes_rewritten = rewrite.get('bytes_rewritten')
-        bytes_rewritten = bytes_rewritten + (1024 * 1024)
+        bytes_rewritten += (1024 * 1024)
         result = {
             'kind': 'storage#rewriteResponse',
             'objectSize': len(source.media),
         }
         if bytes_rewritten >= len(source.media):
             bytes_rewritten = len(source.media)
+            rewrite['bytes_rewritten'] = bytes_rewritten
             # Success, the operation completed. Return the new object:
             object_path = destination_bucket + '/o/' + destination_object
             destination = GCS_OBJECTS.get(
@@ -898,7 +900,7 @@ class GcsObject(object):
             result['done'] = False
 
         result.update({
-            'bytesRewritten': bytes_rewritten,
+            'totalBytesRewritten': bytes_rewritten,
             'rewriteToken': rewrite_token,
         })
         return result

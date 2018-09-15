@@ -532,12 +532,10 @@ TEST_F(ObjectTest, RewriteObject) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  ObjectRewriter copier(
-      client.raw_client(),
-      internal::RewriteObjectRequest(
-          "test-source-bucket-name", "test-source-object-name",
-          "test-destination-bucket-name", "test-destination-object-name", "",
-          ObjectMetadata().upsert_metadata("test-key", "test-value")));
+  auto copier = client.RewriteObject(
+      "test-source-bucket-name", "test-source-object-name",
+      "test-destination-bucket-name", "test-destination-object-name",
+      ObjectMetadata().upsert_metadata("test-key", "test-value"));
   auto actual = copier.Iterate();
   EXPECT_FALSE(actual.done);
   EXPECT_EQ(1048576UL, actual.total_bytes_rewritten);
@@ -562,12 +560,9 @@ TEST_F(ObjectTest, RewriteObjectTooManyFailures) {
   testing::TooManyFailuresTest<internal::RewriteObjectResponse>(
       mock, EXPECT_CALL(*mock, RewriteObject(_)),
       [](Client& client) {
-        ObjectRewriter rewrite(
-            client.raw_client(),
-            internal::RewriteObjectRequest(
-                "test-source-bucket-name", "test-source-object-name",
-                "test-destination-bucket-name", "test-destination-object-name",
-                "", ObjectMetadata()));
+        auto rewrite = client.RewriteObject(
+            "test-source-bucket-name", "test-source-object",
+            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
         rewrite.Result();
       },
       "RewriteObject");
@@ -577,12 +572,9 @@ TEST_F(ObjectTest, RewriteObjectPermanentFailure) {
   testing::PermanentFailureTest<internal::RewriteObjectResponse>(
       *client, EXPECT_CALL(*mock, RewriteObject(_)),
       [](Client& client) {
-        ObjectRewriter rewrite(
-            client.raw_client(),
-            internal::RewriteObjectRequest(
-                "test-source-bucket-name", "test-source-object-name",
-                "test-destination-bucket-name", "test-destination-object-name",
-                "", ObjectMetadata()));
+        auto rewrite = client.RewriteObject(
+            "test-source-bucket-name", "test-source-object",
+            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
         rewrite.Result();
       },
       "RewriteObject");

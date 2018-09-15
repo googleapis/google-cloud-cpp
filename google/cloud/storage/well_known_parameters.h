@@ -265,6 +265,23 @@ struct MaxResults
 };
 
 /**
+ * Limit the number of bytes rewritten in a `Objects: rewrite` step.
+ *
+ * Applications should not need for the most part. It is used during testing, to
+ * ensure the code handles partial rewrites properly. Note that the value must
+ * be a multiple of 1 MiB (1048576).
+ */
+struct MaxBytesRewrittenPerCall
+    : public internal::WellKnownParameter<MaxBytesRewrittenPerCall,
+                                          std::int64_t> {
+  using WellKnownParameter<MaxBytesRewrittenPerCall,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "maxBytesRewrittenPerCall";
+  }
+};
+
+/**
  * Set the ACL to predefined values when creating Buckets or Objects.
  *
  * A predefined ACL is an alias for a set of specific ACL entries that you can

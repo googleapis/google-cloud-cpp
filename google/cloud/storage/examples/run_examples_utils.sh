@@ -251,6 +251,52 @@ run_all_object_examples() {
 }
 
 ################################################
+# Run the example showing how to rewrite objects.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_object_rewrite_examples() {
+  local source_bucket_name=$1
+  local destination_bucket_name=$2
+  shift 2
+
+  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
+  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${object_name}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples rewrite-object \
+      "${source_bucket_name}" "${object_name}" \
+      "${source_bucket_name}" "${rewrite_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${rewrite_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${object_name}"
+
+  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
+  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
+  local msg=$(./storage_object_samples rewrite-object-token \
+      "${source_bucket_name}" "${object_name}" \
+      "${destination_bucket_name}" "${rewrite_object_name}")
+
+  if echo "${msg}" | grep -q "Rewrite in progress"; then
+    local token=$(echo ${msg} | awk '{print $5}')
+    run_example ./storage_object_samples rewrite-object-resume \
+        "${source_bucket_name}" "${object_name}" \
+        "${destination_bucket_name}" "${rewrite_object_name}" "${token}"
+  fi
+  run_example ./storage_object_samples delete-object \
+      "${destination_bucket_name}" "${rewrite_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${object_name}"
+}
+
+################################################
 # Run the example showing how to make objects public.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -448,6 +494,7 @@ run_all_storage_examples() {
   run_all_default_object_acl_examples "${BUCKET_NAME}"
   run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
+  run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_all_public_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"

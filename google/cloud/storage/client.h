@@ -759,6 +759,149 @@ class Client {
   }
 
   /**
+   * Creates a `ObjectRewriter` to copy the source object.
+   *
+   * Applications use this function to reliably copy objects across location
+   * boundaries, and to rewrite objects with different Customer-Supplied
+   * Encryption Keys. The operation returns a `ObjectRewriter`, the application
+   * can use this object to initiate the copy, and to iterate if the copy
+   * requires more than one call to complete.
+   *
+   * @param source_bucket_name where is the source object located.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   *
+   * @snippet storage_object_samples.cc rewrite object non blocking
+   */
+  template <typename... Options>
+  ObjectRewriter RewriteObject(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    return ResumeRewriteObject(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        std::string{}, destination_object_metadata,
+        std::forward<Options>(options)...);
+  }
+
+  /**
+   * Creates a `ObjectRewriter` to resume a previously created rewrite.
+   *
+   * Applications use this function to resume a rewrite operation, possibly
+   * created with `RewriteObject`. Rewrite can reliably copy objects across
+   * location boundaries, and to can rewrite objects with different
+   * Customer-Supplied Encryption Keys. For large objects this operation can
+   * take a long time, applications should consider checkpointing the rewrite
+   * token (accessible in the `ObjectRewriter`) and restarting the operations
+   * in the event their program is terminated.
+   *
+   * @param source_bucket_name where is the source object located.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param rewrite_token the last sucessful token from a previous rewrite
+   *     operation. Can be the empty string, in which case this starts a new
+   *     rewrite operation.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   *
+   * @snippet storage_object_samples.cc rewrite object resume
+   */
+  template <typename... Options>
+  ObjectRewriter ResumeRewriteObject(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      std::string rewrite_token,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    internal::RewriteObjectRequest request(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        std::move(rewrite_token), destination_object_metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return ObjectRewriter(raw_client_, std::move(request));
+  }
+
+  /**
+   * Rewrites the object, blocking until the rewrite completes.
+   *
+   * Applications use this function to reliably copy objects across location
+   * boundaries, and to rewrite objects with different Customer-Supplied
+   * Encryption Keys. The operation blocks until the rewrite completes, and
+   * returns the resulting `ObjectMetadata`.
+   *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take multiple hours. In such cases the application should consider
+   *     using `RewriteObject` or `ResumeRewriteObject`.
+   *
+   * @param source_bucket_name where is the source object located.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   *
+   * @snippet storage_object_samples.cc rewrite object
+   */
+  template <typename... Options>
+  ObjectMetadata RewriteObjectBlocking(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    return ResumeRewriteObject(
+               std::move(source_bucket_name), std::move(source_object_name),
+               std::move(destination_bucket_name),
+               std::move(destination_object_name), std::string{},
+               destination_object_metadata, std::forward<Options>(options)...)
+        .Result();
+  }
+
+  /**
    * Retrieves the list of BucketAccessControls for a bucket.
    *
    * @param bucket_name the name of the bucket.

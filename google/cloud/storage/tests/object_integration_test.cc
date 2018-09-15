@@ -470,7 +470,8 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   };
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0), Fields(""));
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               Fields(""));
   for (int line = 0; line != 1000; ++line) {
     std::string random = generate_random_line() + "\n";
     os << line << ": " << random;
@@ -682,9 +683,9 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::AuthenticatedRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(meta.acl(),
-                                      ObjectAccessControl()
-                                          .set_entity("allAuthenticatedUsers")
-                                          .set_role("READER")))
+                                     ObjectAccessControl()
+                                         .set_entity("allAuthenticatedUsers")
+                                         .set_role("READER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -704,8 +705,8 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerFullControl(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-                    meta.acl(),
-                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -725,8 +726,8 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-                    meta.acl(),
-                    ObjectAccessControl().set_entity(owner).set_role("READER")))
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("READER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -743,8 +744,8 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                                .set_entity(meta.owner().entity)
-                                                .set_role("OWNER")))
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -761,8 +762,8 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclProjectPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                                .set_entity(meta.owner().entity)
-                                                .set_role("OWNER")))
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -778,8 +779,8 @@ TEST_F(ObjectIntegrationTest, InsertPredefinedAclPublicRead) {
       PredefinedAcl::PublicRead(), Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
-              meta.acl(),
-              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+             meta.acl(),
+             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << meta;
 
   client.DeleteObject(bucket_name, object_name);
@@ -795,13 +796,13 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::AuthenticatedRead(),
+      Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(meta.acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-            << meta;
+      << meta;
 
   client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
@@ -822,12 +823,12 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerFullControl(),
+      Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
@@ -848,12 +849,12 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerRead(),
+      Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("READER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
@@ -869,14 +870,14 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::Private(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::Private(),
+      Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
@@ -892,14 +893,14 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::ProjectPrivate(),
+      Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
@@ -915,13 +916,13 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
-      IfGenerationMatch(0),
-      DestinationPredefinedAcl::PublicRead(), Projection::Full());
+      IfGenerationMatch(0), DestinationPredefinedAcl::PublicRead(),
+      Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-            << meta;
+             meta.acl(),
+             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -994,13 +995,80 @@ TEST_F(ObjectIntegrationTest, RewriteSimple) {
 
   // Rewrite object into a new object.
   auto object_name = MakeRandomObjectName();
-  ObjectRewriter rewriter(
-      client.raw_client(),
-      internal::RewriteObjectRequest(
-          bucket_name, source_name, bucket_name, object_name, "",
-          ObjectMetadata().set_content_type("plain/text")));
+  ObjectMetadata rewritten_meta = client.RewriteObjectBlocking(
+      bucket_name, source_name, bucket_name, object_name,
+      ObjectMetadata().set_content_type("plain/text"));
+
+  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
+  EXPECT_EQ(object_name, rewritten_meta.name());
+
+  client.DeleteObject(bucket_name, object_name);
+  client.DeleteObject(bucket_name, source_name);
+}
+
+TEST_F(ObjectIntegrationTest, RewriteEncrypted) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto source_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  EncryptionKeyData source_key = MakeEncryptionKeyData();
+  ObjectMetadata source_meta =
+      client.InsertObject(bucket_name, source_name, LoremIpsum(),
+                          IfGenerationMatch(0), EncryptionKey(source_key));
+  EXPECT_EQ(source_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  // Compose new of object using previously created object
+  auto object_name = MakeRandomObjectName();
+  EncryptionKeyData dest_key = MakeEncryptionKeyData();
+  ObjectRewriter rewriter = client.RewriteObject(
+      bucket_name, source_name, bucket_name, object_name,
+      ObjectMetadata().set_content_type("plain/text"),
+      SourceEncryptionKey(source_key), EncryptionKey(dest_key));
 
   ObjectMetadata rewritten_meta = rewriter.Result();
+  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
+  EXPECT_EQ(object_name, rewritten_meta.name());
+
+  client.DeleteObject(bucket_name, object_name);
+  client.DeleteObject(bucket_name, source_name);
+}
+
+TEST_F(ObjectIntegrationTest, RewriteLarge) {
+  // The testbench always requires multiple iterations to copy this object.
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto source_name = MakeRandomObjectName();
+
+  std::string large_text;
+  long const lines = 8 * 1024 * 1024 / 128;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, source_name, large_text, IfGenerationMatch(0));
+  EXPECT_EQ(source_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  // Rewrite object into a new object.
+  auto object_name = MakeRandomObjectName();
+  ObjectRewriter writer =
+      client.RewriteObject(bucket_name, source_name, bucket_name, object_name,
+                           ObjectMetadata().set_content_type("plain/text"));
+
+  ObjectMetadata rewritten_meta =
+      writer.ResultWithProgressCallback([](RewriteProgress const& p) {
+        EXPECT_TRUE((p.total_bytes_rewritten < p.object_size) xor p.done)
+            << "p.done=" << p.done << ", p.object_size=" << p.object_size
+            << ", p.total_bytes_rewritten=" << p.total_bytes_rewritten;
+      });
+
   EXPECT_EQ(bucket_name, rewritten_meta.bucket());
   EXPECT_EQ(object_name, rewritten_meta.name());
 

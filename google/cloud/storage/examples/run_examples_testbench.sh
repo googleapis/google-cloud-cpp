@@ -28,13 +28,16 @@ start_testbench
 
 # Create most likely unique names for the project and bucket so multiple tests
 # can use the same testbench.
-readonly PROJECT_ID="fake-project-$(date +%s)"
-readonly BUCKET_NAME="fake-bucket-$(date +%s)"
-readonly TOPIC_NAME="fake-topic-$(date +%s)"
+readonly PROJECT_ID="fake-project-$(date +%s)-${RANDOM}"
+readonly BUCKET_NAME="fake-bucket-$(date +%s)-${RANDOM}"
+readonly DESTINATION_BUCKET_NAME="destination-bucket-$(date +%s)-${RANDOM}"
+readonly TOPIC_NAME="fake-topic-$(date +%s)-${RANDOM}"
 readonly STORAGE_CMEK_KEY="projects/${PROJECT_ID}/locations/global/keyRings/fake-key-ring/cryptoKeys/fake-key"
 
 # Most of the examples assume a bucket already exists, create one for them.
 run_example ./storage_bucket_samples create-bucket-for-project \
       "${BUCKET_NAME}" "${PROJECT_ID}"
+run_example ./storage_bucket_samples create-bucket-for-project \
+      "${DESTINATION_BUCKET_NAME}" "${PROJECT_ID}"
 
 run_all_storage_examples
