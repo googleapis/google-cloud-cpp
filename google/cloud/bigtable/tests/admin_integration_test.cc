@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -229,6 +231,71 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   auto table_count = CountMatchingTables(table_id, current_table_list);
   EXPECT_EQ(0, table_count);
+}
+
+/// @test Verify that `bigtable::TableAdmin` CheckConsistency works as expected.
+TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
+  using GC = bigtable::GcRule;
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
+
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id, bigtable::ClientOptions());
+  bigtable::InstanceAdmin instance_admin(instance_admin_client);
+
+  bigtable::InstanceId instance_id(id);
+  bigtable::DisplayName display_name("Integration Tests " + id);
+
+  // Replication needs at least two clusters
+  auto cluster_config_1 =
+      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
+  auto cluster_config_2 =
+      bigtable::ClusterConfig("us-central1-a", 3, bigtable::ClusterConfig::HDD);
+  bigtable::InstanceConfig config(
+      instance_id, display_name,
+      {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
+
+  auto instance = instance_admin.CreateInstance(config).get();
+
+  // need to create table_admin with longer polling as ConsistencyCheck takes a
+  // little long
+  std::shared_ptr<bigtable::AdminClient> admin_client =
+      bigtable::CreateDefaultAdminClient(
+          bigtable::testing::TableTestEnvironment::project_id(),
+          bigtable::ClientOptions());
+  bigtable::TableAdmin table_admin(
+      admin_client, id,
+      bigtable::GenericPollingPolicy<bigtable::LimitedTimeRetryPolicy,
+                                     bigtable::ExponentialBackoffPolicy>(
+          bigtable::LimitedTimeRetryPolicy(3_min),
+          bigtable::ExponentialBackoffPolicy(10_ms, 10_min)));
+
+  std::string const random_table_id = RandomTableId();
+  google::cloud::bigtable::TableId table_id(random_table_id);
+
+  // create table config
+  bigtable::TableConfig table_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  // create table
+  auto table = table_admin.CreateTable(table_id.get(), table_config);
+
+  google::cloud::bigtable::ConsistencyToken consistency_token(
+      table_admin.GenerateConsistencyToken(table_id.get()));
+
+  auto result =
+      table_admin.WaitForConsistencyCheck(table_id, consistency_token);
+
+  EXPECT_TRUE(result.get());
+
+  table_admin.DeleteTable(table_id.get());
+  instance_admin.DeleteInstance(id);
 }
 
 // Test Cases Finished
