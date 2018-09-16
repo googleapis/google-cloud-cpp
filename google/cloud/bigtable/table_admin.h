@@ -96,7 +96,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc create table
+   * @snippet table_admin_snippets.cc create table
    */
   ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
                                                    TableConfig config);
@@ -111,7 +111,7 @@ class TableAdmin {
    *   - `FULL`: return all the information about the table.
    *
    * @par Example
-   * @snippet bigtable_samples.cc list tables
+   * @snippet table_admin_snippets.cc list tables
    */
   std::vector<::google::bigtable::admin::v2::Table> ListTables(
       ::google::bigtable::admin::v2::Table::View view);
@@ -132,7 +132,7 @@ class TableAdmin {
    *     RPC policies in effect gave up.
    *
    * @par Example
-   * @snippet bigtable_samples.cc get table
+   * @snippet table_admin_snippets.cc get table
    */
   ::google::bigtable::admin::v2::Table GetTable(
       std::string const& table_id,
@@ -149,7 +149,7 @@ class TableAdmin {
    *     policies in effect gave up.
    *
    * @par Example
-   * @snippet bigtable_samples.cc delete table
+   * @snippet table_admin_snippets.cc delete table
    */
   void DeleteTable(std::string const& table_id);
 
@@ -164,7 +164,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc modify table
+   * @snippet table_admin_snippets.cc modify table
    */
   ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
       std::string const& table_id,
@@ -180,7 +180,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc drop rows by prefix
+   * @snippet table_admin_snippets.cc drop rows by prefix
    */
   void DropRowsByPrefix(std::string const& table_id,
                         std::string row_key_prefix);
@@ -203,6 +203,9 @@ class TableAdmin {
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc check consistency
    */
   bool CheckConsistency(bigtable::TableId const& table_id,
                         bigtable::ConsistencyToken const& consistency_token);
@@ -217,7 +220,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc wait for consistency check
+   * @snippet table_admin_snippets.cc wait for consistency check
    */
   std::future<bool> WaitForConsistencyCheck(
       bigtable::TableId const& table_id,
@@ -236,7 +239,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc drop all rows
+   * @snippet table_admin_snippets.cc drop all rows
    */
   void DropAllRows(std::string const& table_id);
 
@@ -292,6 +295,9 @@ class TableAdmin {
    * @return the information about the snapshot.
    * @throws std::exception if the information could not be obtained before the
    *     RPC policies in effect gave up.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc get snapshot
    */
   google::bigtable::admin::v2::Snapshot GetSnapshot(
       bigtable::ClusterId const& cluster_id,
@@ -311,7 +317,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc delete snapshot
+   * @snippet table_admin_snippets.cc delete snapshot
    */
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id);
@@ -344,7 +350,7 @@ class TableAdmin {
    * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc list snapshots
+   * @snippet table_admin_snippets.cc list snapshots
    */
   template <template <typename...> class Collection = std::vector>
   Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
