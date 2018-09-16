@@ -36,16 +36,14 @@ using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 
-// This "magic" assertion below was generated using logic from an existing
-// crypto library (Python's oauth2client) from the keyfile above. It was
-// slightly modified to get the b64-encoded versions of each of the JSON objects
-// used in the signature; our JSON library's string dump of the objects dumps
-// the keys in alphabetical order (while the oauth2client crypto functionality
-// does not), which results in different strings and thus different
-// b64-encodings of those strings.
-// TODO(#771): Document reproducible script to generate a fixed JWT assertion.
+// This "magic" assertion below was generated from helper script,
+// "make_jwt_assertion_for_test_data.py". Note that when our JSON library dumps
+// a string representation, the keys are always in alphabetical order; our
+// helper script also takes special care to ensure Python dicts are dumped in
+// this manner, as dumping the keys in a different order would result in a
+// different Base64-encoded string, and thus a different assertion string.
 constexpr char kExpectedAssertionParam[] =
-    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE1MzAwNjM5MjQsImlhdCI6MTUzMDA2MDMyNCwiaXNzIjoiZm9vLWVtYWlsQGZvby1wcm9qZWN0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2Nsb3VkLXBsYXRmb3JtIGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ucmVhZC1vbmx5IGh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wgaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9kZXZzdG9yYWdlLnJlYWRfb25seSBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RldnN0b3JhZ2UucmVhZF93cml0ZSJ9.C4f77UL0i1U7j6YwQEVSW0DFa6TWBt1FZbUrrL0CEyVdcWvUTAWEQbkw0kl-6OJOm6FDCgx4UOKwjPlOIcNdz0PH85n-LEWeQcSzo15k_LMaEmvh1eDSM0pWnJRJyrNi4NGrIHO4_CqRy38mH6PvThw7r_7l0oK95srZ2VJ-lOki5kO6rON4R7Kxe-IRSMoFBBEjHg2bry_4I2mHQk1yDldElBiU83VEV0kOSMbulQ-kwLaZXn8nBdAyi8UpMyqPu-ovnCCGZo4JCU_iYpF4S10Pcm0wkEOo2pS-Zqpu4pojatC-zMMAhaUiL-_yXXDrAsO4t6HCdqFcz9xSX_MWmQ)""";
+    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ifQ.OtL40PSxdAB9rxRkXj-UeyuMhQCoT10WJY4ccOrPXriwm-DRl5AMgbBkQvVmWeYuPMTiFKWz_CMMBjVc3lFPW015eHvKT5r3ySGra1i8hJ9cDsWO7SdIGB-l00G-BdRxVEhN8U4C20eUhlvhtjXemOwlCFrKjF22rJB-ChiKy84rXs3O-Hz0dWmsSZPfVD9q-2S2vJdr9vz7NoP-fCmpxhQ3POVocYb-2OEM5c4Uo_e7lQTX3bRtVc19wz_wrTu9wMMMRYt52K8WPoWPURt7qpjHX88_EitXMzH-cJUQoDsgIoZ6vDlQMs7_nqNfgrlsGWHpPoSoGgvJMg1vJbzVLw)""";
 constexpr long int kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
@@ -59,7 +57,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
       "client_email": "foo-email@foo-project.iam.gserviceaccount.com",
       "client_id": "100000000000000000001",
       "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://accounts.google.com/o/oauth2/token",
+      "token_uri": "https://oauth2.googleapis.com/token",
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";

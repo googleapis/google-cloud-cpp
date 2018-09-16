@@ -58,7 +58,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 
   auto mock_builder = MockHttpRequestBuilder::mock;
   EXPECT_CALL(*mock_builder,
-              Constructor(StrEq("https://accounts.google.com/o/oauth2/token")))
+              Constructor(StrEq("https://oauth2.googleapis.com/token")))
       .Times(1);
   EXPECT_CALL(*mock_builder, BuildRequest(_))
       .WillOnce(Invoke([mock_request](std::string payload) {
