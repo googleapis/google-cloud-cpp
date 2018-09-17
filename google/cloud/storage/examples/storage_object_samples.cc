@@ -698,6 +698,58 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
   (std::move(client), source_bucket_name, source_object_name,
    destination_bucket_name, destination_object_name, rewrite_token);
 }
+
+void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "rotate-encryption-key <bucket-name> <object-name>"
+        " <old-encryption-key> <new-encryption-key>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto old_key_base64 = ConsumeArg(argc, argv);
+  auto new_key_base64 = ConsumeArg(argc, argv);
+  //! [rotate encryption key] [START storage_rotate_encryption_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string old_key_base64, std::string new_key_base64) {
+    gcs::ObjectMetadata meta = client.RewriteObjectBlocking(
+        bucket_name, object_name, bucket_name, object_name,
+        gcs::ObjectMetadata(),
+        gcs::SourceEncryptionKey::FromBase64Key(old_key_base64),
+        gcs::EncryptionKey::FromBase64Key(new_key_base64));
+    std::cout << "Rotated key on object " << object_name
+              << " Metadata: " << meta << std::endl;
+  }
+  //! [rotate encryption key] [END storage_rotate_encryption_key]
+  (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
+}
+
+void RenameObject(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "rename-object <bucket-name> <old-object-name> <new-object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto old_object_name = ConsumeArg(argc, argv);
+  auto new_object_name = ConsumeArg(argc, argv);
+  //! [rename object] [START storage_move_file]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string old_object_name,
+     std::string new_object_name) {
+    gcs::ObjectMetadata meta =
+        client.RewriteObjectBlocking(bucket_name, old_object_name, bucket_name,
+                                     new_object_name, gcs::ObjectMetadata());
+    client.DeleteObject(bucket_name, old_object_name);
+    std::cout << "Renamed " << old_object_name << " to " << new_object_name
+              << " in bucket " << bucket_name << std::endl;
+  }
+  //! [rename object] [END storage_move_file]
+  (std::move(client), bucket_name, old_object_name, new_object_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -732,6 +784,8 @@ int main(int argc, char* argv[]) try {
       {"rewrite-object-non-blocking", &RewriteObjectNonBlocking},
       {"rewrite-object-token", &RewriteObjectToken},
       {"rewrite-object-resume", &RewriteObjectResume},
+      {"rotate-encryption-key", &RotateEncryptionKey},
+      {"rename-object", &RenameObject},
   };
   for (auto&& kv : commands) {
     try {

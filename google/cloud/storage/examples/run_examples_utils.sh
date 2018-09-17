@@ -246,6 +246,12 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_copied_object_name}"
+
+  local newkey="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples rotate-encryption-key \
+      "${bucket_name}" "${encrypted_object_name}" "${key}" "${newkey}"
+
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 }
@@ -262,40 +268,53 @@ run_all_object_examples() {
 ################################################
 run_all_object_rewrite_examples() {
   local source_bucket_name=$1
-  local destination_bucket_name=$2
+  local target_bucket_name=$2
   shift 2
 
-  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
-  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
+  local source_object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-target-object-$(date +%s)-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
-      "${source_bucket_name}" "${object_name}" \
+      "${source_bucket_name}" "${source_object_name}" \
       "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples rewrite-object \
-      "${source_bucket_name}" "${object_name}" \
-      "${source_bucket_name}" "${rewrite_object_name}"
+      "${source_bucket_name}" "${source_object_name}" \
+      "${source_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${rewrite_object_name}"
+      "${source_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${object_name}"
+      "${source_bucket_name}" "${source_object_name}"
 
-  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
-  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
+  local source_object_name="rename-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rename-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media-in-rename-example"
+  run_example ./storage_object_samples rename-object \
+      "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+
+  local source_object_name="rewrite-resume-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-resume-target-object-$(date +%s)-${RANDOM}.txt"
   run_example ./storage_object_samples write-large-object \
-      "${source_bucket_name}" "${object_name}" "16"
+      "${source_bucket_name}" "${source_object_name}" "16"
   local msg=$(./storage_object_samples rewrite-object-token \
-      "${source_bucket_name}" "${object_name}" \
-      "${destination_bucket_name}" "${rewrite_object_name}")
+      "${source_bucket_name}" "${source_object_name}" \
+      "${target_bucket_name}" "${target_object_name}")
 
   if echo "${msg}" | grep -q "Rewrite in progress"; then
     local token=$(echo ${msg} | awk '{print $5}')
     run_example ./storage_object_samples rewrite-object-resume \
-        "${source_bucket_name}" "${object_name}" \
-        "${destination_bucket_name}" "${rewrite_object_name}" "${token}"
+        "${source_bucket_name}" "${source_object_name}" \
+        "${target_bucket_name}" "${target_object_name}" "${token}"
+  else
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " rewrite-object-resume the rewrite completed in one step."
   fi
   run_example ./storage_object_samples delete-object \
-      "${destination_bucket_name}" "${rewrite_object_name}"
+      "${target_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${object_name}"
+      "${source_bucket_name}" "${source_object_name}"
 }
 
 ################################################
