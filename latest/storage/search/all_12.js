@@ -67,6 +67,7 @@ var searchData=
   ['status_5fcode',['status_code',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a2b439f870d69b2ff46da2ddb79c250c8',1,'google::cloud::storage::v0::Status']]],
   ['statustraits',['StatusTraits',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html',1,'google::cloud::storage::v0::internal']]],
   ['storage_5fbucket_5facl_5fsamples_2ecc',['storage_bucket_acl_samples.cc',['../storage__bucket__acl__samples_8cc.html',1,'']]],
+  ['storage_5fbucket_5fiam_5fsamples_2ecc',['storage_bucket_iam_samples.cc',['../storage__bucket__iam__samples_8cc.html',1,'']]],
   ['storage_5fbucket_5fsamples_2ecc',['storage_bucket_samples.cc',['../storage__bucket__samples_8cc.html',1,'']]],
   ['storage_5fclass',['storage_class',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html#ac88d973c159493c6b421f7669698b53c',1,'google::cloud::storage::v0::LifecycleRuleAction']]],
   ['storage_5fclass_2eh',['storage_class.h',['../storage__class_8h.html',1,'']]],
