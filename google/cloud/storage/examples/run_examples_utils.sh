@@ -48,6 +48,14 @@ run_all_bucket_examples() {
       "${bucket_name}" "STANDARD"
   run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
       "${bucket_name}" "COLDLINE"
+  run_example ./storage_bucket_samples add-bucket-label \
+      "${bucket_name}" "test-label" "test-label-value"
+  run_example ./storage_bucket_samples get-bucket-labels \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples remove-bucket-label \
+      "${bucket_name}" "test-label"
+  run_example ./storage_bucket_samples get-bucket-labels \
+      "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   run_example ./storage_bucket_samples get-service-account-for-project \
       "${PROJECT_ID}"
