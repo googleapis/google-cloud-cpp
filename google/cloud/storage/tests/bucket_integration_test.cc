@@ -22,6 +22,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
@@ -507,6 +508,39 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                       return x.id() == create.id();
                     });
   EXPECT_EQ(0U, count) << create;
+
+  client.DeleteBucket(bucket_name);
+}
+
+TEST_F(BucketIntegrationTest, IamCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a new bucket to run the test.
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+
+  IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
+  auto const& bindings = policy.bindings;
+  // There must always be at least an OWNER for the Bucket.
+  ASSERT_FALSE(bindings.end() ==
+               bindings.find("roles/storage.legacyBucketOwner"));
+
+  std::vector<BucketAccessControl> acl = client.ListBucketAcl(bucket_name);
+  // Unfortunately we cannot compare the values in the ACL to the values in the
+  // IamPolicy directly. The ids for entities have different formats, for
+  // example: in ACL 'project-editors-123456789' and in IAM
+  // 'projectEditors:my-project'. We can compare the counts though:
+  std::set<std::string> expected_owners;
+  for (auto const& entry : acl) {
+    if (entry.role() == "OWNER") {
+      expected_owners.insert(entry.entity());
+    }
+  }
+  std::set<std::string> actual_owners =
+      bindings.at("roles/storage.legacyBucketOwner");
+  EXPECT_EQ(expected_owners.size(), actual_owners.size());
 
   client.DeleteBucket(bucket_name);
 }

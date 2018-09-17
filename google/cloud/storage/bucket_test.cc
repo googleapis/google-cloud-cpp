@@ -288,6 +288,42 @@ TEST_F(BucketTest, PatchBucketPermanentFailure) {
       "PatchBucket");
 }
 
+TEST_F(BucketTest, GetBucketIamPolicy) {
+  IamBindings bindings;
+  bindings.AddMember("storage.buckets.list", "test-user");
+  IamPolicy expected{0, bindings, "XYZ="};
+
+  EXPECT_CALL(*mock, GetBucketIamPolicy(_))
+      .WillOnce(Return(std::make_pair(TransientError(), IamPolicy{})))
+      .WillOnce(Invoke([&expected](internal::GetBucketIamPolicyRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.GetBucketIamPolicy("test-bucket-name");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
+  testing::TooManyFailuresTest<IamPolicy>(
+      mock, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
+      [](Client& client) {
+        client.GetBucketIamPolicy("test-bucket-name");
+      },
+      "GetBucketIamPolicy");
+}
+
+TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
+  testing::PermanentFailureTest<IamPolicy>(
+      *client, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
+      [](Client& client) {
+        client.GetBucketIamPolicy("test-bucket-name");
+      },
+      "GetBucketIamPolicy");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

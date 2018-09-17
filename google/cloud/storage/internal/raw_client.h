@@ -59,6 +59,8 @@ class RawClient {
       UpdateBucketRequest const&) = 0;
   virtual std::pair<Status, BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) = 0;
+  virtual std::pair<Status, IamPolicy> GetBucketIamPolicy(
+      GetBucketIamPolicyRequest const& request) = 0;
   //@}
 
   //@{

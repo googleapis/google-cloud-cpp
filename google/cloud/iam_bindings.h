@@ -79,6 +79,20 @@ class IamBindings {
   }
 
   /**
+   * Finds the members for a role.
+   */
+  iterator find(std::string const& role) const { return bindings_.find(role); }
+
+  /// Returns the members for a role.
+  std::set<std::string> at(std::string const& role) const {
+    auto loc = bindings_.find(role);
+    if (loc == bindings_.end()) {
+      return {};
+    }
+    return loc->second;
+  }
+
+  /**
    * Adds a new member if a binding exists with given role otherwise inserts
    * a new key-value pair of role and member to the container.
    *

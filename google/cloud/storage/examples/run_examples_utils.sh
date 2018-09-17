@@ -324,6 +324,28 @@ run_all_notification_examples() {
 }
 
 ################################################
+# Run all Bucket IAM examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_bucket_iam_examples() {
+  local bucket_name=$1
+  shift
+
+  run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
+      "${bucket_name}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_bucket_iam_samples
+}
+
+################################################
 # Run all the examples.
 # Globals:
 #   BUCKET_NAME: the name of the bucket to use in the examples.
@@ -344,6 +366,7 @@ run_all_storage_examples() {
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"
+  run_all_bucket_iam_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then
