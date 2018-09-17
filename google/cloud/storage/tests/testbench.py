@@ -148,12 +148,6 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
     :param algo_header_value: str the value of the x-goog-*-key-algorithm header
     :return: NoneType
     """
-    if key_header_value:
-        print("\n\nKEY = %s\n", key_header_value)
-    if hash_header_value:
-        print("\n\nHASH = %s\n", hash_header_value)
-    if algo_header_value:
-        print("\n\nALGO = %s\n", algo_header_value)
     try:
         if algo_header_value is None or algo_header_value != 'AES256':
             raise ErrorResponse(
@@ -472,6 +466,8 @@ class GcsObject(object):
         # simple counter to increment on each object change.
         self.generation = 0
         self.revisions = {}
+        self.rewrite_token_generator = 0
+        self.rewrite_operations = {}
 
     def get_revision(self, request, version_field_name='generation'):
         """
@@ -480,7 +476,7 @@ class GcsObject(object):
         :param request:flask.Request the contents of the http request.
         :param generation_parameter_name:str the name of the generation
             parameter, typically 'generation', but sometimes 'sourceGeneration'.
-        :return:GcsObjectRevision the object revision.
+        :return:GcsObjectVersion the object revision.
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -635,27 +631,33 @@ class GcsObject(object):
                     and int(metageneration_match) != metageneration:
                 raise ErrorResponse('Precondition Failed', status_code=412)
 
-    def insert(self, gcs_url, request):
+    def _insert_revision(self, revision):
+        """Insert a new revision that has been initialized and checked.
+
+        :param revision:GcsObjectVersion the new revision to insert.
+        :rtype:NoneType
         """
-        Insert a new revision based on the give flask request.
+        update = {self.generation: revision}
+        bucket = lookup_bucket(self.bucket_name)
+        if not bucket.versioning_enabled():
+            self.revisions = update
+        else:
+            self.revisions.update(update)
+
+    def insert(self, gcs_url, request):
+        """Insert a new revision based on the give flask request.
 
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
-        :return:GcsObjectVersion the newly created object version.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
         """
         media = extract_media(request)
         self.generation += 1
         revision = GcsObjectVersion(
             gcs_url, self.bucket_name, self.name, self.generation, request,
             media)
-        update = {
-            self.generation: revision
-        }
-        bucket = lookup_bucket(self.bucket_name)
-        if not bucket.versioning_enabled():
-            self.revisions = update
-        else:
-            self.revisions.update(update)
+        self._insert_revision(revision)
         return revision
 
     def copy_from(self, gcs_url, request, source_revision):
@@ -666,10 +668,11 @@ class GcsObject(object):
         :param request:flask.Request the contents of the HTTP request.
         :param source_revision:GcsObjectVersion the source object version to
             copy from.
-        :return:GcsObjectVersion the newly created object version.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
         """
         self.generation += 1
-        source_revision.validate_encryption_for_read(flask.request)
+        source_revision.validate_encryption_for_read(request)
         revision = GcsObjectVersion(
             gcs_url,
             self.bucket_name,
@@ -679,7 +682,7 @@ class GcsObject(object):
             source_revision.media)
         metadata = json.loads(request.data)
         revision.update_from_metadata(metadata)
-        self.revisions[self.generation] = revision
+        self._insert_revision(revision)
         return revision
 
     def compose_from(self, gcs_url, request, composed_media):
@@ -701,8 +704,171 @@ class GcsObject(object):
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
-        self.revisions[self.generation] = revision
+        self._insert_revision(revision)
         return revision
+
+    @classmethod
+    def rewrite_fixed_args(cls):
+        """The arguments that should not change between rewrite calls."""
+        return [
+            'destinationKmsKeyName', 'destinationPredefinedAcl',
+            'ifGenerationMatch', 'ifGenerationNotMatch',
+            'ifMetagenerationMatch', 'ifMetagenerationNotMatch',
+            'ifSourceGenerationMatch', 'ifSourceGenerationNotMatch',
+            'ifSourceMetagenerationMatch', 'ifSourceMetagenerationNotMatch',
+            'maxBytesRewrittenPerCall', 'projection', 'sourceGeneration',
+            'userProject']
+
+    @classmethod
+    def capture_rewrite_operation_arguments(cls, request, destination_bucket,
+                                            destination_object):
+        """Captures the arguments used to validate related rewrite calls."""
+        original_arguments = {}
+        for arg in GcsObject.rewrite_fixed_args():
+            original_arguments[arg] = request.args.get(arg)
+        original_arguments.update({
+            'destination_bucket': destination_bucket,
+            'destination_object': destination_object,
+        })
+        return original_arguments
+
+    @classmethod
+    def make_rewrite_token(cls, operation, destination_bucket,
+                           destination_object, generation):
+        """Create a new rewrite token for the given operation."""
+        return base64.b64encode('/'.join([
+            str(operation.get('id')),
+            str(operation.get('bytes_written')),
+            destination_bucket,
+            destination_object,
+            str(generation)]))
+
+    def make_rewrite_operation(self, request,
+                               destination_bucket, destination_object):
+        """Create a new rewrite token for `Objects: rewrite`."""
+        generation = request.args.get('sourceGeneration')
+        if generation is None:
+            generation = self.generation
+        else:
+            generation = int(generation)
+
+        self.rewrite_token_generator = self.rewrite_token_generator + 1
+        body = json.loads(request.data)
+        original_arguments = self.capture_rewrite_operation_arguments(
+            request, destination_object, destination_object)
+        operation = {
+            'id': self.rewrite_token_generator,
+            'original_arguments': original_arguments,
+            'actual_generation': generation,
+            'bytes_rewritten': 0,
+            'body': body,
+        }
+        token = GcsObject.make_rewrite_token(
+            operation, destination_bucket, destination_object, generation)
+        return token, operation
+
+    def rewrite_finish(self, gcs_url, request, body, source):
+        """Complete a rewrite from `source` into this object.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :param body:dict the HTTP payload, parsed via json.loads()
+        :param source:GcsObjectVersion the source object version.
+        :return: the newly created object version.
+        :rtype:GcsObjectVersion
+        """
+        media = source.media
+        self.check_preconditions(request)
+        self.generation += 1
+        revision = GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
+        revision.update_from_metadata(body)
+        self._insert_revision(revision)
+        return revision
+
+    def rewrite_step(self, gcs_url, request,
+                     destination_bucket, destination_object):
+        """Execute an iteration of `Objects: rewrite.
+
+        Objects: rewrite may need to be called multiple times before it
+        succeeds. Only objects in the same location, with the same encryption,
+        are guaranteed to complete in a single request.
+
+        The implementation simulates some, but not all, the behaviors of the
+        server, in particular, only rewrites within the same bucket and smaller
+        than 1MiB complete immediately.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :param destination_bucket:str where will the object be placed after the
+            rewrite operation completes.
+        :param destination_object:str the name of the object when the rewrite
+            operation completes.
+        :return: a dictionary prepared for JSON encoding of a
+            `Objects: rewrite` response.
+        :rtype:dict
+        """
+        body = json.loads(request.data)
+        rewrite_token = body.get('rewriteToken')
+        if rewrite_token is not None and rewrite_token != '':
+            # Note that we remove the rewrite operation, not just look it up.
+            # That way if the operation completes in this call, and/or fails,
+            # it is already removed. We need to insert it with a new token
+            # anyway, so this makes sense.
+            rewrite = self.rewrite_operations.pop(rewrite_token, None)
+            if rewrite is None:
+                raise ErrorResponse('Invalid or expired token in rewrite',
+                                    status_code=410)
+        else:
+            rewrite_token, rewrite = self.make_rewrite_operation(
+                request, destination_bucket, destination_bucket)
+
+        # Compare the difference to the original arguments, on the first call
+        # this is a waste, but the code is easier to follow.
+        current_arguments = self.capture_rewrite_operation_arguments(
+            request, destination_bucket, destination_object)
+        diff = set(current_arguments) ^ set(rewrite.get('original_arguments'))
+        if len(diff) != 0:
+            raise ErrorResponse('Mismatched arguments to rewrite',
+                                status_code=412)
+
+        # This will raise if the version is deleted while the operation is in
+        # progress.
+        source = self.get_revision_by_generation(
+            rewrite.get('actual_generation'))
+        source.validate_encryption_for_read(
+            request, prefix='x-goog-copy-source-encryption')
+        bytes_rewritten = rewrite.get('bytes_rewritten')
+        bytes_rewritten = bytes_rewritten + (1024 * 1024)
+        result = {
+            'kind': 'storage#rewriteResponse',
+            'objectSize': len(source.media),
+        }
+        if bytes_rewritten >= len(source.media):
+            bytes_rewritten = len(source.media)
+            # Success, the operation completed. Return the new object:
+            object_path = destination_bucket + '/o/' + destination_object
+            destination = GCS_OBJECTS.get(
+                object_path, GcsObject(destination_bucket, destination_object))
+            revision = destination.rewrite_finish(
+                gcs_url, flask.request, body, source)
+            GCS_OBJECTS[object_path] = destination
+            result['done'] = True
+            result['resource'] = revision.metadata
+            rewrite_token = ''
+        else:
+            rewrite['bytes_rewritten'] = bytes_rewritten
+            rewrite_token = GcsObject.make_rewrite_token(
+                rewrite, destination_bucket, destination_object, source.generation)
+            self.rewrite_operations[rewrite_token] = rewrite
+            result['done'] = False
+
+        result.update({
+            'bytesRewritten': bytes_rewritten,
+            'rewriteToken': rewrite_token,
+        })
+        return result
 
 
 class GcsBucket(object):
@@ -1560,6 +1726,26 @@ def objects_copy(source_bucket, source_object,
     return filtered_response(flask.request, current_version.metadata)
 
 
+@gcs.route(
+    '/b/<source_bucket>/o/<source_object>/rewriteTo/b/<destination_bucket>/o/<destination_object>',
+    methods=['POST'])
+def objects_rewrite(source_bucket, source_object,
+                    destination_bucket, destination_object):
+    """Implement the 'Objects: rewrite' API."""
+    base_url = flask.url_for('gcs_index', _external=True)
+    insert_magic_bucket(base_url)
+    object_path, gcs_object = lookup_object(source_bucket, source_object)
+    gcs_object.check_preconditions(
+        flask.request,
+        if_generation_match='ifSourceGenerationMatch',
+        if_generation_not_match='ifSourceGenerationNotMatch',
+        if_metageneration_match='ifSourceMetagenerationMatch',
+        if_metageneration_not_match='ifSourceMetagenerationNotMatch')
+    response = gcs_object.rewrite_step(base_url, flask.request,
+                                       destination_bucket, destination_object)
+    return filtered_response(flask.request, response)
+
+
 @gcs.route('/b/<bucket_name>/o/<object_name>')
 def objects_get(bucket_name, object_name):
     """Implement the 'Objects: get' API.  Read objects or their metadata."""
@@ -1776,6 +1962,7 @@ def objects_insert(bucket_name):
     gcs_url = flask.url_for(
         'objects_insert', bucket_name=bucket_name, _external=True).replace(
             '/upload/', '/')
+    insert_magic_bucket(gcs_url)
     object_name = flask.request.args.get('name', None)
     if object_name is None:
         raise ErrorResponse('Name not set in Objects: insert', status_code=412)
