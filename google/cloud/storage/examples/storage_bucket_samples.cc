@@ -259,7 +259,7 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     gcs::BucketMetadata metadata =
         client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
-    if (metadata.label_count() == 0U) {
+    if (metadata.labels().empty()) {
       std::cout << "The bucket " << bucket_name << " has no labels set."
                 << std::endl;
       return;
@@ -288,7 +288,7 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
     std::cout << "Successfully reset label " << label_key << " on bucket  "
               << bucket_name << ".";
-    if (updated_metadata.label_count() == 0U) {
+    if (updated_metadata.labels().empty()) {
       std::cout << " The bucket now has no labels." << std::endl;
       return;
     }
