@@ -31,6 +31,7 @@ Usage:
     | clang-format > rpc_policy_parameters.inc
 """
 
+import collections
 import yaml
 import sys
 import urllib
@@ -59,11 +60,11 @@ def print_defines(interface):
     defines = []
     prefix = "GOOGLE_CLOUD_CPP_" + interface['name'].upper().rsplit('.', 1)[1]
     struct = interface['name'].rsplit('.', 1)[1]
-    constants = {
-        "_DEFAULT_INITIAL_DELAY": "initial_retry_delay_millis",
-        "_DEFAULT_MAXIMUM_DELAY": "max_retry_delay_millis",
-        "_DEFAULT_MAXIMUM_RETRY_PERIOD": "total_timeout_millis"
-    }
+    constants = collections.OrderedDict()
+    constants['_DEFAULT_INITIAL_DELAY'] = 'initial_retry_delay_millis'
+    constants['_DEFAULT_MAXIMUM_DELAY'] = 'max_retry_delay_millis'
+    constants['_DEFAULT_MAXIMUM_RETRY_PERIOD'] = 'total_timeout_millis'
+
     print "// Define the defaults using a pre-processor macro, this allows"
     print "// the application developers to change the defaults for their"
     print "// application by compiling with different values."
