@@ -182,6 +182,8 @@ add_library(storage_client
             object_access_control.cc
             object_metadata.h
             object_metadata.cc
+            object_rewriter.h
+            object_rewriter.cc
             object_stream.h
             object_stream.cc
             retry_policy.h

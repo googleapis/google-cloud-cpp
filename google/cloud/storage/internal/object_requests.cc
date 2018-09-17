@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <sstream>
@@ -300,11 +301,13 @@ RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
   nl::json object = nl::json::parse(response.payload);
   RewriteObjectResponse result;
   result.total_bytes_rewritten =
-      object.value("totalBytesRewritten", std::uint64_t(0));
-  result.object_size = object.value("objectSize", std::uint64_t(0));
+      ParseUnsignedLongField(object, "totalBytesRewritten");
+  result.object_size = ParseUnsignedLongField(object, "objectSize");
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
-  result.resource = ObjectMetadata::ParseFromJson(object["resource"]);
+  if (object.count("resource") != 0U) {
+    result.resource = ObjectMetadata::ParseFromJson(object["resource"]);
+  }
   return result;
 }
 

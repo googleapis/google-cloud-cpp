@@ -314,7 +314,7 @@ class RewriteObjectRequest
           IfMetagenerationMatch, IfMetagenerationNotMatch,
           IfSourceGenerationMatch, IfSourceGenerationNotMatch,
           IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
-          Projection, SourceGeneration, UserProject> {
+          Projection, SourceEncryptionKey, SourceGeneration, UserProject> {
  public:
   RewriteObjectRequest() = default;
   RewriteObjectRequest(std::string source_bucket, std::string source_object,
@@ -334,6 +334,7 @@ class RewriteObjectRequest
   std::string const& destination_bucket() const { return destination_bucket_; }
   std::string const& destination_object() const { return destination_object_; }
   std::string const& rewrite_token() const { return rewrite_token_; }
+  void set_rewrite_token(std::string v) { rewrite_token_ = std::move(v); }
   std::string const& json_payload() const { return json_payload_; }
 
  private:

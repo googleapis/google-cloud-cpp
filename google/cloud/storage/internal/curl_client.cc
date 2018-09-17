@@ -400,6 +400,28 @@ std::pair<Status, ObjectMetadata> CurlClient::ComposeObject(
                         ObjectMetadata::ParseFromString(payload.payload));
 }
 
+std::pair<Status, RewriteObjectResponse> CurlClient::RewriteObject(
+    RewriteObjectRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
+          request.source_object() + "/rewriteTo/b/" +
+          request.destination_bucket() + "/o/" + request.destination_object(),
+      storage_factory_);
+  SetupBuilder(builder, request, "POST");
+  if (not request.rewrite_token().empty()) {
+    builder.AddQueryParameter("rewriteToken", request.rewrite_token());
+  }
+  builder.AddHeader("Content-Type: application/json");
+  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        RewriteObjectResponse{});
+  }
+  return std::make_pair(Status(),
+                        RewriteObjectResponse::FromHttpResponse(payload));
+}
+
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(

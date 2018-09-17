@@ -649,14 +649,40 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta =
-      client.ComposeObject(bucket_name, source_objects, composed_object_name,
-                           ObjectMetadata().set_content_type("plain/text"),
-                          EncryptionKey(key));
+  ObjectMetadata composed_meta = client.ComposeObject(
+      bucket_name, source_objects, composed_object_name,
+      ObjectMetadata().set_content_type("plain/text"), EncryptionKey(key));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);
   client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, RewriteSimple) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto source_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, source_name, LoremIpsum(), IfGenerationMatch(0));
+  EXPECT_EQ(source_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  // Compose new of object using previously created object
+  auto object_name = MakeRandomObjectName();
+  ObjectRewriter rewriter(
+      client.raw_client(),
+      internal::RewriteObjectRequest(
+          bucket_name, source_name, bucket_name, object_name, "",
+          ObjectMetadata().set_content_type("plain/text")));
+
+  ObjectMetadata rewritten_meta = rewriter.Result();
+  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
+  EXPECT_EQ(object_name, rewritten_meta.name());
+
+  client.DeleteObject(bucket_name, object_name);
+  client.DeleteObject(bucket_name, source_name);
 }
 
 }  // anonymous namespace

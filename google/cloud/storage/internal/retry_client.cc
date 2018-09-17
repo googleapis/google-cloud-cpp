@@ -265,6 +265,14 @@ std::pair<Status, ObjectMetadata> RetryClient::ComposeObject(
                   &RawClient::ComposeObject, request, __func__);
 }
 
+std::pair<Status, RewriteObjectResponse> RetryClient::RewriteObject(
+    RewriteObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::RewriteObject, request, __func__);
+}
+
 std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
