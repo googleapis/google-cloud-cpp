@@ -33,89 +33,6 @@ namespace {
  */
 const std::string MAGIC_ROW_KEY = "key-000009";
 
-//! [create table]
-void CreateTable(google::cloud::bigtable::TableAdmin admin,
-                 std::string const& table_id) {
-  auto schema = admin.CreateTable(
-      table_id,
-      google::cloud::bigtable::TableConfig(
-          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-           {"foo",
-            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-          {}));
-}
-//! [create table]
-
-//! [list tables]
-void ListTables(google::cloud::bigtable::TableAdmin& admin) {
-  auto tables =
-      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
-  for (auto const& table : tables) {
-    std::cout << table.name() << std::endl;
-  }
-}
-//! [list tables]
-
-//! [get table]
-void GetTable(google::cloud::bigtable::TableAdmin admin,
-              std::string const& table_id) {
-  auto table =
-      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  for (auto const& family : table.column_families()) {
-    std::string const& family_name = family.first;
-    std::string gc_rule;
-    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                &gc_rule);
-    std::cout << "\t" << family_name << "\t\t" << gc_rule << std::endl;
-  }
-}
-//! [get table]
-
-//! [delete table]
-void DeleteTable(google::cloud::bigtable::TableAdmin admin,
-                 std::string const& table_id) {
-  admin.DeleteTable(table_id);
-}
-//! [delete table]
-
-//! [modify table]
-void ModifyTable(google::cloud::bigtable::TableAdmin admin,
-                 std::string const& table_id) {
-  auto schema = admin.ModifyColumnFamilies(
-      table_id,
-      {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-       google::cloud::bigtable::ColumnFamilyModification::Update(
-           "fam", google::cloud::bigtable::GcRule::Union(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(24 * 7)))),
-       google::cloud::bigtable::ColumnFamilyModification::Create(
-           "bar", google::cloud::bigtable::GcRule::Intersection(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(72))))});
-
-  std::string formatted;
-  google::protobuf::TextFormat::PrintToString(schema, &formatted);
-  std::cout << "Schema modified to: " << formatted << std::endl;
-}
-//! [modify table]
-
-//! [drop all rows]
-void DropAllRows(google::cloud::bigtable::TableAdmin admin,
-                 std::string const& table_id) {
-  admin.DropAllRows(table_id);
-}
-//! [drop all rows]
-
-//! [drop rows by prefix]
-void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
-                      std::string const& table_id) {
-  admin.DropRowsByPrefix(table_id, "key-00004");
-}
-//! [drop rows by prefix]
-
 //! [apply]
 void Apply(google::cloud::bigtable::Table table) {
   // Write several rows with some trivial data.
@@ -287,44 +204,6 @@ void ReadModifyWrite(google::cloud::bigtable::Table table) {
 }
 //! [read modify write]
 
-//! [wait for consistency check]
-void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
-                             std::string const& table_id_param) {
-  google::cloud::bigtable::TableId table_id(table_id_param);
-  google::cloud::bigtable::ConsistencyToken consistency_token(
-      admin.GenerateConsistencyToken(table_id.get()));
-  auto result = admin.WaitForConsistencyCheck(table_id, consistency_token);
-  if (result.get()) {
-    std::cout << "Table is consistent" << std::endl;
-  } else {
-    std::cout << "Table is not consistent" << std::endl;
-  }
-}
-//! [wait for consistency check]
-
-//! [list snapshots]
-void ListSnapshots(google::cloud::bigtable::TableAdmin admin,
-                   std::string const& cluster_id_str) {
-  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-
-  auto snapshot_list = admin.ListSnapshots(cluster_id);
-  std::cout << "Snapshot Name List" << std::endl;
-  for (auto const& snapshot : snapshot_list) {
-    std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
-  }
-}
-//! [list snapshots]
-
-//! [delete snapshot]
-void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin,
-                    std::string const& cluster_id_str,
-                    std::string const& snapshot_id_str) {
-  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-  google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-  admin.DeleteSnapshot(cluster_id, snapshot_id);
-}
-//! [delete snapshot]
-
 //! [sample row keys]
 void SampleRows(google::cloud::bigtable::Table table) {
   auto samples = table.SampleRows<>();
@@ -495,12 +374,6 @@ int main(int argc, char* argv[]) try {
               << " <command> <project_id> [arguments]\n\n"
               << "Examples:\n";
     for (auto example : {"run my-project my-instance my-table",
-                         "create-table my-project my-instance my-table",
-                         "list-tables my-project my-instance",
-                         "get-table my-project my-instance my-table",
-                         "modify-table my-project my-instance my-table",
-                         "drop-all-rows my-project my-instance my-table",
-                         "delete-table my-project my-instance my-table",
                          "run-full-example my-project my-instance my-table"}) {
       std::cerr << "  " << program << " " << example << "\n";
     }
@@ -535,20 +408,6 @@ int main(int argc, char* argv[]) try {
 
   if (command == "run") {
     RunTableOperations(admin, table_id);
-  } else if (command == "create-table") {
-    CreateTable(admin, table_id);
-  } else if (command == "list-tables") {
-    ListTables(admin);
-  } else if (command == "get-table") {
-    GetTable(admin, table_id);
-  } else if (command == "delete-table") {
-    DeleteTable(admin, table_id);
-  } else if (command == "modify-table") {
-    ModifyTable(admin, table_id);
-  } else if (command == "drop-all-rows") {
-    DropAllRows(admin, table_id);
-  } else if (command == "drop-rows-by-prefix") {
-    DropRowsByPrefix(admin, table_id);
   } else if (command == "apply") {
     Apply(table);
   } else if (command == "bulk-apply") {
@@ -569,8 +428,6 @@ int main(int argc, char* argv[]) try {
     SampleRowsCollections(table);
   } else if (command == "run-full-example") {
     RunFullExample(admin, table_id);
-  } else if (command == "wait-for-consistency-check") {
-    WaitForConsistencyCheck(admin, table_id);
   } else {
     std::cerr << "Unknown command: " << command << std::endl;
     print_usage();
