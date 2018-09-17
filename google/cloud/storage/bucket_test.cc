@@ -290,7 +290,7 @@ TEST_F(BucketTest, PatchBucketPermanentFailure) {
 
 TEST_F(BucketTest, GetBucketIamPolicy) {
   IamBindings bindings;
-  bindings.AddMember("storage.buckets.list", "test-user");
+  bindings.AddMember("roles/storage.admin", "test-user");
   IamPolicy expected{0, bindings, "XYZ="};
 
   EXPECT_CALL(*mock, GetBucketIamPolicy(_))
@@ -323,7 +323,7 @@ TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
 
 TEST_F(BucketTest, SetBucketIamPolicy) {
   IamBindings bindings;
-  bindings.AddMember("storage.buckets.list", "test-user");
+  bindings.AddMember("roles/storage.admin", "test-user");
   IamPolicy expected{0, bindings, "XYZ="};
 
   EXPECT_CALL(*mock, SetBucketIamPolicy(_))
