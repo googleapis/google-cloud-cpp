@@ -20,36 +20,6 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
-    - # This is a fairly specialized entry in the matrix.  It compiles the code
-      # using Clang's static analyzer.  The static analyzer slows down the build
-      # so much that it can consume the full 50 minutes allocated by Travis for
-      # a build.  Most of this time is spent building gRPC and other
-      # dependencies, but unfortunately the static analyzer inserts itself into
-      # the build process when cmake(1) creates the Makefiles.  The only
-      # workaround that reliably works is to first build and install gRPC
-      # without static analysis, and then compile our code against that
-      # pre-installed version.  Even so, this particular entry takes nearly
-      # 30 minutes to run, so we put it first in the matrix to start it as early
-      # as possible.  We also disable the build on pull-requests.
-      os: linux
-      compiler: clang
-      env:
-        SCAN_BUILD=yes
-        DISTRO=ubuntu
-        DISTRO_VERSION=16.04
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
-    - # This is the only macOS entry in the matrix.  It is disabled on pull
-      # requests because Travis often has long backlogs for macOS.
-      os: osx
-      compiler: clang
-      env:
-        OPENSSL_ROOT_DIR=/usr/local/opt/libressl
-      install:
-        - git submodule update --init
-        - ci/install-retry.sh ci/travis/install-macosx.sh
-      script: ci/travis/build-macosx.sh
-      cache: ccache
-      if: type != pull_request
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
