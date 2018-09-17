@@ -340,9 +340,9 @@ run_all_bucket_iam_examples() {
   run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
       "${bucket_name}"
   run_example ./storage_bucket_iam_samples add-bucket-iam-member \
-      "${bucket_name}" "roles/storage.ObjectViewer" "allAuthenticatedUsers"
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples remove-bucket-iam-member \
-      "${bucket_name}" "roles/storage.ObjectViewer" "allAuthenticatedUsers"
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
