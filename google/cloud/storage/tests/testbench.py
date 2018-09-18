@@ -229,13 +229,7 @@ def extract_media(request):
 class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
-    def __init__(self,
-                 gcs_url,
-                 bucket_name,
-                 name,
-                 generation,
-                 request,
-                 media):
+    def __init__(self, gcs_url, bucket_name, name, generation, request, media):
         """
         Initialize a new object revision.
 
@@ -409,8 +403,8 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -654,9 +648,8 @@ class GcsObject(object):
         """
         media = extract_media(request)
         self.generation += 1
-        revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request, media)
         self._insert_revision(revision)
         return revision
 
@@ -673,13 +666,9 @@ class GcsObject(object):
         """
         self.generation += 1
         source_revision.validate_encryption_for_read(request)
-        revision = GcsObjectVersion(
-            gcs_url,
-            self.bucket_name,
-            self.name,
-            self.generation,
-            request,
-            source_revision.media)
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request,
+                                    source_revision.media)
         metadata = json.loads(request.data)
         revision.update_from_metadata(metadata)
         self._insert_revision(revision)
@@ -694,13 +683,8 @@ class GcsObject(object):
         :return:GcsObjectVersion the newly created object version.
         """
         self.generation += 1
-        revision = GcsObjectVersion(
-            gcs_url,
-            self.bucket_name,
-            self.name,
-            self.generation,
-            request,
-            composed_media)
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request, composed_media)
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
@@ -709,7 +693,8 @@ class GcsObject(object):
 
     @classmethod
     def rewrite_fixed_args(cls):
-        """The arguments that should not change between rewrite calls."""
+        """The arguments that should not change between requests for the same
+        rewrite operation."""
         return [
             'destinationKmsKeyName', 'destinationPredefinedAcl',
             'ifGenerationMatch', 'ifGenerationNotMatch',
@@ -717,7 +702,8 @@ class GcsObject(object):
             'ifSourceGenerationMatch', 'ifSourceGenerationNotMatch',
             'ifSourceMetagenerationMatch', 'ifSourceMetagenerationNotMatch',
             'maxBytesRewrittenPerCall', 'projection', 'sourceGeneration',
-            'userProject']
+            'userProject'
+        ]
 
     @classmethod
     def capture_rewrite_operation_arguments(cls, request, destination_bucket,
@@ -738,13 +724,13 @@ class GcsObject(object):
         """Create a new rewrite token for the given operation."""
         return base64.b64encode('/'.join([
             str(operation.get('id')),
-            str(operation.get('bytes_written')),
-            destination_bucket,
+            str(operation.get('bytes_written')), destination_bucket,
             destination_object,
-            str(generation)]))
+            str(generation)
+        ]))
 
-    def make_rewrite_operation(self, request,
-                               destination_bucket, destination_object):
+    def make_rewrite_operation(self, request, destination_bucket,
+                               destination_object):
         """Create a new rewrite token for `Objects: rewrite`."""
         generation = request.args.get('sourceGeneration')
         if generation is None:
@@ -763,8 +749,8 @@ class GcsObject(object):
             'bytes_rewritten': 0,
             'body': body,
         }
-        token = GcsObject.make_rewrite_token(
-            operation, destination_bucket, destination_object, generation)
+        token = GcsObject.make_rewrite_token(operation, destination_bucket,
+                                             destination_object, generation)
         return token, operation
 
     def rewrite_finish(self, gcs_url, request, body, source):
@@ -780,15 +766,14 @@ class GcsObject(object):
         media = source.media
         self.check_preconditions(request)
         self.generation += 1
-        revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request, media)
         revision.update_from_metadata(body)
         self._insert_revision(revision)
         return revision
 
-    def rewrite_step(self, gcs_url, request,
-                     destination_bucket, destination_object):
+    def rewrite_step(self, gcs_url, request, destination_bucket,
+                     destination_object):
         """Execute an iteration of `Objects: rewrite.
 
         Objects: rewrite may need to be called multiple times before it
@@ -818,8 +803,8 @@ class GcsObject(object):
             # anyway, so this makes sense.
             rewrite = self.rewrite_operations.pop(rewrite_token, None)
             if rewrite is None:
-                raise ErrorResponse('Invalid or expired token in rewrite',
-                                    status_code=410)
+                raise ErrorResponse(
+                    'Invalid or expired token in rewrite', status_code=410)
         else:
             rewrite_token, rewrite = self.make_rewrite_operation(
                 request, destination_bucket, destination_bucket)
@@ -830,8 +815,8 @@ class GcsObject(object):
             request, destination_bucket, destination_object)
         diff = set(current_arguments) ^ set(rewrite.get('original_arguments'))
         if len(diff) != 0:
-            raise ErrorResponse('Mismatched arguments to rewrite',
-                                status_code=412)
+            raise ErrorResponse(
+                'Mismatched arguments to rewrite', status_code=412)
 
         # This will raise if the version is deleted while the operation is in
         # progress.
@@ -849,10 +834,11 @@ class GcsObject(object):
             bytes_rewritten = len(source.media)
             # Success, the operation completed. Return the new object:
             object_path = destination_bucket + '/o/' + destination_object
-            destination = GCS_OBJECTS.get(
-                object_path, GcsObject(destination_bucket, destination_object))
-            revision = destination.rewrite_finish(
-                gcs_url, flask.request, body, source)
+            destination = GCS_OBJECTS.get(object_path,
+                                          GcsObject(destination_bucket,
+                                                    destination_object))
+            revision = destination.rewrite_finish(gcs_url, flask.request, body,
+                                                  source)
             GCS_OBJECTS[object_path] = destination
             result['done'] = True
             result['resource'] = revision.metadata
@@ -860,7 +846,8 @@ class GcsObject(object):
         else:
             rewrite['bytes_rewritten'] = bytes_rewritten
             rewrite_token = GcsObject.make_rewrite_token(
-                rewrite, destination_bucket, destination_object, source.generation)
+                rewrite, destination_bucket, destination_object,
+                source.generation)
             self.rewrite_operations[rewrite_token] = rewrite
             result['done'] = False
 
@@ -1045,8 +1032,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_acl(self, entity, role):
         """
@@ -1108,8 +1095,8 @@ class GcsBucket(object):
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+        raise ErrorResponse('Entity %s not found in object %s' % (entity,
+                                                                  self.name))
 
     def update_default_object_acl(self, entity, role):
         """
@@ -1342,8 +1329,9 @@ def lookup_object(bucket_name, object_name):
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path)
     if gcs_object is None:
-        raise ErrorResponse('Object %s in %s not found' % (object_name, bucket_name),
-                            status_code=404)
+        raise ErrorResponse(
+            'Object %s in %s not found' % (object_name, bucket_name),
+            status_code=404)
     return (object_path, gcs_object)
 
 
@@ -1484,10 +1472,10 @@ def bucket_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        gcs_bucket.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
@@ -1563,10 +1551,10 @@ def bucket_default_object_acl_create(bucket_name):
     """
     gcs_bucket = GCS_BUCKETS.get(bucket_name)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        gcs_bucket.insert_default_object_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             gcs_bucket.insert_default_object_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
@@ -1700,8 +1688,8 @@ def objects_list(bucket_name):
 @gcs.route(
     '/b/<source_bucket>/o/<source_object>/copyTo/b/<destination_bucket>/o/<destination_object>',
     methods=['POST'])
-def objects_copy(source_bucket, source_object,
-                 destination_bucket, destination_object):
+def objects_copy(source_bucket, source_object, destination_bucket,
+                 destination_object):
     """Implement the 'Objects: copy' API, copy an object."""
     object_path, gcs_object = lookup_object(source_bucket, source_object)
     gcs_object.check_preconditions(
@@ -1729,8 +1717,8 @@ def objects_copy(source_bucket, source_object,
 @gcs.route(
     '/b/<source_bucket>/o/<source_object>/rewriteTo/b/<destination_bucket>/o/<destination_object>',
     methods=['POST'])
-def objects_rewrite(source_bucket, source_object,
-                    destination_bucket, destination_object):
+def objects_rewrite(source_bucket, source_object, destination_bucket,
+                    destination_object):
     """Implement the 'Objects: rewrite' API."""
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
@@ -1761,8 +1749,7 @@ def objects_get(bucket_name, object_name):
     revision.validate_encryption_for_read(flask.request)
     response = flask.make_response(revision.media)
     length = len(revision.media)
-    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1,
-                                                           length)
+    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
     return response
 
 
@@ -1811,8 +1798,9 @@ def objects_compose(bucket_name, object_name):
         if source_object_name is None:
             raise ErrorResponse('Required.', status_code=400)
         source_object_path = bucket_name + '/o/' + source_object_name
-        source_gcs_object = GCS_OBJECTS.get(
-            source_object_path, GcsObject(bucket_name, source_object_name))
+        source_gcs_object = GCS_OBJECTS.get(source_object_path,
+                                            GcsObject(bucket_name,
+                                                      source_object_name))
         if source_gcs_object is None:
             raise ErrorResponse(
                 'No such object: %s' % source_object_path, status_code=404)
@@ -1874,10 +1862,10 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(
-        flask.request,
-        revision.insert_acl(
-            payload.get('entity', ''), payload.get('role', '')))
+    return filtered_response(flask.request,
+                             revision.insert_acl(
+                                 payload.get('entity', ''),
+                                 payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
