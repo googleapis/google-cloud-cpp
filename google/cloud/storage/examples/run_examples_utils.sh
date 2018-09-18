@@ -36,7 +36,6 @@ run_all_bucket_examples() {
   local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
   local object_name="object-$(date +%s)-${RANDOM}.txt"
 
-  EMULATOR_LOG="testbench.log"
   run_example ./storage_bucket_samples list-buckets-for-project \
       "${PROJECT_ID}"
   run_example ./storage_bucket_samples create-bucket-for-project \
@@ -57,16 +56,6 @@ run_all_bucket_examples() {
       "${bucket_name}" "test-label"
   run_example ./storage_bucket_samples get-bucket-labels \
       "${bucket_name}"
-  run_example ./storage_bucket_samples get-billing \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples enable-requester-pays \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples write-object-requester-pays \
-      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples read-object-requester-pays \
-      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples disable-requester-pays \
-      "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   run_example ./storage_bucket_samples get-service-account-for-project \
       "${PROJECT_ID}"
@@ -84,6 +73,38 @@ run_all_bucket_examples() {
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_bucket_samples
+}
+
+################################################
+# Run all examples using a Requester Pays bucket.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+run_all_requester_pays_examples() {
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_bucket_samples get-billing \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples enable-requester-pays \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples write-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples read-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples disable-requester-pays \
+      "${bucket_name}"
+
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
 ################################################
@@ -378,6 +399,8 @@ run_all_bucket_iam_examples() {
 run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
+  EMULATOR_LOG="testbench.log"
+  run_all_requester_pays_examples
   run_all_bucket_examples
   run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_default_object_acl_examples "${BUCKET_NAME}"
