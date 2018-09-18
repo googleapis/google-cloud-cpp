@@ -176,7 +176,7 @@ std::pair<Status, IamPolicy> CurlClient::GetBucketIamPolicy(
                              "/iam",
                              storage_factory_);
   SetupBuilder(builder, request, "GET");
-  auto payload = builder.BuildRequest(std::string{}).MakeRequest();
+  auto payload = builder.BuildRequest().MakeRequest(std::string{});
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)}, IamPolicy{});
@@ -191,7 +191,7 @@ std::pair<Status, IamPolicy> CurlClient::SetBucketIamPolicy(
                              storage_factory_);
   SetupBuilder(builder, request, "PUT");
   builder.AddHeader("Content-Type: application/json");
-  auto payload = builder.BuildRequest(request.json_payload()).MakeRequest();
+  auto payload = builder.BuildRequest().MakeRequest(request.json_payload());
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)}, IamPolicy{});
