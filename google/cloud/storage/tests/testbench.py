@@ -70,6 +70,8 @@ def canonical_entity_name(entity):
     :return: the name in canonical form.
     :rtype:str
     """
+    if entity == 'allUsers' or entity == 'allAuthenticatedUsers':
+        return entity
     if entity.startswith('project-owners-'):
         entity = 'project-owners-123456789'
     if entity.startswith('project-editors-'):
@@ -260,7 +262,11 @@ class GcsObjectVersion(object):
             'location': 'US',
             'storageClass': 'STANDARD',
             'size': len(self.media),
-            'etag': 'XYZ='
+            'etag': 'XYZ=',
+            'owner': {
+                'entity': 'project-owners-123456789',
+                'entityId': '',
+            },
         }
         if request.headers.get('content-type') is not None:
             self.metadata['contentType'] = request.headers.get('content-type')
@@ -268,13 +274,7 @@ class GcsObjectVersion(object):
         self.update_from_metadata({})
         # Capture any encryption key headers.
         self._capture_customer_encryption(request)
-        # Insert the well-known values for the ACL.
-        self.insert_acl(
-            canonical_entity_name('project-owners-123456789'), 'OWNER')
-        self.insert_acl(
-            canonical_entity_name('project-editors-123456789'), 'OWNER')
-        self.insert_acl(
-            canonical_entity_name('project-viewers-123456789'), 'READER')
+        self._update_predefined_acl(request.args.get('predefinedAcl'))
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -355,6 +355,41 @@ class GcsObjectVersion(object):
             "keySha256": hash_header_value,
         }
 
+    def _update_predefined_acl(self, predefined_acl):
+        """Update the ACL based on the given request parameter value."""
+        if predefined_acl is None:
+            predefined_acl = 'projectPrivate'
+        self.insert_acl(
+            canonical_entity_name('project-owners-123456789'), 'OWNER')
+        bucket = lookup_bucket(self.bucket_name)
+        owner = bucket.metadata.get('owner')
+        if owner is None:
+            owner_entity = 'project-owners-123456789'
+        else:
+            owner_entity = owner.get('entity')
+        if predefined_acl == 'authenticatedRead':
+            self.insert_acl('allAuthenticatedUsers', 'READER')
+        elif predefined_acl == 'bucketOwnerFullControl':
+            self.insert_acl(owner_entity, 'OWNER')
+        elif predefined_acl == 'bucketOwnerRead':
+            self.insert_acl(owner_entity, 'READER')
+        elif predefined_acl == 'private':
+            self.insert_acl('project-owners', 'OWNER')
+        elif predefined_acl == 'projectPrivate':
+            self.insert_acl(
+                canonical_entity_name('project-editors-123456789'), 'OWNER')
+            self.insert_acl(
+                canonical_entity_name('project-viewers-123456789'), 'READER')
+        elif predefined_acl == 'publicRead':
+            self.insert_acl(canonical_entity_name('allUsers'), 'READER')
+        else:
+            raise ErrorResponse('Invalid predefinedAcl value', status_code=400)
+
+    def reset_predefined_acl(self, predefined_acl):
+        """Reset the ACL based on the given request parameter value."""
+        self.metadata['acl'] = []
+        self._update_predefined_acl(predefined_acl)
+
     def insert_acl(self, entity, role):
         """Insert (or update) a new AccessControl entry for this object.
 
@@ -405,7 +440,7 @@ class GcsObjectVersion(object):
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
-            if acl.get('entity', '').lower() == entity:
+            if acl.get('entity', '') == entity:
                 return acl
         raise ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
@@ -672,14 +707,16 @@ class GcsObject(object):
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request,
                                     source_revision.media)
+        revision.reset_predefined_acl(
+            request.args.get('destinationPredefinedAcl'))
         metadata = json.loads(request.data)
         revision.update_from_metadata(metadata)
         self._insert_revision(revision)
         return revision
 
     def compose_from(self, gcs_url, request, composed_media):
-        """
-        Compose a new revision based on the give flask request.
+        """Compose a new revision based on the give flask request.
+
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
         :param composed_media:str contents of the composed object
@@ -689,6 +726,8 @@ class GcsObject(object):
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, composed_media)
+        revision.reset_predefined_acl(
+            request.args.get('destinationPredefinedAcl'))
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
@@ -879,6 +918,10 @@ class GcsBucket(object):
             'labels': {
                 'foo': 'bar',
                 'baz': 'qux'
+            },
+            'owner': {
+                'entity': 'project-owners-123456789',
+                'entityId': '',
             }
         }
         self.notification_id = 1
@@ -1035,7 +1078,7 @@ class GcsBucket(object):
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
-            if acl.get('entity', '').lower() == entity:
+            if acl.get('entity', '') == entity:
                 return acl
         raise ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
@@ -1098,7 +1141,7 @@ class GcsBucket(object):
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('defaultObjectAcl', []):
-            if acl.get('entity', '').lower() == entity:
+            if acl.get('entity', '') == entity:
                 return acl
         raise ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))

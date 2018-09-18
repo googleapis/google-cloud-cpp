@@ -603,6 +603,268 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+std::vector<ObjectAccessControl>::difference_type CountMatchingEntities(
+    std::vector<ObjectAccessControl> const& acl,
+    ObjectAccessControl const& expected) {
+  return std::count_if(
+      acl.begin(), acl.end(), [&expected](ObjectAccessControl const& x) {
+        return x.entity() == expected.entity() and x.role() == expected.role();
+      });
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::AuthenticatedRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+                                      ObjectAccessControl()
+                                          .set_entity("allAuthenticatedUsers")
+                                          .set_role("READER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::BucketOwnerFullControl(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+                    meta.acl(),
+                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::BucketOwnerRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+                    meta.acl(),
+                    ObjectAccessControl().set_entity(owner).set_role("READER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::Private(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+                                                .set_entity(meta.owner().entity)
+                                                .set_role("OWNER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclProjectPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::ProjectPrivate(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+                                                .set_entity(meta.owner().entity)
+                                                .set_role("OWNER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, InsertPredefinedAclPublicRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::PublicRead(), Projection::Full());
+  EXPECT_LT(
+      0, CountMatchingEntities(
+              meta.acl(),
+              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+      << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+                                     ObjectAccessControl()
+                                         .set_entity("allAuthenticatedUsers")
+                                         .set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, copy_name);
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, copy_name);
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, copy_name);
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::Private(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, copy_name);
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, copy_name);
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto copy_name = MakeRandomObjectName();
+
+  ObjectMetadata original = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ObjectMetadata meta = client.CopyObject(
+      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      IfGenerationMatch(0),
+      DestinationPredefinedAcl::PublicRead(), Projection::Full());
+  EXPECT_LT(
+      0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, ComposeSimple) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();

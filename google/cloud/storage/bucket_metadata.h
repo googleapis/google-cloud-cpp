@@ -544,6 +544,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return *this;
   }
 
+  using CommonMetadata::has_owner;
   using CommonMetadata::owner;
 
   std::int64_t const& project_number() const { return project_number_; }

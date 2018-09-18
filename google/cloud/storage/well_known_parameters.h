@@ -278,6 +278,21 @@ struct PredefinedAcl
     : public internal::WellKnownParameter<PredefinedAcl, std::string> {
   using WellKnownParameter<PredefinedAcl, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "predefinedAcl"; }
+
+  static PredefinedAcl AuthenticatedRead() {
+    return PredefinedAcl("authenticatedRead");
+  }
+  static PredefinedAcl BucketOwnerFullControl() {
+    return PredefinedAcl("bucketOwnerFullControl");
+  }
+  static PredefinedAcl BucketOwnerRead() {
+    return PredefinedAcl("bucketOwnerRead");
+  }
+  static PredefinedAcl Private() { return PredefinedAcl("private"); }
+  static PredefinedAcl ProjectPrivate() {
+    return PredefinedAcl("projectPrivate");
+  }
+  static PredefinedAcl PublicRead() { return PredefinedAcl("publicRead"); }
 };
 
 /**
@@ -297,6 +312,25 @@ struct DestinationPredefinedAcl
                            std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() {
     return "destinationPredefinedAcl";
+  }
+
+  static DestinationPredefinedAcl AuthenticatedRead() {
+    return DestinationPredefinedAcl("authenticatedRead");
+  }
+  static DestinationPredefinedAcl BucketOwnerFullControl() {
+    return DestinationPredefinedAcl("bucketOwnerFullControl");
+  }
+  static DestinationPredefinedAcl BucketOwnerRead() {
+    return DestinationPredefinedAcl("bucketOwnerRead");
+  }
+  static DestinationPredefinedAcl Private() {
+    return DestinationPredefinedAcl("private");
+  }
+  static DestinationPredefinedAcl ProjectPrivate() {
+    return DestinationPredefinedAcl("projectPrivate");
+  }
+  static DestinationPredefinedAcl PublicRead() {
+    return DestinationPredefinedAcl("publicRead");
   }
 };
 
@@ -352,6 +386,9 @@ struct Projection
     : public internal::WellKnownParameter<Projection, std::string> {
   using WellKnownParameter<Projection, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "projection"; }
+
+  static Projection NoAcl() { return Projection("noAcl"); }
+  static Projection Full() { return Projection("full"); }
 };
 
 /**

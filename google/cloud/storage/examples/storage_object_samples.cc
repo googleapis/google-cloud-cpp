@@ -306,6 +306,26 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, content_type);
 }
 
+void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
+                      char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"make-object-public <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [make object public] [START storage_make_public]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata updated = client.PatchObject(
+        bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
+        gcs::PredefinedAcl::PublicRead());
+    std::cout << "Object updated. The full metadata after the update is: "
+              << updated << std::endl;
+  }
+  //! [make object public] [END storage_make_public]
+  (std::move(client), bucket_name, object_name);
+}
+
 void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
                            char* argv[]) {
   if (argc != 1) {
