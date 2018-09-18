@@ -39,3 +39,7 @@ target_link_libraries(storage_object_acl_samples storage_client)
 
 add_executable(storage_notification_samples storage_notification_samples.cc)
 target_link_libraries(storage_notification_samples storage_client)
+
+add_executable(storage_quickstart storage_quickstart.cc)
+target_link_libraries(storage_quickstart storage_client
+                      google_cloud_cpp_common_options)

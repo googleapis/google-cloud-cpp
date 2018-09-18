@@ -1,0 +1,97 @@
+/*!
+
+@mainpage Google Cloud Storage C++ Client Library
+
+These pages contain the reference guide to the Google Cloud Storage (GCS)
+C++ Client Library.
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud Storage
+using the C++ client library.
+
+Costs that you incur in Cloud Storage are based on the resources you use. This
+quickstart typically uses less than $0.01USD worth of Cloud Storage resources.
+
+If you have never used Cloud Storage we recommend that you first follow one of
+the [language neutral quickstart guides][quickstart-link] before you follow this
+guide.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project.
+
+[GO TO THE MANAGE RESOURCES PAGE][resource-link]
+
+Make a note of the project id, you will need to use it later.
+
+2. Make sure that billing is enabled for your project
+
+[LEARN HOW TO ENABLE BILLING][billing-link]
+
+3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
+
+### Downloading and Compiling the C++ Client Library
+
+The [source code][source-link] for the Cloud Storage C++ Client
+Library can be found on [GitHub][source-link]. The top-level README
+file in this repository includes detailed instructions on how to compile the
+library. The examples used in this guide should be automatically compiled when
+you follow said instructions.
+
+### Create a bucket
+
+To programmatically create a bucket from C++ first include the necessary header:
+
+@snippet storage_quickstart.cc header
+
+To keep the example shorter (and therefore easier to read), we use a namespace
+alias:
+
+@snippet storage_quickstart.cc namespace alias
+
+Create a `Client` object to communicate with GCS:
+
+@snippet storage_quickstart.cc create client
+
+Now we can proceed to create the bucket:
+
+@snippet storage_quickstart.cc create bucket
+
+This quickstart will always create a **regional** bucket in the **us-east1**
+region, you must provide the project id and bucket name in the command-line when
+you run the quickstart program, assuming you followed the build instructions
+in referenced above:
+
+```
+./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
+```
+
+### Next Steps
+
+The documentation for each member function in the [Client] class includes short
+snippets on how to call the function, the snippets for
+[ReadObject()][ReadObject], [WriteObject()][WriteObject],
+[ListObjects()][ListObjects], and [DeleteObject()][DeleteObject] are
+good places to continue learning about the library.
+
+[Client]: @ref google::cloud::storage::v0::Client
+[ReadObject]: @ref google::cloud::storage::v0::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::v0::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::v0::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::v0::Client::DeleteObject()
+
+### Putting it all together
+
+The full code for the quickstart is:
+
+@snippet storage_quickstart.cc full quickstart
+
+[quickstart-link]: https://cloud.google.com/storage/docs/quickstarts 'GCS Quickstarts'
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[source-link]: https://github.com/google-cloud-cpp.git 'GitHub Source Code'
+
+
+*/
