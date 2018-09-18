@@ -124,7 +124,7 @@ TEST(ObjectMetadataTest, Parse) {
       "https://www.googleapis.com/storage/v1/b/foo-bar/o/"
       "baz?generation=12345&alt=media",
       actual.media_link());
-  EXPECT_EQ(2U, actual.metadata_count());
+  EXPECT_EQ(2U, actual.metadata().size());
   EXPECT_TRUE(actual.has_metadata("foo"));
   EXPECT_EQ("bar", actual.metadata("foo"));
   EXPECT_EQ(4, actual.metageneration());
