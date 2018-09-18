@@ -21,6 +21,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+TEST(PatchBuilderTest, Empty) {
+  PatchBuilder builder;
+  EXPECT_TRUE(builder.empty());
+  EXPECT_EQ("{}", builder.ToString());
+}
+
 TEST(PatchBuilderTest, String) {
   PatchBuilder builder;
   builder.AddStringField("set-value", "", "new-value");

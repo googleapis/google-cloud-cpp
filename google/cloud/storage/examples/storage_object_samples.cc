@@ -531,6 +531,7 @@ int main(int argc, char* argv[]) try {
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
       {"patch-object-content-type", &PatchObjectContentType},
+      {"make-object-public", &MakeObjectPublic},
       {"generate-encryption-key", &GenerateEncryptionKey},
       {"write-encrypted-object", &WriteEncryptedObject},
       {"read-encrypted-object", &ReadEncryptedObject},
