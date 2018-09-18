@@ -102,8 +102,10 @@ run_all_requester_pays_examples() {
   run_example ./storage_bucket_samples read-object-requester-pays \
       "${bucket_name}" "${object_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples disable-requester-pays \
-      "${bucket_name}"
+      "${bucket_name}" "${PROJECT_ID}"
 
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
@@ -400,10 +402,10 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_all_requester_pays_examples
   run_all_bucket_examples
   run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_default_object_acl_examples "${BUCKET_NAME}"
+  run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"

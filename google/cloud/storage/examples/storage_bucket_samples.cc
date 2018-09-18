@@ -362,16 +362,18 @@ void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
 
 void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"disable-requester-pays <bucket-name>"};
+  if (argc != 3) {
+    throw Usage{"disable-requester-pays <bucket-name> <project-id>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
+  auto project_id = ConsumeArg(argc, argv);
   //! [disable requester pays] [START storage_disable_requester_pays]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string bucket_name, std::string project_id) {
     gcs::BucketMetadata metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetBilling(
-                         gcs::BucketBilling{false}));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{false}),
+        gcs::UserProject(project_id));
     std::cout << "Billing configuration for bucket " << bucket_name
               << " is updated. The bucket now";
     if (not metadata.has_billing()) {
@@ -385,7 +387,7 @@ void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [disable requester pays] [END storage_disable_requester_pays]
-  (std::move(client), bucket_name);
+  (std::move(client), bucket_name, project_id);
 }
 
 void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
