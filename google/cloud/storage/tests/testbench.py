@@ -61,14 +61,14 @@ def index():
 
 
 def canonical_entity_name(entity):
-    """
-    Convert entity names to their canonical form.
+    """Convert entity names to their canonical form.
 
     Some entities (notably project-<team>-) have more than one name, for
     example the project-owners-<project_id> entities are called
     project-owners-<project_number> internally.  This function
     :param entity:str convert this entity to its canonical name.
-    :return:str the name in canonical form.
+    :return: the name in canonical form.
+    :rtype:str
     """
     if entity.startswith('project-owners-'):
         entity = 'project-owners-123456789'
@@ -89,7 +89,8 @@ def index_acl(acl):
     This function performs that conversion.
 
     :param acl:list of dict
-    :return:dict the ACL indexed by the entity of each entry.
+    :return: the ACL indexed by the entity of each entry.
+    :rtype:dict
     """
     # This can be expressed by a comprehension but turns out to be less
     # readable in that form.
@@ -100,13 +101,13 @@ def index_acl(acl):
 
 
 def filtered_response(request, response):
-    """
-    Format the response as a JSON string, using any filtering included in
+    """Format the response as a JSON string, using any filtering included in
     the request.
 
     :param request:flask.Request the original HTTP request.
     :param response:dict a dictionary to be formatted as a JSON string.
-    :return:str the response formatted as a string.
+    :return: the response formatted as a string.
+    :rtype:str
     """
     fields = request.args.get('fields')
     if fields is None:
@@ -120,8 +121,9 @@ def filtered_response(request, response):
 
 
 def raise_csek_error(code=400):
-    msg = "Missing a SHA256 hash of the encryption key, or it is not base64 encoded, or it does not match the encryption key."
-    link = "https://cloud.google.com/storage/docs/encryption#customer-supplied_encryption_keys"
+    msg = 'Missing a SHA256 hash of the encryption key, or it is not'
+    msg += ' base64 encoded, or it does not match the encryption key.'
+    link = 'https://cloud.google.com/storage/docs/encryption#customer-supplied_encryption_keys'
     error = {
         "error": {
             "errors": [{
@@ -146,7 +148,7 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
     :param key_header_value: str the value of the x-goog-*-key header
     :param hash_header_value: str the value of the x-goog-*-key-sha256 header
     :param algo_header_value: str the value of the x-goog-*-key-algorithm header
-    :return: NoneType
+    :rtype: NoneType
     """
     try:
         if algo_header_value is None or algo_header_value != 'AES256':
@@ -167,13 +169,13 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
         # ErrorResponse indicates that the request was invalid, just pass
         # that exception through.
         raise
-    except Exception as ex:
+    except Exception:
         # Many of the functions above may raise, convert those to an
         # ErrorResponse with the right format.
         raise_csek_error()
 
 
-def json_api_patch(original, patch, recurse_on={}):
+def json_api_patch(original, patch, recurse_on=set({})):
     """Patch a dictionary using the JSON API semantics.
 
     Patches are applied using the following algorithm:
@@ -195,7 +197,8 @@ def json_api_patch(original, patch, recurse_on={}):
         other elements are replaced.
     :param recurse_on:set of strings, the names of fields for which the patch
         is applied recursively.
-    :return:dict the updated dictionary
+    :return: the updated dictionary
+    :rtype:dict
     """
     tmp = original.copy()
     for key, value in patch.iteritems():
@@ -219,7 +222,8 @@ def extract_media(request):
     the the state of the application may change due to other I/O.
 
     :param request:flask.Request the HTTP request.
-    :return str:the full media of the request.
+    :return: the full media of the request.
+    :rtype: str
     """
     if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
         return request.environ.get('wsgi.input').read()
@@ -230,8 +234,7 @@ class GcsObjectVersion(object):
     """Represent a single revision of a GCS Object."""
 
     def __init__(self, gcs_url, bucket_name, name, generation, request, media):
-        """
-        Initialize a new object revision.
+        """Initialize a new object revision.
 
         :param gcs_url:str the base URL for the GCS service.
         :param bucket_name:str the name of the bucket that contains the object.
@@ -275,7 +278,9 @@ class GcsObjectVersion(object):
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
+
         :param metadata:dict a dictionary with new metadata values.
+        :rtype:NoneType
         """
         tmp = self.metadata.copy()
         tmp.update(metadata)
@@ -304,7 +309,7 @@ class GcsObjectVersion(object):
         :param prefix: str the prefix shared by the encryption headers,
             typically 'x-goog-encryption', but for rewrite requests it can be
             'x-good-copy-source-encryption'.
-        :return:NoneType
+        :rtype:NoneType
         """
         key_header = prefix + '-key'
         hash_header = prefix + '-key-sha256'
@@ -332,7 +337,7 @@ class GcsObjectVersion(object):
         """Capture the customer-supplied encryption key, if any.
 
         :param request:flask.Request the http request.
-        :return: NoneType
+        :rtype:NoneType
         """
         if request.headers.get('x-goog-encryption-key') is None:
             return
@@ -351,12 +356,12 @@ class GcsObjectVersion(object):
         }
 
     def insert_acl(self, entity, role):
-        """
-        Insert (or update) a new AccessControl entry for this object.
+        """Insert (or update) a new AccessControl entry for this object.
 
         :param entity:str the name of the entity to insert.
         :param role:str the new role
-        :return:dict the dictionary representing the new AccessControl metadata.
+        :return: the dictionary representing the new AccessControl metadata.
+        :rtype:dict
         """
         entity = canonical_entity_name(entity)
         email = ''
@@ -381,11 +386,10 @@ class GcsObjectVersion(object):
         return indexed[entity]
 
     def delete_acl(self, entity):
-        """
-        Delete a single AccessControl entry from the Object revision.
+        """Delete a single AccessControl entry from the Object revision.
 
         :param entity:str the name of the entity.
-        :return:None
+        :rtype:NoneType
         """
         entity = canonical_entity_name(entity)
         indexed = index_acl(self.metadata.get('acl', []))
@@ -393,36 +397,36 @@ class GcsObjectVersion(object):
         self.metadata['acl'] = indexed.values()
 
     def get_acl(self, entity):
-        """
-        Get a single AccessControl entry from the Object revision.
+        """Get a single AccessControl entry from the Object revision.
 
         :param entity:str the name of the entity.
-        :return:dict with the contents of the ObjectAccessControl.
+        :return: with the contents of the ObjectAccessControl.
+        :rtype:dict
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
-        """
-        Update a single AccessControl entry in this Object revision.
+        """Update a single AccessControl entry in this Object revision.
 
         :param entity:str the name of the entity.
         :param role:str the new role for the entity.
-        :return:dict with the contents of the ObjectAccessControl.
+        :return: with the contents of the ObjectAccessControl.
+        :rtype: dict
         """
         return self.insert_acl(entity, role)
 
     def patch_acl(self, entity, request):
-        """
-        Patch a single AccessControl entry in this Object revision.
+        """Patch a single AccessControl entry in this Object revision.
 
         :param entity:str the name of the entity.
         :param request:flask.Request the parameters for this request.
-        :return:dict with the contents of the ObjectAccessControl.
+        :return: with the contents of the ObjectAccessControl.
+        :rtype: dict
         """
         acl = self.get_acl(entity)
         payload = json.loads(request.data)
@@ -448,8 +452,7 @@ class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
 
     def __init__(self, bucket_name, name):
-        """
-        Initialize a fake GCS Blob.
+        """Initialize a fake GCS Blob.
 
         :param bucket_name:str the bucket that will contain the new object.
         :param name:str the name of the new object.
@@ -464,13 +467,13 @@ class GcsObject(object):
         self.rewrite_operations = {}
 
     def get_revision(self, request, version_field_name='generation'):
-        """
-        Get the information about a particular object revision or raise.
+        """Get the information about a particular object revision or raise.
 
         :param request:flask.Request the contents of the http request.
-        :param generation_parameter_name:str the name of the generation
+        :param version_field_name:str the name of the generation
             parameter, typically 'generation', but sometimes 'sourceGeneration'.
-        :return:GcsObjectVersion the object revision.
+        :return: the object revision.
+        :rtype: GcsObjectVersion
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -484,11 +487,11 @@ class GcsObject(object):
         return version
 
     def del_revision(self, request):
-        """
-        Delete a version of a fake GCS Blob.
+        """Delete a version of a fake GCS Blob.
 
         :param request:flask.Request the contents of the HTTP request.
         :return: True if the object entry in the Bucket should be deleted.
+        :rtype: bool
         """
         generation = request.args.get('generation')
         if generation is None:
@@ -502,11 +505,11 @@ class GcsObject(object):
         return False
 
     def update_revision(self, request):
-        """
-        Update the metadata of particular object revision or raise.
+        """Update the metadata of particular object revision or raise.
 
         :param request:flask.Request
-        :return:GcsObjectRevision the object revision.
+        :return: the object revision updated revision.
+        :rtype:GcsObjectVersion
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -524,11 +527,11 @@ class GcsObject(object):
         return version
 
     def patch_revision(self, request):
-        """
-        Patch the metadata of particular object revision or raise.
+        """Patch the metadata of particular object revision or raise.
 
         :param request:flask.Request
-        :return:GcsObjectRevision the object revision.
+        :return: the object revision.
+        :rtype:GcsObjectRevision
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -558,11 +561,11 @@ class GcsObject(object):
         return version
 
     def get_revision_by_generation(self, generation):
-        """
-        Get object revision by generation or None if not found.
+        """Get object revision by generation or None if not found.
 
         :param generation:int
-        :return:GcsObjectRevision the object revision by generation or None.
+        :return: the object revision by generation or None.
+        :rtype:GcsObjectRevision
         """
         return self.revisions.get(generation, None)
 
@@ -591,6 +594,7 @@ class GcsObject(object):
         :param if_metageneration_not_match:str the name of the metageneration
             not-match parameter name, typically 'ifMetagenerationNotMatch', but
             sometimes 'ifSourceMetagenerationNotMatch'.
+        :rtype:NoneType
         """
 
         generation_match = request.args.get(if_generation_match)
@@ -654,8 +658,7 @@ class GcsObject(object):
         return revision
 
     def copy_from(self, gcs_url, request, source_revision):
-        """
-        Insert a new revision based on the give flask request.
+        """Insert a new revision based on the give flask request.
 
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
@@ -680,7 +683,8 @@ class GcsObject(object):
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
         :param composed_media:str contents of the composed object
-        :return:GcsObjectVersion the newly created object version.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
         """
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
@@ -708,7 +712,10 @@ class GcsObject(object):
     @classmethod
     def capture_rewrite_operation_arguments(cls, request, destination_bucket,
                                             destination_object):
-        """Captures the arguments used to validate related rewrite calls."""
+        """Captures the arguments used to validate related rewrite calls.
+
+        :rtype:dict
+        """
         original_arguments = {}
         for arg in GcsObject.rewrite_fixed_args():
             original_arguments[arg] = request.args.get(arg)
@@ -834,9 +841,8 @@ class GcsObject(object):
             bytes_rewritten = len(source.media)
             # Success, the operation completed. Return the new object:
             object_path = destination_bucket + '/o/' + destination_object
-            destination = GCS_OBJECTS.get(object_path,
-                                          GcsObject(destination_bucket,
-                                                    destination_object))
+            destination = GCS_OBJECTS.get(
+                object_path, GcsObject(destination_bucket, destination_object))
             revision = destination.rewrite_finish(gcs_url, flask.request, body,
                                                   source)
             GCS_OBJECTS[object_path] = destination
@@ -945,11 +951,10 @@ class GcsBucket(object):
         self.increase_metageneration()
 
     def check_preconditions(self, request):
-        """
-        Verify that the preconditions in request are met.
+        """Verify that the preconditions in request are met.
 
         :param request:flask.Request the contents of the HTTP request.
-        :return:None
+        :rtype:NoneType
         :raises:ErrorResponse if the request does not pass the preconditions,
             for example, the request has a `ifMetagenerationMatch` restriction
             that is not met.
@@ -972,12 +977,12 @@ class GcsBucket(object):
                 status_code=412)
 
     def create_acl_entry(self, entity, role):
-        """
-        Return an ACL entry for the given entity and role.
+        """Return an ACL entry for the given entity and role.
 
         :param entity: str the user, group or email granted permissions.
         :param role: str the name of the permissions (READER, WRITER, OWNER).
-        :return: (str,dict) the canonical entity name and the ACL entry.
+        :return: the canonical entity name and the ACL entry.
+        :rtype: (str,dict)
         """
         entity = canonical_entity_name(entity)
         email = ''
@@ -995,12 +1000,12 @@ class GcsBucket(object):
         })
 
     def insert_acl(self, entity, role):
-        """
-        Insert (or update) a new BucketAccessControl entry for this bucket.
+        """Insert (or update) a new BucketAccessControl entry for this bucket.
 
         :param entity:str the name of the entity to insert.
         :param role:str the new role
-        :return:dict the dictionary representing the new AccessControl metadata.
+        :return: the dictionary representing the new AccessControl metadata.
+        :rtype: dict
         """
         entity, entry = self.create_acl_entry(entity, role)
         # Replace or insert the entry.
@@ -1014,7 +1019,7 @@ class GcsBucket(object):
         Delete a single BucketAccessControl entry from this bucket.
 
         :param entity:str the name of the entity.
-        :return:None
+        :rtype:NoneType
         """
         entity = canonical_entity_name(entity)
         indexed = index_acl(self.metadata.get('acl', []))
@@ -1022,36 +1027,37 @@ class GcsBucket(object):
         self.metadata['acl'] = indexed.values()
 
     def get_acl(self, entity):
-        """
-        Get a single BucketAccessControl entry from this bucket.
+        """Get a single BucketAccessControl entry from this bucket.
 
         :param entity:str the name of the entity.
-        :return:dict with the contents of the BucketAccessControl.
+        :return: with the contents of the BucketAccessControl.
+        :rtype: dict
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
-        """
-        Update a single BucketAccessControl entry in this bucket.
+        """Update a single BucketAccessControl entry in this bucket.
 
         :param entity:str the name of the entity.
         :param role:str the new role for the entity.
-        :return:dict with the contents of the BucketAccessControl.
+        :return: with the contents of the BucketAccessControl.
+        :rtype: dict
         """
         return self.insert_acl(entity, role)
 
     def insert_default_object_acl(self, entity, role):
-        """
-        Insert (or update) a new default ObjectAccessControl entry for this bucket.
+        """Insert (or update) a new default ObjectAccessControl entry for this
+        bucket.
 
         :param entity:str the name of the entity to insert.
         :param role:str the new role
-        :return:dict the dictionary representing the new ObjectAccessControl.
+        :return: the dictionary representing the new ObjectAccessControl.
+        :rtype: dict
         """
         entity = canonical_entity_name(entity)
         email = ''
@@ -1073,11 +1079,10 @@ class GcsBucket(object):
         return indexed[entity]
 
     def delete_default_object_acl(self, entity):
-        """
-        Delete a single default ObjectAccessControl entry from this bucket.
+        """Delete a single default ObjectAccessControl entry from this bucket.
 
         :param entity:str the name of the entity.
-        :return:None
+        :rtype:NoneType
         """
         entity = canonical_entity_name(entity)
         indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
@@ -1085,34 +1090,34 @@ class GcsBucket(object):
         self.metadata['defaultObjectAcl'] = indexed.values()
 
     def get_default_object_acl(self, entity):
-        """
-        Get a single default ObjectAccessControl entry from this Bucket.
+        """Get a single default ObjectAccessControl entry from this Bucket.
 
         :param entity:str the name of the entity.
-        :return:dict with the contents of the BucketAccessControl.
+        :return: with the contents of the BucketAccessControl.
+        :rtype: dict
         """
         entity = canonical_entity_name(entity)
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '').lower() == entity:
                 return acl
-        raise ErrorResponse('Entity %s not found in object %s' % (entity,
-                                                                  self.name))
+        raise ErrorResponse(
+            'Entity %s not found in object %s' % (entity, self.name))
 
     def update_default_object_acl(self, entity, role):
-        """
-        Update a single default ObjectAccessControl entry in this Bucket.
+        """Update a single default ObjectAccessControl entry in this Bucket.
 
         :param entity:str the name of the entity.
         :param role:str the new role for the entity.
-        :return:dict with the contents of the ObjectAccessControl.
+        :return: with the contents of the ObjectAccessControl.
+        :rtype: dict
         """
         return self.insert_default_object_acl(entity, role)
 
     def list_notifications(self):
-        """
-        List the notifications associated with this Bucket.
+        """List the notifications associated with this Bucket.
 
-        :return:list of dict with the notification definitions.
+        :return: with the notification definitions.
+        :rtype: list[dict]
         """
         return self.notifications.values()
 
@@ -1120,28 +1125,29 @@ class GcsBucket(object):
         """
         Insert a new notification into this Bucket.
 
-        :param gcs_url:str the URL for the service.
-        :return: dict the new notification value.
+        :param request:flask.Request the HTTP request contents.
+        :return: the new notification value.
+        :rtype:dict
         """
-        id = 'notification-%d' % self.notification_id
-        link = '%s/b/%s/notificationConfigs/%s' % (self.gcs_url, self.name, id)
+        notification_id = 'notification-%d' % self.notification_id
+        link = '%s/b/%s/notificationConfigs/%s' % (self.gcs_url, self.name,
+                                                   notification_id)
         self.notification_id += 1
-        dict = json.loads(request.data)
-        dict.update({
-            'id': id,
+        notification = json.loads(request.data)
+        notification.update({
+            'id': notification_id,
             'selfLink': link,
             'etag': 'XYZ=',
             'kind': 'storage#notification',
         })
-        self.notifications[id] = dict
-        return dict
+        self.notifications[notification_id] = notification
+        return notification
 
     def delete_notification(self, notification_id):
-        """
-        Delete a notification in this Bucket.
+        """Delete a notification in this Bucket.
 
         :param notification_id:str the id of the notification.
-        :return:None
+        :rtype:NoneType
         """
         if self.notifications.get(notification_id) is None:
             raise ErrorResponse(
@@ -1155,7 +1161,8 @@ class GcsBucket(object):
         Get the details of a given notification in this Bucket.
 
         :param notification_id:str the id of the notification.
-        :return:dict the details of the notification.
+        :return: the details of the notification.
+        :rtype: dict
         """
         details = self.notifications.get(notification_id)
         if details is None:
@@ -1201,17 +1208,18 @@ class GcsBucket(object):
         """Get the IamPolicy associated with this Bucket.
 
         :param request: flask.Request the http request.
-        :return: dict the IamPolicy as a dictionary, ready for JSON encoding.
+        :return: the IamPolicy as a dictionary, ready for JSON encoding.
+        :rtype: dict
         """
         self.check_preconditions(request)
         return self.iam_policy_as_json()
 
     def set_iam_policy(self, request):
-        """
-        Set the IamPolicy associated with this Bucket.
+        """Set the IamPolicy associated with this Bucket.
 
         :param request: flask.Request the original http request.
-        :return: dict the IamPolicy as a dictionary, ready for JSON encoding.
+        :return: the IamPolicy as a dictionary, ready for JSON encoding.
+        :rtype: dict
         """
         self.check_preconditions(request)
         current_etag = base64.b64encode(str(self.iam_version))
@@ -1254,14 +1262,14 @@ class GcsBucket(object):
         return self.iam_policy_as_json()
 
     def test_iam_permissions(self, request):
-        """
-        Test the IAM permissions for the current user.
+        """Test the IAM permissions for the current user.
 
         Because we do not want to implement a full simulator for IAM, we simply
         return the permissions matching 'storage.*'
 
         :param request: flask.Request the current http request.
-        :return: dict formatted for `Buckets: testIamPermissions`
+        :return: formatted for `Buckets: testIamPermissions`
+        :rtype: dict
         """
         result = {
             'kind': 'storage#testIamPermissionsResponse',
@@ -1303,11 +1311,11 @@ def insert_magic_bucket(base_url):
 
 
 def lookup_bucket(bucket_name):
-    """
-    Lookup a bucket by name in GCS_BUCKETS.
+    """Lookup a bucket by name in GCS_BUCKETS.
 
     :param bucket_name:str the name of the Bucket.
-    :return:GcsBucket the bucket matching the name.
+    :return: the bucket matching the name.
+    :rtype:GcsBucket
     :raises:ErrorResponse if the bucket is not found.
     """
     bucket = GCS_BUCKETS.get(bucket_name)
@@ -1318,12 +1326,12 @@ def lookup_bucket(bucket_name):
 
 
 def lookup_object(bucket_name, object_name):
-    """
-    Lookup an object by name in GCS_OBJECTS.
+    """Lookup an object by name in GCS_OBJECTS.
 
     :param bucket_name:str the name of the Bucket that contains the object.
     :param object_name:str the name of the Object.
-    :return: (str,GcsObject) tuple the object path and the object.
+    :return: tuple the object path and the object.
+    :rtype: (str,GcsObject)
     :raises:ErrorResponse if the object is not found.
     """
     object_path = bucket_name + '/o/' + object_name
@@ -1332,7 +1340,7 @@ def lookup_object(bucket_name, object_name):
         raise ErrorResponse(
             'Object %s in %s not found' % (object_name, bucket_name),
             status_code=404)
-    return (object_path, gcs_object)
+    return object_path, gcs_object
 
 
 @gcs.route('/')
@@ -1383,14 +1391,15 @@ def buckets_update(bucket_name):
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
     payload = json.loads(flask.request.data)
-    bucket_name = payload.get('name')
-    if bucket_name is None:
+    name = payload.get('name')
+    if name is None:
         raise ErrorResponse(
             'Missing bucket name in `Buckets: update`', status_code=412)
-    bucket = GCS_BUCKETS.get(bucket_name)
-    if bucket is None:
+    if name != bucket_name:
         raise ErrorResponse(
-            'Bucket %s does not exist' % bucket_name, status_code=404)
+            'Mismatched bucket name parameter in `Buckets: update`',
+            status_code=400)
+    bucket = lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
     return filtered_response(flask.request, bucket.metadata)
@@ -1418,14 +1427,8 @@ def buckets_get(bucket_name):
 
 @gcs.route('/b/<bucket_name>', methods=['DELETE'])
 def buckets_delete(bucket_name):
-    """Implement the 'Buckets: delete' API.
-
-    Delete a Bucket.
-    """
-    bucket = GCS_BUCKETS.get(bucket_name, None)
-    if bucket is None:
-        raise ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
+    """Implement the 'Buckets: delete' API."""
+    bucket = lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     GCS_BUCKETS.pop(bucket_name, None)
     return filtered_response(flask.request, {})
@@ -1433,10 +1436,7 @@ def buckets_delete(bucket_name):
 
 @gcs.route('/b/<bucket_name>', methods=['PATCH'])
 def buckets_patch(bucket_name):
-    """Implement the 'Buckets: patch' API.
-
-      Patch the metadata in a bucket.
-      """
+    """Implement the 'Buckets: patch' API."""
     bucket = GCS_BUCKETS.get(bucket_name, None)
     if bucket is None:
         raise ErrorResponse(
@@ -1449,14 +1449,8 @@ def buckets_patch(bucket_name):
 
 @gcs.route('/b/<bucket_name>/acl')
 def bucket_acl_list(bucket_name):
-    """Implement the 'BucketAccessControls: list' API.
-
-    List Bucket Access Controls.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
-    if gcs_bucket is None:
-        raise ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
+    """Implement the 'BucketAccessControls: list' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('acl', []),
@@ -1466,47 +1460,38 @@ def bucket_acl_list(bucket_name):
 
 @gcs.route('/b/<bucket_name>/acl', methods=['POST'])
 def bucket_acl_create(bucket_name):
-    """Implement the 'BucketAccessControls: create' API.
-
-    Create a Bucket Access Control.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: create' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             gcs_bucket.insert_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        gcs_bucket.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
 def bucket_acl_delete(bucket_name, entity):
-    """Implement the 'BucketAccessControls: delete' API.
-
-    Delete a Bucket Access Control.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: delete' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_acl(entity)
     return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>')
 def bucket_acl_get(bucket_name, entity):
-    """Implement the 'BucketAccessControls: get' API.
-
-    Get the access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: get' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_acl(entity)
     return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PUT'])
 def bucket_acl_update(bucket_name, entity):
-    """Implement the 'BucketAccessControls: update' API.
-
-    Update the access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: update' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
@@ -1515,11 +1500,8 @@ def bucket_acl_update(bucket_name, entity):
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
 def bucket_acl_patch(bucket_name, entity):
-    """Implement the 'BucketAccessControls: patch' API.
-
-    Patch the access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: patch' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
@@ -1528,14 +1510,8 @@ def bucket_acl_patch(bucket_name, entity):
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl')
 def bucket_default_object_acl_list(bucket_name):
-    """Implement the 'BucketAccessControls: list' API.
-
-    List Bucket Access Controls.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
-    if gcs_bucket is None:
-        raise ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
+    """Implement the 'BucketAccessControls: list' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('defaultObjectAcl', []),
@@ -1545,47 +1521,38 @@ def bucket_default_object_acl_list(bucket_name):
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl', methods=['POST'])
 def bucket_default_object_acl_create(bucket_name):
-    """Implement the 'BucketAccessControls: create' API.
-
-    Create a Bucket Access Control.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: create' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             gcs_bucket.insert_default_object_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        gcs_bucket.insert_default_object_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
 def bucket_default_object_acl_delete(bucket_name, entity):
-    """Implement the 'BucketAccessControls: delete' API.
-
-    Delete a Bucket Access Control.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: delete' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_default_object_acl(entity)
     return filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>')
 def bucket_default_object_acl_get(bucket_name, entity):
-    """Implement the 'BucketAccessControls: get' API.
-
-    Get the access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'BucketAccessControls: get' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_default_object_acl(entity)
     return filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PUT'])
 def bucket_default_object_acl_update(bucket_name, entity):
-    """Implement the 'DefaultObjectAccessControls: update' API.
-
-    Update the access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'DefaultObjectAccessControls: update' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
@@ -1594,11 +1561,8 @@ def bucket_default_object_acl_update(bucket_name, entity):
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PATCH'])
 def bucket_default_object_acl_patch(bucket_name, entity):
-    """Implement the 'DefaultObjectAccessControls: patch' API.
-
-    Patch the default access control configuration for a particular entity.
-    """
-    gcs_bucket = GCS_BUCKETS.get(bucket_name)
+    """Implement the 'DefaultObjectAccessControls: patch' API."""
+    gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
@@ -1609,6 +1573,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
 def bucket_notification_list(bucket_name):
     """Implement the 'Notifications: list' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     return filtered_response(flask.request, {
         'kind': 'storage#notifications',
         'items': gcs_bucket.list_notifications()
@@ -1619,6 +1584,7 @@ def bucket_notification_list(bucket_name):
 def bucket_notification_create(bucket_name):
     """Implement the 'Notifications: insert' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.insert_notification(flask.request)
     return filtered_response(flask.request, notification)
 
@@ -1629,6 +1595,7 @@ def bucket_notification_create(bucket_name):
 def bucket_notification_delete(bucket_name, notification_id):
     """Implement the 'Notifications: delete' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_notification(notification_id)
     return filtered_response(flask.request, {})
 
@@ -1637,6 +1604,7 @@ def bucket_notification_delete(bucket_name, notification_id):
 def bucket_notification_get(bucket_name, notification_id):
     """Implement the 'Notifications: get' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.get_notification(notification_id)
     return filtered_response(flask.request, notification)
 
@@ -1645,6 +1613,7 @@ def bucket_notification_get(bucket_name, notification_id):
 def bucket_get_iam_policy(bucket_name):
     """Implement the 'Buckets: getIamPolicy' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     return filtered_response(flask.request,
                              gcs_bucket.get_iam_policy(flask.request))
 
@@ -1653,6 +1622,7 @@ def bucket_get_iam_policy(bucket_name):
 def bucket_set_iam_policy(bucket_name):
     """Implement the 'Buckets: setIamPolicy' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     return filtered_response(flask.request,
                              gcs_bucket.set_iam_policy(flask.request))
 
@@ -1661,6 +1631,7 @@ def bucket_set_iam_policy(bucket_name):
 def bucket_test_iam_permissions(bucket_name):
     """Implement the 'Buckets: testIamPermissions' API."""
     gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket.check_preconditions(flask.request)
     return filtered_response(flask.request,
                              gcs_bucket.test_iam_permissions(flask.request))
 
@@ -1705,9 +1676,8 @@ def objects_copy(source_bucket, source_object, destination_bucket,
             'Revision not found %s' % object_path, status_code=404)
 
     destination_path = destination_bucket + "/o/" + destination_object
-    gcs_object = GCS_OBJECTS.setdefault(destination_path,
-                                        GcsObject(destination_bucket,
-                                                  destination_object))
+    gcs_object = GCS_OBJECTS.setdefault(
+        destination_path, GcsObject(destination_bucket, destination_object))
     base_url = flask.url_for('gcs_index', _external=True)
     current_version = gcs_object.copy_from(base_url, flask.request,
                                            source_revision)
@@ -1798,9 +1768,8 @@ def objects_compose(bucket_name, object_name):
         if source_object_name is None:
             raise ErrorResponse('Required.', status_code=400)
         source_object_path = bucket_name + '/o/' + source_object_name
-        source_gcs_object = GCS_OBJECTS.get(source_object_path,
-                                            GcsObject(bucket_name,
-                                                      source_object_name))
+        source_gcs_object = GCS_OBJECTS.get(
+            source_object_path, GcsObject(bucket_name, source_object_name))
         if source_gcs_object is None:
             raise ErrorResponse(
                 'No such object: %s' % source_object_path, status_code=404)
@@ -1839,10 +1808,7 @@ def objects_patch(bucket_name, object_name):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl')
 def objects_acl_list(bucket_name, object_name):
-    """Implement the 'ObjectAccessControls: list' API.
-
-    List Object Access Controls.
-    """
+    """Implement the 'ObjectAccessControls: list' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
@@ -1854,26 +1820,20 @@ def objects_acl_list(bucket_name, object_name):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
 def objects_acl_create(bucket_name, object_name):
-    """Implement the 'ObjectAccessControls: create' API.
-
-    Create an Object Access Control.
-    """
+    """Implement the 'ObjectAccessControls: create' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(flask.request,
-                             revision.insert_acl(
-                                 payload.get('entity', ''),
-                                 payload.get('role', '')))
+    return filtered_response(
+        flask.request,
+        revision.insert_acl(
+            payload.get('entity', ''), payload.get('role', '')))
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
 def objects_acl_delete(bucket_name, object_name, entity):
-    """Implement the 'ObjectAccessControls: delete' API.
-
-    Delete an Object Access Control.
-    """
+    """Implement the 'ObjectAccessControls: delete' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
@@ -1883,10 +1843,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
 def objects_acl_get(bucket_name, object_name, entity):
-    """Implement the 'ObjectAccessControls: get' API.
-
-    Get the access control configuration for a particular entity.
-    """
+    """Implement the 'ObjectAccessControls: get' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
@@ -1896,10 +1853,7 @@ def objects_acl_get(bucket_name, object_name, entity):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
 def objects_acl_update(bucket_name, object_name, entity):
-    """Implement the 'ObjectAccessControls: update' API.
-
-    Update the access control configuration for a particular entity.
-    """
+    """Implement the 'ObjectAccessControls: update' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
@@ -1910,10 +1864,7 @@ def objects_acl_update(bucket_name, object_name, entity):
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
 def objects_acl_patch(bucket_name, object_name, entity):
-    """Implement the 'ObjectAccessControls: patch' API.
-
-    Patch the access control configuration for a particular entity.
-    """
+    """Implement the 'ObjectAccessControls: patch' API."""
     _, gcs_object = lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
