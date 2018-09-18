@@ -235,56 +235,70 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 
 /// @test Verify that `bigtable::TableAdmin` CheckConsistency works as expected.
 TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
-  using GC = bigtable::GcRule;
   using namespace google::cloud::testing_util::chrono_literals;
 
   std::string id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string const random_table_id = RandomTableId();
+
   auto project_id = bigtable::testing::TableTestEnvironment::project_id();
 
   auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
       project_id, bigtable::ClientOptions());
   bigtable::InstanceAdmin instance_admin(instance_admin_client);
 
+  // need to create table_admin for dynamically created instance
+  auto admin_client =
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
+  bigtable::TableAdmin table_admin(admin_client, id);
+
+  auto data_client = bigtable::CreateDefaultDataClient(
+      project_id, id, bigtable::ClientOptions());
+  bigtable::Table table(data_client, random_table_id);
+
   bigtable::InstanceId instance_id(id);
   bigtable::DisplayName display_name("Integration Tests " + id);
 
   // Replication needs at least two clusters
   auto cluster_config_1 =
-      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
-  auto cluster_config_2 =
-      bigtable::ClusterConfig("us-central1-a", 3, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
+                              3, bigtable::ClusterConfig::HDD);
+  auto cluster_config_2 = bigtable::ClusterConfig(
+      bigtable::testing::TableTestEnvironment::replication_zone(), 3,
+      bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
       instance_id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   auto instance = instance_admin.CreateInstance(config).get();
 
-  // need to create table_admin with longer polling as ConsistencyCheck takes a
-  // little long
-  std::shared_ptr<bigtable::AdminClient> admin_client =
-      bigtable::CreateDefaultAdminClient(
-          bigtable::testing::TableTestEnvironment::project_id(),
-          bigtable::ClientOptions());
-  bigtable::TableAdmin table_admin(
-      admin_client, id,
-      bigtable::GenericPollingPolicy<bigtable::LimitedTimeRetryPolicy,
-                                     bigtable::ExponentialBackoffPolicy>(
-          bigtable::LimitedTimeRetryPolicy(3_min),
-          bigtable::ExponentialBackoffPolicy(10_ms, 10_min)));
-
-  std::string const random_table_id = RandomTableId();
   google::cloud::bigtable::TableId table_id(random_table_id);
 
-  // create table config
-  bigtable::TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
 
   // create table
-  auto table = table_admin.CreateTable(table_id.get(), table_config);
+  auto table_created = table_admin.CreateTable(table_id.get(), table_config);
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "DropRowKey1";
+  std::string const row_key2 = "DropRowKey2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+
+  CreateCells(table, created_cells);
 
   google::cloud::bigtable::ConsistencyToken consistency_token(
       table_admin.GenerateConsistencyToken(table_id.get()));
@@ -304,20 +318,24 @@ int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Check for arguments validity
-  if (argc != 3) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show Usage if invalid no of arguments
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << "<project_id> <instance_id>" << std::endl;
+              << "<project_id> <instance_id> <zone> <replication_zone>"
+              << std::endl;
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
+  std::string const zone = argv[3];
+  std::string const replication_zone = argv[4];
 
   (void)::testing::AddGlobalTestEnvironment(
-      new bigtable::testing::TableTestEnvironment(project_id, instance_id));
+      new bigtable::testing::TableTestEnvironment(project_id, instance_id, zone,
+                                                  replication_zone));
 
   return RUN_ALL_TESTS();
 }

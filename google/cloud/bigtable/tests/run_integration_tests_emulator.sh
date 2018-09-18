@@ -34,7 +34,7 @@ echo "Running bigtable::InstanceAdmin integration test."
 
 echo
 echo "Running bigtable::TableAdmin integration test."
-./admin_integration_test "${PROJECT_ID}" "admin-test"
+./admin_integration_test "${PROJECT_ID}" "admin-test" "fake-zone-1" "fake-zone-2"
 
 # TODO(#151) - Cleanup integration tests after emulator bugs are fixed. 
 #echo
