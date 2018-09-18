@@ -34,13 +34,12 @@ CurlRequestBuilder::CurlRequestBuilder(
       logging_enabled_(false),
       initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {}
 
-CurlRequest CurlRequestBuilder::BuildRequest(std::string payload) {
+CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
   CurlRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
-  request.payload_ = std::move(payload);
   request.handle_ = std::move(handle_);
   request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;

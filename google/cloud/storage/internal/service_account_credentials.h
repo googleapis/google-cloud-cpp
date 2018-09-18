@@ -113,10 +113,11 @@ class ServiceAccountCredentials : public storage::Credentials {
     payload += "&assertion=";
     payload += MakeJWTAssertion(assertion_header, assertion_payload,
                                 svc_acct_private_key_pem);
+    payload_ = std::move(payload);
 
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
-    request_ = request_builder.BuildRequest(std::move(payload));
+    request_ = request_builder.BuildRequest();
   }
 
   std::string AuthorizationHeader() override {
@@ -145,7 +146,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
-    auto response = request_.MakeRequest();
+    auto response = request_.MakeRequest(payload_);
     if (200 != response.status_code) {
       return false;
     }
@@ -167,6 +168,7 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
   typename HttpRequestBuilderType::RequestType request_;
+  std::string payload_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

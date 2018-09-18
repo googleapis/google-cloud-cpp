@@ -22,7 +22,11 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 CurlRequest::CurlRequest() : headers_(nullptr, &curl_slist_free_all) {}
 
-HttpResponse CurlRequest::MakeRequest() {
+HttpResponse CurlRequest::MakeRequest(std::string const& payload) {
+  if (not payload.empty()) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
+  }
   handle_.EasyPerform();
   handle_.FlushDebug(__func__);
   long code = handle_.GetResponseCode();
@@ -34,10 +38,6 @@ void CurlRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  if (not payload_.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
-  }
   handle_.SetWriterCallback(
       [this](void* ptr, std::size_t size, std::size_t nmemb) {
         response_payload_.append(static_cast<char*>(ptr), size * nmemb);
