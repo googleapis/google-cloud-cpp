@@ -306,6 +306,52 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, content_type);
 }
 
+void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
+                      char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"make-object-public <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [make object public] [START storage_make_public]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata updated = client.PatchObject(
+        bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
+        gcs::PredefinedAcl::PublicRead());
+    std::cout << "Object updated. The full metadata after the update is: "
+              << updated << std::endl;
+  }
+  //! [make object public] [END storage_make_public]
+  (std::move(client), bucket_name, object_name);
+}
+
+void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
+                char* argv[]) {
+  if (argc < 2) {
+    throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [read object unauthenticated]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name) {
+    // Create a client that does not authenticate with the server.
+    gcs::Client client{gcs::CreateInsecureCredentials()};
+    // Read an object, the object must have been made public.
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+    int count = 0;
+    while (not stream.eof()) {
+      std::string line;
+      std::getline(stream, line, '\n');
+      ++count;
+    }
+    std::cout << "The object has " << count << " lines" << std::endl;
+  }
+  //! [read object unauthenticated]
+  (bucket_name, object_name);
+}
+
 void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
                            char* argv[]) {
   if (argc != 1) {
@@ -511,6 +557,8 @@ int main(int argc, char* argv[]) try {
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
       {"patch-object-content-type", &PatchObjectContentType},
+      {"make-object-public", &MakeObjectPublic},
+      {"read-object-unauthenticated", &ReadObjectUnauthenticated},
       {"generate-encryption-key", &GenerateEncryptionKey},
       {"write-encrypted-object", &WriteEncryptedObject},
       {"read-encrypted-object", &ReadEncryptedObject},
