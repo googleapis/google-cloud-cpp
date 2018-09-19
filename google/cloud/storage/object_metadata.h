@@ -172,11 +172,9 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   //@{
   /// @name Accessors and modifiers to the `metadata` labels.
-  std::size_t metadata_count() const { return metadata_.size(); }
   bool has_metadata(std::string const& key) const {
     return metadata_.end() != metadata_.find(key);
   }
-
   std::string const& metadata(std::string const& key) const {
     return metadata_.at(key);
   }
