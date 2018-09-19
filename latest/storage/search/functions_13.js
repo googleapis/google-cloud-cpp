@@ -6,5 +6,6 @@ var searchData=
   ['updateobject',['UpdateObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a38ab992504196fd553cf47bdd2646e99',1,'google::cloud::storage::v0::Client']]],
   ['updateobjectacl',['UpdateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab620fb3cd2c62c990f8191449e1478b0',1,'google::cloud::storage::v0::Client']]],
   ['upsert_5fcustom_5fattributes',['upsert_custom_attributes',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a1ccd992526be854ce4ce0ceb15da6f41',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['upsert_5flabel',['upsert_label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5099c7a6e15c1d2985fee67929af5257',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['upsert_5fmetadata',['upsert_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a5d90005732160ea2fe0fd0477be1e554',1,'google::cloud::storage::v0::ObjectMetadata']]]
 ];
