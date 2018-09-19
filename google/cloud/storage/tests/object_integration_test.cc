@@ -669,7 +669,7 @@ TEST_F(ObjectIntegrationTest, RewriteSimple) {
   EXPECT_EQ(source_name, source_meta.name());
   EXPECT_EQ(bucket_name, source_meta.bucket());
 
-  // Compose new of object using previously created object
+  // Rewrite object into a new object.
   auto object_name = MakeRandomObjectName();
   ObjectRewriter rewriter(
       client.raw_client(),
