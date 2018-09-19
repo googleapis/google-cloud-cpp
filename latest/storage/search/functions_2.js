@@ -28,6 +28,7 @@ var searchData=
   ['createnotification',['CreateNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4ee88ffcd20360f41ad616606737c279',1,'google::cloud::storage::v0::Client']]],
   ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac904a4ac065a12f7cab583457b3bb636',1,'google::cloud::storage::v0::Client']]],
   ['credentials',['credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a13cf2d9979726b861aa436d5d625e1cc',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['currentprogress',['CurrentProgress',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#aae12e1ee83a85728358700545aca1b08',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['custom_5fattribute',['custom_attribute',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a28968d2fc6a042b8c752c5806172db1a',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['custom_5fattributes',['custom_attributes',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#abc69af0b103e319f55e00e7e91d041b4',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['customer_5fencryption',['customer_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a806a95b1455e9eb20f35e8f2e706ae77',1,'google::cloud::storage::v0::ObjectMetadata']]]

@@ -5,5 +5,6 @@ var searchData=
   ['objectmetadata',['ObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html',1,'google::cloud::storage::v0']]],
   ['objectmetadatapatchbuilder',['ObjectMetadataPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html',1,'google::cloud::storage::v0']]],
   ['objectreadstream',['ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html',1,'google::cloud::storage::v0']]],
+  ['objectrewriter',['ObjectRewriter',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html',1,'google::cloud::storage::v0']]],
   ['objectwritestream',['ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html',1,'google::cloud::storage::v0']]]
 ];

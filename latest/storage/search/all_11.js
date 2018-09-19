@@ -31,7 +31,10 @@ var searchData=
   ['resetversioning',['ResetVersioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a2133291b34f854e66c1828877aeea8ac',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetwebsite',['ResetWebsite',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a99d364a0ca372cc5bcca3e9c146a079d',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['response_5fheader',['response_header',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a2177e95854c311ffc4f34ae74be279b8',1,'google::cloud::storage::v0::CorsEntry']]],
+  ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a70135d91f3936fa1fb6c76467f0d3844',1,'google::cloud::storage::v0::ObjectRewriter']]],
+  ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ab14a1ad23c742f13611c2277fdac64ae',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]],
   ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acaace8f5837e18aadc16056c76b4a415',1,'google::cloud::storage::v0']]],
+  ['rewriteprogress',['RewriteProgress',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html',1,'google::cloud::storage::v0']]],
   ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
 ];

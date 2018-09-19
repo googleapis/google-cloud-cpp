@@ -18,5 +18,6 @@ var searchData=
   ['destinationpredefinedacl',['DestinationPredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationPredefinedAcl.html',1,'google::cloud::storage::v0']]],
   ['difference_5ftype',['difference_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#af21904ef1be5aebef06119e40c9ee11a',1,'google::cloud::storage::v0::ListBucketsIterator::difference_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#af4c343b713957dfe7784cf2ffa94e729',1,'google::cloud::storage::v0::ListObjectsIterator::difference_type()']]],
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['done',['done',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#adeed7261b94ff34bcbeb04e080883cfa',1,'google::cloud::storage::v0::RewriteProgress']]],
   ['durablereducedavailability',['DurableReducedAvailability',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a93c7f9d3633f88611eb5fe97477bcedf',1,'google::cloud::storage::v0::storage_class']]]
 ];
