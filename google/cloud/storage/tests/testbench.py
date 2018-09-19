@@ -576,28 +576,28 @@ class GcsObject(object):
             self, generation_match, generation_not_match, metageneration_match,
             metageneration_not_match):
         """Verify that the given precondition values are met."""
-        if generation_match is not None \
-                and int(generation_match) != self.generation:
+        if (generation_match is not None
+                and int(generation_match) != self.generation):
             raise ErrorResponse('Precondition Failed', status_code=412)
         # This object does not exist (yet), testing in this case is special.
-        if generation_not_match is not None \
-                and int(generation_not_match) == self.generation:
+        if (generation_not_match is not None
+                and int(generation_not_match) == self.generation):
             raise ErrorResponse('Precondition Failed', status_code=412)
 
         if self.generation == 0:
-            if metageneration_match is not None \
-                    or metageneration_not_match is not None:
+            if (metageneration_match is not None
+                    or metageneration_not_match is not None):
                 raise ErrorResponse('Precondition Failed', status_code=412)
         else:
             current = self.revisions.get(self.generation)
             if current is None:
                 raise ErrorResponse('Object not found', status_code=404)
             metageneration = current.metadata.get('metageneration')
-            if metageneration_not_match is not None \
-                    and int(metageneration_not_match) == metageneration:
+            if (metageneration_not_match is not None
+                    and int(metageneration_not_match) == metageneration):
                 raise ErrorResponse('Precondition Failed', status_code=412)
-            if metageneration_match is not None \
-                    and int(metageneration_match) != metageneration:
+            if (metageneration_match is not None
+                    and int(metageneration_match) != metageneration):
                 raise ErrorResponse('Precondition Failed', status_code=412)
 
     def check_preconditions(
@@ -965,14 +965,14 @@ class GcsBucket(object):
         metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
         metageneration = self.metadata.get('metageneration')
 
-        if metageneration_not_match is not None \
-                and int(metageneration_not_match) == metageneration:
+        if (metageneration_not_match is not None
+                and int(metageneration_not_match) == metageneration):
             raise ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
 
-        if metageneration_match is not None \
-                and int(metageneration_match) != metageneration:
+        if (metageneration_match is not None
+                and int(metageneration_match) != metageneration):
             raise ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
@@ -1224,12 +1224,12 @@ class GcsBucket(object):
         """
         self.check_preconditions(request)
         current_etag = base64.b64encode(str(self.iam_version))
-        if request.headers.get('if-match') is not None and \
-                current_etag != request.headers.get('if-match'):
+        if (request.headers.get('if-match') is not None
+            and current_etag != request.headers.get('if-match')):
             raise ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
-        if request.headers.get('if-none-match') is not None and \
-                current_etag == request.headers.get('if-none-match'):
+        if (request.headers.get('if-none-match') is not None\
+                and current_etag == request.headers.get('if-none-match')):
             raise ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
 
