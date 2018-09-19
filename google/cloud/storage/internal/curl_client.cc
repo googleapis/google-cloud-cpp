@@ -87,8 +87,8 @@ CurlClient::CurlClient(ClientOptions options)
     xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
     xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
   } else {
-    xml_upload_endpoint_ = "https://upload-storage.googleapis.com";
-    xml_download_endpoint_ = "https://download-storage.googleapis.com";
+    xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
+    xml_download_endpoint_ = "https://storage-download.googleapis.com";
   }
 
   curl_share_setopt(share_.get(), CURLSHOPT_LOCKFUNC, CurlShareLockCallback);
