@@ -182,6 +182,11 @@ std::pair<Status, ObjectMetadata> LoggingClient::ComposeObject(
   return MakeCall(*client_, &RawClient::ComposeObject, request, __func__);
 }
 
+std::pair<Status, RewriteObjectResponse> LoggingClient::RewriteObject(
+    RewriteObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
+}
+
 std::pair<Status, ListBucketAclResponse> LoggingClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBucketAcl, request, __func__);

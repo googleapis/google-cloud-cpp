@@ -461,6 +461,133 @@ TEST_F(ObjectTest, ComposeObjectPermanentFailure) {
       "ComposeObject");
 }
 
+TEST_F(ObjectTest, RewriteObject) {
+  EXPECT_CALL(*mock, RewriteObject(_))
+      .WillOnce(Return(
+          std::make_pair(TransientError(), internal::RewriteObjectResponse{})))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 1048576,
+            "objectSize": 10485760,
+            "done": false,
+            "rewriteToken": "abcd-test-token-0"
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("abcd-test-token-0", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 2097152,
+            "objectSize": 10485760,
+            "done": false,
+            "rewriteToken": "abcd-test-token-2"
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("abcd-test-token-2", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 10485760,
+            "objectSize": 10485760,
+            "done": true,
+            "rewriteToken": "",
+            "resource": {
+               "bucket": "test-destination-bucket-name",
+               "name": "test-destination-object-name"
+            }
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  ObjectRewriter copier(
+      client.raw_client(),
+      internal::RewriteObjectRequest(
+          "test-source-bucket-name", "test-source-object-name",
+          "test-destination-bucket-name", "test-destination-object-name", "",
+          ObjectMetadata().upsert_metadata("test-key", "test-value")));
+  auto actual = copier.Iterate();
+  EXPECT_FALSE(actual.done);
+  EXPECT_EQ(1048576UL, actual.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual.object_size);
+
+  auto current = copier.CurrentProgress();
+  EXPECT_FALSE(current.done);
+  EXPECT_EQ(1048576UL, current.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, current.object_size);
+
+  actual = copier.Iterate();
+  EXPECT_FALSE(actual.done);
+  EXPECT_EQ(2097152UL, actual.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual.object_size);
+
+  auto metadata = copier.Result();
+  EXPECT_EQ("test-destination-bucket-name", metadata.bucket());
+  EXPECT_EQ("test-destination-object-name", metadata.name());
+}
+
+TEST_F(ObjectTest, RewriteObjectTooManyFailures) {
+  testing::TooManyFailuresTest<internal::RewriteObjectResponse>(
+      mock, EXPECT_CALL(*mock, RewriteObject(_)),
+      [](Client& client) {
+        ObjectRewriter rewrite(
+            client.raw_client(),
+            internal::RewriteObjectRequest(
+                "test-source-bucket-name", "test-source-object-name",
+                "test-destination-bucket-name", "test-destination-object-name",
+                "", ObjectMetadata()));
+        rewrite.Result();
+      },
+      "RewriteObject");
+}
+
+TEST_F(ObjectTest, RewriteObjectPermanentFailure) {
+  testing::PermanentFailureTest<internal::RewriteObjectResponse>(
+      *client, EXPECT_CALL(*mock, RewriteObject(_)),
+      [](Client& client) {
+        ObjectRewriter rewrite(
+            client.raw_client(),
+            internal::RewriteObjectRequest(
+                "test-source-bucket-name", "test-source-object-name",
+                "test-destination-bucket-name", "test-destination-object-name",
+                "", ObjectMetadata()));
+        rewrite.Result();
+      },
+      "RewriteObject");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

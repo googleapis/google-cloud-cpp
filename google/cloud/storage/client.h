@@ -21,6 +21,7 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
+#include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 
 namespace google {

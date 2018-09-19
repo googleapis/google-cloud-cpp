@@ -290,16 +290,19 @@ TEST(ObjectRequestsTest, Update) {
 
 TEST(ObjectRequestsTest, Rewrite) {
   RewriteObjectRequest request("source-bucket", "source-object", "my-bucket",
-                               "my-object", "abcd-test-token",
+                               "my-object", "abcd-test-token-0",
                                ObjectMetadata().set_content_type("text/plain"));
   EXPECT_EQ("source-bucket", request.source_bucket());
   EXPECT_EQ("source-object", request.source_object());
   EXPECT_EQ("my-bucket", request.destination_bucket());
   EXPECT_EQ("my-object", request.destination_object());
+  EXPECT_EQ("abcd-test-token-0", request.rewrite_token());
+  request.set_rewrite_token("abcd-test-token");
   EXPECT_EQ("abcd-test-token", request.rewrite_token());
   request.set_multiple_options(IfMetagenerationNotMatch(7),
                                DestinationPredefinedAcl("private"),
                                UserProject("my-project"));
+
 
   std::ostringstream os;
   os << request;
