@@ -86,6 +86,9 @@ ObjectMetadata ObjectWriteStream::Close() {
        << Status(response.status_code, response.payload);
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
+  if (response.payload.empty()) {
+    return ObjectMetadata();
+  }
   return ObjectMetadata::ParseFromString(response.payload);
 }
 

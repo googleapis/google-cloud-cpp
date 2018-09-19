@@ -75,13 +75,15 @@ struct Options {
   int thread_count;
   int object_chunk_count;
   bool enable_connection_pool;
+  bool enable_xml_api;
 
   Options()
       : duration(kDefaultDuration),
         object_count(kDefaultObjectCount),
         thread_count(1),
         object_chunk_count(kDefaultObjectChunkCount),
-        enable_connection_pool(true) {}
+        enable_connection_pool(true),
+        enable_xml_api(true) {}
 
   void ParseArgs(int& argc, char* argv[]);
   std::string ConsumeArg(int& argc, char* argv[], char const* arg_name);
@@ -158,6 +160,7 @@ int main(int argc, char* argv[]) try {
             << "\n# Object Chunk Count: " << options.object_chunk_count
             << "\n# Thread Count: " << options.thread_count
             << "\n# Enable connection pool: " << options.enable_connection_pool
+            << "\n# Enable XML API: " << options.enable_xml_api
             << "\n# Build info: " << notes << std::endl;
 
   std::vector<std::string> object_names =
@@ -253,7 +256,12 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
   TestResult result;
   result.reserve(options.object_chunk_count /
                  kThroughputReportIntervalInChunks);
-  gcs::ObjectWriteStream stream = client.WriteObject(bucket_name, object_name);
+  gcs::ObjectWriteStream stream;
+  if (options.enable_xml_api) {
+    stream = client.WriteObject(bucket_name, object_name, gcs::Fields(""));
+  } else {
+    stream = client.WriteObject(bucket_name, object_name);
+  }
   for (int i = 0; i < options.object_chunk_count; ++i) {
     stream.write(data_chunk.data(), data_chunk.size());
     if (i != 0 and i % kThroughputReportIntervalInChunks == 0) {
@@ -299,7 +307,13 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   TestResult result;
   result.reserve(kDefaultObjectChunkCount);
 
-  gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+  gcs::ObjectReadStream stream;
+  if (options.enable_xml_api) {
+    stream = client.ReadObject(bucket_name, object_name);
+  } else {
+    stream = client.ReadObject(bucket_name, object_name,
+                               gcs::IfGenerationNotMatch(0));
+  }
   std::size_t total_size = 0;
   constexpr auto report = kThroughputReportIntervalInChunks * kChunkSize;
   while (not stream.eof()) {
@@ -539,6 +553,16 @@ The options are:
         this->enable_connection_pool = false;
       } else {
         error = "Invalid enable-connection-pool argument (" + arg + ")";
+        break;
+      }
+    } else if (0 == argument.rfind(enable_xml_api, 0)) {
+      auto arg = argument.substr(enable_xml_api.size());
+      if (arg == "true" or arg == "yes" or arg == "1") {
+        this->enable_xml_api = true;
+      } else if (arg == "false" or arg == "no" or arg == "0") {
+        this->enable_xml_api = false;
+      } else {
+        error = "Invalid enable-xml-api argument (" + arg + ")";
         break;
       }
     } else {

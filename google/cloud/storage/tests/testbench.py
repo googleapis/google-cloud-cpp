@@ -572,6 +572,34 @@ class GcsObject(object):
     def get_latest(self):
         return self.revisions.get(self.generation, None)
 
+    def check_preconditions_by_value(
+            self, generation_match, generation_not_match, metageneration_match,
+            metageneration_not_match):
+        """Verify that the given precondition values are met."""
+        if (generation_match is not None
+                and int(generation_match) != self.generation):
+            raise ErrorResponse('Precondition Failed', status_code=412)
+        # This object does not exist (yet), testing in this case is special.
+        if (generation_not_match is not None
+                and int(generation_not_match) == self.generation):
+            raise ErrorResponse('Precondition Failed', status_code=412)
+
+        if self.generation == 0:
+            if (metageneration_match is not None
+                    or metageneration_not_match is not None):
+                raise ErrorResponse('Precondition Failed', status_code=412)
+        else:
+            current = self.revisions.get(self.generation)
+            if current is None:
+                raise ErrorResponse('Object not found', status_code=404)
+            metageneration = current.metadata.get('metageneration')
+            if (metageneration_not_match is not None
+                    and int(metageneration_not_match) == metageneration):
+                raise ErrorResponse('Precondition Failed', status_code=412)
+            if (metageneration_match is not None
+                    and int(metageneration_match) != metageneration):
+                raise ErrorResponse('Precondition Failed', status_code=412)
+
     def check_preconditions(
             self,
             request,
@@ -596,38 +624,11 @@ class GcsObject(object):
             sometimes 'ifSourceMetagenerationNotMatch'.
         :rtype:NoneType
         """
-
         generation_match = request.args.get(if_generation_match)
-        if generation_match is not None \
-                and int(generation_match) != self.generation:
-            raise ErrorResponse('Precondition Failed', status_code=412)
-
-        # This object does not exist (yet), testing in this case is special.
         generation_not_match = request.args.get(if_generation_not_match)
-        if generation_not_match is not None \
-                and int(generation_not_match) == self.generation:
-            raise ErrorResponse('Precondition Failed', status_code=412)
-
         metageneration_match = request.args.get(if_metageneration_match)
         metageneration_not_match = request.args.get(
             if_metageneration_not_match)
-        if self.generation == 0:
-            if metageneration_match is not None \
-                    or metageneration_not_match is not None:
-                raise ErrorResponse('Precondition Failed', status_code=412)
-        else:
-            current = self.revisions.get(self.generation)
-            if current is None:
-                raise ErrorResponse('Object not found', status_code=404)
-            metageneration = current.metadata.get('metageneration')
-
-            if metageneration_not_match is not None \
-                    and int(metageneration_not_match) == metageneration:
-                raise ErrorResponse('Precondition Failed', status_code=412)
-
-            if metageneration_match is not None \
-                    and int(metageneration_match) != metageneration:
-                raise ErrorResponse('Precondition Failed', status_code=412)
 
     def _insert_revision(self, revision):
         """Insert a new revision that has been initialized and checked.
@@ -964,14 +965,14 @@ class GcsBucket(object):
         metageneration_not_match = request.args.get('ifMetagenerationNotMatch')
         metageneration = self.metadata.get('metageneration')
 
-        if metageneration_not_match is not None \
-                and int(metageneration_not_match) == metageneration:
+        if (metageneration_not_match is not None
+                and int(metageneration_not_match) == metageneration):
             raise ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
 
-        if metageneration_match is not None \
-                and int(metageneration_match) != metageneration:
+        if (metageneration_match is not None
+                and int(metageneration_match) != metageneration):
             raise ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
@@ -1223,12 +1224,12 @@ class GcsBucket(object):
         """
         self.check_preconditions(request)
         current_etag = base64.b64encode(str(self.iam_version))
-        if request.headers.get('if-match') is not None and \
-                current_etag != request.headers.get('if-match'):
+        if (request.headers.get('if-match') is not None
+            and current_etag != request.headers.get('if-match')):
             raise ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
-        if request.headers.get('if-none-match') is not None and \
-                current_etag == request.headers.get('if-none-match'):
+        if (request.headers.get('if-none-match') is not None\
+                and current_etag == request.headers.get('if-none-match')):
             raise ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
 
@@ -1915,11 +1916,73 @@ def objects_insert(bucket_name):
     return filtered_response(flask.request, current_version.metadata)
 
 
-application = wsgi.DispatcherMiddleware(root, {
-    '/httpbin': httpbin.app,
-    GCS_HANDLER_PATH: gcs,
-    UPLOAD_HANDLER_PATH: upload,
-})
+# Define the WSGI application to handle (a few) requests in the XML API.
+XMLAPI_HANDLER_PATH = '/xmlapi'
+xmlapi = flask.Flask(__name__)
+xmlapi.debug = True
+
+
+@xmlapi.errorhandler(ErrorResponse)
+def xmlapi_error(error):
+    return error.as_response()
+
+
+@xmlapi.route('/<bucket_name>/<object_name>')
+def xmlapi_get_object(bucket_name, object_name):
+    """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path)
+    if gcs_object is None:
+        raise ErrorResponse(
+            'Object not found %s' % object_path, status_code=404)
+    if flask.request.args.get('acl') is not None:
+        raise ErrorResponse(
+            'ACL query not supported in XML API', status_code=500)
+    if flask.request.args.get('encryption') is not None:
+        raise ErrorResponse(
+            'Encryption query not supported in XML API', status_code=500)
+    generation_match = flask.request.headers.get('if-generation-match')
+    metageneration_match = flask.request.headers.get('if-metageneration-match')
+    gcs_object.check_preconditions_by_value(generation_match, None,
+                                            metageneration_match, None)
+    revision = gcs_object.get_revision(flask.request)
+    response = flask.make_response(revision.media)
+    length = len(revision.media)
+    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+    return response
+
+
+@xmlapi.route('/<bucket_name>/<object_name>', methods=['PUT'])
+def xmlapi_put_object(bucket_name, object_name):
+    """Inserts a new GCS Object.
+
+    Implement the PUT request in the XML API.
+    """
+    gcs_url = flask.url_for(
+        'xmlapi_put_object',
+        bucket_name=bucket_name,
+        object_name=object_name,
+        _external=True).replace('/xmlapi/', '/')
+    insert_magic_bucket(gcs_url)
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path,
+                                 GcsObject(bucket_name, object_name))
+    generation_match = flask.request.headers.get('if-generation-match')
+    metageneration_match = flask.request.headers.get('if-metageneration-match')
+    gcs_object.check_preconditions_by_value(generation_match, None,
+                                            metageneration_match, None)
+    GCS_OBJECTS[object_path] = gcs_object
+    gcs_object.insert(gcs_url, flask.request)
+    return ''
+
+
+application = wsgi.DispatcherMiddleware(
+    root, {
+        '/httpbin': httpbin.app,
+        GCS_HANDLER_PATH: gcs,
+        UPLOAD_HANDLER_PATH: upload,
+        XMLAPI_HANDLER_PATH: xmlapi,
+    })
 
 
 def main():

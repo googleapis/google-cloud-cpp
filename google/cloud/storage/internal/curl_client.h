@@ -33,6 +33,11 @@ class CurlRequestBuilder;
  */
 class CurlClient : public RawClient {
  public:
+  // TODO(#937) - use the client options to set the buffer size.
+  // This value is mostly arbitrary. It is big enough to fit the typical socket
+  // buffer, but not so large that we worry about memory utilization.
+  static constexpr std::size_t kDefaultBufferSize = 128 * 1024;
+
   explicit CurlClient(std::shared_ptr<Credentials> credentials)
       : CurlClient(ClientOptions(std::move(credentials))) {}
 
@@ -151,9 +156,18 @@ class CurlClient : public RawClient {
   void SetupBuilder(CurlRequestBuilder& builder, Request const& request,
                     char const* method);
 
+  std::pair<Status, ObjectMetadata> InsertObjectMediaXml(
+      InsertObjectMediaRequest const& request);
+  std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObjectXml(
+      ReadObjectRangeRequest const& request);
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectXml(
+      InsertObjectStreamingRequest const& request);
+
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
+  std::string xml_upload_endpoint_;
+  std::string xml_download_endpoint_;
 
   std::mutex mu_;
   CurlShare share_ /* GUARDED_BY(mu_) */;
@@ -165,6 +179,8 @@ class CurlClient : public RawClient {
   // To guarantee this order just list the members in the opposite order.
   std::shared_ptr<CurlHandleFactory> storage_factory_;
   std::shared_ptr<CurlHandleFactory> upload_factory_;
+  std::shared_ptr<CurlHandleFactory> xml_upload_factory_;
+  std::shared_ptr<CurlHandleFactory> xml_download_factory_;
 };
 
 }  // namespace internal

@@ -36,13 +36,24 @@ FAKE_REGION="fake-region-$(date +%s)-${RANDOM}"
 export GOOGLE_CLOUD_PROJECT="fake-project-$(date +%s)-${RANDOM}"
 run_example ./storage_latency_benchmark \
       --duration=5 \
-      --object-count=100 \
+      --object-count=10 \
+      "${FAKE_REGION}"
+run_example ./storage_latency_benchmark \
+      --enable-xml-api=false \
+      --duration=5 \
+      --object-count=10 \
       "${FAKE_REGION}"
 
 run_example ./storage_throughput_benchmark \
       --duration=5 \
       --object-count=8 \
-      --object-chunk-count=20 \
+      --object-chunk-count=10 \
+      "${FAKE_REGION}"
+run_example ./storage_throughput_benchmark \
+      --enable-xml-api=false \
+      --duration=5 \
+      --object-count=8 \
+      --object-chunk-count=10 \
       "${FAKE_REGION}"
 
 if [ "${EXIT_STATUS}" = "0" ]; then
