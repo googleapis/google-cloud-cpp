@@ -365,6 +365,155 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, label_key);
 }
 
+void GetBilling(google::cloud::storage::Client client, int& argc,
+                char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-billing <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get billing] [START storage_get_requester_pays_status]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.GetBucketMetadata(bucket_name);
+    if (not metadata.has_billing()) {
+      std::cout << "The bucket " << bucket_name << " does not have a billing"
+                << " configuration. The default applies, i.e., the project"
+                   " that owns the bucket pays for the requests."
+                << std::endl;
+      return;
+    }
+    if (metadata.billing().requester_pays) {
+      std::cout << "The bucket " << bucket_name << " is configured to charge"
+                << " the calling project for the requests." << std::endl;
+    } else {
+      std::cout << "The bucket " << bucket_name << " is configured to charge"
+                << " the project that owns the bucket for the requests."
+                << std::endl;
+    }
+  }
+  //! [get billing] [END storage_get_requester_pays_status]
+  (std::move(client), bucket_name);
+}
+
+void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"enable-requester-pays <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [enable requester pays] [START storage_enable_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{true}));
+    std::cout << "Billing configuration for bucket " << bucket_name
+              << " is updated. The bucket now";
+    if (not metadata.has_billing()) {
+      std::cout << " has no billing configuration." << std::endl;
+    } else if (metadata.billing().requester_pays) {
+      std::cout << " is configured to charge the caller for requests"
+                << std::endl;
+    } else {
+      std::cout << " is configured to charge the project that owns the bucket"
+                << " for requests." << std::endl;
+    }
+  }
+  //! [enable requester pays] [END storage_enable_requester_pays]
+  (std::move(client), bucket_name);
+}
+
+void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"disable-requester-pays <bucket-name> <project-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto project_id = ConsumeArg(argc, argv);
+  //! [disable requester pays] [START storage_disable_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string project_id) {
+    gcs::BucketMetadata metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{false}),
+        gcs::UserProject(project_id));
+    std::cout << "Billing configuration for bucket " << bucket_name
+              << " is updated. The bucket now";
+    if (not metadata.has_billing()) {
+      std::cout << " has no billing configuration." << std::endl;
+    } else if (metadata.billing().requester_pays) {
+      std::cout << " is configured to charge the caller for requests"
+                << std::endl;
+    } else {
+      std::cout << " is configured to charge the project that owns the bucket"
+                << " for requests." << std::endl;
+    }
+  }
+  //! [disable requester pays] [END storage_disable_requester_pays]
+  (std::move(client), bucket_name, project_id);
+}
+
+void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "write-object-requester-pays <bucket-name> <object-name>"
+        " <billed-project>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto billed_project = ConsumeArg(argc, argv);
+  //! [write object requester pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string billed_project) {
+    std::string const text = "Lorem ipsum dolor sit amet";
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::UserProject(billed_project));
+
+    for (int lineno = 0; lineno != 10; ++lineno) {
+      // Add 1 to the counter, because it is conventional to number lines
+      // starting at 1.
+      stream << (lineno + 1) << ": I will write better examples\n";
+    }
+
+    gcs::ObjectMetadata meta = stream.Close();
+    std::cout << "The resulting object size is: " << meta.size() << std::endl;
+  }
+  //! [write object requester pays]
+  (std::move(client), bucket_name, object_name, billed_project);
+}
+
+void ReadObjectRequesterPays(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "read-object-requester-pays <bucket-name> <object-name>"
+        " <billed-project>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto billed_project = ConsumeArg(argc, argv);
+  //! [read object requester pays]
+  // [START storage_download_file_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string billed_project) {
+    gcs::ObjectReadStream stream = client.ReadObject(
+        bucket_name, object_name, gcs::UserProject(billed_project));
+    while (not stream.eof()) {
+      std::string line;
+      std::getline(stream, line, '\n');
+      if (stream.good()) {
+        std::cout << line << std::endl;
+      }
+    }
+  }
+  // [END storage_download_file_requester_pays]
+  //! [read object requester pays]
+  (std::move(client), bucket_name, object_name, billed_project);
+}
+
 void GetServiceAccount(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 1) {
@@ -426,6 +575,11 @@ int main(int argc, char* argv[]) try {
       {"add-bucket-label", &AddBucketLabel},
       {"get-bucket-labels", &GetBucketLabels},
       {"remove-bucket-label", &RemoveBucketLabel},
+      {"get-billing", &GetBilling},
+      {"enable-requester-pays", &EnableRequesterPays},
+      {"disable-requester-pays", &DisableRequesterPays},
+      {"write-object-requester-pays", &WriteObjectRequesterPays},
+      {"read-object-requester-pays", &ReadObjectRequesterPays},
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
   };
