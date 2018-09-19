@@ -57,3 +57,9 @@ cc_binary(
     srcs = ["storage_notification_samples.cc"],
     deps = ["//google/cloud/storage:storage_client"],
 )
+
+cc_binary(
+    name = "storage_quickstart",
+    srcs = ["storage_quickstart.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
