@@ -21,13 +21,13 @@ guide.
 
 1. Select or create a Google Cloud Platform (GCP) project.
 
-[GO TO THE MANAGE RESOURCES PAGE][resource-link]
+    [GO TO THE MANAGE RESOURCES PAGE][resource-link]
 
-Make a note of the project id, you will need to use it later.
+    Make a note of the project id, you will need to use it later.
 
 2. Make sure that billing is enabled for your project
 
-[LEARN HOW TO ENABLE BILLING][billing-link]
+    [LEARN HOW TO ENABLE BILLING][billing-link]
 
 3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
 
@@ -59,9 +59,9 @@ Now we can proceed to create the bucket:
 @snippet storage_quickstart.cc create bucket
 
 This quickstart will always create a **regional** bucket in the **us-east1**
-region, you must provide the project id and bucket name in the command-line when
+region. You must provide the project id and bucket name in the command-line when
 you run the quickstart program, assuming you followed the build instructions
-in referenced above:
+referenced above:
 
 ```
 ./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
@@ -70,7 +70,7 @@ in referenced above:
 ### Next Steps
 
 The documentation for each member function in the [Client] class includes short
-snippets on how to call the function, the snippets for
+snippets on how to call the function. The snippets for
 [ReadObject()][ReadObject], [WriteObject()][WriteObject],
 [ListObjects()][ListObjects], and [DeleteObject()][DeleteObject] are
 good places to continue learning about the library.
