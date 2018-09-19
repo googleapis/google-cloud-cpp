@@ -33,7 +33,7 @@
  */
 
 #define nlohmann google_cloud_storage_internal_nlohmann_3_1_2
-#include <nlohmann/json.hpp>
+#include "google/cloud/storage/internal/nlohmann_json.hpp"
 
 namespace nlohmann {
 //
