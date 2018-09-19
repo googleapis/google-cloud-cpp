@@ -242,6 +242,16 @@ run_all_cmek_examples() {
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  run_example ./storage_bucket_samples get-bucket-default-kms-key \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples add-bucket-default-kms-key \
+      "${bucket_name}" "${cmek}"
+  run_example ./storage_bucket_samples get-bucket-default-kms-key \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples remove-bucket-default-kms-key \
+      "${bucket_name}"
+
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
 }

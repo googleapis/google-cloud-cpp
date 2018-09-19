@@ -221,6 +221,69 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   (std::move(client), bucket_name, storage_class);
 }
 
+void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"add-bucket-default-kms-key <bucket-name> <key-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto key_name = ConsumeArg(argc, argv);
+  //! [add bucket kms key] [START storage_bucket_set_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string key_name) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
+                         gcs::BucketEncryption{key_name}));
+    std::cout << "Successfully set default KMS key on bucket  " << bucket_name
+              << ". The metadata is now: " << updated_metadata << std::endl;
+  }
+  //! [add bucket label] [END storage_bucket_set_default_kms_key]
+  (std::move(client), bucket_name, key_name);
+}
+
+void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-default-kms-key <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get bucket default kms key] [START storage_get_bucket_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.GetBucketMetadata(bucket_name);
+    if (not metadata.has_encryption()) {
+      std::cout << "The bucket " << bucket_name
+                << " does not have a default KMS key set." << std::endl;
+      return;
+    }
+    std::cout << "The default KMS key for bucket " << bucket_name
+              << " is: " << metadata.encryption().default_kms_key_name
+              << std::endl;
+  }
+  //! [get bucket default kms key] [END storage_get_bucket_default_kms_key]
+  (std::move(client), bucket_name);
+}
+
+void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"remove-bucket-default-kms-key <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [remove bucket default kms key]
+  // [START storage_bucket_delete_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
+    std::cout << "Successfully removed default KMS key on bucket  "
+              << bucket_name << std::endl;
+  }
+  // [END storage_bucket_delete_default_kms_key]
+  //! [remove bucket default kms key]
+  (std::move(client), bucket_name);
+}
+
 void AddBucketLabel(google::cloud::storage::Client client, int& argc,
                     char* argv[]) {
   if (argc != 4) {
@@ -345,7 +408,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
@@ -357,6 +420,9 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class", &PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
+      {"add-bucket-default-kms-key", &AddBucketDefaultKmsKey},
+      {"get-bucket-default-kms-key", &GetBucketDefaultKmsKey},
+      {"remove-bucket-default-kms-key", &RemoveBucketDefaultKmsKey},
       {"add-bucket-label", &AddBucketLabel},
       {"get-bucket-labels", &GetBucketLabels},
       {"remove-bucket-label", &RemoveBucketLabel},
