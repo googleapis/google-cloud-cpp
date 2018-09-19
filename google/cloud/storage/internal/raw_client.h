@@ -63,6 +63,8 @@ class RawClient {
       GetBucketIamPolicyRequest const& request) = 0;
   virtual std::pair<Status, IamPolicy> SetBucketIamPolicy(
       SetBucketIamPolicyRequest const& request) = 0;
+  virtual std::pair<Status, TestBucketIamPermissionsResponse>
+  TestBucketIamPermissions(TestBucketIamPermissionsRequest const& request) = 0;
   //@}
 
   //@{

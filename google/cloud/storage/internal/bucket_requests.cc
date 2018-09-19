@@ -262,7 +262,7 @@ std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
 
 std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsRequest const& r) {
-  os << "TestBucketIamPermissionsREquest={bucket_name=" << r.bucket_name()
+  os << "TestBucketIamPermissionsRequest={bucket_name=" << r.bucket_name()
      << ", permissions=[";
   char const* sep = "";
   for (auto const& p : r.permissions()) {
@@ -272,6 +272,26 @@ std::ostream& operator<<(std::ostream& os,
   os << "]";
   r.DumpOptions(os, ", ");
   return os << "}";
+}
+
+TestBucketIamPermissionsResponse TestBucketIamPermissionsResponse::FromHttpResponse(HttpResponse const& response) {
+  TestBucketIamPermissionsResponse result;
+  auto json = nl::json::parse(response.payload);
+  for (auto const& kv : json["permissions"].items()) {
+    result.permissions.emplace_back(kv.value().get<std::string>());
+  }
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsResponse const& r) {
+  os << "TestBucketIamPermissionsResponse={permissions=[";
+  char const* sep = "";
+  for (auto const& p : r.permissions) {
+    os << sep << p;
+    sep = ", ";
+  }
+  return os << "]}";
 }
 
 }  // namespace internal

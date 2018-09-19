@@ -65,6 +65,8 @@ class CurlClient : public RawClient {
       GetBucketIamPolicyRequest const& request) override;
   std::pair<Status, IamPolicy> SetBucketIamPolicy(
       SetBucketIamPolicyRequest const& request) override;
+  std::pair<Status, TestBucketIamPermissionsResponse> TestBucketIamPermissions(
+      TestBucketIamPermissionsRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;

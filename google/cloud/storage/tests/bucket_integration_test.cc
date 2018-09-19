@@ -550,6 +550,12 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   EXPECT_EQ(update.bindings, updated_policy.bindings);
   EXPECT_NE(update.etag, updated_policy.etag);
 
+  std::vector<std::string> expected_permissions{
+      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
+  std::vector<std::string> actual_permissions =
+      client.TestBucketIamPermissions(bucket_name, expected_permissions);
+  EXPECT_THAT(actual_permissions, ElementsAreArray(expected_permissions));
+
   client.DeleteBucket(bucket_name);
 }
 
