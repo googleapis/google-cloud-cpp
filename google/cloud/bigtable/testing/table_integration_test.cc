@@ -28,6 +28,8 @@ namespace testing {
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::cluster_id_;
+std::string TableTestEnvironment::zone_;
+std::string TableTestEnvironment::replication_zone_;
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
