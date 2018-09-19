@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+# Copyright 2018 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """Create a JWT assertion for test purposes.
 
 Requires package `python-jose`. This script was written/tested on Python 2.7.
@@ -10,10 +24,14 @@ from jose import jwk
 from jose import jws
 
 
-# pylint: disable=line-too-long
+# Make sure the values in this section are identical to the values in
+# service_account_credentials_test.cc.
 ############################################
-# These values are copy/pasted from the values used in our tests.
+# pylint: disable=line-too-long
 
+# The private key JSON below was obtained by downloading a service account
+# private key file from the Google Cloud Console, then deleting/invalidating
+# that key (along with replacing the other identifiable attributes here).
 CONTENTS_DICT = {
     "type": "service_account",
     "project_id": "foo-project",
@@ -27,12 +45,15 @@ CONTENTS_DICT = {
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 }
 
+# Timestamp used to represent the current time in the JWT assertion.
 TIMESTAMP = 1530060324
 
+# Scopes that the returned access token should be valid for use with. This is
+# also used in constructing the JWT assertion.
 SCOPE_STR = "https://www.googleapis.com/auth/cloud-platform"
 
-############################################
 # pylint: enable=line-too-long
+############################################
 
 
 def ordered_json_str(ordered_dict):
