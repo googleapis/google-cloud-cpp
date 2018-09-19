@@ -269,7 +269,7 @@ run_all_public_object_examples() {
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples make-object-public \
       "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples read-object \
+  run_example ./storage_object_samples read-object-unauthenticated \
       "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
