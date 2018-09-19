@@ -524,8 +524,11 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
    *
-   * @par Example
+   * @par Examples
+   *
    * @snippet storage_object_samples.cc read object
+   *
+   * @snippet storage_object_samples.cc read encrypted object
    */
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,
@@ -545,6 +548,12 @@ class Client {
    *   Valid types for this operation include `IfGenerationMatch`,
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc write object
+   *
+   * @snippet storage_object_samples.cc write object with kms key
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
@@ -739,6 +748,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
    */
   template <typename... Options>
@@ -759,6 +769,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
    */
   template <typename... Options>
@@ -1126,6 +1137,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_default_object_acl_samples.cc create default object acl
    *
    * @see
@@ -1152,6 +1164,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_default_object_acl_samples.cc delete default object acl
    *
    * @see

@@ -227,6 +227,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  *   `UniformRandomBitGenerator` requirements.
  * @param gen the pseudo-random number generator.
  *
+ * @par Example
  * @snippet storage_object_samples.cc generate encryption key
  *
  * @see https://en.cppreference.com/w/cpp/numeric/random for a general
