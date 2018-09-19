@@ -67,6 +67,7 @@ var searchData=
   ['status_2eh',['status.h',['../status_8h.html',1,'']]],
   ['status_5fcode',['status_code',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a2b439f870d69b2ff46da2ddb79c250c8',1,'google::cloud::storage::v0::Status']]],
   ['statustraits',['StatusTraits',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html',1,'google::cloud::storage::v0::internal']]],
+  ['storage_2dmain_2edox',['storage-main.dox',['../storage-main_8dox.html',1,'']]],
   ['storage_5fbucket_5facl_5fsamples_2ecc',['storage_bucket_acl_samples.cc',['../storage__bucket__acl__samples_8cc.html',1,'']]],
   ['storage_5fbucket_5fiam_5fsamples_2ecc',['storage_bucket_iam_samples.cc',['../storage__bucket__iam__samples_8cc.html',1,'']]],
   ['storage_5fbucket_5fsamples_2ecc',['storage_bucket_samples.cc',['../storage__bucket__samples_8cc.html',1,'']]],
@@ -78,5 +79,6 @@ var searchData=
   ['storage_5fnotification_5fsamples_2ecc',['storage_notification_samples.cc',['../storage__notification__samples_8cc.html',1,'']]],
   ['storage_5fobject_5facl_5fsamples_2ecc',['storage_object_acl_samples.cc',['../storage__object__acl__samples_8cc.html',1,'']]],
   ['storage_5fobject_5fsamples_2ecc',['storage_object_samples.cc',['../storage__object__samples_8cc.html',1,'']]],
+  ['storage_5fquickstart_2ecc',['storage_quickstart.cc',['../storage__quickstart_8cc.html',1,'']]],
   ['storage_5fthroughput_5fbenchmark_2ecc',['storage_throughput_benchmark.cc',['../storage__throughput__benchmark_8cc.html',1,'']]]
 ];
