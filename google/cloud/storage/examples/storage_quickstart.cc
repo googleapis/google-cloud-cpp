@@ -13,9 +13,7 @@
 // limitations under the License.
 
 //! [full quickstart]
-//! [header]
 #include "google/cloud/storage/client.h"
-//! [header]
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -28,16 +26,13 @@ int main(int argc, char* argv[]) try {
   std::string bucket_name = argv[1];
   std::string project_id = argv[2];
 
-  //! [namespace alias]
+  // Create an alias to make the code easier to read.
   namespace gcs = google::cloud::storage;
-  //! [namespace alias]
 
-  // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
+  // Create a client to communicate with Google Cloud Storage. This client
+  // uses the default configuration for authentication and project id.
   gcs::Client client;
-  //! [create client]
 
-  //! [create bucket]
   gcs::BucketMetadata metadata = client.CreateBucketForProject(
       bucket_name, project_id,
       gcs::BucketMetadata()
@@ -45,7 +40,6 @@ int main(int argc, char* argv[]) try {
           .set_storage_class(gcs::storage_class::Regional()));
 
   std::cout << "Created bucket " << metadata.name() << std::endl;
-  //! [create bucket]
 
   return 0;
 } catch (std::exception const& ex) {
