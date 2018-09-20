@@ -113,8 +113,29 @@ TEST(LogSinkTest, LogToClog) {
   EXPECT_FALSE(LogSink::Instance().empty());
   LogSink::Instance().set_minimum_severity(Severity::GCP_LS_NOTICE);
   GCP_LOG(NOTICE) << "test message";
+  LogSink::DisableStdClog();
+  EXPECT_TRUE(LogSink::Instance().empty());
+  EXPECT_EQ(0U, LogSink::Instance().BackendCount());
   LogSink::Instance().ClearBackends();
 }
+
+TEST(LogSinkTest, ClogMultiple) {
+  LogSink::EnableStdClog();
+  EXPECT_FALSE(LogSink::Instance().empty());
+  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  LogSink::EnableStdClog();
+  EXPECT_FALSE(LogSink::Instance().empty());
+  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  LogSink::EnableStdClog();
+  EXPECT_FALSE(LogSink::Instance().empty());
+  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  LogSink::Instance().set_minimum_severity(Severity::GCP_LS_NOTICE);
+  GCP_LOG(NOTICE) << "test message";
+  LogSink::DisableStdClog();
+  EXPECT_TRUE(LogSink::Instance().empty());
+  EXPECT_EQ(0U, LogSink::Instance().BackendCount());
+}
+
 
 namespace {
 /// A class to count calls to IOStream operator.

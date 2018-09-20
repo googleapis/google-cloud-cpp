@@ -41,7 +41,8 @@ std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
 LogSink::LogSink()
     : empty_(true),
       minimum_severity_(static_cast<int>(Severity::GCP_LS_LOWEST_ENABLED)),
-      next_id_(0) {}
+      next_id_(0),
+      clog_backend_id_(0) {}
 
 LogSink& LogSink::Instance() {
   static LogSink instance;
@@ -50,26 +51,24 @@ LogSink& LogSink::Instance() {
 
 long LogSink::AddBackend(std::shared_ptr<LogBackend> backend) {
   std::unique_lock<std::mutex> lk(mu_);
-  long id = ++next_id_;
-  backends_.emplace(id, std::move(backend));
-  empty_.store(backends_.empty());
-  return id;
+  return AddBackendImpl(std::move(backend));
 }
 
 void LogSink::RemoveBackend(long id) {
   std::unique_lock<std::mutex> lk(mu_);
-  auto it = backends_.find(id);
-  if (backends_.end() == it) {
-    return;
-  }
-  backends_.erase(it);
-  empty_.store(backends_.empty());
+  RemoveBackendImpl(id);
 }
 
 void LogSink::ClearBackends() {
   std::unique_lock<std::mutex> lk(mu_);
   backends_.clear();
+  clog_backend_id_ = 0;
   empty_.store(backends_.empty());
+}
+
+std::size_t LogSink::BackendCount() const {
+  std::unique_lock<std::mutex> lk(mu_);
+  return backends_.size();
 }
 
 void LogSink::Log(LogRecord log_record) {
@@ -111,8 +110,37 @@ class StdClogBackend : public LogBackend {
 };
 }  // namespace
 
-long LogSink::EnableStdClog() {
-  return Instance().AddBackend(std::make_shared<StdClogBackend>());
+void LogSink::EnableStdClogImpl() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (clog_backend_id_ != 0) {
+    return;
+  }
+  clog_backend_id_ = AddBackendImpl(std::make_shared<StdClogBackend>());
+}
+
+void LogSink::DisableStdClogImpl() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (clog_backend_id_ == 0) {
+    return;
+  }
+  RemoveBackendImpl(clog_backend_id_);
+  clog_backend_id_ = 0;
+}
+
+long LogSink::AddBackendImpl(std::shared_ptr<LogBackend> backend) {
+  long id = ++next_id_;
+  backends_.emplace(id, std::move(backend));
+  empty_.store(backends_.empty());
+  return id;
+}
+
+void LogSink::RemoveBackendImpl(long id) {
+  auto it = backends_.find(id);
+  if (backends_.end() == it) {
+    return;
+  }
+  backends_.erase(it);
+  empty_.store(backends_.empty());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
