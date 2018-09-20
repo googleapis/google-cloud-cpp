@@ -762,12 +762,13 @@ class Client {
    * Creates a `ObjectRewriter` to copy the source object.
    *
    * Applications use this function to reliably copy objects across location
-   * boundaries, and to rewrite objects with different Customer-Supplied
-   * Encryption Keys. The operation returns a `ObjectRewriter`, the application
-   * can use this object to initiate the copy, and to iterate if the copy
-   * requires more than one call to complete.
+   * boundaries, and to rewrite objects with different encryption keys. The
+   * operation returns a `ObjectRewriter`, which the application can use to
+   * initiate the copy and to iterate if the copy requires more than one call
+   * to complete.
    *
-   * @param source_bucket_name where is the source object located.
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
    * @param source_object_name the name of the source object.
    * @param destination_bucket_name where the destination object will be
    *     located.
@@ -806,14 +807,15 @@ class Client {
    * Creates a `ObjectRewriter` to resume a previously created rewrite.
    *
    * Applications use this function to resume a rewrite operation, possibly
-   * created with `RewriteObject`. Rewrite can reliably copy objects across
-   * location boundaries, and to can rewrite objects with different
-   * Customer-Supplied Encryption Keys. For large objects this operation can
-   * take a long time, applications should consider checkpointing the rewrite
-   * token (accessible in the `ObjectRewriter`) and restarting the operations
-   * in the event their program is terminated.
+   * created with `RewriteObject()`. Rewrite can reliably copy objects across
+   * location boundaries, and can rewrite objects with different encryption
+   * keys. For large objects this operation can take a long time, thus
+   * applications should consider checkpointing the rewrite token (accessible in
+   * the `ObjectRewriter`) and restarting the operation in the event the program
+   * is terminated.
    *
-   * @param source_bucket_name where is the source object located.
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
    * @param source_object_name the name of the source object.
    * @param destination_bucket_name where the destination object will be
    *     located.
@@ -821,8 +823,8 @@ class Client {
    * @param destination_object_metadata the new metadata for the Object. Only
    *     the writeable fields accepted by the `Objects: rewrite` API are used,
    *     all other fields are ignored.
-   * @param rewrite_token the last sucessful token from a previous rewrite
-   *     operation. Can be the empty string, in which case this starts a new
+   * @param rewrite_token the token from a previous successful rewrite
+   *     iteration. Can be the empty string, in which case this starts a new
    *     rewrite operation.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationKmsKeyName`,
@@ -857,15 +859,16 @@ class Client {
    * Rewrites the object, blocking until the rewrite completes.
    *
    * Applications use this function to reliably copy objects across location
-   * boundaries, and to rewrite objects with different Customer-Supplied
-   * Encryption Keys. The operation blocks until the rewrite completes, and
-   * returns the resulting `ObjectMetadata`.
+   * boundaries and to rewrite objects with different encryption keys. The
+   * operation blocks until the rewrite completes, and returns the resulting
+   * `ObjectMetadata`.
    *
    * @note Application developers should be aware that rewriting large objects
    *     may take multiple hours. In such cases the application should consider
-   *     using `RewriteObject` or `ResumeRewriteObject`.
+   *     using `RewriteObject()` or `ResumeRewriteObject()`.
    *
-   * @param source_bucket_name where is the source object located.
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
    * @param source_object_name the name of the source object.
    * @param destination_bucket_name where the destination object will be
    *     located.
