@@ -56,4 +56,9 @@ cc_binary(
     name = "table_admin_snippets",
     srcs = ["table_admin_snippets.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
+
+cc_binary(
+    name = "data_admin_snippets",
+    srcs = ["data_admin_snippets.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
 )

@@ -192,7 +192,7 @@ class Table {
    *     application wants to retry, log, or otherwise handle the failure.
    *
    * @par Example
-   * @snippet bigtable_samples.cc apply
+   * @snippet data_admin_snippets.cc apply
    */
   void Apply(SingleRowMutation&& mut);
 
@@ -214,7 +214,7 @@ class Table {
    *     handle the failed mutations.
    *
    * @par Example
-   * @snippet bigtable_samples.cc bulk apply
+   * @snippet data_admin_snippets.cc bulk apply
    */
   void BulkApply(BulkMutation&& mut);
 
@@ -225,7 +225,7 @@ class Table {
    * @param filter is applied on the server-side to data in the rows.
    *
    * @par Example
-   * @snippet bigtable_samples.cc read rows
+   * @snippet data_admin_snippets.cc read rows
    */
   RowReader ReadRows(RowSet row_set, Filter filter);
 
@@ -241,7 +241,7 @@ class Table {
    * will return all rows
    *
    * @par Example
-   * @snippet bigtable_samples.cc read rows with limit
+   * @snippet data_admin_snippets.cc read rows with limit
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
@@ -257,7 +257,7 @@ class Table {
    *     if the filter expression removes all column families and columns.
    *
    * @par Example
-   * @snippet bigtable_samples.cc read row
+   * @snippet data_admin_snippets.cc read row
    */
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
 
@@ -276,7 +276,7 @@ class Table {
    * @returns true if the filter passed.
    *
    * @par Example
-   * @snippet bigtable_samples.cc check and mutate
+   * @snippet data_admin_snippets.cc check and mutate
    */
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
@@ -296,7 +296,7 @@ class Table {
    *
    * In addition, application developers can specify other collection types, for
    * example `std::list<>` or `std::deque<>`:
-   * @snippet bigtable_samples.cc sample row keys collections
+   * @snippet data_admin_snippets.cc sample row keys collections
    */
   template <template <typename...> class Collection = std::vector>
   Collection<bigtable::RowKeySample> SampleRows() {
@@ -325,7 +325,7 @@ class Table {
    * @returns modified row
    *
    * @par Example
-   * @snippet bigtable_samples.cc read modify write
+   * @snippet data_admin_snippets.cc read modify write
    */
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key,
