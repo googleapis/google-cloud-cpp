@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_BUILDER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_BUILDER_H_
 
+#include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
@@ -118,6 +119,15 @@ class CurlRequestBuilder {
       AddHeader(std::string(p.prefix()) + "Key: " + p.value().key);
       AddHeader(std::string(p.prefix()) + "Key-Sha256: " + p.value().sha256);
     }
+    return *this;
+  }
+
+  /**
+   * Ignore complex options, these are managed explicitly in the requests that
+   * use them.
+   */
+  template <typename Option, typename T>
+  CurlRequestBuilder& AddOption(ComplexOption<Option, T> const& p) {
     return *this;
   }
 
