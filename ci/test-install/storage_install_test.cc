@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include <sstream>
 
 namespace gcs = google::cloud::storage;
 
