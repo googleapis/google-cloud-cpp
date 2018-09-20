@@ -290,17 +290,27 @@ class LogSink {
   long AddBackend(std::shared_ptr<LogBackend> backend);
   void RemoveBackend(long id);
   void ClearBackends();
+  std::size_t BackendCount() const;
 
   void Log(LogRecord log_record);
 
   /// Enable `std::clog` on `LogSink::Instance()`.
-  static long EnableStdClog();
+  static void EnableStdClog() { Instance().EnableStdClogImpl(); }
+
+  /// Disable `std::clog` on `LogSink::Instance()`.
+  static void DisableStdClog() { Instance().DisableStdClogImpl(); }
 
  private:
+  void EnableStdClogImpl();
+  void DisableStdClogImpl();
+  long AddBackendImpl(std::shared_ptr<LogBackend> backend);
+  void RemoveBackendImpl(long id);
+
   std::atomic<bool> empty_;
   std::atomic<int> minimum_severity_;
-  std::mutex mu_;
+  std::mutex mutable mu_;
   long next_id_;
+  long clog_backend_id_;
   std::map<long, std::shared_ptr<LogBackend>> backends_;
 };
 
