@@ -51,15 +51,10 @@ echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
 echo "================================================================"
 echo ${INVOCATION_ID} >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 
-bazel --bazelrc=kokoro-bazelrc test \
+bazel test \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
-    --project_id=${KOKORO_PROJECT_ID} \
-    --auth_credentials="${KOKORO_GFILE_DIR}/build-results-service-account.json" \
-    --remote_instance_name="projects/${KOKORO_PROJECT_ID}" \
-    --invocation_id="${INVOCATION_ID}" \
-    --config=results-local \
     -- //google/cloud/...:all
 
 echo
@@ -72,11 +67,8 @@ echo "End of copying."
 echo
 echo "================================================================"
 echo "================================================================"
-# Then build everything else (integration tests, examples, etc). This needs to
-# go last (and in a separate invocation) so Bazel state is preserved to run the
-# integration tests. We have not figured out how to run the integration test
-# scripts with the more advanced bazelrc file (the artifacts go missing), so
-# build with the default settings (whatever is in .bazelrc) instead.
+# Then build everything else (integration tests, examples, etc). So we can run
+# them next.
 bazel build \
     --test_output=errors \
     --verbose_failures=true \

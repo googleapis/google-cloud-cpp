@@ -28,7 +28,10 @@ if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
 else
   # We cannot simply use //...:all because when submodules are checked out that
   # includes the BUILD files for gRPC, protobuf, etc.
-  bazel --batch build "//google/cloud/...:all"
+  bazel --batch build \
+      --test_output=errors \
+      --action_env="GTEST_COLOR=1" \
+      "//google/cloud/...:all"
   bazel --batch test \
       --test_output=errors \
       --action_env="GTEST_COLOR=1" \
