@@ -759,7 +759,7 @@ class Client {
   }
 
   /**
-   * Creates a `ObjectRewriter` to copy the source object.
+   * Creates an `ObjectRewriter` to copy the source object.
    *
    * Applications use this function to reliably copy objects across location
    * boundaries, and to rewrite objects with different encryption keys. The
@@ -804,7 +804,7 @@ class Client {
   }
 
   /**
-   * Creates a `ObjectRewriter` to resume a previously created rewrite.
+   * Creates an `ObjectRewriter` to resume a previously created rewrite.
    *
    * Applications use this function to resume a rewrite operation, possibly
    * created with `RewriteObject()`. Rewrite can reliably copy objects across
@@ -856,7 +856,8 @@ class Client {
   }
 
   /**
-   * Rewrites the object, blocking until the rewrite completes.
+   * Rewrites the object, blocking until the rewrite completes, and returns the
+   * resulting `ObjectMetadata`.
    *
    * Applications use this function to reliably copy objects across location
    * boundaries and to rewrite objects with different encryption keys. The

@@ -231,6 +231,42 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, desired_line_count);
 }
 
+void WriteLargeObject(google::cloud::storage::Client client, int& argc,
+                      char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"write-large-object <bucket-name> <object-name> <size-in-MiB>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  int object_size_in_MiB = std::stoi(ConsumeArg(argc, argv));
+
+  //! [write large object]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     int object_size_in_MiB) {
+    // We want random-looking data, but we do not care if the data has a lot of
+    // entropy, so do not bother with a complex initialization of the PRNG seed.
+    std::mt19937_64 gen;
+    auto generate_line = [&gen]() -> std::string {
+      std::string const chars =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345789";
+      std::string line(128, '\n');
+      std::uniform_int_distribution<std::size_t> uni(0, chars.size() - 1);
+      std::generate_n(line.begin(), 127, [&] { return chars.at(uni(gen)); });
+      return line;
+    };
+    // Each line is 128 bytes, so the number of lines is:
+    long const kMiB = 1024L * 1024;
+    long const line_count = object_size_in_MiB * kMiB / 128;
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::IfGenerationMatch(0), gcs::Fields(""));
+    std::generate_n(std::ostream_iterator<std::string>(stream), line_count,
+                    generate_line);
+  }
+  //! [write large object]
+  (std::move(client), bucket_name, object_name, object_size_in_MiB);
+}
+
 void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 5) {
@@ -607,26 +643,6 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
   auto destination_bucket_name = ConsumeArg(argc, argv);
   auto destination_object_name = ConsumeArg(argc, argv);
 
-  // Create a 16 MiB object to copy from, otherwise the rewrite finishes too
-  // quickly:
-  std::mt19937_64 gen;
-  auto generate_line = [&gen]() -> std::string {
-    std::string const chars =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345789";
-    std::string line(128, '\n');
-    std::uniform_int_distribution<std::size_t> uni(0, chars.size() - 1);
-    std::generate_n(line.begin(), 127, [&] { return chars.at(uni(gen)); });
-    return line;
-  };
-  std::string text;
-  // We want about 8 MiB of data, and each line is 128 bytes, so:
-  for (int i = 0; i != 8 * 1024 * 1024 / 128; ++i) {
-    text += generate_line();
-  }
-  google::cloud::storage::ObjectMetadata source = client.InsertObject(
-      source_bucket_name, source_object_name, std::move(text),
-      google::cloud::storage::IfGenerationMatch(0));
-
   //! [rewrite object token]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string source_bucket_name,
@@ -689,7 +705,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
@@ -699,6 +715,7 @@ int main(int argc, char* argv[]) try {
       {"read-object", &ReadObject},
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
+      {"write-large-object", &WriteLargeObject},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
       {"patch-object-content-type", &PatchObjectContentType},

@@ -280,6 +280,8 @@ run_all_object_rewrite_examples() {
 
   local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
   local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples write-large-object \
+      "${source_bucket_name}" "${object_name}" "16"
   local msg=$(./storage_object_samples rewrite-object-token \
       "${source_bucket_name}" "${object_name}" \
       "${destination_bucket_name}" "${rewrite_object_name}")
