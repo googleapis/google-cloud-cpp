@@ -189,7 +189,6 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
-//! [wait for consistency check]
 void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
                              int argc, char* argv[]) {
   if (argc != 2) {
