@@ -12,26 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
-
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
-/// Return the path for the default service account credentials file.
-std::string GoogleApplicationDefaultCredentialsFile();
+namespace oauth2 {
+namespace {
 
-/// The name of the environment variable to configure `HOME`.
-char const* GoogleApplicationDefaultCredentialsHomeVariable();
+class AnonymousCredentialsTest : public ::testing::Test {};
 
-}  // namespace internal
+/// @test Verify `AnonymousCredentials` works as expected.
+TEST_F(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
+  AnonymousCredentials credentials;
+  EXPECT_EQ("", credentials.AuthorizationHeader());
+}
+
+}  // namespace
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_

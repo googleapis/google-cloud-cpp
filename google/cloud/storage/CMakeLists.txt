@@ -100,11 +100,8 @@ add_library(storage_client
             client.cc
             client_options.h
             client_options.cc
-            credentials.h
-            credentials.cc
             internal/access_control_common.h
             internal/access_control_common.cc
-            internal/authorized_user_credentials.h
             internal/binary_data_as_debug_string.h
             internal/binary_data_as_debug_string.cc
             internal/bucket_acl_requests.h
@@ -113,7 +110,6 @@ add_library(storage_client
             internal/bucket_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
-            internal/credential_constants.h
             internal/curl_handle.h
             internal/curl_handle.cc
             internal/curl_handle_factory.h
@@ -140,8 +136,6 @@ add_library(storage_client
             internal/format_rfc3339.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/google_application_default_credentials_file.h
-            internal/google_application_default_credentials_file.cc
             internal/http_response.h
             internal/http_response.cc
             internal/logging_client.h
@@ -165,7 +159,6 @@ add_library(storage_client
             internal/raw_client.h
             internal/retry_client.h
             internal/retry_client.cc
-            internal/service_account_credentials.h
             internal/service_account_requests.h
             internal/service_account_requests.cc
             lifecycle_rule.h
@@ -178,6 +171,16 @@ add_library(storage_client
             notification_metadata.h
             notification_metadata.cc
             notification_payload_format.h
+            oauth2/anonymous_credentials.h
+            oauth2/anonymous_credentials.cc
+            oauth2/authorized_user_credentials.h
+            oauth2/credentials.h
+            oauth2/credential_constants.h
+            oauth2/credential_constants.cc
+            oauth2/google_credentials.h
+            oauth2/google_credentials.cc
+            oauth2/refreshing_credentials.h
+            oauth2/service_account_credentials.h
             object_access_control.h
             object_access_control.cc
             object_metadata.h
@@ -248,15 +251,12 @@ set(storage_client_unit_tests
     client_notifications_test.cc
     client_test.cc
     client_write_object_test.cc
-    credentials_test.cc
     internal/access_control_common_test.cc
-    internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
     internal/bucket_requests_test.cc
     internal/default_object_acl_requests_test.cc
     internal/format_rfc3339_test.cc
-    internal/google_application_default_credentials_file_test.cc
     internal/http_response_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc
@@ -267,8 +267,11 @@ set(storage_client_unit_tests
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
     internal/retry_client_test.cc
-    internal/service_account_credentials_test.cc
     internal/service_account_requests_test.cc
+    oauth2/anonymous_credentials_test.cc
+    oauth2/authorized_user_credentials_test.cc
+    oauth2/google_credentials_test.cc
+    oauth2/service_account_credentials_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
