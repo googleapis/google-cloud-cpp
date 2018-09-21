@@ -13,6 +13,7 @@ var searchData=
   ['matchesstorageclassstandard',['MatchesStorageClassStandard',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a0b4069a274f93f43d520b68b77a470a6',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['max_5fage_5fseconds',['max_age_seconds',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a91482ec5384426acc0f73634953a2fdc',1,'google::cloud::storage::v0::CorsEntry']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a93883230f52887e9aa84bcada3992c41',1,'google::cloud::storage::v0::LifecycleRule']]],
+  ['maxbytesrewrittenpercall',['MaxBytesRewrittenPerCall',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxBytesRewrittenPerCall.html',1,'google::cloud::storage::v0']]],
   ['maxresults',['MaxResults',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxResults.html',1,'google::cloud::storage::v0']]],
   ['md5_5fhash',['md5_hash',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a7072ee8071901c1c8a2af53ac6e31894',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['media_5flink',['media_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab57b60606791394a12f82d2f9ecf4a83',1,'google::cloud::storage::v0::ObjectMetadata']]],
