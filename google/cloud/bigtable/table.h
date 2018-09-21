@@ -292,7 +292,7 @@ class Table {
    *     "end of table".
    *
    * @par Examples
-   * @snippet bigtable_samples.cc sample row keys
+   * @snippet data_admin_snippets.cc sample row keys
    *
    * In addition, application developers can specify other collection types, for
    * example `std::list<>` or `std::deque<>`:
