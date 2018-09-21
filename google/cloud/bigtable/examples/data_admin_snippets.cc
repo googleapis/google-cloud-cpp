@@ -59,7 +59,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 
 void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"apply: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"apply: <project-id> <instance-id> <table-id>"};
   }
 
   //! [apply]
@@ -95,7 +95,7 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
 void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"bulk-apply: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
   //! [bulk apply]
@@ -133,7 +133,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
 void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"read-row: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
   }
 
   //! [read row]
@@ -169,7 +169,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
 void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"read-rows: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
   }
 
   //! [read rows]
@@ -202,7 +202,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
                        char* argv[]) {
   if (argc != 1) {
-    throw Usage{"read-rows-with-limit: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"read-rows-with-limit: <project-id> <instance-id> <table-id>"};
   }
 
   //! [read rows with limit]
@@ -235,7 +235,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
   if (argc != 1) {
-    throw Usage{"check-and-mutate: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"check-and-mutate: <project-id> <instance-id> <table-id>"};
   }
 
   //! [check and mutate]
@@ -263,7 +263,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
 void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
                      char* argv[]) {
   if (argc != 1) {
-    throw Usage{"read-modify-write: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"read-modify-write: <project-id> <instance-id> <table-id>"};
   }
 
   //! [read modify write]
@@ -284,7 +284,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
 
 void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"sample-rows: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"sample-rows: <project-id> <instance-id> <table-id>"};
   }
 
   //! [sample row keys]
@@ -304,7 +304,7 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
                            char* argv[]) {
   if (argc != 1) {
     throw Usage{
-        "sample-rows-collections: <project-id> <instanse-id> <table-id>"};
+        "sample-rows-collections: <project-id> <instance-id> <table-id>"};
   }
 
   //! [sample row keys collections]

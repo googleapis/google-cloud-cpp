@@ -53,7 +53,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"create-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"create-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -74,7 +74,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
 void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
                 char* argv[]) {
   if (argc != 1) {
-    throw Usage{"list-tables: <project-id> <instanse-id>"};
+    throw Usage{"list-tables: <project-id> <instance-id>"};
   }
 
   //! [list tables]
@@ -92,7 +92,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
 void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
               char* argv[]) {
   if (argc != 2) {
-    throw Usage{"get-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"get-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -116,7 +116,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
 void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"delete-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"delete-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -131,7 +131,7 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
 void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"modify-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"modify-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -162,7 +162,7 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
 void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"drop-all-rows: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"drop-all-rows: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -177,7 +177,7 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
 void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
   if (argc != 2) {
-    throw Usage{"drop-rows-by-prefix: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"drop-rows-by-prefix: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
@@ -194,7 +194,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
                              int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{
-        "wait-for-consistency-check: <project-id> <instanse-id> <table-id>"};
+        "wait-for-consistency-check: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id_param = ConsumeArg(argc, argv);
 
@@ -218,7 +218,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "check-consistency: <project-id> <instanse-id> <table-id> "
+        "check-consistency: <project-id> <instance-id> <table-id> "
         "<consistency_token>"};
   }
   std::string const table_id_param = ConsumeArg(argc, argv);
@@ -248,7 +248,7 @@ void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "get-snapshot: <project-id> <instanse-id> <cluster-id> <snapshot-id>"};
+        "get-snapshot: <project-id> <instance-id> <cluster-id> <snapshot-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
   std::string const snapshot_id_str = ConsumeArg(argc, argv);
@@ -268,7 +268,7 @@ void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
 void ListSnapshots(google::cloud::bigtable::TableAdmin admin, int argc,
                    char* argv[]) {
   if (argc != 2) {
-    throw Usage{"list-snapshot: <project-id> <instanse-id> <cluster-id>"};
+    throw Usage{"list-snapshot: <project-id> <instance-id> <cluster-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
 
@@ -290,7 +290,7 @@ void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                     char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "delete-snapshot: <project-id> <instanse-id> <cluster-id> "
+        "delete-snapshot: <project-id> <instance-id> <cluster-id> "
         "<snapshot-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
