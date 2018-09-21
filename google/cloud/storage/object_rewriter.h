@@ -95,8 +95,9 @@ class ObjectRewriter {
                                         Functor, RewriteProgress>::value,
                                     int>::type = 0>
   ObjectMetadata ResultWithProgressCallback(Functor cb) {
-    for (auto progress = progress_; not progress.done; progress = Iterate()) {
-      cb(progress);
+    while (not progress_.done) {
+      Iterate();
+      cb(progress_);
     }
     return result_;
   }

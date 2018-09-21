@@ -314,7 +314,8 @@ class RewriteObjectRequest
           IfMetagenerationMatch, IfMetagenerationNotMatch,
           IfSourceGenerationMatch, IfSourceGenerationNotMatch,
           IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
-          Projection, SourceEncryptionKey, SourceGeneration, UserProject> {
+          MaxBytesRewrittenPerCall, Projection, SourceEncryptionKey,
+          SourceGeneration, UserProject> {
  public:
   RewriteObjectRequest() = default;
   RewriteObjectRequest(std::string source_bucket, std::string source_object,

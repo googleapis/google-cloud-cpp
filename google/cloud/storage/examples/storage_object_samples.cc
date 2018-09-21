@@ -231,6 +231,42 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, desired_line_count);
 }
 
+void WriteLargeObject(google::cloud::storage::Client client, int& argc,
+                      char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"write-large-object <bucket-name> <object-name> <size-in-MiB>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  int object_size_in_MiB = std::stoi(ConsumeArg(argc, argv));
+
+  //! [write large object]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     int object_size_in_MiB) {
+    // We want random-looking data, but we do not care if the data has a lot of
+    // entropy, so do not bother with a complex initialization of the PRNG seed.
+    std::mt19937_64 gen;
+    auto generate_line = [&gen]() -> std::string {
+      std::string const chars =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345789";
+      std::string line(128, '\n');
+      std::uniform_int_distribution<std::size_t> uni(0, chars.size() - 1);
+      std::generate_n(line.begin(), 127, [&] { return chars.at(uni(gen)); });
+      return line;
+    };
+    // Each line is 128 bytes, so the number of lines is:
+    long const kMiB = 1024L * 1024;
+    long const line_count = object_size_in_MiB * kMiB / 128;
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::IfGenerationMatch(0), gcs::Fields(""));
+    std::generate_n(std::ostream_iterator<std::string>(stream), line_count,
+                    generate_line);
+  }
+  //! [write large object]
+  (std::move(client), bucket_name, object_name, object_size_in_MiB);
+}
+
 void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 5) {
@@ -327,7 +363,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
 }
 
 void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
-                char* argv[]) {
+                               char* argv[]) {
   if (argc < 2) {
     throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
   }
@@ -535,16 +571,141 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
   //! [write object with kms key] [END storage_upload_with_kms_key]
   (std::move(client), bucket_name, object_name, kms_key_name);
 }
+
+void RewriteObject(google::cloud::storage::Client client, int& argc,
+                   char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "rewrite-object <source-bucket-name> <source-object-name>"
+        " <destination-bucket-name> <destination-object-name>"};
+  }
+  auto source_bucket_name = ConsumeArg(argc, argv);
+  auto source_object_name = ConsumeArg(argc, argv);
+  auto destination_bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  //! [rewrite object]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string source_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
+     std::string destination_object_name) {
+    gcs::ObjectMetadata meta = client.RewriteObjectBlocking(
+        source_bucket_name, source_object_name, destination_bucket_name,
+        destination_object_name, gcs::ObjectMetadata());
+    std::cout << "Rewrote object " << destination_object_name
+              << " Metadata: " << meta << std::endl;
+  }
+  //! [rewrite object]
+  (std::move(client), source_bucket_name, source_object_name,
+   destination_bucket_name, destination_object_name);
+}
+
+void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "rewrite-object-non-blocking <source-bucket-name> <source-object-name>"
+        " <destination-bucket-name> <destination-object-name>"};
+  }
+  auto source_bucket_name = ConsumeArg(argc, argv);
+  auto source_object_name = ConsumeArg(argc, argv);
+  auto destination_bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  //! [rewrite object non blocking]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string source_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
+     std::string destination_object_name) {
+    gcs::ObjectRewriter rewriter = client.RewriteObject(
+        source_bucket_name, source_object_name, destination_bucket_name,
+        destination_object_name, gcs::ObjectMetadata());
+    gcs::ObjectMetadata meta = rewriter.ResultWithProgressCallback(
+        [](gcs::RewriteProgress const& progress) {
+          std::cout << "Rewrote " << progress.total_bytes_rewritten << "/"
+                    << progress.object_size << std::endl;
+        });
+    std::cout << "Rewrote object " << destination_object_name
+              << " Metadata: " << meta << std::endl;
+  }
+  //! [rewrite object non blocking]
+  (std::move(client), source_bucket_name, source_object_name,
+   destination_bucket_name, destination_object_name);
+}
+
+void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "rewrite-object-token <source-bucket-name> <source-object-name>"
+        " <destination-bucket-name> <destination-object-name>"};
+  }
+  auto source_bucket_name = ConsumeArg(argc, argv);
+  auto source_object_name = ConsumeArg(argc, argv);
+  auto destination_bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+
+  //! [rewrite object token]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string source_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
+     std::string destination_object_name) {
+    gcs::ObjectRewriter rewriter = client.RewriteObject(
+        source_bucket_name, source_object_name, destination_bucket_name,
+        destination_object_name, gcs::ObjectMetadata(),
+        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+    auto progress = rewriter.Iterate();
+    if (progress.done) {
+      std::cout << "The rewrite completed immediately, no token to resume later"
+                << std::endl;
+      return;
+    }
+    std::cout << "Rewrite in progress, token " << rewriter.token() << std::endl;
+  }
+  //! [rewrite object token]
+  (std::move(client), source_bucket_name, source_object_name,
+   destination_bucket_name, destination_object_name);
+}
+
+void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 6) {
+    throw Usage{
+        "rewrite-object-resume <source-bucket-name> <source-object-name>"
+        " <destination-bucket-name> <destination-object-name> <token>"};
+  }
+  auto source_bucket_name = ConsumeArg(argc, argv);
+  auto source_object_name = ConsumeArg(argc, argv);
+  auto destination_bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  auto rewrite_token = ConsumeArg(argc, argv);
+  //! [rewrite object resume]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string source_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
+     std::string destination_object_name, std::string rewrite_token) {
+    gcs::ObjectRewriter rewriter = client.ResumeRewriteObject(
+        source_bucket_name, source_object_name, destination_bucket_name,
+        destination_object_name, rewrite_token, gcs::ObjectMetadata(),
+        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+    gcs::ObjectMetadata meta = rewriter.ResultWithProgressCallback(
+        [](gcs::RewriteProgress const& progress) {
+          std::cout << "Rewrote " << progress.total_bytes_rewritten << "/"
+                    << progress.object_size << std::endl;
+        });
+    std::cout << "Rewrote object " << destination_object_name
+              << " Metadata: " << meta << std::endl;
+  }
+  //! [rewrite object resume]
+  (std::move(client), source_bucket_name, source_object_name,
+   destination_bucket_name, destination_object_name, rewrite_token);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
   google::cloud::storage::Client client;
-  //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
@@ -554,6 +715,7 @@ int main(int argc, char* argv[]) try {
       {"read-object", &ReadObject},
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
+      {"write-large-object", &WriteLargeObject},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
       {"patch-object-content-type", &PatchObjectContentType},
@@ -566,6 +728,10 @@ int main(int argc, char* argv[]) try {
       {"compose-object-from-encrypted-objects",
        &ComposeObjectFromEncryptedObjects},
       {"write-object-with-kms-key", &WriteObjectWithKmsKey},
+      {"rewrite-object", &RewriteObject},
+      {"rewrite-object-non-blocking", &RewriteObjectNonBlocking},
+      {"rewrite-object-token", &RewriteObjectToken},
+      {"rewrite-object-resume", &RewriteObjectResume},
   };
   for (auto&& kv : commands) {
     try {
