@@ -28,12 +28,13 @@ externalproject_add(
     BUILD_COMMAND ${CMAKE_COMMAND}
                   -E
                   make_directory
-                  <INSTALL_DIR>/include/nlohmann
-    INSTALL_COMMAND ${CMAKE_COMMAND}
-                    -E
-                    copy
-                    <INSTALL_DIR>/src/json.hpp
-                    <INSTALL_DIR>/include/nlohmann/json.hpp
+                  <INSTALL_DIR>/include
+    INSTALL_COMMAND
+        ${CMAKE_COMMAND}
+        -E
+        copy
+        <INSTALL_DIR>/src/json.hpp
+        <INSTALL_DIR>/include/google/cloud/storage/internal/nlohmann_json.hpp
     LOG_DOWNLOAD ON
     LOG_INSTALL ON)
 

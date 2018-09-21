@@ -339,7 +339,11 @@ install(DIRECTORY . DESTINATION include/storage/client
         PATTERN "testing/*"
         EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
-              include/storage/client)
+              include/google/cloud/storage)
+install(
+    FILES
+        ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
+        DESTINATION include/google/cloud/storage/internal)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})

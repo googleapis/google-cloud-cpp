@@ -18,24 +18,33 @@
 # nor is it a general solution on how to build Makefiles for google-cloud-cpp.
 # It is simply a minimal file to test the installed pkg-config support files.
 
-DEPS       := bigtable_client google_cloud_cpp_common grpc++ grpc zlib openssl libcares protobuf
-CXXFLAGS   := $(shell pkg-config $(DEPS) --cflags)
-CXXLDFLAGS := $(shell pkg-config $(DEPS) --libs-only-L)
-
-# gRPC does not install a full complement of pkg-config files:
-#   https://github.com/grpc/grpc/issues/15166
-# so we need to "guess" that -lgpr and -laddress_sorting will be needed.
-LIBS       := $(shell pkg-config $(DEPS) --libs-only-l) -lgpr -laddress_sorting $(shell pkg-config libcares --libs-only-l)
-
-# This is hard-coded because it is intended for a test, applications are
-# expected to configure the files themselves.
+# This is hard-coded because it is intended for a test, applications typically
+# have their own configuration files.
 CXX=clang++ -std=c++11
 CXXLD=$(CXX)
 
-all: echo install_integration_test
 
-install_integration_test: install_integration_test.cc
-	$(CXXLD) $(CXXFLAGS) $(CXXLDFLAGS) -o $@ $^ $(LIBS)
+all: bigtable_install_test storage_install_test
 
-echo:
-	echo $(DEPS)
+CBT_DEPS := bigtable_client google_cloud_cpp_common grpc++ grpc zlib openssl libcares protobuf
+CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
+CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
+# gRPC does not install a full complement of pkg-config files:
+#   https://github.com/grpc/grpc/issues/15166
+# so we need to "guess" that -lgpr and -laddress_sorting will be needed.
+CBT_LIBS := \
+    $(shell pkg-config $(CBT_DEPS) --libs-only-l) \
+    -lgpr -laddress_sorting \
+    $(shell pkg-config libcares --libs-only-l)
+
+bigtable_install_test: bigtable_install_test.cc
+	$(CXXLD) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+
+
+GCS_DEPS := storage_client google_cloud_cpp_common libcurl openssl
+GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
+GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
+GCS_LIBS := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
+
+storage_install_test: storage_install_test.cc
+	$(CXXLD) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
