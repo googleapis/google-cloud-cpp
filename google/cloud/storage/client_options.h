@@ -84,6 +84,12 @@ class ClientOptions {
     return *this;
   }
 
+  std::size_t download_buffer_size() const { return download_buffer_size_; }
+  ClientOptions& SetDownloadBufferSize(std::size_t size);
+
+  std::size_t upload_buffer_size() const { return upload_buffer_size_; }
+  ClientOptions& SetUploadBufferSize(std::size_t size);
+
  private:
   void SetupFromEnvironment();
 
@@ -95,6 +101,8 @@ class ClientOptions {
   bool enable_raw_client_tracing_;
   std::string project_id_;
   std::size_t connection_pool_size_;
+  std::size_t download_buffer_size_;
+  std::size_t upload_buffer_size_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
