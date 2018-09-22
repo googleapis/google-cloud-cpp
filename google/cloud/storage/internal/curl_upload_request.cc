@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include <curl/multi.h>
 #include <algorithm>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -174,9 +175,25 @@ int CurlUploadRequest::PerformWork() {
   return running_handles;
 }
 
-void CurlUploadRequest::WaitForHandles() {
-  CURLMcode result = curl_multi_wait(multi_.get(), nullptr, 0, 0, nullptr);
+void CurlUploadRequest::WaitForHandles(int& repeats) {
+  int const timeout_ms = 1;
+  std::chrono::milliseconds const timeout(timeout_ms);
+  int numfds = 0;
+  CURLMcode result =
+      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds
+                 << ", result=" << result << ", repeats=" << repeats;
   RaiseOnError(__func__, result);
+  // The documentation for curl_multi_wait() recommends sleeping if it returns
+  // numfds == 0 more than once in a row :shrug:
+  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
+  if (numfds == 0) {
+    if (++repeats > 1) {
+      std::this_thread::sleep_for(timeout);
+    }
+  } else {
+    repeats = 0;
+  }
 }
 
 void CurlUploadRequest::RaiseOnError(char const* where, CURLMcode result) {
