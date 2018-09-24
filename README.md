@@ -24,6 +24,11 @@ at the [Beta](#versioning) quality level:
 
 - [Google Cloud Bigtable](google/cloud/bigtable#google-cloud-bigtable)
 
+This library supports the following Google Cloud Platform services with clients
+at the [Alpha](#versioning) quality level:
+
+- [Google Cloud Storage](google/cloud/storage#google-cloud-storage)
+
 The libraries in this code base likely do not (yet) cover all the available
 APIs.
 
