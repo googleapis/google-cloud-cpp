@@ -257,16 +257,19 @@ run_all_object_examples() {
 }
 
 ################################################
-# Run the example showing how to rewrite objects.
+# Run the example showing how to rewrite one object.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
 # Returns:
 #   None
 ################################################
-run_all_object_rewrite_examples() {
+run_rewrite_object_example() {
   local source_bucket_name=$1
   local target_bucket_name=$2
   shift 2
@@ -283,6 +286,22 @@ run_all_object_rewrite_examples() {
       "${source_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
       "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the example showing how to rename one object.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created and then renamed.
+# Returns:
+#   None
+################################################
+run_rename_object_example() {
+  local source_bucket_name=$1
+  shift
 
   local source_object_name="rename-source-object-$(date +%s)-${RANDOM}.txt"
   local target_object_name="rename-target-object-$(date +%s)-${RANDOM}.txt"
@@ -293,6 +312,25 @@ run_all_object_rewrite_examples() {
       "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
       "${source_bucket_name}" "${target_object_name}"
+}
+
+################################################
+# Run the example showing how to resume a partially completed rewrite.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_resume_rewrite_example() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
 
   local source_object_name="rewrite-resume-source-object-$(date +%s)-${RANDOM}.txt"
   local target_object_name="rewrite-resume-target-object-$(date +%s)-${RANDOM}.txt"
@@ -315,6 +353,29 @@ run_all_object_rewrite_examples() {
       "${target_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
       "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the examples showing how to rewrite objects.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_all_object_rewrite_examples() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  run_rewrite_object_example "${source_bucket_name}" "${target_bucket_name}"
+  run_rename_object_example "${source_bucket_name}"
+  run_resume_rewrite_example "${source_bucket_name}" "${target_bucket_name}"
 }
 
 ################################################
