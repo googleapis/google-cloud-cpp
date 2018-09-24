@@ -246,56 +246,136 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_copied_object_name}"
+
+  local newkey="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples rotate-encryption-key \
+      "${bucket_name}" "${encrypted_object_name}" "${key}" "${newkey}"
+
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 }
 
 ################################################
-# Run the example showing how to rewrite objects.
+# Run the example showing how to rewrite one object.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_rewrite_object_example() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  local source_object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples rewrite-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the example showing how to rename one object.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created and then renamed.
+# Returns:
+#   None
+################################################
+run_rename_object_example() {
+  local source_bucket_name=$1
+  shift
+
+  local source_object_name="rename-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rename-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media-in-rename-example"
+  run_example ./storage_object_samples rename-object \
+      "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+}
+
+################################################
+# Run the example showing how to resume a partially completed rewrite.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_resume_rewrite_example() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  local source_object_name="rewrite-resume-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-resume-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples write-large-object \
+      "${source_bucket_name}" "${source_object_name}" "16"
+  local msg=$(./storage_object_samples rewrite-object-token \
+      "${source_bucket_name}" "${source_object_name}" \
+      "${target_bucket_name}" "${target_object_name}")
+
+  if echo "${msg}" | grep -q "Rewrite in progress"; then
+    local token=$(echo ${msg} | awk '{print $5}')
+    run_example ./storage_object_samples rewrite-object-resume \
+        "${source_bucket_name}" "${source_object_name}" \
+        "${target_bucket_name}" "${target_object_name}" "${token}"
+  else
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " rewrite-object-resume the rewrite completed in one step."
+  fi
+  run_example ./storage_object_samples delete-object \
+      "${target_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the examples showing how to rewrite objects.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
 # Returns:
 #   None
 ################################################
 run_all_object_rewrite_examples() {
   local source_bucket_name=$1
-  local destination_bucket_name=$2
+  local target_bucket_name=$2
   shift 2
 
-  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
-  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
-  run_example ./storage_object_samples insert-object \
-      "${source_bucket_name}" "${object_name}" \
-      "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples rewrite-object \
-      "${source_bucket_name}" "${object_name}" \
-      "${source_bucket_name}" "${rewrite_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${rewrite_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${object_name}"
-
-  local object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
-  local rewrite_object_name="rewrite-object-$(date +%s)-${RANDOM}.txt"
-  run_example ./storage_object_samples write-large-object \
-      "${source_bucket_name}" "${object_name}" "16"
-  local msg=$(./storage_object_samples rewrite-object-token \
-      "${source_bucket_name}" "${object_name}" \
-      "${destination_bucket_name}" "${rewrite_object_name}")
-
-  if echo "${msg}" | grep -q "Rewrite in progress"; then
-    local token=$(echo ${msg} | awk '{print $5}')
-    run_example ./storage_object_samples rewrite-object-resume \
-        "${source_bucket_name}" "${object_name}" \
-        "${destination_bucket_name}" "${rewrite_object_name}" "${token}"
-  fi
-  run_example ./storage_object_samples delete-object \
-      "${destination_bucket_name}" "${rewrite_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${object_name}"
+  run_rewrite_object_example "${source_bucket_name}" "${target_bucket_name}"
+  run_rename_object_example "${source_bucket_name}"
+  run_resume_rewrite_example "${source_bucket_name}" "${target_bucket_name}"
 }
 
 ################################################

@@ -788,7 +788,6 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   *
    * @snippet storage_object_samples.cc rewrite object non blocking
    */
   template <typename... Options>
@@ -838,7 +837,6 @@ class Client {
    * @throw std::runtime_error if the operation fails.
    *
    * @par Example
-   *
    * @snippet storage_object_samples.cc rewrite object resume
    */
   template <typename... Options>
@@ -888,9 +886,14 @@ class Client {
    *
    * @throw std::runtime_error if the operation fails.
    *
-   * @par Example
+   * @par Examples
    *
    * @snippet storage_object_samples.cc rewrite object
+   *
+   * @snippet storage_object_samples.cc rotate encryption key
+   *
+   * @snippet storage_object_samples.cc rename object
+   *
    */
   template <typename... Options>
   ObjectMetadata RewriteObjectBlocking(
