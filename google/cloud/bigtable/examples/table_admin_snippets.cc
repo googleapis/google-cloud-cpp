@@ -24,12 +24,6 @@
 #include <sstream>
 
 namespace {
-/**
- * The key used for ReadRow(), ReadModifyWrite(), CheckAndMutate.
- *
- * Using the same key makes it possible for the user to see the effect of
- * the different APIs on one row.
- */
 
 struct Usage {
   std::string msg;
@@ -56,220 +50,261 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
             << command_usage << std::endl;
 }
 
-//! [create table]
 void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"create-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"create-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  auto schema = admin.CreateTable(
-      table_id,
-      google::cloud::bigtable::TableConfig(
-          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-           {"foo",
-            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-          {}));
+  //! [create table]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    auto schema = admin.CreateTable(
+        table_id,
+        google::cloud::bigtable::TableConfig(
+            {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
+             {"foo",
+              google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
+            {}));
+  }
+  //! [create table]
+  (std::move(admin), table_id);
 }
-//! [create table]
 
-//! [list tables]
 void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
                 char* argv[]) {
   if (argc != 1) {
-    throw Usage{"list-tables: <project-id> <instanse-id>"};
+    throw Usage{"list-tables: <project-id> <instance-id>"};
   }
-  auto tables =
-      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
-  for (auto const& table : tables) {
-    std::cout << table.name() << std::endl;
-  }
-}
-//! [list tables]
 
-//! [get table]
+  //! [list tables]
+  [](google::cloud::bigtable::TableAdmin admin) {
+    auto tables =
+        admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+    for (auto const& table : tables) {
+      std::cout << table.name() << std::endl;
+    }
+  }
+  //! [list tables]
+  (std::move(admin));
+}
+
 void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
               char* argv[]) {
   if (argc != 2) {
-    throw Usage{"get-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"get-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  auto table =
-      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  for (auto const& family : table.column_families()) {
-    std::string const& family_name = family.first;
-    std::string gc_rule;
-    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                &gc_rule);
-    std::cout << "\t" << family_name << "\t\t" << gc_rule << std::endl;
+  //! [get table]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    auto table =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    std::cout << table.name() << "\n";
+    for (auto const& family : table.column_families()) {
+      std::string const& family_name = family.first;
+      std::string gc_rule;
+      google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
+                                                  &gc_rule);
+      std::cout << "\t" << family_name << "\t\t" << gc_rule << std::endl;
+    }
   }
+  //! [get table]
+  (std::move(admin), table_id);
 }
-//! [get table]
 
-//! [delete table]
 void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"delete-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"delete-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  admin.DeleteTable(table_id);
+  //! [delete table]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    admin.DeleteTable(table_id);
+  }
+  //! [delete table]
+  (std::move(admin), table_id);
 }
-//! [delete table]
 
-//! [modify table]
 void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"modify-table: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"modify-table: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  auto schema = admin.ModifyColumnFamilies(
-      table_id,
-      {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-       google::cloud::bigtable::ColumnFamilyModification::Update(
-           "fam", google::cloud::bigtable::GcRule::Union(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(24 * 7)))),
-       google::cloud::bigtable::ColumnFamilyModification::Create(
-           "bar", google::cloud::bigtable::GcRule::Intersection(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(72))))});
+  //! [modify table]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id,
+        {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
+         google::cloud::bigtable::ColumnFamilyModification::Update(
+             "fam", google::cloud::bigtable::GcRule::Union(
+                        google::cloud::bigtable::GcRule::MaxNumVersions(5),
+                        google::cloud::bigtable::GcRule::MaxAge(
+                            std::chrono::hours(24 * 7)))),
+         google::cloud::bigtable::ColumnFamilyModification::Create(
+             "bar", google::cloud::bigtable::GcRule::Intersection(
+                        google::cloud::bigtable::GcRule::MaxNumVersions(3),
+                        google::cloud::bigtable::GcRule::MaxAge(
+                            std::chrono::hours(72))))});
 
-  std::string formatted;
-  google::protobuf::TextFormat::PrintToString(schema, &formatted);
-  std::cout << "Schema modified to: " << formatted << std::endl;
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << std::endl;
+  }
+  //! [modify table]
+  (std::move(admin), table_id);
 }
-//! [modify table]
 
-//! [drop all rows]
 void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
-    throw Usage{"drop-all-rows: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"drop-all-rows: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  admin.DropAllRows(table_id);
+  //! [drop all rows]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    admin.DropAllRows(table_id);
+  }
+  //! [drop all rows]
+  (std::move(admin), table_id);
 }
-//! [drop all rows]
 
-//! [drop rows by prefix]
 void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
   if (argc != 2) {
-    throw Usage{"drop-rows-by-prefix: <project-id> <instanse-id> <table-id>"};
+    throw Usage{"drop-rows-by-prefix: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  admin.DropRowsByPrefix(table_id, "key-00004");
+  //! [drop rows by prefix]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    admin.DropRowsByPrefix(table_id, "key-00004");
+  }
+  //! [drop rows by prefix]
+  (std::move(admin), table_id);
 }
-//! [drop rows by prefix]
 
-//! [wait for consistency check]
 void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
                              int argc, char* argv[]) {
   if (argc != 2) {
     throw Usage{
-        "wait-for-consistency-check: <project-id> <instanse-id> <table-id>"};
+        "wait-for-consistency-check: <project-id> <instance-id> <table-id>"};
   }
   std::string const table_id_param = ConsumeArg(argc, argv);
 
-  google::cloud::bigtable::TableId table_id(table_id_param);
-  google::cloud::bigtable::ConsistencyToken consistency_token(
-      admin.GenerateConsistencyToken(table_id.get()));
-  auto result = admin.WaitForConsistencyCheck(table_id, consistency_token);
-  if (result.get()) {
-    std::cout << "Table is consistent" << std::endl;
-  } else {
-    std::cout << "Table is not consistent" << std::endl;
+  //! [wait for consistency check]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param) {
+    google::cloud::bigtable::TableId table_id(table_id_param);
+    google::cloud::bigtable::ConsistencyToken consistency_token(
+        admin.GenerateConsistencyToken(table_id.get()));
+    auto result = admin.WaitForConsistencyCheck(table_id, consistency_token);
+    if (result.get()) {
+      std::cout << "Table is consistent" << std::endl;
+    } else {
+      std::cout << "Table is not consistent" << std::endl;
+    }
   }
+  //! [wait for consistency check]
+  (std::move(admin), table_id_param);
 }
-//! [wait for consistency check]
 
-//! [check consistency]
 void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "check-consistency: <project-id> <instanse-id> <table-id> "
-        "<consistency_token"};
+        "check-consistency: <project-id> <instance-id> <table-id> "
+        "<consistency_token>"};
   }
   std::string const table_id_param = ConsumeArg(argc, argv);
   std::string const consistency_token_param = ConsumeArg(argc, argv);
 
-  google::cloud::bigtable::TableId table_id(table_id_param);
-  google::cloud::bigtable::ConsistencyToken consistency_token(
-      consistency_token_param);
-  auto result = admin.CheckConsistency(table_id, consistency_token);
-  if (result) {
-    std::cout << "Table is consistent" << std::endl;
-  } else {
-    std::cout << "Table is not yet consistent, Please Try again Later with the "
-                 "same Token!";
+  //! [check consistency]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,
+     std::string consistency_token_param) {
+    google::cloud::bigtable::TableId table_id(table_id_param);
+    google::cloud::bigtable::ConsistencyToken consistency_token(
+        consistency_token_param);
+    auto result = admin.CheckConsistency(table_id, consistency_token);
+    if (result) {
+      std::cout << "Table is consistent" << std::endl;
+    } else {
+      std::cout
+          << "Table is not yet consistent, Please Try again Later with the "
+             "same Token!";
+    }
+    std::cout << std::flush;
   }
-  std::cout << std::flush;
+  //! [check consistency]
+  (std::move(admin), table_id_param, consistency_token_param);
 }
-//! [check consistency]
 
-//! [get snapshot]
 void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "get-snapshot: <project-id> <instanse-id> <cluster-id> <snapshot-id"};
+        "get-snapshot: <project-id> <instance-id> <cluster-id> <snapshot-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
   std::string const snapshot_id_str = ConsumeArg(argc, argv);
 
-  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-  google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-  auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
-  std::cout << "GetSnapshot name : " << snapshot.name() << std::endl;
+  //! [get snapshot]
+  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
+     std::string snapshot_id_str) {
+    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
+    auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
+    std::cout << "GetSnapshot name : " << snapshot.name() << std::endl;
+  }
+  //! [get snapshot]
+  (std::move(admin), cluster_id_str, snapshot_id_str);
 }
-//! [get snapshot]
 
-//! [list snapshots]
 void ListSnapshots(google::cloud::bigtable::TableAdmin admin, int argc,
                    char* argv[]) {
   if (argc != 2) {
-    throw Usage{"list-snapshot: <project-id> <instanse-id> <cluster-id>"};
+    throw Usage{"list-snapshot: <project-id> <instance-id> <cluster-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
 
-  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+  //! [list snapshots]
+  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str) {
+    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
 
-  auto snapshot_list = admin.ListSnapshots(cluster_id);
-  std::cout << "Snapshot Name List" << std::endl;
-  for (auto const& snapshot : snapshot_list) {
-    std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
+    auto snapshot_list = admin.ListSnapshots(cluster_id);
+    std::cout << "Snapshot Name List" << std::endl;
+    for (auto const& snapshot : snapshot_list) {
+      std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
+    }
   }
+  //! [list snapshots]
+  (std::move(admin), cluster_id_str);
 }
-//! [list snapshots]
 
-//! [delete snapshot]
 void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                     char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "delete-snapshot: <project-id> <instanse-id> <cluster-id> "
-        "<snapshot-id"};
+        "delete-snapshot: <project-id> <instance-id> <cluster-id> "
+        "<snapshot-id>"};
   }
   std::string const cluster_id_str = ConsumeArg(argc, argv);
   std::string const snapshot_id_str = ConsumeArg(argc, argv);
 
-  google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-  google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-  admin.DeleteSnapshot(cluster_id, snapshot_id);
+  //! [delete snapshot]
+  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
+     std::string snapshot_id_str) {
+    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
+    admin.DeleteSnapshot(cluster_id, snapshot_id);
+  }
+  //! [delete snapshot]
+  (std::move(admin), cluster_id_str, snapshot_id_str);
 }
-//! [delete snapshot]
 
 }  // anonymous namespace
 
