@@ -267,6 +267,7 @@ class GcsObjectVersion(object):
                 'entity': 'project-owners-123456789',
                 'entityId': '',
             },
+            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()),
         }
         if request.headers.get('content-type') is not None:
             self.metadata['contentType'] = request.headers.get('content-type')
@@ -300,6 +301,15 @@ class GcsObjectVersion(object):
         })
         tmp['metageneration'] = tmp.get('metageneration', 0) + 1
         self.metadata = tmp
+        self._validate_hashes()
+
+    def _validate_hashes(self):
+        """Validate the md5Hash field against the stored media."""
+        actual = self.metadata.get('md5Hash', '')
+        expected = base64.b64encode(hashlib.md5(self.media).digest())
+        if actual != expected:
+            raise ErrorResponse(
+                'Mismatched MD5 hash expected=%s, actual=%s' % (expected, actual))
 
     def validate_encryption_for_read(self, request,
                                      prefix='x-goog-encryption'):
@@ -690,6 +700,89 @@ class GcsObject(object):
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, media)
+        self._insert_revision(revision)
+        return revision
+
+    def _parse_part(self, multipart_upload_part):
+        """Parse a portion of a multipart breaking out the headers and payload.
+
+        :param multipart_upload_part:str a portion of the multipart upload body.
+        :return: a tuple with the headers and the payload.
+        :rtype: (dict, str)
+        """
+        headers = dict()
+        index = 0
+        next_line = multipart_upload_part.find('\r\n', index)
+        while next_line != index:
+            header_line = multipart_upload_part[index:next_line]
+            key, value = header_line.split(':', 2)
+            # This does not work for repeated headers, but we do not expect
+            # those in the testbench.
+            headers[key.encode('ascii', 'ignore')] = value
+            index = next_line + 2
+            next_line = multipart_upload_part.find('\r\n', index)
+        return headers, multipart_upload_part[next_line + 2:]
+
+    def insert_multipart(self, gcs_url, request):
+        """Insert a new revision based on the give flask request.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
+        """
+        content_type = request.headers.get('content-type')
+        if content_type is None or not content_type.startswith('multipart/related'):
+            raise ErrorResponse('Missing or invalid content-type header in multipart upload')
+        _, _, boundary = content_type.partition('boundary=')
+        if boundary is None:
+            raise ErrorResponse('Missing boundary in content-type header in multipart upload')
+
+        marker = '--' + boundary + '\r\n'
+        body = extract_media(request)
+        parts = body.split(marker)
+        # parts[0] is the empty string, `multipart` should start with the boundary
+        # parts[1] is the JSON resource object part, with some headers
+        resource_headers, resource_body = self._parse_part(parts[1])
+        # parts[2] is the media, with some headers
+        media_headers, media_body = self._parse_part(parts[2])
+        end = media_body.find('\r\n--' + boundary + '--\r\n')
+        if end == -1:
+            raise ErrorResponse('Missing end marker in media body')
+        media_body = media_body[:end]
+        self.generation += 1
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request, media_body)
+        # Apply any overrides from the resource object part.
+        revision.update_from_metadata(json.loads(resource_body))
+        # The content-type needs to be patched up, yuck.
+        if resource_headers.get('content-type') is not None:
+            revision.update_from_metadata({
+                'contentType': resource_headers.get('content-type')})
+        self._insert_revision(revision)
+        return revision
+
+    def insert_xml(self, gcs_url, request):
+        """Implement the insert operation using the XML API.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
+        """
+        media = extract_media(request)
+        goog_hash = request.headers.get('x-goog-hash')
+        md5hash = None
+        if goog_hash is not None:
+            for hash in goog_hash.split(','):
+                if hash.startswith('md5='):
+                    md5hash = hash[4:]
+        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
+                                    self.generation, request, media)
+        if md5hash is not None:
+            revision.update_from_metadata({
+                'md5Hash': md5hash,
+            })
         self._insert_revision(revision)
         return revision
 
@@ -1950,14 +2043,23 @@ def objects_insert(bucket_name):
     insert_magic_bucket(gcs_url)
     object_name = flask.request.args.get('name', None)
     if object_name is None:
-        raise ErrorResponse('Name not set in Objects: insert', status_code=412)
-
+        raise ErrorResponse('name not set in Objects: insert', status_code=412)
+    upload_type = flask.request.args.get('uploadType')
+    if upload_type is None:
+        raise ErrorResponse('uploadType not set in Objects: insert',
+                            status_code=412)
+    if upload_type not in {'multipart', 'media'}:
+        raise ErrorResponse('testbench does not support %s uploadType' % upload_type,
+                            status_code=400)
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
     GCS_OBJECTS[object_path] = gcs_object
-    current_version = gcs_object.insert(gcs_url, flask.request)
+    if upload_type == 'media':
+        current_version = gcs_object.insert(gcs_url, flask.request)
+    else:
+        current_version = gcs_object.insert_multipart(gcs_url, flask.request)
     return filtered_response(flask.request, current_version.metadata)
 
 
@@ -2017,7 +2119,7 @@ def xmlapi_put_object(bucket_name, object_name):
     gcs_object.check_preconditions_by_value(generation_match, None,
                                             metageneration_match, None)
     GCS_OBJECTS[object_path] = gcs_object
-    gcs_object.insert(gcs_url, flask.request)
+    gcs_object.insert_xml(gcs_url, flask.request)
     return ''
 
 
