@@ -22,6 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 extern "C" void CurlShareLockCallback(CURL* handle, curl_lock_data data,
                                       curl_lock_access access, void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
@@ -61,13 +62,19 @@ std::string XmlMapPredefinedAcl(std::string const& acl) {
 
 }  // namespace
 
-template <typename Request>
-void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                              Request const& request, char const* method) {
+void CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
+                                    char const* method) {
   builder.SetMethod(method)
       .SetDebugLogging(options_.enable_http_tracing())
       .SetCurlShare(share_.get())
+      .AddUserAgentPrefix(options_.user_agent_prefix())
       .AddHeader(options_.credentials()->AuthorizationHeader());
+}
+
+template <typename Request>
+void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
+                              Request const& request, char const* method) {
+  SetupBuilderCommon(builder, method);
   request.AddOptionsToHttpRequest(builder);
 }
 
@@ -881,11 +888,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_upload_factory_);
-  builder.SetMethod("PUT")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "PUT");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -953,11 +957,8 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_download_factory_);
-  builder.SetMethod("GET")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "GET");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1000,11 +1001,8 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_upload_factory_);
-  builder.SetMethod("PUT")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "PUT");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
