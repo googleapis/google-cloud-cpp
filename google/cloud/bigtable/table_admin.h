@@ -335,6 +335,9 @@ class TableAdmin {
    * @param snapshot_id the id of the snapshot to which table belongs.
    * @param table_id the id of the table which needs to be created.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc create table from snapshot
    */
   std::future<google::bigtable::admin::v2::Table> CreateTableFromSnapshot(
       bigtable::ClusterId const& cluster_id,
