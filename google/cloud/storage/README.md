@@ -26,6 +26,8 @@ the reference guide includes a quick start guide.
   * Create, list, and delete buckets and objects.
   * Read and modify metadata attributes of buckets and objects, including patch
     semantics.
+  * Compose multiple objects into a single object.
+  * Rewrite objects to a different bucket or with with different encrytion keys.
   * Read object contents as a stream of data.
   * Create objects using a stream of data.
   * Create objects from a `std::string`.
