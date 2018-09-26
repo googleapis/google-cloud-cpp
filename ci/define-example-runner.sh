@@ -70,7 +70,7 @@ run_example() {
     echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
         " ${program_name} ${example}"
     echo
-    dump_log ${log}
+    dump_log "${log}"
     if [ -f "${EMULATOR_LOG}" ]; then
       dump_log "${EMULATOR_LOG}"
     fi

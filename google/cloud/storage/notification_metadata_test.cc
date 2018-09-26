@@ -51,7 +51,6 @@ NotificationMetadata CreateNotificationMetadataForTest() {
 TEST(NotificationMetadataTest, Parse) {
   auto actual = CreateNotificationMetadataForTest();
   EXPECT_EQ(2U, actual.custom_attributes().size());
-  EXPECT_EQ(2U, actual.custom_attributes_size());
   EXPECT_TRUE(actual.has_custom_attribute("test-ca-1"));
   EXPECT_EQ("value1", actual.custom_attribute("test-ca-1"));
   EXPECT_TRUE(actual.has_custom_attribute("test-ca-2"));

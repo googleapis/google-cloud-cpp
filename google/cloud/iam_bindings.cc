@@ -14,6 +14,7 @@
 
 #include "google/cloud/iam_bindings.h"
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 
 namespace google {
@@ -48,24 +49,13 @@ void IamBindings::RemoveMember(std::string const& role,
   if (member_loc != members.end()) {
     members.erase(member_loc);
   }
+  if (members.empty()) {
+    bindings_.erase(it);
+  }
 }
 
 void IamBindings::RemoveMembers(google::cloud::IamBinding const& iam_binding) {
-  std::string const& role(iam_binding.role());
-  std::set<std::string> const& members = iam_binding.members();
-
-  auto it = bindings_.find(role);
-  if (it == bindings_.end()) {
-    return;
-  }
-
-  auto& binding_members = it->second;
-  for (auto const& member : members) {
-    auto member_loc = binding_members.find(member);
-    if (member_loc != binding_members.end()) {
-      binding_members.erase(member_loc);
-    }
-  }
+  RemoveMembers(iam_binding.role(), iam_binding.members());
 }
 
 void IamBindings::RemoveMembers(std::string const& role,
@@ -82,6 +72,25 @@ void IamBindings::RemoveMembers(std::string const& role,
       binding_members.erase(member_loc);
     }
   }
+  if (binding_members.empty()) {
+    bindings_.erase(it);
+  }
+}
+
+std::ostream& operator<<(std::ostream& os, IamBindings const& rhs) {
+  os << "IamBindings={";
+  char const* sep = "";
+  for (auto const& kv : rhs) {
+    os << sep << kv.first << ": [";
+    char const* sep2 = "";
+    for (auto const& member : kv.second) {
+      os << sep2 << member;
+      sep2 = ", ";
+    }
+    os << "]";
+    sep = ", ";
+  }
+  return os << "}";
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

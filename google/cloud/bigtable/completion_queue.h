@@ -51,7 +51,9 @@ class CompletionQueue {
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
    */
-  template <typename Functor>
+  template <typename Functor,
+            typename std::enable_if<
+                internal::CheckTimerCallback<Functor>::value, int>::type = 0>
   std::shared_ptr<AsyncOperation> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline, Functor&& functor) {
     auto op = std::make_shared<internal::AsyncTimerFunctor<Functor>>(
@@ -81,11 +83,61 @@ class CompletionQueue {
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
    */
-  template <typename Rep, typename Period, typename Functor>
+  template <typename Rep, typename Period, typename Functor,
+            typename std::enable_if<
+                internal::CheckTimerCallback<Functor>::value, int>::type = 0>
   std::shared_ptr<AsyncOperation> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration, Functor&& functor) {
     auto deadline = std::chrono::system_clock::now() + duration;
     return MakeDeadlineTimer(deadline, std::forward<Functor>(functor));
+  }
+
+  /**
+   * Make an asynchronous unary RPC.
+   *
+   * @param client the object implementing the asynchronous API.
+   * @param call the pointer to the member function to invoke.
+   * @param request the contents of the request.
+   * @param context an initialized request context to make the call.
+   * @param f the callback to report completion of the call.
+   *
+   * @tparam Client the type of the class to call.  Typically this would be a
+   *   wrapper like DataClient or AdminClient.
+   * @tparam MemberFunction the type of the member function in the @p Client
+   *     to call. It must meet the requirements for
+   *     `internal::CheckAsyncUnaryRpcSignature<>`.
+   * @tparam Request the type of the request parameter in the gRPC.
+   * @tparam Functor the type of the callback provided by the application. It
+   *     must satisfy (using C++17 classes):
+   *     @code
+   *     static_assert(std::is_invocable_v<
+   *         Functor, internal::AsyncUnaryRpc<RequestType,ResponseType>&, bool>)
+   *     @endcode
+   *
+   * @return an AsyncOperation instance that can be used to request cancelation
+   *   of the pending operation.
+   */
+  template <
+      typename Client, typename MemberFunction, typename Request,
+      typename Functor,
+      typename Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunction>,
+      typename std::enable_if<Sig::value, int>::type
+          valid_member_function_type = 0,
+      typename std::enable_if<internal::CheckUnaryRpcCallback<
+                                  Functor, typename Sig::ResponseType>::value,
+                              int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> MakeUnaryRpc(
+      Client& client, MemberFunction Client::*call, Request const& request,
+      std::unique_ptr<grpc::ClientContext> context, Functor&& f) {
+    static_assert(std::is_same<typename Sig::RequestType,
+                               typename std::decay<Request>::type>::value,
+                  "Mismatched pointer to member function and request types");
+    auto op = std::make_shared<internal::AsyncUnaryRpcFunctor<
+        typename Sig::RequestType, typename Sig::ResponseType, Functor>>(
+        std::forward<Functor>(f));
+    void* tag = impl_->RegisterOperation(op);
+    op->Set(client, call, std::move(context), request, &impl_->cq(), tag);
+    return op;
   }
 
  private:

@@ -134,12 +134,12 @@ Usage: bigtable_samples <command> <project_id> <instance_id> <table_id> [argumen
 
 Examples:
   bigtable_samples run my-project my-instance my-table 
-  bigtable_samples create-table my-project my-instance my-table
-  bigtable_samples list-tables my-project my-instance
-  bigtable_samples get-table my-project my-instance my-table
-  bigtable_samples modify-table my-project my-instance my-table
-  bigtable_samples drop-all-rows my-project my-instance my-table
-  bigtable_samples delete-table my-project my-instance my-table  
+  table_admin_snippets create-table my-project my-instance my-table
+  table_admin_snippets list-tables my-project my-instance
+  table_admin_snippets get-table my-project my-instance my-table
+  table_admin_snippets modify-table my-project my-instance my-table
+  table_admin_snippets drop-all-rows my-project my-instance my-table
+  table_admin_snippets delete-table my-project my-instance my-table  
 ```
 #### Run admin table samples
 After configuring gRPC, you can run the examples using:
@@ -153,4 +153,4 @@ $ ./bigtable_samples run ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
 
 [hello_world_code]: bigtable_hello_world.cc
 [instance_admin_code]: bigtable_samples_instance_admin.cc
-[table_admin_code]: bigtable_samples.cc
+[table_admin_code]: table_admin_snippets.cc

@@ -22,26 +22,32 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {
  public:
-  BucketTestEnvironment(std::string project, std::string instance) {
+  BucketTestEnvironment(std::string project, std::string instance,
+                        std::string topic) {
     project_id_ = std::move(project);
     bucket_name_ = std::move(instance);
+    topic_ = std::move(topic);
   }
 
   static std::string const& project_id() { return project_id_; }
   static std::string const& bucket_name() { return bucket_name_; }
+  static std::string const& topic() { return topic_; }
 
  private:
   static std::string project_id_;
   static std::string bucket_name_;
+  static std::string topic_;
 };
 
 std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
+std::string BucketTestEnvironment::topic_;
 
 class BucketIntegrationTest : public ::testing::Test {
  protected:
@@ -476,6 +482,80 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
 
+  auto create = client.CreateNotification(
+      bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+
+  EXPECT_EQ(payload_format::JsonApiV1(), create.payload_format());
+  EXPECT_THAT(create.topic(), HasSubstr(BucketTestEnvironment::topic()));
+
+  current_notifications = client.ListNotifications(bucket_name);
+  auto count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(1U, count) << create;
+
+  auto get = client.GetNotification(bucket_name, create.id());
+  EXPECT_EQ(create, get);
+
+  client.DeleteNotification(bucket_name, create.id());
+  current_notifications = client.ListNotifications(bucket_name);
+  count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(0U, count) << create;
+
+  client.DeleteBucket(bucket_name);
+}
+
+TEST_F(BucketIntegrationTest, IamCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a new bucket to run the test.
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+
+  IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
+  auto const& bindings = policy.bindings;
+  // There must always be at least an OWNER for the Bucket.
+  ASSERT_FALSE(bindings.end() ==
+               bindings.find("roles/storage.legacyBucketOwner"));
+
+  std::vector<BucketAccessControl> acl = client.ListBucketAcl(bucket_name);
+  // Unfortunately we cannot compare the values in the ACL to the values in the
+  // IamPolicy directly. The ids for entities have different formats, for
+  // example: in ACL 'project-editors-123456789' and in IAM
+  // 'projectEditors:my-project'. We can compare the counts though:
+  std::set<std::string> expected_owners;
+  for (auto const& entry : acl) {
+    if (entry.role() == "OWNER") {
+      expected_owners.insert(entry.entity());
+    }
+  }
+  std::set<std::string> actual_owners =
+      bindings.at("roles/storage.legacyBucketOwner");
+  EXPECT_EQ(expected_owners.size(), actual_owners.size());
+
+  IamPolicy update = policy;
+  update.bindings.AddMember("roles/storage.objectViewer",
+                            "allAuthenticatedUsers");
+
+  IamPolicy updated_policy = client.SetBucketIamPolicy(bucket_name, update);
+  EXPECT_EQ(update.bindings, updated_policy.bindings);
+  EXPECT_NE(update.etag, updated_policy.etag);
+
+  std::vector<std::string> expected_permissions{
+      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
+  std::vector<std::string> actual_permissions =
+      client.TestBucketIamPermissions(bucket_name, expected_permissions);
+  EXPECT_THAT(actual_permissions, ElementsAreArray(expected_permissions));
+
   client.DeleteBucket(bucket_name);
 }
 
@@ -489,19 +569,20 @@ int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 3) {
+  if (argc != 4) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <bucket>" << std::endl;
+              << " <project> <bucket> <topic>" << std::endl;
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const bucket_name = argv[2];
+  std::string const topic = argv[3];
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::BucketTestEnvironment(project_id,
-                                                        bucket_name));
+      new google::cloud::storage::BucketTestEnvironment(project_id, bucket_name,
+                                                        topic));
 
   return RUN_ALL_TESTS();
 }

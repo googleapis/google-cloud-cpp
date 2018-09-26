@@ -43,7 +43,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  CurlRequest BuildRequest(std::string payload);
+  CurlRequest BuildRequest();
 
   /**
    * Create a http request where the payload is provided dynamically.

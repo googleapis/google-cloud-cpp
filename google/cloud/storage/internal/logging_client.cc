@@ -113,9 +113,31 @@ std::pair<Status, BucketMetadata> LoggingClient::PatchBucket(
   return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
 }
 
+std::pair<Status, IamPolicy> LoggingClient::GetBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
+}
+
+std::pair<Status, IamPolicy> LoggingClient::SetBucketIamPolicy(
+    SetBucketIamPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
+}
+
+std::pair<Status, TestBucketIamPermissionsResponse>
+LoggingClient::TestBucketIamPermissions(
+    TestBucketIamPermissionsRequest const& request) {
+  return MakeCall(*client_, &RawClient::TestBucketIamPermissions, request,
+                  __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
+}
+
+std::pair<Status, ObjectMetadata> LoggingClient::CopyObject(
+    CopyObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::CopyObject, request, __func__);
 }
 
 std::pair<Status, ObjectMetadata> LoggingClient::GetObjectMetadata(
@@ -153,6 +175,16 @@ std::pair<Status, ObjectMetadata> LoggingClient::UpdateObject(
 std::pair<Status, ObjectMetadata> LoggingClient::PatchObject(
     PatchObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchObject, request, __func__);
+}
+
+std::pair<Status, ObjectMetadata> LoggingClient::ComposeObject(
+    ComposeObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::ComposeObject, request, __func__);
+}
+
+std::pair<Status, RewriteObjectResponse> LoggingClient::RewriteObject(
+    RewriteObjectRequest const& request) {
+  return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
 }
 
 std::pair<Status, ListBucketAclResponse> LoggingClient::ListBucketAcl(
@@ -259,6 +291,21 @@ std::pair<Status, ServiceAccount> LoggingClient::GetServiceAccount(
 std::pair<Status, ListNotificationsResponse> LoggingClient::ListNotifications(
     ListNotificationsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);
+}
+
+std::pair<Status, NotificationMetadata> LoggingClient::CreateNotification(
+    CreateNotificationRequest const& request) {
+  return MakeCall(*client_, &RawClient::CreateNotification, request, __func__);
+}
+
+std::pair<Status, NotificationMetadata> LoggingClient::GetNotification(
+    GetNotificationRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetNotification, request, __func__);
+}
+
+std::pair<Status, EmptyResponse> LoggingClient::DeleteNotification(
+    DeleteNotificationRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteNotification, request, __func__);
 }
 
 }  // namespace internal

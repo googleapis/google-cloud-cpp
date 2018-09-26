@@ -99,7 +99,6 @@ void CurlUploadRequest::ResetOptions() {
   handle_.EnableLogging(logging_enabled_);
 
   handle_.SetOption(CURLOPT_UPLOAD, 1L);
-  handle_.SetOption(CURLOPT_CUSTOMREQUEST, "POST");
 }
 
 std::size_t CurlUploadRequest::ReadCallback(char* ptr, std::size_t size,

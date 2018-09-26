@@ -163,7 +163,7 @@ inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
 }
 //@}
 
-/*
+/**
  * The Logging configuration for a Bucket.
  *
  * @see https://cloud.google.com/storage/docs/access-logs for general
@@ -458,15 +458,38 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   using CommonMetadata::id;
   using CommonMetadata::kind;
 
-  std::size_t label_count() const { return labels_.size(); }
+  //@{
+  /// @name Accessors and modifiers to the `labels`.
   bool has_label(std::string const& key) const {
     return labels_.end() != labels_.find(key);
   }
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+  /// Delete a label. This is a no-op if the key does not exist.
+  BucketMetadata& delete_label(std::string const& key) {
+    auto i = labels_.find(key);
+    if (i == labels_.end()) {
+      return *this;
+    }
+    labels_.erase(i);
+    return *this;
+  }
+
+  /// Insert or update the label entry.
+  BucketMetadata& upsert_label(std::string key, std::string value) {
+    auto i = labels_.lower_bound(key);
+    if (i == labels_.end() or i->first != key) {
+      labels_.emplace_hint(i, std::move(key), std::move(value));
+    } else {
+      i->second = std::move(value);
+    }
+    return *this;
+  }
+
   std::map<std::string, std::string> const& labels() const { return labels_; }
   std::map<std::string, std::string>& mutable_labels() { return labels_; }
+  //@}
 
   //@{
   /**
@@ -521,6 +544,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return *this;
   }
 
+  using CommonMetadata::has_owner;
   using CommonMetadata::owner;
 
   std::int64_t const& project_number() const { return project_number_; }

@@ -43,6 +43,18 @@ class SnapshotIntegrationTest : public bigtable::testing::TableIntegrationTest {
 
   void TearDown() {}
 };
+
+bool IsSnapshotPresent(
+    std::vector<google::bigtable::admin::v2::Snapshot> const& snapshots,
+    std::string const& snapshot_name) {
+  return snapshots.end() !=
+         std::find_if(
+             snapshots.begin(), snapshots.end(),
+             [&snapshot_name](google::bigtable::admin::v2::Snapshot const& i) {
+               return i.name() == snapshot_name;
+             });
+}
+
 }  // namespace
 
 /// @test Verify that `bigtable::TableAdmin` snapshot operations work as
@@ -91,6 +103,62 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
   table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
   DeleteTable(table_id.get());
   DeleteTable(table_id_new.get());
+}
+
+/// @test Verify that Snapshot CRUD operations work as expected.
+TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
+  google::cloud::bigtable::TableId table_id(RandomTableId());
+  google::cloud::bigtable::ClusterId cluster_id(
+      bigtable::testing::TableTestEnvironment::cluster_id());
+  std::string snapshot_id_str = table_id.get() + "-snapshot";
+  google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
+
+  // create table prerequisites for snapshot operations.
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+  auto table = CreateTable(table_id.get(), table_config);
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "row1";
+  std::string const row_key2 = "row2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+  // Create records
+  CreateCells(*table, created_cells);
+
+  // verify new snapshot id in list of snapshot
+  auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
+  ASSERT_FALSE(IsSnapshotPresent(snapshots_before, snapshot_id_str))
+      << "Snapshot (" << snapshot_id_str << ") already exists."
+      << " This is unexpected, as the snapshot ids are"
+      << " generated at random.";
+
+  // create snapshot
+  auto snapshot =
+      table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
+          .get();
+  auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
+  EXPECT_TRUE(IsSnapshotPresent(snapshots_current, snapshot.name()));
+
+  // get snapshot
+  auto snapshot_check = table_admin_->GetSnapshot(cluster_id, snapshot_id);
+  auto const npos = std::string::npos;
+  EXPECT_NE(npos, snapshot_check.name().find(snapshot_id_str));
+
+  // Delete snapshot
+  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
+  auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
+  EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
 }
 
 // Test Cases Finished

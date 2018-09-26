@@ -45,10 +45,21 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                                  internal::UpdateBucketRequest const&));
   MOCK_METHOD1(PatchBucket, ResponseWrapper<storage::BucketMetadata>(
                                 internal::PatchBucketRequest const&));
+  MOCK_METHOD1(
+      GetBucketIamPolicy,
+      ResponseWrapper<IamPolicy>(internal::GetBucketIamPolicyRequest const&));
+  MOCK_METHOD1(
+      SetBucketIamPolicy,
+      ResponseWrapper<IamPolicy>(internal::SetBucketIamPolicyRequest const&));
+  MOCK_METHOD1(TestBucketIamPermissions,
+               ResponseWrapper<internal::TestBucketIamPermissionsResponse>(
+                   internal::TestBucketIamPermissionsRequest const&));
 
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::InsertObjectMediaRequest const&));
+  MOCK_METHOD1(CopyObject, ResponseWrapper<storage::ObjectMetadata>(
+                               internal::CopyObjectRequest const&));
   MOCK_METHOD1(GetObjectMetadata,
                ResponseWrapper<storage::ObjectMetadata>(
                    internal::GetObjectMetadataRequest const&));
@@ -66,6 +77,10 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                                  internal::UpdateObjectRequest const&));
   MOCK_METHOD1(PatchObject, ResponseWrapper<storage::ObjectMetadata>(
                                 internal::PatchObjectRequest const&));
+  MOCK_METHOD1(ComposeObject, ResponseWrapper<storage::ObjectMetadata>(
+                                  internal::ComposeObjectRequest const&));
+  MOCK_METHOD1(RewriteObject, ResponseWrapper<internal::RewriteObjectResponse>(
+                                  internal::RewriteObjectRequest const&));
 
   MOCK_METHOD1(ListBucketAcl, ResponseWrapper<internal::ListBucketAclResponse>(
                                   internal::ListBucketAclRequest const&));
@@ -119,6 +134,14 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(ListNotifications,
                ResponseWrapper<internal::ListNotificationsResponse>(
                    internal::ListNotificationsRequest const&));
+  MOCK_METHOD1(CreateNotification,
+               ResponseWrapper<NotificationMetadata>(
+                   internal::CreateNotificationRequest const&));
+  MOCK_METHOD1(GetNotification, ResponseWrapper<NotificationMetadata>(
+                                    internal::GetNotificationRequest const&));
+  MOCK_METHOD1(DeleteNotification,
+               ResponseWrapper<internal::EmptyResponse>(
+                   internal::DeleteNotificationRequest const&));
 };
 }  // namespace testing
 }  // namespace storage

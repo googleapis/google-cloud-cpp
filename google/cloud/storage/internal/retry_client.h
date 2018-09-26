@@ -55,9 +55,17 @@ class RetryClient : public RawClient {
       UpdateBucketRequest const& request) override;
   std::pair<Status, BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) override;
+  std::pair<Status, IamPolicy> GetBucketIamPolicy(
+      GetBucketIamPolicyRequest const& request) override;
+  std::pair<Status, IamPolicy> SetBucketIamPolicy(
+      SetBucketIamPolicyRequest const& request) override;
+  std::pair<Status, TestBucketIamPermissionsResponse> TestBucketIamPermissions(
+      TestBucketIamPermissionsRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
+  std::pair<Status, ObjectMetadata> CopyObject(
+      CopyObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
   std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
@@ -72,6 +80,10 @@ class RetryClient : public RawClient {
       UpdateObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> PatchObject(
       PatchObjectRequest const& request) override;
+  std::pair<Status, ObjectMetadata> ComposeObject(
+      ComposeObjectRequest const& request) override;
+  std::pair<Status, RewriteObjectResponse> RewriteObject(
+      RewriteObjectRequest const&) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -117,6 +129,12 @@ class RetryClient : public RawClient {
 
   std::pair<Status, ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;
+  std::pair<Status, NotificationMetadata> CreateNotification(
+      CreateNotificationRequest const&) override;
+  std::pair<Status, NotificationMetadata> GetNotification(
+      GetNotificationRequest const&) override;
+  std::pair<Status, EmptyResponse> DeleteNotification(
+      DeleteNotificationRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }
 

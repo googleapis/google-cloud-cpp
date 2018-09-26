@@ -25,35 +25,35 @@ for the example on GitHub.
 
 The example uses the following headers:
 
-@snippet bigtable_samples.cc bigtable includes
+@snippet table_admin_snippets.cc bigtable includes
 
 ### Create a new table in the instance.
 
-@snippet bigtable_samples.cc create table
+@snippet table_admin_snippets.cc create table
 
 ### Return all the tables in the instance.
 
-@snippet bigtable_samples.cc list tables
+@snippet table_admin_snippets.cc list tables
 
 ### Get information about a single table.
 
-@snippet bigtable_samples.cc get table
+@snippet table_admin_snippets.cc get table
 
 ### Modify the schema for an existing table.
 
-@snippet bigtable_samples.cc modify table
+@snippet table_admin_snippets.cc modify table
 
 ### Delete all the rows in a table.
 
-@snippet bigtable_samples.cc drop all rows
+@snippet table_admin_snippets.cc drop all rows
 
 ### Delete a table.
 
-@snippet bigtable_samples.cc delete table
+@snippet table_admin_snippets.cc delete table
 
 ### Put it all together
 
 Here is the full example
 
-@snippet bigtable_samples.cc all code
+@snippet table_admin_snippets.cc all code
 */

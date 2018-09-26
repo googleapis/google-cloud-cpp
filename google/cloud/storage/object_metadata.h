@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_
 
+#include "google/cloud/internal/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
@@ -30,6 +31,15 @@ struct CustomerEncryption {
   // The SHA256 hash of the encryption key.
   std::string key_sha256;
 };
+
+/// Defines one of the source objects for a compose operation.
+struct ComposeSourceObject {
+  std::string object_name;
+  google::cloud::internal::optional<long> generation;
+  google::cloud::internal::optional<long> if_generation_match;
+};
+
+std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
 
 inline bool operator==(CustomerEncryption const& lhs,
                        CustomerEncryption const& rhs) {
@@ -81,6 +91,21 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
    * them as a JSON string.
    */
   std::string JsonPayloadForUpdate() const;
+
+  /**
+   * Return the payload for a call to `Objects: copy`.
+   *
+   * The `Objects: copy` API only accepts a subset of the writeable fields in
+   * the object resource. This function selects the relevant fields and formats
+   * them as a JSON string.
+   */
+
+  std::string JsonPayloadForCopy() const;
+
+  /**
+   * Return the payload for a call to `Objects: compose`.
+   */
+  internal::nl::json JsonPayloadForCompose() const;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
@@ -147,11 +172,9 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   //@{
   /// @name Accessors and modifiers to the `metadata` labels.
-  std::size_t metadata_count() const { return metadata_.size(); }
   bool has_metadata(std::string const& key) const {
     return metadata_.end() != metadata_.find(key);
   }
-
   std::string const& metadata(std::string const& key) const {
     return metadata_.at(key);
   }
@@ -183,6 +206,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::map<std::string, std::string>& mutable_metadata() { return metadata_; }
   //@}
 
+  using CommonMetadata::has_owner;
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
   using CommonMetadata::owner;
@@ -206,6 +230,8 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool operator!=(ObjectMetadata const& rhs) const { return not(*this == rhs); }
 
  private:
+  internal::nl::json JsonForUpdate() const;
+
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<ObjectAccessControl> acl_;

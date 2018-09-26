@@ -29,6 +29,12 @@ cc_binary(
 )
 
 cc_binary(
+    name = "storage_bucket_iam_samples",
+    srcs = ["storage_bucket_iam_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
     name = "storage_default_object_acl_samples",
     srcs = ["storage_default_object_acl_samples.cc"],
     deps = ["//google/cloud/storage:storage_client"],
@@ -49,5 +55,11 @@ cc_binary(
 cc_binary(
     name = "storage_notification_samples",
     srcs = ["storage_notification_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)
+
+cc_binary(
+    name = "storage_quickstart",
+    srcs = ["storage_quickstart.cc"],
     deps = ["//google/cloud/storage:storage_client"],
 )

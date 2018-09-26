@@ -19,6 +19,9 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/notification_event_type.h"
+#include "google/cloud/storage/notification_payload_format.h"
+#include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 
 namespace google {
@@ -191,7 +194,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return GetBucketMetadataImpl(request);
+    return raw_client_->GetBucketMetadata(request).second;
   }
 
   /**
@@ -300,6 +303,128 @@ class Client {
   }
 
   /**
+   * Fetches the IamPolicy for a Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation allows you to query the IAM policies
+   * for a Bucket. IAM policies are a superset of the Bucket ACL, changes
+   * to the Bucket ACL are reflected in the IAM policy, and vice-versa. The
+   * documentation describes
+   * [the
+   * mapping](https://cloud.google.com/storage/docs/access-control/iam#acls)
+   * between legacy Bucket ACLs and IAM policies.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_iam_samples.cc get bucket iam policy
+   *
+   */
+  template <typename... Options>
+  IamPolicy GetBucketIamPolicy(std::string const& bucket_name,
+                               Options&&... options) {
+    internal::GetBucketIamPolicyRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetBucketIamPolicy(request).second;
+  }
+
+  /**
+   * Sets the IamPolicy for a Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation allows you to set the IAM policies
+   * for a Bucket. IAM policies are a superset of the Bucket ACL, changes
+   * to the Bucket ACL are reflected in the IAM policy, and vice-versa. The
+   * documentation describes
+   * [the
+   * mapping](https://cloud.google.com/storage/docs/access-control/iam#acls)
+   * between legacy Bucket ACLs and IAM policies.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @note The server rejects requests where the ETag value of the policy does
+   *   not match the current ETag. Effectively this means that applications must
+   *   use `GetBucketIamPolicy()` to fetch the current value and ETag before
+   *   calling `SetBucketIamPolicy()`. Applications should use optimistic
+   *   concurrency control techniques to retry changes in case some other
+   *   application modified the IAM policy between the `GetBucketIamPolicy`
+   *   and `SetBucketIamPolicy` calls.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param iam_policy the new IAM policy.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Examples
+   *
+   * @snippet storage_bucket_iam_samples.cc add bucket iam member
+   *
+   * @snippet storage_bucket_iam_samples.cc remove bucket iam member
+   */
+  template <typename... Options>
+  IamPolicy SetBucketIamPolicy(std::string const& bucket_name,
+                               IamPolicy const& iam_policy,
+                               Options&&... options) {
+    internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->SetBucketIamPolicy(request).second;
+  }
+
+  /**
+   * Tests the IAM permissions of the caller against a Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation tests the permissions of the caller
+   * for a Bucket. You must provide a list of permissions, this API will return
+   * the subset of those permissions that the current caller has in the given
+   * Bucket.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param permissions the list of permissions to check.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
+   */
+  template <typename... Options>
+  std::vector<std::string> TestBucketIamPermissions(
+      std::string bucket_name, std::vector<std::string> permissions,
+      Options&&... options) {
+    internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
+                                                      std::move(permissions));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->TestBucketIamPermissions(request).second.permissions;
+  }
+
+  /**
    * Creates an object given its name and media (contents).
    *
    * @param bucket_name the name of the bucket that will contain the object.
@@ -322,7 +447,60 @@ class Client {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return InsertObjectMediaImpl(request);
+    return raw_client_->InsertObjectMedia(request).second;
+  }
+
+  /**
+   * Copies an existing object.
+   *
+   * Use `CopyObject` to copy between objects in the same location and storage
+   * class.  Copying objects across locations or storage classes can fail for
+   * large objects and retrying the operation will not succeed.
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
+   *   a full description of the advantages of `Objects: rewrite` over
+   *   `Objects: copy`.
+   *
+   * TODO(#816) - reference the RewriteObject() member function here.
+   *
+   * @param source_bucket_name the name of the bucket that contains the object
+   *     to be copied.
+   * @param source_object_name the name of the object to copy.
+   * @param destination_bucket_name the name of the bucket that will contain the
+   *     new object.
+   * @param destination_object_name the name of the new object.
+   * @param metadata additional metadata attributes that you want to set in the
+   *     new object.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationPredefinedAcl`,
+   *     `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
+   *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *     `Projection`, `SourceGeneration`, and `UserProject`.
+   *
+   * @throw std::runtime_error if the operation cannot be completed using the
+   *   current policies.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc copy object
+   *
+   * @snippet storage_object_samples.cc copy encrypted object
+   */
+  template <typename... Options>
+  ObjectMetadata CopyObject(std::string source_bucket_name,
+                            std::string source_object_name,
+                            std::string destination_bucket_name,
+                            std::string destination_object_name,
+                            ObjectMetadata const& metadata,
+                            Options&&... options) {
+    internal::CopyObjectRequest request(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CopyObject(request).second;
   }
 
   /**
@@ -383,8 +561,11 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
    *
-   * @par Example
+   * @par Examples
+   *
    * @snippet storage_object_samples.cc read object
+   *
+   * @snippet storage_object_samples.cc read encrypted object
    */
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,
@@ -404,6 +585,12 @@ class Client {
    *   Valid types for this operation include `IfGenerationMatch`,
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc write object
+   *
+   * @snippet storage_object_samples.cc write object with kms key
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
@@ -479,8 +666,8 @@ class Client {
    * @param updated the updated value for the object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
@@ -513,8 +700,8 @@ class Client {
    * @param builder the set of updates to perform in the Object metadata.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetaGenerationMatch`,
-   *     `IfMetaGenerationNotMatch`, `PredefinedAcl`,
+   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the metadata cannot be fetched using the
@@ -531,6 +718,194 @@ class Client {
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchObject(request).second;
+  }
+
+  /**
+   * Composes existing objects into a new object in the same bucket.
+   *
+   * @param bucket_name the name of the bucket used for source object and
+   *     destination object.
+   * @param source_objects objects used to compose `destination_object_name`.
+   * @param destination_object_name the composed object name.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: compose` API are used,
+   *     all other fields are ignored.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
+   *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
+   *      `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   *
+   * @snippet storage_object_samples.cc compose object
+   *
+   * @snippet storage_object_samples.cc compose object from encrypted objects
+   */
+  template <typename... Options>
+  ObjectMetadata ComposeObject(
+      std::string bucket_name,
+      std::vector<ComposeSourceObject> const& source_objects,
+      std::string destination_object_name,
+      ObjectMetadata destination_object_metadata, Options&&... options) {
+    internal::ComposeObjectRequest request(
+        std::move(bucket_name), source_objects,
+        std::move(destination_object_name),
+        std::move(destination_object_metadata));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->ComposeObject(request).second;
+  }
+
+  /**
+   * Creates an `ObjectRewriter` to copy the source object.
+   *
+   * Applications use this function to reliably copy objects across location
+   * boundaries, and to rewrite objects with different encryption keys. The
+   * operation returns a `ObjectRewriter`, which the application can use to
+   * initiate the copy and to iterate if the copy requires more than one call
+   * to complete.
+   *
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc rewrite object non blocking
+   */
+  template <typename... Options>
+  ObjectRewriter RewriteObject(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    return ResumeRewriteObject(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        std::string{}, destination_object_metadata,
+        std::forward<Options>(options)...);
+  }
+
+  /**
+   * Creates an `ObjectRewriter` to resume a previously created rewrite.
+   *
+   * Applications use this function to resume a rewrite operation, possibly
+   * created with `RewriteObject()`. Rewrite can reliably copy objects across
+   * location boundaries, and can rewrite objects with different encryption
+   * keys. For large objects this operation can take a long time, thus
+   * applications should consider checkpointing the rewrite token (accessible in
+   * the `ObjectRewriter`) and restarting the operation in the event the program
+   * is terminated.
+   *
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param rewrite_token the token from a previous successful rewrite
+   *     iteration. Can be the empty string, in which case this starts a new
+   *     rewrite operation.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc rewrite object resume
+   */
+  template <typename... Options>
+  ObjectRewriter ResumeRewriteObject(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      std::string rewrite_token,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    internal::RewriteObjectRequest request(
+        std::move(source_bucket_name), std::move(source_object_name),
+        std::move(destination_bucket_name), std::move(destination_object_name),
+        std::move(rewrite_token), destination_object_metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return ObjectRewriter(raw_client_, std::move(request));
+  }
+
+  /**
+   * Rewrites the object, blocking until the rewrite completes, and returns the
+   * resulting `ObjectMetadata`.
+   *
+   * Applications use this function to reliably copy objects across location
+   * boundaries and to rewrite objects with different encryption keys. The
+   * operation blocks until the rewrite completes, and returns the resulting
+   * `ObjectMetadata`.
+   *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take multiple hours. In such cases the application should consider
+   *     using `RewriteObject()` or `ResumeRewriteObject()`.
+   *
+   * @param source_bucket_name the name of the bucket containing the source
+   *     object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket_name where the destination object will be
+   *     located.
+   * @param destination_object_name what to name the destination object.
+   * @param destination_object_metadata the new metadata for the Object. Only
+   *     the writeable fields accepted by the `Objects: rewrite` API are used,
+   *     all other fields are ignored.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `SourceGeneration`, `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Examples
+   *
+   * @snippet storage_object_samples.cc rewrite object
+   *
+   * @snippet storage_object_samples.cc rotate encryption key
+   *
+   * @snippet storage_object_samples.cc rename object
+   *
+   */
+  template <typename... Options>
+  ObjectMetadata RewriteObjectBlocking(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+    return ResumeRewriteObject(
+               std::move(source_bucket_name), std::move(source_object_name),
+               std::move(destination_bucket_name),
+               std::move(destination_object_name), std::string{},
+               destination_object_metadata, std::forward<Options>(options)...)
+        .Result();
   }
 
   /**
@@ -560,6 +935,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
    */
   template <typename... Options>
@@ -580,6 +956,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
    */
   template <typename... Options>
@@ -947,6 +1324,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_default_object_acl_samples.cc create default object acl
    *
    * @see
@@ -973,6 +1351,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Example
    * @snippet storage_default_object_acl_samples.cc delete default object acl
    *
    * @see
@@ -1190,6 +1569,9 @@ class Client {
   /**
    * Retrieves the list of Notifications for a Bucket.
    *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service.
+   *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
@@ -1205,13 +1587,110 @@ class Client {
     return raw_client_->ListNotifications(request).second.items;
   }
 
+  /**
+   * Creates a new notification config for a Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param topic_name the Google Cloud Pub/Sub topic that will receive the
+   *     notifications. This requires the full name of the topic, i.e.:
+   *     `projects/<PROJECT_ID>/topics/<TOPIC_ID>`.
+   * @param payload_format how will the data be formatted in the notifications,
+   *     consider using the helpers in the `payload_format` namespace, or
+   *     specify one of the valid formats defined in:
+   *     https://cloud.google.com/storage/docs/json_api/v1/notifications
+   * @param metadata define any optional parameters for the notification, such
+   *     as the list of event types, or any custom attributes.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc create notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  NotificationMetadata CreateNotification(std::string const& bucket_name,
+                                          std::string const& topic_name,
+                                          std::string const& payload_format,
+                                          NotificationMetadata metadata,
+                                          Options&&... options) {
+    metadata.set_topic(topic_name).set_payload_format(payload_format);
+    internal::CreateNotificationRequest request(bucket_name, metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CreateNotification(request).second;
+  }
+
+  /**
+   * Gets the details about a notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function fetches the detailed information for a given notification config.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc get notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  NotificationMetadata GetNotification(std::string const& bucket_name,
+                                       std::string const& notification_id,
+                                       Options&&... options) {
+    internal::GetNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetNotification(request).second;
+  }
+
+  /**
+   * Delete an existing notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function deletes one of the notification configs.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc delete notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  void DeleteNotification(std::string const& bucket_name,
+                          std::string const& notification_id,
+                          Options&&... options) {
+    internal::DeleteNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->DeleteNotification(request);
+  }
+
  private:
-  BucketMetadata GetBucketMetadataImpl(
-      internal::GetBucketMetadataRequest const& request);
-
-  ObjectMetadata InsertObjectMediaImpl(
-      internal::InsertObjectMediaRequest const& request);
-
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(
       std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
@@ -1221,7 +1700,6 @@ class Client {
     return retry;
   }
 
- private:
   std::shared_ptr<internal::RawClient> raw_client_;
 };
 

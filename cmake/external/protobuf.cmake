@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(external/zlib)
-
 if (NOT TARGET protobuf_project)
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
@@ -29,7 +27,6 @@ if (NOT TARGET protobuf_project)
     include(ExternalProject)
     externalproject_add(
         protobuf_project
-        DEPENDS zlib_project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/protobuf"
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"

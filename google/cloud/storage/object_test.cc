@@ -97,6 +97,52 @@ TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
       "InsertObjectMedia");
 }
 
+TEST_F(ObjectTest, CopyObject) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = storage::ObjectMetadata::ParseFromString(text);
+
+  EXPECT_CALL(*mock, CopyObject(_))
+      .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.destination_bucket());
+        EXPECT_EQ("test-object-name", request.destination_object());
+        EXPECT_EQ("source-bucket-name", request.source_bucket());
+        EXPECT_EQ("source-object-name", request.source_object());
+        EXPECT_THAT(request.json_payload(), HasSubstr("text/plain"));
+        return std::make_pair(storage::Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  ObjectMetadata actual = client.CopyObject(
+      "source-bucket-name", "source-object-name", "test-bucket-name",
+      "test-object-name", ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectTest, CopyObjectTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectMetadata>(
+      mock, EXPECT_CALL(*mock, CopyObject(_)),
+      [](Client& client) {
+        client.CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name",
+                          ObjectMetadata());
+      },
+      "CopyObject");
+}
+
+TEST_F(ObjectTest, CopyObjectPermanentFailure) {
+  testing::PermanentFailureTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, CopyObject(_)),
+      [](Client& client) {
+        client.CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name",
+                          ObjectMetadata());
+      },
+      "CopyObject");
+}
+
 TEST_F(ObjectTest, GetObjectMetadata) {
   std::string text = R"""({
       "bucket": "test-bucket-name",
@@ -345,6 +391,193 @@ TEST_F(ObjectTest, PatchObjectPermanentFailure) {
             ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"));
       },
       "PatchObject");
+}
+
+TEST_F(ObjectTest, ComposeObject) {
+  std::string response = R"""({
+      "bucket": "test-bucket-name",
+      "contentDisposition": "new-disposition",
+      "contentLanguage": "new-language",
+      "contentType": "application/octet-stream",
+      "crc32c": "d1e2f3",
+      "etag": "XYZ=",
+      "generation": "12345",
+      "id": "test-bucket-name/test-object-name/1",
+      "kind": "storage#object",
+      "md5Hash": "xa1b2c3==",
+      "mediaLink": "https://www.googleapis.com/download/storage/v1/b/test-bucket-name/o/test-object-name?generation=12345&alt=media",
+      "metageneration": "1",
+      "name": "test-object-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name/o/test-object-name",
+      "size": 1024,
+      "storageClass": "STANDARD",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "timeDeleted": "2018-05-19T19:32:24Z",
+      "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "componentCount": 2
+})""";
+  auto expected = ObjectMetadata::ParseFromString(response);
+
+  EXPECT_CALL(*mock, ComposeObject(_))
+      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Invoke([&expected](internal::ComposeObjectRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        EXPECT_EQ("test-object-name", r.object_name());
+        internal::nl::json actual_payload =
+            internal::nl::json::parse(r.json_payload());
+        internal::nl::json expected_payload = {
+            {"kind", "storage#composeRequest"},
+            {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
+        EXPECT_EQ(expected_payload, actual_payload);
+        return std::make_pair(Status(), expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual =
+      client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                           "test-object-name", ObjectMetadata());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(ObjectTest, ComposeObjectTooManyFailures) {
+  testing::TooManyFailuresTest<ObjectMetadata>(
+      mock, EXPECT_CALL(*mock, ComposeObject(_)),
+      [](Client& client) {
+        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                             "test-object-name", ObjectMetadata());
+      },
+      "ComposeObject");
+}
+
+TEST_F(ObjectTest, ComposeObjectPermanentFailure) {
+  testing::PermanentFailureTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, ComposeObject(_)),
+      [](Client& client) {
+        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                             "test-object-name", ObjectMetadata());
+      },
+      "ComposeObject");
+}
+
+TEST_F(ObjectTest, RewriteObject) {
+  EXPECT_CALL(*mock, RewriteObject(_))
+      .WillOnce(Return(
+          std::make_pair(TransientError(), internal::RewriteObjectResponse{})))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 1048576,
+            "objectSize": 10485760,
+            "done": false,
+            "rewriteToken": "abcd-test-token-0"
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("abcd-test-token-0", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 2097152,
+            "objectSize": 10485760,
+            "done": false,
+            "rewriteToken": "abcd-test-token-2"
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }))
+      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+        EXPECT_EQ("test-source-bucket-name", r.source_bucket());
+        EXPECT_EQ("test-source-object-name", r.source_object());
+        EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
+        EXPECT_EQ("test-destination-object-name", r.destination_object());
+        EXPECT_EQ("abcd-test-token-2", r.rewrite_token());
+
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
+        std::string response = R"""({
+            "kind": "storage#rewriteResponse",
+            "totalBytesRewritten": 10485760,
+            "objectSize": 10485760,
+            "done": true,
+            "rewriteToken": "",
+            "resource": {
+               "bucket": "test-destination-bucket-name",
+               "name": "test-destination-object-name"
+            }
+        })""";
+        return std::make_pair(Status(),
+                              internal::RewriteObjectResponse::FromHttpResponse(
+                                  internal::HttpResponse{200, response, {}}));
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto copier = client.RewriteObject(
+      "test-source-bucket-name", "test-source-object-name",
+      "test-destination-bucket-name", "test-destination-object-name",
+      ObjectMetadata().upsert_metadata("test-key", "test-value"));
+  auto actual = copier.Iterate();
+  EXPECT_FALSE(actual.done);
+  EXPECT_EQ(1048576UL, actual.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual.object_size);
+
+  auto current = copier.CurrentProgress();
+  EXPECT_FALSE(current.done);
+  EXPECT_EQ(1048576UL, current.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, current.object_size);
+
+  actual = copier.Iterate();
+  EXPECT_FALSE(actual.done);
+  EXPECT_EQ(2097152UL, actual.total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual.object_size);
+
+  auto metadata = copier.Result();
+  EXPECT_EQ("test-destination-bucket-name", metadata.bucket());
+  EXPECT_EQ("test-destination-object-name", metadata.name());
+}
+
+TEST_F(ObjectTest, RewriteObjectTooManyFailures) {
+  testing::TooManyFailuresTest<internal::RewriteObjectResponse>(
+      mock, EXPECT_CALL(*mock, RewriteObject(_)),
+      [](Client& client) {
+        auto rewrite = client.RewriteObject(
+            "test-source-bucket-name", "test-source-object",
+            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
+        rewrite.Result();
+      },
+      "RewriteObject");
+}
+
+TEST_F(ObjectTest, RewriteObjectPermanentFailure) {
+  testing::PermanentFailureTest<internal::RewriteObjectResponse>(
+      *client, EXPECT_CALL(*mock, RewriteObject(_)),
+      [](Client& client) {
+        auto rewrite = client.RewriteObject(
+            "test-source-bucket-name", "test-source-object",
+            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
+        rewrite.Result();
+      },
+      "RewriteObject");
 }
 
 }  // namespace

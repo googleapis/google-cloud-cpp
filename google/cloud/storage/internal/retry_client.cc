@@ -159,12 +159,45 @@ std::pair<Status, BucketMetadata> RetryClient::PatchBucket(
                   &RawClient::PatchBucket, request, __func__);
 }
 
+std::pair<Status, IamPolicy> RetryClient::GetBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::GetBucketIamPolicy, request, __func__);
+}
+
+std::pair<Status, IamPolicy> RetryClient::SetBucketIamPolicy(
+    SetBucketIamPolicyRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::SetBucketIamPolicy, request, __func__);
+}
+
+std::pair<Status, TestBucketIamPermissionsResponse>
+RetryClient::TestBucketIamPermissions(
+    TestBucketIamPermissionsRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::TestBucketIamPermissions, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
                   &RawClient::InsertObjectMedia, request, __func__);
+}
+
+std::pair<Status, ObjectMetadata> RetryClient::CopyObject(
+    CopyObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::CopyObject, request, __func__);
 }
 
 std::pair<Status, ObjectMetadata> RetryClient::GetObjectMetadata(
@@ -222,6 +255,22 @@ std::pair<Status, ObjectMetadata> RetryClient::PatchObject(
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
                   &RawClient::PatchObject, request, __func__);
+}
+
+std::pair<Status, ObjectMetadata> RetryClient::ComposeObject(
+    ComposeObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::ComposeObject, request, __func__);
+}
+
+std::pair<Status, RewriteObjectResponse> RetryClient::RewriteObject(
+    RewriteObjectRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::RewriteObject, request, __func__);
 }
 
 std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(
@@ -382,6 +431,30 @@ std::pair<Status, ListNotificationsResponse> RetryClient::ListNotifications(
   auto backoff_policy = backoff_policy_->clone();
   return MakeCall(*retry_policy, *backoff_policy, *client_,
                   &RawClient::ListNotifications, request, __func__);
+}
+
+std::pair<Status, NotificationMetadata> RetryClient::CreateNotification(
+    CreateNotificationRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::CreateNotification, request, __func__);
+}
+
+std::pair<Status, NotificationMetadata> RetryClient::GetNotification(
+    GetNotificationRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::GetNotification, request, __func__);
+}
+
+std::pair<Status, EmptyResponse> RetryClient::DeleteNotification(
+    DeleteNotificationRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, *client_,
+                  &RawClient::DeleteNotification, request, __func__);
 }
 
 }  // namespace internal

@@ -34,8 +34,8 @@ source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 ################################################
 run_all_bucket_examples() {
   local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
 
-  EMULATOR_LOG="testbench.log"
   run_example ./storage_bucket_samples list-buckets-for-project \
       "${PROJECT_ID}"
   run_example ./storage_bucket_samples create-bucket-for-project \
@@ -48,6 +48,14 @@ run_all_bucket_examples() {
       "${bucket_name}" "STANDARD"
   run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
       "${bucket_name}" "COLDLINE"
+  run_example ./storage_bucket_samples add-bucket-label \
+      "${bucket_name}" "test-label" "test-label-value"
+  run_example ./storage_bucket_samples get-bucket-labels \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples remove-bucket-label \
+      "${bucket_name}" "test-label"
+  run_example ./storage_bucket_samples get-bucket-labels \
+      "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   run_example ./storage_bucket_samples get-service-account-for-project \
       "${PROJECT_ID}"
@@ -65,6 +73,40 @@ run_all_bucket_examples() {
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_bucket_samples
+}
+
+################################################
+# Run all examples using a Requester Pays bucket.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+run_all_requester_pays_examples() {
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_bucket_samples get-billing \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples enable-requester-pays \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples write-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples read-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples disable-requester-pays \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
 ################################################
@@ -150,6 +192,8 @@ run_all_object_examples() {
   shift
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
+  local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -167,10 +211,22 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}" "application/text"
   run_example ./storage_object_samples patch-object-delete-metadata \
       "${bucket_name}" "${object_name}" "test-label"
+  run_example ./storage_object_samples compose-object \
+      "${bucket_name}" "${composed_object_name}" "${object_name}" \
+      "${object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${composed_object_name}"
+  run_example ./storage_object_samples copy-object \
+      "${bucket_name}" "${object_name}" \
+      "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
-  local encrypted_object_name="object-$(date +%s)-${RANDOM}.txt"
+  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_composed_object_name="composed-enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_copied_object_name="copied-enc-obj-$(date +%s)-${RANDOM}.txt"
 
   local key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
@@ -178,12 +234,213 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_object_name}" "${key}"
   run_example ./storage_object_samples read-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples compose-object-from-encrypted-objects \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}" \
+      "${encrypted_object_name}" "${encrypted_object_name}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_composed_object_name}" "${key}"
+  run_example ./storage_object_samples copy-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples read-encrypted-object \
+      "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_copied_object_name}"
+
+  local newkey="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples rotate-encryption-key \
+      "${bucket_name}" "${encrypted_object_name}" "${key}" "${newkey}"
+
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
+}
 
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_object_samples
+################################################
+# Run the example showing how to rewrite one object.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_rewrite_object_example() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  local source_object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples rewrite-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the example showing how to rename one object.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created and then renamed.
+# Returns:
+#   None
+################################################
+run_rename_object_example() {
+  local source_bucket_name=$1
+  shift
+
+  local source_object_name="rename-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rename-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media-in-rename-example"
+  run_example ./storage_object_samples rename-object \
+      "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+}
+
+################################################
+# Run the example showing how to resume a partially completed rewrite.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_resume_rewrite_example() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  local source_object_name="rewrite-resume-source-object-$(date +%s)-${RANDOM}.txt"
+  local target_object_name="rewrite-resume-target-object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples write-large-object \
+      "${source_bucket_name}" "${source_object_name}" "16"
+  local msg=$(./storage_object_samples rewrite-object-token \
+      "${source_bucket_name}" "${source_object_name}" \
+      "${target_bucket_name}" "${target_object_name}")
+
+  if echo "${msg}" | grep -q "Rewrite in progress"; then
+    local token=$(echo ${msg} | awk '{print $5}')
+    run_example ./storage_object_samples rewrite-object-resume \
+        "${source_bucket_name}" "${source_object_name}" \
+        "${target_bucket_name}" "${target_object_name}" "${token}"
+  else
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " rewrite-object-resume the rewrite completed in one step."
+  fi
+  run_example ./storage_object_samples delete-object \
+      "${target_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${source_object_name}"
+}
+
+################################################
+# Run the examples showing how to rewrite objects.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   source_bucket_name: an existing bucket where the source object will be
+#     created.
+#   target_bucket_name: an existing bucket where the target object will be
+#     created.
+# Returns:
+#   None
+################################################
+run_all_object_rewrite_examples() {
+  local source_bucket_name=$1
+  local target_bucket_name=$2
+  shift 2
+
+  run_rewrite_object_example "${source_bucket_name}" "${target_bucket_name}"
+  run_rename_object_example "${source_bucket_name}"
+  run_resume_rewrite_example "${source_bucket_name}" "${target_bucket_name}"
+}
+
+################################################
+# Run the example showing how to make objects public.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_public_object_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples make-object-public \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples read-object-unauthenticated \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
+# Run all Customer-managed Encryption Keys examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   cmek: the name of the Customer-managed Encryption Key used in the tests.
+# Returns:
+#   None
+################################################
+run_all_cmek_examples() {
+  local cmek=$1
+
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_object_samples write-object-with-kms-key \
+      "${bucket_name}" "${object_name}" "${cmek}"
+  run_example ./storage_object_samples read-object \
+      "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+
+  run_example ./storage_bucket_samples get-bucket-default-kms-key \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples add-bucket-default-kms-key \
+      "${bucket_name}" "${cmek}"
+  run_example ./storage_bucket_samples get-bucket-default-kms-key \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples remove-bucket-default-kms-key \
+      "${bucket_name}"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 }
 
 ################################################
@@ -235,20 +492,86 @@ run_all_object_acl_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   topic_name: the topic used to create notifications.
 # Returns:
 #   None
 ################################################
 run_all_notification_examples() {
-  local bucket_name=$1
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local topic_name=$1
   shift
 
+  # Create a new bucket for each run so the list of notifications is initially
+  # empty
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+
+  run_example ./storage_notification_samples create-notification \
+      "${bucket_name}" "${topic_name}"
   run_example ./storage_notification_samples list-notifications \
+      "${bucket_name}"
+  # The notifications ids are assigned by the server, so we need to discover it
+  # here. Parse the output from the list-notifications command to extract what
+  # we need.
+  local id="$(./storage_notification_samples list-notifications \
+      "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
+  run_example ./storage_notification_samples get-notification \
+      "${bucket_name}" "${id}"
+  run_example ./storage_notification_samples delete-notification \
+      "${bucket_name}" "${id}"
+
+  run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_notification_samples
+}
+
+################################################
+# Run all Bucket IAM examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_bucket_iam_examples() {
+  local bucket_name=$1
+  shift
+
+  run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
+      "${bucket_name}"
+  run_example ./storage_bucket_iam_samples add-bucket-iam-member \
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples remove-bucket-iam-member \
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
+      "${bucket_name}" "storage.objects.list" "storage.objects.delete"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_bucket_iam_samples
+}
+
+################################################
+# Run the quickstart.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+run_quickstart() {
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+
+  ./storage_quickstart "${bucket_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
 ################################################
@@ -265,12 +588,19 @@ run_all_notification_examples() {
 run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
+  EMULATOR_LOG="testbench.log"
+  run_quickstart
   run_all_bucket_examples
   run_all_bucket_acl_examples "${BUCKET_NAME}"
   run_all_default_object_acl_examples "${BUCKET_NAME}"
+  run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
+  run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
+  run_all_public_object_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_notification_examples "${BUCKET_NAME}"
+  run_all_notification_examples "${TOPIC_NAME}"
+  run_all_cmek_examples "${STORAGE_CMEK_KEY}"
+  run_all_bucket_iam_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then

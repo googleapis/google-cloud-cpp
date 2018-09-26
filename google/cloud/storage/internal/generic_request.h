@@ -66,6 +66,12 @@ class GenericRequestBase<Derived, Option> {
     return false;
   }
 
+  template <typename O, typename std::enable_if<std::is_same<O, Option>::value,
+                                                int>::type = 0>
+  O GetOption() const {
+    return option_;
+  }
+
  private:
   Option option_;
 };
@@ -107,6 +113,18 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
       return option_.has_value();
     }
     return GenericRequestBase<Derived, Options...>::template HasOption<O>();
+  }
+
+  template <typename O, typename std::enable_if<std::is_same<O, Option>::value,
+                                                int>::type = 0>
+  O GetOption() const {
+    return option_;
+  }
+
+  template <typename O, typename std::enable_if<
+                            not std::is_same<O, Option>::value, int>::type = 0>
+  O GetOption() const {
+    return GenericRequestBase<Derived, Options...>::template GetOption<O>();
   }
 
  private:
@@ -175,6 +193,11 @@ class GenericRequest
   template <typename Option>
   bool HasOption() const {
     return Super::template HasOption<Option>();
+  }
+
+  template <typename Option>
+  Option GetOption() const {
+    return Super::template GetOption<Option>();
   }
 };
 

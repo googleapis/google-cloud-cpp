@@ -60,7 +60,7 @@ class ServiceAccountCredentials : public storage::Credentials {
       : ServiceAccountCredentials(content, GoogleOAuthRefreshEndpoint()) {}
 
   explicit ServiceAccountCredentials(std::string const& content,
-                                     std::string oauth_server)
+                                     std::string default_token_uri)
       : expiration_time_(), clock_() {
     nl::json credentials = nl::json::parse(content);
     // Below, we construct a JWT refresh request used to obtain an access token.
@@ -73,19 +73,12 @@ class ServiceAccountCredentials : public storage::Credentials {
         {"kid", credentials["private_key_id"].get_ref<std::string const&>()},
         {"typ", "JWT"}};
 
-    // TODO(#770): Remove all scopes except "cloud-platform".
-    std::string scope = std::string(GoogleOAuthScopeCloudPlatform()) + " " +
-                        GoogleOAuthScopeCloudPlatformReadOnly() + " " +
-                        GoogleOAuthScopeDevstorageFullControl() + " " +
-                        GoogleOAuthScopeDevstorageReadOnly() + " " +
-                        GoogleOAuthScopeDevstorageReadWrite();
+    std::string scope = GoogleOAuthScopeCloudPlatform();
     // Some credential formats (e.g. gcloud's ADC file) don't contain a
     // "token_uri" attribute in the JSON object.  In this case, we try using the
-    // default value. See the comments around GoogleOAuthRefreshEndpoint about
-    // potential drawbacks to this approach.
+    // default value.
     char const TOKEN_URI_KEY[] = "token_uri";
-    std::string token_uri =
-        credentials.value(TOKEN_URI_KEY, GoogleOAuthRefreshEndpoint());
+    std::string token_uri = credentials.value(TOKEN_URI_KEY, default_token_uri);
     long int cur_time = static_cast<long int>(
         std::chrono::system_clock::to_time_t(clock_.now()));
     long int expiration_time =
@@ -99,8 +92,7 @@ class ServiceAccountCredentials : public storage::Credentials {
         {"exp", expiration_time}};
 
     HttpRequestBuilderType request_builder(
-        std::move(oauth_server),
-        storage::internal::GetDefaultCurlHandleFactory());
+        std::move(token_uri), storage::internal::GetDefaultCurlHandleFactory());
     std::string svc_acct_private_key_pem =
         credentials["private_key"].get_ref<std::string const&>();
     // This is the value of grant_type for JSON-formatted service account
@@ -113,10 +105,11 @@ class ServiceAccountCredentials : public storage::Credentials {
     payload += "&assertion=";
     payload += MakeJWTAssertion(assertion_header, assertion_payload,
                                 svc_acct_private_key_pem);
+    payload_ = std::move(payload);
 
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
-    request_ = request_builder.BuildRequest(std::move(payload));
+    request_ = request_builder.BuildRequest();
   }
 
   std::string AuthorizationHeader() override {
@@ -145,7 +138,7 @@ class ServiceAccountCredentials : public storage::Credentials {
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
-    auto response = request_.MakeRequest();
+    auto response = request_.MakeRequest(payload_);
     if (200 != response.status_code) {
       return false;
     }
@@ -167,6 +160,7 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
   typename HttpRequestBuilderType::RequestType request_;
+  std::string payload_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

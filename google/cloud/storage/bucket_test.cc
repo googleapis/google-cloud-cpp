@@ -25,6 +25,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::_;
+using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
@@ -286,6 +288,116 @@ TEST_F(BucketTest, PatchBucketPermanentFailure) {
         client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
       },
       "PatchBucket");
+}
+
+TEST_F(BucketTest, GetBucketIamPolicy) {
+  IamBindings bindings;
+  bindings.AddMember("roles/storage.admin", "test-user");
+  IamPolicy expected{0, bindings, "XYZ="};
+
+  EXPECT_CALL(*mock, GetBucketIamPolicy(_))
+      .WillOnce(Return(std::make_pair(TransientError(), IamPolicy{})))
+      .WillOnce(
+          Invoke([&expected](internal::GetBucketIamPolicyRequest const& r) {
+            EXPECT_EQ("test-bucket-name", r.bucket_name());
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.GetBucketIamPolicy("test-bucket-name");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
+  testing::TooManyFailuresTest<IamPolicy>(
+      mock, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
+      [](Client& client) { client.GetBucketIamPolicy("test-bucket-name"); },
+      "GetBucketIamPolicy");
+}
+
+TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
+  testing::PermanentFailureTest<IamPolicy>(
+      *client, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
+      [](Client& client) { client.GetBucketIamPolicy("test-bucket-name"); },
+      "GetBucketIamPolicy");
+}
+
+TEST_F(BucketTest, SetBucketIamPolicy) {
+  IamBindings bindings;
+  bindings.AddMember("roles/storage.admin", "test-user");
+  IamPolicy expected{0, bindings, "XYZ="};
+
+  EXPECT_CALL(*mock, SetBucketIamPolicy(_))
+      .WillOnce(Return(std::make_pair(TransientError(), IamPolicy{})))
+      .WillOnce(
+          Invoke([&expected](internal::SetBucketIamPolicyRequest const& r) {
+            EXPECT_EQ("test-bucket-name", r.bucket_name());
+            EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
+  testing::TooManyFailuresTest<IamPolicy>(
+      mock, EXPECT_CALL(*mock, SetBucketIamPolicy(_)),
+      [](Client& client) {
+        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{});
+      },
+      "SetBucketIamPolicy");
+}
+
+TEST_F(BucketTest, SetBucketIamPolicyPermanentFailure) {
+  testing::PermanentFailureTest<IamPolicy>(
+      *client, EXPECT_CALL(*mock, SetBucketIamPolicy(_)),
+      [](Client& client) {
+        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{});
+      },
+      "SetBucketIamPolicy");
+}
+
+TEST_F(BucketTest, TestBucketIamPermissions) {
+  internal::TestBucketIamPermissionsResponse expected;
+  expected.permissions.emplace_back("storage.buckets.delete");
+
+  EXPECT_CALL(*mock, TestBucketIamPermissions(_))
+      .WillOnce(Return(std::make_pair(
+          TransientError(), internal::TestBucketIamPermissionsResponse{})))
+      .WillOnce(Invoke(
+          [&expected](internal::TestBucketIamPermissionsRequest const& r) {
+            EXPECT_EQ("test-bucket-name", r.bucket_name());
+            EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
+            return std::make_pair(Status(), expected);
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto actual = client.TestBucketIamPermissions("test-bucket-name",
+                                                {"storage.buckets.delete"});
+  EXPECT_THAT(actual, ElementsAreArray(expected.permissions));
+}
+
+TEST_F(BucketTest, TestBucketIamPermissionsTooManyFailures) {
+  testing::TooManyFailuresTest<internal::TestBucketIamPermissionsResponse>(
+      mock, EXPECT_CALL(*mock, TestBucketIamPermissions(_)),
+      [](Client& client) {
+        client.TestBucketIamPermissions("test-bucket-name", {});
+      },
+      "TestBucketIamPermissions");
+}
+
+TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
+  testing::PermanentFailureTest<internal::TestBucketIamPermissionsResponse>(
+      *client, EXPECT_CALL(*mock, TestBucketIamPermissions(_)),
+      [](Client& client) {
+        client.TestBucketIamPermissions("test-bucket-name", {});
+      },
+      "TestBucketIamPermissions");
 }
 
 }  // namespace

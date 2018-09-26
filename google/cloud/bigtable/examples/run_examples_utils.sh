@@ -167,18 +167,16 @@ function run_all_table_admin_examples {
   local -r TABLE="sample-table-for-admin"
 
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples list-tables "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples get-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples check-consistency "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples scan "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./bigtable_samples delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets list-tables "${project_id}" "${INSTANCE}"
+  run_example ./table_admin_snippets get-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./data_admin_snippets bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./data_admin_snippets read-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -219,26 +217,26 @@ run_all_data_examples() {
 
   # Use the same table in all the tests.
   local -r TABLE="data-examples-tbl-${RANDOM}"
-  run_example ./bigtable_samples create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples scan "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples sample-rows "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
 }
 
 ################################################
@@ -280,7 +278,7 @@ run_quickstart_example() {
   run_example ${CBT_CMD} -project "${project_id}" -instance "${instance_id}" \
       set "${TABLE}" "r1" "cf1:greeting=Hello"
   run_example ./bigtable_quickstart "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_samples delete-table \
+  run_example ./table_admin_snippets delete-table \
       "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
@@ -352,11 +350,11 @@ run_hello_app_profile_example() {
   local -r TABLE="hello-app-profile-tbl-${RANDOM}"
   local -r PROFILE_ID="profile-${RANDOM}"
 
-  run_example ./bigtable_samples create-table \
+  run_example ./table_admin_snippets create-table \
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./bigtable_hello_app_profile \
       "${project_id}" "${instance_id}" "${TABLE}" "${PROFILE_ID}"
-  run_example ./bigtable_samples delete-table \
+  run_example ./table_admin_snippets delete-table \
       "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and

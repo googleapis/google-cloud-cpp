@@ -1,4 +1,4 @@
-# Copyright 201\8 Google LLC
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,5 +15,16 @@
 include(CMakeFindDependencyMacro)
 find_dependency(CURL)
 find_dependency(google_cloud_cpp_common 0.1.0)
+
+# Some versions of FindCURL do not define CURL::CURL, so we define it ourselves.
+if (NOT TARGET CURL::CURL)
+    add_library(CURL::CURL UNKNOWN IMPORTED)
+    set_property(TARGET CURL::CURL
+                 APPEND
+                 PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
+    set_property(TARGET CURL::CURL
+                 APPEND
+                 PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
+endif ()
 
 include("${CMAKE_CURRENT_LIST_DIR}/storage-targets.cmake")

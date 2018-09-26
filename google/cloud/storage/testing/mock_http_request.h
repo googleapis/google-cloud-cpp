@@ -36,10 +36,13 @@ class MockHttpRequest {
  public:
   MockHttpRequest() : mock(std::make_shared<Impl>()) {}
 
-  internal::HttpResponse MakeRequest() { return mock->MakeRequest(); }
+  internal::HttpResponse MakeRequest(std::string const& s) {
+    return mock->MakeRequest(s);
+  }
 
   struct Impl {
-    MOCK_METHOD0(MakeRequest, storage::internal::HttpResponse());
+    MOCK_METHOD1(MakeRequest,
+                 storage::internal::HttpResponse(std::string const&));
   };
 
   std::shared_ptr<Impl> mock;
@@ -66,30 +69,30 @@ class MockHttpRequestBuilder {
   using RequestType = MockHttpRequest;
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::string> const& p) {
+  void AddWellKnownParameter(
+      internal::WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
       mock->AddQueryParameter(p.parameter_name(), p.value());
     }
   }
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, std::int64_t> const& p) {
+  void AddWellKnownParameter(
+      internal::WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
       mock->AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
     }
   }
 
   template <typename P>
-  void AddWellKnownParameter(WellKnownParameter<P, bool> const& p) {
+  void AddWellKnownParameter(internal::WellKnownParameter<P, bool> const& p) {
     if (not p.has_value()) {
       return;
     }
     mock->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
   }
 
-  MockHttpRequest BuildRequest(std::string payload) {
-    return mock->BuildRequest(std::move(payload));
-  }
+  MockHttpRequest BuildRequest() { return mock->BuildRequest(); }
 
   void AddUserAgentPrefix(std::string const& prefix) {
     mock->AddUserAgentPrefix(prefix);
@@ -113,7 +116,7 @@ class MockHttpRequestBuilder {
 
   struct Impl {
     MOCK_METHOD1(Constructor, void(std::string));
-    MOCK_METHOD1(BuildRequest, MockHttpRequest(std::string));
+    MOCK_METHOD0(BuildRequest, MockHttpRequest());
     MOCK_METHOD1(AddUserAgentPrefix, void(std::string const&));
     MOCK_METHOD1(AddHeader, void(std::string const&));
     MOCK_METHOD2(AddQueryParameter,

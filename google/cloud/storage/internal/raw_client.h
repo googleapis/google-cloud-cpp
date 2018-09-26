@@ -59,12 +59,20 @@ class RawClient {
       UpdateBucketRequest const&) = 0;
   virtual std::pair<Status, BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) = 0;
+  virtual std::pair<Status, IamPolicy> GetBucketIamPolicy(
+      GetBucketIamPolicyRequest const& request) = 0;
+  virtual std::pair<Status, IamPolicy> SetBucketIamPolicy(
+      SetBucketIamPolicyRequest const& request) = 0;
+  virtual std::pair<Status, TestBucketIamPermissionsResponse>
+  TestBucketIamPermissions(TestBucketIamPermissionsRequest const& request) = 0;
   //@}
 
   //@{
   /// @name Object resource operations
   virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> CopyObject(
+      CopyObjectRequest const&) = 0;
   virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
   virtual std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
@@ -79,6 +87,10 @@ class RawClient {
       UpdateObjectRequest const&) = 0;
   virtual std::pair<Status, ObjectMetadata> PatchObject(
       PatchObjectRequest const&) = 0;
+  virtual std::pair<Status, ObjectMetadata> ComposeObject(
+      ComposeObjectRequest const&) = 0;
+  virtual std::pair<Status, RewriteObjectResponse> RewriteObject(
+      RewriteObjectRequest const&) = 0;
   //@}
 
   //@{
@@ -137,6 +149,12 @@ class RawClient {
   //@{
   virtual std::pair<Status, ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) = 0;
+  virtual std::pair<Status, NotificationMetadata> CreateNotification(
+      CreateNotificationRequest const&) = 0;
+  virtual std::pair<Status, NotificationMetadata> GetNotification(
+      GetNotificationRequest const&) = 0;
+  virtual std::pair<Status, EmptyResponse> DeleteNotification(
+      DeleteNotificationRequest const&) = 0;
   //@}
 };
 

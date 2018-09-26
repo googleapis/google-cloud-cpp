@@ -72,7 +72,8 @@ class AuthorizedUserCredentials : public storage::Credentials {
     payload += "&refresh_token=";
     payload +=
         request_builder.MakeEscapedString(credentials["refresh_token"]).get();
-    request_ = request_builder.BuildRequest(std::move(payload));
+    payload_ = std::move(payload);
+    request_ = request_builder.BuildRequest();
   }
 
   std::string AuthorizationHeader() override {
@@ -88,7 +89,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
-    auto response = request_.MakeRequest();
+    auto response = request_.MakeRequest(payload_);
     if (200 != response.status_code) {
       return false;
     }
@@ -108,6 +109,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
   }
 
   typename HttpRequestBuilderType::RequestType request_;
+  std::string payload_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

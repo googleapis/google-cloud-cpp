@@ -44,7 +44,12 @@ class PatchBuilder {
   PatchBuilder() = default;
 
   /// Return the patch as a string.
-  std::string ToString() const { return patch_.dump(); }
+  std::string ToString() const {
+    if (empty()) {
+      return "{}";
+    }
+    return patch_.dump();
+  }
 
   bool empty() const { return patch_.empty(); }
   void clear() { patch_.clear(); }

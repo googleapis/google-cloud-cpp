@@ -49,9 +49,6 @@ class NotificationMetadata {
 
   //@{
   /// @name Accessors and modifiers to the custom attributes.
-  std::size_t custom_attributes_size() const {
-    return custom_attributes_.size();
-  }
   bool has_custom_attribute(std::string const& key) const {
     return custom_attributes_.end() != custom_attributes_.find(key);
   }

@@ -126,6 +126,45 @@ std::ostream& operator<<(std::ostream& os,
                          InsertObjectStreamingRequest const& r);
 
 /**
+ * Represents a request to the `Objects: copy` API.
+ */
+class CopyObjectRequest
+    : public GenericRequest<
+          CopyObjectRequest, DestinationPredefinedAcl, EncryptionKey,
+          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+          IfMetagenerationNotMatch, IfSourceGenerationMatch,
+          IfSourceGenerationNotMatch, IfSourceMetagenerationMatch,
+          IfSourceMetagenerationNotMatch, Projection, SourceGeneration,
+          UserProject> {
+ public:
+  CopyObjectRequest() = default;
+  CopyObjectRequest(std::string source_bucket, std::string source_object,
+                    std::string destination_bucket,
+                    std::string destination_object,
+                    ObjectMetadata const& metadata)
+      : source_bucket_(std::move(source_bucket)),
+        source_object_(std::move(source_object)),
+        destination_bucket_(std::move(destination_bucket)),
+        destination_object_(std::move(destination_object)),
+        json_payload_(metadata.JsonPayloadForCopy()) {}
+
+  std::string const& source_bucket() const { return source_bucket_; }
+  std::string const& source_object() const { return source_object_; }
+  std::string const& destination_bucket() const { return destination_bucket_; }
+  std::string const& destination_object() const { return destination_object_; }
+  std::string const& json_payload() const { return json_payload_; }
+
+ private:
+  std::string source_bucket_;
+  std::string source_object_;
+  std::string destination_bucket_;
+  std::string destination_object_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
+
+/**
  * Represents a request to the `Objects: get` API with `alt=media`.
  */
 class ReadObjectRangeRequest
@@ -213,6 +252,36 @@ class UpdateObjectRequest
 std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
 
 /**
+ * Represents a request to the `Objects: compose` API.
+ */
+class ComposeObjectRequest
+    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
+                                  Generation, DestinationPredefinedAcl,
+                                  KmsKeyName, IfGenerationMatch,
+                                  IfMetagenerationMatch, UserProject> {
+ public:
+  ComposeObjectRequest() = default;
+  explicit ComposeObjectRequest(
+      std::string bucket_name,
+      std::vector<ComposeSourceObject> const& source_objects,
+      std::string destination_object_name,
+      ObjectMetadata destination_object_metadata);
+
+  /// Returns the request as the JSON API payload.
+  std::string json_payload() const { return json_payload_; }
+
+  ObjectMetadata const& destination_metadata() const {
+    return destination_metadata_;
+  }
+
+ private:
+  ObjectMetadata destination_metadata_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r);
+
+/**
  * Represents a request to the `Buckets: patch` API.
  */
 class PatchObjectRequest
@@ -234,6 +303,65 @@ class PatchObjectRequest
 };
 
 std::ostream& operator<<(std::ostream& os, PatchObjectRequest const& r);
+
+/**
+ * Represents a request to the `Objects: rewrite` API.
+ */
+class RewriteObjectRequest
+    : public GenericRequest<
+          RewriteObjectRequest, DestinationKmsKeyName, DestinationPredefinedAcl,
+          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch,
+          IfSourceGenerationMatch, IfSourceGenerationNotMatch,
+          IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
+          MaxBytesRewrittenPerCall, Projection, SourceEncryptionKey,
+          SourceGeneration, UserProject> {
+ public:
+  RewriteObjectRequest() = default;
+  RewriteObjectRequest(std::string source_bucket, std::string source_object,
+                       std::string destination_bucket,
+                       std::string destination_object,
+                       std::string rewrite_token,
+                       ObjectMetadata const& metadata)
+      : source_bucket_(std::move(source_bucket)),
+        source_object_(std::move(source_object)),
+        destination_bucket_(std::move(destination_bucket)),
+        destination_object_(std::move(destination_object)),
+        rewrite_token_(std::move(rewrite_token)),
+        json_payload_(metadata.JsonPayloadForCopy()) {}
+
+  std::string const& source_bucket() const { return source_bucket_; }
+  std::string const& source_object() const { return source_object_; }
+  std::string const& destination_bucket() const { return destination_bucket_; }
+  std::string const& destination_object() const { return destination_object_; }
+  std::string const& rewrite_token() const { return rewrite_token_; }
+  void set_rewrite_token(std::string v) { rewrite_token_ = std::move(v); }
+  std::string const& json_payload() const { return json_payload_; }
+
+ private:
+  std::string source_bucket_;
+  std::string source_object_;
+  std::string destination_bucket_;
+  std::string destination_object_;
+  std::string rewrite_token_;
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);
+
+/// Holds an `Objects: rewrite` response.
+struct RewriteObjectResponse {
+  static RewriteObjectResponse FromHttpResponse(HttpResponse const& response);
+
+  std::uint64_t total_bytes_rewritten;
+  std::uint64_t object_size;
+  bool done;
+  std::string rewrite_token;
+  ObjectMetadata resource;
+};
+
+std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

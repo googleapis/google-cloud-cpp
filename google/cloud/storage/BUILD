@@ -30,7 +30,7 @@ sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/0/' \
 genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
-    outs = ["nlohmann/json.hpp"],
+    outs = ["google/cloud/storage/internal/nlohmann_json.hpp"],
     cmd = "cp $< $@ && echo GENDIR=$(GENDIR) @=$(@) S=$<",
 )
 

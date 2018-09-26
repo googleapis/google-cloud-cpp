@@ -1,0 +1,196 @@
+/*!
+
+@mainpage Google Cloud Storage C++ Client Library
+
+The Google Cloud Storage (GCS) C++ Client library offers types and functions
+access GCS from C++11 applications. It offers full access to the GCS API,
+including operations to list, read, write, and delete
+[GCS objects][objects-definition-link] and [buckets][bucket-definition-link].
+The library also provides functions to modify the IAM permissions on buckets,
+read and modify the metadata associated with objects and buckets, configure
+encryption keys, configure notifications via Cloud Pub/Sub, and change the
+access control list of object or buckets.
+
+This library requires a C++11 compiler, it is supported (and tested) on multiple
+Linux distributions, as well as Windows and macOS. The top-level README
+on [GitHub][github-link] provides detailed instructions to install the necessary
+dependencies, and how to compile the client library.
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud Storage
+using the C++ client library.
+
+Costs that you incur in Cloud Storage are based on the resources you use. This
+quickstart typically uses less than $0.01USD worth of Cloud Storage resources.
+
+If you have never used Cloud Storage we recommend that you first follow one of
+the [language neutral quickstart guides][gcs-quickstart] before you follow this
+guide.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project.
+
+    [GO TO THE MANAGE RESOURCES PAGE][resource-link]
+
+    Make a note of the project id, you will need to use it later.
+
+2. Make sure that billing is enabled for your project
+
+    [LEARN HOW TO ENABLE BILLING][billing-link]
+
+3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
+
+
+4. Setup the authentication for the examples.
+
+    [LEARN HOW TO CONFIGURE A SERVICE ACCOUNT][authentication-quickstart]
+
+    [LEARN HOW TO LOGIN WITH YOUR PERSONAL ACCOUNT][gcloud-quickstart]
+
+### Downloading and Compiling the C++ Client Library
+
+The source code for the Cloud Storage C++ Client Library can be found on
+[GitHub][github-link]. Download or clone this repository as usual. The
+top-level README file in this repository includes detailed instructions on
+how to compile the library. The examples used in this guide should be
+automatically compiled when you follow said instructions.
+
+### Configuring authentication for the C++ Client Library
+
+This library uses the `GOOGLE_APPLICATION_DEFAULT_CREDENTIALS` environment
+variable to find the credentials file. This is the recommended way to configure
+the authentication preferences, though if the environment variable is not set,
+the library searches for a credentials file in the same location as the
+[Cloud SDK](https://cloud.google.com/sdk/).
+
+### Create a bucket
+
+This is a short example to create a
+[GCS bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
+This example assumes you have configured the authentication using
+`GOOGLE_APPLICATION_DEFAULT_CREDENTIALS`:
+
+@snippet storage_quickstart.cc full quickstart
+
+This quickstart will always create a **regional** bucket in the **us-east1**
+region. You must provide the project id and bucket name in the command-line when
+you run the quickstart program. Assuming you followed the build instructions
+referenced above this would be:
+
+```
+./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
+```
+
+### Using GOOGLE_CLOUD_PROJECT to set the default project
+
+Some of the GCS APIs need a [project][project-definition-link] as a parameter.
+For such APIs the application can (a) call an overload that takes the project id
+as a parameter, (b) define the project explicitly when the `Client` object is
+constructed, or (c) set the `GOOGLE_CLOUD_PROJECT` environment variable to the
+desired project id. If you have set this environment variable the code can
+be even simpler:
+
+@snippet storage_bucket_samples.cc create bucket
+
+### Using the library in your own projects
+
+Our continuous integration builds compile and test the code using both
+[Bazel](https://bazel.build/), and [CMake](https://cmake.org/). Integrating the
+GCS C++ Client library should be easy if you use either.
+
+#### Integrating with Bazel
+
+In your [WORKSPACE][workspace-definition-link] file add a dependency to download
+and install the library, for example:
+
+[workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
+
+@code {.py}
+# Change the version and SHA256 hash as needed.
+http_archive(
+    name = "com_github_googlecloudplatform_google_cloud_cpp",
+    url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.2.0.tar.gz",
+    sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
+)
+@endcode
+
+Then load the dependencies of the library:
+
+```{.py}
+load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+# Have to manually call the corresponding function for gRPC:
+#   https://github.com/bazelbuild/bazel/issues/1550
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+```
+
+You can now use the library as a dependency in your BUILD files, for example:
+
+```{.py}
+cc_binary(
+    name = "my_program",
+    srcs = [
+        "my_program.cc",
+    ],
+    deps = [
+        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/storage:storage_client",
+    ],
+)
+```
+
+#### Integrating with CMake
+
+@note This assumes that you have downloaded and installed the dependencies of
+  the library. Please check the top-level README on [GitHub][github-link] for
+  details.
+
+Compile and install the library using the normal cycle:
+
+```
+cd google-cloud-cpp
+cmake -H. -Bbuild-output
+cmake --build build-output/google/cloud/storage -- -j $(nproc)
+cmake --build build-output/google/cloud/storage --target install
+```
+
+Now that the library is installed, you can use it in your CMake list files:
+
+```
+find_package(Threads REQUIRED)
+find_package(CURL REQUIRED)
+find_package(storage_client 0.1.0 REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program storage_client)
+```
+
+### Next Steps
+
+The documentation for each member function in the [Client] class includes short
+snippets on how to call the function. The snippets for
+[ReadObject()][ReadObject], [WriteObject()][WriteObject],
+[ListObjects()][ListObjects], and [DeleteObject()][DeleteObject] are
+good places to continue learning about the library.
+
+[Client]: @ref google::cloud::storage::v0::Client
+[ReadObject]: @ref google::cloud::storage::v0::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::v0::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::v0::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::v0::Client::DeleteObject()
+
+
+[gcs-quickstart]: https://cloud.google.com/storage/docs/quickstarts 'GCS Quickstarts'
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[bucket-definition-link]: https://cloud.google.com/storage/docs/key-terms#buckets
+[object-definition-link]: https://cloud.google.com/storage/docs/key-terms#objects
+[project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
+[github-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp 'Top-level README'
+
+*/

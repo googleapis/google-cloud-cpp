@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include <iostream>
 
 namespace google {
@@ -187,6 +188,110 @@ std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r) {
   os << "PatchBucketRequest={bucket_name=" << r.bucket();
   r.DumpOptions(os, ", ");
   return os << ", payload=" << r.payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
+  os << "GetBucketIamPolicyRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+IamPolicy ParseIamPolicyFromString(std::string const& payload) {
+  auto json = nl::json::parse(payload);
+  IamPolicy policy;
+  policy.version = 0;
+  policy.etag = json.value("etag", "");
+  if (json.count("bindings") != 0U) {
+    if (not json["bindings"].is_array()) {
+      std::ostringstream os;
+      os << "Invalid IamPolicy payload, expected array for 'bindings' field."
+         << "  payload=" << payload;
+      google::cloud::internal::RaiseInvalidArgument(os.str());
+    }
+    for (auto const& kv : json["bindings"].items()) {
+      auto binding = kv.value();
+      if (binding.count("role") == 0U or binding.count("members") == 0U) {
+        std::ostringstream os;
+        os << "Invalid IamPolicy payload, expected 'role' and 'members'"
+           << " fields for element #" << kv.key() << ". payload=" << payload;
+        google::cloud::internal::RaiseInvalidArgument(os.str());
+      }
+      if (not binding["members"].is_array()) {
+        std::ostringstream os;
+        os << "Invalid IamPolicy payload, expected array for 'members'"
+           << " fields for element #" << kv.key() << ". payload=" << payload;
+        google::cloud::internal::RaiseInvalidArgument(os.str());
+      }
+      std::string role = binding.value("role", "");
+      for (auto const& member : binding["members"].items()) {
+        policy.bindings.AddMember(role, member.value());
+      }
+    }
+  }
+  return policy;
+}  // namespace internal
+
+SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
+    std::string bucket_name, google::cloud::IamPolicy const& policy)
+    : bucket_name_(std::move(bucket_name)) {
+  internal::nl::json iam{
+      {"kind", "storage#policy"},
+      {"etag", policy.etag},
+  };
+  internal::nl::json bindings;
+  for (auto const& binding : policy.bindings) {
+    internal::nl::json b{
+        {"role", binding.first},
+    };
+    internal::nl::json m;
+    for (auto const& member : binding.second) {
+      m.emplace_back(member);
+    }
+    b["members"] = std::move(m);
+    bindings.emplace_back(std::move(b));
+  }
+  iam["bindings"] = std::move(bindings);
+  json_payload_ = iam.dump();
+}
+
+std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
+  os << "GetBucketIamPolicyRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << ", json_payload=" << r.json_payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsRequest const& r) {
+  os << "TestBucketIamPermissionsRequest={bucket_name=" << r.bucket_name()
+     << ", permissions=[";
+  char const* sep = "";
+  for (auto const& p : r.permissions()) {
+    os << sep << p;
+    sep = ", ";
+  }
+  os << "]";
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+TestBucketIamPermissionsResponse TestBucketIamPermissionsResponse::FromHttpResponse(HttpResponse const& response) {
+  TestBucketIamPermissionsResponse result;
+  auto json = nl::json::parse(response.payload);
+  for (auto const& kv : json["permissions"].items()) {
+    result.permissions.emplace_back(kv.value().get<std::string>());
+  }
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         TestBucketIamPermissionsResponse const& r) {
+  os << "TestBucketIamPermissionsResponse={permissions=[";
+  char const* sep = "";
+  for (auto const& p : r.permissions) {
+    os << sep << p;
+    sep = ", ";
+  }
+  return os << "]}";
 }
 
 }  // namespace internal

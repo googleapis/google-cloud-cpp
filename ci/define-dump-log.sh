@@ -37,9 +37,9 @@ dump_log() {
   if [ "$(wc -l "${logfile}" | awk '{print $1}')" -lt 200 ]; then
     cat "${logfile}"
   else
-    head -100 "${EMULATOR_LOG}"
+    head -100 "${logfile}"
     echo "==== [snip] [snip] [${base}] [snip] [snip] ===="
-    tail -100 "${EMULATOR_LOG}"
+    tail -100 "${logfile}"
   fi
   echo "================ [end ${base}] ================"
 }

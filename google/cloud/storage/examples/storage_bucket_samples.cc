@@ -221,6 +221,299 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   (std::move(client), bucket_name, storage_class);
 }
 
+void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"add-bucket-default-kms-key <bucket-name> <key-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto key_name = ConsumeArg(argc, argv);
+  //! [add bucket kms key] [START storage_bucket_set_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string key_name) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
+                         gcs::BucketEncryption{key_name}));
+    std::cout << "Successfully set default KMS key on bucket  " << bucket_name
+              << ". The metadata is now: " << updated_metadata << std::endl;
+  }
+  //! [add bucket label] [END storage_bucket_set_default_kms_key]
+  (std::move(client), bucket_name, key_name);
+}
+
+void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-default-kms-key <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get bucket default kms key] [START storage_get_bucket_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.GetBucketMetadata(bucket_name);
+    if (not metadata.has_encryption()) {
+      std::cout << "The bucket " << bucket_name
+                << " does not have a default KMS key set." << std::endl;
+      return;
+    }
+    std::cout << "The default KMS key for bucket " << bucket_name
+              << " is: " << metadata.encryption().default_kms_key_name
+              << std::endl;
+  }
+  //! [get bucket default kms key] [END storage_get_bucket_default_kms_key]
+  (std::move(client), bucket_name);
+}
+
+void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"remove-bucket-default-kms-key <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [remove bucket default kms key]
+  // [START storage_bucket_delete_default_kms_key]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
+    std::cout << "Successfully removed default KMS key on bucket  "
+              << bucket_name << std::endl;
+  }
+  // [END storage_bucket_delete_default_kms_key]
+  //! [remove bucket default kms key]
+  (std::move(client), bucket_name);
+}
+
+void AddBucketLabel(google::cloud::storage::Client client, int& argc,
+                    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"add-bucket-label <bucket-name> <label-key> <label-value>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto label_key = ConsumeArg(argc, argv);
+  auto label_value = ConsumeArg(argc, argv);
+  //! [add bucket label] [START storage_add_bucket_label]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string label_key,
+     std::string label_value) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetLabel(label_key, label_value));
+    std::cout << "Successfully set label " << label_key << " to " << label_value
+              << " on bucket  " << bucket_name << ".";
+    std::cout << " The bucket labels are now:";
+    for (auto const& kv : updated_metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [add bucket label] [END storage_add_bucket_label]
+  (std::move(client), bucket_name, label_key, label_value);
+}
+
+void GetBucketLabels(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-labels <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get bucket labels] [START storage_get_bucket_labels]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata =
+        client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
+    if (metadata.labels().empty()) {
+      std::cout << "The bucket " << bucket_name << " has no labels set."
+                << std::endl;
+      return;
+    }
+    std::cout << "The labels for bucket " << bucket_name << " are:";
+    for (auto const& kv : metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [get bucket label] [END storage_get_bucket_labels]
+  (std::move(client), bucket_name);
+}
+
+void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"remove-bucket-label <bucket-name> <label-key>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto label_key = ConsumeArg(argc, argv);
+  //! [remove bucket label] [START storage_remove_bucket_label]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string label_key) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
+    std::cout << "Successfully reset label " << label_key << " on bucket  "
+              << bucket_name << ".";
+    if (updated_metadata.labels().empty()) {
+      std::cout << " The bucket now has no labels." << std::endl;
+      return;
+    }
+    std::cout << " The bucket labels are now:";
+    for (auto const& kv : updated_metadata.labels()) {
+      std::cout << "\n  " << kv.first << ": " << kv.second;
+    }
+    std::cout << std::endl;
+  }
+  //! [remove bucket label] [END storage_remove_bucket_label]
+  (std::move(client), bucket_name, label_key);
+}
+
+void GetBilling(google::cloud::storage::Client client, int& argc,
+                char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-billing <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get billing] [START storage_get_requester_pays_status]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.GetBucketMetadata(bucket_name);
+    if (not metadata.has_billing()) {
+      std::cout << "The bucket " << bucket_name << " does not have a billing"
+                << " configuration. The default applies, i.e., the project"
+                   " that owns the bucket pays for the requests."
+                << std::endl;
+      return;
+    }
+    if (metadata.billing().requester_pays) {
+      std::cout << "The bucket " << bucket_name << " is configured to charge"
+                << " the calling project for the requests." << std::endl;
+    } else {
+      std::cout << "The bucket " << bucket_name << " is configured to charge"
+                << " the project that owns the bucket for the requests."
+                << std::endl;
+    }
+  }
+  //! [get billing] [END storage_get_requester_pays_status]
+  (std::move(client), bucket_name);
+}
+
+void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"enable-requester-pays <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [enable requester pays] [START storage_enable_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{true}));
+    std::cout << "Billing configuration for bucket " << bucket_name
+              << " is updated. The bucket now";
+    if (not metadata.has_billing()) {
+      std::cout << " has no billing configuration." << std::endl;
+    } else if (metadata.billing().requester_pays) {
+      std::cout << " is configured to charge the caller for requests"
+                << std::endl;
+    } else {
+      std::cout << " is configured to charge the project that owns the bucket"
+                << " for requests." << std::endl;
+    }
+  }
+  //! [enable requester pays] [END storage_enable_requester_pays]
+  (std::move(client), bucket_name);
+}
+
+void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"disable-requester-pays <bucket-name> <project-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto project_id = ConsumeArg(argc, argv);
+  //! [disable requester pays] [START storage_disable_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string project_id) {
+    gcs::BucketMetadata metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{false}),
+        gcs::UserProject(project_id));
+    std::cout << "Billing configuration for bucket " << bucket_name
+              << " is updated. The bucket now";
+    if (not metadata.has_billing()) {
+      std::cout << " has no billing configuration." << std::endl;
+    } else if (metadata.billing().requester_pays) {
+      std::cout << " is configured to charge the caller for requests"
+                << std::endl;
+    } else {
+      std::cout << " is configured to charge the project that owns the bucket"
+                << " for requests." << std::endl;
+    }
+  }
+  //! [disable requester pays] [END storage_disable_requester_pays]
+  (std::move(client), bucket_name, project_id);
+}
+
+void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "write-object-requester-pays <bucket-name> <object-name>"
+        " <billed-project>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto billed_project = ConsumeArg(argc, argv);
+  //! [write object requester pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string billed_project) {
+    std::string const text = "Lorem ipsum dolor sit amet";
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::UserProject(billed_project));
+
+    for (int lineno = 0; lineno != 10; ++lineno) {
+      // Add 1 to the counter, because it is conventional to number lines
+      // starting at 1.
+      stream << (lineno + 1) << ": I will write better examples\n";
+    }
+
+    gcs::ObjectMetadata meta = stream.Close();
+    std::cout << "The resulting object size is: " << meta.size() << std::endl;
+  }
+  //! [write object requester pays]
+  (std::move(client), bucket_name, object_name, billed_project);
+}
+
+void ReadObjectRequesterPays(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "read-object-requester-pays <bucket-name> <object-name>"
+        " <billed-project>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto billed_project = ConsumeArg(argc, argv);
+  //! [read object requester pays]
+  // [START storage_download_file_requester_pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string billed_project) {
+    gcs::ObjectReadStream stream = client.ReadObject(
+        bucket_name, object_name, gcs::UserProject(billed_project));
+    while (not stream.eof()) {
+      std::string line;
+      std::getline(stream, line, '\n');
+      if (stream.good()) {
+        std::cout << line << std::endl;
+      }
+    }
+  }
+  // [END storage_download_file_requester_pays]
+  //! [read object requester pays]
+  (std::move(client), bucket_name, object_name, billed_project);
+}
+
 void GetServiceAccount(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 1) {
@@ -264,7 +557,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
@@ -276,6 +569,17 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class", &PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
+      {"add-bucket-default-kms-key", &AddBucketDefaultKmsKey},
+      {"get-bucket-default-kms-key", &GetBucketDefaultKmsKey},
+      {"remove-bucket-default-kms-key", &RemoveBucketDefaultKmsKey},
+      {"add-bucket-label", &AddBucketLabel},
+      {"get-bucket-labels", &GetBucketLabels},
+      {"remove-bucket-label", &RemoveBucketLabel},
+      {"get-billing", &GetBilling},
+      {"enable-requester-pays", &EnableRequesterPays},
+      {"disable-requester-pays", &DisableRequesterPays},
+      {"write-object-requester-pays", &WriteObjectRequesterPays},
+      {"read-object-requester-pays", &ReadObjectRequesterPays},
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
   };

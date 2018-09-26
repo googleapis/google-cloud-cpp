@@ -69,6 +69,7 @@ add_library(google_cloud_cpp_common
             iam_bindings.h
             iam_bindings.cc
             iam_policy.h
+            iam_policy.cc
             internal/backoff_policy.h
             internal/backoff_policy.cc
             internal/build_info.h
@@ -78,6 +79,7 @@ add_library(google_cloud_cpp_common
             internal/port_platform.h
             internal/random.h
             internal/random.cc
+            internal/invoke_result.h
             internal/retry_policy.h
             internal/setenv.h
             internal/setenv.cc
@@ -118,6 +120,7 @@ set(google_cloud_cpp_common_unit_tests
     internal/backoff_policy_test.cc
     internal/optional_test.cc
     internal/random_test.cc
+    internal/invoke_result_test.cc
     internal/retry_policy_test.cc
     internal/throw_delegate_test.cc
     log_test.cc)

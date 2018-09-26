@@ -62,6 +62,14 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->MutateRow(context, request, response);
   }
 
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<btproto::MutateRowResponse>>
+  AsyncMutateRow(grpc::ClientContext* context,
+                 btproto::MutateRowRequest const& request,
+                 grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncMutateRow(context, request, cq);
+  }
+
   grpc::Status CheckAndMutateRow(
       grpc::ClientContext* context,
       btproto::CheckAndMutateRowRequest const& request,

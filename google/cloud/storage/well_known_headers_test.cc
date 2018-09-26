@@ -114,7 +114,8 @@ TEST(WellKnownHeader, SourceEncryptionKeyFromBase64) {
 
 /// @test Verify that CreateKeyFromGenerator works as expected.
 TEST(WellKnownHeader, FromGenerator) {
-  internal::DefaultPRNG gen = internal::MakeDefaultPRNG();
+  google::cloud::internal::DefaultPRNG gen =
+      google::cloud::internal::MakeDefaultPRNG();
 
   auto header = EncryptionKey(CreateKeyFromGenerator(gen));
   ASSERT_TRUE(header.has_value());

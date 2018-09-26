@@ -52,13 +52,13 @@ class IamBindings {
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  iterator begin() { return bindings_.begin(); }
+  iterator begin() const { return bindings_.begin(); }
 
   /**
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  iterator end() { return bindings_.end(); }
+  iterator end() const { return bindings_.end(); }
 
   /**
    * Returns whether the Bindings container is empty.
@@ -76,6 +76,20 @@ class IamBindings {
 
   std::map<std::string, std::set<std::string>> const& bindings() const {
     return bindings_;
+  }
+
+  /**
+   * Finds the members for a role.
+   */
+  iterator find(std::string const& role) const { return bindings_.find(role); }
+
+  /// Returns the members for a role.
+  std::set<std::string> at(std::string const& role) const {
+    auto loc = bindings_.find(role);
+    if (loc == bindings_.end()) {
+      return {};
+    }
+    return loc->second;
   }
 
   /**
@@ -136,9 +150,35 @@ class IamBindings {
   void RemoveMembers(std::string const& role,
                      std::set<std::string> const& members);
 
+  bool operator==(IamBindings const& rhs) const {
+    return bindings_ == rhs.bindings_;
+  }
+
+  bool operator<(IamBindings const& rhs) const {
+    return bindings_ < rhs.bindings_;
+  }
+
+  bool operator!=(IamBindings const& rhs) const {
+    return std::rel_ops::operator!=(*this, rhs);
+  }
+
+  bool operator>(IamBindings const& rhs) const {
+    return std::rel_ops::operator>(*this, rhs);
+  }
+
+  bool operator<=(IamBindings const& rhs) const {
+    return std::rel_ops::operator<=(*this, rhs);
+  }
+
+  bool operator>=(IamBindings const& rhs) const {
+    return std::rel_ops::operator>=(*this, rhs);
+  }
+
  private:
   std::map<std::string, std::set<std::string>> bindings_;
 };
+
+std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

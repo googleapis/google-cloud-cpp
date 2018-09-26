@@ -28,6 +28,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
 /**
  * Defines well-known request headers using the CRTP.
  *
@@ -55,22 +56,57 @@ std::ostream& operator<<(std::ostream& os, WellKnownHeader<H, T> const& rhs) {
   }
   return os << rhs.header_name() << ": <not set>";
 }
+}  // namespace internal
 
-struct ContentType : public WellKnownHeader<ContentType, std::string> {
+/**
+ * Set the MIME content type of an object.
+ *
+ * This optional parameter sets the content-type of an object during uploads,
+ * without having to configure all the other metadata attributes.
+ */
+struct ContentType
+    : public internal::WellKnownHeader<ContentType, std::string> {
   using WellKnownHeader<ContentType, std::string>::WellKnownHeader;
   static char const* header_name() { return "content-type"; }
 };
 
-struct IfMatchEtag : public WellKnownHeader<IfMatchEtag, std::string> {
+/**
+ * A pre-condition: apply this operation only if the HTTP Entity Tag matches.
+ *
+ * [HTTP Entity Tags](https://en.wikipedia.org/wiki/HTTP_ETag) allow
+ * applications to conditionally execute a query only if the target resource
+ * matches the expected state. This can be useful, for example, to implement
+ * optimistic concurrency control in the application.
+ */
+struct IfMatchEtag
+    : public internal::WellKnownHeader<IfMatchEtag, std::string> {
   using WellKnownHeader<IfMatchEtag, std::string>::WellKnownHeader;
   static char const* header_name() { return "If-Match"; }
 };
 
-struct IfNoneMatchEtag : public WellKnownHeader<IfNoneMatchEtag, std::string> {
+/**
+ * A pre-condition: apply this operation only if the HTTP Entity Tag does not
+ * match.
+ *
+ * [HTTP Entity Tags](https://en.wikipedia.org/wiki/HTTP_ETag) allow
+ * applications to conditionally execute a query only if the target resource
+ * matches the expected state. This can be useful, for example, to implement
+ * optimistic concurrency control in the application.
+ */
+struct IfNoneMatchEtag
+    : public internal::WellKnownHeader<IfNoneMatchEtag, std::string> {
   using WellKnownHeader<IfNoneMatchEtag, std::string>::WellKnownHeader;
   static char const* header_name() { return "If-None-Match"; }
 };
 
+/**
+ * A simple wrapper for the encryption key attributes.
+ *
+ * Most request options have primitive types such as integers or strings.
+ * Encryption keys, in contrast, must include the algorithm, the
+ * (base64-encoded) key, and the (base64-encoded) hash of the key. This
+ * structure provides a simple container for these three values.
+ */
 struct EncryptionKeyData {
   std::string algorithm;
   std::string key;
@@ -93,8 +129,30 @@ EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key);
  */
 EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key);
 
+/**
+ * An optional parameter to set the Customer-Supplied Encryption key.
+ *
+ * Application developers can generate their own encryption keys to protect the
+ * data in GCS. This is known as a Customer-Supplied Encryption key (CSEK). If
+ * the application provides a CSEK, GCS does not retain the key. The object
+ * data, the object CRC32 checksum, and its MD5 hash (if applicable) are all
+ * encrypted with this key, and the key is required to read any of these
+ * elements back.
+ *
+ * Care must be taken to save and protect these keys, if lost, the data is not
+ * recoverable.  Also, applications should avoid generating predictable keys,
+ * as this weakens the encryption.
+ *
+ * This option is used in read (download), write (upload), copy, and compose
+ * operations. Note that copy and compose operations use the same key for the
+ * source and destination objects.
+ *
+ * @see https://cloud.google.com/storage/docs/encryption/customer-supplied-keys
+ *     for a detailed description of how Customer Supplied Encryption keys are
+ *     used in GCS.
+ */
 struct EncryptionKey
-    : public WellKnownHeader<EncryptionKey, EncryptionKeyData> {
+    : public internal::WellKnownHeader<EncryptionKey, EncryptionKeyData> {
   using WellKnownHeader<EncryptionKey, EncryptionKeyData>::WellKnownHeader;
 
   /**
@@ -116,8 +174,30 @@ struct EncryptionKey
 
 std::ostream& operator<<(std::ostream& os, EncryptionKey const& rhs);
 
+/**
+ * An optional parameter to set the Customer-Supplied Encryption key for rewrite
+ * source object.
+ *
+ * Application developers can generate their own encryption keys to protect the
+ * data in GCS. This is known as a Customer-Supplied Encryption key (CSEK). If
+ * the application provides a CSEK, GCS does not retain the key. The object
+ * data, the object CRC32 checksum, and its MD5 hash (if applicable) are all
+ * encrypted with this key, and the key is required to read any of these
+ * elements back.
+ *
+ * Care must be taken to save and protect these keys, if lost, the data is not
+ * recoverable.  Also, applications should avoid generating predictable keys,
+ * as this weakens the encryption.
+ *
+ * This option is used only in rewrite operations and it defines the key used
+ * for the source object.
+ *
+ * @see https://cloud.google.com/storage/docs/encryption/customer-supplied-keys
+ *     for a detailed description of how Customer Supplied Encryption keys are
+ *     used in GCS.
+ */
 struct SourceEncryptionKey
-    : public WellKnownHeader<SourceEncryptionKey, EncryptionKeyData> {
+    : public internal::WellKnownHeader<SourceEncryptionKey, EncryptionKeyData> {
   using WellKnownHeader<SourceEncryptionKey,
                         EncryptionKeyData>::WellKnownHeader;
 
@@ -147,6 +227,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  *   `UniformRandomBitGenerator` requirements.
  * @param gen the pseudo-random number generator.
  *
+ * @par Example
  * @snippet storage_object_samples.cc generate encryption key
  *
  * @see https://en.cppreference.com/w/cpp/numeric/random for a general

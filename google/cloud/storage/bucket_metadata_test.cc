@@ -173,7 +173,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("XYZ=", actual.etag());
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
-  EXPECT_EQ(2U, actual.label_count());
+  EXPECT_EQ(2U, actual.labels().size());
   EXPECT_TRUE(actual.has_label("label-key-1"));
   EXPECT_EQ("label-value-1", actual.label("label-key-1"));
   EXPECT_FALSE(actual.has_label("not-a-label-key"));
@@ -375,6 +375,39 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_TRUE(actual["website"].is_object()) << actual;
   EXPECT_EQ("index.html", actual["website"].value("mainPageSuffix", ""));
   EXPECT_EQ("404.html", actual["website"].value("notFoundPage", ""));
+}
+
+/// @test Verify we can delete label fields.
+TEST(BucketMetadataTest, DeleteLabels) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_TRUE(copy.has_label("label-key-1"));
+  copy.delete_label("label-key-1");
+  EXPECT_FALSE(copy.has_label("label-key-1"));
+  EXPECT_FALSE(copy.has_label("not-there"));
+  copy.delete_label("not-there");
+  EXPECT_FALSE(copy.has_label("not-there"));
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change metadata existing label fields.
+TEST(BuucketMetadataTest, ChangeLabels) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_TRUE(copy.has_label("label-key-1"));
+  copy.upsert_label("label-key-1", "some-new-value");
+  EXPECT_EQ("some-new-value", copy.label("label-key-1"));
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change insert new label fields.
+TEST(BUcketMetadataTest, InsertLabels) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_FALSE(copy.has_label("not-there"));
+  copy.upsert_label("not-there", "now-it-is");
+  EXPECT_EQ("now-it-is", copy.label("not-there"));
+  EXPECT_NE(expected, copy);
 }
 
 /// @test Verify we can make changes to one Acl in BucketMetadata.

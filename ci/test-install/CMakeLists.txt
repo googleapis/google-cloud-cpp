@@ -30,5 +30,10 @@ find_package(Threads REQUIRED)
 find_package(bigtable_client 0.3.0 REQUIRED)
 
 # Defining new targets should be easy.
-add_executable(install_integration_test install_integration_test.cc)
-target_link_libraries(install_integration_test bigtable::client)
+add_executable(bigtable_install_test bigtable_install_test.cc)
+target_link_libraries(bigtable_install_test bigtable::client)
+
+find_package(CURL REQUIRED)
+find_package(storage_client 0.1.0 REQUIRED)
+add_executable(storage_install_test storage_install_test.cc)
+target_link_libraries(storage_install_test storage_client)

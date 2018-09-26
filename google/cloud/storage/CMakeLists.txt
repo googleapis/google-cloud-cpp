@@ -182,6 +182,8 @@ add_library(storage_client
             object_access_control.cc
             object_metadata.h
             object_metadata.cc
+            object_rewriter.h
+            object_rewriter.cc
             object_stream.h
             object_stream.cc
             retry_policy.h
@@ -310,6 +312,7 @@ export_list_to_bazel(
 add_subdirectory(tests)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(benchmarks)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
@@ -336,7 +339,11 @@ install(DIRECTORY . DESTINATION include/storage/client
         PATTERN "testing/*"
         EXCLUDE)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
-              include/storage/client)
+              include/google/cloud/storage)
+install(
+    FILES
+        ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
+        DESTINATION include/google/cloud/storage/internal)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})

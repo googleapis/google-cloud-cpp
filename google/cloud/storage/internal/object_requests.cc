@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <sstream>
@@ -73,6 +74,15 @@ std::ostream& operator<<(std::ostream& os,
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
   return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
+  os << "CopyObjectRequest={destination_bucket=" << r.destination_bucket()
+     << ", destination_object=" << r.destination_object()
+     << ", source_bucket=" << r.source_bucket()
+     << ", source_object=" << r.source_object();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
@@ -159,6 +169,48 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
   return os << "}";
 }
 
+ComposeObjectRequest::ComposeObjectRequest(
+    std::string bucket_name,
+    std::vector<ComposeSourceObject> const& source_objects,
+    std::string destination_object_name,
+    ObjectMetadata destination_object_metadata)
+    : GenericObjectRequest(std::move(bucket_name),
+                           std::move(destination_object_name)),
+      destination_metadata_(std::move(destination_object_metadata)) {
+  using internal::nl::json;
+  json compose_object_payload_json;
+  compose_object_payload_json["kind"] = "storage#composeRequest";
+  auto destination_metadata_payload =
+      destination_metadata_.JsonPayloadForCompose();
+  if (!destination_metadata_payload.is_null()) {
+    compose_object_payload_json["destination"] = destination_metadata_payload;
+  }
+  json source_object_list;
+  for (auto const& source_object : source_objects) {
+    json source_object_json;
+    source_object_json["name"] = source_object.object_name;
+    if (source_object.generation.has_value()) {
+      source_object_json["generation"] = source_object.generation.value();
+    }
+    if (source_object.if_generation_match.has_value()) {
+      source_object_json["ifGenerationMatch"] =
+          source_object.if_generation_match.value();
+    }
+    source_object_list.emplace_back(std::move(source_object_json));
+  }
+  compose_object_payload_json["sourceObjects"] = source_object_list;
+  json_payload_ = compose_object_payload_json.dump();
+}
+
+std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r) {
+  os << "ComposeObjectRequest={bucket_name=" << r.bucket_name()
+     << ", destination_object_name=" << r.object_name()
+     << ", destination_metadata="
+     << r.destination_metadata().JsonPayloadForCompose();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
+}
+
 PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
                                        std::string object_name,
                                        ObjectMetadata const& original,
@@ -232,6 +284,39 @@ std::ostream& operator<<(std::ostream& os, PatchObjectRequest const& r) {
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
   return os << ", payload=" << r.payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
+  os << "RewriteObjectRequest={destination_bucket=" << r.destination_bucket()
+     << ", destination_object=" << r.destination_object()
+     << ", source_bucket=" << r.source_bucket()
+     << ", source_object=" << r.source_object()
+     << ", rewrite_token=" << r.rewrite_token();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
+}
+
+RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  nl::json object = nl::json::parse(response.payload);
+  RewriteObjectResponse result;
+  result.total_bytes_rewritten =
+      ParseUnsignedLongField(object, "totalBytesRewritten");
+  result.object_size = ParseUnsignedLongField(object, "objectSize");
+  result.done = object.value("done", false);
+  result.rewrite_token = object.value("rewriteToken", "");
+  if (object.count("resource") != 0U) {
+    result.resource = ObjectMetadata::ParseFromJson(object["resource"]);
+  }
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r) {
+  return os << "RewriteObjectResponse={total_bytes_rewritten="
+            << r.total_bytes_rewritten << ", object_size=" << r.object_size
+            << ", done=" << std::boolalpha << r.done
+            << ", rewrite_token=" << r.rewrite_token
+            << ", resource=" << r.resource << "}";
 }
 
 }  // namespace internal

@@ -36,6 +36,17 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
 }
 }  // namespace
 
+std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
+  os << "ComposeSourceObject={bucket_name=" << r.object_name;
+  if (r.generation.has_value()) {
+    os << ", generation=" << r.generation.value();
+  }
+  if (r.if_generation_match.has_value()) {
+    os << ", if_generation_match=" << r.if_generation_match.value();
+  }
+  return os << "}";
+}
+
 ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   ObjectMetadata result{};
   static_cast<CommonMetadata<ObjectMetadata>&>(result) =
@@ -84,6 +95,21 @@ ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
 }
 
 std::string ObjectMetadata::JsonPayloadForUpdate() const {
+  auto json = JsonForUpdate();
+  return json.empty() ? "{}" : json.dump();
+}
+
+std::string ObjectMetadata::JsonPayloadForCopy() const {
+  auto json = JsonForUpdate();
+  // TODO(#564) - add checksums if applicable.
+  // Only crc32c and md5Hash are writeable fields that could be included in a
+  // copy but are not included in an update.  The server has the checksums for
+  // a copy though, so it does not seem necessary to send them. When we
+  // implement #564 we should revisit this decision.
+  return json.empty() ? "{}" : json.dump();
+}
+
+internal::nl::json ObjectMetadata::JsonForUpdate() const {
   using internal::nl::json;
   json metadata_as_json;
   if (not acl().empty()) {
@@ -109,7 +135,40 @@ std::string ObjectMetadata::JsonPayloadForUpdate() const {
     metadata_as_json["metadata"] = std::move(meta_as_json);
   }
 
-  return metadata_as_json.dump();
+  return metadata_as_json;
+}
+
+internal::nl::json ObjectMetadata::JsonPayloadForCompose() const {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (not acl().empty()) {
+    for (ObjectAccessControl const& a : acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition", content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", content_type());
+  SetIfNotEmpty(metadata_as_json, "crc32c", crc32c());
+  SetIfNotEmpty(metadata_as_json, "md5Hash", md5_hash());
+  SetIfNotEmpty(metadata_as_json, "name", name());
+  SetIfNotEmpty(metadata_as_json, "storageClass", storage_class());
+
+  if (not metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json;
 }
 
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {

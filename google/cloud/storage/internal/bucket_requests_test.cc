@@ -21,6 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -549,6 +550,232 @@ TEST(PatchBucketRequestTest, Builder) {
   EXPECT_THAT(actual, HasSubstr("defaultObjectAcl"));
 }
 
+TEST(BucketRequestsTest, GetIamPolicy) {
+  GetBucketIamPolicyRequest request("my-bucket");
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromString) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       {
+           // The order of these elements matters, SetBucketIamPolicyRequest
+           // generates them sorted by role. If we ever change that, we will
+           // need to change this test, and it will be a bit more difficult to
+           // write it.
+           nl::json{
+               {"role", "roles/storage.admin"},
+               {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{
+               {"role", "roles/storage.objectViewer"},
+               {"members",
+                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+       }},
+  };
+
+  IamBindings expected_bindings;
+  expected_bindings.AddMember("roles/storage.admin", "test-user-1");
+  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-2");
+  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
+  IamPolicy expected{0, expected_bindings, "XYZ="};
+
+  auto actual = ParseIamPolicyFromString(expected_payload.dump());
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       std::vector<nl::json>{
+           nl::json{{"members", std::vector<std::string>{"test-user-1"}}},
+
+       }},
+  };
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ParseIamPolicyFromString(expected_payload.dump());
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("expected 'role' and 'members'"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       std::vector<nl::json>{nl::json{
+           {"role", "roles/storage.objectViewer"},
+       }}},
+  };
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ParseIamPolicyFromString(expected_payload.dump());
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("expected 'role' and 'members'"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       std::vector<nl::json>{nl::json{
+           {"role", "roles/storage.objectViewer"},
+           {"members", "invalid"},
+       }}},
+  };
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ParseIamPolicyFromString(expected_payload.dump());
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("expected array for 'members'"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings", "invalid"},
+  };
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ParseIamPolicyFromString(expected_payload.dump());
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("expected array for 'bindings'"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(BucketRequestsTest, SetIamPolicy) {
+  google::cloud::IamBindings bindings;
+  bindings.AddMember("roles/storage.admin", "test-user-1");
+  bindings.AddMember("roles/storage.objectViewer", "test-user-2");
+  bindings.AddMember("roles/storage.objectViewer", "test-user-3");
+  google::cloud::IamPolicy policy{1, bindings, "XYZ="};
+
+  SetBucketIamPolicyRequest request("my-bucket", policy);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       {
+           // The order of these elements matters, SetBucketIamPolicyRequest
+           // generates them sorted by role. If we ever change that, we will
+           // need to change this test, and it will be a bit more difficult to
+           // write it.
+           nl::json{
+               {"role", "roles/storage.admin"},
+               {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{
+               {"role", "roles/storage.objectViewer"},
+               {"members",
+                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+       }},
+  };
+  auto actual_payload = nl::json::parse(request.json_payload());
+  EXPECT_EQ(expected_payload, actual_payload)
+      << nl::json::diff(expected_payload, actual_payload);
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissions) {
+  std::vector<std::string> permissions{"storage.buckets.get",
+                                       "storage.buckets.setIamPolicy",
+                                       "storage.objects.update"};
+  TestBucketIamPermissionsRequest request("my-bucket", permissions);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+  EXPECT_EQ(permissions, request.permissions());
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+  EXPECT_THAT(actual, HasSubstr("storage.buckets.get"));
+  EXPECT_THAT(actual, HasSubstr("storage.buckets.setIamPolicy"));
+  EXPECT_THAT(actual, HasSubstr("storage.objects.update"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissionsResponse) {
+  std::string text = R"""({
+      "permissions": [
+          "storage.buckets.get",
+          "storage.buckets.setIamPolicy",
+          "storage.objects.update"
+      ]})""";
+
+  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
+      HttpResponse{200, text, {}});
+  EXPECT_THAT(actual.permissions,
+              ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
+                          "storage.objects.update"));
+
+  std::ostringstream os;
+  os << actual;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("storage.buckets.get"));
+  EXPECT_THAT(str, HasSubstr("storage.buckets.setIamPolicy"));
+  EXPECT_THAT(str, HasSubstr("storage.objects.update"));
+}
+
+TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
+  std::string text = R"""({})""";
+
+  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
+      HttpResponse{200, text, {}});
+  EXPECT_TRUE(actual.permissions.empty());
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

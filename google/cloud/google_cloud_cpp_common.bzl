@@ -9,6 +9,7 @@ google_cloud_cpp_common_HDRS = [
     "internal/optional.h",
     "internal/port_platform.h",
     "internal/random.h",
+    "internal/invoke_result.h",
     "internal/retry_policy.h",
     "internal/setenv.h",
     "internal/throw_delegate.h",
@@ -18,6 +19,7 @@ google_cloud_cpp_common_HDRS = [
 
 google_cloud_cpp_common_SRCS = [
     "iam_bindings.cc",
+    "iam_policy.cc",
     "internal/backoff_policy.cc",
     "internal/random.cc",
     "internal/setenv.cc",
