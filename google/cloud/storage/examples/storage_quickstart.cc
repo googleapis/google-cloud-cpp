@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [full quickstart]
+//! [full quickstart] [START storage_quickstart]
 #include "google/cloud/storage/client.h"
 #include <iostream>
 
@@ -46,4 +46,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
   return 1;
 }
-//! [full quickstart]
+//! [full quickstart] [END storage_quickstart]
