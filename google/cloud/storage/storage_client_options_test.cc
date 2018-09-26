@@ -111,6 +111,26 @@ TEST_F(ClientOptionsTest, SetProjectId) {
   EXPECT_EQ("test-project-id", options.project_id());
 }
 
+TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
+  ClientOptions client_options;
+  auto default_size = client_options.download_buffer_size();
+  EXPECT_NE(0U, default_size);
+  client_options.SetDownloadBufferSize(1024);
+  EXPECT_EQ(1024U, client_options.download_buffer_size());
+  client_options.SetDownloadBufferSize(0);
+  EXPECT_EQ(default_size, client_options.download_buffer_size());
+}
+
+TEST_F(ClientOptionsTest, SetUploadBufferSize) {
+  ClientOptions client_options;
+  auto default_size = client_options.upload_buffer_size();
+  EXPECT_NE(0U, default_size);
+  client_options.SetUploadBufferSize(1024);
+  EXPECT_EQ(1024U, client_options.upload_buffer_size());
+  client_options.SetUploadBufferSize(0);
+  EXPECT_EQ(default_size, client_options.upload_buffer_size());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
