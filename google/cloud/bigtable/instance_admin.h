@@ -29,6 +29,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Implements the APIs to administer Cloud Bigtable instances.
+ *
+ * @par Cost
+ * Creating a new object of type InstanceAdmin is comparable to creating a few
+ * objects of type std::string or a few objects of type std::shared_ptr<int>.
+ * The class represents a shallow handle to a remote object.
  */
 class InstanceAdmin {
  public:
@@ -84,6 +89,9 @@ class InstanceAdmin {
    * for this operation.
    *
    * @param instance_config a description of the new instance to be created.
+   *   instance_id and a display_name parameters must be set in instance_config,
+   *   - instance_id : instance_id must be between 6 and 33 characters.
+   *   - display_name : display_name must be between 4 and 30 characters.
    * @return a future that becomes satisfied when (a) the operation has
    *   completed successfully, in which case it returns a proto with the
    *   Instance details, (b) the operation has failed, in which case the future
@@ -104,7 +112,7 @@ class InstanceAdmin {
    * @param cluster_config a description of the new cluster to be created.
    * @param instance_id the id of the instance in the project
    * @param cluster_id the id of the cluster in the project that needs to be
-   *   created
+   *   created. It must be between 6 and 30 characters.
    *
    *  @par Example
    *  @snippet bigtable_samples_instance_admin.cc create cluster
