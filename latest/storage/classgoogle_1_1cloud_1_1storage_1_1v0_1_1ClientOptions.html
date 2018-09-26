@@ -111,6 +111,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae34bb725b9e22de485b195cc8d9980a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab01273524879e6c1bee8090289dd7670"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#ab01273524879e6c1bee8090289dd7670">set_connection_pool_size</a> (std::size_t size)</td></tr>
 <tr class="separator:ab01273524879e6c1bee8090289dd7670"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a296af603db8b89499f06568c210790f2"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2">download_buffer_size</a> () const</td></tr>
+<tr class="separator:a296af603db8b89499f06568c210790f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb4a3c0bad4051e8e34c053008d369fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#adb4a3c0bad4051e8e34c053008d369fe">SetDownloadBufferSize</a> (std::size_t size)</td></tr>
+<tr class="separator:adb4a3c0bad4051e8e34c053008d369fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c11783bcb3579f6c7453aaa9151893d"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a6c11783bcb3579f6c7453aaa9151893d">upload_buffer_size</a> () const</td></tr>
+<tr class="separator:a6c11783bcb3579f6c7453aaa9151893d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cf7085cbce9fb9616decdcf4893a05c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a5cf7085cbce9fb9616decdcf4893a05c">SetUploadBufferSize</a> (std::size_t size)</td></tr>
+<tr class="separator:a5cf7085cbce9fb9616decdcf4893a05c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Describes the configuration for a <code>storage::Client</code> object. </p>
@@ -204,6 +212,31 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Credentials.html">Credentials</a>&gt; google::cloud::storage::v0::ClientOptions::credentials </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a296af603db8b89499f06568c210790f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296af603db8b89499f06568c210790f2">&#9670;&nbsp;</a></span>download_buffer_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t google::cloud::storage::v0::ClientOptions::download_buffer_size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -489,6 +522,67 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>version</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adb4a3c0bad4051e8e34c053008d369fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb4a3c0bad4051e8e34c053008d369fe">&#9670;&nbsp;</a></span>SetDownloadBufferSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp; google::cloud::storage::v0::ClientOptions::SetDownloadBufferSize </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5cf7085cbce9fb9616decdcf4893a05c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cf7085cbce9fb9616decdcf4893a05c">&#9670;&nbsp;</a></span>SetUploadBufferSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp; google::cloud::storage::v0::ClientOptions::SetUploadBufferSize </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6c11783bcb3579f6c7453aaa9151893d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c11783bcb3579f6c7453aaa9151893d">&#9670;&nbsp;</a></span>upload_buffer_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t google::cloud::storage::v0::ClientOptions::upload_buffer_size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>

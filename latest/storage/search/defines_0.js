@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['storage_5fclient_5fns',['STORAGE_CLIENT_NS',['../version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28',1,'version.h']]]
+  ['google_5fcloud_5fcpp_5fstorage_5fdefault_5fbuffer_5fsize',['GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE',['../client__options_8cc.html#aeba036b7d1f0290f9bf4e589822293db',1,'client_options.cc']]]
 ];

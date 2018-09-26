@@ -13,6 +13,7 @@ var searchData=
   ['getserviceaccount',['GetServiceAccount',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a60b75719e0b7d19eea3cdaa97796d35e',1,'google::cloud::storage::v0::Client']]],
   ['getserviceaccountforproject',['GetServiceAccountForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd8129fecaf20d72ccd078c77dae6d39',1,'google::cloud::storage::v0::Client']]],
   ['google',['google',['../namespacegoogle.html',1,'']]],
+  ['google_5fcloud_5fcpp_5fstorage_5fdefault_5fbuffer_5fsize',['GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE',['../client__options_8cc.html#aeba036b7d1f0290f9bf4e589822293db',1,'client_options.cc']]],
   ['googledefaultcredentials',['GoogleDefaultCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9209a78c76703abaf6c57365bdbc0f9d',1,'google::cloud::storage::v0']]],
   ['google_20cloud_20storage_20c_2b_2b_20client_20library',['Google Cloud Storage C++ Client Library',['../index.html',1,'']]],
   ['internal',['internal',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal.html',1,'google::cloud::storage::v0']]],
