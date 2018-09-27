@@ -192,6 +192,9 @@ class TableAdmin {
    *     consistency token.
    * @return the consistency token for table.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc generate consistency token
    */
   std::string GenerateConsistencyToken(std::string const& table_id);
 
