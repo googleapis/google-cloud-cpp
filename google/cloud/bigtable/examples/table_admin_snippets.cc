@@ -243,6 +243,23 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id_param, consistency_token_param);
 }
 
+void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
+                              int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "generate-consistency-token: <project-id> <instance-id> <table-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  //! [generate consistency token]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    std::string token = admin.GenerateConsistencyToken(table_id);
+    std::cout << std::endl << "generated token is : " << token << std::endl;
+  }
+  //! [generate consistency token]
+  (std::move(admin), table_id);
+}
+
 void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 3) {
@@ -322,6 +339,7 @@ int main(int argc, char* argv[]) try {
       {"drop-rows-by-prefix", &DropRowsByPrefix},
       {"wait-for-consistency-check", &WaitForConsistencyCheck},
       {"check-consistency", &CheckConsistency},
+      {"generate-consistency-token", &GenerateConsistencyToken},
       {"get-snapshot", &GetSnapshot},
       {"list-snapshot", &ListSnapshots},
       {"delete-snapshot", &DeleteSnapshot},
