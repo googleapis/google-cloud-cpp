@@ -606,10 +606,11 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the consistency token for table. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed. </td></tr>
+    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    std::string token = admin.GenerateConsistencyToken(table_id);</div><div class="line">    std::cout &lt;&lt; std::endl &lt;&lt; <span class="stringliteral">&quot;generated token is : &quot;</span> &lt;&lt; token &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
