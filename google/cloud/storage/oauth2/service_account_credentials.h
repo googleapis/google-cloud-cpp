@@ -149,7 +149,7 @@ class ServiceAccountCredentials : public RefreshingCredentials {
   bool Refresh() override /* EXCLUSIVE_LOCKS_REQUIRED(mu_) */ {
     // Build and make the request.
     HttpRequestBuilderType request_builder(
-        jwt_payload_["aud"].get_ref<std::string const&>(),  // Refresh URI.
+        jwt_payload_["aud"],  // Refresh URI.
         storage::internal::GetDefaultCurlHandleFactory());
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
