@@ -39,12 +39,6 @@ namespace oauth2 {
  * Takes a JSON object representing the contents of a service account keyfile,
  * and uses Google's OAuth2 service to obtain an access token.
  *
- * @warning
- * The current implementation is a placeholder to unblock development of the
- * Google Cloud Storage client libraries. There is substantial work needed
- * before this class is complete, in fact, we do not even have a complete set of
- * requirements for it.
- *
  * @see
  *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *   https://tools.ietf.org/html/rfc7523
