@@ -44,8 +44,10 @@ MiB.max <- max(df$MiB)
 aggregate(Mbps ~ MiB + op, data=subset(df, MiB == MiB.max), FUN=summary)
 
 # Skip the DELETE operations in this graph because they have "0" throughput.
-ggplot(data=df, mapping=aes(x=MiB, y=Mbps, color=op)) +
-    geom_smooth()
+ggplot(data=df, mapping=aes(x=MiB, y=Mbps, color=run)) +
+    scale_color_brewer(palette="Set1") + facet_grid(op ~ .) + ylim(0, 250) +
+    geom_quantile(formula=y~log(x), quantiles=c(0.5)) +
+    geom_point(size=0.15, alpha=0.2)
 
 fig.height <- function(width) {
     phi <- (1 + sqrt(5.0)) / 2
