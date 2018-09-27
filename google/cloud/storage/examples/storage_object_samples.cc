@@ -166,7 +166,7 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [read object]
+  //! [read object] [START storage_download_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
@@ -178,7 +178,7 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
     }
     std::cout << "The object has " << count << " lines" << std::endl;
   }
-  //! [read object]
+  //! [read object] [END storage_download_file]
   (std::move(client), bucket_name, object_name);
 }
 
