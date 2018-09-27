@@ -37,9 +37,9 @@ inline namespace BIGTABLE_CLIENT_NS {
  * These policies are documented in`Table::Table()`.
  *
  * @par Cost
- * Creating a new object of type Table is comparable to creating a few objects
- * of type std::string or a few objects of type std::shared_ptr<int>. The class
- * represents a shallow handle to a remote object.
+ * Creating a new object of type `Table` is comparable to creating a few objects
+ * of type `std::string` or a few objects of type `std::shared_ptr<int>`. The
+ * class represents a shallow handle to a remote object.
  */
 class Table {
  public:

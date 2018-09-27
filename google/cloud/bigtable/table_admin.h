@@ -41,9 +41,10 @@ class TableAdmin {
    *   the project id in the @p client parameter.
    *
    * @par Cost
-   * Creating a new object of type TableAdmin is comparable to creating a few
-   * objects of type std::string or a few objects of type std::shared_ptr<int>.
-   * The class represents a shallow handle to a remote object.
+   * Creating a new object of type `TableAdmin` is comparable to creating a few
+   * objects of type `std::string` or a few objects of type
+   * `std::shared_ptr<int>`. The class represents a shallow handle to a remote
+   * object.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : impl_(std::move(client), std::move(instance_id)) {}

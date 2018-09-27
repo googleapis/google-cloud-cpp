@@ -43,11 +43,11 @@ class BulkMutator;
  *
  * @par Cost
  * Applications should avoid unnecessarily creating new objects of type
- * DataClient. Creating a new object of this type typically requires connecting
- * to the Cloud Bigtable servers, and performing the authentication workflows
- * with Google Cloud Platform. These operations can take many milliseconds,
- * therefore applications should try to reuse the same DataClient instances when
- * possible.
+ * `DataClient`. Creating a new object of this type typically requires
+ * connecting to the Cloud Bigtable servers, and performing the authentication
+ * workflows with Google Cloud Platform. These operations can take many
+ * milliseconds, therefore applications should try to reuse the same
+ * `DataClient` instances when possible.
  */
 class DataClient {
  public:

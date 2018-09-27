@@ -43,11 +43,11 @@ class InstanceAdmin;
  *
  * @par Cost
  * Applications should avoid unnecessarily creating new objects of type
- * InstanceAdminClient. Creating a new object of this type typically requires
+ * `InstanceAdminClient`. Creating a new object of this type typically requires
  * connecting to the Cloud Bigtable servers, and performing the authentication
  * workflows with Google Cloud Platform. These operations can take many
  * milliseconds, therefore applications should try to reuse the same
- * InstanceAdminClient instances when possible.
+ * `InstanceAdminClient` instances when possible.
  */
 class InstanceAdminClient {
  public:
