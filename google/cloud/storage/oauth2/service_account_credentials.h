@@ -93,43 +93,6 @@ class ServiceAccountCredentials : public RefreshingCredentials {
     signing_pem_ = pem;
   }
 
-  /**
-   * TODO: Docstring with a link to scope strings in web docs, mention this is
-   * useful for requesting a non-default scope like read-only.
-   *
-   * Mention that scopes are considered immutable, but that you can get a copy
-   * of this credential with altered scopes. Taken from
-   * https://github.com/GoogleCloudPlatform/google-auth-library-python/blob/master/google/oauth2/service_account.py.
-   */
-  ServiceAccountCredentials<HttpRequestBuilderType, ClockType> WithScopes(
-      std::set<std::string> scopes) {
-    std::ostringstream oss;
-    char const* sep = "";
-    for (auto const& scope : scopes) {
-      oss << sep << scope;
-      sep = " ";
-    }
-
-    ServiceAccountCredentials<HttpRequestBuilderType, ClockType> cred = *this;
-    // Set the new scopes and invalidate the credentials.
-    cred.jwt_payload_["scope"] = oss.str();
-    cred.access_token_ = "";
-    return cred;
-  }
-
-  /**
-   * TODO: Docstring explaining why you'd do this - link to:
-   * https://developers.google.com/identity/protocols/OAuth2ServiceAccount
-   */
-  ServiceAccountCredentials<HttpRequestBuilderType, ClockType>
-  WithServiceAccountUser(std::string user_email) {
-    ServiceAccountCredentials<HttpRequestBuilderType, ClockType> cred = *this;
-    // Set the new subject and invalidate the credentials.
-    cred.jwt_payload_["sub"] = user_email;
-    cred.access_token_ = "";
-    return cred;
-  }
-
  protected:
   bool IsExpired() override {
     auto now = std::chrono::system_clock::now();
