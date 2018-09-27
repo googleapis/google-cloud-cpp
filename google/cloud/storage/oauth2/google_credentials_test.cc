@@ -69,17 +69,12 @@ TEST_F(GoogleCredentialsTest, HomeSet) {
   EXPECT_THAT(actual, HasSubstr(".json"));
 }
 
-/// @test Verify that the service account file path fails when HOME is not set.
+/// @test Verify that the ADC file path returns empty when HOME is not set.
 TEST_F(GoogleCredentialsTest, HomeNotSet) {
   UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
   char const* home = internal::kGoogleAdcHomeVar;
   UnsetEnv(home);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(internal::GoogleAdcFilePathOrEmpty(), std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(internal::GoogleAdcFilePathOrEmpty(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(internal::GoogleAdcFilePathOrEmpty(), "");
 }
 
 /**
