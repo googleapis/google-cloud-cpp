@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/storage/internal/authorized_user_credentials.h"
-#include "google/cloud/storage/internal/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <fstream>

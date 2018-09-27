@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/credential_constants.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>

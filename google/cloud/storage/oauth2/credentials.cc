@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/credentials.h"
+#include "credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/authorized_user_credentials.h"
-#include "google/cloud/storage/internal/google_application_default_credentials_file.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>

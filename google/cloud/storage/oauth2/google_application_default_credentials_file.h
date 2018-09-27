@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GOOGLE_APPLICATION_DEFAULT_CREDENTIALS_FILE_H_
 
-#include "google/cloud/storage/credentials.h"
+#include "credentials.h"
 
 namespace google {
 namespace cloud {
