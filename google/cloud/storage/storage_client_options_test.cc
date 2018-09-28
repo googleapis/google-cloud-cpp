@@ -131,6 +131,15 @@ TEST_F(ClientOptionsTest, SetUploadBufferSize) {
   EXPECT_EQ(default_size, client_options.upload_buffer_size());
 }
 
+TEST_F(ClientOptionsTest, UserAgentPrefix) {
+  ClientOptions options(CreateInsecureCredentials());
+  EXPECT_EQ("", options.user_agent_prefix());
+  options.add_user_agent_prefx("foo-1.0");
+  EXPECT_EQ("foo-1.0", options.user_agent_prefix());
+  options.add_user_agent_prefx("bar-2.2");
+  EXPECT_EQ("bar-2.2/foo-1.0", options.user_agent_prefix());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

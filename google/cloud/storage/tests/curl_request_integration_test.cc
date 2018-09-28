@@ -19,11 +19,14 @@
 #include <cstdlib>
 #include <vector>
 
-namespace storage = google::cloud::storage;
-namespace nl = google::cloud::storage::internal::nl;
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+namespace {
 using testing::HasSubstr;
 
-namespace {
 std::string HttpBinEndpoint() {
   auto env = std::getenv("HTTPBIN_ENDPOINT");
   if (env != nullptr) {
@@ -31,7 +34,6 @@ std::string HttpBinEndpoint() {
   }
   return "https://nghttp2.org/httpbin";
 }
-}  // namespace
 
 TEST(CurlRequestTest, SimpleGET) {
   storage::internal::CurlRequestBuilder request(
@@ -167,6 +169,27 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   EXPECT_EQ("", response.headers.find("x-test-empty")->second);
   EXPECT_LE(1U, response.headers.count("x-test-foo"));
   EXPECT_EQ("bar", response.headers.find("x-test-foo")->second);
+}
+
+/// @test Verify the user agent prefix affects the request.
+TEST(CurlRequestTest, UserAgentPrefix) {
+  // Test that headers are parsed correctly. We send capitalized headers
+  // because some versions of httpbin capitalize and others do not, in real
+  // code (as opposed to a test), we should search for headers in a
+  // case-insensitive manner, but that is not the purpose of this test.
+  storage::internal::CurlRequestBuilder builder(
+      HttpBinEndpoint() + "/headers",
+      storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddUserAgentPrefix("test-program");
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+
+  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  EXPECT_EQ(200, response.status_code);
+  auto payload = nl::json::parse(response.payload);
+  ASSERT_EQ(1U, payload.count("headers"));
+  auto headers = payload["headers"];
+  EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("test-program"));
 }
 
 /// @test Verify that the Projection parameter is included if set.
@@ -372,3 +395,9 @@ TEST(CurlRequestTest, Logging) {
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Header)"));
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }
+}  // namespace
+}  // namespace internal
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

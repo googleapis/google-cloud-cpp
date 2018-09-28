@@ -90,6 +90,17 @@ class ClientOptions {
   std::size_t upload_buffer_size() const { return upload_buffer_size_; }
   ClientOptions& SetUploadBufferSize(std::size_t size);
 
+  std::string const& user_agent_prefix() const { return user_agent_prefix_; }
+  ClientOptions& add_user_agent_prefx(std::string const& v) {
+    std::string prefix = v;
+    if (not user_agent_prefix_.empty()) {
+      prefix += '/';
+      prefix += user_agent_prefix_;
+    }
+    user_agent_prefix_ = std::move(prefix);
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -103,6 +114,7 @@ class ClientOptions {
   std::size_t connection_pool_size_;
   std::size_t download_buffer_size_;
   std::size_t upload_buffer_size_;
+  std::string user_agent_prefix_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

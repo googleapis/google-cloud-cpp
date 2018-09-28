@@ -146,6 +146,9 @@ class CurlClient : public RawClient {
   void UnlockShared();
 
  private:
+  /// Setup the configuration parameters that do not depend on the request.
+  void SetupBuilderCommon(CurlRequestBuilder& builder, char const* method);
+
   /// Applies the common configuration parameters to @p builder.
   template <typename Request>
   void SetupBuilder(CurlRequestBuilder& builder, Request const& request,
