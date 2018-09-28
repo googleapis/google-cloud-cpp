@@ -154,6 +154,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the APIs to administer Cloud Bigtable instances. </p>
+<dl class="section user"><dt>Cost</dt><dd>Creating a new object of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html" title="Implements the APIs to administer Cloud Bigtable instances. ">InstanceAdmin</a></code> is comparable to creating a few objects of type <code>std::string</code> or a few objects of type <code>std::shared_ptr&lt;int&gt;</code>. The class represents a shallow handle to a remote object. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af1131dad1833304ae0586de8a2fcd1dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1131dad1833304ae0586de8a2fcd1dd">&#9670;&nbsp;</a></span>InstanceAdmin() <span class="overload">[1/2]</span></h2>
@@ -324,7 +325,7 @@ template&lt;typename... Policies&gt; </div>
   <table class="params">
     <tr><td class="paramname">cluster_config</td><td>a description of the new cluster to be created. </td></tr>
     <tr><td class="paramname">instance_id</td><td>the id of the instance in the project </td></tr>
-    <tr><td class="paramname">cluster_id</td><td>the id of the cluster in the project that needs to be created</td></tr>
+    <tr><td class="paramname">cluster_id</td><td>the id of the cluster in the project that needs to be created. It must be between 6 and 30 characters.</td></tr>
   </table>
   </dd>
 </dl>
@@ -352,7 +353,11 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section warning"><dt>Warning</dt><dd>Note that this is operation can take seconds or minutes to complete. The application may prefer to perform other work while waiting for this operation.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">instance_config</td><td>a description of the new instance to be created. </td></tr>
+    <tr><td class="paramname">instance_config</td><td>a description of the new instance to be created. instance_id and a display_name parameters must be set in instance_config,<ul>
+<li>instance_id : must be between 6 and 33 characters.</li>
+<li>display_name : must be between 4 and 30 characters. </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
