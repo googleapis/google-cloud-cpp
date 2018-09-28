@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H_
 
-#include "credentials.h"
-#include "credential_constants.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
@@ -29,7 +29,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
 /**
  * A C++ wrapper for Google's Authorized User Credentials.
  *
@@ -49,8 +49,8 @@ namespace internal {
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
  *     possible to mock the libcurl wrappers.
  */
-template <typename HttpRequestBuilderType = CurlRequestBuilder>
-class AuthorizedUserCredentials : public storage::Credentials {
+template <typename HttpRequestBuilderType = storage::internal::CurlRequestBuilder>
+class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents)
       : AuthorizedUserCredentials(contents, GoogleOAuthRefreshEndpoint()) {}
@@ -61,7 +61,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
     HttpRequestBuilderType request_builder(
         std::move(oauth_server),
         storage::internal::GetDefaultCurlHandleFactory());
-    auto credentials = nl::json::parse(content);
+    auto credentials = storage::internal::nl::json::parse(content);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload +=
@@ -84,6 +84,7 @@ class AuthorizedUserCredentials : public storage::Credentials {
 
  private:
   bool Refresh() {
+    namespace nl = storage::internal::nl;
     if (std::chrono::system_clock::now() < expiration_time_) {
       return true;
     }
@@ -116,10 +117,10 @@ class AuthorizedUserCredentials : public storage::Credentials {
   std::chrono::system_clock::time_point expiration_time_;
 };
 
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_AUTHORIZED_USER_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H_

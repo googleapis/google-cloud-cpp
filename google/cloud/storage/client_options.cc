@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <cstdlib>
 #include <set>
 #include <sstream>
@@ -24,13 +25,13 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-std::shared_ptr<google::cloud::storage::Credentials>
+std::shared_ptr<oauth2::Credentials>
 StorageDefaultCredentials() {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
-    return google::cloud::storage::CreateInsecureCredentials();
+    return oauth2::CreateInsecureCredentials();
   }
-  return google::cloud::storage::GoogleDefaultCredentials();
+  return oauth2::GoogleDefaultCredentials();
 }
 
 std::size_t DefaultConnectionPoolSize() {
@@ -53,7 +54,7 @@ std::size_t DefaultConnectionPoolSize() {
 
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
 
-ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
+ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("https://www.googleapis.com"),
       version_("v1"),

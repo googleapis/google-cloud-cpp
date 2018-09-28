@@ -25,6 +25,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace oauth2 {
 namespace {
 
 char const VAR_NAME[] = "GOOGLE_APPLICATION_CREDENTIALS";
@@ -71,7 +72,7 @@ TEST_F(CredentialsTest, LoadValidAuthorizedUserCredentials) {
   // using expressions with (potential) side-effects inside typeid().
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(internal::AuthorizedUserCredentials<>));
+  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
 
 /**
@@ -106,10 +107,11 @@ TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
   // using expressions with (potential) side-effects inside typeid().
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(internal::ServiceAccountCredentials<>));
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
 }  // namespace
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

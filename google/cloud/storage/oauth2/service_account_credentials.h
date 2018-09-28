@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 
-#include "credentials.h"
-#include "credential_constants.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <chrono>
 #include <condition_variable>
 #include <ctime>
@@ -31,7 +31,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
 /**
  * A C++ wrapper for Google's Service Account Credentials.
  *
@@ -52,9 +52,10 @@ namespace internal {
  *     possible to mock the libcurl wrappers.
  * @tparam ClockType a dependency injection point to fetch the current time.
  */
-template <typename HttpRequestBuilderType = CurlRequestBuilder,
+template <typename HttpRequestBuilderType =
+              storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
-class ServiceAccountCredentials : public storage::Credentials {
+class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(std::string const& content)
       : ServiceAccountCredentials(content, GoogleOAuthRefreshEndpoint()) {}
@@ -62,6 +63,7 @@ class ServiceAccountCredentials : public storage::Credentials {
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string default_token_uri)
       : expiration_time_(), clock_() {
+    namespace nl = storage::internal::nl;
     nl::json credentials = nl::json::parse(content);
     // Below, we construct a JWT refresh request used to obtain an access token.
     // The structure of a JWT is defined in RFC 7519 (see
@@ -119,8 +121,10 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
  private:
-  std::string MakeJWTAssertion(nl::json const& header, nl::json const& payload,
+  std::string MakeJWTAssertion(storage::internal::nl::json const& header,
+                               storage::internal::nl::json const& payload,
                                std::string const& pem_contents) {
+    using storage::internal::OpenSslUtils;
     std::string encoded_header =
         OpenSslUtils::UrlsafeBase64Encode(header.dump());
     std::string encoded_payload =
@@ -133,6 +137,7 @@ class ServiceAccountCredentials : public storage::Credentials {
   }
 
   bool Refresh() {
+    namespace nl = storage::internal::nl;
     if (std::chrono::system_clock::now() < expiration_time_) {
       return true;
     }
@@ -168,10 +173,10 @@ class ServiceAccountCredentials : public storage::Credentials {
   ClockType clock_;
 };
 
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_

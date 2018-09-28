@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -52,7 +53,8 @@ class NotificationsTest : public ::testing::Test {
 
   std::shared_ptr<testing::MockClient> mock_;
   std::unique_ptr<Client> client_;
-  ClientOptions client_options_ = ClientOptions(CreateInsecureCredentials());
+  ClientOptions client_options_ =
+      ClientOptions(oauth2::CreateInsecureCredentials());
 };
 
 TEST_F(NotificationsTest, ListNotifications) {

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/storage/object_rewriter.h"
@@ -48,7 +49,7 @@ class Client {
   /**
    * Creates the default client type given the credentials.
    */
-  explicit Client(std::shared_ptr<Credentials> credentials)
+  explicit Client(std::shared_ptr<oauth2::Credentials> credentials)
       : Client(ClientOptions(std::move(credentials))) {}
 
   /// Builds a client and maybe override the retry and/or backoff policies.

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
 #include <cstring>
@@ -24,8 +24,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
 namespace {
+using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
@@ -148,7 +149,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -70,7 +70,9 @@ struct OpenSslUtils {
    */
   static std::string SignStringWithPem(
       std::string const& str, std::string const& pem_contents,
-      google::cloud::storage::internal::JwtSigningAlgorithms alg) {
+      storage::oauth2::JwtSigningAlgorithms alg) {
+    using storage::oauth2::JwtSigningAlgorithms;
+
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
     const char* func_name = __func__;  // Avoid using the lambda name instead.

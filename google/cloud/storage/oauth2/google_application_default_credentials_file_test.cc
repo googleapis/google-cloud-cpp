@@ -21,7 +21,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
 namespace {
 using ::google::cloud::internal::SetEnv;
 using ::google::cloud::internal::UnsetEnv;
@@ -80,7 +80,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

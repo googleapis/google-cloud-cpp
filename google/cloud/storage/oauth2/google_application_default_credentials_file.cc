@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google_application_default_credentials_file.h"
+#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <sstream>
 
@@ -39,7 +39,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
+
 char const* GoogleApplicationDefaultCredentialsHomeVariable() {
   return CREDENTIALS_HOME_VAR;
 }
@@ -61,7 +62,7 @@ std::string GoogleApplicationDefaultCredentialsFile() {
   }
   return root + GoogleCredentialsSuffix();
 }
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
