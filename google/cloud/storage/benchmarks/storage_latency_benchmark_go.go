@@ -169,7 +169,7 @@ func MakeRandomData(desiredSize int) string {
 		result = result + sample(chars, kLineSize-1) + "\n"
 	}
 	if len(result) < desiredSize {
-		result = sample(chars, desiredSize-len(result))
+		result = result + sample(chars, desiredSize-len(result))
 	}
 	return result
 }

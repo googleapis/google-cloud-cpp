@@ -286,9 +286,7 @@ func RunTest(bucket *storage.BucketHandle, ctx context.Context,
 }
 
 func DeleteObject(bucket *storage.BucketHandle, ctx context.Context, objectName string) {
-	start := time.Now()
 	bucket.Object(objectName).Delete(ctx)
-	elapsed := time.Since(start)
 }
 
 func DeleteAllObjects(bucket *storage.BucketHandle, ctx context.Context, objectCount int) {
