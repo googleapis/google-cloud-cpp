@@ -133,7 +133,7 @@ TEST_F(ClientOptionsTest, SetUploadBufferSize) {
 }
 
 TEST_F(ClientOptionsTest, UserAgentPrefix) {
-  ClientOptions options(CreateInsecureCredentials());
+  ClientOptions options(oauth2::CreateInsecureCredentials());
   EXPECT_EQ("", options.user_agent_prefix());
   options.add_user_agent_prefx("foo-1.0");
   EXPECT_EQ("foo-1.0", options.user_agent_prefix());
