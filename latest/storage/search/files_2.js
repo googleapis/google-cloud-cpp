@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['lifecycle_5frule_2ecc',['lifecycle_rule.cc',['../lifecycle__rule_8cc.html',1,'']]],
-  ['lifecycle_5frule_2eh',['lifecycle_rule.h',['../lifecycle__rule_8h.html',1,'']]],
-  ['list_5fbuckets_5freader_2ecc',['list_buckets_reader.cc',['../list__buckets__reader_8cc.html',1,'']]],
-  ['list_5fbuckets_5freader_2eh',['list_buckets_reader.h',['../list__buckets__reader_8h.html',1,'']]],
-  ['list_5fobjects_5freader_2ecc',['list_objects_reader.cc',['../list__objects__reader_8cc.html',1,'']]],
-  ['list_5fobjects_5freader_2eh',['list_objects_reader.h',['../list__objects__reader_8h.html',1,'']]]
+  ['client_2ecc',['client.cc',['../client_8cc.html',1,'']]],
+  ['client_2eh',['client.h',['../client_8h.html',1,'']]],
+  ['client_5foptions_2ecc',['client_options.cc',['../client__options_8cc.html',1,'']]],
+  ['client_5foptions_2eh',['client_options.h',['../client__options_8h.html',1,'']]],
+  ['credential_5fconstants_2eh',['credential_constants.h',['../credential__constants_8h.html',1,'']]],
+  ['credentials_2ecc',['credentials.cc',['../credentials_8cc.html',1,'']]],
+  ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]]
 ];

@@ -39,5 +39,6 @@ var searchData=
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6f79ed0314f8655e71c4292895636f1c',1,'google::cloud::storage::v0::Client']]],
   ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a025a3894a62fe0f4f8fd96beabce8c5f',1,'google::cloud::storage::v0::Client']]],
   ['rewriteprogress',['RewriteProgress',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html',1,'google::cloud::storage::v0']]],
+  ['rs256',['RS256',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#adf56d5c10f381e0e82e9a2e421ead186ab774c36caa844a2b0e94f9c04c3ccacc',1,'google::cloud::storage::v0::oauth2']]],
   ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
 ];

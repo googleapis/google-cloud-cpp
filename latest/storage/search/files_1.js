@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['client_2ecc',['client.cc',['../client_8cc.html',1,'']]],
-  ['client_2eh',['client.h',['../client_8h.html',1,'']]],
-  ['client_5foptions_2ecc',['client_options.cc',['../client__options_8cc.html',1,'']]],
-  ['client_5foptions_2eh',['client_options.h',['../client__options_8h.html',1,'']]],
-  ['credentials_2ecc',['credentials.cc',['../credentials_8cc.html',1,'']]],
-  ['credentials_2eh',['credentials.h',['../credentials_8h.html',1,'']]]
+  ['bucket_5faccess_5fcontrol_2ecc',['bucket_access_control.cc',['../bucket__access__control_8cc.html',1,'']]],
+  ['bucket_5faccess_5fcontrol_2eh',['bucket_access_control.h',['../bucket__access__control_8h.html',1,'']]],
+  ['bucket_5fmetadata_2ecc',['bucket_metadata.cc',['../bucket__metadata_8cc.html',1,'']]],
+  ['bucket_5fmetadata_2eh',['bucket_metadata.h',['../bucket__metadata_8h.html',1,'']]]
 ];
