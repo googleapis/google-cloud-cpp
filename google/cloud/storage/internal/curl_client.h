@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <mutex>
 
 namespace google {
@@ -33,7 +34,7 @@ class CurlRequestBuilder;
  */
 class CurlClient : public RawClient {
  public:
-  explicit CurlClient(std::shared_ptr<Credentials> credentials)
+  explicit CurlClient(std::shared_ptr<oauth2::Credentials> credentials)
       : CurlClient(ClientOptions(std::move(credentials))) {}
 
   explicit CurlClient(ClientOptions options);

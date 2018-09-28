@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/storage/internal/authorized_user_credentials.h"
-#include "google/cloud/storage/internal/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <fstream>
@@ -25,6 +25,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace oauth2 {
 namespace {
 
 char const VAR_NAME[] = "GOOGLE_APPLICATION_CREDENTIALS";
@@ -71,7 +72,7 @@ TEST_F(CredentialsTest, LoadValidAuthorizedUserCredentials) {
   // using expressions with (potential) side-effects inside typeid().
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(internal::AuthorizedUserCredentials<>));
+  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
 
 /**
@@ -106,10 +107,11 @@ TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
   // using expressions with (potential) side-effects inside typeid().
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(internal::ServiceAccountCredentials<>));
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
 }  // namespace
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

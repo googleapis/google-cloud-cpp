@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 
 namespace google {
 namespace cloud {
@@ -40,10 +40,13 @@ inline namespace STORAGE_CLIENT_NS {
 class ClientOptions {
  public:
   ClientOptions();
-  explicit ClientOptions(std::shared_ptr<Credentials> credentials);
+  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials);
 
-  std::shared_ptr<Credentials> credentials() const { return credentials_; }
-  ClientOptions& set_credentials(std::shared_ptr<Credentials> credentials) {
+  std::shared_ptr<oauth2::Credentials> credentials() const {
+    return credentials_;
+  }
+  ClientOptions& set_credentials(
+      std::shared_ptr<oauth2::Credentials> credentials) {
     credentials_ = std::move(credentials);
     return *this;
   }
@@ -105,7 +108,7 @@ class ClientOptions {
   void SetupFromEnvironment();
 
  private:
-  std::shared_ptr<Credentials> credentials_;
+  std::shared_ptr<oauth2::Credentials> credentials_;
   std::string endpoint_;
   std::string version_;
   bool enable_http_tracing_;

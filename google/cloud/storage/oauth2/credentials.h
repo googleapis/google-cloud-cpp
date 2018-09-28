@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 
 #include "google/cloud/storage/version.h"
 #include <chrono>
@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace oauth2 {
 /**
  * Represents a credential to access Google Cloud Storage.
  */
@@ -45,7 +46,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials();
  * a test bench without having to worry about authentication or SSL setup, and
  * (b) when accessing publicly readable buckets or objects without credentials.
  */
-class InsecureCredentials : public storage::Credentials {
+class InsecureCredentials : public Credentials {
  public:
   InsecureCredentials() = default;
 
@@ -56,9 +57,10 @@ inline std::shared_ptr<Credentials> CreateInsecureCredentials() {
   return std::make_shared<InsecureCredentials>();
 }
 
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_

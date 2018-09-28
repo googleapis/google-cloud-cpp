@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/google_application_default_credentials_file.h"
+#include "google_application_default_credentials_file.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
@@ -21,7 +21,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
+namespace oauth2 {
 namespace {
 using ::google::cloud::internal::SetEnv;
 using ::google::cloud::internal::UnsetEnv;
@@ -80,7 +80,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
