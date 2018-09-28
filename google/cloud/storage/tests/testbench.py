@@ -308,8 +308,8 @@ class GcsObjectVersion(object):
         actual = self.metadata.get('md5Hash', '')
         expected = base64.b64encode(hashlib.md5(self.media).digest())
         if actual != expected:
-            raise ErrorResponse(
-                'Mismatched MD5 hash expected=%s, actual=%s' % (expected, actual))
+            raise ErrorResponse('Mismatched MD5 hash expected=%s, actual=%s' %
+                                (expected, actual))
 
     def validate_encryption_for_read(self, request,
                                      prefix='x-goog-encryption'):
@@ -732,11 +732,15 @@ class GcsObject(object):
         :rtype: GcsObjectVersion
         """
         content_type = request.headers.get('content-type')
-        if content_type is None or not content_type.startswith('multipart/related'):
-            raise ErrorResponse('Missing or invalid content-type header in multipart upload')
+        if content_type is None or not content_type.startswith(
+                'multipart/related'):
+            raise ErrorResponse(
+                'Missing or invalid content-type header in multipart upload')
         _, _, boundary = content_type.partition('boundary=')
         if boundary is None:
-            raise ErrorResponse('Missing boundary (%s) in content-type header in multipart upload' % boundary)
+            raise ErrorResponse(
+                'Missing boundary (%s) in content-type header in multipart upload'
+                % boundary)
 
         marker = '--' + boundary + '\r\n'
         body = extract_media(request)
@@ -748,7 +752,8 @@ class GcsObject(object):
         media_headers, media_body = self._parse_part(parts[2])
         end = media_body.find('\r\n--' + boundary + '--\r\n')
         if end == -1:
-            raise ErrorResponse('Missing end marker (--%s--) in media body' % boundary)
+            raise ErrorResponse(
+                'Missing end marker (--%s--) in media body' % boundary)
         media_body = media_body[:end]
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
@@ -758,7 +763,9 @@ class GcsObject(object):
         # The content-type needs to be patched up, yuck.
         if resource_headers.get('content-type') is not None:
             revision.update_from_metadata({
-                'contentType': resource_headers.get('content-type')})
+                'contentType':
+                resource_headers.get('content-type')
+            })
         self._insert_revision(revision)
         return revision
 
@@ -1363,7 +1370,7 @@ class GcsBucket(object):
         self.check_preconditions(request)
         current_etag = base64.b64encode(str(self.iam_version))
         if (request.headers.get('if-match') is not None
-            and current_etag != request.headers.get('if-match')):
+                and current_etag != request.headers.get('if-match')):
             raise ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
         if (request.headers.get('if-none-match') is not None\
@@ -2046,11 +2053,12 @@ def objects_insert(bucket_name):
         raise ErrorResponse('name not set in Objects: insert', status_code=412)
     upload_type = flask.request.args.get('uploadType')
     if upload_type is None:
-        raise ErrorResponse('uploadType not set in Objects: insert',
-                            status_code=412)
+        raise ErrorResponse(
+            'uploadType not set in Objects: insert', status_code=412)
     if upload_type not in {'multipart', 'media'}:
-        raise ErrorResponse('testbench does not support %s uploadType' % upload_type,
-                            status_code=400)
+        raise ErrorResponse(
+            'testbench does not support %s uploadType' % upload_type,
+            status_code=400)
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
