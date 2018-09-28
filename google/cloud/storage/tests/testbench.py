@@ -736,7 +736,7 @@ class GcsObject(object):
             raise ErrorResponse('Missing or invalid content-type header in multipart upload')
         _, _, boundary = content_type.partition('boundary=')
         if boundary is None:
-            raise ErrorResponse('Missing boundary in content-type header in multipart upload')
+            raise ErrorResponse('Missing boundary (%s) in content-type header in multipart upload' % boundary)
 
         marker = '--' + boundary + '\r\n'
         body = extract_media(request)
@@ -748,7 +748,7 @@ class GcsObject(object):
         media_headers, media_body = self._parse_part(parts[2])
         end = media_body.find('\r\n--' + boundary + '--\r\n')
         if end == -1:
-            raise ErrorResponse('Missing end marker in media body')
+            raise ErrorResponse('Missing end marker (--%s--) in media body' % boundary)
         media_body = media_body[:end]
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
