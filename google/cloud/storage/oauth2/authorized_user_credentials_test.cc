@@ -67,12 +67,11 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
   EXPECT_CALL(*mock_builder,
               Constructor(StrEq("https://oauth2.googleapis.com/token")))
       .Times(1);
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request]() {
-        MockHttpRequest result;
-        result.mock = mock_request;
-        return result;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request]() {
+    MockHttpRequest result;
+    result.mock = mock_request;
+    return result;
+  }));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(Invoke([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
@@ -117,12 +116,11 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest request;
-        request.mock = mock_request;
-        return request;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  }));
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))

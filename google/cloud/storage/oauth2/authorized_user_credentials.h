@@ -49,7 +49,8 @@ namespace oauth2 {
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
  *     possible to mock the libcurl wrappers.
  */
-template <typename HttpRequestBuilderType = storage::internal::CurlRequestBuilder>
+template <typename HttpRequestBuilderType =
+              storage::internal::CurlRequestBuilder>
 class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents)

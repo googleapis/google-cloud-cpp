@@ -103,12 +103,11 @@ TEST_F(ServiceAccountCredentialsTest,
       }));
 
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest result;
-        result.mock = mock_request;
-        return result;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest result;
+    result.mock = mock_request;
+    return result;
+  }));
 
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
@@ -157,12 +156,11 @@ TEST_F(ServiceAccountCredentialsTest,
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest request;
-        request.mock = mock_request;
-        return request;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  }));
   EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>())).Times(1);
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);

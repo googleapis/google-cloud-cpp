@@ -25,8 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-std::shared_ptr<oauth2::Credentials>
-StorageDefaultCredentials() {
+std::shared_ptr<oauth2::Credentials> StorageDefaultCredentials() {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     return oauth2::CreateInsecureCredentials();
