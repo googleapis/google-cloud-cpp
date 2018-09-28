@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/credential_constants.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
@@ -70,7 +70,8 @@ struct OpenSslUtils {
    */
   static std::string SignStringWithPem(
       std::string const& str, std::string const& pem_contents,
-      google::cloud::storage::internal::JwtSigningAlgorithms alg) {
+      storage::oauth2::internal::JwtSigningAlgorithms alg) {
+    using storage::oauth2::internal::JwtSigningAlgorithms;
     // We check for failures several times, so we shorten this into a lambda
     // to avoid bloating the code with alloc/init checks.
     const char* func_name = __func__;  // Avoid using the lambda name instead.

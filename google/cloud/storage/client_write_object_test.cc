@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -23,6 +24,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using oauth2::CreateAnonymousCredentials;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
@@ -51,7 +53,7 @@ class WriteObjectTest : public ::testing::Test {
 
   std::shared_ptr<testing::MockClient> mock;
   std::unique_ptr<Client> client;
-  ClientOptions client_options = ClientOptions(CreateInsecureCredentials());
+  ClientOptions client_options = ClientOptions(CreateAnonymousCredentials());
 };
 
 class MockStreambuf : public internal::ObjectWriteStreambuf {

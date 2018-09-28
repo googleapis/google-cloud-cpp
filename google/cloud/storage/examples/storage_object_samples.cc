@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include <functional>
 #include <iostream>
 #include <map>
@@ -373,7 +374,7 @@ void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](std::string bucket_name, std::string object_name) {
     // Create a client that does not authenticate with the server.
-    gcs::Client client{gcs::CreateInsecureCredentials()};
+    gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
     // Read an object, the object must have been made public.
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
     int count = 0;

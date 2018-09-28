@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
-#include "google/cloud/storage/credentials.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
@@ -27,6 +26,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/status.h"

@@ -12,53 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_ANONYMOUS_CREDENTIALS_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_ANONYMOUS_CREDENTIALS_H_
 
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
-#include <chrono>
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-/**
- * Represents a credential to access Google Cloud Storage.
- */
-class Credentials {
- public:
-  virtual ~Credentials() = default;
-
-  /**
-   * Returns the value for the Authorization header in HTTP requests.
-   */
-  virtual std::string AuthorizationHeader() = 0;
-};
-
-std::shared_ptr<Credentials> GoogleDefaultCredentials();
+namespace oauth2 {
 
 /**
- * Defines credentials to access Google Cloud Storage anonymously.
+ * Credential type used to access Google Cloud Storage anonymously.
  *
  * This is only useful in two cases: (a) in testing, where you want to access
  * a test bench without having to worry about authentication or SSL setup, and
  * (b) when accessing publicly readable buckets or objects without credentials.
  */
-class InsecureCredentials : public storage::Credentials {
+class AnonymousCredentials : public Credentials {
  public:
-  InsecureCredentials() = default;
+  AnonymousCredentials() = default;
 
   std::string AuthorizationHeader() override;
 };
 
-inline std::shared_ptr<Credentials> CreateInsecureCredentials() {
-  return std::make_shared<InsecureCredentials>();
-}
-
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CREDENTIALS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_ANONYMOUS_CREDENTIALS_H_

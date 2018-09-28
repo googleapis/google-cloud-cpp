@@ -21,6 +21,7 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 
@@ -46,9 +47,9 @@ class Client {
   explicit Client() : Client(ClientOptions()) {}
 
   /**
-   * Creates the default client type given the credentials.
+   * Creates the default client type given the credential.
    */
-  explicit Client(std::shared_ptr<Credentials> credentials)
+  explicit Client(std::shared_ptr<oauth2::Credentials> credentials)
       : Client(ClientOptions(std::move(credentials))) {}
 
   /// Builds a client and maybe override the retry and/or backoff policies.
