@@ -29,8 +29,8 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * - `CLOUD_STORAGE_TESTBENCH_ENDPOINT`: if set, use this http endpoint to
  *   make all http requests instead of the production GCS service. Also,
- *   if set it uses the `google::cloud::storage::InsecureCredentials` by
- *   default.
+ *   if set it uses the `google::cloud::storage::oauth2::AnonymousCredentials`
+ *   by default.
  * - `CLOUD_STORAGE_ENABLE_CLOG`: if set, enable std::clog as a backend for
  *   `google::cloud::LogSink`.
  * - `CLOUD_STORAGE_ENABLE_TRACING`: if set, this is the list of components that

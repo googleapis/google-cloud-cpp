@@ -171,6 +171,8 @@ add_library(storage_client
             notification_metadata.h
             notification_metadata.cc
             notification_payload_format.h
+            oauth2/anonymous_credentials.h
+            oauth2/anonymous_credentials.cc
             oauth2/authorized_user_credentials.h
             oauth2/credential_constants.h
             oauth2/credentials.h
@@ -275,6 +277,7 @@ set(storage_client_unit_tests
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
+    oauth2/anonymous_credentials_test.cc
     oauth2/authorized_user_credentials_test.cc
     oauth2/credentials_test.cc
     oauth2/google_application_default_credentials_file_test.cc

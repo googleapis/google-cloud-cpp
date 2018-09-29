@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include <cstdlib>
 #include <set>
@@ -24,11 +25,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 namespace {
 std::shared_ptr<oauth2::Credentials> StorageDefaultCredentials() {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
-    return oauth2::CreateInsecureCredentials();
+    return oauth2::CreateAnonymousCredentials();
   }
   return oauth2::GoogleDefaultCredentials();
 }

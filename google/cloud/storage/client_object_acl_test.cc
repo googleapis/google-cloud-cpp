@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -50,7 +50,7 @@ class ObjectAccessControlsTest : public ::testing::Test {
   std::shared_ptr<testing::MockClient> mock;
   std::unique_ptr<Client> client;
   ClientOptions client_options =
-      ClientOptions(oauth2::CreateInsecureCredentials());
+      ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
 TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
