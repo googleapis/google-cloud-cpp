@@ -165,11 +165,7 @@ install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/google/cloud
-        FILES_MATCHING
-        PATTERN "*.h")
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/internal/version_info.h DESTINATION
-              include/google/cloud/internal)
+google_cloud_cpp_install_headers(google_cloud_cpp_common include/google/cloud)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
