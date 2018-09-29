@@ -215,19 +215,21 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 
 void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"check-consistency: <project-id> <instance-id> <table-id>"};
+  if (argc != 3) {
+    throw Usage{
+        "check-consistency: <project-id> <instance-id> <table-id> "
+        "<consistency_token>"};
   }
   std::string const table_id_param = ConsumeArg(argc, argv);
+  std::string const consistency_token_param = ConsumeArg(argc, argv);
 
   //! [check consistency]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param) {
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,
+     std::string consistency_token_param) {
 
-    std::string const consistency_token_str =
-        admin.GenerateConsistencyToken(table_id_param);
     google::cloud::bigtable::TableId table_id(table_id_param);
     google::cloud::bigtable::ConsistencyToken consistency_token(
-        consistency_token_str);
+        consistency_token_param);
     auto result = admin.CheckConsistency(table_id, consistency_token);
     if (result) {
       std::cout << "Table is consistent" << std::endl;
@@ -239,7 +241,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
     std::cout << std::flush;
   }
   //! [check consistency]
-  (std::move(admin), table_id_param);
+  (std::move(admin), table_id_param, consistency_token_param);
 }
 
 void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
