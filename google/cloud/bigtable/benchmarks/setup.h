@@ -37,6 +37,7 @@ class BenchmarkSetup {
   std::string const& notes() const { return notes_; }
   std::string const& project_id() const { return project_id_; }
   std::string const& instance_id() const { return instance_id_; }
+  std::string const& app_profile_id() const { return app_profile_id_; }
 
   /// The randomly generated table id for the benchmark.
   std::string const& table_id() const { return table_id_; }
@@ -51,6 +52,7 @@ class BenchmarkSetup {
   std::string notes_;
   std::string project_id_;
   std::string instance_id_;
+  std::string app_profile_id_;
   std::string table_id_;
   int thread_count_ = kDefaultThreads;
   long table_size_ = kDefaultTableSize;

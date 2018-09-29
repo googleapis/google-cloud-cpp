@@ -64,8 +64,9 @@ constexpr int kScanSizes[] = {100, 1000, 10000};
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size, std::string const& table_id,
-                             long scan_size,
+                             long table_size,
+                             bigtable::AppProfileId app_profile_id,
+                             std::string const& table_id, long scan_size,
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
 
@@ -87,6 +88,7 @@ int main(int argc, char* argv[]) try {
     auto start = std::chrono::steady_clock::now();
     auto combined =
         RunBenchmark(benchmark, data_client, setup.table_size(),
+                     bigtable::AppProfileId(setup.app_profile_id()),
                      setup.table_id(), scan_size, setup.test_duration());
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
@@ -118,12 +120,13 @@ int main(int argc, char* argv[]) try {
 namespace {
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size, std::string const& table_id,
-                             long scan_size,
+                             long table_size,
+                             bigtable::AppProfileId app_profile_id,
+                             std::string const& table_id, long scan_size,
                              std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
 
-  bigtable::Table table(std::move(data_client), table_id);
+  bigtable::Table table(std::move(data_client), app_profile_id, table_id);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<long> prng(0, table_size - scan_size - 1);

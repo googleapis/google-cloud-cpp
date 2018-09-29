@@ -64,12 +64,13 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
       notes_(FormattedAnnotations()),
       project_id_(),
       instance_id_(),
+      app_profile_id_(),
       table_id_(MakeRandomTableId(prefix)) {
   auto usage = [argv](char const* msg) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance>"
+              << " <project> <instance> <app_profile_id>"
               << " [thread-count (" << kDefaultThreads << ")]"
               << " [test-duration-seconds (" << kDefaultTestDuration << "min)]"
               << " [table-size (" << kDefaultTableSize << ")]"
@@ -77,7 +78,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
     google::cloud::internal::RaiseRuntimeError(msg);
   };
 
-  if (argc < 3) {
+  if (argc < 4) {
     usage("too few arguments for program.");
   }
 
@@ -90,6 +91,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
 
   project_id_ = shift();
   instance_id_ = shift();
+  app_profile_id_ = shift();
 
   if (argc == 1) {
     return;

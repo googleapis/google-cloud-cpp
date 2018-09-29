@@ -27,20 +27,24 @@ ctest --output-on-failure
 
 readonly BTDIR="google/cloud/bigtable"
 
+# Use the APP_PROFILE_ID if set or pass an empty string (represets default profile) otherwaise.
+APP_PROFILE_ID="${APP_PROFILE_ID:-}"
+echo APP_PROFILE_ID=${APP_PROFILE_ID}
+
 case ${BENCHMARK} in
     endurance)
-        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 4 82800;
+        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 4 82800;
         ;;
     latency)
-        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}";
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}";
         ;;
     throughput)
         # The magic number 64 here is the number of threads necessary to saturate the CPU
         # on a n1-standard-4 GCE instance (that is 4 vCPUs).
-        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 64 1800;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 64 1800;
         ;;
     scan)
-        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 1800;
+        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 1 1800;
         ;;
     integration)
         (cd "${BTDIR}/tests" && "${PROJECT_ROOT}/${BTDIR}/tests/run_integration_tests_production.sh");
@@ -49,16 +53,16 @@ case ${BENCHMARK} in
     # The following cases are used to test the script when making changes, they are not good
     # benchmarks.
     endurance-quick)
-        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
+        "${BTDIR}/benchmarks/endurance_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 1 5 1000 true;
         ;;
     latency-quick)
-        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 1 5 1000 true;
         ;;
     throughput-quick)
-        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
+        "${BTDIR}/benchmarks/apply_read_latency_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 1 5 1000 true;
         ;;
     scan-quick)
-        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" 1 5 1000 true;
+        "${BTDIR}/benchmarks/scan_throughput_benchmark" "${PROJECT_ID}" "${INSTANCE_ID}" "${APP_PROFILE_ID}" 1 5 1000 true;
         ;;
     *)
         echo "Unknown benchmark type"
