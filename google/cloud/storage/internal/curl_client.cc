@@ -22,6 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 extern "C" void CurlShareLockCallback(CURL* handle, curl_lock_data data,
                                       curl_lock_access access, void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
@@ -33,7 +34,6 @@ extern "C" void CurlShareUnlockCallback(CURL* handle, curl_lock_data data,
   auto* client = reinterpret_cast<CurlClient*>(userptr);
   client->UnlockShared();
 }
-
 
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
     ClientOptions const& options) {
@@ -62,13 +62,19 @@ std::string XmlMapPredefinedAcl(std::string const& acl) {
 
 }  // namespace
 
-template <typename Request>
-void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                              Request const& request, char const* method) {
+void CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
+                                    char const* method) {
   builder.SetMethod(method)
       .SetDebugLogging(options_.enable_http_tracing())
       .SetCurlShare(share_.get())
+      .AddUserAgentPrefix(options_.user_agent_prefix())
       .AddHeader(options_.credentials()->AuthorizationHeader());
+}
+
+template <typename Request>
+void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
+                              Request const& request, char const* method) {
+  SetupBuilderCommon(builder, method);
   request.AddOptionsToHttpRequest(builder);
 }
 
@@ -326,9 +332,9 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
                              storage_factory_);
   SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("alt", "media");
-  // TODO(#937) - use client options to configure buffer size.
-  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
-      builder.BuildDownloadRequest(std::string{}), kDefaultBufferSize));
+  std::unique_ptr<CurlReadStreambuf> buf(
+      new CurlReadStreambuf(builder.BuildDownloadRequest(std::string{}),
+                            client_options().download_buffer_size()));
   return std::make_pair(Status(),
                         std::unique_ptr<ObjectReadStreambuf>(std::move(buf)));
 }
@@ -352,9 +358,8 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   }
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
-  // TODO(#937) - use client options to configure buffer size.
-  std::unique_ptr<internal::CurlStreambuf> buf(
-      new internal::CurlStreambuf(builder.BuildUpload(), kDefaultBufferSize));
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), client_options().upload_buffer_size()));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
@@ -883,11 +888,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_upload_factory_);
-  builder.SetMethod("PUT")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "PUT");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -905,23 +907,23 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (request.HasOption<IfGenerationMatch>()) {
     builder.AddHeader(
         "x-goog-if-generation-match: " +
-            std::to_string(request.GetOption<IfGenerationMatch>().value()));
+        std::to_string(request.GetOption<IfGenerationMatch>().value()));
   }
   // IfGenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<IfMetagenerationMatch>()) {
     builder.AddHeader(
         "x-goog-if-meta-generation-match: " +
-            std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
+        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
   }
   // IfMetagenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<KmsKeyName>()) {
     builder.AddHeader("x-goog-encryption-kms-key-name: " +
-        request.GetOption<KmsKeyName>().value());
+                      request.GetOption<KmsKeyName>().value());
   }
   if (request.HasOption<PredefinedAcl>()) {
     builder.AddHeader(
         "x-goog-acl: " +
-            XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
+        XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
   }
   builder.AddOption(request.GetOption<UserProject>());
 
@@ -935,7 +937,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   // QuotaUser cannot be set, checked by the caller.
 
   builder.AddHeader("Content-Length: " +
-      std::to_string(request.contents().size()));
+                    std::to_string(request.contents().size()));
   auto payload = builder.BuildRequest().MakeRequest(request.contents());
   if (payload.status_code >= 300) {
     return std::make_pair(
@@ -955,11 +957,8 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_download_factory_);
-  builder.SetMethod("GET")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "GET");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -970,13 +969,13 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   if (request.HasOption<IfGenerationMatch>()) {
     builder.AddHeader(
         "x-goog-if-generation-match: " +
-            std::to_string(request.GetOption<IfGenerationMatch>().value()));
+        std::to_string(request.GetOption<IfGenerationMatch>().value()));
   }
   // IfGenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<IfMetagenerationMatch>()) {
     builder.AddHeader(
         "x-goog-if-meta-generation-match: " +
-            std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
+        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
   }
   // IfMetagenerationNotMatch cannot be set, checked by the caller.
   builder.AddOption(request.GetOption<UserProject>());
@@ -989,9 +988,9 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
 
-  // TODO(#937) - use client options to configure buffer size.
-  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
-      builder.BuildDownloadRequest(std::string{}), kDefaultBufferSize));
+  std::unique_ptr<CurlReadStreambuf> buf(
+      new CurlReadStreambuf(builder.BuildDownloadRequest(std::string{}),
+                            client_options().download_buffer_size()));
   return std::make_pair(Status(),
                         std::unique_ptr<ObjectReadStreambuf>(std::move(buf)));
 }
@@ -1002,11 +1001,8 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
                                  request.bucket_name() + "/" +
                                  request.object_name(),
                              xml_upload_factory_);
-  builder.SetMethod("PUT")
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
-      .AddHeader(options_.credentials()->AuthorizationHeader())
-      .AddHeader("Host: storage.googleapis.com");
+  SetupBuilderCommon(builder, "PUT");
+  builder.AddHeader("Host: storage.googleapis.com");
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1022,23 +1018,25 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   }
   builder.AddOption(request.GetOption<EncryptionKey>());
   if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader("x-goog-if-generation-match: " +
+    builder.AddHeader(
+        "x-goog-if-generation-match: " +
         std::to_string(request.GetOption<IfGenerationMatch>().value()));
   }
   // IfGenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader("x-goog-if-meta-generation-match: " +
+    builder.AddHeader(
+        "x-goog-if-meta-generation-match: " +
         std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
   }
   // IfMetagenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<KmsKeyName>()) {
     builder.AddHeader("x-goog-encryption-kms-key-name: " +
-        request.GetOption<KmsKeyName>().value());
+                      request.GetOption<KmsKeyName>().value());
   }
   if (request.HasOption<PredefinedAcl>()) {
     builder.AddHeader(
         "x-goog-acl: " +
-            XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
+        XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
   }
   builder.AddOption(request.GetOption<UserProject>());
 
@@ -1051,9 +1049,8 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
 
-  // TODO(#937) - use client options to configure buffer size.
-  std::unique_ptr<internal::CurlStreambuf> buf(
-      new internal::CurlStreambuf(builder.BuildUpload(), kDefaultBufferSize));
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), client_options().upload_buffer_size()));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));

@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 
 namespace google {
 namespace cloud {
@@ -40,10 +40,13 @@ inline namespace STORAGE_CLIENT_NS {
 class ClientOptions {
  public:
   ClientOptions();
-  explicit ClientOptions(std::shared_ptr<Credentials> credentials);
+  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials);
 
-  std::shared_ptr<Credentials> credentials() const { return credentials_; }
-  ClientOptions& set_credentials(std::shared_ptr<Credentials> credentials) {
+  std::shared_ptr<oauth2::Credentials> credentials() const {
+    return credentials_;
+  }
+  ClientOptions& set_credentials(
+      std::shared_ptr<oauth2::Credentials> credentials) {
     credentials_ = std::move(credentials);
     return *this;
   }
@@ -84,17 +87,37 @@ class ClientOptions {
     return *this;
   }
 
+  std::size_t download_buffer_size() const { return download_buffer_size_; }
+  ClientOptions& SetDownloadBufferSize(std::size_t size);
+
+  std::size_t upload_buffer_size() const { return upload_buffer_size_; }
+  ClientOptions& SetUploadBufferSize(std::size_t size);
+
+  std::string const& user_agent_prefix() const { return user_agent_prefix_; }
+  ClientOptions& add_user_agent_prefx(std::string const& v) {
+    std::string prefix = v;
+    if (not user_agent_prefix_.empty()) {
+      prefix += '/';
+      prefix += user_agent_prefix_;
+    }
+    user_agent_prefix_ = std::move(prefix);
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
  private:
-  std::shared_ptr<Credentials> credentials_;
+  std::shared_ptr<oauth2::Credentials> credentials_;
   std::string endpoint_;
   std::string version_;
   bool enable_http_tracing_;
   bool enable_raw_client_tracing_;
   std::string project_id_;
   std::size_t connection_pool_size_;
+  std::size_t download_buffer_size_;
+  std::size_t upload_buffer_size_;
+  std::string user_agent_prefix_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

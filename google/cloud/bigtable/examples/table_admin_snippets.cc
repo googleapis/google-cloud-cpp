@@ -244,6 +244,23 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id_param, consistency_token_param);
 }
 
+void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
+                              int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "generate-consistency-token: <project-id> <instance-id> <table-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  //! [generate consistency token]
+  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+    std::string token = admin.GenerateConsistencyToken(table_id);
+    std::cout << std::endl << "generated token is : " << token << std::endl;
+  }
+  //! [generate consistency token]
+  (std::move(admin), table_id);
+}
+
 void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 3) {
@@ -307,6 +324,30 @@ void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), cluster_id_str, snapshot_id_str);
 }
 
+void CreateTableFromSnapshot(google::cloud::bigtable::TableAdmin admin,
+                             int argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "create-table-from-snapshot: <project-id> <instance-id> <cluster-id> "
+        "<snapshot-id> <table-id>"};
+  }
+  std::string const cluster_id_str = ConsumeArg(argc, argv);
+  std::string const snapshot_id_str = ConsumeArg(argc, argv);
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  //! [create table from snapshot]
+  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
+     std::string snapshot_id_str, std::string table_id) {
+    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
+    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
+    auto future =
+        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);
+    std::cout << "Table created :" << future.get().name() << std::endl;
+  }
+  //! [create table from snapshot]
+  (std::move(admin), cluster_id_str, snapshot_id_str, table_id);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -327,6 +368,7 @@ int main(int argc, char* argv[]) try {
       {"get-snapshot", &GetSnapshot},
       {"list-snapshot", &ListSnapshots},
       {"delete-snapshot", &DeleteSnapshot},
+      {"create-table-from-snapshot", &CreateTableFromSnapshot},
   };
 
   {

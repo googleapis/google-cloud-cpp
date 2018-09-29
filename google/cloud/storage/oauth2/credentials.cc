@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/authorized_user_credentials.h"
-#include "google/cloud/storage/internal/google_application_default_credentials_file.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -26,20 +26,20 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace oauth2 {
+
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  auto path = storage::internal::GoogleApplicationDefaultCredentialsFile();
+  auto path = GoogleApplicationDefaultCredentialsFile();
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
 
   auto object = storage::internal::nl::json::parse(contents);
   std::string type = object["type"];
   if (type == "authorized_user") {
-    return std::make_shared<storage::internal::AuthorizedUserCredentials<>>(
-        contents);
+    return std::make_shared<AuthorizedUserCredentials<>>(contents);
   }
   if (type == "service_account") {
-    return std::make_shared<storage::internal::ServiceAccountCredentials<>>(
-        contents);
+    return std::make_shared<ServiceAccountCredentials<>>(contents);
   }
   google::cloud::internal::RaiseRuntimeError("Unsupported credential type (" +
                                              type + ")");
@@ -47,6 +47,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
 
 std::string InsecureCredentials::AuthorizationHeader() { return ""; }
 
+}  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

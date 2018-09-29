@@ -24,6 +24,7 @@ import (
 	"path"
 	"runtime"
 	"strconv"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -35,11 +36,14 @@ const (
 	kDefaultObjectCount               = 1000
 	kChunkSize                        = 1024 * 1024
 	kDefaultObjectChunkCount          = 250
-	kThroughputReportIntervalInChunks = 10
+	kThroughputReportIntervalInChunks = 4
+	kReadOp = 1
+	kWriteOp = 2
+	kCreateOp = 3
 )
 
 type IterationResult struct {
-	op      string
+	op      int
 	bytes   int
 	elapsed time.Duration
 }
@@ -158,7 +162,17 @@ func MakeRandomObjectName() string {
 
 func PrintResult(result TestResult) {
 	for _, r := range result {
-		fmt.Printf("%s,%d,%d\n", r.op, r.bytes, r.elapsed.Nanoseconds()/1000000)
+	        op := "UNKNOWN"
+		if r.op == kReadOp {
+		    op = "READ"
+		}
+		if r.op == kWriteOp {
+		    op = "WRITE"
+		}
+		if r.op == kCreateOp {
+		    op = "CREATE"
+		}
+		fmt.Printf("%s,%d,%d\n", op, r.bytes, r.elapsed.Nanoseconds()/1000000)
 	}
 }
 
@@ -180,7 +194,7 @@ func MakeRandomData(desiredSize int) string {
 
 func CreateOneObject(bucket *storage.BucketHandle, ctx context.Context,
 	objectName string, data string, objectChunkCount int) []IterationResult {
-	return WriteCommon(bucket, ctx, objectName, data, objectChunkCount, "CREATE")
+	return WriteCommon(bucket, ctx, objectName, data, objectChunkCount, kCreateOp)
 }
 
 func CreateAllObjects(bucket *storage.BucketHandle, ctx context.Context,
@@ -204,26 +218,32 @@ func CreateAllObjects(bucket *storage.BucketHandle, ctx context.Context,
 
 func WriteOnce(bucket *storage.BucketHandle, ctx context.Context,
 	objectName string, data string, objectChunkCount int) []IterationResult {
-	return WriteCommon(bucket, ctx, objectName, data, objectChunkCount, "WRITE")
+	return WriteCommon(bucket, ctx, objectName, data, objectChunkCount, kWriteOp)
 }
 
 func WriteCommon(bucket *storage.BucketHandle, ctx context.Context,
-	objectName string, data string, objectChunkCount int, opName string) []IterationResult {
+	objectName string, data string, objectChunkCount int, opName int) []IterationResult {
 	start := time.Now()
 	result := make([]IterationResult, 0, objectChunkCount)
 
 	w := bucket.Object(objectName).NewWriter(ctx)
 	for i := 0; i < objectChunkCount; i++ {
-		if _, err := w.Write([]byte(data)); err != nil {
-			result = append(result, IterationResult{op: "WRITE", bytes: -1, elapsed: time.Since(start)})
+	    r := strings.NewReader(data)
+	    n, err := io.Copy(w, r)
+	    if err != nil {
+			result = append(result, IterationResult{op: opName, bytes: -1, elapsed: time.Since(start)})
 		}
+	    if n != int64(len(data)) {
+	       fmt.Printf("# Short write %d / %d\n", n, len(data))
+	    }
 		if i != 0 && i%kThroughputReportIntervalInChunks == 0 {
 			result = append(result, IterationResult{op: opName, bytes: i * len(data), elapsed: time.Since(start)})
 		}
 	}
 	if err := w.Close(); err != nil {
-		result = append(result, IterationResult{op: opName, bytes: objectChunkCount * len(data), elapsed: time.Since(start)})
+	   fmt.Printf("# Error %v\n", err);
 	}
+	result = append(result, IterationResult{op: opName, bytes: objectChunkCount * len(data), elapsed: time.Since(start)})
 	return result
 }
 
@@ -233,7 +253,7 @@ func ReadOnce(bucket *storage.BucketHandle, ctx context.Context, objectName stri
 
 	rd, err := bucket.Object(objectName).NewReader(ctx)
 	if err != nil {
-		result = append(result, IterationResult{op: "READ", bytes: 0, elapsed: time.Since(start)})
+		result = append(result, IterationResult{op: kReadOp, bytes: 0, elapsed: time.Since(start)})
 		return result
 	}
 	buf := make([]byte, 4096)
@@ -242,25 +262,28 @@ func ReadOnce(bucket *storage.BucketHandle, ctx context.Context, objectName stri
 		report = kThroughputReportIntervalInChunks * kChunkSize
 	)
 	for {
-		_, err = io.ReadFull(rd, buf)
+		n, err := io.ReadFull(rd, buf)
+		if err == io.EOF {
+		   break
+		}
 		if err != nil {
-			result = append(result, IterationResult{op: "READ", bytes: -1, elapsed: time.Since(start)})
+			result = append(result, IterationResult{op: kReadOp, bytes: -1, elapsed: time.Since(start)})
 			continue
 		}
-		totalSize += len(buf)
+		totalSize += n
 		if totalSize != 0 && totalSize%report == 0 {
-			result = append(result, IterationResult{op: "READ", bytes: totalSize, elapsed: time.Since(start)})
+			result = append(result, IterationResult{op: kReadOp, bytes: totalSize, elapsed: time.Since(start)})
 		}
 	}
 	rd.Close()
-	result = append(result, IterationResult{op: "READ", bytes: totalSize, elapsed: time.Since(start)})
+	result = append(result, IterationResult{op: kReadOp, bytes: totalSize, elapsed: time.Since(start)})
 	return result
 }
 
 func RunTestThread(bucket *storage.BucketHandle, ctx context.Context,
 	duration int, objectNames []string, objectChunkCount int, ch chan TestResult) {
 	data := MakeRandomData(kChunkSize)
-	result := make([]IterationResult, 0, 5*duration)
+	result := make([]IterationResult, 0, duration*objectChunkCount/10)
 	deadline := time.Now().Add(time.Duration(duration) * time.Second)
 	for time.Now().Before(deadline) {
 		name := objectNames[rand.Intn(len(objectNames))]
@@ -286,9 +309,7 @@ func RunTest(bucket *storage.BucketHandle, ctx context.Context,
 }
 
 func DeleteObject(bucket *storage.BucketHandle, ctx context.Context, objectName string) {
-	start := time.Now()
 	bucket.Object(objectName).Delete(ctx)
-	elapsed := time.Since(start)
 }
 
 func DeleteAllObjects(bucket *storage.BucketHandle, ctx context.Context, objectCount int) {

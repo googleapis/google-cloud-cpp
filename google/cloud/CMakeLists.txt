@@ -97,6 +97,13 @@ target_include_directories(google_cloud_cpp_common
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+set_target_properties(
+    google_cloud_cpp_common
+    PROPERTIES
+        VERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+        SOVERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)

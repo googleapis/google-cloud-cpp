@@ -100,11 +100,8 @@ add_library(storage_client
             client.cc
             client_options.h
             client_options.cc
-            credentials.h
-            credentials.cc
             internal/access_control_common.h
             internal/access_control_common.cc
-            internal/authorized_user_credentials.h
             internal/binary_data_as_debug_string.h
             internal/binary_data_as_debug_string.cc
             internal/bucket_acl_requests.h
@@ -113,7 +110,6 @@ add_library(storage_client
             internal/bucket_requests.cc
             internal/raw_client_wrapper_utils.h
             internal/common_metadata.h
-            internal/credential_constants.h
             internal/curl_handle.h
             internal/curl_handle.cc
             internal/curl_handle_factory.h
@@ -140,8 +136,6 @@ add_library(storage_client
             internal/format_rfc3339.cc
             internal/generic_object_request.h
             internal/generic_request.h
-            internal/google_application_default_credentials_file.h
-            internal/google_application_default_credentials_file.cc
             internal/http_response.h
             internal/http_response.cc
             internal/logging_client.h
@@ -165,7 +159,6 @@ add_library(storage_client
             internal/raw_client.h
             internal/retry_client.h
             internal/retry_client.cc
-            internal/service_account_credentials.h
             internal/service_account_requests.h
             internal/service_account_requests.cc
             lifecycle_rule.h
@@ -178,6 +171,13 @@ add_library(storage_client
             notification_metadata.h
             notification_metadata.cc
             notification_payload_format.h
+            oauth2/authorized_user_credentials.h
+            oauth2/credential_constants.h
+            oauth2/credentials.h
+            oauth2/credentials.cc
+            oauth2/google_application_default_credentials_file.h
+            oauth2/google_application_default_credentials_file.cc
+            oauth2/service_account_credentials.h
             object_access_control.h
             object_access_control.cc
             object_metadata.h
@@ -214,6 +214,13 @@ target_include_directories(storage_client
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+set_target_properties(
+    storage_client
+    PROPERTIES
+        VERSION
+        ${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}
+        SOVERSION
+        ${STORAGE_CLIENT_VERSION_MAJOR})
 
 add_library(storage_client_testing
             testing/canonical_errors.h
@@ -248,15 +255,12 @@ set(storage_client_unit_tests
     client_notifications_test.cc
     client_test.cc
     client_write_object_test.cc
-    credentials_test.cc
     internal/access_control_common_test.cc
-    internal/authorized_user_credentials_test.cc
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
     internal/bucket_requests_test.cc
     internal/default_object_acl_requests_test.cc
     internal/format_rfc3339_test.cc
-    internal/google_application_default_credentials_file_test.cc
     internal/http_response_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc
@@ -267,11 +271,14 @@ set(storage_client_unit_tests
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
     internal/retry_client_test.cc
-    internal/service_account_credentials_test.cc
     internal/service_account_requests_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
+    oauth2/authorized_user_credentials_test.cc
+    oauth2/credentials_test.cc
+    oauth2/google_application_default_credentials_file_test.cc
+    oauth2/service_account_credentials_test.cc
     object_access_control_test.cc
     object_metadata_test.cc
     object_test.cc
@@ -333,7 +340,7 @@ install(TARGETS storage_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/storage/client
+install(DIRECTORY . DESTINATION include/google/cloud/storage/client
         FILES_MATCHING
         PATTERN "*.h"
         PATTERN "testing/*"

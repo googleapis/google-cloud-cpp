@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <cstdlib>
 #include <set>
 #include <sstream>
@@ -24,13 +25,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-std::shared_ptr<google::cloud::storage::Credentials>
-StorageDefaultCredentials() {
+std::shared_ptr<oauth2::Credentials> StorageDefaultCredentials() {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
-    return google::cloud::storage::CreateInsecureCredentials();
+    return oauth2::CreateInsecureCredentials();
   }
-  return google::cloud::storage::GoogleDefaultCredentials();
+  return oauth2::GoogleDefaultCredentials();
 }
 
 std::size_t DefaultConnectionPoolSize() {
@@ -41,17 +41,27 @@ std::size_t DefaultConnectionPoolSize() {
   return 4 * nthreads;
 }
 
+// There is nothing special about the buffer sizes here. They are relatively
+// small, because we do not want to consume too much memory from the
+// application. They are larger than the typical socket buffer size (64KiB), to
+// be able to read the full buffer into userspace if it happens to be full.
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE 128 * 1024
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
+
 }  // namespace
 
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
 
-ClientOptions::ClientOptions(std::shared_ptr<Credentials> credentials)
+ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("https://www.googleapis.com"),
       version_("v1"),
       enable_http_tracing_(false),
       enable_raw_client_tracing_(false),
-      connection_pool_size_(DefaultConnectionPoolSize()) {
+      connection_pool_size_(DefaultConnectionPoolSize()),
+      download_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE),
+      upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE) {
   char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator != nullptr) {
     endpoint_ = emulator;
@@ -90,6 +100,24 @@ void ClientOptions::SetupFromEnvironment() {
   if (project_id != nullptr) {
     project_id_ = project_id;
   }
+}
+
+ClientOptions& ClientOptions::SetDownloadBufferSize(std::size_t size) {
+  if (size == 0) {
+    download_buffer_size_ = GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE;
+  } else {
+    download_buffer_size_ = size;
+  }
+  return *this;
+}
+
+ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
+  if (size == 0) {
+    upload_buffer_size_ = GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE;
+  } else {
+    upload_buffer_size_ = size;
+  }
+  return *this;
 }
 
 }  // namespace STORAGE_CLIENT_NS

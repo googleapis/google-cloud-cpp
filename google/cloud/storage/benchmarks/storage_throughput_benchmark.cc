@@ -66,7 +66,7 @@ constexpr unsigned long kDefaultObjectCount = 1000;
 constexpr long kMiB = 1024 * 1024;
 constexpr unsigned long kChunkSize = 1 * kMiB;
 constexpr int kDefaultObjectChunkCount = 250;
-constexpr int kThroughputReportIntervalInChunks = 10;
+constexpr int kThroughputReportIntervalInChunks = 4;
 
 struct Options {
   std::string region;
@@ -267,7 +267,7 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
     if (i != 0 and i % kThroughputReportIntervalInChunks == 0) {
       auto elapsed = std::chrono::steady_clock::now() - start;
       result.emplace_back(
-          IterationResult{op_type, i * kChunkSize,
+	  IterationResult{op_type, i * data_chunk.size(),
                           std::chrono::duration_cast<milliseconds>(elapsed)});
     }
   }
@@ -275,7 +275,7 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
     stream.Close();
     auto elapsed = std::chrono::steady_clock::now() - start;
     result.emplace_back(
-        IterationResult{op_type, options.object_chunk_count * kChunkSize,
+	IterationResult{op_type, options.object_chunk_count * data_chunk.size(),
                         std::chrono::duration_cast<milliseconds>(elapsed)});
   } catch (std::exception const& ex) {
     std::cerr << ex.what() << std::endl;
@@ -319,6 +319,9 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   while (not stream.eof()) {
     char buf[4096];
     stream.read(buf, sizeof(buf));
+    if (stream.gcount() == 0) {
+      continue;
+    }
     total_size += stream.gcount();
     if (total_size != 0 and total_size % report == 0) {
       auto elapsed = std::chrono::steady_clock::now() - start;
@@ -328,8 +331,9 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
     }
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
-  result.emplace_back(IterationResult{
-      OP_READ, total_size, std::chrono::duration_cast<milliseconds>(elapsed)});
+  result.emplace_back(
+      IterationResult{OP_READ, total_size,
+                     std::chrono::duration_cast<milliseconds>(elapsed)});
   return result;
 }
 

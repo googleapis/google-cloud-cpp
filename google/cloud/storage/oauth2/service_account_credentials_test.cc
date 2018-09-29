@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/storage/internal/credential_constants.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -24,11 +24,12 @@
 namespace google {
 namespace cloud {
 namespace storage {
-namespace testing {
+inline namespace STORAGE_CLIENT_NS {
+namespace oauth2 {
 namespace {
-
-using storage::internal::GoogleOAuthRefreshEndpoint;
-using storage::internal::ServiceAccountCredentials;
+using ::google::cloud::storage::internal::HttpResponse;
+using ::google::cloud::storage::testing::MockHttpRequest;
+using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
@@ -98,16 +99,15 @@ TEST_F(ServiceAccountCredentialsTest,
         // Hard-coded in this order in ServiceAccountCredentials class.
         EXPECT_THAT(payload,
                     HasSubstr(std::string("grant_type=") + kGrantParamEscaped));
-        return storage::internal::HttpResponse{200, response, {}};
+        return HttpResponse{200, response, {}};
       }));
 
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest result;
-        result.mock = mock_request;
-        return result;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest result;
+    result.mock = mock_request;
+    return result;
+  }));
 
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
@@ -151,17 +151,16 @@ TEST_F(ServiceAccountCredentialsTest,
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   EXPECT_CALL(*mock_request, MakeRequest(_))
-      .WillOnce(Return(storage::internal::HttpResponse{200, r1, {}}))
-      .WillOnce(Return(storage::internal::HttpResponse{200, r2, {}}));
+      .WillOnce(Return(HttpResponse{200, r1, {}}))
+      .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest request;
-        request.mock = mock_request;
-        return request;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  }));
   EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>())).Times(1);
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
@@ -190,7 +189,8 @@ TEST_F(ServiceAccountCredentialsTest,
 }
 
 }  // namespace
-}  // namespace testing
+}  // namespace oauth2
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

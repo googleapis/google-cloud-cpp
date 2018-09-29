@@ -40,6 +40,14 @@ class TableAdmin;
  * endpoints, default timeouts, and other gRPC configuration options. This is an
  * interface class because it is also used as a dependency injection point in
  * some of the tests.
+ *
+ * @par Cost
+ * Applications should avoid unnecessarily creating new objects of type
+ * `AdminClient`. Creating a new object of this type typically requires
+ * connecting to the Cloud Bigtable servers, and performing the authentication
+ * workflows with Google Cloud Platform. These operations can take many
+ * milliseconds, therefore applications should try to reuse the same
+ * `AdminClient` instances when possible.
  */
 class AdminClient {
  public:

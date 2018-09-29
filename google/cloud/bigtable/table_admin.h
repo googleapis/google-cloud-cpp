@@ -39,6 +39,12 @@ class TableAdmin {
    * @param instance_id the id of the instance, e.g., "my-instance", the full
    *   name (e.g. '/projects/my-project/instances/my-instance') is built using
    *   the project id in the @p client parameter.
+   *
+   * @par Cost
+   * Creating a new object of type `TableAdmin` is comparable to creating a few
+   * objects of type `std::string` or a few objects of type
+   * `std::shared_ptr<int>`. The class represents a shallow handle to a remote
+   * object.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : impl_(std::move(client), std::move(instance_id)) {}
@@ -192,6 +198,9 @@ class TableAdmin {
    *     consistency token.
    * @return the consistency token for table.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc generate consistency token
    */
   std::string GenerateConsistencyToken(std::string const& table_id);
 
@@ -335,6 +344,9 @@ class TableAdmin {
    * @param snapshot_id the id of the snapshot to which table belongs.
    * @param table_id the id of the table which needs to be created.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc create table from snapshot
    */
   std::future<google::bigtable::admin::v2::Table> CreateTableFromSnapshot(
       bigtable::ClusterId const& cluster_id,

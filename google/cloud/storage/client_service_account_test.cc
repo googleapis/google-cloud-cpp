@@ -24,6 +24,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using storage::oauth2::CreateInsecureCredentials;
 using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
