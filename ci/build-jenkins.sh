@@ -27,7 +27,7 @@ ctest --output-on-failure
 
 readonly BTDIR="google/cloud/bigtable"
 
-# Use the APP_PROFILE_ID if set or pass an empty string (represets default profile) otherwaise.
+# Use the APP_PROFILE_ID if set or pass an empty string (the default profile) otherwise.
 APP_PROFILE_ID="${APP_PROFILE_ID:-}"
 echo APP_PROFILE_ID=${APP_PROFILE_ID}
 
