@@ -40,7 +40,7 @@ class ClientOptionsTest : public ::testing::Test {
 
 TEST_F(ClientOptionsTest, Default) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_ENABLE_TRACING", nullptr);
-  // Create the options with the insecure credentials because the default
+  // Create the options with the anonymous credentials because the default
   // credentials try to load the application default credentials, and those do
   // not exist in the CI environment, which results in errors or warnings.
   auto creds = oauth2::CreateAnonymousCredentials();
