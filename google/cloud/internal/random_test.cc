@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "random.h"
+#include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 
 using namespace google::cloud::internal;

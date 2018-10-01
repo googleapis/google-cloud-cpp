@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H_
 
-#include "internal/throw_delegate.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <type_traits>
 #include <utility>
 
