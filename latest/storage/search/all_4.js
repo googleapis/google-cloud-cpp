@@ -7,7 +7,7 @@ var searchData=
   ['enabled',['enabled',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketVersioning.html#a0dc7c4c73c6844f79d193836eb93f3e3',1,'google::cloud::storage::v0::BucketVersioning']]],
   ['encryption',['encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a70cfce9ef47ea8af8a6b8eeb854fab32',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['encryption_5falgorithm',['encryption_algorithm',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html#aba57c3a0e4c10d6c31948d1adfa73acb',1,'google::cloud::storage::v0::CustomerEncryption']]],
-  ['encryption_5fas_5foptional',['encryption_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ac5ffebfa4492a1be67c1416b2555016a',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['encryption_5fas_5foptional',['encryption_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ab2fdc55e1d8c1d4a6b09164545c93817',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['encryptiondatafrombase64key',['EncryptionDataFromBase64Key',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa6f7eaeec26085a446f829b2f13b7eeb',1,'google::cloud::storage::v0']]],
   ['encryptiondatafrombinarykey',['EncryptionDataFromBinaryKey',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4418a63d224c7b1d893b3983709ab3e0',1,'google::cloud::storage::v0']]],
   ['encryptionkey',['EncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKey.html',1,'google::cloud::storage::v0']]],

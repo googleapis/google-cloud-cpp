@@ -3,7 +3,7 @@ var searchData=
   ['label',['label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a77fc36e5c9291fa3dd3e588a566d4d14',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['labels',['labels',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a0ef99824b5c329f836a41c8ac986945f',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['lifecycle',['lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af7ac1f8e6ff20f22740be2967727bb27',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['lifecycle_5fas_5foptional',['lifecycle_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a1bddb735f2f219e27b5f8ea9ac16adb4',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['lifecycle_5fas_5foptional',['lifecycle_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae3b269d75f869a838b3c3b0c73705f92',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['lifecyclerule',['LifecycleRule',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#af9645e330d7b20ff0aa7a423b77f6601',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['listbucketacl',['ListBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0030af74c45749f6178f160728d8ef6',1,'google::cloud::storage::v0::Client']]],
   ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c',1,'google::cloud::storage::v0::Client']]],
@@ -18,5 +18,5 @@ var searchData=
   ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a836063ab73ff658d41eb8fb17615d02c',1,'google::cloud::storage::v0::ListObjectsReader']]],
   ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af185cafdcd77fb4fe7b0fec350985551',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['logging',['logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ac1b4b44777173d93ddb86d0039341172',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['logging_5fas_5foptional',['logging_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aa20931332c058d4b0c6cf1aef65dbbf3',1,'google::cloud::storage::v0::BucketMetadata']]]
+  ['logging_5fas_5foptional',['logging_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a4b9fb1d3cf4e78b8bdcba4213182af2b',1,'google::cloud::storage::v0::BucketMetadata']]]
 ];

@@ -10,6 +10,6 @@ var searchData=
   ['notification_5fmetadata_2eh',['notification_metadata.h',['../notification__metadata_8h.html',1,'']]],
   ['notification_5fpayload_5fformat_2eh',['notification_payload_format.h',['../notification__payload__format_8h.html',1,'']]],
   ['notificationmetadata',['NotificationMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html',1,'google::cloud::storage::v0::NotificationMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a6e4a79a4641a5b27660c109c89810d8b',1,'google::cloud::storage::v0::NotificationMetadata::NotificationMetadata()']]],
-  ['num_5fnewer_5fversions',['num_newer_versions',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#ad9c5d814ecb1a46fb364f9c2177317ed',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
+  ['num_5fnewer_5fversions',['num_newer_versions',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a6b09d7c24ed12ede8011c5f1b58b28b6',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
   ['numnewerversions',['NumNewerVersions',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a7aef17f40367ef52de7f3fc52f2efa19',1,'google::cloud::storage::v0::LifecycleRule']]]
 ];

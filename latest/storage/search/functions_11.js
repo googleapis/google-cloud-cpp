@@ -30,7 +30,7 @@ var searchData=
   ['set_5fstorage_5fclass',['set_storage_class',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aea9e3439314d0d614f671274772fd61c',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5ftopic',['set_topic',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#ac21801406448c19fa268222728dda061',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['set_5fversion',['set_version',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a2c5a40f9590e20a3ddf93f02f0b1c648',1,'google::cloud::storage::v0::ClientOptions']]],
-  ['set_5fversioning',['set_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a9df76f7afb0a4cb0c5624c79fe77fe0f',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['set_5fversioning',['set_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a3df958e944e345cd7ceba1a42f5ed313',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fwebsite',['set_website',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2e9f6b5c5ee87f6effbbc0130135562c',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['setacl',['SetAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#af056c6cdb9151fb53a149760332167fc',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder::SetAcl()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html#a6e42c897bd31d2107826c0df6b1d973f',1,'google::cloud::storage::v0::ObjectMetadataPatchBuilder::SetAcl()']]],
   ['setbilling',['SetBilling',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a45378962b11b39c7508f6a20a8f19950',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
