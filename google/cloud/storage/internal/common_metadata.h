@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <chrono>
@@ -139,7 +139,7 @@ class CommonMetadata {
   std::string kind_;
   std::int64_t metageneration_;
   std::string name_;
-  google::cloud::internal::optional<Owner> owner_;
+  google::cloud::optional<Owner> owner_;
   std::string self_link_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;

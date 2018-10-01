@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_READ_ROWS_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_READ_ROWS_READER_H_
 
-#include "mock_response_reader.h"
+#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 

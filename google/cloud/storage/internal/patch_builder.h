@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <string>
 #include <vector>
@@ -111,9 +111,9 @@ class PatchBuilder {
    *     patch that removes the previous value.
    */
   template <typename T>
-  PatchBuilder& AddOptionalField(
-      char const* field_name, google::cloud::internal::optional<T> const& lhs,
-      google::cloud::internal::optional<T> const& rhs) {
+  PatchBuilder& AddOptionalField(char const* field_name,
+                                 google::cloud::optional<T> const& lhs,
+                                 google::cloud::optional<T> const& rhs) {
     if (lhs == rhs) return *this;
     if (not rhs.has_value()) {
       patch_[field_name] = nullptr;

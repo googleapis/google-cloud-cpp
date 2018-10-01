@@ -75,7 +75,6 @@ add_library(google_cloud_cpp_common
             internal/build_info.h
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             internal/make_unique.h
-            internal/optional.h
             internal/port_platform.h
             internal/random.h
             internal/random.cc
@@ -87,6 +86,7 @@ add_library(google_cloud_cpp_common
             internal/throw_delegate.cc
             log.h
             log.cc
+            optional.h
             version.h)
 target_link_libraries(google_cloud_cpp_common
                       PUBLIC Threads::Threads
@@ -125,12 +125,12 @@ create_bazel_config(google_cloud_cpp_testing)
 set(google_cloud_cpp_common_unit_tests
     iam_bindings_test.cc
     internal/backoff_policy_test.cc
-    internal/optional_test.cc
     internal/random_test.cc
     internal/invoke_result_test.cc
     internal/retry_policy_test.cc
     internal/throw_delegate_test.cc
-    log_test.cc)
+    log_test.cc
+    optional_test.cc)
 
 # Export the list of unit tests so the Bazel BUILD file can pick it up.
 export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"

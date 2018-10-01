@@ -59,8 +59,7 @@ static_assert(
     "ListBucketsReader::iterator &>");
 
 ListBucketsIterator::ListBucketsIterator(
-    ListBucketsReader* owner,
-    google::cloud::internal::optional<BucketMetadata> value)
+    ListBucketsReader* owner, google::cloud::optional<BucketMetadata> value)
     : owner_(owner), value_(std::move(value)) {
   if (not value_) {
     // This iterator was initialized by begin() on an empty list, turn it into
@@ -82,10 +81,10 @@ ListBucketsReader::iterator ListBucketsReader::begin() {
   return iterator(this, GetNext());
 }
 
-google::cloud::internal::optional<BucketMetadata> ListBucketsReader::GetNext() {
+google::cloud::optional<BucketMetadata> ListBucketsReader::GetNext() {
   if (current_buckets_.end() == current_) {
     if (on_last_page_) {
-      return google::cloud::internal::optional<BucketMetadata>();
+      return google::cloud::optional<BucketMetadata>();
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListBuckets(request_);
@@ -96,11 +95,10 @@ google::cloud::internal::optional<BucketMetadata> ListBucketsReader::GetNext() {
       on_last_page_ = true;
     }
     if (current_buckets_.end() == current_) {
-      return google::cloud::internal::optional<BucketMetadata>();
+      return google::cloud::optional<BucketMetadata>();
     }
   }
-  return google::cloud::internal::optional<BucketMetadata>(
-      std::move(*current_++));
+  return google::cloud::optional<BucketMetadata>(std::move(*current_++));
 }
 
 }  // namespace STORAGE_CLIENT_NS

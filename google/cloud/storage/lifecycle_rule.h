@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include "google/cloud/storage/storage_class.h"
@@ -69,13 +69,11 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs);
 
 /// Implement a wrapper for Lifecycle Conditions.
 struct LifecycleRuleCondition {
-  google::cloud::internal::optional<std::int32_t> age;
-  google::cloud::internal::optional<std::chrono::system_clock::time_point>
-      created_before;
-  google::cloud::internal::optional<bool> is_live;
-  google::cloud::internal::optional<std::vector<std::string>>
-      matches_storage_class;
-  google::cloud::internal::optional<std::int32_t> num_newer_versions;
+  google::cloud::optional<std::int32_t> age;
+  google::cloud::optional<std::chrono::system_clock::time_point> created_before;
+  google::cloud::optional<bool> is_live;
+  google::cloud::optional<std::vector<std::string>> matches_storage_class;
+  google::cloud::optional<std::int32_t> num_newer_versions;
 };
 
 inline bool operator==(LifecycleRuleCondition const& lhs,

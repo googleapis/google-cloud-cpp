@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_HEADERS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_HEADERS_H_
 
-#include "google/cloud/internal/optional.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <iostream>
@@ -46,7 +46,7 @@ class WellKnownHeader {
   T const& value() const { return value_.value(); }
 
  private:
-  google::cloud::internal::optional<T> value_;
+  google::cloud::optional<T> value_;
 };
 
 template <typename H, typename T>

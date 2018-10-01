@@ -6,7 +6,6 @@ google_cloud_cpp_common_HDRS = [
     "internal/backoff_policy.h",
     "internal/build_info.h",
     "internal/make_unique.h",
-    "internal/optional.h",
     "internal/port_platform.h",
     "internal/random.h",
     "internal/invoke_result.h",
@@ -14,6 +13,7 @@ google_cloud_cpp_common_HDRS = [
     "internal/setenv.h",
     "internal/throw_delegate.h",
     "log.h",
+    "optional.h",
     "version.h",
 ]
 

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_
 
-#include "google/cloud/internal/optional.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
@@ -35,8 +35,8 @@ struct CustomerEncryption {
 /// Defines one of the source objects for a compose operation.
 struct ComposeSourceObject {
   std::string object_name;
-  google::cloud::internal::optional<long> generation;
-  google::cloud::internal::optional<long> if_generation_match;
+  google::cloud::optional<long> generation;
+  google::cloud::optional<long> if_generation_match;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
@@ -243,7 +243,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
-  google::cloud::internal::optional<CustomerEncryption> customer_encryption_;
+  google::cloud::optional<CustomerEncryption> customer_encryption_;
   std::int64_t generation_;
   std::string kms_key_name_;
   std::string md5_hash_;
