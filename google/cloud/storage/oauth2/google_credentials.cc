@@ -55,26 +55,26 @@ std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials() {
 }
 
 std::shared_ptr<AuthorizedUserCredentials<>>
-CreateAuthorizedUserCredentialsFromJsonFilePath(std::string path) {
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return CreateAuthorizedUserCredentialsFromJsonContents(contents);
 }
 
 std::shared_ptr<AuthorizedUserCredentials<>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string contents) {
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   return std::make_shared<AuthorizedUserCredentials<>>(contents);
 }
 
 std::shared_ptr<ServiceAccountCredentials<>>
-CreateServiceAccountCredentialsFromJsonFilePath(std::string path) {
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return CreateServiceAccountCredentialsFromJsonContents(contents);
 }
 
 std::shared_ptr<ServiceAccountCredentials<>>
-CreateServiceAccountCredentialsFromJsonContents(std::string contents) {
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   return std::make_shared<ServiceAccountCredentials<>>(contents);
 }
 
