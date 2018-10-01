@@ -38,10 +38,6 @@ class AnonymousCredentials : public Credentials {
   std::string AuthorizationHeader() override;
 };
 
-inline std::shared_ptr<Credentials> CreateAnonymousCredentials() {
-  return std::make_shared<AnonymousCredentials>();
-}
-
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

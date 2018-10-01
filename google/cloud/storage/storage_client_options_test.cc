@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/client_options.h"
-#include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 

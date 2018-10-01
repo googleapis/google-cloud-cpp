@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include <functional>
 #include <iostream>
 #include <map>

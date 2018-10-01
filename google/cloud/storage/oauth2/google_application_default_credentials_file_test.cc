@@ -30,8 +30,8 @@ using ::google::cloud::testing_util::EnvironmentVariableRestore;
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_(GoogleApplicationDefaultCredentialsHomeVariable()),
-        override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
+      : home_(GoogleAdcHomeEnvVar()),
+        override_variable_(GoogleAdcEnvVar()) {}
 
  protected:
   void SetUp() override {
@@ -50,17 +50,17 @@ class DefaultServiceAccountFileTest : public ::testing::Test {
 
 /// @test Verify that the application can override the default credentials.
 TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
-  SetEnv("GOOGLE_APPLICATION_CREDENTIALS", "/foo/bar/baz");
-  auto actual = GoogleApplicationDefaultCredentialsFile();
+  SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
+  auto actual = GoogleAdcFilePathOrEmpty();
   EXPECT_EQ("/foo/bar/baz", actual);
 }
 
 /// @test Verify that the file path works as expected when using HOME.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
-  UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
-  char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
+  UnsetEnv(GoogleAdcEnvVar());
+  char const* home = GoogleAdcHomeEnvVar();
   SetEnv(home, "/foo/bar/baz");
-  auto actual = GoogleApplicationDefaultCredentialsFile();
+  auto actual = GoogleAdcFilePathOrEmpty();
   using testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
   EXPECT_THAT(actual, HasSubstr(".json"));
@@ -68,15 +68,10 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
 /// @test Verify that the service account file path fails when HOME is not set.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  UnsetEnv("GOOGLE_APPLICATION_CREDENTIALS");
-  char const* home = GoogleApplicationDefaultCredentialsHomeVariable();
+  UnsetEnv(GoogleAdcEnvVar());
+  char const* home = GoogleAdcHomeEnvVar();
   UnsetEnv(home);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(GoogleApplicationDefaultCredentialsFile(), std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(GoogleApplicationDefaultCredentialsFile(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
 }
 
 }  // namespace

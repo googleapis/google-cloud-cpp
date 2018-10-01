@@ -32,22 +32,24 @@ namespace oauth2 {
  */
 enum class JwtSigningAlgorithms { RS256 };
 
-/// The endpoint to create an access token from.
-inline char const* GoogleOAuthRefreshEndpoint() {
-  static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
-  return kEndpoint;
-}
-
 /// The max lifetime in seconds of an access token.
 constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
   return std::chrono::seconds(3600);
 }
 
-/// The skew in seconds, to be subtracted from a token's expiration time,
-/// used to determine if we should attempt to refresh and get a new access
-/// token. This helps avoid a token potentially expiring mid-request.
-constexpr std::chrono::seconds GoogleOAuthTokenExpirationSlack() {
+/**
+ * The skew in seconds, to be subtracted from a token's expiration time,
+ * used to determine if we should attempt to refresh and get a new access
+ * token. This helps avoid a token potentially expiring mid-request.
+ */
+constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
   return std::chrono::seconds(500);
+}
+
+/// The endpoint to create an access token from.
+inline char const* GoogleOAuthRefreshEndpoint() {
+  static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
+  return kEndpoint;
 }
 
 inline char const* GoogleOAuthScopeCloudPlatform() {

@@ -103,7 +103,7 @@ class AuthorizedUserCredentials : public Credentials {
     std::string new_id = access_token["id_token"];
     auto expires_in = std::chrono::seconds(access_token["expires_in"]);
     auto new_expiration = std::chrono::system_clock::now() + expires_in -
-                          GoogleOAuthTokenExpirationSlack();
+        GoogleOAuthAccessTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;

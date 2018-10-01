@@ -13,17 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include <sstream>
+#include <cstdlib>
 
 namespace {
-#ifdef _WIN32
-char const CREDENTIALS_HOME_VAR[] = "APPDATA";
-#else
-char const CREDENTIALS_HOME_VAR[] = "HOME";
-#endif
 
-std::string const& GoogleCredentialsSuffix() {
+std::string const& GoogleWellKnownAdcFilePathSuffix() {
 #ifdef _WIN32
   static std::string const suffix =
       "/gcloud/application_default_credentials.json";
@@ -33,6 +27,7 @@ std::string const& GoogleCredentialsSuffix() {
 #endif
   return suffix;
 }
+
 }  // anonymous namespace
 
 namespace google {
@@ -41,27 +36,19 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-char const* GoogleApplicationDefaultCredentialsHomeVariable() {
-  return CREDENTIALS_HOME_VAR;
+std::string GoogleAdcFilePathOrEmpty() {
+  auto override_value = std::getenv(GoogleAdcEnvVar());
+  if (override_value != nullptr) {
+    return std::string(override_value);
+  }
+  // Search well known gcloud ADC path.
+  auto adc_path_root = std::getenv(GoogleAdcHomeEnvVar());
+  if (adc_path_root != nullptr) {
+    return std::string(adc_path_root) + GoogleWellKnownAdcFilePathSuffix();
+  }
+  return "";
 }
 
-std::string GoogleApplicationDefaultCredentialsFile() {
-  auto override_value = std::getenv("GOOGLE_APPLICATION_CREDENTIALS");
-  if (override_value != nullptr) {
-    return override_value;
-  }
-  // There are probably more efficient ways to do this, but meh, the strings
-  // are typically short, and this does not happen that often.
-  auto root = std::getenv(GoogleApplicationDefaultCredentialsHomeVariable());
-  if (root == nullptr) {
-    std::ostringstream os;
-    os << "The " << GoogleApplicationDefaultCredentialsHomeVariable()
-       << " environment variable is not set. Cannot determine the default"
-       << " path for service account credentials.";
-    google::cloud::internal::RaiseRuntimeError(os.str());
-  }
-  return root + GoogleCredentialsSuffix();
-}
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
