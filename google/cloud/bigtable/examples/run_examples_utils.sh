@@ -174,6 +174,8 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
+  local token="$(./table_admin_snippets generate-consistency-token ${project_id} ${INSTANCE} ${TABLE} | awk '{print $5}')"
+  run_example ./table_admin_snippets check-consistency "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
   run_example ./table_admin_snippets drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./data_admin_snippets read-rows "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
@@ -362,3 +364,4 @@ run_hello_app_profile_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_app_profile
 }
+
