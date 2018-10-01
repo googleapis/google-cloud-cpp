@@ -82,7 +82,7 @@ start_testbench() {
   gunicorn --bind 0.0.0.0:${PORT} \
       --worker-class gevent \
       --access-logfile - \
-      --pythonpath "${PROJECT_ROOT}/google/cloud/storage/tests" \
+      --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
       testbench:application \
       >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
