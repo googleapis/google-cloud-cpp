@@ -40,7 +40,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
     }
     google::cloud::internal::RaiseRuntimeError(
         "Unsupported credential type (" + cred_type +
-            ") when reading Application Default Credentials file.");
+        ") when reading Application Default Credentials file.");
   }
 
   // TODO(#579): Check for implicit environment-based credentials if no ADC file

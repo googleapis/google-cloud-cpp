@@ -30,8 +30,7 @@ using ::google::cloud::testing_util::EnvironmentVariableRestore;
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_(GoogleAdcHomeEnvVar()),
-        override_variable_(GoogleAdcEnvVar()) {}
+      : home_(GoogleAdcHomeEnvVar()), override_variable_(GoogleAdcEnvVar()) {}
 
  protected:
   void SetUp() override {
