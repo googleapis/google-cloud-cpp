@@ -30,6 +30,7 @@ storage_client_unit_tests = [
     "lifecycle_rule_test.cc",
     "list_buckets_reader_test.cc",
     "list_objects_reader_test.cc",
+    "oauth2/anonymous_credentials_test.cc",
     "oauth2/authorized_user_credentials_test.cc",
     "oauth2/credentials_test.cc",
     "oauth2/google_application_default_credentials_file_test.cc",

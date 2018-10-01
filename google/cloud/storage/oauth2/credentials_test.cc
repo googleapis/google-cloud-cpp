@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
@@ -39,12 +40,6 @@ class CredentialsTest : public ::testing::Test {
   testing_util::EnvironmentVariableRestore env_ =
       testing_util::EnvironmentVariableRestore(VAR_NAME);
 };
-
-/// @test Verify `InsecureCredentials` works as expected.
-TEST_F(CredentialsTest, Insecure) {
-  InsecureCredentials credentials;
-  EXPECT_EQ("", credentials.AuthorizationHeader());
-}
 
 /**
  * @test Verify `GoogleDefaultCredentials()` loads authorized user credentials.

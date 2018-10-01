@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -57,7 +57,7 @@ class BucketTest : public ::testing::Test {
   std::shared_ptr<testing::MockClient> mock;
   std::unique_ptr<Client> client;
   ClientOptions client_options =
-      ClientOptions(oauth2::CreateInsecureCredentials());
+      ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
 TEST_F(BucketTest, CreateBucket) {
@@ -76,7 +76,7 @@ TEST_F(BucketTest, CreateBucket) {
 })""";
   auto expected = BucketMetadata::ParseFromString(text);
 
-  ClientOptions mock_options(oauth2::CreateInsecureCredentials());
+  ClientOptions mock_options(oauth2::CreateAnonymousCredentials());
   mock_options.set_project_id("test-project-name");
 
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));

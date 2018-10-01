@@ -45,8 +45,6 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
                                              type + ")");
 }
 
-std::string InsecureCredentials::AuthorizationHeader() { return ""; }
-
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

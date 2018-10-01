@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -129,9 +129,9 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecorators) {
-  // Create a client, use the insecure credentials because on the CI environment
-  // there may not be other credentials configured.
-  Client tested(oauth2::CreateInsecureCredentials());
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  Client tested(oauth2::CreateAnonymousCredentials());
 
   EXPECT_TRUE(tested.raw_client() != nullptr);
   auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
