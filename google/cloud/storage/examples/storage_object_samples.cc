@@ -18,6 +18,7 @@
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <string>
 
 namespace {
 struct Usage {
