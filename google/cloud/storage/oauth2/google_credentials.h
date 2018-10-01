@@ -55,7 +55,7 @@ std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials();
  * with Cloud Storage client libraries.
  */
 std::shared_ptr<AuthorizedUserCredentials<>>
-    CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
 
 /**
  * Creates an "authorized user" credential from a JSON string.
@@ -64,15 +64,15 @@ std::shared_ptr<AuthorizedUserCredentials<>>
  * with Cloud Storage client libraries.
  */
 std::shared_ptr<AuthorizedUserCredentials<>>
-    CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
 
 /// Creates a "service account" credential from a JSON file at the given path.
 std::shared_ptr<ServiceAccountCredentials<>>
-    CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
 
 /// Creates a "service account" credential from a JSON string.
 std::shared_ptr<ServiceAccountCredentials<>>
-    CreateServiceAccountCredentialsFromJsonContents(std::string const&);
+CreateServiceAccountCredentialsFromJsonContents(std::string const&);
 
 // TODO(#1193): Should we support loading service account credentials from a P12
 // file too? Other libraries do, but the JSON format is strongly preferred.
