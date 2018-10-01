@@ -128,7 +128,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Describes the configuration for a <code>storage::Client</code> object. </p>
 <p>By default read several environment variables to configure the client:</p>
 <ul>
-<li><code>CLOUD_STORAGE_TESTBENCH_ENDPOINT</code>: if set, use this http endpoint to make all http requests instead of the production GCS service. Also, if set it uses the <code>google::cloud::storage::InsecureCredentials</code> by default.</li>
+<li><code>CLOUD_STORAGE_TESTBENCH_ENDPOINT</code>: if set, use this http endpoint to make all http requests instead of the production GCS service. Also, if set it uses the <code>google::cloud::storage::oauth2::AnonymousCredentials</code> by default.</li>
 <li><code>CLOUD_STORAGE_ENABLE_CLOG</code>: if set, enable std::clog as a backend for <code>google::cloud::LogSink</code>.</li>
 <li><code>CLOUD_STORAGE_ENABLE_TRACING</code>: if set, this is the list of components that will have logging enabled, the component this is:<ul>
 <li><code>http</code>: trace all http request / responses. </li>

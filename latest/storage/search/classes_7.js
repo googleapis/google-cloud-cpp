@@ -9,6 +9,5 @@ var searchData=
   ['ifsourcegenerationmatch',['IfSourceGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceGenerationMatch.html',1,'google::cloud::storage::v0']]],
   ['ifsourcegenerationnotmatch',['IfSourceGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceGenerationNotMatch.html',1,'google::cloud::storage::v0']]],
   ['ifsourcemetagenerationmatch',['IfSourceMetagenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationMatch.html',1,'google::cloud::storage::v0']]],
-  ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v0']]],
-  ['insecurecredentials',['InsecureCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1InsecureCredentials.html',1,'google::cloud::storage::v0::oauth2']]]
+  ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v0']]]
 ];

@@ -12,7 +12,6 @@ var searchData=
   ['ifsourcegenerationnotmatch',['IfSourceGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceGenerationNotMatch.html',1,'google::cloud::storage::v0']]],
   ['ifsourcemetagenerationmatch',['IfSourceMetagenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationMatch.html',1,'google::cloud::storage::v0']]],
   ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v0']]],
-  ['insecurecredentials',['InsecureCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1InsecureCredentials.html',1,'google::cloud::storage::v0::oauth2::InsecureCredentials'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1InsecureCredentials.html#aa66e1a4740031f7c20aedbfe1a860502',1,'google::cloud::storage::v0::oauth2::InsecureCredentials::InsecureCredentials()']]],
   ['insertobject',['InsertObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7610b83f4010d0477942d21c9e4294e3',1,'google::cloud::storage::v0::Client']]],
   ['is_5flive',['is_live',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a48231031a5b2250a989a372b7267fcc3',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
   ['islive',['IsLive',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ab35f7e79a289ab9959fae5733c144e2e',1,'google::cloud::storage::v0::LifecycleRule']]],
