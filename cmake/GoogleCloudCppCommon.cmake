@@ -134,7 +134,9 @@ endfunction ()
 function (google_cloud_cpp_install_headers target destination)
     get_target_property(target_sources ${target} SOURCES)
     foreach (header ${target_sources})
-        if (NOT "${header}" MATCHES "\\.h$" AND NOT "${header}" MATCHES "\\.inc$")
+        if (NOT "${header}" MATCHES "\\.h$"
+            AND
+            NOT "${header}" MATCHES "\\.inc$")
             continue()
         endif ()
         string(REPLACE "${CMAKE_CURRENT_BINARY_DIR}/"
