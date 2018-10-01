@@ -343,13 +343,7 @@ install(TARGETS storage_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/google/cloud/storage/client
-        FILES_MATCHING
-        PATTERN "*.h"
-        PATTERN "testing/*"
-        EXCLUDE)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
-              include/google/cloud/storage)
+google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)
 install(
     FILES
         ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp

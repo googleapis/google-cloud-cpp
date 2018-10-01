@@ -216,6 +216,30 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
   (cd /v ; ./ci/check-abi.sh)
+
+  # Also verify that the install directory does not get unexpected files or
+  # directories installed.
+  echo
+  echo "${COLOR_YELLOW}Verify installed headers created only" \
+      " expected directories.${COLOR_RESET}"
+  cmake --build . --target install -- DESTDIR=/var/tmp/staging
+  if comm -23 \
+      <(find /var/tmp/staging/usr/local/include/google/cloud -type d | sort) \
+      <(echo /var/tmp/staging/usr/local/include/google/cloud ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/bigtable ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/bigtable/internal ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/firestore ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/internal ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/storage ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/storage/internal ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/storage/oauth2 ; \
+        /bin/true) | grep -q /var/tmp; then
+      echo "${COLOR_YELLOW}Installed directories do not match expectation.${COLOR_RESET}"
+      echo "${COLOR_RED}Found:"
+      find /var/tmp/staging/usr/local/include/google/cloud -type d | sort
+      echo "${COLOR_RESET}"
+      /bin/false
+   fi
 fi
 
 # If document generation is enabled, run it now.

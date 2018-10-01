@@ -368,10 +368,7 @@ install(TARGETS bigtable_protos bigtable_common_options
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Install proto generated files into include/google.
-install(DIRECTORY ${CMAKE_BINARY_DIR}/google/cloud/bigtable/google/ DESTINATION
-                  include/google
-        FILES_MATCHING
-        PATTERN "*.h")
+google_cloud_cpp_install_headers(bigtable_protos include)
 
 # The exports can only be installed if all the dependencies are installed. CMake
 # needs to know where the submodules will be installed from,
@@ -387,14 +384,7 @@ install(TARGETS bigtable_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/google/cloud/bigtable
-        FILES_MATCHING
-        PATTERN "*.inc"
-        PATTERN "*.h"
-        PATTERN "testing/*"
-        EXCLUDE)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
-              include/google/cloud/bigtable)
+google_cloud_cpp_install_headers(bigtable_client include/google/cloud/bigtable)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${BIGTABLE_CLIENT_VERSION_MAJOR})

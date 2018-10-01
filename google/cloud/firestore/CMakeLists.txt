@@ -115,13 +115,8 @@ install(TARGETS firestore_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY . DESTINATION include/google/cloud/firestore
-        FILES_MATCHING
-        PATTERN "*.h"
-        PATTERN "testing/*"
-        EXCLUDE)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/version_info.h DESTINATION
-              include/google/cloud/firestore)
+google_cloud_cpp_install_headers(
+    firestore_client include/google/cloud/firestore)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${FIRESTORE_CLIENT_VERSION_MAJOR})
