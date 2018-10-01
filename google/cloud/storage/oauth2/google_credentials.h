@@ -30,44 +30,54 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * Produces a credential type based on a the runtime environment. If the
- * GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON file it
- * points to will be loaded and used to create a credential of the specified
- * type. Otherwise, if running on a Google-hosted environment (Compute Engine,
- * etc.), credentials for the the environment's default service account will be
- * used.
+ * Produces a credential type based on a the runtime environment.
+ *
+ * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
+ * file it points to will be loaded and used to create a credential of the
+ * specified type. Otherwise, if running on a Google-hosted environment (Compute
+ * Engine, etc.), credentials for the the environment's default service account
+ * will be used.
  */
 std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
-// Below are functions to manually create specific credential types.
+//@{
+/**
+ * @name Functions to manually create specific credential types.
+ */
 
-/// Creates an anonymous credential.
+/// Creates an "anonymous" credential.
 std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials();
 
 /**
- * Creates an authorized user credential. Note that it is strongly preferred to
- * instead use service account credentials with Cloud Storage client libraries.
+ * Creates an "authorized user" credential from a JSON file at the given path.
+ *
+ * @note It is strongly preferred to instead use service account credentials
+ * with Cloud Storage client libraries.
  */
 std::shared_ptr<AuthorizedUserCredentials<>>
     CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
 
 /**
- * Creates an authorized user credential. Note that it is strongly preferred to
- * instead use service account credentials with Cloud Storage client libraries.
+ * Creates an "authorized user" credential from a JSON string.
+ *
+ * @note It is strongly preferred to instead use service account credentials
+ * with Cloud Storage client libraries.
  */
 std::shared_ptr<AuthorizedUserCredentials<>>
     CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
 
-/// Creates a service account credential.
+/// Creates a "service account" credential from a JSON file at the given path.
 std::shared_ptr<ServiceAccountCredentials<>>
     CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
 
-/// Creates a service account credential.
+/// Creates a "service account" credential from a JSON string.
 std::shared_ptr<ServiceAccountCredentials<>>
     CreateServiceAccountCredentialsFromJsonContents(std::string const&);
 
 // TODO(#1193): Should we support loading service account credentials from a P12
 // file too? Other libraries do, but the JSON format is strongly preferred.
+
+//@}
 
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

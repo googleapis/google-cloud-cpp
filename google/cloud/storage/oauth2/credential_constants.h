@@ -38,20 +38,25 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
 }
 
 /**
- * The skew in seconds, to be subtracted from a token's expiration time,
- * used to determine if we should attempt to refresh and get a new access
- * token. This helps avoid a token potentially expiring mid-request.
+ * Returns the slack to consider when checking if an access token is expired.
+ *
+ * This time should be subtracted from a token's expiration time when checking
+ * if it is expired. This prevents race conditions where, for example, one might
+ * check expiration time one second before the expiration, see that the token is
+ * still valid, then attempt to use it two seconds later and receive an
+ * error.
  */
 constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
   return std::chrono::seconds(500);
 }
 
-/// The endpoint to create an access token from.
+/// The endpoint to fetch an OAuth access token from.
 inline char const* GoogleOAuthRefreshEndpoint() {
   static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
   return kEndpoint;
 }
 
+/// String representing the "cloud-platform" OAuth scope.
 inline char const* GoogleOAuthScopeCloudPlatform() {
   static constexpr char kScope[] =
       "https://www.googleapis.com/auth/cloud-platform";
