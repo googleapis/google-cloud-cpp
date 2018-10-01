@@ -73,7 +73,7 @@ for benchmark in endurance apply_read_latency scan_throughput; do
     continue
   fi
   echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET} ${benchmark}"
-  "${BTDIR}/benchmarks/${benchmark}_benchmark" unused unused 1 5 1000 true >"${log}" 2>&1 </dev/null
+  "${BTDIR}/benchmarks/${benchmark}_benchmark" unused unused unused 1 5 1000 true >"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${benchmark} benchmark"
   else

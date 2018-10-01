@@ -23,14 +23,15 @@ namespace {
 char arg0[] = "program";
 char arg1[] = "foo";
 char arg2[] = "bar";
-char arg3[] = "4";
-char arg4[] = "300";
-char arg5[] = "10000";
-char arg6[] = "True";
+char arg3[] = "profile";
+char arg4[] = "4";
+char arg5[] = "300";
+char arg6[] = "10000";
+char arg7[] = "True";
 }  // anonymous namespace
 
 TEST(BenchmarkTest, Create) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("create", argc, argv);
 
@@ -49,7 +50,7 @@ TEST(BenchmarkTest, Create) {
 }
 
 TEST(BenchmarkTest, Populate) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("populate", argc, argv);
 
@@ -64,7 +65,7 @@ TEST(BenchmarkTest, Populate) {
 }
 
 TEST(BenchmarkTest, MakeRandomKey) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("key", argc, argv);
 
@@ -92,7 +93,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
 }
 
 TEST(BenchmarkTest, PrintThroughputResult) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("throughput", argc, argv);
 
@@ -117,7 +118,7 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 }
 
 TEST(BenchmarkTest, PrintLatencyResult) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("latency", argc, argv);
 
@@ -150,7 +151,7 @@ TEST(BenchmarkTest, PrintLatencyResult) {
 }
 
 TEST(BenchmarkTest, PrintCsv) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("latency", argc, argv);
 

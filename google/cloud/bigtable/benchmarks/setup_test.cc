@@ -21,19 +21,21 @@ namespace {
 char arg0[] = "program";
 char arg1[] = "foo";
 char arg2[] = "bar";
-char arg3[] = "4";
-char arg4[] = "300";
-char arg5[] = "10000";
-char arg6[] = "True";
-char arg7[] = "Unused";
+char arg3[] = "profile";
+char arg4[] = "4";
+char arg5[] = "300";
+char arg6[] = "10000";
+char arg7[] = "True";
+char arg8[] = "Unused";
 }  // anonymous namespace
 
 TEST(BenchmarksSetup, Basic) {
-  char* argv[] = {arg0, arg1, arg2};
-  int argc = 3;
+  char* argv[] = {arg0, arg1, arg2, arg3};
+  int argc = 4;
   BenchmarkSetup setup("pre", argc, argv);
   EXPECT_EQ("foo", setup.project_id());
   EXPECT_EQ("bar", setup.instance_id());
+  EXPECT_EQ("profile", setup.app_profile_id());
   EXPECT_EQ(0U, setup.table_id().find("pre"));
   std::size_t expected = 4 + kTableIdRandomLetters;
   EXPECT_EQ(expected, setup.table_id().size());
@@ -47,9 +49,10 @@ TEST(BenchmarksSetup, Different) {
   char arg0[] = "program";
   char arg1[] = "foo";
   char arg2[] = "bar";
-  char* argv_0[] = {arg0, arg1, arg2};
+  char arg3[] = "profile";
+  char* argv_0[] = {arg0, arg1, arg2, arg3};
   int argc_0 = sizeof(argv_0) / sizeof(argv_0[0]);
-  char* argv_1[] = {arg0, arg1, arg2};
+  char* argv_1[] = {arg0, arg1, arg2, arg3};
   int argc_1 = sizeof(argv_1) / sizeof(argv_1[0]);
   BenchmarkSetup s0("pre", argc_0, argv_0);
   BenchmarkSetup s1("pre", argc_1, argv_1);
@@ -59,7 +62,7 @@ TEST(BenchmarksSetup, Different) {
 }
 
 TEST(BenchmarkSetup, Parse) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("pre", argc, argv);
 
@@ -69,48 +72,56 @@ TEST(BenchmarkSetup, Parse) {
 
   EXPECT_EQ("foo", setup.project_id());
   EXPECT_EQ("bar", setup.instance_id());
+  EXPECT_EQ("profile", setup.app_profile_id());
   EXPECT_EQ(4, setup.thread_count());
   EXPECT_EQ(300, setup.test_duration().count());
   EXPECT_EQ(10000, setup.table_size());
+  EXPECT_TRUE(setup.use_embedded_server());
+}
+
+TEST(BenchmarkSetup, Test7) {
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  BenchmarkSetup setup("t6", argc, argv);
   EXPECT_TRUE(setup.use_embedded_server());
 }
 
 TEST(BenchmarkSetup, Test6) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("t6", argc, argv);
-  EXPECT_TRUE(setup.use_embedded_server());
-}
-
-TEST(BenchmarkSetup, Test5) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5};
-  int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("t5", argc, argv);
   EXPECT_EQ(10000, setup.table_size());
   EXPECT_FALSE(setup.use_embedded_server());
 }
 
-TEST(BenchmarkSetup, Test4) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4};
+TEST(BenchmarkSetup, Test5) {
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("t4", argc, argv);
   EXPECT_EQ(300, setup.test_duration().count());
 }
 
-TEST(BenchmarkSetup, Test3) {
-  char* argv[] = {arg0, arg1, arg2, arg3};
+TEST(BenchmarkSetup, Test4) {
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("t3", argc, argv);
   EXPECT_EQ(4, setup.thread_count());
 }
 
-TEST(BenchmarkSetup, Test2) {
-  char* argv[] = {arg0, arg1, arg2};
+TEST(BenchmarkSetup, Test3) {
+  char* argv[] = {arg0, arg1, arg2, arg3};
   int argc = sizeof(argv) / sizeof(argv[0]);
   BenchmarkSetup setup("t2", argc, argv);
   EXPECT_EQ("foo", setup.project_id());
   EXPECT_EQ("bar", setup.instance_id());
+  EXPECT_EQ("profile", setup.app_profile_id());
   EXPECT_EQ(kDefaultThreads, setup.thread_count());
+}
+
+TEST(BenchmarkSetup, Test2) {
+  char* argv[] = {arg0, arg1, arg2};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  EXPECT_THROW(BenchmarkSetup("t1", argc, argv), std::exception);
 }
 
 TEST(BenchmarkSetup, Test1) {
@@ -127,7 +138,7 @@ TEST(BenchmarkSetup, Test0) {
 
 TEST(BenchmarkSetup, TestDuration) {
   char seconds[] = "0";
-  char* argv[] = {arg0, arg1, arg2, arg3, seconds, arg5, arg6, arg7};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, seconds, arg6, arg7, arg8};
   int argc = sizeof(argv) / sizeof(argv[0]);
 
   // Test duration parameter should be >= 0.
@@ -136,7 +147,7 @@ TEST(BenchmarkSetup, TestDuration) {
 
 TEST(BenchmarkSetup, TableSize) {
   char table_size[] = "10";
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, table_size, arg6, arg7};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, table_size, arg7, arg8};
   int argc = sizeof(argv) / sizeof(argv[0]);
 
   // TableSize parameter should be >= 100.
