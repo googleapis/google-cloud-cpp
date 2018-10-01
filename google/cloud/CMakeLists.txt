@@ -85,6 +85,7 @@ add_library(google_cloud_cpp_common
             internal/setenv.cc
             internal/throw_delegate.h
             internal/throw_delegate.cc
+            ${CMAKE_CURRENT_BINARY_DIR}/internal/version_info.h
             log.h
             log.cc
             version.h)
