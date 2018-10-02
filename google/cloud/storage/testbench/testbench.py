@@ -22,6 +22,7 @@ import hashlib
 import httpbin
 import json
 import os
+import re
 import testbench_utils
 import time
 from werkzeug import serving
@@ -1328,6 +1329,10 @@ def gcs_error(error):
 def buckets_list():
     """Implement the 'Buckets: list' API: return the Buckets in a project."""
     base_url = flask.url_for('gcs_index', _external=True)
+    project = flask.request.args.get('project')
+    if project is None or project.endswith('-'):
+        raise error_response.ErrorResponse(
+            'Invalid or missing project id in `Buckets: list`')
     insert_magic_bucket(base_url)
     result = {'next_page_token': '', 'items': []}
     for name, b in GCS_BUCKETS.items():
@@ -1345,6 +1350,9 @@ def buckets_insert():
     if bucket_name is None:
         raise error_response.ErrorResponse(
             'Missing bucket name in `Buckets: insert`', status_code=412)
+    if len(bucket_name) > 63 or not re.match('^[a-z][a-z-]*[a-z]', bucket_name):
+        raise error_response.ErrorResponse(
+            'Invalid bucket name in `Buckets: insert`')
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is not None:
         raise error_response.ErrorResponse(
@@ -1380,17 +1388,7 @@ def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
-    # TODO(#821) - until we implement Client::CreateBucket, simply insert every
-    # bucket that the application queries.
-    bucket = GcsBucket(base_url, bucket_name)
-    bucket.update_from_metadata({})
-    bucket.update_from_metadata({})
-    bucket.update_from_metadata({})
-    bucket = GCS_BUCKETS.setdefault(bucket_name, bucket)
-    # end of TODO(#821)
-    if bucket is None:
-        raise error_response.ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
+    bucket = lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
