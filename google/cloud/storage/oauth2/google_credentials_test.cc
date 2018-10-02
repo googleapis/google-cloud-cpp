@@ -184,3 +184,4 @@ TEST_F(GoogleCredentialsTest, LoadValidAnonymousCredentials) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
