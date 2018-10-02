@@ -27,6 +27,12 @@ using MockMutateRowsReader =
     MockResponseReader<google::bigtable::v2::MutateRowsResponse,
                        google::bigtable::v2::MutateRowsRequest>;
 
+// An alternative name could be `MockAsyncMutateRowReader`, but that is too
+// small a difference with `MockAsyncMutateRowsReader` (note the `s` is `Rows`)
+// so we prefer to call them by the higher-level API (Apply vs. BulkApply).
+using MockAsyncApplyReader =
+    MockAsyncResponseReader<google::bigtable::v2::MutateRowResponse>;
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

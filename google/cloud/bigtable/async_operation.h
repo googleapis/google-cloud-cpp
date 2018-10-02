@@ -23,6 +23,8 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class CompletionQueue;
+
 namespace internal {
 class CompletionQueueImpl;
 }  // namespace internal

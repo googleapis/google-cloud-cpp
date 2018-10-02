@@ -53,12 +53,13 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
 
   noex::Table table(data_client_, table_id);
   std::promise<void> done;
-  table.AsyncApply(std::move(mut), cq,
-                   [&done](google::bigtable::v2::MutateRowResponse& r,
-                           grpc::Status const& status) {
-                     done.set_value();
-                     EXPECT_TRUE(status.ok());
-                   });
+  table.AsyncApply(
+      std::move(mut), cq,
+      [&done](CompletionQueue& cq, google::bigtable::v2::MutateRowResponse& r,
+              grpc::Status const& status) {
+        done.set_value();
+        EXPECT_TRUE(status.ok());
+      });
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that

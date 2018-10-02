@@ -55,18 +55,16 @@ template <
     typename std::enable_if<CheckTimerCallback<Functor>::value, int>::type = 0>
 class AsyncTimerFunctor : public AsyncOperation {
  public:
-  explicit AsyncTimerFunctor(Functor&& functor)
-      : functor_(std::move(functor)), alarm_(new grpc::Alarm) {}
-
-  void Notify(CompletionQueue& cq, Disposition d) override {
-    alarm_.reset();
-    functor_(cq, timer_, d);
-  }
+  explicit AsyncTimerFunctor(Functor&& functor,
+                             std::unique_ptr<grpc::Alarm> alarm)
+      : functor_(std::move(functor)), alarm_(std::move(alarm)) {}
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     timer_.deadline = deadline;
-    alarm_->Set(&cq, deadline, tag);
+    if (alarm_) {
+      alarm_->Set(&cq, deadline, tag);
+    }
   }
 
   void Cancel() override {
@@ -76,6 +74,11 @@ class AsyncTimerFunctor : public AsyncOperation {
   }
 
  private:
+  void Notify(CompletionQueue& cq, Disposition d) override {
+    alarm_.reset();
+    functor_(cq, timer_, d);
+  }
+
   Functor functor_;
   AsyncTimerResult timer_;
   std::unique_ptr<grpc::Alarm> alarm_;
@@ -110,12 +113,6 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
       : functor_(std::forward<Functor>(functor)) {}
 
-  void Notify(CompletionQueue& cq, Disposition d) override {
-    functor_(cq, result_, d);
-  }
-
-  void Cancel() override { result_.context->TryCancel(); }
-
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>
   void Set(Client& client, MemberFunction Client::*call,
@@ -126,17 +123,36 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
     rpc->Finish(&result_.response, &result_.status, tag);
   }
 
+  void Cancel() override { result_.context->TryCancel(); }
+
  private:
+  void Notify(CompletionQueue& cq, Disposition d) override {
+    functor_(cq, result_, d);
+  }
+
   Functor functor_;
   AsyncUnaryRpcResult<Response> result_;
 };  // namespace internal
+
+template <typename T>
+struct ExtractMemberFunctionType : public std::false_type {
+  using ClassType = void;
+  using MemberFunctionType = void;
+};
+
+template <typename ClassType, typename MemberFunctionType>
+struct ExtractMemberFunctionType<MemberFunctionType ClassType::*>
+    : public std::true_type {
+  using Class = ClassType;
+  using MemberFunction = MemberFunctionType;
+};
 
 /// Determine the Request and Response parameter for an RPC based on the Stub
 /// signature - mismatch case.
 template <typename MemberFunction>
 struct CheckAsyncUnaryRpcSignature : public std::false_type {
-  using RequestType = void;
-  using ResponseType = void;
+  using RequestType = int;
+  using ResponseType = int;
 };
 
 /// Determine the Request and Response parameter for an RPC based on the Stub
@@ -173,19 +189,26 @@ class CompletionQueueImpl {
   /// Terminate the event loop.
   void Shutdown();
 
+  /// Create a new alarm object.
+  virtual std::unique_ptr<grpc::Alarm> CreateAlarm() const;
+
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() { return cq_; }
 
   /// Add a new asynchronous operation to the completion queue.
   void* RegisterOperation(std::shared_ptr<AsyncOperation> op);
 
+ protected:
   /// Return the asynchronous operation associated with @p tag.
   std::shared_ptr<AsyncOperation> CompletedOperation(void* tag);
 
- protected:
   /// Simulate a completed operation, provided only to support unit tests.
   void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
                           AsyncOperation::Disposition d);
+
+  /// Simulate completion of all pending operations, provided only to support
+  /// unit tests.
+  void SimulateCompletion(CompletionQueue& cq, AsyncOperation::Disposition d);
 
   bool empty() const {
     std::unique_lock<std::mutex> lk(mu_);

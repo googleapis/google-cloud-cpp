@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -73,6 +74,17 @@ struct RowKeySample {
  * Provide APIs to access and modify data in a Cloud Bigtable table.
  */
 namespace noex {
+
+/**
+ * Manipulate data in a Cloud Bigtable table.
+ *
+ * This class implements APIs to manipulate data in a Cloud Bigtable table. It
+ * uses a `grpc::Status` parameter to signal errors, as opposed to
+ * `google::cloud::bigtable::Table` which uses exceptions.
+ *
+ * In general, the documentation for `google::cloud::bigtable::Table` applies to
+ * both.
+ */
 class Table {
  public:
   Table(std::shared_ptr<DataClient> client,
@@ -114,8 +126,16 @@ class Table {
    * @name No exception versions of Table::*
    *
    * These functions provide the same functionality as their counterparts in the
-   * `bigtable::Table` class, but do not raise exceptions on errors, instead
-   * they return the error on the status parameter.
+   * `bigtable::Table` class. Unless otherwise noted, these functions do not
+   * raise exceptions of failure, instead they return the error on the
+   * `grpc::Status` parameter.
+   */
+
+  /**
+   * Apply multiple mutations to a single row.
+   *
+   * @return The list of mutations that failed, empty when the operation is
+   *     successful.
    */
   std::vector<FailedMutation> Apply(SingleRowMutation&& mut);
 
@@ -137,39 +157,50 @@ class Table {
    * @return A handle to the asynchronous operation, applications can request
    *   the operation to be canceled.
    */
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    Functor, google::bigtable::v2::MutateRowResponse&,
-                    grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncApply(SingleRowMutation&& mut,
-                                             CompletionQueue& cq,
-                                             Functor&& callback) {
-    using AsyncOpResult =
-        AsyncUnaryRpcResult<google::bigtable::v2::MutateRowResponse>;
-
-    auto rpc_policy = rpc_retry_policy_->clone();
-    auto backoff_policy = rpc_backoff_policy_->clone();
-    auto idempotent_policy = idempotent_mutation_policy_->clone();
-
+  template <
+      typename Functor,
+      typename std::enable_if<
+          google::cloud::internal::is_invocable<
+              Functor, CompletionQueue&,
+              google::bigtable::v2::MutateRowResponse&, grpc::Status&>::value,
+          int>::type valid_callback_type = 0>
+  void AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq,
+                  Functor&& callback) {
     google::bigtable::v2::MutateRowRequest request;
     internal::SetCommonTableOperationRequest<
         google::bigtable::v2::MutateRowRequest>(request, app_profile_id_.get(),
                                                 table_name_.get());
     mut.MoveTo(request);
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    return cq.MakeUnaryRpc(
-        *client_, &DataClient::AsyncMutateRow, request, std::move(context),
-        [callback](CompletionQueue& cq, AsyncOpResult& result, bool ok) {
-          if (not ok) {
-            callback(result.response,
-                     grpc::Status(grpc::StatusCode::CANCELLED,
-                                  result.status.error_message()));
-          } else {
-            callback(result.response, result.status);
-          }
+
+    // Determine if all the mutations are idempotent. The idempotency of the
+    // mutations won't change as the retry loop executes, so we can just compute
+    // it once and use a constant value for the loop.
+    auto idempotent_mutation_policy = idempotent_mutation_policy_->clone();
+    bool const is_idempotent = std::all_of(
+        request.mutations().begin(), request.mutations().end(),
+        [&idempotent_mutation_policy](google::bigtable::v2::Mutation const& m) {
+          return idempotent_mutation_policy->is_idempotent(m);
         });
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &DataClient::AsyncMutateRow)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &DataClient::AsyncMutateRow)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<DataClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(is_idempotent),
+        metadata_update_policy_, client_, &DataClient::AsyncMutateRow,
+        std::move(request), std::forward<Functor>(callback));
+    retry->Start(cq);
   }
 
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
