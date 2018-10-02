@@ -123,6 +123,8 @@ target_link_libraries(my_program bigtable_client)
  
  * @ref bigtable-samples "Table Admin Example"
 
+ * @ref bigtable-samples-data-client "Advanced Reading and Writing Example"
+
 [read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
 [read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
 [read-tables]: https://cloud.google.com/bigtable/docs/overview 'Tables'

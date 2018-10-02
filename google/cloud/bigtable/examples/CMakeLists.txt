@@ -41,5 +41,5 @@ target_link_libraries(bigtable_samples_instance_admin_ext bigtable_client)
 add_executable(table_admin_snippets table_admin_snippets.cc)
 target_link_libraries(table_admin_snippets bigtable_client)
 
-add_executable(data_admin_snippets data_admin_snippets.cc)
-target_link_libraries(data_admin_snippets bigtable_client)
+add_executable(data_snippets data_snippets.cc)
+target_link_libraries(data_snippets bigtable_client)
