@@ -6,6 +6,7 @@ This example is for advance reading and writing opertions on bigtable data clien
 - Use ReadModifyWrite to append a string to a value.
 - Use ReadModifyWrite to increment a value.
 - Use the features to simplify reading bigendian64 values from Cloud Bigtable.
+- Use CheckAndMutate to modify a value only if it exists.
 
 ## Run the example
 
@@ -34,6 +35,10 @@ The example uses the following headers:
 ### Use the features to simplify reading bigendian64 values from Cloud Bigtable.
 
 @snippet data_snippets.cc read row
+
+### Use CheckAndMutate to modify a value only if it exists.
+
+@snippet data_snippets.cc check and mutate
 
 ### Put it all together
 
