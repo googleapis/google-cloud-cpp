@@ -17,4 +17,4 @@ cmake-build-*/
 github-io-staging/
 
 google/cloud/storage/testbench/__pycache__/
-google/cloud/storage/testbench/testbench.pyc
+google/cloud/storage/testbench/*.pyc
