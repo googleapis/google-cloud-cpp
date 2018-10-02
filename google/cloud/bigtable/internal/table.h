@@ -192,12 +192,12 @@ class Table {
 
     using Retry =
         internal::AsyncRetryUnaryRpc<DataClient, MemberFunction,
-                                     internal::ConstantIdempotentPolicy,
+                                     internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-        internal::ConstantIdempotentPolicy(is_idempotent),
+        internal::ConstantIdempotencyPolicy(is_idempotent),
         metadata_update_policy_, client_, &DataClient::AsyncMutateRow,
         std::move(request), std::forward<Functor>(callback));
     retry->Start(cq);

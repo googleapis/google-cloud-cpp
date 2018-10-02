@@ -37,7 +37,7 @@ namespace internal {
  *     `internal::CheckAsyncUnaryRpcSignature`, the `AsyncRetryUnaryRpc`
  *     template is disabled otherwise.
  *
- * @tparam IdempotentPolicy the policy used to determine if an operation is
+ * @tparam IdempotencyPolicy the policy used to determine if an operation is
  *     idempotent. In most cases this is just `ConstantIdempotentPolicy`
  *     because the decision around idempotency can be made before the retry loop
  *     starts. Some calls may dynamically determine if a retry (or a partial
@@ -59,7 +59,7 @@ namespace internal {
  *     signature.
  */
 template <
-    typename Client, typename MemberFunctionType, typename IdempotentPolicy,
+    typename Client, typename MemberFunctionType, typename IdempotencyPolicy,
     typename Functor,
     typename Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunctionType>,
     typename std::enable_if<Sig::value, int>::type valid_member_function_type =
@@ -71,7 +71,7 @@ template <
         int>::type valid_callback_type = 0>
 class AsyncRetryUnaryRpc
     : public std::enable_shared_from_this<AsyncRetryUnaryRpc<
-          Client, MemberFunctionType, IdempotentPolicy, Functor>> {
+          Client, MemberFunctionType, IdempotencyPolicy, Functor>> {
  public:
   //@{
   /// @name Convenience aliases for the RPC request and response types.
@@ -86,7 +86,7 @@ class AsyncRetryUnaryRpc
       char const* error_message,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      IdempotentPolicy idempotent_policy,
+      IdempotencyPolicy idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<Client> client, MemberFunctionType Client::*call,
       Request&& request, Functor&& callback)
@@ -195,7 +195,7 @@ class AsyncRetryUnaryRpc
   char const* error_message_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  IdempotentPolicy idempotent_policy_;
+  IdempotencyPolicy idempotent_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<Client> client_;
   MemberFunctionType Client::*call_;
@@ -211,9 +211,9 @@ class AsyncRetryUnaryRpc
  * the value is unchanged during the retry loop. This class can be used in those
  * cases as the `IdempotentPolicy` template parameter for `AsyncRetryUnaryRpc`.
  */
-class ConstantIdempotentPolicy {
+class ConstantIdempotencyPolicy {
  public:
-  explicit ConstantIdempotentPolicy(bool is_idempotent)
+  explicit ConstantIdempotencyPolicy(bool is_idempotent)
       : is_idempotent_(is_idempotent) {}
 
   bool is_idempotent() const { return is_idempotent_; }

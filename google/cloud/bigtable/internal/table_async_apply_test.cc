@@ -104,7 +104,6 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
 
   // That should have created a timer, but not fired r2, verify that and
   // simulate the timer completion.
-  EXPECT_TRUE(r1_called);
   EXPECT_FALSE(r2_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
@@ -112,15 +111,12 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
 
   // Once the timer completes, r2 should be fired, but op, verify this and
   // simulate r2 completing.
-  EXPECT_TRUE(r1_called);
   EXPECT_TRUE(r2_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
   impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
 
   // At this point all requests and the final callback should be completed.
-  EXPECT_TRUE(r1_called);
-  EXPECT_TRUE(r2_called);
   EXPECT_TRUE(op_called);
   EXPECT_TRUE(impl->empty());
 
@@ -175,7 +171,6 @@ TEST_F(NoexTableAsyncApplyTest, PermanentFailure) {
   impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
 
   // At this point the final callback should be completed.
-  EXPECT_TRUE(r1_called);
   EXPECT_TRUE(op_called);
   EXPECT_TRUE(impl->empty());
 
@@ -313,7 +308,6 @@ TEST_F(NoexTableAsyncApplyTest, TransientFailureNonIdempotent) {
   impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
 
   // At this point the final callback should be completed.
-  EXPECT_TRUE(r1_called);
   EXPECT_TRUE(op_called);
   EXPECT_EQ(0U, impl->size());
 
@@ -422,6 +416,51 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   EXPECT_THAT(capture_status.error_message(), HasSubstr(tested.table_name()));
   EXPECT_THAT(capture_status.error_message(),
               HasSubstr("pending timer cancelled"));
+}
+
+struct Counter : public grpc::ClientAsyncResponseReaderInterface<
+                     btproto::MutateRowResponse> {
+  Counter() { ++constructor_count; }
+  ~Counter() override { ++destructor_count; }
+  void StartCall() override {}
+  void ReadInitialMetadata(void*) override {}
+  void Finish(btproto::MutateRowResponse*, grpc::Status*, void*) override {}
+
+  static int constructor_count;
+  static int destructor_count;
+};
+
+int Counter::constructor_count = 0;
+int Counter::destructor_count = 0;
+
+/// @test Verify that gRPC async reply handles are not deleted.
+TEST_F(NoexTableAsyncApplyTest, AsyncReaderNotDeleted) {
+  // If gRPC ever disables the optimization whereby std::unique_ptr<> does not
+  // delete objects of type grpc::ClientAsyncResponseReaderInterface<T> the
+  // tests will fail in the ASAN builds, but with very obscure errors. We expect
+  // this test to clarify the problem for our future selves.
+  auto counter = new Counter;
+  {
+    std::unique_ptr<
+        grpc::ClientAsyncResponseReaderInterface<btproto::MutateRowResponse>>
+        tmp(counter);
+    EXPECT_EQ(1, Counter::constructor_count);
+  }
+  ASSERT_EQ(0, Counter::destructor_count) << R"""(
+When this test was written gRPC specialized the deleter for
+grpc::ClientAsyncResponseReaderInterface<T>. Consequently the tests that mock
+these objects need to manually cleanup any instances of objects of that type. It
+seems that gRPC no longer specializes the std::unique_ptr deleter. If that is
+the case all the tests that perform manual cleanups may crash, or fail in the
+ASAN builds. This test is here to (we hope) ease troubleshooting of this future
+problem.
+)""";
+
+  // Manually cleanup because gRPC disables the automatic cleanup in
+  // std::unique_ptr.
+  delete counter;
+  EXPECT_EQ(1, Counter::destructor_count);
+  EXPECT_EQ(1, Counter::constructor_count);
 }
 
 }  // namespace
