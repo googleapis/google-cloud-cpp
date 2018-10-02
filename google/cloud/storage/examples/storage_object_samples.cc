@@ -184,8 +184,9 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name);
 }
 
-void DeleteObject(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
+// We can't name this DeleteObject due #1208.
+void DeleteObjectFn(google::cloud::storage::Client client, int& argc,
+                    char* argv[]) {
   if (argc < 2) {
     throw Usage{"delete-object <bucket-name> <object-name>"};
   }
@@ -767,7 +768,7 @@ int main(int argc, char* argv[]) try {
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},
       {"read-object", &ReadObject},
-      {"delete-object", &DeleteObject},
+      {"delete-object", &DeleteObjectFn},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
       {"update-object-metadata", &UpdateObjectMetadata},
