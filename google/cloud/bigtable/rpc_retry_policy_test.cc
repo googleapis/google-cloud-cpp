@@ -59,6 +59,15 @@ TEST(LimitedTimeRetryPolicy, Simple) {
   CheckLimitedTime(tested);
 }
 
+/// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
+TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
+  bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
+  EXPECT_FALSE(tested.IsPermanentFailure(
+      grpc::Status(grpc::StatusCode::OK, "No Error")));
+  EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
+}
+
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Clone) {
   using namespace google::cloud::testing_util::chrono_literals;
