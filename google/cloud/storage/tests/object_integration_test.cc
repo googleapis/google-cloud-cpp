@@ -924,6 +924,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << meta;
 
+  client.DeleteObject(bucket_name, copy_name);
   client.DeleteObject(bucket_name, object_name);
 }
 
