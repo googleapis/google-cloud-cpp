@@ -265,7 +265,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     return InsertObjectMediaXml(request);
   }
 
-  // If the application has set an explicit
+  // If the application has set an explicit hash value we need to use multipart
+  // uploads.
   if (request.HasOption<MD5HashValue>()) {
     return InsertObjectMediaMultipart(request);
   }
@@ -1079,9 +1080,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
 
-  std::unique_ptr<internal::CurlStreambuf> buf(
-      new internal::CurlStreambuf(builder.BuildUpload(),
-                                  client_options().upload_buffer_size()));
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), client_options().upload_buffer_size()));
   ObjectWriteStream writer(std::move(buf));
 
   nl::json metadata = nl::json::object();
@@ -1089,18 +1089,18 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
   }
 
-  std::string marker = "--" + boundary + "\r\n";
-  writer << marker
-         << "content-type: application/json; charset=UTF-8\r\n\r\n"
-         << metadata.dump() << "\r\n"
-         << marker;
+  std::string crlf = "\r\n";
+  std::string marker = "--" + boundary;
+  writer << marker << crlf << "content-type: application/json; charset=UTF-8"
+         << crlf << crlf << metadata.dump() << crlf << marker << crlf;
 
   if (not request.HasOption<ContentType>()) {
-    writer << "content-type: application/octet-stream\r\n";
+    writer << "content-type: application/octet-stream" << crlf;
   } else {
-    writer << "content-type: " << request.GetOption<ContentType>().value() << "\r\n";
+    writer << "content-type: " << request.GetOption<ContentType>().value()
+           << crlf;
   }
-  writer << "\r\n" << request.contents() << "\r\n--" << boundary << "--\r\n";
+  writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
   auto payload = writer.CloseRaw();
   if (payload.status_code >= 300) {
