@@ -126,7 +126,7 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      kJsonKeyfileContents);
+      kJsonKeyfileContents, "test");
 
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-value",
@@ -176,7 +176,7 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   ServiceAccountCredentials<MockHttpRequestBuilder> credentials(
-      kJsonKeyfileContents);
+      kJsonKeyfileContents, "test");
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader());
@@ -186,6 +186,61 @@ TEST_F(ServiceAccountCredentialsTest,
   // Token still valid; should return cached token instead of calling Refresh.
   EXPECT_EQ("Authorization: Type access-token-r2",
             credentials.AuthorizationHeader());
+}
+
+/// @test Verify that invalid contents result in a readable error.
+TEST_F(ServiceAccountCredentialsTest, InvalidContents) {
+  std::string config = R"""( not-a-valid-json-string )""";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ServiceAccountCredentials<MockHttpRequestBuilder> credentials(
+            config, "test-as-a-source");
+      } catch (std::invalid_argument const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Invalid ServiceAccountCredentials"));
+        EXPECT_THAT(ex.what(), HasSubstr("test-as-a-source"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ServiceAccountCredentials<MockHttpRequestBuilder>(
+                                config, "test-as-a-source"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that missing fields result in a readable error.
+TEST_F(ServiceAccountCredentialsTest, MissingContents) {
+  // Note that the private_key field is missing here.
+  std::string contents = R"""({
+      "type": "service_account",
+      "project_id": "foo-project",
+      "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
+      "client_email": "foo-email@foo-project.iam.gserviceaccount.com",
+      "client_id": "100000000000000000001",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
+})""";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ServiceAccountCredentials<MockHttpRequestBuilder> credentials(
+            contents, "test-as-a-source");
+      } catch (std::invalid_argument const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("the private_key field is missing"));
+        EXPECT_THAT(ex.what(), HasSubstr("test-as-a-source"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ServiceAccountCredentials<MockHttpRequestBuilder>(
+                                contents, "test-as-a-source"),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 }  // namespace

@@ -53,26 +53,49 @@ template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(std::string const& contents)
-      : AuthorizedUserCredentials(contents, GoogleOAuthRefreshEndpoint()) {}
+  explicit AuthorizedUserCredentials(std::string const& contents,
+                                     std::string const& source)
+      : AuthorizedUserCredentials(contents, source,
+                                  GoogleOAuthRefreshEndpoint()) {}
 
   explicit AuthorizedUserCredentials(std::string const& content,
+                                     std::string const& source,
                                      std::string oauth_server)
       : expiration_time_() {
     HttpRequestBuilderType request_builder(
         std::move(oauth_server),
         storage::internal::GetDefaultCurlHandleFactory());
-    auto credentials = storage::internal::nl::json::parse(content);
+    auto credentials =
+        storage::internal::nl::json::parse(content, nullptr, false);
+    if (credentials.is_null()) {
+      google::cloud::internal::RaiseInvalidArgument(
+          "Invalid AuthorizedUserCredentials, parsing failed on data from " +
+          source);
+    }
+    char const CLIENT_ID_KEY[] = "client_id";
+    char const CLIENT_SECRET_KEY[] = "client_secret";
+    char const REFRESH_TOKEN_KEY[] = "refresh_token";
+    for (auto const& key :
+         {CLIENT_ID_KEY, CLIENT_SECRET_KEY, REFRESH_TOKEN_KEY}) {
+      if (credentials.count(key) == 0U) {
+        google::cloud::internal::RaiseInvalidArgument(
+            "Invalid AuthorizedUserCredentials, the " + std::string(key) +
+            " field is missing on data loaded from " + source);
+      }
+    }
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload +=
-        request_builder.MakeEscapedString(credentials["client_id"]).get();
+        request_builder.MakeEscapedString(credentials.value(CLIENT_ID_KEY, ""))
+            .get();
     payload += "&client_secret=";
-    payload +=
-        request_builder.MakeEscapedString(credentials["client_secret"]).get();
+    payload += request_builder
+                   .MakeEscapedString(credentials.value(CLIENT_SECRET_KEY, ""))
+                   .get();
     payload += "&refresh_token=";
-    payload +=
-        request_builder.MakeEscapedString(credentials["refresh_token"]).get();
+    payload += request_builder
+                   .MakeEscapedString(credentials.value(REFRESH_TOKEN_KEY, ""))
+                   .get();
     payload_ = std::move(payload);
     request_ = request_builder.BuildRequest();
   }
@@ -92,16 +115,23 @@ class AuthorizedUserCredentials : public Credentials {
 
     // TODO(#516) - use retry policies to refresh the credentials.
     auto response = request_.MakeRequest(payload_);
-    if (200 != response.status_code) {
+    if (response.status_code >= 300) {
       return false;
     }
-    nl::json access_token = nl::json::parse(response.payload);
+    nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+    if (access_token.is_discarded() or access_token.count("token_type") == 0U or
+        access_token.count("access_token") == 0U or
+        access_token.count("id_token") == 0U or
+        access_token.count("expires_in") == 0U) {
+      return false;
+    }
     std::string header = "Authorization: ";
-    header += access_token["token_type"].get_ref<std::string const&>();
+    header += access_token.value("token_type", "");
     header += ' ';
-    header += access_token["access_token"].get_ref<std::string const&>();
-    std::string new_id = access_token["id_token"];
-    auto expires_in = std::chrono::seconds(access_token["expires_in"]);
+    header += access_token.value("access_token", "");
+    std::string new_id = access_token.value("id_token", "");
+    auto expires_in =
+        std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in -
                           GoogleOAuthAccessTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.

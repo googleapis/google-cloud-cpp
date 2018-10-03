@@ -29,18 +29,28 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   auto path = GoogleAdcFilePathOrEmpty();
   if (not path.empty()) {
     std::ifstream is(path);
+    if (not is.is_open()) {
+      google::cloud::internal::RaiseRuntimeError(
+          "Cannot open credentials file " + path);
+    }
     std::string contents(std::istreambuf_iterator<char>{is}, {});
-    auto cred_json = storage::internal::nl::json::parse(contents);
+    auto cred_json =
+        storage::internal::nl::json::parse(contents, nullptr, false);
+    if (cred_json.is_discarded()) {
+      google::cloud::internal::RaiseRuntimeError(
+          "Invalid contents in credentials file " + path);
+    }
     std::string cred_type = cred_json.value("type", "no type given");
     if (cred_type == "authorized_user") {
-      return std::make_shared<AuthorizedUserCredentials<>>(contents);
+      return std::make_shared<AuthorizedUserCredentials<>>(contents, path);
     }
     if (cred_type == "service_account") {
-      return std::make_shared<ServiceAccountCredentials<>>(contents);
+      return std::make_shared<ServiceAccountCredentials<>>(contents, path);
     }
     google::cloud::internal::RaiseRuntimeError(
         "Unsupported credential type (" + cred_type +
-        ") when reading Application Default Credentials file.");
+        ") when reading Application Default Credentials file from " + path +
+        ".");
   }
 
   // TODO(#579): Check for implicit environment-based credentials if no ADC file
@@ -58,24 +68,24 @@ std::shared_ptr<AuthorizedUserCredentials<>>
 CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return CreateAuthorizedUserCredentialsFromJsonContents(contents);
+  return std::make_shared<AuthorizedUserCredentials<>>(contents, path);
 }
 
 std::shared_ptr<AuthorizedUserCredentials<>>
 CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
-  return std::make_shared<AuthorizedUserCredentials<>>(contents);
+  return std::make_shared<AuthorizedUserCredentials<>>(contents, "memory");
 }
 
 std::shared_ptr<ServiceAccountCredentials<>>
 CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return CreateServiceAccountCredentialsFromJsonContents(contents);
+  return std::make_shared<ServiceAccountCredentials<>>(contents, path);
 }
 
 std::shared_ptr<ServiceAccountCredentials<>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
-  return std::make_shared<ServiceAccountCredentials<>>(contents);
+  return std::make_shared<ServiceAccountCredentials<>>(contents, "memory");
 }
 
 }  // namespace oauth2
