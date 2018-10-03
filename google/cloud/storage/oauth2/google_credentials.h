@@ -15,13 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H_
 
-#include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/oauth2/anonymous_credentials.h"
-#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
-#include "google/cloud/storage/oauth2/service_account_credentials.h"
-#include "google/cloud/storage/version.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include <memory>
-#include <utility>
 
 namespace google {
 namespace cloud {
@@ -46,7 +41,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials();
  */
 
 /// Creates an "anonymous" credential.
-std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials();
+std::shared_ptr<Credentials> CreateAnonymousCredentials();
 
 /**
  * Creates an "authorized user" credential from a JSON file at the given path.
@@ -54,8 +49,8 @@ std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials();
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
  */
-std::shared_ptr<AuthorizedUserCredentials<>>
-CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
+std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
+    std::string const&);
 
 /**
  * Creates an "authorized user" credential from a JSON string.
@@ -63,16 +58,16 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
  */
-std::shared_ptr<AuthorizedUserCredentials<>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
+std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
+    std::string const&);
 
 /// Creates a "service account" credential from a JSON file at the given path.
-std::shared_ptr<ServiceAccountCredentials<>>
-CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
+std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const&);
 
 /// Creates a "service account" credential from a JSON string.
-std::shared_ptr<ServiceAccountCredentials<>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const&);
+std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
+    std::string const&);
 
 // TODO(#1193): Should we support loading service account credentials from a P12
 // file too? Other libraries do, but the JSON format is strongly preferred.
