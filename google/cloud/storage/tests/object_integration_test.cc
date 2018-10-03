@@ -1676,6 +1676,148 @@ TEST_F(ObjectIntegrationTest, RewriteFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { client.ListObjectAcl(bucket_name, object_name); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(client.ListObjectAcl(bucket_name, object_name),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.CreateObjectAcl(bucket_name, object_name, entity_name, "READER");
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.CreateObjectAcl(bucket_name, object_name, entity_name, "READER"),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.GetObjectAcl(bucket_name, object_name, entity_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.GetObjectAcl(bucket_name, object_name, entity_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.UpdateObjectAcl(
+            bucket_name, object_name,
+            ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.UpdateObjectAcl(
+          bucket_name, object_name,
+          ObjectAccessControl().set_entity(entity_name).set_role("READER")),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.PatchObjectAcl(
+            bucket_name, object_name, entity_name, ObjectAccessControl(),
+            ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.PatchObjectAcl(
+          bucket_name, object_name, entity_name, ObjectAccessControl(),
+          ObjectAccessControl().set_entity(entity_name).set_role("READER")),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the source object does not exist.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.DeleteObjectAcl(bucket_name, object_name, entity_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
