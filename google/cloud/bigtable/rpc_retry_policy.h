@@ -41,7 +41,7 @@ struct SafeGrpcRetry {
     return IsTransientFailure(status.error_code());
   }
   static inline bool IsPermanentFailure(grpc::Status const& status) {
-    return not IsOk(status) && not IsTransientFailure(status);
+    return not IsOk(status) and not IsTransientFailure(status);
   }
 };
 
