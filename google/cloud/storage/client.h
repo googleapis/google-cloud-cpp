@@ -32,7 +32,31 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * The Google Cloud Storage Client.
  *
- * @warning this implementation is incomplete.
+ * This is the main class to interact with Google Cloud Storage. It provides
+ * member functions to invoke all the APIs in the service.
+ *
+ * @par Performance
+ * Creating an object of this type is a relatively low-cost operation.
+ * Connections to the service are created on demand. Copy-assignment and
+ * copy-construction are also relatively low-cost operations, they should be
+ * comparable to copying a few shared pointers. The first request (or any
+ * request that requires a new connection) incurs the cost of creating the
+ * connection and authenticating with the service.
+ *
+ * @par Thread-safety
+ * Instances of this class created via copy-construction or copy-assignment
+ * share the underlying pool of connections. Access to these copies via multiple
+ * threads is guaranteed to work. Two threads operating on the same instance of
+ * this class is not guaranteed to work.
+ *
+ * @see https://cloud.google.com/storage/ for an overview of Google Cloud
+ *     Storage.
+ *
+ * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
+ *     the key terms used in Google Cloud Storage.
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/ for an overview of the
+ *     underlying API.
  */
 class Client {
  public:
