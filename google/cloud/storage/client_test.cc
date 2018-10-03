@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"

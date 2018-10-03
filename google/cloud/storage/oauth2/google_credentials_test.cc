@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/storage/oauth2/anonymous_credentials.h"
-#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
-#include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <fstream>
-#include <typeinfo>
 
 namespace google {
 namespace cloud {
@@ -28,18 +25,58 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
+using ::google::cloud::internal::SetEnv;
+using ::google::cloud::internal::UnsetEnv;
+using ::google::cloud::testing_util::EnvironmentVariableRestore;
 
 char const VAR_NAME[] = "GOOGLE_APPLICATION_CREDENTIALS";
 
-class CredentialsTest : public ::testing::Test {
- protected:
-  void SetUp() override { env_.SetUp(); }
-  void TearDown() override { env_.TearDown(); }
+class GoogleCredentialsTest : public ::testing::Test {
+ public:
+  GoogleCredentialsTest()
+      : home_(GoogleAdcHomeEnvVar()),
+        override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
 
- private:
-  testing_util::EnvironmentVariableRestore env_ =
-      testing_util::EnvironmentVariableRestore(VAR_NAME);
+ protected:
+  void SetUp() override {
+    home_.SetUp();
+    override_variable_.SetUp();
+  }
+  void TearDown() override {
+    override_variable_.TearDown();
+    home_.TearDown();
+  }
+
+ protected:
+  EnvironmentVariableRestore home_;
+  EnvironmentVariableRestore override_variable_;
 };
+
+/// @test Verify that the application can override the default credentials.
+TEST_F(GoogleCredentialsTest, EnvironmentVariableSet) {
+  SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
+  std::string actual = GoogleAdcFilePathOrEmpty();
+  EXPECT_EQ("/foo/bar/baz", actual);
+}
+
+/// @test Verify that the file path works as expected when using HOME.
+TEST_F(GoogleCredentialsTest, HomeSet) {
+  UnsetEnv(GoogleAdcEnvVar());
+  char const* home = GoogleAdcHomeEnvVar();
+  SetEnv(home, "/foo/bar/baz");
+  std::string actual = GoogleAdcFilePathOrEmpty();
+  using testing::HasSubstr;
+  EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
+  EXPECT_THAT(actual, HasSubstr(".json"));
+}
+
+/// @test Verify that the ADC file path returns empty when HOME is not set.
+TEST_F(GoogleCredentialsTest, HomeNotSet) {
+  UnsetEnv(GoogleAdcEnvVar());
+  char const* home = GoogleAdcHomeEnvVar();
+  UnsetEnv(home);
+  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
+}
 
 /**
  * @test Verify `GoogleDefaultCredentials()` loads authorized user credentials.
@@ -51,22 +88,36 @@ class CredentialsTest : public ::testing::Test {
  * requires valid keys and contacting Google's production servers, and would
  * make this an integration test.
  */
-TEST_F(CredentialsTest, LoadValidAuthorizedUserCredentials) {
+TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentials) {
   char const filename[] = "authorized-user.json";
   std::ofstream os(filename);
-  os << R"""({
+  std::string contents_str = R"""({
   "client_id": "test-invalid-test-invalid.apps.googleusercontent.com",
   "client_secret": "invalid-invalid-invalid",
   "refresh_token": "1/test-test-test",
   "type": "authorized_user"
 })""";
+  os << contents_str;
   os.close();
-  google::cloud::internal::SetEnv(VAR_NAME, filename);
+  SetEnv(VAR_NAME, filename);
 
+  // Test that the service account credentials are loaded as the default when
+  // specified via the well known environment variable.
+  auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
-  auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
+
+  // Test that the authorized user credentials are loaded from a file.
+  credentials = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
+  ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
+
+  // Test that the authorized user credentials are loaded from a string
+  // representing JSON contents.
+  credentials = CreateAuthorizedUserCredentialsFromJsonContents(contents_str);
+  ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
 
@@ -80,10 +131,10 @@ TEST_F(CredentialsTest, LoadValidAuthorizedUserCredentials) {
  * requires valid keys and contacting Google's production servers, and would
  * make this an integration test.
  */
-TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
+TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentials) {
   char const filename[] = "service-account.json";
   std::ofstream os(filename);
-  os << R"""({
+  std::string contents_str = R"""({
     "type": "service_account",
     "project_id": "foo-project",
     "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
@@ -95,14 +146,36 @@ TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
+  os << contents_str;
   os.close();
-  google::cloud::internal::SetEnv(VAR_NAME, filename);
+  SetEnv(VAR_NAME, filename);
 
+  // Test that the service account credentials are loaded as the default when
+  // specified via the well known environment variable.
+  auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
-  auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+
+  // Test that the service account credentials are loaded from a file.
+  credentials = CreateServiceAccountCredentialsFromJsonFilePath(filename);
+  ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+
+  // Test that the service account credentials are loaded from a string
+  // representing JSON contents.
+  credentials = CreateServiceAccountCredentialsFromJsonContents(contents_str);
+  ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
+TEST_F(GoogleCredentialsTest, LoadValidAnonymousCredentials) {
+  auto credentials = CreateAnonymousCredentials();
+  // Need to create a temporary for the pointer because clang-tidy warns about
+  // using expressions with (potential) side-effects inside typeid().
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(AnonymousCredentials));
 }
 
 }  // namespace
@@ -111,3 +184,4 @@ TEST_F(CredentialsTest, LoadValdServiceAccountCredentials) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+

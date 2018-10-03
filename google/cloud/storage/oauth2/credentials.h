@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/version.h"
 #include <chrono>
-#include <memory>
 
 namespace google {
 namespace cloud {
@@ -36,8 +35,6 @@ class Credentials {
    */
   virtual std::string AuthorizationHeader() = 0;
 };
-
-std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

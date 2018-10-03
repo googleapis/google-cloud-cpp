@@ -23,11 +23,43 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
-/// Return the path for the default service account credentials file.
-std::string GoogleApplicationDefaultCredentialsFile();
 
-/// The name of the environment variable to configure `HOME`.
-char const* GoogleApplicationDefaultCredentialsHomeVariable();
+/**
+ * Returns the Application Default Credentials environment variable name.
+ *
+ * This environment variable should be checked for a valid file path when
+ * attempting to load Google Application Default Credentials.
+ */
+inline char const* GoogleAdcEnvVar() {
+  static constexpr char kEnvVarName[] = "GOOGLE_APPLICATION_CREDENTIALS";
+  return kEnvVarName;
+}
+
+/**
+ * Returns the path to the Application Default Credentials file, if set.
+ *
+ * If the Application Default Credentials environment variable is set, we check
+ * the path specified by its value for a file containing ADCs. Returns an
+ * empty string if no such path exists or the environment variable is not set.
+ */
+std::string GoogleAdcFilePathOrEmpty();
+
+/**
+ * Returns the environment variable used to construct the well known ADC path.
+ *
+ * The directory containing a user's application configuration data, indicated
+ * by this environment variable, varies across environments. That directory is
+ * used when constructing the well known path of the Application Default
+ * Credentials file.
+ */
+inline char const* GoogleAdcHomeEnvVar() {
+#ifdef _WIN32
+  static constexpr char kHomeEnvVar[] = "APPDATA";
+#else
+  static constexpr char kHomeEnvVar[] = "HOME";
+#endif
+  return kHomeEnvVar;
+}
 
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

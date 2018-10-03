@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
