@@ -246,6 +246,8 @@ run_all_object_examples() {
       "${bucket_name}" "${encrypted_copied_object_name}" "${key}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_composed_object_name}"
 
   local newkey="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
