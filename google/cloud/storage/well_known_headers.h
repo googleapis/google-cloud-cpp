@@ -247,8 +247,8 @@ static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
       "describing your platform details to request support for it.");
   constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
 
-  constexpr auto minchar = std::numeric_limits<char>::min();
-  constexpr auto maxchar = std::numeric_limits<char>::max();
+  constexpr auto minchar = (std::numeric_limits<char>::min)();
+  constexpr auto maxchar = (std::numeric_limits<char>::max)();
   std::uniform_int_distribution<int> uni(minchar, maxchar);
   std::string key(static_cast<std::size_t>(kKeySize), ' ');
   std::generate_n(key.begin(), key.size(),
