@@ -103,6 +103,7 @@ storage_client_SRCS = [
     "oauth2/anonymous_credentials.cc",
     "oauth2/google_application_default_credentials_file.cc",
     "oauth2/google_credentials.cc",
+    "oauth2/service_account_credentials.cc",
     "object_access_control.cc",
     "object_metadata.cc",
     "object_rewriter.cc",

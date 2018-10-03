@@ -32,6 +32,19 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
+/// A plain object to hold the result of parsing a service account credentials.
+struct ServiceAccountCredentialsInfo {
+  std::string private_key_id;
+  std::string private_key;
+  std::string token_uri;
+  std::string client_email;
+};
+
+/// Parse a JSON object as a ServiceAccountCredentials.
+ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri);
+
 /**
  * A C++ wrapper for Google's Service Account Credentials.
  *
@@ -64,43 +77,20 @@ class ServiceAccountCredentials : public Credentials {
 
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string const& source,
-                                     std::string default_token_uri)
+                                     std::string const& default_token_uri)
       : expiration_time_(), clock_() {
     namespace nl = storage::internal::nl;
-    nl::json credentials = nl::json::parse(content, nullptr, false);
-    if (credentials.is_discarded()) {
-      google::cloud::internal::RaiseInvalidArgument(
-          "Invalid ServiceAccountCredentials, "
-          "parsing failed on data loaded from " +
-          source);
-    }
-    char const PRIVATE_KEY_ID_KEY[] = "private_key_id";
-    char const PRIVATE_KEY_KEY[] = "private_key";
-    char const TOKEN_URI_KEY[] = "token_uri";
-    char const CLIENT_EMAIL_KEY[] = "client_email";
-    for (auto const& key : {PRIVATE_KEY_ID_KEY, PRIVATE_KEY_KEY, TOKEN_URI_KEY,
-                            CLIENT_EMAIL_KEY}) {
-      if (credentials.count(key) == 0U) {
-        google::cloud::internal::RaiseInvalidArgument(
-            "Invalid ServiceAccountCredentials, the " + std::string(key) +
-            " field is missing on data loaded from " + source);
-      }
-    }
+    auto info =
+        ParseServiceAccountCredentials(content, source, default_token_uri);
     // Below, we construct a JWT refresh request used to obtain an access token.
     // The structure of a JWT is defined in RFC 7519 (see
     // https://tools.ietf.org/html/rfc7519), and Google-specific JWT validation
     // logic is further described at:
     // https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
     nl::json assertion_header = {
-        {"alg", "RS256"},
-        {"kid", credentials.value(PRIVATE_KEY_ID_KEY, "")},
-        {"typ", "JWT"}};
+        {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
     std::string scope = GoogleOAuthScopeCloudPlatform();
-    // Some credential formats (e.g. gcloud's ADC file) don't contain a
-    // "token_uri" attribute in the JSON object.  In this case, we try using the
-    // default value.
-    std::string token_uri = credentials.value(TOKEN_URI_KEY, default_token_uri);
 
     // As much as possible do the time arithmetic using the std::chrono types,
     // convert to longs only when we are dealing with timestamps since the
@@ -112,17 +102,16 @@ class ServiceAccountCredentials : public Credentials {
     auto expiration_from_epoch =
         static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
     nl::json assertion_payload = {
-        {"iss", credentials.value(CLIENT_EMAIL_KEY, "")},
+        {"iss", info.client_email},
         {"scope", scope},
-        {"aud", token_uri},
+        {"aud", info.token_uri},
         {"iat", now_from_epoch},
         // Resulting access token should be expire after one hour.
         {"exp", expiration_from_epoch}};
 
     HttpRequestBuilderType request_builder(
-        std::move(token_uri), storage::internal::GetDefaultCurlHandleFactory());
-    std::string svc_acct_private_key_pem =
-        credentials.value(PRIVATE_KEY_KEY, "");
+        std::move(info.token_uri),
+        storage::internal::GetDefaultCurlHandleFactory());
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
     std::string payload("grant_type=");
@@ -131,8 +120,8 @@ class ServiceAccountCredentials : public Credentials {
             .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
     payload += "&assertion=";
-    payload += MakeJWTAssertion(assertion_header, assertion_payload,
-                                svc_acct_private_key_pem);
+    payload +=
+        MakeJWTAssertion(assertion_header, assertion_payload, info.private_key);
     payload_ = std::move(payload);
 
     request_builder.AddHeader(

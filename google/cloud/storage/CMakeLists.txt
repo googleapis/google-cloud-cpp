@@ -181,6 +181,7 @@ add_library(storage_client
             oauth2/google_credentials.h
             oauth2/google_credentials.cc
             oauth2/service_account_credentials.h
+            oauth2/service_account_credentials.cc
             object_access_control.h
             object_access_control.cc
             object_metadata.h

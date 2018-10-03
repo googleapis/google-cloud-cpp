@@ -188,6 +188,16 @@ TEST_F(ServiceAccountCredentialsTest,
             credentials.AuthorizationHeader());
 }
 
+/// @test Verify that nl::json::parse() failures are reported as is_discarded.
+TEST_F(ServiceAccountCredentialsTest, JsonParsingFailure) {
+  std::string config = R"""( not-a-valid-json-string )""";
+  // The documentation for nl::json::parse() is a bit ambiguous, so wrote a
+  // little test to verify it works as I expected.
+  internal::nl::json parsed = internal::nl::json::parse(config, nullptr, false);
+  EXPECT_TRUE(parsed.is_discarded());
+  EXPECT_FALSE(parsed.is_null());
+}
+
 /// @test Verify that invalid contents result in a readable error.
 TEST_F(ServiceAccountCredentialsTest, InvalidContents) {
   std::string config = R"""( not-a-valid-json-string )""";
