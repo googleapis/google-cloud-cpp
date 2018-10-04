@@ -79,17 +79,11 @@ class AuthorizedUserCredentials : public Credentials {
     auto info = ParseAuthorizedUserCredentials(content, source);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
-    payload +=
-        request_builder.MakeEscapedString(info.client_id)
-            .get();
+    payload += request_builder.MakeEscapedString(info.client_id).get();
     payload += "&client_secret=";
-    payload += request_builder
-                   .MakeEscapedString(info.client_secret)
-                   .get();
+    payload += request_builder.MakeEscapedString(info.client_secret).get();
     payload += "&refresh_token=";
-    payload += request_builder
-                   .MakeEscapedString(info.refresh_token)
-                   .get();
+    payload += request_builder.MakeEscapedString(info.refresh_token).get();
     payload_ = std::move(payload);
     request_ = request_builder.BuildRequest();
   }
