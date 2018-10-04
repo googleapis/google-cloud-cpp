@@ -10,6 +10,7 @@ storage_client_unit_tests = [
     "client_notifications_test.cc",
     "client_test.cc",
     "client_write_object_test.cc",
+    "hashing_options_test.cc",
     "internal/access_control_common_test.cc",
     "internal/binary_data_as_debug_string_test.cc",
     "internal/bucket_acl_requests_test.cc",

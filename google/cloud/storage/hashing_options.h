@@ -36,6 +36,11 @@ struct MD5HashValue
   static char const* name() { return "md5-hash-value"; }
 };
 
+/**
+ * Compute the MD5 Hash of a string in the format preferred by GCS.
+ */
+std::string ComputeMD5Hash(std::string const& payload);
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

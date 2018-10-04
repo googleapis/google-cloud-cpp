@@ -347,6 +347,29 @@ TEST_F(ObjectIntegrationTest, InsertWithMD5) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectIntegrationTest, InsertWithComputedMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, expected,
+                          IfGenerationMatch(0),
+                          MD5HashValue(ComputeMD5Hash(expected)));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
