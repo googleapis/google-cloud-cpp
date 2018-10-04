@@ -16,36 +16,18 @@
 
 import argparse
 import base64
-import json
-import time
+import error_response
 import flask
 import hashlib
 import httpbin
+import json
 import os
+import time
 from werkzeug import serving
 from werkzeug import wsgi
 
 
-class ErrorResponse(Exception):
-    """Simplify generation of error responses."""
-    status_code = 400
-
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def as_response(self):
-        kv = dict(self.payload or ())
-        kv['message'] = self.message
-        response = flask.jsonify(kv)
-        response.status_code = self.status_code
-        return response
-
-
-@httpbin.app.errorhandler(ErrorResponse)
+@httpbin.app.errorhandler(error_response.ErrorResponse)
 def httpbin_error(error):
     return error.as_response()
 
@@ -140,7 +122,7 @@ def raise_csek_error(code=400):
             msg,
         }
     }
-    raise ErrorResponse(json.dumps(error), status_code=code)
+    raise error_response.ErrorResponse(json.dumps(error), status_code=code)
 
 
 def validate_customer_encryption_headers(key_header_value, hash_header_value,
@@ -154,7 +136,7 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
     """
     try:
         if algo_header_value is None or algo_header_value != 'AES256':
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Invalid or missing algorithm %s for CSEK' % algo_header_value,
                 status_code=400)
 
@@ -167,13 +149,13 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
         expected = base64.standard_b64encode(h.digest())
         if hash_header_value is None or expected != hash_header_value:
             raise_csek_error()
-    except ErrorResponse:
-        # ErrorResponse indicates that the request was invalid, just pass
+    except error_response.ErrorResponse:
+        # error_response.ErrorResponse indicates that the request was invalid, just pass
         # that exception through.
         raise
     except Exception:
         # Many of the functions above may raise, convert those to an
-        # ErrorResponse with the right format.
+        # error_response.ErrorResponse with the right format.
         raise_csek_error()
 
 
@@ -308,8 +290,9 @@ class GcsObjectVersion(object):
         actual = self.metadata.get('md5Hash', '')
         expected = base64.b64encode(hashlib.md5(self.media).digest())
         if actual != expected:
-            raise ErrorResponse('Mismatched MD5 hash expected=%s, actual=%s' %
-                                (expected, actual))
+            raise error_response.ErrorResponse(
+                'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
+                                                                actual))
 
     def validate_encryption_for_read(self, request,
                                      prefix='x-goog-encryption'):
@@ -393,7 +376,8 @@ class GcsObjectVersion(object):
         elif predefined_acl == 'publicRead':
             self.insert_acl(canonical_entity_name('allUsers'), 'READER')
         else:
-            raise ErrorResponse('Invalid predefinedAcl value', status_code=400)
+            raise error_response.ErrorResponse(
+                'Invalid predefinedAcl value', status_code=400)
 
     def reset_predefined_acl(self, predefined_acl):
         """Reset the ACL based on the given request parameter value."""
@@ -452,7 +436,7 @@ class GcsObjectVersion(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '') == entity:
                 return acl
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
@@ -477,19 +461,21 @@ class GcsObjectVersion(object):
         payload = json.loads(request.data)
         request_entity = payload.get('entity')
         if request_entity is not None and request_entity != entity:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s'
                 % (entity, request_entity))
         etag_match = request.headers.get('if-match')
         if etag_match is not None and etag_match != acl.get('etag'):
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
         etag_none_match = request.headers.get('if-none-match')
         if (etag_none_match is not None
                 and etag_none_match != acl.get('etag')):
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
         role = payload.get('role')
         if role is None:
-            raise ErrorResponse('Missing role value')
+            raise error_response.ErrorResponse('Missing role value')
         return self.insert_acl(entity, role)
 
 
@@ -527,7 +513,7 @@ class GcsObject(object):
             return self.get_latest()
         version = self.revisions.get(int(generation))
         if version is None:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Precondition Failed: generation %s not found' % generation)
         return version
 
@@ -564,7 +550,7 @@ class GcsObject(object):
         else:
             version = self.revisions.get(int(generation))
             if version is None:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'Precondition Failed: generation %s not found' %
                     generation)
         metadata = json.loads(request.data)
@@ -586,7 +572,7 @@ class GcsObject(object):
         else:
             version = self.revisions.get(int(generation))
             if version is None:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'Precondition Failed: generation %s not found' %
                     generation)
         patch = json.loads(request.data)
@@ -596,7 +582,7 @@ class GcsObject(object):
         }
         for key, value in patch.iteritems():
             if key not in writeable_keys:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
         patched = json_api_patch(
@@ -623,27 +609,33 @@ class GcsObject(object):
         """Verify that the given precondition values are met."""
         if (generation_match is not None
                 and int(generation_match) != self.generation):
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
         # This object does not exist (yet), testing in this case is special.
         if (generation_not_match is not None
                 and int(generation_not_match) == self.generation):
-            raise ErrorResponse('Precondition Failed', status_code=412)
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
 
         if self.generation == 0:
             if (metageneration_match is not None
                     or metageneration_not_match is not None):
-                raise ErrorResponse('Precondition Failed', status_code=412)
+                raise error_response.ErrorResponse(
+                    'Precondition Failed', status_code=412)
         else:
             current = self.revisions.get(self.generation)
             if current is None:
-                raise ErrorResponse('Object not found', status_code=404)
+                raise error_response.ErrorResponse(
+                    'Object not found', status_code=404)
             metageneration = current.metadata.get('metageneration')
             if (metageneration_not_match is not None
                     and int(metageneration_not_match) == metageneration):
-                raise ErrorResponse('Precondition Failed', status_code=412)
+                raise error_response.ErrorResponse(
+                    'Precondition Failed', status_code=412)
             if (metageneration_match is not None
                     and int(metageneration_match) != metageneration):
-                raise ErrorResponse('Precondition Failed', status_code=412)
+                raise error_response.ErrorResponse(
+                    'Precondition Failed', status_code=412)
 
     def check_preconditions(
             self,
@@ -734,11 +726,11 @@ class GcsObject(object):
         content_type = request.headers.get('content-type')
         if content_type is None or not content_type.startswith(
                 'multipart/related'):
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Missing or invalid content-type header in multipart upload')
         _, _, boundary = content_type.partition('boundary=')
         if boundary is None:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Missing boundary (%s) in content-type header in multipart upload'
                 % boundary)
 
@@ -752,7 +744,7 @@ class GcsObject(object):
         media_headers, media_body = self._parse_part(parts[2])
         end = media_body.find('\r\n--' + boundary + '--\r\n')
         if end == -1:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Missing end marker (--%s--) in media body' % boundary)
         media_body = media_body[:end]
         self.generation += 1
@@ -951,7 +943,7 @@ class GcsObject(object):
             # anyway, so this makes sense.
             rewrite = self.rewrite_operations.pop(rewrite_token, None)
             if rewrite is None:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'Invalid or expired token in rewrite', status_code=410)
         else:
             rewrite_token, rewrite = self.make_rewrite_operation(
@@ -963,7 +955,7 @@ class GcsObject(object):
             request, destination_bucket, destination_object)
         diff = set(current_arguments) ^ set(rewrite.get('original_arguments'))
         if len(diff) != 0:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Mismatched arguments to rewrite', status_code=412)
 
         # This will raise if the version is deleted while the operation is in
@@ -1089,7 +1081,7 @@ class GcsBucket(object):
         }
         for key, value in patch.iteritems():
             if key not in writeable_keys:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
         patched = json_api_patch(self.metadata, patch, recurse_on={'labels'})
@@ -1112,13 +1104,13 @@ class GcsBucket(object):
 
         if (metageneration_not_match is not None
                 and int(metageneration_not_match) == metageneration):
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
 
         if (metageneration_match is not None
                 and int(metageneration_match) != metageneration):
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Precondition Failed (metageneration = %s)' % metageneration,
                 status_code=412)
 
@@ -1183,7 +1175,7 @@ class GcsBucket(object):
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '') == entity:
                 return acl
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
 
     def update_acl(self, entity, role):
@@ -1246,7 +1238,7 @@ class GcsBucket(object):
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '') == entity:
                 return acl
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Entity %s not found in object %s' % (entity, self.name))
 
     def update_default_object_acl(self, entity, role):
@@ -1296,7 +1288,7 @@ class GcsBucket(object):
         :rtype:NoneType
         """
         if self.notifications.get(notification_id) is None:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Notification %d not found in %s' % (notification_id,
                                                      self.name),
                 status_code=404)
@@ -1312,7 +1304,7 @@ class GcsBucket(object):
         """
         details = self.notifications.get(notification_id)
         if details is None:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Notification %d not found in %s' % (notification_id,
                                                      self.name),
                 status_code=404)
@@ -1331,10 +1323,11 @@ class GcsBucket(object):
             for entry in self.metadata.get('acl', []):
                 legacy_role = entry.get('role')
                 if legacy_role is None or entry.get('entity') is None:
-                    raise ErrorResponse('Invalid ACL entry', status_code=500)
+                    raise error_response.ErrorResponse(
+                        'Invalid ACL entry', status_code=500)
                 role = role_mapping.get(legacy_role)
                 if role is None:
-                    raise ErrorResponse(
+                    raise error_response.ErrorResponse(
                         'Invalid legacy role %s' % legacy_role,
                         status_code=500)
                 members_by_role.setdefault(role, []).append(
@@ -1371,16 +1364,16 @@ class GcsBucket(object):
         current_etag = base64.b64encode(str(self.iam_version))
         if (request.headers.get('if-match') is not None
                 and current_etag != request.headers.get('if-match')):
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
-        if (request.headers.get('if-none-match') is not None\
+        if (request.headers.get('if-none-match') is not None
                 and current_etag == request.headers.get('if-none-match')):
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'Mismatched ETag has %s' % current_etag, status_code=412)
 
         policy = json.loads(request.data)
         if policy.get('bindings') is None:
-            raise ErrorResponse('Missing "bindings" field')
+            raise error_response.ErrorResponse('Missing "bindings" field')
 
         new_acl = []
         new_iam_bindings = {}
@@ -1393,7 +1386,8 @@ class GcsBucket(object):
             role = binding.get('role')
             members = binding.get('members')
             if role is None or members is None:
-                raise ErrorResponse('Missing "role" or "members" fields')
+                raise error_response.ErrorResponse(
+                    'Missing "role" or "members" fields')
             if role_mapping.get(role) is None:
                 new_iam_bindings[role] = members
             else:
@@ -1466,7 +1460,7 @@ def lookup_bucket(bucket_name):
     """
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     return bucket
 
@@ -1483,7 +1477,7 @@ def lookup_object(bucket_name, object_name):
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path)
     if gcs_object is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Object %s in %s not found' % (object_name, bucket_name),
             status_code=404)
     return object_path, gcs_object
@@ -1495,7 +1489,7 @@ def gcs_index():
     return 'OK'
 
 
-@gcs.errorhandler(ErrorResponse)
+@gcs.errorhandler(error_response.ErrorResponse)
 def gcs_error(error):
     return error.as_response()
 
@@ -1519,11 +1513,11 @@ def buckets_insert():
     payload = json.loads(flask.request.data)
     bucket_name = payload.get('name')
     if bucket_name is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Missing bucket name in `Buckets: insert`', status_code=412)
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is not None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Bucket %s already exists' % bucket_name, status_code=503)
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
@@ -1539,10 +1533,10 @@ def buckets_update(bucket_name):
     payload = json.loads(flask.request.data)
     name = payload.get('name')
     if name is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Missing bucket name in `Buckets: update`', status_code=412)
     if name != bucket_name:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Mismatched bucket name parameter in `Buckets: update`',
             status_code=400)
     bucket = lookup_bucket(bucket_name)
@@ -1565,7 +1559,7 @@ def buckets_get(bucket_name):
     bucket = GCS_BUCKETS.setdefault(bucket_name, bucket)
     # end of TODO(#821)
     if bucket is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     return filtered_response(flask.request, bucket.metadata)
@@ -1585,7 +1579,7 @@ def buckets_patch(bucket_name):
     """Implement the 'Buckets: patch' API."""
     bucket = GCS_BUCKETS.get(bucket_name, None)
     if bucket is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
     patch = json.loads(flask.request.data)
@@ -1818,7 +1812,7 @@ def objects_copy(source_bucket, source_object, destination_bucket,
     source_revision = gcs_object.get_revision(flask.request,
                                               'sourceGeneration')
     if source_revision is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Revision not found %s' % object_path, status_code=404)
 
     destination_path = destination_bucket + "/o/" + destination_object
@@ -1861,7 +1855,7 @@ def objects_get(bucket_name, object_name):
     if media is None or media == 'json':
         return filtered_response(flask.request, revision.metadata)
     if media != 'media':
-        raise ErrorResponse('Invalid alt=%s parameter' % media)
+        raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
     revision.validate_encryption_for_read(flask.request)
     response = flask.make_response(revision.media)
     length = len(revision.media)
@@ -1901,10 +1895,10 @@ def objects_compose(bucket_name, object_name):
     payload = json.loads(flask.request.data)
     source_objects = payload["sourceObjects"]
     if source_objects is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'You must provide at least one source component.', status_code=400)
     if len(source_objects) > 32:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'The number of source components provided'
             ' (%d) exceeds the maximum (32)' % len(source_objects),
             status_code=400)
@@ -1912,12 +1906,12 @@ def objects_compose(bucket_name, object_name):
     for source_object in source_objects:
         source_object_name = source_object.get('name')
         if source_object_name is None:
-            raise ErrorResponse('Required.', status_code=400)
+            raise error_response.ErrorResponse('Required.', status_code=400)
         source_object_path = bucket_name + '/o/' + source_object_name
         source_gcs_object = GCS_OBJECTS.get(
             source_object_path, GcsObject(bucket_name, source_object_name))
         if source_gcs_object is None:
-            raise ErrorResponse(
+            raise error_response.ErrorResponse(
                 'No such object: %s' % source_object_path, status_code=404)
         source_revision = source_gcs_object.get_latest()
         generation = source_object.get('generation')
@@ -1925,14 +1919,15 @@ def objects_compose(bucket_name, object_name):
             source_revision = source_gcs_object.get_revision_by_generation(
                 generation)
             if source_revision is None:
-                raise ErrorResponse(
+                raise error_response.ErrorResponse(
                     'No such object: %s' % source_object_path, status_code=404)
         object_preconditions = source_object.get('objectPreconditions')
         if object_preconditions is not None:
             if_generation_match = object_preconditions.get('ifGenerationMatch')
             if if_generation_match is not None:
                 if source_gcs_object.generation != if_generation_match:
-                    raise ErrorResponse('Precondition Failed', status_code=412)
+                    raise error_response.ErrorResponse(
+                        'Precondition Failed', status_code=412)
         composed_media += source_revision.media
     gcs_object = GCS_OBJECTS.setdefault(composed_object_path,
                                         GcsObject(bucket_name, object_name))
@@ -2036,7 +2031,7 @@ upload = flask.Flask(__name__)
 upload.debug = True
 
 
-@upload.errorhandler(ErrorResponse)
+@upload.errorhandler(error_response.ErrorResponse)
 def upload_error(error):
     return error.as_response()
 
@@ -2050,13 +2045,14 @@ def objects_insert(bucket_name):
     insert_magic_bucket(gcs_url)
     object_name = flask.request.args.get('name', None)
     if object_name is None:
-        raise ErrorResponse('name not set in Objects: insert', status_code=412)
+        raise error_response.ErrorResponse(
+            'name not set in Objects: insert', status_code=412)
     upload_type = flask.request.args.get('uploadType')
     if upload_type is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'uploadType not set in Objects: insert', status_code=412)
     if upload_type not in {'multipart', 'media'}:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'testbench does not support %s uploadType' % upload_type,
             status_code=400)
     object_path = bucket_name + '/o/' + object_name
@@ -2077,7 +2073,7 @@ xmlapi = flask.Flask(__name__)
 xmlapi.debug = True
 
 
-@xmlapi.errorhandler(ErrorResponse)
+@xmlapi.errorhandler(error_response.ErrorResponse)
 def xmlapi_error(error):
     return error.as_response()
 
@@ -2088,13 +2084,13 @@ def xmlapi_get_object(bucket_name, object_name):
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path)
     if gcs_object is None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Object not found %s' % object_path, status_code=404)
     if flask.request.args.get('acl') is not None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'ACL query not supported in XML API', status_code=500)
     if flask.request.args.get('encryption') is not None:
-        raise ErrorResponse(
+        raise error_response.ErrorResponse(
             'Encryption query not supported in XML API', status_code=500)
     generation_match = flask.request.headers.get('if-generation-match')
     metageneration_match = flask.request.headers.get('if-metageneration-match')
