@@ -983,7 +983,8 @@ class Client {
    * @see https://cloud.google.com/storage/docs/access-control/ for more
    *     information about access control in GCS.
    *
-   * @see https://cloud.google.com/storage/docs/access-control/lists#defaultbuckets
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/lists#defaultbuckets
    *     for more details about the default owners for a bucket.
    */
   /**
@@ -1395,7 +1396,8 @@ class Client {
    * created with the Default Object ACL for that bucket. These operations are
    * used to query and modify the Default Object ACL of a bucket.
    *
-   * @see https://cloud.google.com/storage/docs/access-control/lists#defaultobjects
+   * @see
+   * https://cloud.google.com/storage/docs/access-control/lists#defaultobjects
    *     for more information on default object ACLs.
    */
   /**
