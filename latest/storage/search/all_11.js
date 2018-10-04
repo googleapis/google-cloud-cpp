@@ -3,6 +3,7 @@ var searchData=
   ['raw_5fclient',['raw_client',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a84569cd8e135373f6e299c3c146317f6',1,'google::cloud::storage::v0::Client']]],
   ['readobject',['ReadObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a511f352533a2bda918c37f05b02f1469',1,'google::cloud::storage::v0::Client']]],
   ['reference',['reference',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#af305ca4d99ab83b5f1f1d068c0c1e8f9',1,'google::cloud::storage::v0::ListBucketsIterator::reference()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a9d48f75b665e0bfdca95cd254fd16b21',1,'google::cloud::storage::v0::ListObjectsIterator::reference()']]],
+  ['refresh_5ftoken',['refresh_token',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1AuthorizedUserCredentialsInfo.html#ae33dd6b327c301cd08393b11e0245d3f',1,'google::cloud::storage::v0::oauth2::AuthorizedUserCredentialsInfo']]],
   ['regional',['Regional',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a9109a55c653f9da886e4756b1025c31f',1,'google::cloud::storage::v0::storage_class']]],
   ['requester_5fpays',['requester_pays',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketBilling.html#ac118ae6b3b540d0eaafa1a46b37c875c',1,'google::cloud::storage::v0::BucketBilling']]],
   ['reset_5fbilling',['reset_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2379213ce368144b4a2fa65412d1fa1e',1,'google::cloud::storage::v0::BucketMetadata']]],

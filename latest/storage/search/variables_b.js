@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['requester_5fpays',['requester_pays',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketBilling.html#ac118ae6b3b540d0eaafa1a46b37c875c',1,'google::cloud::storage::v0::BucketBilling']]],
-  ['response_5fheader',['response_header',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a2177e95854c311ffc4f34ae74be279b8',1,'google::cloud::storage::v0::CorsEntry']]],
-  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
+  ['private_5fkey',['private_key',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a0845c1fa506498d9642a8aeb759afc68',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentialsInfo']]],
+  ['private_5fkey_5fid',['private_key_id',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a162173618701e4fde73479d504fa7c38',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentialsInfo']]]
 ];
