@@ -30,10 +30,10 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * The Google Cloud Storage Client.
+ * The Google Cloud Storage (GCS) Client.
  *
- * This is the main class to interact with Google Cloud Storage. It provides
- * member functions to invoke all the APIs in the service.
+ * This is the main class to interact with GCS. It provides member functions to
+ * invoke all the APIs in the service.
  *
  * @par Performance
  * Creating an object of this type is a relatively low-cost operation.
@@ -49,11 +49,10 @@ inline namespace STORAGE_CLIENT_NS {
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
- * @see https://cloud.google.com/storage/ for an overview of Google Cloud
- *     Storage.
+ * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
- *     the key terms used in Google Cloud Storage.
+ *     the key terms used in GCS.
  *
  * @see https://cloud.google.com/storage/docs/json_api/ for an overview of the
  *     underlying API.
@@ -92,6 +91,18 @@ class Client {
     return raw_client_;
   }
 
+  //@{
+  /**
+   * @name Bucket operations.
+   *
+   * Buckets are the basic containers that hold your data. Everything that you
+   * store in GCS must be contained in a bucket. You can use buckets to organize
+   * your data and control access to your data, but unlike directories and
+   * folders, you cannot nest buckets.
+   *
+   * @see https://cloud.google.com/storage/docs/key-terms#buckets for more
+   * information about GCS buckets.
+   */
   /**
    * Fetches the list of buckets for a given project.
    *
@@ -448,7 +459,21 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->TestBucketIamPermissions(request).second.permissions;
   }
+  //@}
 
+  //@{
+  /**
+   * @name Object operations
+   *
+   * Objects are the individual pieces of data that you store in GCS. Objects
+   * have two components: *object data* and *object metadata*. Object data
+   * (sometimes referred to as *media*) is typically a file that you want
+   * to store in GCS. Object metadata is information that describe various
+   * object qualities.
+   *
+   * @see https://cloud.google.com/storage/docs/key-terms#objects for more
+   * information about GCS objects.
+   */
   /**
    * Creates an object given its name and media (contents).
    *
@@ -482,11 +507,13 @@ class Client {
    * class.  Copying objects across locations or storage classes can fail for
    * large objects and retrying the operation will not succeed.
    *
+   * @note Prefer using `RewriteObject()` to copy objects, `RewriteObject()` can
+   *     copy objects to different locations, with different storage class,
+   *     and/or with different encryption keys.
+   *
    * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
    *   a full description of the advantages of `Objects: rewrite` over
    *   `Objects: copy`.
-   *
-   * TODO(#816) - reference the RewriteObject() member function here.
    *
    * @param source_bucket_name the name of the bucket that contains the object
    *     to be copied.
@@ -932,7 +959,33 @@ class Client {
                destination_object_metadata, std::forward<Options>(options)...)
         .Result();
   }
+  //@}
 
+  //@{
+  /**
+   * @name Bucket Access Control List operations.
+   *
+   * You can control who has access to your GCS buckets and objects as
+   * well as what level of access they have.
+   *
+   * @note In most cases, you should use IAM permissions instead of ACLs to
+   * control access to buckets.
+   *
+   * @note All buckets are owned by the project owners group. Project owners
+   *     are granted `OWNER` permissions to all buckets inside their project.
+   *     Bucket and object ownership cannot be changed by modifying ACLs. If you
+   *     apply a new ACL to a bucket, be sure that the bucket owner remains
+   *     unchanged in the new ACL.
+   *
+   * @note When you apply a new ACL to a bucket, GCS adds `OWNER` permission to
+   *     the bucket if you omit the grants.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/ for more
+   *     information about access control in GCS.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#defaultbuckets
+   *     for more details about the default owners for a bucket.
+   */
   /**
    * Retrieves the list of BucketAccessControls for a bucket.
    *
@@ -1114,7 +1167,27 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchBucketAcl(request).second;
   }
+  //@}
 
+  //@{
+  /**
+   * @name Object Access Control List operations.
+   *
+   * You can control who has access to your GCS buckets and objects as
+   * well as what level of access they have.
+   *
+   * @note When you upload (create) an object the entity that uploads the object
+   *     is listed as the object owner. This can be a user or a service account,
+   *     depending on what credentials are used to authenticate with GCS.
+   *     Object ownership cannot be changed by modifying ACLs. You can change
+   *     object ownership only by overwriting the object.
+   *
+   * @note When you apply a new ACL to an object, GCS adds `OWNER` permission to
+   *     the object if you omit the grants.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/ for more
+   *     information about access control in GCS.
+   */
   /**
    * Retrieves the list of ObjectAccessControls for an object.
    *
@@ -1312,7 +1385,19 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchObjectAcl(request).second;
   }
+  //@}
 
+  //@{
+  /**
+   * @name Bucket Default Object Access Control List operations.
+   *
+   * When you upload an object to GCS, without specifying an ACL the object is
+   * created with the Default Object ACL for that bucket. These operations are
+   * used to query and modify the Default Object ACL of a bucket.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#defaultobjects
+   *     for more information on default object ACLs.
+   */
   /**
    * Retrieves the default object ACL for a bucket.
    *
@@ -1523,7 +1608,20 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->PatchDefaultObjectAcl(request).second;
   }
+  //@}
 
+  //@{
+  /**
+   * @name Service account operations.
+   *
+   * Service accounts allow applications to authenticate and access GCP
+   * resources and services. When acting on your behalf, GCS uses such a service
+   * account. GCS creates one service account per project. These operations
+   * allow you to query the GCS service account for a project.
+   *
+   * @see https://cloud.google.com/storage/docs/projects#service-accounts for
+   *     more information on service accounts.
+   */
   /**
    * Gets the GCS service account for a given project.
    *
@@ -1590,7 +1688,19 @@ class Client {
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
   }
+  //@}
 
+  //@{
+  /**
+   * @name Pub/Sub operations.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects in
+   * your buckets to Cloud Pub/Sub, where the information is added to a Cloud
+   * Pub/Sub topic of your choice in the form of messages.
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for more
+   *     information about Cloud Pub/Sub in the context of GCS.
+   */
   /**
    * Retrieves the list of Notifications for a Bucket.
    *
@@ -1714,6 +1824,7 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     raw_client_->DeleteNotification(request);
   }
+  //@}
 
  private:
   template <typename... Policies>
