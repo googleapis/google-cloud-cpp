@@ -25,9 +25,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
-using ::google::cloud::internal::SetEnv;
-using ::google::cloud::internal::UnsetEnv;
-using ::google::cloud::testing_util::EnvironmentVariableRestore;
+using google::cloud::internal::SetEnv;
+using google::cloud::internal::UnsetEnv;
+using google::cloud::testing_util::EnvironmentVariableRestore;
+using ::testing::HasSubstr;
 
 char const VAR_NAME[] = "GOOGLE_APPLICATION_CREDENTIALS";
 
@@ -176,6 +177,70 @@ TEST_F(GoogleCredentialsTest, LoadValidAnonymousCredentials) {
   // using expressions with (potential) side-effects inside typeid().
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AnonymousCredentials));
+}
+
+TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
+  char const filename[] = "unknown-type-credentials.json";
+  std::ofstream os(filename);
+  std::string contents_str = R"""({
+  "type": "unknown_type"
+})""";
+  os << contents_str;
+  os.close();
+  SetEnv(VAR_NAME, filename);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try {
+    auto credentials = GoogleDefaultCredentials();
+  } catch(std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Unsupported credential type"));
+    EXPECT_THAT(ex.what(), HasSubstr(filename));
+    throw;
+  }, std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      GoogleDefaultCredentials(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
+  char const filename[] = "invalid-credentials.json";
+  std::ofstream os(filename);
+  std::string contents_str = R"""( not-a-json-object-string )""";
+  os << contents_str;
+  os.close();
+  SetEnv(VAR_NAME, filename);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try {
+    auto credentials = GoogleDefaultCredentials();
+  } catch(std::exception const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Invalid contents in credentials file"));
+    EXPECT_THAT(ex.what(), HasSubstr(filename));
+    throw;
+  }, std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      GoogleDefaultCredentials(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(GoogleCredentialsTest, MissingCredentials) {
+  char const filename[] = "missing-credentials.json";
+  SetEnv(VAR_NAME, filename);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try {
+    auto credentials = GoogleDefaultCredentials();
+  } catch(std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Cannot open credentials file"));
+    EXPECT_THAT(ex.what(), HasSubstr(filename));
+    throw;
+  }, std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      GoogleDefaultCredentials(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 }  // namespace

@@ -32,6 +32,19 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
+/// A plain object to hold the result of parsing a service account credentials.
+struct ServiceAccountCredentialsInfo {
+  std::string private_key_id;
+  std::string private_key;
+  std::string token_uri;
+  std::string client_email;
+};
+
+/// Parse a JSON object as a ServiceAccountCredentials.
+ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri);
+
 /**
  * A C++ wrapper for Google's Service Account Credentials.
  *
@@ -57,46 +70,48 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public Credentials {
  public:
-  explicit ServiceAccountCredentials(std::string const& content)
-      : ServiceAccountCredentials(content, GoogleOAuthRefreshEndpoint()) {}
+  explicit ServiceAccountCredentials(std::string const& content,
+                                     std::string const& source)
+      : ServiceAccountCredentials(content, source,
+                                  GoogleOAuthRefreshEndpoint()) {}
 
   explicit ServiceAccountCredentials(std::string const& content,
-                                     std::string default_token_uri)
+                                     std::string const& source,
+                                     std::string const& default_token_uri)
       : expiration_time_(), clock_() {
     namespace nl = storage::internal::nl;
-    nl::json credentials = nl::json::parse(content);
+    auto info =
+        ParseServiceAccountCredentials(content, source, default_token_uri);
     // Below, we construct a JWT refresh request used to obtain an access token.
     // The structure of a JWT is defined in RFC 7519 (see
     // https://tools.ietf.org/html/rfc7519), and Google-specific JWT validation
     // logic is further described at:
     // https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
     nl::json assertion_header = {
-        {"alg", "RS256"},
-        {"kid", credentials["private_key_id"].get_ref<std::string const&>()},
-        {"typ", "JWT"}};
+        {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
     std::string scope = GoogleOAuthScopeCloudPlatform();
-    // Some credential formats (e.g. gcloud's ADC file) don't contain a
-    // "token_uri" attribute in the JSON object.  In this case, we try using the
-    // default value.
-    char const TOKEN_URI_KEY[] = "token_uri";
-    std::string token_uri = credentials.value(TOKEN_URI_KEY, default_token_uri);
-    long int cur_time = static_cast<long int>(
-        std::chrono::system_clock::to_time_t(clock_.now()));
-    long int expiration_time =
-        cur_time + GoogleOAuthAccessTokenLifetime().count();
+
+    // As much as possible do the time arithmetic using the std::chrono types,
+    // convert to longs only when we are dealing with timestamps since the
+    // epoch.
+    auto now = clock_.now();
+    auto expiration = now + GoogleOAuthAccessTokenLifetime();
+    auto now_from_epoch =
+        static_cast<long>(std::chrono::system_clock::to_time_t(now));
+    auto expiration_from_epoch =
+        static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
     nl::json assertion_payload = {
-        {"iss", credentials["client_email"].get_ref<std::string const&>()},
+        {"iss", info.client_email},
         {"scope", scope},
-        {"aud", token_uri},
-        {"iat", cur_time},
+        {"aud", info.token_uri},
+        {"iat", now_from_epoch},
         // Resulting access token should be expire after one hour.
-        {"exp", expiration_time}};
+        {"exp", expiration_from_epoch}};
 
     HttpRequestBuilderType request_builder(
-        std::move(token_uri), storage::internal::GetDefaultCurlHandleFactory());
-    std::string svc_acct_private_key_pem =
-        credentials["private_key"].get_ref<std::string const&>();
+        std::move(info.token_uri),
+        storage::internal::GetDefaultCurlHandleFactory());
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
     std::string payload("grant_type=");
@@ -105,8 +120,8 @@ class ServiceAccountCredentials : public Credentials {
             .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
     payload += "&assertion=";
-    payload += MakeJWTAssertion(assertion_header, assertion_payload,
-                                svc_acct_private_key_pem);
+    payload +=
+        MakeJWTAssertion(assertion_header, assertion_payload, info.private_key);
     payload_ = std::move(payload);
 
     request_builder.AddHeader(
@@ -144,18 +159,23 @@ class ServiceAccountCredentials : public Credentials {
 
     // TODO(#516) - use retry policies to refresh the credentials.
     auto response = request_.MakeRequest(payload_);
-    if (200 != response.status_code) {
+    if (response.status_code >= 300) {
       return false;
     }
 
-    nl::json access_token = nl::json::parse(response.payload);
+    nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+    if (access_token.is_discarded() or access_token.count("token_type") == 0U or
+        access_token.count("access_token") == 0U or
+        access_token.count("expires_in") == 0U) {
+      return false;
+    }
     // Response should have the attributes "access_token", "expires_in", and
     // "token_type".
     std::string header =
-        "Authorization: " +
-        access_token["token_type"].get_ref<std::string const&>() + " " +
-        access_token["access_token"].get_ref<std::string const&>();
-    auto expires_in = std::chrono::seconds(access_token["expires_in"]);
+        "Authorization: " + access_token.value("token_type", "") + " " +
+        access_token.value("access_token", "");
+    auto expires_in =
+        std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in -
                           GoogleOAuthAccessTokenExpirationSlack();
     // Do not update any state until all potential exceptions are raised.
