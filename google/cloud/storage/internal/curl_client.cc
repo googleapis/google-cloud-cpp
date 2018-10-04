@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
+#include "google/cloud/storage/object_stream.h"
 
 namespace google {
 namespace cloud {
@@ -81,6 +82,7 @@ void CurlClient::SetupBuilder(CurlRequestBuilder& builder,
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
       share_(curl_share_init(), &curl_share_cleanup),
+      generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),
       xml_upload_factory_(CreateHandleFactory(options_)),
@@ -262,6 +264,13 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
       request.GetOption<Fields>().value().empty()) {
     return InsertObjectMediaXml(request);
   }
+
+  // If the application has set an explicit hash value we need to use multipart
+  // uploads.
+  if (request.HasOption<MD5HashValue>()) {
+    return InsertObjectMediaMultipart(request);
+  }
+
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   SetupBuilder(builder, request, "POST");
@@ -920,6 +929,10 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
     builder.AddHeader("x-goog-encryption-kms-key-name: " +
                       request.GetOption<KmsKeyName>().value());
   }
+  if (request.HasOption<MD5HashValue>()) {
+    builder.AddHeader("x-goog-hash: md5=" +
+                      request.GetOption<MD5HashValue>().value());
+  }
   if (request.HasOption<PredefinedAcl>()) {
     builder.AddHeader(
         "x-goog-acl: " +
@@ -1054,6 +1067,84 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
+}
+
+std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
+    InsertObjectMediaRequest const& request) {
+  // To perform a multipart upload we need to separate the parts using:
+  //   https://cloud.google.com/storage/docs/json_api/v1/how-tos/multipart-upload
+  // This function is structured as follows:
+  // 1. Create a request object, as we often do.
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  SetupBuilder(builder, request, "POST");
+
+  // 2. Pick a separator that does not conflict with the request contents.
+  auto boundary = PickBoundary(request.contents());
+  builder.AddHeader("content-type: multipart/related; boundary=" + boundary);
+  builder.AddQueryParameter("uploadType", "multipart");
+  builder.AddQueryParameter("name", request.object_name());
+
+  // 3. Perform a streaming upload because computing the size upfront is more
+  //    complicated than it is worth.
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), client_options().upload_buffer_size()));
+  ObjectWriteStream writer(std::move(buf));
+
+  nl::json metadata = nl::json::object();
+  if (request.HasOption<MD5HashValue>()) {
+    metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  }
+
+  std::string crlf = "\r\n";
+  std::string marker = "--" + boundary;
+
+  // 4. Format the first part, including the separators and the headers.
+  writer << marker << crlf << "content-type: application/json; charset=UTF-8"
+         << crlf << crlf << metadata.dump() << crlf << marker << crlf;
+
+  // 5. Format the second part, which includes all the contents and a final
+  //    separator.
+  if (not request.HasOption<ContentType>()) {
+    writer << "content-type: application/octet-stream" << crlf;
+  } else {
+    writer << "content-type: " << request.GetOption<ContentType>().value()
+           << crlf;
+  }
+  writer << crlf << request.contents() << crlf << marker << "--" << crlf;
+
+  // 6. Return the results as usual.
+  auto payload = writer.CloseRaw();
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectMetadata{});
+  }
+  return std::make_pair(Status(),
+                        ObjectMetadata::ParseFromString(payload.payload));
+}
+
+std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
+  // We need to find a string that is *not* found in `text_to_avoid`, we pick
+  // a string at random, and see if it is in `text_to_avoid`, if it is, we grow
+  // the string with random characters and start from where we last found a
+  // the candidate.  Eventually we will find something, though it might be
+  // larger than `text_to_avoid`.  And we only make (approximately) one pass
+  // over `text_to_avoid`.
+  auto generate_candidate = [this](int n) {
+    static std::string const chars =
+        "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::unique_lock<std::mutex> lk(mu_);
+    return google::cloud::internal::Sample(generator_, n, chars);
+  };
+  constexpr int INITIAL_CANDIDATE_SIZE = 16;
+  constexpr int CANDIDATE_GROWTH_SIZE = 4;
+  std::string candidate = generate_candidate(INITIAL_CANDIDATE_SIZE);
+  for (std::string::size_type i = text_to_avoid.find(candidate, 0);
+       i != std::string::npos; text_to_avoid.find(candidate, i)) {
+    candidate += generate_candidate(CANDIDATE_GROWTH_SIZE);
+  }
+  return candidate;
 }
 
 }  // namespace internal

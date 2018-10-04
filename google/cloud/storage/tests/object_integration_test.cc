@@ -67,7 +67,7 @@ ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
 non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-})""";
+)""";
   }
 
   EncryptionKeyData MakeEncryptionKeyData() {
@@ -324,6 +324,29 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectIntegrationTest, InsertWithMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, expected,
+                          IfGenerationMatch(0),
+                          MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -503,6 +526,29 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   // Create the object, but only if it does not exist already.
   ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
                                             IfGenerationMatch(0), Fields(""));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, XmlInsertWithMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, expected,
+                          IfGenerationMatch(0), Fields(""),
+                          MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 

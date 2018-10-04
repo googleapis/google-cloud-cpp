@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H_
 
+#include "google/cloud/internal/random.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/oauth2/credentials.h"
@@ -162,6 +163,11 @@ class CurlClient : public RawClient {
   std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectXml(
       InsertObjectStreamingRequest const& request);
 
+  /// Insert an object using the uploadType=multipart.
+  std::pair<Status, ObjectMetadata> InsertObjectMediaMultipart(
+      InsertObjectMediaRequest const& request);
+  std::string PickBoundary(std::string const& text_to_avoid);
+
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
@@ -170,6 +176,7 @@ class CurlClient : public RawClient {
 
   std::mutex mu_;
   CurlShare share_ /* GUARDED_BY(mu_) */;
+  google::cloud::internal::DefaultPRNG generator_;
 
   // The factories must be listed *after* the CurlShare. libcurl keeps a
   // usage count on each CURLSH* handle, which is only released once the CURL*

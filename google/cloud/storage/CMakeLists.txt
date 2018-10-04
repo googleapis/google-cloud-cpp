@@ -100,6 +100,7 @@ add_library(storage_client
             client.cc
             client_options.h
             client_options.cc
+            hashing_options.h
             internal/access_control_common.h
             internal/access_control_common.cc
             internal/binary_data_as_debug_string.h
@@ -108,7 +109,7 @@ add_library(storage_client
             internal/bucket_acl_requests.cc
             internal/bucket_requests.h
             internal/bucket_requests.cc
-            internal/raw_client_wrapper_utils.h
+            internal/complex_option.h
             internal/common_metadata.h
             internal/curl_handle.h
             internal/curl_handle.cc
@@ -157,6 +158,7 @@ add_library(storage_client
             internal/parse_rfc3339.cc
             internal/patch_builder.h
             internal/raw_client.h
+            internal/raw_client_wrapper_utils.h
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_requests.h

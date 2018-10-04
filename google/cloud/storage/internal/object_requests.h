@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H_
 
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -82,11 +83,11 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  * objects.
  */
 class InsertObjectMediaRequest
-    : public GenericObjectRequest<InsertObjectMediaRequest, ContentEncoding,
-                                  ContentType, EncryptionKey, IfGenerationMatch,
-                                  IfGenerationNotMatch, IfMetagenerationMatch,
-                                  IfMetagenerationNotMatch, KmsKeyName,
-                                  PredefinedAcl, Projection, UserProject> {
+    : public GenericObjectRequest<
+          InsertObjectMediaRequest, ContentEncoding, ContentType, EncryptionKey,
+          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+          IfMetagenerationNotMatch, KmsKeyName, MD5HashValue, PredefinedAcl,
+          Projection, UserProject> {
  public:
   InsertObjectMediaRequest() : GenericObjectRequest(), contents_() {}
 
