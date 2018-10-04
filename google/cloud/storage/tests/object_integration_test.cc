@@ -343,10 +343,9 @@ TEST_F(ObjectIntegrationTest, InsertWithMD5) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta =
-      client.InsertObject(bucket_name, object_name, expected,
-                          IfGenerationMatch(0),
-                          MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -366,10 +365,9 @@ TEST_F(ObjectIntegrationTest, InsertWithComputedMD5) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta =
-      client.InsertObject(bucket_name, object_name, expected,
-                          IfGenerationMatch(0),
-                          MD5HashValue(ComputeMD5Hash(expected)));
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      MD5HashValue(ComputeMD5Hash(expected)));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -579,10 +577,9 @@ TEST_F(ObjectIntegrationTest, XmlInsertWithMD5) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta =
-      client.InsertObject(bucket_name, object_name, expected,
-                          IfGenerationMatch(0), Fields(""),
-                          MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+      MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -1281,6 +1278,116 @@ TEST_F(ObjectIntegrationTest, RewriteLarge) {
   client.DeleteObject(bucket_name, source_name);
 }
 
+/// @test Verify that MD5 hashes are computed by default.
+TEST_F(ObjectIntegrationTest, DefaultMD5HashXML) {
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
+  LogSink::Instance().RemoveBackend(id);
+
+  long count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [](std::string const& line) {
+                      return line.rfind("x-goog-hash: md5=", 0) == 0;
+                    });
+  EXPECT_EQ(1, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes are computed by default.
+TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  LogSink::Instance().RemoveBackend(id);
+
+  long count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [](std::string const& line) {
+        // This is a big indirect, we detect if the upload changed to
+        // multipart/related, and if so, we assume the hash value is being used.
+        // Unfortunately I (@coryan) cannot think of a way to examine the upload
+        // contents.
+        return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
+      });
+  EXPECT_EQ(1, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that `DisableMD5Hash` actually disables the header.
+TEST_F(ObjectIntegrationTest, DisableMD5HashXML) {
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      DisableMD5Hash(true), Fields(""));
+  LogSink::Instance().RemoveBackend(id);
+
+  long count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [](std::string const& line) {
+                      return line.rfind("x-goog-hash: md5=", 0) == 0;
+                    });
+  EXPECT_EQ(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that `DisableMD5Hash` actually disables the payload.
+TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), DisableMD5Hash(true));
+  LogSink::Instance().RemoveBackend(id);
+
+  long count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [](std::string const& line) {
+        // This is a big indirect, we detect if the upload changed to
+        // multipart/related, and if so, we assume the hash value is being used.
+        // Unfortunately I (@coryan) cannot think of a way to examine the upload
+        // contents.
+        return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
+      });
+  EXPECT_EQ(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectIntegrationTest, InsertFailure) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -1344,8 +1451,6 @@ TEST_F(ObjectIntegrationTest, InsertXmlFailure) {
                           IfGenerationMatch(0)),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  client.DeleteObject(bucket_name, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, CopyFailure) {
@@ -1420,8 +1525,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(os.Close(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  client.DeleteObject(bucket_name, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {

@@ -481,8 +481,11 @@ class Client {
    * @param object_name the name of the object to be created.
    * @param contents the contents (media) for the new object.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
+   *     Valid types for this operation include `ContentEncoding`,
+   *     `ContentType`, `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
+   *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @throw std::runtime_error if the operation cannot be completed using the
    *   current policies.

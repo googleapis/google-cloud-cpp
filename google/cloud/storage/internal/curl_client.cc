@@ -267,7 +267,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
 
   // If the application has set an explicit hash value we need to use multipart
   // uploads.
-  if (request.HasOption<MD5HashValue>()) {
+  if (not request.HasOption<DisableMD5Hash>()) {
     return InsertObjectMediaMultipart(request);
   }
 
@@ -932,6 +932,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (request.HasOption<MD5HashValue>()) {
     builder.AddHeader("x-goog-hash: md5=" +
                       request.GetOption<MD5HashValue>().value());
+  } else if (not request.HasOption<DisableMD5Hash>()) {
+    builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
   }
   if (request.HasOption<PredefinedAcl>()) {
     builder.AddHeader(
@@ -1094,6 +1096,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   nl::json metadata = nl::json::object();
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  } else {
+    metadata["md5Hash"] = ComputeMD5Hash(request.contents());
   }
 
   std::string crlf = "\r\n";

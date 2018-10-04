@@ -41,6 +41,22 @@ struct MD5HashValue
  */
 std::string ComputeMD5Hash(std::string const& payload);
 
+/**
+ * Disable MD5 Hashing computations.
+ *
+ * By default the GCS client library computes MD5 hashes in all
+ * `Client::InsertObject` calls. The application can disable the hash
+ * computation by passing this parameter.
+ *
+ * @warning Disabling MD5 hashing exposes your application to data corruption.
+ *   We recommend that all uploads to GCS are protected by the supported
+ *   checksums and/or hashes.
+ */
+struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
+  using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
+  static char const* name() { return "disable-md5-hash"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

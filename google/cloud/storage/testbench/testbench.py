@@ -557,7 +557,7 @@ class GcsObject(object):
         next_line = multipart_upload_part.find('\r\n', index)
         while next_line != index:
             header_line = multipart_upload_part[index:next_line]
-            key, value = header_line.split(':', 2)
+            key, value = header_line.split(': ', 2)
             # This does not work for repeated headers, but we do not expect
             # those in the testbench.
             headers[key.encode('ascii', 'ignore')] = value
@@ -603,10 +603,10 @@ class GcsObject(object):
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(json.loads(resource_body))
         # The content-type needs to be patched up, yuck.
-        if resource_headers.get('content-type') is not None:
+        if media_headers.get('content-type') is not None:
             revision.update_from_metadata({
                 'contentType':
-                resource_headers.get('content-type')
+                media_headers.get('content-type')
             })
         self._insert_revision(revision)
         return revision
