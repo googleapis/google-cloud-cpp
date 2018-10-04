@@ -16,6 +16,7 @@ var searchData=
   ['maxbytesrewrittenpercall',['MaxBytesRewrittenPerCall',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxBytesRewrittenPerCall.html',1,'google::cloud::storage::v0']]],
   ['maxresults',['MaxResults',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxResults.html',1,'google::cloud::storage::v0']]],
   ['md5_5fhash',['md5_hash',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a7072ee8071901c1c8a2af53ac6e31894',1,'google::cloud::storage::v0::ObjectMetadata']]],
+  ['md5hashvalue',['MD5HashValue',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html',1,'google::cloud::storage::v0']]],
   ['media_5flink',['media_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab57b60606791394a12f82d2f9ecf4a83',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['metadata',['metadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a3d00d25f1eaa7147592b38140c760718',1,'google::cloud::storage::v0::ObjectMetadata::metadata(std::string const &amp;key) const'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aada2a3c949a324df084d85556fbf2b98',1,'google::cloud::storage::v0::ObjectMetadata::metadata() const']]],
   ['method',['method',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a8bd60e2054c927bb4828c76bf64cf0a1',1,'google::cloud::storage::v0::CorsEntry']]],
