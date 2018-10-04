@@ -1071,15 +1071,22 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
 
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
+  // To perform a multipart upload we need to separate the parts using:
+  //   https://cloud.google.com/storage/docs/json_api/v1/how-tos/multipart-upload
+  // This function is structured as follows:
+  // 1. Create a request object, as we often do.
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   SetupBuilder(builder, request, "POST");
-  // Pick a separator that does not conflict with the request contents:
+
+  // 2. Pick a separator that does not conflict with the request contents.
   auto boundary = PickBoundary(request.contents());
   builder.AddHeader("content-type: multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
 
+  // 3. Perform a streaming upload because computing the size upfront is more
+  //    complicated than it is worth.
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
       builder.BuildUpload(), client_options().upload_buffer_size()));
   ObjectWriteStream writer(std::move(buf));
@@ -1091,9 +1098,13 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   std::string crlf = "\r\n";
   std::string marker = "--" + boundary;
+
+  // 4. Format the first part, including the separators and the headers.
   writer << marker << crlf << "content-type: application/json; charset=UTF-8"
          << crlf << crlf << metadata.dump() << crlf << marker << crlf;
 
+  // 5. Format the second part, which includes all the contents and a final
+  //    separator.
   if (not request.HasOption<ContentType>()) {
     writer << "content-type: application/octet-stream" << crlf;
   } else {
@@ -1102,6 +1113,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   }
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
+  // 6. Return the results as usual.
   auto payload = writer.CloseRaw();
   if (payload.status_code >= 300) {
     return std::make_pair(
