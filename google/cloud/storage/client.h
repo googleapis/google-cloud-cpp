@@ -973,12 +973,13 @@ class Client {
    *
    * @note All buckets are owned by the project owners group. Project owners
    *     are granted `OWNER` permissions to all buckets inside their project.
-   *     Bucket and object ownership cannot be changed by modifying ACLs. If you
-   *     apply a new ACL to a bucket, be sure that the bucket owner remains
-   *     unchanged in the new ACL.
+   *     Bucket and object ownership cannot be changed by modifying ACLs.
    *
    * @note When you apply a new ACL to a bucket, GCS adds `OWNER` permission to
-   *     the bucket if you omit the grants.
+   *     the bucket if you omit the grants. You cannot remove the project owners
+   *     group from a bucket ACL. Attempts to do so will appear to succeed, but
+   *     the service will add the project owners group into the new ACL before
+   *     applying it.
    *
    * @see https://cloud.google.com/storage/docs/access-control/ for more
    *     information about access control in GCS.
@@ -1181,7 +1182,8 @@ class Client {
    *     is listed as the object owner. This can be a user or a service account,
    *     depending on what credentials are used to authenticate with GCS.
    *     Object ownership cannot be changed by modifying ACLs. You can change
-   *     object ownership only by overwriting the object.
+   *     object ownership only by overwriting the object while authenticated as
+   *     the desired owner.
    *
    * @note When you apply a new ACL to an object, GCS adds `OWNER` permission to
    *     the object if you omit the grants.
@@ -1392,8 +1394,8 @@ class Client {
   /**
    * @name Bucket Default Object Access Control List operations.
    *
-   * When you upload an object to GCS, without specifying an ACL the object is
-   * created with the Default Object ACL for that bucket. These operations are
+   * When you upload an object to GCS without specifying an ACL, the object is
+   * created with the Default Object ACL for its bucket. These operations are
    * used to query and modify the Default Object ACL of a bucket.
    *
    * @see
