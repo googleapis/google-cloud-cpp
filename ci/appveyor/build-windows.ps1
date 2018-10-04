@@ -45,6 +45,7 @@ if ($env:PROVIDER -eq "vcpkg") {
     }
 
     $cmake_flags += "-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=$env:PROVIDER"
+    $cmake_flags += "-DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=$env:PROVIDER"
     $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
     $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
 }
