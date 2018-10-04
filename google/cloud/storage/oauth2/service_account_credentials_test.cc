@@ -253,6 +253,127 @@ TEST_F(ServiceAccountCredentialsTest, MissingContents) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+/// @test Verify that parsing a service account JSON string works.
+TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "not-a-key-id-just-for-testing",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  auto actual = ParseServiceAccountCredentials(contents, "test-data", "unused");
+  EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
+  EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
+  EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
+  EXPECT_EQ("https://oauth2.googleapis.com/token", actual.token_uri);
+}
+
+/// @test Verify that parsing a service account JSON string works.
+TEST_F(ServiceAccountCredentialsTest, ParseDefaultTokenUri) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "not-a-key-id-just-for-testing",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com"
+})""";
+
+  auto actual = ParseServiceAccountCredentials(
+      contents, "test-data", "https://oauth2.googleapis.com/token");
+  EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
+  EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
+  EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
+  EXPECT_EQ("https://oauth2.googleapis.com/token", actual.token_uri);
+}
+
+/// @test Verify that invalid contents result in a readable error.
+TEST_F(ServiceAccountCredentialsTest, ParseInvalid) {
+  std::string contents = R"""( not-a-valid-json-string )""";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        ParseServiceAccountCredentials(contents, "test-data", "unused");
+      } catch (std::invalid_argument const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Invalid ServiceAccountCredentials"));
+        EXPECT_THAT(ex.what(), HasSubstr("test-data"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ParseServiceAccountCredentials(contents, "test-data", "unused"),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Parsing a service account JSON string should detect empty fields.
+TEST_F(ServiceAccountCredentialsTest, ParseEmptyField) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "not-a-key-id-just-for-testing",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  for (auto const& field :
+       {"private_key_id", "private_key", "client_email", "token_uri"}) {
+    internal::nl::json json = internal::nl::json::parse(contents);
+    json[field] = "";
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    EXPECT_THROW(
+        try {
+          ParseServiceAccountCredentials(json.dump(), "test-data", "");
+        } catch (std::invalid_argument const& ex) {
+          EXPECT_THAT(ex.what(), HasSubstr(field));
+          EXPECT_THAT(ex.what(), HasSubstr(" field is empty"));
+          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
+          throw;
+        },
+        std::invalid_argument) << "field=" << field;
+#else
+    EXPECT_DEATH_IF_SUPPORTED(
+        ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
+        "exceptions are disabled") << "field=" << field;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  }
+}
+
+/// @test Parsing a service account JSON string should detect missing fields.
+TEST_F(ServiceAccountCredentialsTest, ParseMissingField) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "not-a-key-id-just-for-testing",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  for (auto const& field :
+      {"private_key_id", "private_key", "client_email"}) {
+    internal::nl::json json = internal::nl::json::parse(contents);
+    json.erase(field);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    EXPECT_THROW(
+        try {
+          ParseServiceAccountCredentials(json.dump(), "test-data", "");
+        } catch (std::invalid_argument const& ex) {
+          EXPECT_THAT(ex.what(), HasSubstr(field));
+          EXPECT_THAT(ex.what(), HasSubstr(" field is missing"));
+          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
+          throw;
+        },
+        std::invalid_argument) << "field=" << field;
+#else
+    EXPECT_DEATH_IF_SUPPORTED(
+        ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
+        "exceptions are disabled") << "field=" << field;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  }
+}
+
 }  // namespace
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
