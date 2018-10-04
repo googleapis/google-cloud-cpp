@@ -164,7 +164,7 @@ class ServiceAccountCredentials : public Credentials {
     }
 
     nl::json access_token = nl::json::parse(response.payload, nullptr, false);
-    if (access_token.is_null() or access_token.count("token_type") == 0U or
+    if (access_token.is_discarded() or access_token.count("token_type") == 0U or
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U) {
       return false;
