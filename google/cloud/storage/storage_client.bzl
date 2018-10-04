@@ -101,6 +101,7 @@ storage_client_SRCS = [
     "list_objects_reader.cc",
     "notification_metadata.cc",
     "oauth2/anonymous_credentials.cc",
+    "oauth2/authorized_user_credentials.cc",
     "oauth2/google_application_default_credentials_file.cc",
     "oauth2/google_credentials.cc",
     "oauth2/service_account_credentials.cc",

@@ -174,6 +174,7 @@ add_library(storage_client
             oauth2/anonymous_credentials.h
             oauth2/anonymous_credentials.cc
             oauth2/authorized_user_credentials.h
+            oauth2/authorized_user_credentials.cc
             oauth2/credential_constants.h
             oauth2/credentials.h
             oauth2/google_application_default_credentials_file.h

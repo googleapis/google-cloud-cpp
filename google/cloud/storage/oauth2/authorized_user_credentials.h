@@ -30,6 +30,17 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
+/// A plain object to hold the result of parsing authorized user credentials.
+struct AuthorizedUserCredentialsInfo {
+  std::string client_id;
+  std::string client_secret;
+  std::string refresh_token;
+};
+
+/// Parse a JSON object string as an AuthorizedUserCredentials.
+AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
+    std::string const& content, std::string const& source);
+
 /**
  * A C++ wrapper for Google's Authorized User Credentials.
  *
@@ -65,36 +76,19 @@ class AuthorizedUserCredentials : public Credentials {
     HttpRequestBuilderType request_builder(
         std::move(oauth_server),
         storage::internal::GetDefaultCurlHandleFactory());
-    auto credentials =
-        storage::internal::nl::json::parse(content, nullptr, false);
-    if (credentials.is_null()) {
-      google::cloud::internal::RaiseInvalidArgument(
-          "Invalid AuthorizedUserCredentials, parsing failed on data from " +
-          source);
-    }
-    char const CLIENT_ID_KEY[] = "client_id";
-    char const CLIENT_SECRET_KEY[] = "client_secret";
-    char const REFRESH_TOKEN_KEY[] = "refresh_token";
-    for (auto const& key :
-         {CLIENT_ID_KEY, CLIENT_SECRET_KEY, REFRESH_TOKEN_KEY}) {
-      if (credentials.count(key) == 0U) {
-        google::cloud::internal::RaiseInvalidArgument(
-            "Invalid AuthorizedUserCredentials, the " + std::string(key) +
-            " field is missing on data loaded from " + source);
-      }
-    }
+    auto info = ParseAuthorizedUserCredentials(content, source);
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload +=
-        request_builder.MakeEscapedString(credentials.value(CLIENT_ID_KEY, ""))
+        request_builder.MakeEscapedString(info.client_id)
             .get();
     payload += "&client_secret=";
     payload += request_builder
-                   .MakeEscapedString(credentials.value(CLIENT_SECRET_KEY, ""))
+                   .MakeEscapedString(info.client_secret)
                    .get();
     payload += "&refresh_token=";
     payload += request_builder
-                   .MakeEscapedString(credentials.value(REFRESH_TOKEN_KEY, ""))
+                   .MakeEscapedString(info.refresh_token)
                    .get();
     payload_ = std::move(payload);
     request_ = request_builder.BuildRequest();
