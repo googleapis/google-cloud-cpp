@@ -29,11 +29,11 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
         source);
   }
 
-  char const CLIENT_ID_KEY[] = "client_id";
-  char const CLIENT_SECRET_KEY[] = "client_secret";
-  char const REFRESH_TOKEN_KEY[] = "refresh_token";
+  char const client_id_key[] = "client_id";
+  char const client_secret_key[] = "client_secret";
+  char const refresh_token_key[] = "refresh_token";
   for (auto const& key :
-       {CLIENT_ID_KEY, CLIENT_SECRET_KEY, REFRESH_TOKEN_KEY}) {
+       {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0U) {
       google::cloud::internal::RaiseInvalidArgument(
           "Invalid AuthorizedUserCredentials, the " + std::string(key) +
@@ -46,9 +46,9 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
     }
   }
   return AuthorizedUserCredentialsInfo{
-      credentials.value(CLIENT_ID_KEY, ""),
-      credentials.value(CLIENT_SECRET_KEY, ""),
-      credentials.value(REFRESH_TOKEN_KEY, "")};
+      credentials.value(client_id_key, ""),
+      credentials.value(client_secret_key, ""),
+      credentials.value(refresh_token_key, "")};
 }
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

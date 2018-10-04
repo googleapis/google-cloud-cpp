@@ -31,12 +31,12 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
         " parsing failed on data loaded from " +
         source);
   }
-  char const PRIVATE_KEY_ID_KEY[] = "private_key_id";
-  char const PRIVATE_KEY_KEY[] = "private_key";
-  char const TOKEN_URI_KEY[] = "token_uri";
-  char const CLIENT_EMAIL_KEY[] = "client_email";
+  char const private_key_id_key[] = "private_key_id";
+  char const private_key_key[] = "private_key";
+  char const token_uri_key[] = "token_uri";
+  char const client_email_key[] = "client_email";
   for (auto const& key :
-       {PRIVATE_KEY_ID_KEY, PRIVATE_KEY_KEY, CLIENT_EMAIL_KEY}) {
+       {private_key_id_key, private_key_key, client_email_key}) {
     if (credentials.count(key) == 0U) {
       google::cloud::internal::RaiseInvalidArgument(
           "Invalid ServiceAccountCredentials, the " + std::string(key) +
@@ -49,20 +49,20 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
     }
   }
   // The token_uri field may be missing, but may not be empty:
-  if (credentials.count(TOKEN_URI_KEY) != 0U and
-      credentials.value(TOKEN_URI_KEY, "").empty()) {
+  if (credentials.count(token_uri_key) != 0U and
+      credentials.value(token_uri_key, "").empty()) {
     google::cloud::internal::RaiseInvalidArgument(
-        "Invalid ServiceAccountCredentials, the " + std::string(TOKEN_URI_KEY) +
+        "Invalid ServiceAccountCredentials, the " + std::string(token_uri_key) +
         " field is empty on data loaded from " + source);
   }
   return ServiceAccountCredentialsInfo{
-      credentials.value(PRIVATE_KEY_ID_KEY, ""),
-      credentials.value(PRIVATE_KEY_KEY, ""),
+      credentials.value(private_key_id_key, ""),
+      credentials.value(private_key_key, ""),
       // Some credential formats (e.g. gcloud's ADC file) don't contain a
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
-      credentials.value(TOKEN_URI_KEY, default_token_uri),
-      credentials.value(CLIENT_EMAIL_KEY, ""),
+      credentials.value(token_uri_key, default_token_uri),
+      credentials.value(client_email_key, ""),
   };
 }
 
