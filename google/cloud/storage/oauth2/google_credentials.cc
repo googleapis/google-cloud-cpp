@@ -15,7 +15,10 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <fstream>
 #include <iterator>
 
@@ -60,30 +63,30 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
       "No eligible credential types were found to use as default credentials.");
 }
 
-std::shared_ptr<AnonymousCredentials> CreateAnonymousCredentials() {
+std::shared_ptr<Credentials> CreateAnonymousCredentials() {
   return std::make_shared<AnonymousCredentials>();
 }
 
-std::shared_ptr<AuthorizedUserCredentials<>>
+std::shared_ptr<Credentials>
 CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return std::make_shared<AuthorizedUserCredentials<>>(contents, path);
 }
 
-std::shared_ptr<AuthorizedUserCredentials<>>
+std::shared_ptr<Credentials>
 CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   return std::make_shared<AuthorizedUserCredentials<>>(contents, "memory");
 }
 
-std::shared_ptr<ServiceAccountCredentials<>>
+std::shared_ptr<Credentials>
 CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return std::make_shared<ServiceAccountCredentials<>>(contents, path);
 }
 
-std::shared_ptr<ServiceAccountCredentials<>>
+std::shared_ptr<Credentials>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   return std::make_shared<ServiceAccountCredentials<>>(contents, "memory");
 }
