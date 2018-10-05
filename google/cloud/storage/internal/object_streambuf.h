@@ -42,6 +42,8 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 
   virtual HttpResponse Close() = 0;
   virtual bool IsOpen() const = 0;
+  virtual std::string const& received_hash() const = 0;
+  virtual std::string const& computed_hash() const = 0;
 };
 
 /**

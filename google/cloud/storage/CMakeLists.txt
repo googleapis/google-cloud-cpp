@@ -138,6 +138,8 @@ add_library(storage_client
             internal/format_rfc3339.cc
             internal/generic_object_request.h
             internal/generic_request.h
+            internal/hash_validator.h
+            internal/hash_validator.cc
             internal/http_response.h
             internal/http_response.cc
             internal/logging_client.h
@@ -270,6 +272,7 @@ set(storage_client_unit_tests
     internal/bucket_requests_test.cc
     internal/default_object_acl_requests_test.cc
     internal/format_rfc3339_test.cc
+    internal/hash_validator_test.cc
     internal/http_response_test.cc
     internal/logging_client_test.cc
     internal/metadata_parser_test.cc

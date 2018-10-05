@@ -20,9 +20,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlReadStreambuf::CurlReadStreambuf(CurlDownloadRequest&& download,
-                                     std::size_t target_buffer_size)
-    : download_(std::move(download)), target_buffer_size_(target_buffer_size) {
+CurlReadStreambuf::CurlReadStreambuf(
+    CurlDownloadRequest&& download, std::size_t target_buffer_size,
+    std::unique_ptr<HashValidator> hash_validator)
+    : download_(std::move(download)),
+      target_buffer_size_(target_buffer_size),
+      hash_validator_(std::move(hash_validator)) {
   // Start with an empty read area, to force an underflow() on the first
   // extraction.
   current_ios_buffer_.push_back('\0');
@@ -40,16 +43,25 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     current_ios_buffer_.push_back('\0');
     char* data = &current_ios_buffer_[0];
     setg(data, data + 1, data + 1);
+    hash_validator_result_ =
+        std::move(*hash_validator_)
+            .Finish(
+                __func__ +
+                std::string(" mismatched hashes reading from closed stream"));
     return traits_type::eof();
   }
 
   current_ios_buffer_.reserve(target_buffer_size_);
   auto response = download_.GetMore(current_ios_buffer_);
+  for (auto const& kv : response.headers) {
+    hash_validator_->ProcessHeader(kv.first, kv.second);
+  }
   if (response.status_code >= 300) {
     return traits_type::eof();
   }
 
   if (not current_ios_buffer_.empty()) {
+    hash_validator_->Update(current_ios_buffer_);
     char* data = &current_ios_buffer_[0];
     setg(data, data, data + current_ios_buffer_.size());
     return traits_type::to_int_type(*data);
@@ -57,6 +69,10 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   current_ios_buffer_.push_back('\0');
   char* data = &current_ios_buffer_[0];
   setg(data, data + 1, data + 1);
+  hash_validator_result_ =
+      std::move(*hash_validator_)
+          .Finish(__func__ +
+                  std::string(" mismatched hashes at end of download"));
   return traits_type::eof();
 }
 

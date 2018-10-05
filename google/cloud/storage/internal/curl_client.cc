@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
@@ -43,6 +44,15 @@ std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
   }
   return std::make_shared<PooledCurlHandleFactory>(
       options.connection_pool_size());
+}
+
+/// Create a HashValidator for a download request
+std::unique_ptr<HashValidator> CreateHashValidator(
+    ReadObjectRangeRequest const& request) {
+  if (request.HasOption<DisableMD5Hash>()) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
+  return google::cloud::internal::make_unique<MD5HashValidator>();
 }
 
 std::string XmlMapPredefinedAcl(std::string const& acl) {
@@ -341,9 +351,10 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
                              storage_factory_);
   SetupBuilder(builder, request, "GET");
   builder.AddQueryParameter("alt", "media");
-  std::unique_ptr<CurlReadStreambuf> buf(
-      new CurlReadStreambuf(builder.BuildDownloadRequest(std::string{}),
-                            client_options().download_buffer_size()));
+
+  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
+      builder.BuildDownloadRequest(std::string{}),
+      client_options().download_buffer_size(), CreateHashValidator(request)));
   return std::make_pair(Status(),
                         std::unique_ptr<ObjectReadStreambuf>(std::move(buf)));
 }
@@ -1003,9 +1014,9 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
 
-  std::unique_ptr<CurlReadStreambuf> buf(
-      new CurlReadStreambuf(builder.BuildDownloadRequest(std::string{}),
-                            client_options().download_buffer_size()));
+  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
+      builder.BuildDownloadRequest(std::string{}),
+      client_options().download_buffer_size(), CreateHashValidator(request)));
   return std::make_pair(Status(),
                         std::unique_ptr<ObjectReadStreambuf>(std::move(buf)));
 }
