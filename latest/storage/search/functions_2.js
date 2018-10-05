@@ -8,6 +8,7 @@ var searchData=
   ['coldline',['Coldline',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#aa712796263130d30270650fe484706d7',1,'google::cloud::storage::v0::storage_class']]],
   ['component_5fcount',['component_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ad7f50a0cf8f114d215f25ac5172f4b6b',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['composeobject',['ComposeObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a294901ed4bc568fd7b3934d42dc9b2e0',1,'google::cloud::storage::v0::Client']]],
+  ['computemd5hash',['ComputeMD5Hash',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0b814dbb970f58eeb290c891333bac3c',1,'google::cloud::storage::v0']]],
   ['condition',['condition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['conditionconjunction',['ConditionConjunction',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['connection_5fpool_5fsize',['connection_pool_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#ae34bb725b9e22de485b195cc8d9980a6',1,'google::cloud::storage::v0::ClientOptions']]],
