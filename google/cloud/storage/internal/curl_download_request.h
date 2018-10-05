@@ -106,6 +106,7 @@ class CurlDownloadRequest {
   /// Wait until a condition is met.
   template <typename Predicate>
   void Wait(Predicate&& predicate) {
+    int repeats = 0;
     // We can assert that the current thread is the leader, because the
     // predicate is satisfied, and the condition variable exited. Therefore,
     // this thread must run the I/O event loop.
@@ -121,7 +122,7 @@ class CurlDownloadRequest {
       if (running_handles == 0 or predicate()) {
         return;
       }
-      WaitForHandles();
+      WaitForHandles(repeats);
     }
   }
 
@@ -129,7 +130,7 @@ class CurlDownloadRequest {
   int PerformWork();
 
   /// Use libcurl to wait until the underlying data can perform work.
-  void WaitForHandles();
+  void WaitForHandles(int& repeats);
 
   /// Simplify handling of errors in the curl_multi_* API.
   void RaiseOnError(char const* where, CURLMcode result);

@@ -20,6 +20,7 @@
 #include <curl/multi.h>
 #include <algorithm>
 #include <cstring>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -139,8 +140,6 @@ int CurlDownloadRequest::PerformWork() {
   CURLMcode result;
   do {
     result = curl_multi_perform(multi_.get(), &running_handles);
-    GCP_LOG(DEBUG) << __func__ << "(): running_handles=" << running_handles
-                   << ", result=" << result;
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
   // Raise an exception if the result is unexpected, otherwise return.
@@ -172,9 +171,25 @@ int CurlDownloadRequest::PerformWork() {
   return running_handles;
 }
 
-void CurlDownloadRequest::WaitForHandles() {
-  CURLMcode result = curl_multi_wait(multi_.get(), nullptr, 0, 0, nullptr);
+void CurlDownloadRequest::WaitForHandles(int& repeats) {
+  int const timeout_ms = 1;
+  std::chrono::milliseconds const timeout(timeout_ms);
+  int numfds = 0;
+  CURLMcode result =
+      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds
+                 << ", result=" << result << ", repeats=" << repeats;
   RaiseOnError(__func__, result);
+  // The documentation for curl_multi_wait() recommends sleeping if it returns
+  // numfds == 0 more than once in a row :shrug:
+  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
+  if (numfds == 0) {
+    if (++repeats > 1) {
+      std::this_thread::sleep_for(timeout);
+    }
+  } else {
+    repeats = 0;
+  }
 }
 
 void CurlDownloadRequest::RaiseOnError(char const* where, CURLMcode result) {
