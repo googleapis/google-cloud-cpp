@@ -22,6 +22,7 @@ import hashlib
 import httpbin
 import json
 import os
+import testbench_utils
 import time
 from werkzeug import serving
 from werkzeug import wsgi
@@ -40,178 +41,6 @@ root.debug = True
 def index():
     """Default handler for the test bench."""
     return 'OK'
-
-
-def canonical_entity_name(entity):
-    """Convert entity names to their canonical form.
-
-    Some entities (notably project-<team>-) have more than one name, for
-    example the project-owners-<project_id> entities are called
-    project-owners-<project_number> internally.  This function
-    :param entity:str convert this entity to its canonical name.
-    :return: the name in canonical form.
-    :rtype:str
-    """
-    if entity == 'allUsers' or entity == 'allAuthenticatedUsers':
-        return entity
-    if entity.startswith('project-owners-'):
-        entity = 'project-owners-123456789'
-    if entity.startswith('project-editors-'):
-        entity = 'project-editors-123456789'
-    if entity.startswith('project-viewers-'):
-        entity = 'project-viewers-123456789'
-    return entity.lower()
-
-
-def index_acl(acl):
-    """Return a ACL as a dictionary indexed by the 'entity' values of the ACL.
-
-    We represent ACLs as lists of dictionaries, that makes it easy to convert
-    them to JSON objects. When changing them though, we need to make sure there
-    is a single element in the list for each `entity` value, so it is convenient
-    to convert the list to a dictionary (indexed by `entity`) of dictionaries.
-    This function performs that conversion.
-
-    :param acl:list of dict
-    :return: the ACL indexed by the entity of each entry.
-    :rtype:dict
-    """
-    # This can be expressed by a comprehension but turns out to be less
-    # readable in that form.
-    indexed = dict()
-    for e in acl:
-        indexed[e['entity']] = e
-    return indexed
-
-
-def filtered_response(request, response):
-    """Format the response as a JSON string, using any filtering included in
-    the request.
-
-    :param request:flask.Request the original HTTP request.
-    :param response:dict a dictionary to be formatted as a JSON string.
-    :return: the response formatted as a string.
-    :rtype:str
-    """
-    fields = request.args.get('fields')
-    if fields is None:
-        return json.dumps(response)
-    tmp = {}
-    # TODO(#1037) - support full filter expressions
-    for key in fields.split(','):
-        if key in response:
-            tmp[key] = response[key]
-    return json.dumps(tmp)
-
-
-def raise_csek_error(code=400):
-    msg = 'Missing a SHA256 hash of the encryption key, or it is not'
-    msg += ' base64 encoded, or it does not match the encryption key.'
-    link = 'https://cloud.google.com/storage/docs/encryption#customer-supplied_encryption_keys'
-    error = {
-        "error": {
-            "errors": [{
-                "domain": "global",
-                "reason": "customerEncryptionKeySha256IsInvalid",
-                "message": msg,
-                "extendedHelp": link,
-            }],
-            "code":
-            code,
-            "message":
-            msg,
-        }
-    }
-    raise error_response.ErrorResponse(json.dumps(error), status_code=code)
-
-
-def validate_customer_encryption_headers(key_header_value, hash_header_value,
-                                         algo_header_value):
-    """Verify that the encryption headers are internally consistent.
-
-    :param key_header_value: str the value of the x-goog-*-key header
-    :param hash_header_value: str the value of the x-goog-*-key-sha256 header
-    :param algo_header_value: str the value of the x-goog-*-key-algorithm header
-    :rtype: NoneType
-    """
-    try:
-        if algo_header_value is None or algo_header_value != 'AES256':
-            raise error_response.ErrorResponse(
-                'Invalid or missing algorithm %s for CSEK' % algo_header_value,
-                status_code=400)
-
-        key = base64.standard_b64decode(key_header_value)
-        if key is None or len(key) != 256 / 8:
-            raise_csek_error()
-
-        h = hashlib.sha256()
-        h.update(key)
-        expected = base64.standard_b64encode(h.digest())
-        if hash_header_value is None or expected != hash_header_value:
-            raise_csek_error()
-    except error_response.ErrorResponse:
-        # error_response.ErrorResponse indicates that the request was invalid, just pass
-        # that exception through.
-        raise
-    except Exception:
-        # Many of the functions above may raise, convert those to an
-        # error_response.ErrorResponse with the right format.
-        raise_csek_error()
-
-
-def json_api_patch(original, patch, recurse_on=set({})):
-    """Patch a dictionary using the JSON API semantics.
-
-    Patches are applied using the following algorithm:
-    - patch is a dictionary representing a JSON object. JSON `null` values are
-      represented by None).
-    - For fields that are not in `recursive_fields`:
-      - If patch contains {field: None} the field is erased from `original`.
-      - Otherwise `patch[field]` replaces `original[field]`.
-    - For fields that are in `recursive_fields`:
-      - If patch contains {field: None} the field is erased from `original`.
-      - If patch contains {field: {}} the field is left untouched in `original`,
-        note that if the field does not exist in original this means it is not
-        created.
-      - Otherwise patch[field] is treated as a patch and applied to
-        `original[field]`, potentially creating the new field.
-
-    :param original:dict the dictionary to patch
-    :param patch:dict the patch to apply. Elements pointing to None are removed,
-        other elements are replaced.
-    :param recurse_on:set of strings, the names of fields for which the patch
-        is applied recursively.
-    :return: the updated dictionary
-    :rtype:dict
-    """
-    tmp = original.copy()
-    for key, value in patch.iteritems():
-        if value is None:
-            tmp.pop(key, None)
-        elif key not in recurse_on:
-            tmp[key] = value
-        elif len(value) != 0:
-            tmp[key] = json_api_patch(original.get(key, {}), value)
-    return tmp
-
-
-def extract_media(request):
-    """Extract the media from a flask Request.
-
-    To avoid race conditions when using greenlets we cannot perform I/O in the
-    constructor of GcsObjectVersion, or in any of the operations that modify
-    the state of the service.  Because sometimes the media is uploaded with
-    chunked encoding, we need to do I/O before finishing the GcsObjectVersion
-    creation. If we do this I/O after the GcsObjectVersion creation started,
-    the the state of the application may change due to other I/O.
-
-    :param request:flask.Request the HTTP request.
-    :return: the full media of the request.
-    :rtype: str
-    """
-    if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
-        return request.environ.get('wsgi.input').read()
-    return request.data
 
 
 class GcsObjectVersion(object):
@@ -315,16 +144,16 @@ class GcsObjectVersion(object):
             else:
                 # The data is not encrypted, sending an encryption key is an
                 # error.
-                raise_csek_error()
+                testbench_utils.raise_csek_error()
         # The data is encrypted, the key must be present, match, and match its
         # hash.
         key_header_value = request.headers.get(key_header)
         hash_header_value = request.headers.get(hash_header)
         algo_header_value = request.headers.get(algo_header)
-        validate_customer_encryption_headers(
+        testbench_utils.validate_customer_encryption_headers(
             key_header_value, hash_header_value, algo_header_value)
         if encryption.get('keySha256') != hash_header_value:
-            raise_csek_error()
+            testbench_utils.raise_csek_error()
 
     def _capture_customer_encryption(self, request):
         """Capture the customer-supplied encryption key, if any.
@@ -341,7 +170,7 @@ class GcsObjectVersion(object):
         key_header_value = request.headers.get(key_header)
         hash_header_value = request.headers.get(hash_header)
         algo_header_value = request.headers.get(algo_header)
-        validate_customer_encryption_headers(
+        testbench_utils.validate_customer_encryption_headers(
             key_header_value, hash_header_value, algo_header_value)
         self.metadata['customerEncryption'] = {
             "encryptionAlgorithm": algo_header_value,
@@ -353,7 +182,7 @@ class GcsObjectVersion(object):
         if predefined_acl is None:
             predefined_acl = 'projectPrivate'
         self.insert_acl(
-            canonical_entity_name('project-owners-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
         bucket = lookup_bucket(self.bucket_name)
         owner = bucket.metadata.get('owner')
         if owner is None:
@@ -370,11 +199,12 @@ class GcsObjectVersion(object):
             self.insert_acl('project-owners', 'OWNER')
         elif predefined_acl == 'projectPrivate':
             self.insert_acl(
-                canonical_entity_name('project-editors-123456789'), 'OWNER')
+                testbench_utils.canonical_entity_name('project-editors-123456789'), 'OWNER')
             self.insert_acl(
-                canonical_entity_name('project-viewers-123456789'), 'READER')
+                testbench_utils.canonical_entity_name('project-viewers-123456789'), 'READER')
         elif predefined_acl == 'publicRead':
-            self.insert_acl(canonical_entity_name('allUsers'), 'READER')
+            self.insert_acl(
+                testbench_utils.canonical_entity_name('allUsers'), 'READER')
         else:
             raise error_response.ErrorResponse(
                 'Invalid predefinedAcl value', status_code=400)
@@ -392,12 +222,12 @@ class GcsObjectVersion(object):
         :return: the dictionary representing the new AccessControl metadata.
         :rtype:dict
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         email = ''
         if entity.startswith('user-'):
             email = entity
         # Replace or insert the entry.
-        indexed = index_acl(self.metadata.get('acl', []))
+        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed[entity] = {
             'bucket': self.bucket_name,
             'email': email,
@@ -420,8 +250,8 @@ class GcsObjectVersion(object):
         :param entity:str the name of the entity.
         :rtype:NoneType
         """
-        entity = canonical_entity_name(entity)
-        indexed = index_acl(self.metadata.get('acl', []))
+        entity = testbench_utils.canonical_entity_name(entity)
+        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
@@ -432,7 +262,7 @@ class GcsObjectVersion(object):
         :return: with the contents of the ObjectAccessControl.
         :rtype:dict
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '') == entity:
                 return acl
@@ -585,7 +415,7 @@ class GcsObject(object):
                 raise error_response.ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-        patched = json_api_patch(
+        patched = testbench_utils.json_api_patch(
             version.metadata, patch, recurse_on={'metadata'})
         patched['metageneration'] = patched.get('metageneration', 0) + 1
         version.metadata = patched
@@ -688,7 +518,7 @@ class GcsObject(object):
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        media = extract_media(request)
+        media = testbench_utils.extract_media(request)
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, media)
@@ -735,7 +565,7 @@ class GcsObject(object):
                 % boundary)
 
         marker = '--' + boundary + '\r\n'
-        body = extract_media(request)
+        body = testbench_utils.extract_media(request)
         parts = body.split(marker)
         # parts[0] is the empty string, `multipart` should start with the boundary
         # parts[1] is the JSON resource object part, with some headers
@@ -769,7 +599,7 @@ class GcsObject(object):
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        media = extract_media(request)
+        media = testbench_utils.extract_media(request)
         goog_hash = request.headers.get('x-goog-hash')
         md5hash = None
         if goog_hash is not None:
@@ -1026,17 +856,17 @@ class GcsBucket(object):
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
         self.insert_acl(
-            canonical_entity_name('project-owners-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_acl(
-            canonical_entity_name('project-editors-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_acl(
-            canonical_entity_name('project-viewers-123456789'), 'READER')
+            testbench_utils.canonical_entity_name('project-viewers-123456789'), 'READER')
         self.insert_default_object_acl(
-            canonical_entity_name('project-owners-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
         self.insert_default_object_acl(
-            canonical_entity_name('project-editors-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name('project-editors-123456789'), 'OWNER')
         self.insert_default_object_acl(
-            canonical_entity_name('project-viewers-123456789'), 'READER')
+            testbench_utils.canonical_entity_name('project-viewers-123456789'), 'READER')
 
     def increase_metageneration(self):
         """Increase the current metageneration number."""
@@ -1084,7 +914,7 @@ class GcsBucket(object):
                 raise error_response.ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
                     status_code=503)
-        patched = json_api_patch(self.metadata, patch, recurse_on={'labels'})
+        patched = testbench_utils.json_api_patch(self.metadata, patch, recurse_on={'labels'})
         self.metadata = patched
         self.increase_metageneration()
 
@@ -1122,7 +952,7 @@ class GcsBucket(object):
         :return: the canonical entity name and the ACL entry.
         :rtype: (str,dict)
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         email = ''
         if entity.startswith('user-'):
             email = entity.replace('user-', '', 1)
@@ -1147,7 +977,7 @@ class GcsBucket(object):
         """
         entity, entry = self.create_acl_entry(entity, role)
         # Replace or insert the entry.
-        indexed = index_acl(self.metadata.get('acl', []))
+        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed[entity] = entry
         self.metadata['acl'] = indexed.values()
         return entry
@@ -1159,8 +989,8 @@ class GcsBucket(object):
         :param entity:str the name of the entity.
         :rtype:NoneType
         """
-        entity = canonical_entity_name(entity)
-        indexed = index_acl(self.metadata.get('acl', []))
+        entity = testbench_utils.canonical_entity_name(entity)
+        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
         self.metadata['acl'] = indexed.values()
 
@@ -1171,7 +1001,7 @@ class GcsBucket(object):
         :return: with the contents of the BucketAccessControl.
         :rtype: dict
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         for acl in self.metadata.get('acl', []):
             if acl.get('entity', '') == entity:
                 return acl
@@ -1197,12 +1027,12 @@ class GcsBucket(object):
         :return: the dictionary representing the new ObjectAccessControl.
         :rtype: dict
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         email = ''
         if entity.startswith('user-'):
             email = email.replace('user-', '', 1)
         # Replace or insert the entry.
-        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
+        indexed = testbench_utils.index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed[entity] = {
             'bucket': self.name,
             'email': email,
@@ -1222,8 +1052,8 @@ class GcsBucket(object):
         :param entity:str the name of the entity.
         :rtype:NoneType
         """
-        entity = canonical_entity_name(entity)
-        indexed = index_acl(self.metadata.get('defaultObjectAcl', []))
+        entity = testbench_utils.canonical_entity_name(entity)
+        indexed = testbench_utils.index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed.pop(entity)
         self.metadata['defaultObjectAcl'] = indexed.values()
 
@@ -1234,7 +1064,7 @@ class GcsBucket(object):
         :return: with the contents of the BucketAccessControl.
         :rtype: dict
         """
-        entity = canonical_entity_name(entity)
+        entity = testbench_utils.canonical_entity_name(entity)
         for acl in self.metadata.get('defaultObjectAcl', []):
             if acl.get('entity', '') == entity:
                 return acl
@@ -1502,7 +1332,7 @@ def buckets_list():
     result = {'next_page_token': '', 'items': []}
     for name, b in GCS_BUCKETS.items():
         result['items'].append(b.metadata)
-    return filtered_response(flask.request, result)
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 @gcs.route('/b', methods=['POST'])
@@ -1522,7 +1352,7 @@ def buckets_insert():
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
     GCS_BUCKETS[bucket_name] = bucket
-    return filtered_response(flask.request, bucket.metadata)
+    return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>', methods=['PUT'])
@@ -1542,7 +1372,7 @@ def buckets_update(bucket_name):
     bucket = lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
-    return filtered_response(flask.request, bucket.metadata)
+    return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>')
@@ -1562,7 +1392,7 @@ def buckets_get(bucket_name):
         raise error_response.ErrorResponse(
             'Bucket %s not found' % bucket_name, status_code=404)
     bucket.check_preconditions(flask.request)
-    return filtered_response(flask.request, bucket.metadata)
+    return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>', methods=['DELETE'])
@@ -1571,7 +1401,7 @@ def buckets_delete(bucket_name):
     bucket = lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     GCS_BUCKETS.pop(bucket_name, None)
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>', methods=['PATCH'])
@@ -1584,7 +1414,7 @@ def buckets_patch(bucket_name):
     bucket.check_preconditions(flask.request)
     patch = json.loads(flask.request.data)
     bucket.apply_patch(patch)
-    return filtered_response(flask.request, bucket.metadata)
+    return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>/acl')
@@ -1595,7 +1425,7 @@ def bucket_acl_list(bucket_name):
     result = {
         'items': gcs_bucket.metadata.get('acl', []),
     }
-    return filtered_response(flask.request, result)
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/acl', methods=['POST'])
@@ -1604,7 +1434,7 @@ def bucket_acl_create(bucket_name):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(
+    return testbench_utils.filtered_response(
         flask.request,
         gcs_bucket.insert_acl(
             payload.get('entity', ''), payload.get('role', '')))
@@ -1616,7 +1446,7 @@ def bucket_acl_delete(bucket_name, entity):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_acl(entity)
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>')
@@ -1625,7 +1455,7 @@ def bucket_acl_get(bucket_name, entity):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_acl(entity)
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PUT'])
@@ -1635,7 +1465,7 @@ def bucket_acl_update(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
@@ -1645,7 +1475,7 @@ def bucket_acl_patch(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl')
@@ -1656,7 +1486,7 @@ def bucket_default_object_acl_list(bucket_name):
     result = {
         'items': gcs_bucket.metadata.get('defaultObjectAcl', []),
     }
-    return filtered_response(flask.request, result)
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl', methods=['POST'])
@@ -1665,7 +1495,7 @@ def bucket_default_object_acl_create(bucket_name):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(
+    return testbench_utils.filtered_response(
         flask.request,
         gcs_bucket.insert_default_object_acl(
             payload.get('entity', ''), payload.get('role', '')))
@@ -1677,7 +1507,7 @@ def bucket_default_object_acl_delete(bucket_name, entity):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_default_object_acl(entity)
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>')
@@ -1686,7 +1516,7 @@ def bucket_default_object_acl_get(bucket_name, entity):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_default_object_acl(entity)
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PUT'])
@@ -1696,7 +1526,7 @@ def bucket_default_object_acl_update(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PATCH'])
@@ -1706,7 +1536,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/notificationConfigs')
@@ -1714,7 +1544,7 @@ def bucket_notification_list(bucket_name):
     """Implement the 'Notifications: list' API."""
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
-    return filtered_response(flask.request, {
+    return testbench_utils.filtered_response(flask.request, {
         'kind': 'storage#notifications',
         'items': gcs_bucket.list_notifications()
     })
@@ -1726,7 +1556,7 @@ def bucket_notification_create(bucket_name):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.insert_notification(flask.request)
-    return filtered_response(flask.request, notification)
+    return testbench_utils.filtered_response(flask.request, notification)
 
 
 @gcs.route(
@@ -1737,7 +1567,7 @@ def bucket_notification_delete(bucket_name, notification_id):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_notification(notification_id)
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/notificationConfigs/<notification_id>')
@@ -1746,7 +1576,7 @@ def bucket_notification_get(bucket_name, notification_id):
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.get_notification(notification_id)
-    return filtered_response(flask.request, notification)
+    return testbench_utils.filtered_response(flask.request, notification)
 
 
 @gcs.route('/b/<bucket_name>/iam')
@@ -1754,7 +1584,7 @@ def bucket_get_iam_policy(bucket_name):
     """Implement the 'Buckets: getIamPolicy' API."""
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
-    return filtered_response(flask.request,
+    return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.get_iam_policy(flask.request))
 
 
@@ -1763,7 +1593,7 @@ def bucket_set_iam_policy(bucket_name):
     """Implement the 'Buckets: setIamPolicy' API."""
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
-    return filtered_response(flask.request,
+    return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.set_iam_policy(flask.request))
 
 
@@ -1772,7 +1602,7 @@ def bucket_test_iam_permissions(bucket_name):
     """Implement the 'Buckets: testIamPermissions' API."""
     gcs_bucket = lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
-    return filtered_response(flask.request,
+    return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.test_iam_permissions(flask.request))
 
 
@@ -1793,7 +1623,7 @@ def objects_list(bucket_name):
                 result['items'].append(object_version.metadata)
         else:
             result['items'].append(o.get_latest().metadata)
-    return filtered_response(flask.request, result)
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 @gcs.route(
@@ -1821,7 +1651,7 @@ def objects_copy(source_bucket, source_object, destination_bucket,
     base_url = flask.url_for('gcs_index', _external=True)
     current_version = gcs_object.copy_from(base_url, flask.request,
                                            source_revision)
-    return filtered_response(flask.request, current_version.metadata)
+    return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
 @gcs.route(
@@ -1841,7 +1671,7 @@ def objects_rewrite(source_bucket, source_object, destination_bucket,
         if_metageneration_not_match='ifSourceMetagenerationNotMatch')
     response = gcs_object.rewrite_step(base_url, flask.request,
                                        destination_bucket, destination_object)
-    return filtered_response(flask.request, response)
+    return testbench_utils.filtered_response(flask.request, response)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>')
@@ -1853,7 +1683,7 @@ def objects_get(bucket_name, object_name):
 
     media = flask.request.args.get('alt', None)
     if media is None or media == 'json':
-        return filtered_response(flask.request, revision.metadata)
+        return testbench_utils.filtered_response(flask.request, revision.metadata)
     if media != 'media':
         raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
     revision.validate_encryption_for_read(flask.request)
@@ -1872,7 +1702,7 @@ def objects_delete(bucket_name, object_name):
     if remove:
         GCS_OBJECTS.pop(object_path)
 
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
@@ -1935,7 +1765,7 @@ def objects_compose(bucket_name, object_name):
     base_url = flask.url_for('gcs_index', _external=True)
     current_version = gcs_object.compose_from(base_url, flask.request,
                                               composed_media)
-    return filtered_response(flask.request, current_version.metadata)
+    return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
@@ -1956,7 +1786,7 @@ def objects_acl_list(bucket_name, object_name):
     result = {
         'items': revision.metadata.get('acl', []),
     }
-    return filtered_response(flask.request, result)
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
@@ -1966,7 +1796,7 @@ def objects_acl_create(bucket_name, object_name):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
-    return filtered_response(
+    return testbench_utils.filtered_response(
         flask.request,
         revision.insert_acl(
             payload.get('entity', ''), payload.get('role', '')))
@@ -1979,7 +1809,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
-    return filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
@@ -1989,7 +1819,7 @@ def objects_acl_get(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.get_acl(entity)
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
@@ -2000,7 +1830,7 @@ def objects_acl_update(bucket_name, object_name, entity):
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
     acl = revision.update_acl(entity, payload.get('role', ''))
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
@@ -2010,13 +1840,13 @@ def objects_acl_patch(bucket_name, object_name, entity):
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
-    return filtered_response(flask.request, acl)
+    return testbench_utils.filtered_response(flask.request, acl)
 
 
 @gcs.route('/projects/<project_id>/serviceAccount')
 def projects_get(project_id):
     """Implement the `Projects.serviceAccount: get` API."""
-    return filtered_response(
+    return testbench_utils.filtered_response(
         flask.request, {
             'kind':
             'storage#serviceAccount',
@@ -2064,7 +1894,7 @@ def objects_insert(bucket_name):
         current_version = gcs_object.insert(gcs_url, flask.request)
     else:
         current_version = gcs_object.insert_multipart(gcs_url, flask.request)
-    return filtered_response(flask.request, current_version.metadata)
+    return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
 # Define the WSGI application to handle (a few) requests in the XML API.
