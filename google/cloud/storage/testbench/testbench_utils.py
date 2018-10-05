@@ -219,3 +219,108 @@ def extract_media(request):
     if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
         return request.environ.get('wsgi.input').read()
     return request.data
+
+
+# Define the collection of Buckets indexed by <bucket_name>
+GCS_BUCKETS = dict()
+
+
+def lookup_bucket(bucket_name):
+    """Lookup a bucket by name in the global collection.
+
+    :param bucket_name:str the name of the Bucket.
+    :return: the bucket matching the name.
+    :rtype:GcsBucket
+    :raises:ErrorResponse if the bucket is not found.
+    """
+    bucket = GCS_BUCKETS.get(bucket_name)
+    if bucket is None:
+        raise error_response.ErrorResponse(
+            'Bucket %s not found' % bucket_name, status_code=404)
+    return bucket
+
+
+def has_buckets():
+    """Return True if there are any buckets in the global collection."""
+    return len(GCS_BUCKETS) != 0
+
+
+def has_bucket(bucket_name):
+    """Return True if the bucket already exists in the global collection."""
+    return GCS_BUCKETS.get(bucket_name) is not None
+
+
+def insert_bucket(bucket_name, bucket):
+    """Insert (or replace) a new bucket into the global collection.
+
+    :param bucket_name:str the name of the bucket.
+    :param bucket:GcsBucket the bucket to insert.
+    """
+    GCS_BUCKETS[bucket_name] = bucket
+
+
+def delete_bucket(bucket_name):
+    """Delete a bucket from the global collection."""
+    GCS_BUCKETS.pop(bucket_name)
+
+
+def all_buckets():
+    """Return a key,value iterator for all the buckets in the global collection.
+
+    :rtype:dict[str, GcsBucket]
+    """
+    return GCS_BUCKETS.items()
+
+
+# Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
+GCS_OBJECTS = dict()
+
+
+def lookup_object(bucket_name, object_name):
+    """Lookup an object by name in the global collection.
+
+    :param bucket_name:str the name of the Bucket that contains the object.
+    :param object_name:str the name of the Object.
+    :return: tuple the object path and the object.
+    :rtype: (str,GcsObject)
+    :raises:ErrorResponse if the object is not found.
+    """
+    object_path = bucket_name + '/o/' + object_name
+    gcs_object = GCS_OBJECTS.get(object_path)
+    if gcs_object is None:
+        raise error_response.ErrorResponse(
+            'Object %s in %s not found' % (object_name, bucket_name),
+            status_code=404)
+    return object_path, gcs_object
+
+
+def get_object(bucket_name, object_name, default_value):
+    """Find an object in the global collection, return a default value if not
+    found.
+
+    :param bucket_name:str the name of the Bucket that contains the object.
+    :param object_name:str the name of the Object.
+    :return: tuple the object path and the object.
+    :rtype: (str,GcsObject)
+    :raises:ErrorResponse if the object is not found.
+    """
+    object_path = bucket_name + '/o/' + object_name
+    return object_path, GCS_OBJECTS.get(object_path, default_value)
+
+
+def insert_object(object_path, value):
+    """Insert an object to the global collection."""
+    GCS_OBJECTS[object_path] = value
+
+
+def delete_object(object_path):
+    """Delete an object from the global collection."""
+    GCS_OBJECTS.pop(object_path)
+
+
+def all_objects():
+    """Return a key,value iterator for all the objects in the global collection.
+
+    :rtype:dict[str, GcsBucket]
+    """
+    return GCS_OBJECTS.items()

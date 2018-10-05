@@ -200,7 +200,7 @@ class GcsObjectVersion(object):
             predefined_acl = 'projectPrivate'
         self.insert_acl(
             testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
-        bucket = lookup_bucket(self.bucket_name)
+        bucket = testbench_utils.lookup_bucket(self.bucket_name)
         owner = bucket.metadata.get('owner')
         if owner is None:
             owner_entity = 'project-owners-123456789'
@@ -524,7 +524,7 @@ class GcsObject(object):
         :rtype:NoneType
         """
         update = {self.generation: revision}
-        bucket = lookup_bucket(self.bucket_name)
+        bucket = testbench_utils.lookup_bucket(self.bucket_name)
         if not bucket.versioning_enabled():
             self.revisions = update
         else:
@@ -834,12 +834,12 @@ class GcsObject(object):
             bytes_rewritten = len(source.media)
             rewrite['bytes_rewritten'] = bytes_rewritten
             # Success, the operation completed. Return the new object:
-            object_path = destination_bucket + '/o/' + destination_object
-            destination = GCS_OBJECTS.get(
-                object_path, GcsObject(destination_bucket, destination_object))
+            object_path, destination = testbench_utils.get_object(
+                destination_bucket, destination_object,
+                GcsObject(destination_bucket, destination_object))
             revision = destination.rewrite_finish(gcs_url, flask.request, body,
                                                   source)
-            GCS_OBJECTS[object_path] = destination
+            testbench_utils.insert_object(object_path, destination)
             result['done'] = True
             result['resource'] = revision.metadata
             rewrite_token = ''
@@ -1281,23 +1281,14 @@ class GcsBucket(object):
         return result
 
 
-# Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
-GCS_OBJECTS = dict()
-
-# Define the collection of Buckets indexed by <bucket_name>
-GCS_BUCKETS = dict()
-
 # Define the WSGI application to handle bucket requests.
 GCS_HANDLER_PATH = '/storage/v1'
 gcs = flask.Flask(__name__)
 gcs.debug = True
 
 
-# TODO(#821) TODO(#820) - until we implement CreateBucket + DeleteBucket insert
-# a well-known bucket based on the BUCKET_NAME environment (this is set by our
-# CI builds), to make the integration tests easy to write.
 def insert_magic_bucket(base_url):
-    if len(GCS_BUCKETS) == 0:
+    if testbench_utils.has_buckets() == 0:
         bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
         bucket = GcsBucket(base_url, bucket_name)
         # Enable versioning in the Bucket, the integration tests expect this to
@@ -1307,40 +1298,7 @@ def insert_magic_bucket(base_url):
         # expected by the integration tests.
         bucket.update_from_metadata({})
         bucket.update_from_metadata({})
-        GCS_BUCKETS[bucket_name] = bucket
-
-
-def lookup_bucket(bucket_name):
-    """Lookup a bucket by name in GCS_BUCKETS.
-
-    :param bucket_name:str the name of the Bucket.
-    :return: the bucket matching the name.
-    :rtype:GcsBucket
-    :raises:ErrorResponse if the bucket is not found.
-    """
-    bucket = GCS_BUCKETS.get(bucket_name)
-    if bucket is None:
-        raise error_response.ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
-    return bucket
-
-
-def lookup_object(bucket_name, object_name):
-    """Lookup an object by name in GCS_OBJECTS.
-
-    :param bucket_name:str the name of the Bucket that contains the object.
-    :param object_name:str the name of the Object.
-    :return: tuple the object path and the object.
-    :rtype: (str,GcsObject)
-    :raises:ErrorResponse if the object is not found.
-    """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path)
-    if gcs_object is None:
-        raise error_response.ErrorResponse(
-            'Object %s in %s not found' % (object_name, bucket_name),
-            status_code=404)
-    return object_path, gcs_object
+        testbench_utils.insert_bucket(bucket_name, bucket)
 
 
 @gcs.route('/')
@@ -1364,7 +1322,7 @@ def buckets_list():
             'Invalid or missing project id in `Buckets: list`')
     insert_magic_bucket(base_url)
     result = {'next_page_token': '', 'items': []}
-    for name, b in GCS_BUCKETS.items():
+    for name, b in testbench_utils.all_buckets():
         result['items'].append(b.metadata)
     return testbench_utils.filtered_response(flask.request, result)
 
@@ -1382,13 +1340,12 @@ def buckets_insert():
     if not testbench_utils.validate_bucket_name(bucket_name):
         raise error_response.ErrorResponse(
             'Invalid bucket name in `Buckets: insert`')
-    bucket = GCS_BUCKETS.get(bucket_name)
-    if bucket is not None:
+    if testbench_utils.has_bucket(bucket_name):
         raise error_response.ErrorResponse(
-            'Bucket %s already exists' % bucket_name, status_code=503)
+            'Bucket %s already exists' % bucket_name, status_code=400)
     bucket = GcsBucket(base_url, bucket_name)
     bucket.update_from_metadata(payload)
-    GCS_BUCKETS[bucket_name] = bucket
+    testbench_utils.insert_bucket(bucket_name, bucket)
     return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
@@ -1406,7 +1363,7 @@ def buckets_update(bucket_name):
         raise error_response.ErrorResponse(
             'Mismatched bucket name parameter in `Buckets: update`',
             status_code=400)
-    bucket = lookup_bucket(bucket_name)
+    bucket = testbench_utils.lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     bucket.update_from_metadata(payload)
     return testbench_utils.filtered_response(flask.request, bucket.metadata)
@@ -1417,7 +1374,7 @@ def buckets_get(bucket_name):
     """Implement the 'Buckets: get' API: return the metadata for a bucket."""
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
-    bucket = lookup_bucket(bucket_name)
+    bucket = testbench_utils.lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
@@ -1425,19 +1382,16 @@ def buckets_get(bucket_name):
 @gcs.route('/b/<bucket_name>', methods=['DELETE'])
 def buckets_delete(bucket_name):
     """Implement the 'Buckets: delete' API."""
-    bucket = lookup_bucket(bucket_name)
+    bucket = testbench_utils.lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
-    GCS_BUCKETS.pop(bucket_name, None)
+    testbench_utils.delete_bucket(bucket_name)
     return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>', methods=['PATCH'])
 def buckets_patch(bucket_name):
     """Implement the 'Buckets: patch' API."""
-    bucket = GCS_BUCKETS.get(bucket_name, None)
-    if bucket is None:
-        raise error_response.ErrorResponse(
-            'Bucket %s not found' % bucket_name, status_code=404)
+    bucket = testbench_utils.lookup_bucket(bucket_name)
     bucket.check_preconditions(flask.request)
     patch = json.loads(flask.request.data)
     bucket.apply_patch(patch)
@@ -1447,7 +1401,7 @@ def buckets_patch(bucket_name):
 @gcs.route('/b/<bucket_name>/acl')
 def bucket_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('acl', []),
@@ -1458,7 +1412,7 @@ def bucket_acl_list(bucket_name):
 @gcs.route('/b/<bucket_name>/acl', methods=['POST'])
 def bucket_acl_create(bucket_name):
     """Implement the 'BucketAccessControls: create' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     return testbench_utils.filtered_response(
@@ -1470,7 +1424,7 @@ def bucket_acl_create(bucket_name):
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['DELETE'])
 def bucket_acl_delete(bucket_name, entity):
     """Implement the 'BucketAccessControls: delete' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_acl(entity)
     return testbench_utils.filtered_response(flask.request, {})
@@ -1479,7 +1433,7 @@ def bucket_acl_delete(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/acl/<entity>')
 def bucket_acl_get(bucket_name, entity):
     """Implement the 'BucketAccessControls: get' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_acl(entity)
     return testbench_utils.filtered_response(flask.request, acl)
@@ -1488,7 +1442,7 @@ def bucket_acl_get(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PUT'])
 def bucket_acl_update(bucket_name, entity):
     """Implement the 'BucketAccessControls: update' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
@@ -1498,7 +1452,7 @@ def bucket_acl_update(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/acl/<entity>', methods=['PATCH'])
 def bucket_acl_patch(bucket_name, entity):
     """Implement the 'BucketAccessControls: patch' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_acl(entity, payload.get('role', ''))
@@ -1508,7 +1462,7 @@ def bucket_acl_patch(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl')
 def bucket_default_object_acl_list(bucket_name):
     """Implement the 'BucketAccessControls: list' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     result = {
         'items': gcs_bucket.metadata.get('defaultObjectAcl', []),
@@ -1519,7 +1473,7 @@ def bucket_default_object_acl_list(bucket_name):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl', methods=['POST'])
 def bucket_default_object_acl_create(bucket_name):
     """Implement the 'BucketAccessControls: create' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     return testbench_utils.filtered_response(
@@ -1531,7 +1485,7 @@ def bucket_default_object_acl_create(bucket_name):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['DELETE'])
 def bucket_default_object_acl_delete(bucket_name, entity):
     """Implement the 'BucketAccessControls: delete' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_default_object_acl(entity)
     return testbench_utils.filtered_response(flask.request, {})
@@ -1540,7 +1494,7 @@ def bucket_default_object_acl_delete(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>')
 def bucket_default_object_acl_get(bucket_name, entity):
     """Implement the 'BucketAccessControls: get' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     acl = gcs_bucket.get_default_object_acl(entity)
     return testbench_utils.filtered_response(flask.request, acl)
@@ -1549,7 +1503,7 @@ def bucket_default_object_acl_get(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PUT'])
 def bucket_default_object_acl_update(bucket_name, entity):
     """Implement the 'DefaultObjectAccessControls: update' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
@@ -1559,7 +1513,7 @@ def bucket_default_object_acl_update(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/defaultObjectAcl/<entity>', methods=['PATCH'])
 def bucket_default_object_acl_patch(bucket_name, entity):
     """Implement the 'DefaultObjectAccessControls: patch' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     acl = gcs_bucket.update_default_object_acl(entity, payload.get('role', ''))
@@ -1569,7 +1523,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
 @gcs.route('/b/<bucket_name>/notificationConfigs')
 def bucket_notification_list(bucket_name):
     """Implement the 'Notifications: list' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request, {
         'kind': 'storage#notifications',
@@ -1580,7 +1534,7 @@ def bucket_notification_list(bucket_name):
 @gcs.route('/b/<bucket_name>/notificationConfigs', methods=['POST'])
 def bucket_notification_create(bucket_name):
     """Implement the 'Notifications: insert' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.insert_notification(flask.request)
     return testbench_utils.filtered_response(flask.request, notification)
@@ -1591,7 +1545,7 @@ def bucket_notification_create(bucket_name):
     methods=['DELETE'])
 def bucket_notification_delete(bucket_name, notification_id):
     """Implement the 'Notifications: delete' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     gcs_bucket.delete_notification(notification_id)
     return testbench_utils.filtered_response(flask.request, {})
@@ -1600,7 +1554,7 @@ def bucket_notification_delete(bucket_name, notification_id):
 @gcs.route('/b/<bucket_name>/notificationConfigs/<notification_id>')
 def bucket_notification_get(bucket_name, notification_id):
     """Implement the 'Notifications: get' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     notification = gcs_bucket.get_notification(notification_id)
     return testbench_utils.filtered_response(flask.request, notification)
@@ -1609,7 +1563,7 @@ def bucket_notification_get(bucket_name, notification_id):
 @gcs.route('/b/<bucket_name>/iam')
 def bucket_get_iam_policy(bucket_name):
     """Implement the 'Buckets: getIamPolicy' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.get_iam_policy(flask.request))
@@ -1618,7 +1572,7 @@ def bucket_get_iam_policy(bucket_name):
 @gcs.route('/b/<bucket_name>/iam', methods=['PUT'])
 def bucket_set_iam_policy(bucket_name):
     """Implement the 'Buckets: setIamPolicy' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.set_iam_policy(flask.request))
@@ -1627,7 +1581,7 @@ def bucket_set_iam_policy(bucket_name):
 @gcs.route('/b/<bucket_name>/iam/testPermissions')
 def bucket_test_iam_permissions(bucket_name):
     """Implement the 'Buckets: testIamPermissions' API."""
-    gcs_bucket = lookup_bucket(bucket_name)
+    gcs_bucket = testbench_utils.lookup_bucket(bucket_name)
     gcs_bucket.check_preconditions(flask.request)
     return testbench_utils.filtered_response(flask.request,
                              gcs_bucket.test_iam_permissions(flask.request))
@@ -1638,12 +1592,12 @@ def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
     # Lookup the bucket, if this fails the bucket does not exist, and this
     # function should return an error.
-    _ = lookup_bucket(bucket_name)
+    _ = testbench_utils.lookup_bucket(bucket_name)
     result = {'next_page_token': '', 'items': []}
     versions_parameter = flask.request.args.get('versions')
     all_versions = (versions_parameter is not None
                     and bool(versions_parameter))
-    for name, o in GCS_OBJECTS.items():
+    for name, o in testbench_utils.all_objects():
         if name.find(bucket_name + '/o') != 0:
             continue
         if o.get_latest() is None:
@@ -1662,7 +1616,7 @@ def objects_list(bucket_name):
 def objects_copy(source_bucket, source_object, destination_bucket,
                  destination_object):
     """Implement the 'Objects: copy' API, copy an object."""
-    object_path, gcs_object = lookup_object(source_bucket, source_object)
+    object_path, gcs_object = testbench_utils.lookup_object(source_bucket, source_object)
     gcs_object.check_preconditions(
         flask.request,
         if_generation_match='ifSourceGenerationMatch',
@@ -1675,12 +1629,13 @@ def objects_copy(source_bucket, source_object, destination_bucket,
         raise error_response.ErrorResponse(
             'Revision not found %s' % object_path, status_code=404)
 
-    destination_path = destination_bucket + "/o/" + destination_object
-    gcs_object = GCS_OBJECTS.setdefault(
-        destination_path, GcsObject(destination_bucket, destination_object))
+    destination_path, destination = testbench_utils.get_object(
+        destination_bucket, destination_object,
+        GcsObject(destination_bucket, destination_object))
     base_url = flask.url_for('gcs_index', _external=True)
-    current_version = gcs_object.copy_from(base_url, flask.request,
-                                           source_revision)
+    current_version = destination.copy_from(base_url, flask.request,
+                                            source_revision)
+    testbench_utils.insert_object(destination_path, destination)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
@@ -1692,7 +1647,7 @@ def objects_rewrite(source_bucket, source_object, destination_bucket,
     """Implement the 'Objects: rewrite' API."""
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
-    object_path, gcs_object = lookup_object(source_bucket, source_object)
+    object_path, gcs_object = testbench_utils.lookup_object(source_bucket, source_object)
     gcs_object.check_preconditions(
         flask.request,
         if_generation_match='ifSourceGenerationMatch',
@@ -1707,7 +1662,7 @@ def objects_rewrite(source_bucket, source_object, destination_bucket,
 @gcs.route('/b/<bucket_name>/o/<object_name>')
 def objects_get(bucket_name, object_name):
     """Implement the 'Objects: get' API.  Read objects or their metadata."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
 
@@ -1726,19 +1681,18 @@ def objects_get(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
 def objects_delete(bucket_name, object_name):
     """Implement the 'Objects: delete' API.  Delete objects."""
-    object_path, gcs_object = lookup_object(bucket_name, object_name)
+    object_path, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     remove = gcs_object.del_revision(flask.request)
     if remove:
-        GCS_OBJECTS.pop(object_path)
-
+        testbench_utils.delete_object(object_path)
     return testbench_utils.filtered_response(flask.request, {})
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
 def objects_update(bucket_name, object_name):
     """Implement the 'Objects: update' API: update an existing Object."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.update_revision(flask.request)
     return json.dumps(revision.metadata)
@@ -1747,11 +1701,6 @@ def objects_update(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/compose', methods=['POST'])
 def objects_compose(bucket_name, object_name):
     """Implement the 'Objects: compose' API: concatenate Objects."""
-    composed_object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(composed_object_path,
-                                 GcsObject(bucket_name, object_name))
-    if gcs_object is not None:
-        gcs_object.check_preconditions(flask.request)
     payload = json.loads(flask.request.data)
     source_objects = payload["sourceObjects"]
     if source_objects is None:
@@ -1767,7 +1716,7 @@ def objects_compose(bucket_name, object_name):
         source_object_name = source_object.get('name')
         if source_object_name is None:
             raise error_response.ErrorResponse('Required.', status_code=400)
-        source_object_path, source_gcs_object = lookup_object(
+        source_object_path, source_gcs_object = testbench_utils.lookup_object(
             bucket_name, source_object_name)
         source_revision = source_gcs_object.get_latest()
         generation = source_object.get('generation')
@@ -1783,19 +1732,20 @@ def objects_compose(bucket_name, object_name):
             source_gcs_object.check_preconditions_by_value(
                 if_generation_match, None, None, None)
         composed_media += source_revision.media
-    gcs_object = GCS_OBJECTS.setdefault(composed_object_path,
-                                        GcsObject(bucket_name, object_name))
-    GCS_OBJECTS[composed_object_path] = gcs_object
+    composed_object_path, composed_object = testbench_utils.get_object(
+        bucket_name, object_name, GcsObject(bucket_name, object_name))
+    composed_object.check_preconditions(flask.request)
     base_url = flask.url_for('gcs_index', _external=True)
-    current_version = gcs_object.compose_from(base_url, flask.request,
-                                              composed_media)
+    current_version = composed_object.compose_from(base_url, flask.request,
+                                                   composed_media)
+    testbench_utils.insert_object(composed_object_path, composed_object)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
 def objects_patch(bucket_name, object_name):
     """Implement the 'Objects: patch' API: update an existing Object."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.patch_revision(flask.request)
     return json.dumps(revision.metadata)
@@ -1804,7 +1754,7 @@ def objects_patch(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl')
 def objects_acl_list(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: list' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     result = {
@@ -1816,7 +1766,7 @@ def objects_acl_list(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
 def objects_acl_create(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: create' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
@@ -1829,7 +1779,7 @@ def objects_acl_create(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
 def objects_acl_delete(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: delete' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     revision.delete_acl(entity)
@@ -1839,7 +1789,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
 def objects_acl_get(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: get' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.get_acl(entity)
@@ -1849,7 +1799,7 @@ def objects_acl_get(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
 def objects_acl_update(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: update' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     payload = json.loads(flask.request.data)
@@ -1860,7 +1810,7 @@ def objects_acl_update(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
 def objects_acl_patch(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: patch' API."""
-    _, gcs_object = lookup_object(bucket_name, object_name)
+    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
     gcs_object.check_preconditions(flask.request)
     revision = gcs_object.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
@@ -1909,15 +1859,14 @@ def objects_insert(bucket_name):
         raise error_response.ErrorResponse(
             'testbench does not support %s uploadType' % upload_type,
             status_code=400)
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    object_path, gcs_object = testbench_utils.get_object(
+        bucket_name, object_name, GcsObject(bucket_name, object_name))
     gcs_object.check_preconditions(flask.request)
-    GCS_OBJECTS[object_path] = gcs_object
     if upload_type == 'media':
         current_version = gcs_object.insert(gcs_url, flask.request)
     else:
         current_version = gcs_object.insert_multipart(gcs_url, flask.request)
+    testbench_utils.insert_object(object_path, gcs_object)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
@@ -1935,11 +1884,8 @@ def xmlapi_error(error):
 @xmlapi.route('/<bucket_name>/<object_name>')
 def xmlapi_get_object(bucket_name, object_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path)
-    if gcs_object is None:
-        raise error_response.ErrorResponse(
-            'Object not found %s' % object_path, status_code=404)
+    object_path, gcs_object = testbench_utils.lookup_object(
+        bucket_name, object_name)
     if flask.request.args.get('acl') is not None:
         raise error_response.ErrorResponse(
             'ACL query not supported in XML API', status_code=500)
@@ -1969,15 +1915,14 @@ def xmlapi_put_object(bucket_name, object_name):
         object_name=object_name,
         _external=True).replace('/xmlapi/', '/')
     insert_magic_bucket(gcs_url)
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path,
-                                 GcsObject(bucket_name, object_name))
+    object_path, gcs_object = testbench_utils.get_object(
+        bucket_name, object_name, GcsObject(bucket_name, object_name))
     generation_match = flask.request.headers.get('x-goog-if-generation-match')
     metageneration_match = flask.request.headers.get('x-goog-if-metageneration-match')
     gcs_object.check_preconditions_by_value(generation_match, None,
                                             metageneration_match, None)
-    GCS_OBJECTS[object_path] = gcs_object
     gcs_object.insert_xml(gcs_url, flask.request)
+    testbench_utils.insert_object(object_path, gcs_object)
     return ''
 
 
