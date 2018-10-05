@@ -34,34 +34,25 @@ if (NOT TARGET protobuf_project)
         URL_HASH
             SHA256=4ffd420f39f226e96aebc3554f9c66a912f6cad6261f39f194f16af8a1f6dab2
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
+                          -G${CMAKE_GENERATOR}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Debug
                           -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                           -Dprotobuf_BUILD_TESTS=OFF
+                          -Dprotobuf_DEBUG_POSTFIX=
                           -H<SOURCE_DIR>/cmake
-                          -B<BINARY_DIR>/Debug
-        COMMAND ${CMAKE_COMMAND} ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                -DCMAKE_BUILD_TYPE=Release
-                -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                -DCMAKE_PREFIX_PATH=<INSTALL_DIR> -Dprotobuf_BUILD_TESTS=OFF
-                -H<SOURCE_DIR>/cmake -B<BINARY_DIR>/Release
+                          -B<BINARY_DIR>
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
-                      Debug
+                      <BINARY_DIR>
                       ${PARALLEL}
-        COMMAND ${CMAKE_COMMAND} --build Release ${PARALLEL}
-        INSTALL_COMMAND ${CMAKE_COMMAND}
-                        --build
-                        Debug
-                        --target
-                        install
-        COMMAND ${CMAKE_COMMAND} --build Release --target install
         BUILD_BYPRODUCTS
             <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_STATIC_LIBRARY_SUFFIX}
             <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_SHARED_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobufd${CMAKE_STATIC_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobufd${CMAKE_SHARED_LIBRARY_SUFFIX}
             <INSTALL_DIR>/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
