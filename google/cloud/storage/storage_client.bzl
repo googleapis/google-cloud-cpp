@@ -71,6 +71,7 @@ storage_client_SRCS = [
     "bucket_metadata.cc",
     "client.cc",
     "client_options.cc",
+    "hashing_options.cc",
     "internal/access_control_common.cc",
     "internal/binary_data_as_debug_string.cc",
     "internal/bucket_acl_requests.cc",
