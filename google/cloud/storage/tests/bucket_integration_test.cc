@@ -581,8 +581,10 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 TEST_F(BucketIntegrationTest, CreateFailure) {
   Client client;
 
-  // Try to create an invalid bucket (the name should not contain `_`), the
-  // server will reject the request and we should report that error correctly.
+  // Try to create an invalid bucket (the name should not start with an
+  // uppercase letter), the service (or testbench) will reject the request and
+  // we should report that error correctly. For good measure, make the project
+  // id invalid too.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       try {

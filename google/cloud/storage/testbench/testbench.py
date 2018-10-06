@@ -1350,7 +1350,7 @@ def buckets_insert():
     if bucket_name is None:
         raise error_response.ErrorResponse(
             'Missing bucket name in `Buckets: insert`', status_code=412)
-    if len(bucket_name) > 63 or not re.match('^[a-z][a-z-]*[a-z]', bucket_name):
+    if not testbench_utils.validate_bucket_name(bucket_name):
         raise error_response.ErrorResponse(
             'Invalid bucket name in `Buckets: insert`')
     bucket = GCS_BUCKETS.get(bucket_name)
