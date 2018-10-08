@@ -678,14 +678,13 @@ class CaptureSendHeaderBackend : public LogBackend {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_F(ObjectIntegrationTest, InsertWithQuotaUser) {
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
-
   Client client(ClientOptions()
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
@@ -1280,14 +1279,13 @@ TEST_F(ObjectIntegrationTest, RewriteLarge) {
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectIntegrationTest, DefaultMD5HashXML) {
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
-
   Client client(ClientOptions()
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
@@ -1305,14 +1303,13 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashXML) {
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
-
   Client client(ClientOptions()
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
@@ -1334,14 +1331,13 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the header.
 TEST_F(ObjectIntegrationTest, DisableMD5HashXML) {
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
-
   Client client(ClientOptions()
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
@@ -1360,14 +1356,13 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashXML) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the payload.
 TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
-
   Client client(ClientOptions()
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
+  auto backend = std::make_shared<CaptureSendHeaderBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
