@@ -22,6 +22,7 @@ additional_commands = {
         "kwargs": {
             "BUILD_COMMAND": "+",
             "BUILD_BYPRODUCTS": "+",
+            "CMAKE_ARGS": "+",
             "COMMAND": "+",
             "CONFIGURE_COMMAND": "+",
             "DEPENDS": "+",
