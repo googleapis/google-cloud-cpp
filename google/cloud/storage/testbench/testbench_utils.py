@@ -18,6 +18,35 @@ import base64
 import error_response
 import hashlib
 import json
+import re
+
+
+def validate_bucket_name(bucket_name):
+    """Return True if bucket_name is a valid bucket name.
+
+    Bucket naming requirements are described in:
+
+    https://cloud.google.com/storage/docs/naming
+
+    Note that this function does not verify domain bucket names:
+
+    https://cloud.google.com/storage/docs/domain-name-verification
+
+    :param bucket_name:str the name to validate.
+    :rtype: bool
+    """
+    valid = True
+    if '.' in bucket_name:
+        valid &= len(bucket_name) <= 222
+        valid &= all([len(part) <= 63 for part in bucket_name.split('.')])
+    else:
+        valid &= len(bucket_name) <= 63
+    valid &= re.match('^[a-z0-9][a-z0-9._\\-]+[a-z0-9]$', bucket_name) is not None
+    valid &= not bucket_name.startswith('goog')
+    valid &= re.search('g[0o][0o]g[1l][e3]', bucket_name) is None
+    valid &= re.match('^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$',
+                      bucket_name) is None
+    return valid
 
 
 def canonical_entity_name(entity):

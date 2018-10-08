@@ -185,8 +185,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   }
 
   // cors()
-  desired_state.mutable_cors().push_back(CorsEntry{
-      google::cloud::optional<std::int64_t>(86400), {"GET"}, {}, {}});
+  desired_state.mutable_cors().push_back(
+      CorsEntry{google::cloud::optional<std::int64_t>(86400), {"GET"}, {}, {}});
 
   // default_acl()
   desired_state.mutable_default_acl().push_back(
@@ -559,6 +559,196 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   client.DeleteBucket(bucket_name);
 }
 
+TEST_F(BucketIntegrationTest, ListFailure) {
+  Client client;
+
+  // Project IDs must end with a letter or number, test with an invalid ID.
+  auto stream = client.ListBucketsForProject("Invalid-project-id-");
+  std::vector<BucketMetadata> results;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { results.assign(stream.begin(), stream.end()); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(results.assign(stream.begin(), stream.end()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, CreateFailure) {
+  Client client;
+
+  // Try to create an invalid bucket (the name should not start with an
+  // uppercase letter), the service (or testbench) will reject the request and
+  // we should report that error correctly. For good measure, make the project
+  // id invalid too.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.CreateBucketForProject("Invalid_Bucket_Name",
+                                      "Invalid-project-id-", BucketMetadata());
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.CreateBucketForProject("Invalid_Bucket_Name",
+                                    "Invalid-project-id-", BucketMetadata()),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, GetFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to get information about a bucket that does not exist, or at least
+  // it is very unlikely to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { client.GetBucketMetadata(bucket_name); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(client.GetBucketMetadata(bucket_name),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, DeleteFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to delete a bucket that does not exist, or at least it is very unlikely
+  // to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { client.DeleteBucket(bucket_name); } catch (
+                   std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(client.DeleteBucket(bucket_name),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, UpdateFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to update a bucket that does not exist, or at least it is very unlikely
+  // to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.UpdateBucket(bucket_name, BucketMetadata());
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(client.UpdateBucket(bucket_name, BucketMetadata()),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, PatchFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to update a bucket that does not exist, or at least it is very unlikely
+  // to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.PatchBucket(bucket_name, BucketMetadataPatchBuilder());
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.PatchBucket(bucket_name, BucketMetadataPatchBuilder()),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to get information about a bucket that does not exist, or at least it
+  // is very unlikely to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.GetBucketIamPolicy(bucket_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.GetBucketIamPolicy(bucket_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to set the IAM policy on a bucket that does not exist, or at least it
+  // is very unlikely to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.SetBucketIamPolicy(bucket_name, IamPolicy{});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.SetBucketIamPolicy(bucket_name, IamPolicy{}),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // Try to set the IAM policy on a bucket that does not exist, or at least it
+  // is very unlikely to exist, the name is random.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.TestBucketIamPermissions(bucket_name, {});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.TestBucketIamPermissions(bucket_name, {}),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
