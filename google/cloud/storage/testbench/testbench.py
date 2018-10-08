@@ -87,20 +87,19 @@ class GcsObjectVersion(object):
         # Capture any encryption key headers.
         self._capture_customer_encryption(request)
         self._update_predefined_acl(request.args.get('predefinedAcl'))
+        acl2json_mapping = {
+            'authenticated-read': 'authenticatedRead',
+            'bucket-owner-full-control': 'bucketOwnerFullControl',
+            'bucket-owner-read': 'bucketOwnerRead',
+            'private': 'private',
+            'project-private': 'projectPrivate',
+            'public-read': 'publicRead',
+        }
         if request.headers.get('x-goog-acl') is not None:
             acl = request.headers.get('x-goog-acl')
-            if acl == 'authenticated-read':
-                self._update_predefined_acl("authenticatedRead")
-            elif acl == 'bucket-owner-full-control':
-                self._update_predefined_acl('bucketOwnerFullControl')
-            elif acl == 'bucket-owner-read':
-                self._update_predefined_acl('bucketOwnerRead')
-            elif acl == 'private':
-                self._update_predefined_acl('private')
-            elif acl == 'project-private':
-                self._update_predefined_acl('projectPrivate')
-            elif acl == 'public-read':
-                self._update_predefined_acl('publicRead')
+            predefined = acl2json_mapping.get(acl)
+            if predefined is not None:
+                self._update_predefined_acl(predefined)
             else:
                 raise error_response.ErrorResponse(
                     'Invalid predefinedAcl value %s' % acl, status_code=400)
