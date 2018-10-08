@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -160,55 +161,6 @@ class InstanceAdmin {
       std::vector<std::string> const& permissions, grpc::Status& status);
   //@}
 
-  template <typename ResultType>
-  ResultType PollLongRunningOperation(google::longrunning::Operation& operation,
-                                      char const* error_message,
-                                      grpc::Status& status) {
-    auto polling_policy = polling_policy_->clone();
-    do {
-      if (operation.done()) {
-        if (operation.has_response()) {
-          auto const& any = operation.response();
-          if (not any.Is<ResultType>()) {
-            std::ostringstream os;
-            os << error_message << "(" << metadata_update_policy_.value()
-               << ") - "
-               << "invalid result type in operation=" << operation.name();
-            status = grpc::Status(grpc::StatusCode::UNKNOWN, os.str());
-            return ResultType{};
-          }
-          ResultType result;
-          any.UnpackTo(&result);
-          return result;
-        }
-        if (operation.has_error()) {
-          std::ostringstream os;
-          os << error_message << "(" << metadata_update_policy_.value()
-             << ") - "
-             << "error reported by operation=" << operation.name();
-          status = grpc::Status(
-              static_cast<grpc::StatusCode>(operation.error().code()),
-              operation.error().message(), os.str());
-          return ResultType{};
-        }
-      }
-      auto delay = polling_policy->WaitPeriod();
-      std::this_thread::sleep_for(delay);
-      google::longrunning::GetOperationRequest op;
-      op.set_name(operation.name());
-      grpc::ClientContext context;
-      status = client_->GetOperation(&context, op, &operation);
-      if (not status.ok() and not polling_policy->OnFailure(status)) {
-        return ResultType{};
-      }
-    } while (not polling_policy->Exhausted());
-    std::ostringstream os;
-    os << error_message << "(" << metadata_update_policy_.value() << ") - "
-       << "polling policy exhausted in operation=" << operation.name();
-    status = grpc::Status(grpc::StatusCode::UNKNOWN, os.str());
-    return ResultType{};
-  }
-
  private:
   //@{
   /// @name Helper functions to implement constructors with changed policies.
@@ -237,6 +189,7 @@ class InstanceAdmin {
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   std::shared_ptr<PollingPolicy> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
+  bigtable::PollLongRunningOperation poll_longrunning_operation_;
 };
 
 }  // namespace noex

@@ -80,6 +80,7 @@ class InstanceAdminClient {
  protected:
   friend class InstanceAdmin;
   friend class noex::InstanceAdmin;
+  friend class PollLongRunningOperation;
   //@{
   /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
   virtual grpc::Status ListInstances(

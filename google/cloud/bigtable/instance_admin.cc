@@ -78,8 +78,12 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::Instance>(
-      operation, "InstanceAdmin::CreateInstance", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::Instance, InstanceAdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "InstanceAdmin::CreateInstance", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status, "while polling operation in InstanceAdmin::CreateInstance");
@@ -117,8 +121,12 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::Instance>(
-      operation, "InstanceAdmin::UpdateInstance", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::Instance, InstanceAdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "InstanceAdmin::UpdateInstance", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status, "while polling operation in InstanceAdmin::UpdateInstance");
@@ -198,8 +206,12 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::Cluster>(
-      operation, "InstanceAdmin::UpdateCluster", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::Cluster, InstanceAdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "InstanceAdmin::UpdateCluster", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status, "while polling operation in InstanceAdmin::UpdateCluster");
@@ -294,8 +306,12 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::Cluster>(
-      operation, "InstanceAdmin::CreateCluster", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::Cluster, InstanceAdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "InstanceAdmin::CreateCluster", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status, "while polling operation in InstanceAdmin::CreateCluster");
@@ -313,8 +329,12 @@ btadmin::AppProfile InstanceAdmin::UpdateAppProfileImpl(
     internal::RaiseRpcError(status, status.error_message());
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::AppProfile>(
-      operation, "InstanceAdmin::UpdateAppProfileImpl", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::AppProfile, InstanceAdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "InstanceAdmin::UpdateAppProfileImpl", status);
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }

@@ -130,8 +130,12 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  auto result = impl_.PollLongRunningOperation<btadmin::Snapshot>(
-      operation, "TableAdmin::SnapshotTable", status);
+  auto result =
+      impl_.poll_longrunning_operation_
+          .RunOperation<btadmin::Snapshot, AdminClient>(
+              std::move(impl_.client_), impl_.polling_policy_->clone(),
+              impl_.metadata_update_policy_, operation,
+              "TableAdmin::SnapshotTable", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status, "while polling operation in TableAdmin::SnapshotTable");
@@ -225,8 +229,11 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
                                       "unrecoverable error in MakeCall()");
   }
 
-  result = impl_.PollLongRunningOperation<btadmin::Table>(
-      operation, "TableAdmin::CreateTableFromSnapshot", status);
+  result = impl_.poll_longrunning_operation_
+               .RunOperation<btadmin::Table, AdminClient>(
+                   std::move(impl_.client_), impl_.polling_policy_->clone(),
+                   impl_.metadata_update_policy_, operation,
+                   "TableAdmin::CreateTableFromSnapshot", status);
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(
         status,

@@ -80,6 +80,7 @@ class AdminClient {
  protected:
   friend class TableAdmin;
   friend class noex::TableAdmin;
+  friend class PollLongRunningOperation;
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` operations.
   virtual grpc::Status CreateTable(
