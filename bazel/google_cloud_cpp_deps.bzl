@@ -57,6 +57,18 @@ def google_cloud_cpp_deps():
             sha256 = "16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70",
         )
 
+    # Load OpenCensus and its dependencies.
+    if "io_opencensus_cpp" not in native.existing_rules():
+        native.http_archive(
+            name = "io_opencensus_cpp",
+            strip_prefix = "opencensus-cpp-893e0835a45d749221f049d0d167e157b67b6d9c",
+            urls = [
+                "https://github.com/census-instrumentation/opencensus-cpp/archive"
+                + "/893e0835a45d749221f049d0d167e157b67b6d9c.tar.gz",
+            ],
+            sha256 = "8e2bddd3ea6d747a8c4255c73dcea1b9fcdf1560f3bb9ff96bcb20d4d207235e",
+        )
+
     # We need libcurl for the Google Cloud Storage client.
     if "com_github_curl_curl" not in native.existing_rules():
         native.new_http_archive(

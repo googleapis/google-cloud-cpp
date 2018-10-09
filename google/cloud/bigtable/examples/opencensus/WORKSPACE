@@ -14,9 +14,15 @@
 
 workspace(name = "com_github_googlecloudplatform_google_cloud_cpp_example_opencensus")
 
+local_repository(
+    name="com_github_googlecloudplatform_google_cloud_cpp",
+    path="../../../../..",
+)
 
-load("//bazel:google_cloud_bigtable_opencensus_cpp_deps.bzl", "google_cloud_bigtable_opencensus_cpp_deps")
-google_cloud_bigtable_opencensus_cpp_deps()
-
+load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+# Have to manually call the corresponding function for gRPC:
+#   https://github.com/bazelbuild/bazel/issues/1550
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
+
