@@ -45,15 +45,18 @@ RUN apt update && \
         zlib1g-dev
 
 # By default, Ubuntu 18.04 does not install the alternatives for clang-format
-# and clang-tidy, so we need to manually install those. Also install the
-# the buildifier tool, which does not compile in Ubuntu 16.04.
+# and clang-tidy, so we need to manually install those.
 RUN if grep -q 18.04 /etc/lsb-release; then \
       apt update && apt install -y clang-tidy clang-format clang-tools; \
       update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100; \
       update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100; \
       update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100; \
-      /usr/bin/env GOPATH=/usr go get github.com/bazelbuild/buildtools/buildifier; \
     fi
+
+# Install the the buildifier tool, which does not compile with the default
+# golang compiler for Ubuntu 16.04 and Ubuntu 18.04.
+RUN wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.17.2/buildifier
+RUN chmod 755 /usr/bin/buildifier
 
 # Install cmake_format to automatically format the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
