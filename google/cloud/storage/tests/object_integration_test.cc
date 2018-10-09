@@ -1326,6 +1326,15 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
       });
   EXPECT_EQ(1, count);
 
+  if (insert_meta.has_metadata("x_testbench_upload")) {
+    // When running against the testbench, we have some more information to
+    // verify the right upload type and contents were sent.
+    EXPECT_EQ("multipart", insert_meta.metadata("x_testbench_upload"));
+    ASSERT_TRUE(insert_meta.has_metadata("x_testbench_md5"));
+    auto expected_md5 = ComputeMD5Hash(LoremIpsum());
+    EXPECT_EQ(expected_md5, insert_meta.metadata("x_testbench_md5"));
+  }
+
   client.DeleteObject(bucket_name, object_name);
 }
 
@@ -1379,6 +1388,13 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
   EXPECT_EQ(0, count);
+
+  if (insert_meta.has_metadata("x_testbench_upload")) {
+    // When running against the testbench, we have some more information to
+    // verify the right upload type and contents were sent.
+    EXPECT_EQ("simple", insert_meta.metadata("x_testbench_upload"));
+    ASSERT_FALSE(insert_meta.has_metadata("x_testbench_md5"));
+  }
 
   client.DeleteObject(bucket_name, object_name);
 }
