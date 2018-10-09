@@ -37,28 +37,20 @@ if (NOT TARGET gprc_project)
         URL https://github.com/grpc/grpc/archive/v1.14.1.tar.gz
         URL_HASH
             SHA256=16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70
-        CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                          -DCMAKE_BUILD_TYPE=Release
-                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                          -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                          -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
-                          -DgRPC_BUILD_TESTS=OFF
-                          -DgRPC_ZLIB_PROVIDER=package
-                          -DgRPC_SSL_PROVIDER=package
-                          -DgRPC_CARES_PROVIDER=package
-                          -DgRPC_PROTOBUF_PROVIDER=package
-                          -H<SOURCE_DIR>
-                          -B<BINARY_DIR>/Release
+        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                   -DCMAKE_BUILD_TYPE=Release
+                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                   -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+                   -DgRPC_BUILD_TESTS=OFF
+                   -DgRPC_ZLIB_PROVIDER=package
+                   -DgRPC_SSL_PROVIDER=package
+                   -DgRPC_CARES_PROVIDER=package
+                   -DgRPC_PROTOBUF_PROVIDER=package
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
-                      Release
+                      <BINARY_DIR>
                       ${PARALLEL}
-        INSTALL_COMMAND ${CMAKE_COMMAND}
-                        --build
-                        Release
-                        --target
-                        install
         BUILD_BYPRODUCTS
             <INSTALL_DIR>/lib/libgrpc${CMAKE_STATIC_LIBRARY_SUFFIX}
             <INSTALL_DIR>/lib/libgrpc${CMAKE_SHARED_LIBRARY_SUFFIX}
@@ -66,6 +58,8 @@ if (NOT TARGET gprc_project)
             <INSTALL_DIR>/lib/libgrpc++${CMAKE_SHARED_LIBRARY_SUFFIX}
             <INSTALL_DIR>/lib/libgpr${CMAKE_STATIC_LIBRARY_SUFFIX}
             <INSTALL_DIR>/lib/libgpr${CMAKE_SHARED_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/lib/libaddress_sorting${CMAKE_STATIC_LIBRARY_SUFFIX}
+            <INSTALL_DIR>/lib/libaddress_sorting${CMAKE_SHARED_LIBRARY_SUFFIX}
             <INSTALL_DIR>/bin/grpc_cpp_plugin${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
