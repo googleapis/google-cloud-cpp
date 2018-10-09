@@ -88,6 +88,22 @@ class GcsObjectVersion(object):
         # Capture any encryption key headers.
         self._capture_customer_encryption(request)
         self._update_predefined_acl(request.args.get('predefinedAcl'))
+        acl2json_mapping = {
+            'authenticated-read': 'authenticatedRead',
+            'bucket-owner-full-control': 'bucketOwnerFullControl',
+            'bucket-owner-read': 'bucketOwnerRead',
+            'private': 'private',
+            'project-private': 'projectPrivate',
+            'public-read': 'publicRead',
+        }
+        if request.headers.get('x-goog-acl') is not None:
+            acl = request.headers.get('x-goog-acl')
+            predefined = acl2json_mapping.get(acl)
+            if predefined is not None:
+                self._update_predefined_acl(predefined)
+            else:
+                raise error_response.ErrorResponse(
+                    'Invalid predefinedAcl value %s' % acl, status_code=400)
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -497,6 +513,9 @@ class GcsObject(object):
         metageneration_match = request.args.get(if_metageneration_match)
         metageneration_not_match = request.args.get(
             if_metageneration_not_match)
+        self.check_preconditions_by_value(
+            generation_match, generation_not_match, metageneration_match,
+            metageneration_not_match)
 
     def _insert_revision(self, revision):
         """Insert a new revision that has been initialized and checked.
@@ -601,6 +620,7 @@ class GcsObject(object):
         :rtype: GcsObjectVersion
         """
         media = testbench_utils.extract_media(request)
+        self.generation += 1
         goog_hash = request.headers.get('x-goog-hash')
         md5hash = None
         if goog_hash is not None:
@@ -1607,6 +1627,9 @@ def bucket_test_iam_permissions(bucket_name):
 @gcs.route('/b/<bucket_name>/o')
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""
+    # Lookup the bucket, if this fails the bucket does not exist, and this
+    # function should return an error.
+    _ = lookup_bucket(bucket_name)
     result = {'next_page_token': '', 'items': []}
     versions_parameter = flask.request.args.get('versions')
     all_versions = (versions_parameter is not None
@@ -1735,12 +1758,8 @@ def objects_compose(bucket_name, object_name):
         source_object_name = source_object.get('name')
         if source_object_name is None:
             raise error_response.ErrorResponse('Required.', status_code=400)
-        source_object_path = bucket_name + '/o/' + source_object_name
-        source_gcs_object = GCS_OBJECTS.get(
-            source_object_path, GcsObject(bucket_name, source_object_name))
-        if source_gcs_object is None:
-            raise error_response.ErrorResponse(
-                'No such object: %s' % source_object_path, status_code=404)
+        source_object_path, source_gcs_object = lookup_object(
+            bucket_name, source_object_name)
         source_revision = source_gcs_object.get_latest()
         generation = source_object.get('generation')
         if generation is not None:
@@ -1752,10 +1771,8 @@ def objects_compose(bucket_name, object_name):
         object_preconditions = source_object.get('objectPreconditions')
         if object_preconditions is not None:
             if_generation_match = object_preconditions.get('ifGenerationMatch')
-            if if_generation_match is not None:
-                if source_gcs_object.generation != if_generation_match:
-                    raise error_response.ErrorResponse(
-                        'Precondition Failed', status_code=412)
+            source_gcs_object.check_preconditions_by_value(
+                if_generation_match, None, None, None)
         composed_media += source_revision.media
     gcs_object = GCS_OBJECTS.setdefault(composed_object_path,
                                         GcsObject(bucket_name, object_name))
@@ -1946,8 +1963,8 @@ def xmlapi_put_object(bucket_name, object_name):
     object_path = bucket_name + '/o/' + object_name
     gcs_object = GCS_OBJECTS.get(object_path,
                                  GcsObject(bucket_name, object_name))
-    generation_match = flask.request.headers.get('if-generation-match')
-    metageneration_match = flask.request.headers.get('if-metageneration-match')
+    generation_match = flask.request.headers.get('x-goog-if-generation-match')
+    metageneration_match = flask.request.headers.get('x-goog-if-metageneration-match')
     gcs_object.check_preconditions_by_value(generation_match, None,
                                             metageneration_match, None)
     GCS_OBJECTS[object_path] = gcs_object

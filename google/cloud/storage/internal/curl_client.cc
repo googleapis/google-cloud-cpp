@@ -47,7 +47,7 @@ std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
 
 std::string XmlMapPredefinedAcl(std::string const& acl) {
   static std::map<std::string, std::string> mapping{
-      {"allAuthenticatedRead", "authenticated-read"},
+      {"authenticatedRead", "authenticated-read"},
       {"bucketOwnerFullControl", "bucket-owner-full-control"},
       {"bucketOwnerRead", "bucket-owner-read"},
       {"private", "private"},
@@ -284,7 +284,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.contents().size()));
   auto payload = builder.BuildRequest().MakeRequest(request.contents());
-  if (200 != payload.status_code) {
+  if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
         ObjectMetadata{});
