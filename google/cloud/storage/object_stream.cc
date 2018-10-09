@@ -58,7 +58,7 @@ ObjectWriteStream::~ObjectWriteStream() {
   }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   try {
-    Close();
+    CloseRaw();
   } catch (std::exception const& ex) {
     GCP_LOG(INFO) << "Ignored exception while trying to close stream: "
                   << ex.what();
@@ -66,7 +66,7 @@ ObjectWriteStream::~ObjectWriteStream() {
     GCP_LOG(INFO) << "Ignored unknown exception while trying to close stream";
   }
 #else
-  Close();
+  CloseRaw();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
