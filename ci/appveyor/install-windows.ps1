@@ -32,8 +32,8 @@ if ($env:PROVIDER -eq "module") {
 # BEGIN WORKAROUND
 # As of 2018-08-30 AppVeyor had a broken image, reportedly this is a workaround.
 #     https://github.com/Microsoft/vcpkg/issues/4189#issuecomment-417462822
-Remove-Item C:\OpenSSL-v11-Win32 -Recurse -Force
-Remove-Item C:\OpenSSL-v11-Win64 -Recurse -Force
+Remove-Item C:\OpenSSL-v11-Win32 -Recurse -Force -ErrorAction Ignore
+Remove-Item C:\OpenSSL-v11-Win64 -Recurse -Force -ErrorAction Ignore
 # END WORKAROUND
 
 # Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
