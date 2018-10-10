@@ -37,7 +37,7 @@ kill_testbench() {
   echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
   echo -n "Killing testbench server [${TESTBENCH_PID}] ... "
   kill "${TESTBENCH_PID}"
-  wait >/dev/null 2>&1
+  wait "${TESTBENCH_PID}" >/dev/null 2>&1
   echo "done."
   if [ "${TESTBENCH_DUMP_LOG}" = "yes" -a "testbench.log" ]; then
     echo "================ [begin testbench.log] ================"
@@ -77,9 +77,9 @@ start_testbench() {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  readonly PORT=${TESTBENCH_PORT:-8000}
+  local testbench_port=${TESTBENCH_PORT:-8000}
 
-  gunicorn --bind 0.0.0.0:${PORT} \
+  gunicorn --bind 0.0.0.0:${testbench_port} \
       --worker-class gevent \
       --access-logfile - \
       --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
@@ -87,13 +87,12 @@ start_testbench() {
       >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 
-  export HTTPBIN_ENDPOINT="http://localhost:${PORT}/httpbin"
-  export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${PORT}"
+  export HTTPBIN_ENDPOINT="http://localhost:${testbench_port}/httpbin"
+  export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${testbench_port}"
 
   delay=1
   connected=no
-  readonly ATTEMPTS=$(seq 1 8)
-  for attempt in $ATTEMPTS; do
+  for attempt in $(seq 1 8); do
     if curl "${HTTPBIN_ENDPOINT}/get" >/dev/null 2>&1; then
       connected=yes
       break

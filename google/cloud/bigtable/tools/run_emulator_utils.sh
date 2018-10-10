@@ -18,14 +18,21 @@ INSTANCE_ADMIN_EMULATOR_PID=0
 
 readonly CBT_CMD="${CBT:-${GOPATH}/bin/cbt}"
 readonly CBT_EMULATOR_CMD="${CBT_EMULATOR:-${GOPATH}/bin/emulator}"
-readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
+if [ -z "${CBT_INSTANCE_ADMIN_EMULATOR_CMD+x}" ]; then
+  readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
+fi
 
 function kill_emulators {
-  echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}] ... "
-  kill "${EMULATOR_PID}"
-  kill "${INSTANCE_ADMIN_EMULATOR_PID}"
-  wait >/dev/null 2>&1
-  echo "done."
+  echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}] "
+  kill "${EMULATOR_PID}" || echo -n "-"
+  echo -n "."
+  wait "${EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
+  echo -n "."
+  kill "${INSTANCE_ADMIN_EMULATOR_PID}"  || echo -n "-"
+  echo -n "."
+  wait "${INSTANCE_ADMIN_EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
+  echo -n "."
+  echo " done."
 }
 
 function start_emulators {
@@ -34,22 +41,22 @@ function start_emulators {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  readonly PORT=${EMULATOR_PORT:-9000}
-  "${CBT_EMULATOR_CMD}" -port "${PORT}" >emulator.log 2>&1 </dev/null &
+  local emulator_port=${EMULATOR_PORT:-9000}
+  "${CBT_EMULATOR_CMD}" -port "${emulator_port}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 
-  readonly INSTANCE_ADMIN_PORT=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
-  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${INSTANCE_ADMIN_PORT}" >instance-admin-emulator.log 2>&1 </dev/null &
+  local instance_admin_port=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
+  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${instance_admin_port}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
 
-  export BIGTABLE_EMULATOR_HOST="localhost:${PORT}"
+  export BIGTABLE_EMULATOR_HOST="localhost:${emulator_port}"
   # Avoid repetition
   readonly CBT_ARGS="-project emulated -instance emulated -creds default"
   # Wait until the emulator starts responding.
   delay=1
   connected=no
-  readonly ATTEMPTS=$(seq 1 8)
-  for attempt in $ATTEMPTS; do
+  local -r attempts=$(seq 1 8)
+  for attempt in ${attempts}; do
     if "${CBT_CMD}" $CBT_ARGS ls >/dev/null 2>&1; then
       connected=yes
       break
@@ -65,10 +72,10 @@ function start_emulators {
 
   echo "Successfully connected to the Cloud Bigtable emulator."
 
-  export BIGTABLE_EMULATOR_HOST="localhost:${INSTANCE_ADMIN_PORT}"
+  export BIGTABLE_EMULATOR_HOST="localhost:${instance_admin_port}"
   delay=1
   connected=no
-  for attempt in $ATTEMPTS; do
+  for attempt in ${attempts}; do
     if "${CBT_CMD}" $CBT_ARGS listinstances >/dev/null 2>&1; then
       connected=yes
       break
@@ -83,6 +90,6 @@ function start_emulators {
   fi
   echo "Successfully connected to the Cloud Bigtable Instance Admin emulator."
 
-  export BIGTABLE_EMULATOR_HOST="localhost:${PORT}"
-  export BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST="localhost:${INSTANCE_ADMIN_PORT}"
+  export BIGTABLE_EMULATOR_HOST="localhost:${emulator_port}"
+  export BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST="localhost:${instance_admin_port}"
 }
