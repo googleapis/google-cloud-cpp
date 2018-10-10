@@ -84,10 +84,10 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  */
 class InsertObjectMediaRequest
     : public GenericObjectRequest<
-          InsertObjectMediaRequest, ContentEncoding, ContentType, EncryptionKey,
-          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
-          IfMetagenerationNotMatch, KmsKeyName, MD5HashValue, PredefinedAcl,
-          Projection, UserProject> {
+          InsertObjectMediaRequest, ContentEncoding, ContentType,
+          DisableMD5Hash, EncryptionKey, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject> {
  public:
   InsertObjectMediaRequest() : GenericObjectRequest(), contents_() {}
 

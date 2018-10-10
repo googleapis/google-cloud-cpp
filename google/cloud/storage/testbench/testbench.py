@@ -542,6 +542,8 @@ class GcsObject(object):
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, media)
+        meta = revision.metadata.setdefault('metadata', {})
+        meta['x_testbench_upload'] = 'simple'
         self._insert_revision(revision)
         return revision
 
@@ -557,7 +559,7 @@ class GcsObject(object):
         next_line = multipart_upload_part.find('\r\n', index)
         while next_line != index:
             header_line = multipart_upload_part[index:next_line]
-            key, value = header_line.split(':', 2)
+            key, value = header_line.split(': ', 2)
             # This does not work for repeated headers, but we do not expect
             # those in the testbench.
             headers[key.encode('ascii', 'ignore')] = value
@@ -600,13 +602,17 @@ class GcsObject(object):
         self.generation += 1
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, media_body)
+        resource = json.loads(resource_body)
+        meta = revision.metadata.setdefault('metadata', {})
+        meta['x_testbench_upload'] = 'multipart'
+        meta['x_testbench_md5'] = resource.get('md5Hash', '')
         # Apply any overrides from the resource object part.
-        revision.update_from_metadata(json.loads(resource_body))
+        revision.update_from_metadata(resource)
         # The content-type needs to be patched up, yuck.
-        if resource_headers.get('content-type') is not None:
+        if media_headers.get('content-type') is not None:
             revision.update_from_metadata({
                 'contentType':
-                resource_headers.get('content-type')
+                media_headers.get('content-type')
             })
         self._insert_revision(revision)
         return revision
@@ -629,7 +635,10 @@ class GcsObject(object):
                     md5hash = hash[4:]
         revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
                                     self.generation, request, media)
+        meta = revision.metadata.setdefault('metadata', {})
+        meta['x_testbench_upload'] = 'xml'
         if md5hash is not None:
+            meta['x_testbench_md5'] = md5hash
             revision.update_from_metadata({
                 'md5Hash': md5hash,
             })
