@@ -202,7 +202,8 @@ add_library(bigtable_client
             table_config.cc
             table_strong_types.h
             version.h
-            version.cc)
+            version.cc
+            poll_longrunning_operation.h)
 target_link_libraries(bigtable_client
                       PUBLIC bigtable_protos
                              google_cloud_cpp_common

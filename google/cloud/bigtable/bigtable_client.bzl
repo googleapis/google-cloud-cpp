@@ -50,6 +50,7 @@ bigtable_client_HDRS = [
     "table_config.h",
     "table_strong_types.h",
     "version.h",
+    "poll_longrunning_operation.h",
 ]
 
 bigtable_client_SRCS = [
