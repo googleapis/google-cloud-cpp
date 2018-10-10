@@ -559,23 +559,29 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   client.DeleteBucket(bucket_name);
 }
 
-TEST_F(BucketIntegrationTest, ListFailure) {
-  Client client;
-
-  // Project IDs must end with a letter or number, test with an invalid ID.
-  auto stream = client.ListBucketsForProject("Invalid-project-id-");
-  std::vector<BucketMetadata> results;
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { results.assign(stream.begin(), stream.end()); } catch (
-                   std::runtime_error const& ex) {
+  EXPECT_THROW(try { callable(); } catch (
+      std::runtime_error const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
     throw;
   },
                std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(results.assign(stream.begin(), stream.end()),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(BucketIntegrationTest, ListFailure) {
+  Client client;
+
+  // Project IDs must end with a letter or number, test with an invalid ID.
+  auto stream = client.ListBucketsForProject("Invalid-project-id-");
+  TestPermanentFailure([&stream] {
+    std::vector<BucketMetadata> results;
+    results.assign(stream.begin(), stream.end());
+  });
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
@@ -585,22 +591,10 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   // uppercase letter), the service (or testbench) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.CreateBucketForProject("Invalid_Bucket_Name",
-                                      "Invalid-project-id-", BucketMetadata());
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.CreateBucketForProject("Invalid_Bucket_Name",
-                                    "Invalid-project-id-", BucketMetadata()),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client] {
+    client.CreateBucketForProject("Invalid_Bucket_Name",
+                                  "Invalid-project-id-", BucketMetadata());
+  });
 }
 
 TEST_F(BucketIntegrationTest, GetFailure) {
@@ -609,17 +603,9 @@ TEST_F(BucketIntegrationTest, GetFailure) {
 
   // Try to get information about a bucket that does not exist, or at least
   // it is very unlikely to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { client.GetBucketMetadata(bucket_name); } catch (
-                   std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(client.GetBucketMetadata(bucket_name),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.GetBucketMetadata(bucket_name);
+  });
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
@@ -628,17 +614,9 @@ TEST_F(BucketIntegrationTest, DeleteFailure) {
 
   // Try to delete a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { client.DeleteBucket(bucket_name); } catch (
-                   std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(client.DeleteBucket(bucket_name),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.DeleteBucket(bucket_name);
+  });
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
@@ -647,19 +625,9 @@ TEST_F(BucketIntegrationTest, UpdateFailure) {
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.UpdateBucket(bucket_name, BucketMetadata());
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(client.UpdateBucket(bucket_name, BucketMetadata()),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.UpdateBucket(bucket_name, BucketMetadata());
+  });
 }
 
 TEST_F(BucketIntegrationTest, PatchFailure) {
@@ -668,20 +636,9 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.PatchBucket(bucket_name, BucketMetadataPatchBuilder());
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.PatchBucket(bucket_name, BucketMetadataPatchBuilder()),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.PatchBucket(bucket_name, BucketMetadataPatchBuilder());
+  });
 }
 
 TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
@@ -690,20 +647,9 @@ TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.GetBucketIamPolicy(bucket_name);
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.GetBucketIamPolicy(bucket_name),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.GetBucketIamPolicy(bucket_name);
+  });
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
@@ -712,20 +658,9 @@ TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.SetBucketIamPolicy(bucket_name, IamPolicy{});
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.SetBucketIamPolicy(bucket_name, IamPolicy{}),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.SetBucketIamPolicy(bucket_name, IamPolicy{});
+  });
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
@@ -734,20 +669,147 @@ TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.TestBucketIamPermissions(bucket_name, {});
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.TestBucketIamPermissions(bucket_name, {}),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  TestPermanentFailure([&client, bucket_name] {
+    client.TestBucketIamPermissions(bucket_name, {});
+  });
+}
+
+TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name] {
+    client.ListBucketAcl(bucket_name);
+  });
+}
+
+TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.CreateBucketAcl(bucket_name, entity_name, "READER");
+  });
+}
+
+TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.GetBucketAcl(bucket_name, entity_name);
+  });
+}
+
+TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.UpdateBucketAcl(
+        bucket_name,
+        BucketAccessControl().set_entity(entity_name).set_role("READER"));
+  });
+}
+
+TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.PatchBucketAcl(
+        bucket_name, entity_name, BucketAccessControl(),
+        BucketAccessControl().set_entity(entity_name).set_role("READER"));
+  });
+}
+
+TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.DeleteBucketAcl(bucket_name, entity_name);
+  });
+}
+
+TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name] {
+    client.ListDefaultObjectAcl(bucket_name);
+  });
+}
+
+TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.CreateDefaultObjectAcl(bucket_name, entity_name, "READER");
+  });
+}
+
+TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.GetDefaultObjectAcl(bucket_name, entity_name);
+  });
+}
+
+TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.UpdateDefaultObjectAcl(
+        bucket_name,
+        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+  });
+}
+
+TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.PatchDefaultObjectAcl(
+        bucket_name, entity_name, ObjectAccessControl(),
+        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+  });
+}
+
+TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
+  Client client;
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  TestPermanentFailure([&client, bucket_name, entity_name] {
+    client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  });
 }
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
