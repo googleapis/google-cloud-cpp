@@ -114,11 +114,11 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
  * application.
  */
 class InsertObjectStreamingRequest
-    : public GenericObjectRequest<InsertObjectStreamingRequest, ContentEncoding,
-                                  ContentType, EncryptionKey, IfGenerationMatch,
-                                  IfGenerationNotMatch, IfMetagenerationMatch,
-                                  IfMetagenerationNotMatch, KmsKeyName,
-                                  PredefinedAcl, Projection, UserProject> {
+    : public GenericObjectRequest<
+          InsertObjectStreamingRequest, ContentEncoding, ContentType,
+          DisableMD5Hash, EncryptionKey, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          KmsKeyName, PredefinedAcl, Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

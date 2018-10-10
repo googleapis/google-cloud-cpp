@@ -63,11 +63,19 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 class CurlStreambuf : public ObjectWriteStreambuf {
  public:
   explicit CurlStreambuf(CurlUploadRequest&& upload,
-                         std::size_t max_buffer_size);
+                         std::size_t max_buffer_size,
+                         std::unique_ptr<HashValidator> hash_validator);
 
   ~CurlStreambuf() override = default;
 
   bool IsOpen() const override;
+  void ValidateHash(ObjectMetadata const& meta) override;
+  std::string const& received_hash() const override {
+    return hash_validator_result_.received;
+  }
+  std::string const& computed_hash() const override {
+    return hash_validator_result_.computed;
+  }
 
  protected:
   int sync() override;
@@ -85,6 +93,9 @@ class CurlStreambuf : public ObjectWriteStreambuf {
   CurlUploadRequest upload_;
   std::string current_ios_buffer_;
   std::size_t max_buffer_size_;
+
+  std::unique_ptr<HashValidator> hash_validator_;
+  HashValidator::Result hash_validator_result_;
 };
 
 }  // namespace internal

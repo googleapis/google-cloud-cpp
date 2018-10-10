@@ -1487,11 +1487,149 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadJSON) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+/// @test Verify that MD5 hashes are computed by default on downloads.
+TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               Fields(""));
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line() + "\n";
+    os << line << ": " << random;
+    expected << line << ": " << random;
+  }
+  auto expected_md5hash = ComputeMD5Hash(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(os.received_hash(), os.computed_hash());
+  EXPECT_EQ(os.received_hash(), expected_md5hash);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes are computed by default on downloads.
+TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line() + "\n";
+    os << line << ": " << random;
+    expected << line << ": " << random;
+  }
+  auto expected_md5hash = ComputeMD5Hash(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(os.received_hash(), os.computed_hash());
+  EXPECT_EQ(os.received_hash(), expected_md5hash);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               Fields(""), DisableMD5Hash(true));
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line() + "\n";
+    os << line << ": " << random;
+    expected << line << ": " << random;
+  }
+  auto expected_md5hash = ComputeMD5Hash(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_TRUE(os.received_hash().empty());
+  EXPECT_TRUE(os.computed_hash().empty());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               DisableMD5Hash(true));
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line() + "\n";
+    os << line << ": " << random;
+    expected << line << ": " << random;
+  }
+  auto expected_md5hash = ComputeMD5Hash(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_TRUE(os.received_hash().empty());
+  EXPECT_TRUE(os.computed_hash().empty());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 template <typename Callable>
 void TestPermanentFailure(Callable&& callable) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (
-      std::runtime_error const& ex) {
+  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
     throw;
   },
@@ -1564,9 +1702,8 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.GetObjectMetadata(bucket_name, object_name);
-  });
+  TestPermanentFailure(
+      [&] { client.GetObjectMetadata(bucket_name, object_name); });
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
@@ -1625,9 +1762,8 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.UpdateObject(bucket_name, object_name, ObjectMetadata());
-  });
+  TestPermanentFailure(
+      [&] { client.UpdateObject(bucket_name, object_name, ObjectMetadata()); });
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
@@ -1637,8 +1773,7 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
 
   // This operation should fail because the source object does not exist.
   TestPermanentFailure([&] {
-    client.PatchObject(bucket_name, object_name,
-                       ObjectMetadataPatchBuilder());
+    client.PatchObject(bucket_name, object_name, ObjectMetadataPatchBuilder());
   });
 }
 
@@ -1665,9 +1800,8 @@ TEST_F(ObjectIntegrationTest, RewriteFailure) {
 
   // This operation should fail because the source object does not exist.
   TestPermanentFailure([&] {
-    client.RewriteObjectBlocking(bucket_name, source_object_name,
-                                 bucket_name, destination_object_name,
-                                 ObjectMetadata());
+    client.RewriteObjectBlocking(bucket_name, source_object_name, bucket_name,
+                                 destination_object_name, ObjectMetadata());
   });
 }
 
@@ -1699,9 +1833,8 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.GetObjectAcl(bucket_name, object_name, entity_name);
-  });
+  TestPermanentFailure(
+      [&] { client.GetObjectAcl(bucket_name, object_name, entity_name); });
 }
 
 TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
@@ -1739,9 +1872,8 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.DeleteObjectAcl(bucket_name, object_name, entity_name);
-  });
+  TestPermanentFailure(
+      [&] { client.DeleteObjectAcl(bucket_name, object_name, entity_name); });
 }
 
 }  // anonymous namespace

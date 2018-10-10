@@ -24,6 +24,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+class ObjectMetadata;
 namespace internal {
 /**
  * Defines the interface to check hash values during uploads and downloads.
@@ -32,10 +33,13 @@ class HashValidator {
  public:
   virtual ~HashValidator() = default;
 
-  /// Update the actual hash value with some portion of the data.
+  /// Update the computed hash value with some portion of the data.
   virtual void Update(std::string const& payload) = 0;
 
-  /// Update the expected hash value based on a response header.
+  /// Update the received hash value based on object metadata.
+  virtual void Received(ObjectMetadata const& meta) = 0;
+
+  /// Update the received hash value based on a response header.
   virtual void ProcessHeader(std::string const& key,
                              std::string const& value) = 0;
 
@@ -66,6 +70,7 @@ class NullHashValidator : public HashValidator {
   NullHashValidator() = default;
 
   void Update(std::string const& payload) override {}
+  void Received(ObjectMetadata const& meta) override {}
   void ProcessHeader(std::string const& key,
                      std::string const& value) override {}
   Result Finish(std::string const& msg) && override { return Result{}; }
@@ -82,6 +87,7 @@ class MD5HashValidator : public HashValidator {
   MD5HashValidator& operator=(MD5HashValidator const&) = delete;
 
   void Update(std::string const& payload) override;
+  void Received(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
   Result Finish(std::string const& msg) && override;
 

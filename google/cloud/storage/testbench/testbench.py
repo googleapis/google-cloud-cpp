@@ -1923,9 +1923,11 @@ def xmlapi_put_object(bucket_name, object_name):
     metageneration_match = flask.request.headers.get('x-goog-if-metageneration-match')
     gcs_object.check_preconditions_by_value(generation_match, None,
                                             metageneration_match, None)
-    gcs_object.insert_xml(gcs_url, flask.request)
+    revision = gcs_object.insert_xml(gcs_url, flask.request)
     testbench_utils.insert_object(object_path, gcs_object)
-    return ''
+    response = flask.make_response('')
+    response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
+    return response
 
 
 application = wsgi.DispatcherMiddleware(

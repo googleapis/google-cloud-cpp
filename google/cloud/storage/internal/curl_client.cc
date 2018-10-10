@@ -46,13 +46,28 @@ std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
       options.connection_pool_size());
 }
 
-/// Create a HashValidator for a download request
+/// Create a HashValidator for a download request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.HasOption<DisableMD5Hash>()) {
     return google::cloud::internal::make_unique<NullHashValidator>();
   }
   return google::cloud::internal::make_unique<MD5HashValidator>();
+}
+
+/// Create a HashValidator for an upload request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    InsertObjectStreamingRequest const& request) {
+  if (request.HasOption<DisableMD5Hash>()) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
+  return google::cloud::internal::make_unique<MD5HashValidator>();
+}
+
+/// Create a HashValidator for an insert request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    InsertObjectMediaRequest const& request) {
+  return google::cloud::internal::make_unique<NullHashValidator>();
 }
 
 std::string XmlMapPredefinedAcl(std::string const& acl) {
@@ -379,7 +394,8 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size()));
+      builder.BuildUpload(), client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
@@ -1076,7 +1092,8 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   // QuotaUser cannot be set, checked by the caller.
 
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size()));
+      builder.BuildUpload(), client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
@@ -1101,7 +1118,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   // 3. Perform a streaming upload because computing the size upfront is more
   //    complicated than it is worth.
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size()));
+      builder.BuildUpload(), client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
   ObjectWriteStream writer(std::move(buf));
 
   nl::json metadata = nl::json::object();

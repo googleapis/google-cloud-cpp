@@ -22,6 +22,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+class ObjectMetadata;
 namespace internal {
 /**
  * Defines a compilation barrier for libcurl.
@@ -65,6 +66,9 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   HttpResponse Close();
   virtual bool IsOpen() const = 0;
+  virtual void ValidateHash(ObjectMetadata const& meta) = 0;
+  virtual std::string const& received_hash() const = 0;
+  virtual std::string const& computed_hash() const = 0;
 
  protected:
   virtual HttpResponse DoClose() = 0;

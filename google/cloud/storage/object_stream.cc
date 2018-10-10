@@ -87,9 +87,12 @@ ObjectMetadata ObjectWriteStream::Close() {
     google::cloud::internal::RaiseRuntimeError(os.str());
   }
   if (response.payload.empty()) {
+    buf_->ValidateHash(ObjectMetadata());
     return ObjectMetadata();
   }
-  return ObjectMetadata::ParseFromString(response.payload);
+  auto metadata = ObjectMetadata::ParseFromString(response.payload);
+  buf_->ValidateHash(metadata);
+  return metadata;
 }
 
 }  // namespace STORAGE_CLIENT_NS
