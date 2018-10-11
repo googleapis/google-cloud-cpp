@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Stop on errors. This is similar to `set -e` on Unix shells.
-$ErrorActionPreference = "Stop"
 
+# Ignore errors
+choco install --no-progress -y cmake
+
+# Ignore errors
 choco install --no-progress -y cmake.portable
-if ($LastExitCode) {
-    throw "choco install failed with exit code $LastExitCode"
-}
+
