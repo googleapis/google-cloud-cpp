@@ -26,12 +26,11 @@ def google_cloud_cpp_deps():
 
     # Load a newer version of google test than what gRPC does.
     if "com_google_googletest" not in native.existing_rules():
-        native.new_http_archive(
+        native.http_archive(
             name = "com_google_googletest",
-            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googletest.BUILD",
-            strip_prefix = "googletest-4bd8c4638ada823a8da2569735cc0a9402fb8052",
-            url = "https://github.com/google/googletest/archive/4bd8c4638ada823a8da2569735cc0a9402fb8052.tar.gz",
-            sha256 = "9f842f79d92dfa694d9811918efb36a0bcd82d7b32f37a8f852dddde264c0f55",
+            strip_prefix = "googletest-release-1.8.1",
+            url = "https://github.com/google/googletest/archive/release-1.8.1.tar.gz",
+            sha256 = "9bf1fe5182a604b4135edc1a425ae356c9ad15e9b23f9f12a02e80184c3a249c",
         )
 
     # Load the googleapis dependency.
