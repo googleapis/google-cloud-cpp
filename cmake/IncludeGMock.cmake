@@ -45,7 +45,9 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
     # expression computes that value. Note that it must be a generator
     # expression because with MSBuild the config type can change after the
     # configuration phase.
-    set(_lib_postfix $<$<CONFIG:DEBUG>:d>)
+    if (WIN32)
+        set(_lib_postfix $<$<CONFIG:DEBUG>:d>)
+    endif ()
 
     include(ExternalProjectHelper)
     add_library(GTest::gtest INTERFACE IMPORTED)
