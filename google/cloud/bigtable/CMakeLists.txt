@@ -160,6 +160,7 @@ add_library(bigtable_client
             internal/grpc_error_delegate.cc
             internal/instance_admin.h
             internal/instance_admin.cc
+            internal/poll_longrunning_operation.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
             internal/readrowsparser.h
@@ -202,8 +203,7 @@ add_library(bigtable_client
             table_config.cc
             table_strong_types.h
             version.h
-            version.cc
-            poll_longrunning_operation.h)
+            version.cc)
 target_link_libraries(bigtable_client
                       PUBLIC bigtable_protos
                              google_cloud_cpp_common

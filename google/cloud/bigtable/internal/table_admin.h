@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -231,7 +230,6 @@ class TableAdmin {
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<PollingPolicy> polling_policy_;
-  bigtable::PollLongRunningOperation poll_longrunning_operation_;
 };
 
 }  // namespace noex

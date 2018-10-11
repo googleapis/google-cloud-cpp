@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -189,7 +188,6 @@ class InstanceAdmin {
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   std::shared_ptr<PollingPolicy> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
-  bigtable::PollLongRunningOperation poll_longrunning_operation_;
 };
 
 }  // namespace noex
