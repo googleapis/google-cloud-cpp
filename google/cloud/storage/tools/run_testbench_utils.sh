@@ -77,7 +77,7 @@ start_testbench() {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  local testbench_port=${TESTBENCH_PORT:-8000}
+  local -r testbench_port=${TESTBENCH_PORT:-8000}
 
   gunicorn --bind 0.0.0.0:${testbench_port} \
       --worker-class gevent \

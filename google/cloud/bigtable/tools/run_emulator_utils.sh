@@ -41,11 +41,11 @@ function start_emulators {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  local emulator_port=${EMULATOR_PORT:-9000}
+  local -r emulator_port=${EMULATOR_PORT:-9000}
   "${CBT_EMULATOR_CMD}" -port "${emulator_port}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 
-  local instance_admin_port=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
+  local -r instance_admin_port=${INSTANCE_ADMIN_EMULATOR_PORT:-9090}
   "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${instance_admin_port}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
 
