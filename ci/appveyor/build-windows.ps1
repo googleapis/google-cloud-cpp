@@ -45,6 +45,8 @@ if ($env:PROVIDER -eq "vcpkg") {
     $cmake_flags += "-DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=$env:PROVIDER"
     $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
     $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
+    $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
+    $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
 }
 
 # Create a build directory, and run cmake in it.

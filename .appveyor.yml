@@ -40,10 +40,8 @@ install:
   - powershell -exec bypass ci\appveyor\install-windows.ps1
 
 build_script:
-  - path
-    call @"c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-    path
-    powershell -exec bypass ci\appveyor\build-windows.ps1
+  - call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+  - powershell -exec bypass ci\appveyor\build-windows.ps1
 
 test_script:
   - ps: cd build-output
