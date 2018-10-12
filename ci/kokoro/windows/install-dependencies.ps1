@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+choco sources list
 
 # Ignore errors
 choco install --no-progress -y cmake
