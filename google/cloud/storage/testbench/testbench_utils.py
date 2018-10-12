@@ -280,8 +280,7 @@ def lookup_object(bucket_name, object_name):
     :rtype: (str,GcsObject)
     :raises:ErrorResponse if the object is not found.
     """
-    object_path = bucket_name + '/o/' + object_name
-    gcs_object = GCS_OBJECTS.get(object_path)
+    object_path, gcs_object = get_object(bucket_name, object_name, None)
     if gcs_object is None:
         raise error_response.ErrorResponse(
             'Object %s in %s not found' % (object_name, bucket_name),
