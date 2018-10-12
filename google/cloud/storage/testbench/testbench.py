@@ -1288,7 +1288,7 @@ gcs.debug = True
 
 
 def insert_magic_bucket(base_url):
-    if testbench_utils.has_buckets() == 0:
+    if len(testbench_utils.all_buckets()) == 0:
         bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
         bucket = GcsBucket(base_url, bucket_name)
         # Enable versioning in the Bucket, the integration tests expect this to

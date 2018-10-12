@@ -240,11 +240,6 @@ def lookup_bucket(bucket_name):
     return bucket
 
 
-def has_buckets():
-    """Return True if there are any buckets in the global collection."""
-    return len(GCS_BUCKETS) != 0
-
-
 def has_bucket(bucket_name):
     """Return True if the bucket already exists in the global collection."""
     return GCS_BUCKETS.get(bucket_name) is not None
@@ -300,9 +295,10 @@ def get_object(bucket_name, object_name, default_value):
 
     :param bucket_name:str the name of the Bucket that contains the object.
     :param object_name:str the name of the Object.
+    :param default_value:GcsObject the default value returned if the object is
+        not found.
     :return: tuple the object path and the object.
     :rtype: (str,GcsObject)
-    :raises:ErrorResponse if the object is not found.
     """
     object_path = bucket_name + '/o/' + object_name
     return object_path, GCS_OBJECTS.get(object_path, default_value)
