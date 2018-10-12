@@ -48,8 +48,8 @@ function (create_googletest_aliases)
     add_library(GTest::gtest_main ALIAS GTest_gtest_main)
 endfunction ()
 
-if (TARGET gmock)
-    # gmock is already defined, do not define it again.
+if (TARGET GTest::gmock)
+    # GTest::gmock is already defined, do not define it again.
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
     include(external/googletest)
 
@@ -98,12 +98,6 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           "GTest::gmock;GTest::gtest;Threads::Threads")
 
-    # TODO(#310) - consider changing the name of this target as it can conflict
-    # with another target defined in a submodule.
-    add_library(gmock INTERFACE)
-    target_link_libraries(gmock
-                          INTERFACE GTest::gmock_main GTest::gmock GTest::gtest)
-
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     find_package(GTest REQUIRED)
 
@@ -137,10 +131,23 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     __gtest_import_library(GTest::gmock GMOCK_LIBRARY "RELEASE")
     __gtest_import_library(GTest::gmock GMOCK_LIBRARY "DEBUG")
 
-    # TODO(#310) - consider changing the name of this target as it can conflict
-    # with another target defined in a submodule.
-    add_library(gmock INTERFACE)
-    target_link_libraries(gmock INTERFACE GTest::gmock)
+    __gtest_find_library(GMOCK_MAIN_LIBRARY gmock_main)
+    __gtest_find_library(GMOCK_MAIN_LIBRARY_DEBUG gmock_maind)
+    if ("${GMOCK_MAIN_LIBRARY}" MATCHES "-NOTFOUND")
+        message(
+            FATAL_ERROR "Cannot find gmock main_library ${GMOCK_MAIN_LIBRARY}.")
+    endif ()
+    mark_as_advanced(GMOCK_MAIN_LIBRARY)
+
+    add_library(GTest::gmock_main STATIC IMPORTED)
+    set_target_properties(GTest::gmock_main
+                          PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+                                     GTest::gmock
+                                     INTERFACE_INCLUDE_DIRECTORIES
+                                     "${GMOCK_INCLUDE_DIRS}")
+    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "")
+    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "RELEASE")
+    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "DEBUG")
 
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     find_package(GTest REQUIRED)
@@ -189,28 +196,35 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
                                      IMPORTED_LOCATION
                                      "${GMOCK_MAIN_LIBRARY}")
 
-    # TODO(#310) - consider changing the name of this target as it can conflict
-    # with another target defined in a submodule.
-    add_library(gmock INTERFACE)
-    target_link_libraries(gmock
-                          INTERFACE GTest::gmock_main GTest::gmock GTest::GTest)
-
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
 
     # Use pkg-config to find the libraries.
-    find_package(PkgConfig REQUIRED) # We need a helper function to convert pkg-
-                                     # config(1) output into target  properties.
-    include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
+    find_package(PkgConfig REQUIRED)
 
-    pkg_check_modules(gmock_pc REQUIRED gmock_main gmock gtest)
+    # Load the helper function to convert pkg-config(1) output into target
+    # properties.
+    include(PkgConfigHelper)
+
+    pkg_check_modules(gtest_pc REQUIRED gtest)
+    add_library(GTest::gtest INTERFACE IMPORTED)
+    set_library_properties_from_pkg_config(GTest::gtest gtest_pc)
+    set_property(TARGET GTest::gtest
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
+
+    pkg_check_modules(gmock_pc REQUIRED gmock)
+    add_library(GTest::gmock INTERFACE IMPORTED)
+    set_library_properties_from_pkg_config(GTest::gmock gmock_pc)
+    set_property(TARGET GTest::gmock
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          "GTest::test;Threads::Threads")
+
+    pkg_check_modules(gmock_main_pc REQUIRED gmock_main)
     add_library(GTest::gmock_main INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(GTest::gmock_main gmock_pc)
     set_property(TARGET GTest::gmock_main
                  APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
-
-    # TODO(#310) - consider changing the name of this target as it can conflict
-    # with another target defined in a submodule.
-    add_library(gmock INTERFACE)
-    target_link_libraries(gmock INTERFACE GTest::gmock_main)
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          "GTest::gmock;GTest::gtest;Threads::Threads")
 endif ()

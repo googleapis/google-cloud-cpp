@@ -239,7 +239,11 @@ add_library(storage_client_testing
             testing/mock_http_request.cc
             testing/retry_tests.h)
 target_link_libraries(storage_client_testing
-                      PUBLIC storage_client nlohmann_json gmock
+                      PUBLIC storage_client
+                             nlohmann_json
+                             GTest::gmock_main
+                             GTest::gmock
+                             GTest::gtest
                       PRIVATE storage_common_options)
 target_include_directories(storage_client_testing
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -318,7 +322,9 @@ foreach (fname ${storage_client_unit_tests})
                                   google_cloud_cpp_testing
                                   storage_client
                                   google_cloud_cpp_testing
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   CURL::CURL
                                   storage_common_options
                                   nlohmann_json)

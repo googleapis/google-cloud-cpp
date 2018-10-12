@@ -110,7 +110,7 @@ add_library(bigtable::protos ALIAS bigtable_protos)
 # Enable unit tests
 enable_testing()
 
-add_dependencies(skip-scanbuild-targets gmock bigtable_protos)
+add_dependencies(skip-scanbuild-targets bigtable_protos)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
@@ -254,7 +254,9 @@ add_library(bigtable_client_testing
 target_link_libraries(bigtable_client_testing
                       PUBLIC bigtable_client
                              bigtable_protos
-                             gmock
+                             GTest::gmock_main
+                             GTest::gmock
+                             GTest::gtest
                              gRPC::grpc++
                              gRPC::grpc
                              protobuf::libprotobuf
@@ -332,7 +334,9 @@ foreach (fname ${bigtable_client_unit_tests})
                                   bigtable_protos
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   gRPC::grpc++
                                   gRPC::grpc
                                   protobuf::libprotobuf

@@ -39,7 +39,9 @@ foreach (fname ${storage_client_integration_tests})
                           PRIVATE storage_client
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   CURL::CURL
                                   Threads::Threads
                                   nlohmann_json

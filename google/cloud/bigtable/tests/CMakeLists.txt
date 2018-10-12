@@ -46,7 +46,9 @@ foreach (fname ${bigtable_client_integration_tests})
                                   bigtable_protos
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   gRPC::grpc++
                                   gRPC::grpc
                                   protobuf::libprotobuf
