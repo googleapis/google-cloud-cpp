@@ -160,6 +160,7 @@ add_library(bigtable_client
             internal/grpc_error_delegate.cc
             internal/instance_admin.h
             internal/instance_admin.cc
+            internal/poll_longrunning_operation.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
             internal/readrowsparser.h

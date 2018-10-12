@@ -25,6 +25,7 @@ bigtable_client_HDRS = [
     "internal/endian.h",
     "internal/grpc_error_delegate.h",
     "internal/instance_admin.h",
+    "internal/poll_longrunning_operation.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
     "internal/rpc_policy_parameters.inc",

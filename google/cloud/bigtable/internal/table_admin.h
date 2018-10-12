@@ -156,59 +156,7 @@ class TableAdmin {
         status);
     return result;
   }
-
   //@}
-
-  // TODO(#1017) - Need to keep function, in common place for InstanceAdmin and
-  // TableAdmin
-  template <typename ResultType>
-  ResultType PollLongRunningOperation(google::longrunning::Operation& operation,
-                                      char const* error_message,
-                                      grpc::Status& status) {
-    auto polling_policy = polling_policy_->clone();
-    do {
-      if (operation.done()) {
-        if (operation.has_response()) {
-          auto const& any = operation.response();
-          if (not any.Is<ResultType>()) {
-            std::ostringstream os;
-            os << error_message << "(" << metadata_update_policy_.value()
-               << ") - "
-               << "invalid result type in operation=" << operation.name();
-            status = grpc::Status(grpc::StatusCode::UNKNOWN, os.str());
-            return ResultType{};
-          }
-          ResultType result;
-          any.UnpackTo(&result);
-          return result;
-        }
-        if (operation.has_error()) {
-          std::ostringstream os;
-          os << error_message << "(" << metadata_update_policy_.value()
-             << ") - "
-             << "error reported by operation=" << operation.name();
-          status = grpc::Status(
-              static_cast<grpc::StatusCode>(operation.error().code()),
-              operation.error().message(), os.str());
-          return ResultType{};
-        }
-      }
-      auto delay = polling_policy->WaitPeriod();
-      std::this_thread::sleep_for(delay);
-      google::longrunning::GetOperationRequest op;
-      op.set_name(operation.name());
-      grpc::ClientContext context;
-      status = client_->GetOperation(&context, op, &operation);
-      if (not status.ok() and not polling_policy->OnFailure(status)) {
-        return ResultType{};
-      }
-    } while (not polling_policy->Exhausted());
-    std::ostringstream os;
-    os << error_message << "(" << metadata_update_policy_.value() << ") - "
-       << "polling policy exhausted in operation=" << operation.name();
-    status = grpc::Status(grpc::StatusCode::UNKNOWN, os.str());
-    return ResultType{};
-  }
 
  private:
   //@{
