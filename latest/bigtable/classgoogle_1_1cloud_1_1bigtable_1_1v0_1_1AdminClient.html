@@ -103,6 +103,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a73748811fe4ea5c423adc7445c17956d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4211c22704c011f09e8d7346074cd9b1"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a4211c22704c011f09e8d7346074cd9b1">GetTable</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetTableRequest const &amp;request, google::bigtable::admin::v2::Table *response)=0</td></tr>
 <tr class="separator:a4211c22704c011f09e8d7346074cd9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64ebb11f65c225e0ed2cb3f4fff22300"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Table &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a64ebb11f65c225e0ed2cb3f4fff22300">AsyncGetTable</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetTableRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a64ebb11f65c225e0ed2cb3f4fff22300"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37832014e6f67fc0538fcbfb90f70ee5"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a37832014e6f67fc0538fcbfb90f70ee5">DeleteTable</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteTableRequest const &amp;request, google::protobuf::Empty *response)=0</td></tr>
 <tr class="separator:a37832014e6f67fc0538fcbfb90f70ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a4aaf6de302928e7c001dcb44b66a7"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a67a4aaf6de302928e7c001dcb44b66a7">ModifyColumnFamilies</a> (grpc::ClientContext *context, google::bigtable::admin::v2::ModifyColumnFamiliesRequest const &amp;request, google::bigtable::admin::v2::Table *response)=0</td></tr>
@@ -166,6 +168,48 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a64ebb11f65c225e0ed2cb3f4fff22300"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64ebb11f65c225e0ed2cb3f4fff22300">&#9670;&nbsp;</a></span>AsyncGetTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Table&gt; &gt; google::cloud::bigtable::v0::AdminClient::AsyncGetTable </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::GetTableRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a69882ebe08b25cf70e2d65381ccac32e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69882ebe08b25cf70e2d65381ccac32e">&#9670;&nbsp;</a></span>Channel()</h2>
 
