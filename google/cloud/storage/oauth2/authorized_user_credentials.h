@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/status.h"
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
@@ -90,28 +91,32 @@ class AuthorizedUserCredentials : public Credentials {
 
   std::string AuthorizationHeader() override {
     std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return Refresh(); });
+    cv_.wait(lk, [this]() { return Refresh().ok(); });
     return authorization_header_;
   }
 
  private:
-  bool Refresh() {
+  storage::Status Refresh() {
     namespace nl = storage::internal::nl;
     if (std::chrono::system_clock::now() < expiration_time_) {
-      return true;
+      return storage::Status();
     }
 
     // TODO(#516) - use retry policies to refresh the credentials.
     auto response = request_.MakeRequest(payload_);
     if (response.status_code >= 300) {
-      return false;
+      return storage::Status(response.status_code, std::move(response.payload));
     }
     nl::json access_token = nl::json::parse(response.payload, nullptr, false);
-    if (access_token.is_discarded() or access_token.count("token_type") == 0U or
+    if (access_token.is_discarded() or
         access_token.count("access_token") == 0U or
+        access_token.count("expires_in") == 0U or
         access_token.count("id_token") == 0U or
-        access_token.count("expires_in") == 0U) {
-      return false;
+        access_token.count("token_type") == 0U) {
+      return storage::Status(
+          response.status_code, std::move(response.payload),
+          "Could not find all required fields in response (access_token,"
+          " id_token, expires_in, token_type).");
     }
     std::string header = "Authorization: ";
     header += access_token.value("token_type", "");
@@ -125,7 +130,7 @@ class AuthorizedUserCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;
-    return true;
+    return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
