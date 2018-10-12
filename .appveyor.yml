@@ -29,19 +29,20 @@ environment:
   matrix:
     - PROVIDER: vcpkg
       CONFIG: Debug
-      GENERATOR: "Visual Studio 15 2017 Win64"
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
   - c:\projects\vcpkg\installed -> ci\appveyor\install-windows.ps1
 
 install:
+  - choco install -y ninja
   - git submodule update --init
   - powershell -exec bypass ci\appveyor\install-windows.ps1
 
 build_script:
+  - call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
   - powershell -exec bypass ci\appveyor\build-windows.ps1
 
 test_script:
   - ps: cd build-output
-  - ctest --output-on-failure -C "%CONFIG%"
+  - ctest --output-on-failure -C "%CONFIG%" -j 2

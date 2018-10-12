@@ -21,15 +21,12 @@ $ErrorActionPreference = "Stop"
 if (-not (Test-Path env:PROVIDER)) {
     throw "Aborting build because the PROVIDER environment variable is not set."
 }
-if (-not (Test-Path env:GENERATOR)) {
-    throw "Aborting build because the GENERATOR environment variable is not set."
-}
 if (-not (Test-Path env:CONFIG)) {
     throw "Aborting build because the CONFIG environment variable is not set."
 }
 
 # By default assume "module", use the configuration parameters and build in the `build-output` directory.
-$cmake_flags=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-Bbuild-output")
+$cmake_flags=@("-GNinja", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-Bbuild-output")
 
 if ($env:PROVIDER -eq "vcpkg") {
     # Setup the environment for vcpkg:
@@ -48,6 +45,8 @@ if ($env:PROVIDER -eq "vcpkg") {
     $cmake_flags += "-DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=$env:PROVIDER"
     $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
     $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
+    $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
+    $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
 }
 
 # Create a build directory, and run cmake in it.
@@ -57,7 +56,7 @@ if ($LastExitCode) {
 }
 
 # Compile inside the build directory. Pass /m flag to msbuild to use all cores.
-cmake --build build-output --config $env:CONFIG -- /m
+cmake --build build-output --config $env:CONFIG
 if ($LastExitCode) {
     throw "cmake build failed with exit code $LastExitCode"
 }
