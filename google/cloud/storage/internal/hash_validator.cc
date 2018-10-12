@@ -46,8 +46,12 @@ HashValidator::Result MD5HashValidator::Finish(std::string const& msg) && {
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
   auto computed = OpenSslUtils::Base64Encode(hash);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  if (received_hash_ != computed) {
-    std::cerr << "msg=" << msg << ", received = " << received_hash_ << ", computed=" << computed << std::endl;
+  // Sometimes the server simply does not have a MD5 hash to send us, the most
+  // common case is a composed object, particularly one formed from encrypted
+  // components, where computing the MD5 would require decrypting and re-reading
+  // all the components. In that case we just do not raise an exception even if
+  // there is a mismatch.
+  if (not received_hash_.empty() and received_hash_ != computed) {
     throw HashMismatchError(msg, std::move(received_hash_),
                             std::move(computed));
   }
