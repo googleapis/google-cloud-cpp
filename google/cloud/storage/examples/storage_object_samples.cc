@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -267,6 +268,69 @@ void WriteLargeObject(google::cloud::storage::Client client, int& argc,
   }
   //! [write large object]
   (std::move(client), bucket_name, object_name, object_size_in_MiB);
+}
+
+void UploadFile(google::cloud::storage::Client client, int& argc,
+                char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"upload-file <file-name> <bucket-name> <object-name>"};
+  }
+  auto file_name = ConsumeArg(argc, argv);
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [upload file]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string file_name, std::string bucket_name,
+     std::string object_name) {
+    std::ifstream is(file_name);
+    if (not is.is_open()) {
+      std::cerr << "Cannot open file: " << file_name << std::endl;
+      return;
+    }
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::IfGenerationMatch(0), gcs::Fields(""));
+    while (not is.eof()) {
+      char buffer[4096];
+      is.read(buffer, sizeof(buffer));
+      stream.write(buffer, is.gcount());
+    }
+    gcs::ObjectMetadata meta = stream.Close();
+    std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
+  }
+  //! [upload file]
+  (std::move(client), file_name, bucket_name, object_name);
+}
+
+void DownloadFile(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"download-file <bucket-name> <object-name> <file-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto file_name = ConsumeArg(argc, argv);
+
+  //! [download file]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string file_name) {
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+    std::ofstream os(file_name);
+    if (not os.is_open()) {
+      std::cerr << "Cannot open file: " << file_name << std::endl;
+      return;
+    }
+    while (not stream.eof()) {
+      char buffer[4096];
+      stream.read(buffer, sizeof(buffer));
+      os.write(buffer, stream.gcount());
+    }
+    std::cout << "Downloaded " << object_name << " to " << file_name
+              << std::endl;
+  }
+  //! [download file]
+  (std::move(client), bucket_name, object_name, file_name);
 }
 
 void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
@@ -770,6 +834,8 @@ int main(int argc, char* argv[]) try {
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
+      {"upload-file", &UploadFile},
+      {"download-file", &DownloadFile},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
       {"patch-object-content-type", &PatchObjectContentType},
