@@ -141,6 +141,9 @@ Friends</h2></td></tr>
 <tr class="separator:ae3f77558669caa629f5357dd5a727481"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18daf10b767dbbc357ed0d953c0d363b"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a18daf10b767dbbc357ed0d953c0d363b">noex::InstanceAdmin</a></td></tr>
 <tr class="separator:a18daf10b767dbbc357ed0d953c0d363b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6ca2ef57a06cd4abec05c00662b116"><td class="memTemplParams" colspan="2">template&lt;typename ResultType , typename ClientType &gt; </td></tr>
+<tr class="memitem:aac6ca2ef57a06cd4abec05c00662b116"><td class="memTemplItemLeft" align="right" valign="top">ResultType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#aac6ca2ef57a06cd4abec05c00662b116">internal::PollLongRunningOperation</a> (std::shared_ptr&lt; ClientType &gt; client, std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a> &gt; polling_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html">MetadataUpdatePolicy</a> metadata_update_policy, google::longrunning::Operation &amp;operation, char const *error_message, grpc::Status &amp;status)</td></tr>
+<tr class="separator:aac6ca2ef57a06cd4abec05c00662b116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's instance administration APIs. </p>
@@ -1066,6 +1069,68 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html">InstanceAdmin</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac6ca2ef57a06cd4abec05c00662b116"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac6ca2ef57a06cd4abec05c00662b116">&#9670;&nbsp;</a></span>internal::PollLongRunningOperation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ResultType , typename ClientType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResultType internal::PollLongRunningOperation </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; ClientType &gt;&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a> &gt;&#160;</td>
+          <td class="paramname"><em>polling_policy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html">MetadataUpdatePolicy</a>&#160;</td>
+          <td class="paramname"><em>metadata_update_policy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::longrunning::Operation &amp;&#160;</td>
+          <td class="paramname"><em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>error_message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::Status &amp;&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
