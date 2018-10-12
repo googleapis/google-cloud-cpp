@@ -35,6 +35,7 @@ cache:
   - c:\projects\vcpkg\installed -> ci\appveyor\install-windows.ps1
 
 install:
+  - choco install -y ninja
   - git submodule update --init
   - powershell -exec bypass ci\appveyor\install-windows.ps1
 
