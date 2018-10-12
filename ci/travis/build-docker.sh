@@ -102,6 +102,20 @@ function install_grpc {
   ldconfig
 }
 
+function install_googletest {
+  # Install googletest.
+  echo "${COLOR_YELLOW}Installing googletest $(date)${COLOR_RESET}"
+  wget -q https://github.com/google/googletest/archive/release-1.8.1.tar.gz
+  tar -xf release-1.8.1.tar.gz
+  cd googletest-release-1.8.1
+  env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      ${CMAKE_FLAGS} \
+      -H. -B.build/googletest
+  cmake --build .build/googletest --target install -- -j ${NCPU}
+  ldconfig
+}
+
 if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Started dependency install at: $(date)${COLOR_RESET}"
@@ -118,6 +132,7 @@ if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
   (cd /var/tmp/build-dependencies; install_protobuf)
   (cd /var/tmp/build-dependencies; install_c_ares)
   (cd /var/tmp/build-dependencies; install_grpc)
+  (cd /var/tmp/build-dependencies; install_googletest)
   # DEBUG REMOVE BEFORE MERGE
   ${ccache_command} --show-stats
   # END DEBUG REMOVE BEFORE MERGE
@@ -134,6 +149,7 @@ echo "travis_fold:start:configure-cmake"
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
   cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+  cmake_install_flags="${cmake_install_flags} -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=package"
 fi
 
 if [ "${SCAN_BUILD:-}" = "yes" ]; then

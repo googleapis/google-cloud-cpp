@@ -94,6 +94,17 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     find_package(GTest REQUIRED)
 
+    # FindGTest() is a standard CMake module. It, unfortunately, *only* creates
+    # targets for the googletest libraries (not gmock), and with a name that is
+    # not the same names used by googletest: GTest::GTest vs. GTest::gtest and
+    # GTest::Main vs. GTest::gtest_main. We create aliases for them:
+    add_library(GTest_gtest INTERFACE)
+    target_link_libraries(GTest_gtest INTERFACE GTest::GTest)
+    add_library(GTest_gtest_main INTERFACE)
+    target_link_libraries(GTest_gtest_main INTERFACE GTest::Main)
+    add_library(GTest::gtest ALIAS GTest_gtest)
+    add_library(GTest::gtest_main ALIAS GTest_gtest_main)
+
     # The FindGTest module finds GTest by default, but does not search for
     # GMock, though they are usually installed together. Define the
     # GTest::gmock* targets manually.
@@ -128,8 +139,18 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
     target_link_libraries(gmock INTERFACE GTest::gmock)
 
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
-    find_package(Threads REQUIRED)
     find_package(GTest REQUIRED)
+
+    # FindGTest() is a standard CMake module. It, unfortunately, *only* creates
+    # targets for the googletest libraries (not gmock), and with a name that is
+    # not the same names used by googletest: GTest::GTest vs. GTest::gtest and
+    # GTest::Main vs. GTest::gtest_main. We create aliases for them:
+    add_library(GTest_gtest INTERFACE)
+    target_link_libraries(GTest_gtest INTERFACE GTest::GTest)
+    add_library(GTest_gtest_main INTERFACE)
+    target_link_libraries(GTest_gtest_main INTERFACE GTest::Main)
+    add_library(GTest::gtest ALIAS GTest_gtest)
+    add_library(GTest::gtest_main ALIAS GTest_gtest_main)
 
     # The FindGTest module finds GTest by default, but does not search for
     # GMock, though they are usually installed together. Define the
