@@ -429,6 +429,8 @@ Functions</h2></td></tr>
 <tr class="separator:a94562f881ffc7a794a54c523b4d68314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac30c1b95375b86684bfb67e62bbe08c3"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ac30c1b95375b86684bfb67e62bbe08c3">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> const &amp;rhs)</td></tr>
 <tr class="separator:ac30c1b95375b86684bfb67e62bbe08c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4acdc213c26a2348d39840aff09839f0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4acdc213c26a2348d39840aff09839f0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
+<tr class="separator:a4acdc213c26a2348d39840aff09839f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2853d016c5621a676d8986b01e473c6f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a2853d016c5621a676d8986b01e473c6f">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;rhs)</td></tr>
 <tr class="separator:a2853d016c5621a676d8986b01e473c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39553998e5dcc4ff40ab2eb06b0a5c2d"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a39553998e5dcc4ff40ab2eb06b0a5c2d">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html">ComposeSourceObject</a> const &amp;r)</td></tr>
@@ -463,8 +465,6 @@ Functions</h2></td></tr>
 <tr class="memitem:abca1cce326f7aa9912580588c4517e70"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70">CreateKeyFromGenerator</a> (Generator &amp;gen)</td></tr>
 <tr class="memdesc:abca1cce326f7aa9912580588c4517e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an encryption key parameter from a pseudo-random number generator.  <a href="#abca1cce326f7aa9912580588c4517e70">More...</a><br /></td></tr>
 <tr class="separator:abca1cce326f7aa9912580588c4517e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acdc213c26a2348d39840aff09839f0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4acdc213c26a2348d39840aff09839f0">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
-<tr class="separator:a4acdc213c26a2348d39840aff09839f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Comparison operators for CorsEntry.</div></td></tr>
 <tr class="memitem:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a392fb8bf4acb46a45dd5165e7a40b2ee">operator==</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;lhs, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;rhs)</td></tr>
 <tr class="separator:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1640,36 +1640,8 @@ template&lt;typename Generator &gt; </div>
 
 </div>
 </div>
-<a id="a76e1eacccfbd6dbfe9673bc06a514e94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76e1eacccfbd6dbfe9673bc06a514e94">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/15]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream &amp; google::cloud::storage::v0::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a4acdc213c26a2348d39840aff09839f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/15]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1700,6 +1672,34 @@ template&lt;typename Generator &gt; </div>
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76e1eacccfbd6dbfe9673bc06a514e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e1eacccfbd6dbfe9673bc06a514e94">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/15]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; google::cloud::storage::v0::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
