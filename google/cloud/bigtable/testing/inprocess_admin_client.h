@@ -50,62 +50,67 @@ class InProcessAdminClient : public bigtable::AdminClient {
 
   //@{
   /// @name the google.bigtable.admin.v2.TableAdmin operations.
-  virtual grpc::Status CreateTable(
+  grpc::Status CreateTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
       google::bigtable::admin::v2::Table* response) override;
-  virtual grpc::Status CreateTableFromSnapshot(
+  grpc::Status CreateTableFromSnapshot(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
           request,
       google::longrunning::Operation* response) override;
-  virtual grpc::Status ListTables(
+  grpc::Status ListTables(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListTablesRequest const& request,
       google::bigtable::admin::v2::ListTablesResponse* response) override;
-  virtual grpc::Status GetTable(
+  grpc::Status GetTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetTableRequest const& request,
       google::bigtable::admin::v2::Table* response) override;
-  virtual grpc::Status DeleteTable(
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncGetTable(grpc::ClientContext* context,
+                google::bigtable::admin::v2::GetTableRequest const& request,
+                grpc::CompletionQueue* cq) override;
+  grpc::Status DeleteTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       google::protobuf::Empty* response) override;
-  virtual grpc::Status ModifyColumnFamilies(
+  grpc::Status ModifyColumnFamilies(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
       google::bigtable::admin::v2::Table* response) override;
-  virtual grpc::Status DropRowRange(
+  grpc::Status DropRowRange(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
       google::protobuf::Empty* response) override;
-  virtual grpc::Status GenerateConsistencyToken(
+  grpc::Status GenerateConsistencyToken(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
           request,
       google::bigtable::admin::v2::GenerateConsistencyTokenResponse* response)
       override;
-  virtual grpc::Status CheckConsistency(
+  grpc::Status CheckConsistency(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       google::bigtable::admin::v2::CheckConsistencyResponse* response) override;
-  virtual grpc::Status SnapshotTable(
+  grpc::Status SnapshotTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::SnapshotTableRequest const& request,
       google::longrunning::Operation* response) override;
-  virtual grpc::Status GetSnapshot(
+  grpc::Status GetSnapshot(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetSnapshotRequest const& request,
       google::bigtable::admin::v2::Snapshot* response) override;
-  virtual grpc::Status ListSnapshots(
+  grpc::Status ListSnapshots(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListSnapshotsRequest const& request,
       google::bigtable::admin::v2::ListSnapshotsResponse* response) override;
-  virtual grpc::Status DeleteSnapshot(
+  grpc::Status DeleteSnapshot(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       google::protobuf::Empty* response) override;
-  virtual grpc::Status GetOperation(
+  grpc::Status GetOperation(
       grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) override;

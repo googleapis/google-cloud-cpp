@@ -29,3 +29,7 @@ echo "Running bigtable::Filters integration tests."
 echo
 echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
 ./mutations_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+
+echo
+echo "Running Table::Async* integration test."
+./data_async_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"

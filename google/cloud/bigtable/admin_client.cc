@@ -82,6 +82,14 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->GetTable(context, request, response);
   }
 
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncGetTable(grpc::ClientContext* context,
+                google::bigtable::admin::v2::GetTableRequest const& request,
+                grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncGetTable(context, request, cq);
+  }
+
   grpc::Status DeleteTable(grpc::ClientContext* context,
                            btadmin::DeleteTableRequest const& request,
                            google::protobuf::Empty* response) override {

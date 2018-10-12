@@ -46,6 +46,13 @@ grpc::Status InProcessAdminClient::GetTable(
   return Stub()->GetTable(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+InProcessAdminClient::AsyncGetTable(grpc::ClientContext* context,
+                                    btadmin::GetTableRequest const& request,
+                                    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncGetTable(context, request, cq);
+}
+
 grpc::Status InProcessAdminClient::DeleteTable(
     grpc::ClientContext* context, btadmin::DeleteTableRequest const& request,
     google::protobuf::Empty* response) {

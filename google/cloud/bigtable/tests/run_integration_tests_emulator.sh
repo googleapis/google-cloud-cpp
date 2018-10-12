@@ -52,3 +52,11 @@ echo "Running bigtable::Filters integration tests."
 echo
 echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
 ./mutations_integration_test "${PROJECT_ID}" "mutations-test"
+
+echo
+echo "Running TableAdmin async integration test."
+./admin_async_integration_test "${PROJECT_ID}" "admin-noex-async"
+
+echo
+echo "Running Table::Async* integration test."
+./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
