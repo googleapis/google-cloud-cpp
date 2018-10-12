@@ -27,7 +27,6 @@
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
