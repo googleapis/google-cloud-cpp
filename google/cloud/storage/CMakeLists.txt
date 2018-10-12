@@ -63,39 +63,7 @@ google_cloud_cpp_add_common_options(storage_common_options)
 # Enable unit tests
 enable_testing()
 
-# Search for libcurl, in CMake 3.5 this does not define a target, but it will in
-# 3.12 (see https://cmake.org/cmake/help/git-stage/module/FindCURL.html for
-# details).  Until then, define the target ourselves if it is missing.
-find_package(CURL REQUIRED)
-if (NOT TARGET CURL::CURL)
-    add_library(CURL::CURL UNKNOWN IMPORTED)
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
-endif ()
-# If the library is static, we need to explicitly link its dependencies.
-# However, we should not do so for shared libraries, because the version of
-# OpenSSL (for example) found by find_package() may be newer than the version
-# linked against libcurl.
-if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
-    find_package(OpenSSL REQUIRED)
-    find_package(ZLIB REQUIRED)
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          OpenSSL::SSL
-                          OpenSSL::Crypto
-                          ZLIB::ZLIB)
-    message(STATUS "CURL linkage will be static")
-else()
-    message(STATUS "CURL linkage will be non-static")
-endif ()
-
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
+include(IncludeCurl)
 
 # the client library
 add_library(storage_client

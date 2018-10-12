@@ -16,6 +16,7 @@
 
 include(ExternalProjectHelper)
 find_package(Threads REQUIRED)
+include(external/zlib)
 
 if (NOT TARGET protobuf_project)
     # Give application developers a hook to configure the version and hash
@@ -40,6 +41,7 @@ if (NOT TARGET protobuf_project)
     include(ExternalProject)
     externalproject_add(
         protobuf_project
+        DEPENDS zlib_project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/protobuf"
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
@@ -70,7 +72,6 @@ if (NOT TARGET protobuf_project)
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     add_dependencies(protobuf::libprotobuf protobuf_project)
     set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
-    find_package(ZLIB REQUIRED)
     set_property(TARGET protobuf::libprotobuf
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
