@@ -190,9 +190,9 @@ ctest --output-on-failure
 
 # Run the integration tests. Not all projects have them, so just iterate over
 # the ones that do.
-for subdir in google/cloud/{bigtable,storage}; do
+for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
   echo
-  echo "Running integration tests for ${subdir}"
+  echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
   /v/${subdir}/ci/run_integration_tests.sh
 done
 
