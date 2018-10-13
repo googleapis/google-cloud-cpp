@@ -45,4 +45,4 @@ build_script:
 
 test_script:
   - ps: cd build-output
-  - ctest --output-on-failure -C "%CONFIG%" -j 2
+  - ctest --output-on-failure -C "%CONFIG%"
