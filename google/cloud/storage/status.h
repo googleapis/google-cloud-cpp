@@ -76,6 +76,26 @@ inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
   return os << rhs.error_message() << " [" << rhs.status_code()
             << "], details=" << rhs.error_details();
 }
+
+/**
+ * Report checksum mismatches as exceptions.
+ */
+class HashMismatchError : public std::ios_base::failure {
+ public:
+  explicit HashMismatchError(std::string const& msg, std::string received,
+                             std::string computed)
+      : std::ios_base::failure(msg),
+        received_hash_(std::move(received)),
+        computed_hash_(std::move(computed)) {}
+
+  std::string const& received_hash() const { return received_hash_; }
+  std::string const& computed_hash() const { return computed_hash_; }
+
+ private:
+  std::string received_hash_;
+  std::string computed_hash_;
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

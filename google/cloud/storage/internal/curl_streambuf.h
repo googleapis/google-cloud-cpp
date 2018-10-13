@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_upload_request.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 
 namespace google {
@@ -30,12 +31,19 @@ namespace internal {
 class CurlReadStreambuf : public ObjectReadStreambuf {
  public:
   explicit CurlReadStreambuf(CurlDownloadRequest&& download,
-                             std::size_t target_buffer_size);
+                             std::size_t target_buffer_size,
+                             std::unique_ptr<HashValidator> hash_validator);
 
   ~CurlReadStreambuf() override = default;
 
   HttpResponse Close() override;
   bool IsOpen() const override;
+  std::string const& received_hash() const override {
+    return hash_validator_result_.received;
+  }
+  std::string const& computed_hash() const override {
+    return hash_validator_result_.computed;
+  }
 
  protected:
   int_type underflow() override;
@@ -44,6 +52,9 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
   CurlDownloadRequest download_;
   std::string current_ios_buffer_;
   std::size_t target_buffer_size_;
+
+  std::unique_ptr<HashValidator> hash_validator_;
+  HashValidator::Result hash_validator_result_;
 };
 
 /**

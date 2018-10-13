@@ -1399,6 +1399,94 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+/// @test Verify that MD5 hashes are computed by default on downloads.
+TEST_F(ObjectIntegrationTest, DefaultMD5StreamingReadXML) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.received_hash(), meta.md5_hash());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes are computed by default on downloads.
+TEST_F(ObjectIntegrationTest, DefaultMD5StreamingReadJSON) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream =
+      client.ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.received_hash(), meta.md5_hash());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadXML) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream =
+      client.ReadObject(bucket_name, object_name, DisableMD5Hash(true));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_TRUE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.received_hash().empty());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hashes can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadJSON) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream =
+      client.ReadObject(bucket_name, object_name, DisableMD5Hash(true),
+                        IfMetagenerationNotMatch(0));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_TRUE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.received_hash().empty());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 template <typename Callable>
 void TestPermanentFailure(Callable&& callable) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

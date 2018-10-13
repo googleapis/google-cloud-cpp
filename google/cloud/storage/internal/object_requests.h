@@ -169,8 +169,8 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
  * Represents a request to the `Objects: get` API with `alt=media`.
  */
 class ReadObjectRangeRequest
-    : public GenericObjectRequest<ReadObjectRangeRequest, EncryptionKey,
-                                  Generation, IfGenerationMatch,
+    : public GenericObjectRequest<ReadObjectRangeRequest, DisableMD5Hash,
+                                  EncryptionKey, Generation, IfGenerationMatch,
                                   IfGenerationNotMatch, IfMetagenerationMatch,
                                   IfMetagenerationNotMatch, UserProject> {
  public:

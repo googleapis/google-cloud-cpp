@@ -1675,6 +1675,7 @@ def objects_get(bucket_name, object_name):
     response = flask.make_response(revision.media)
     length = len(revision.media)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+    response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
 
 
@@ -1900,6 +1901,7 @@ def xmlapi_get_object(bucket_name, object_name):
     response = flask.make_response(revision.media)
     length = len(revision.media)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+    response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
 
 

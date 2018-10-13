@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include <ios>
 #include <iostream>
 #include <string>
 
@@ -64,6 +65,8 @@ class ObjectReadStream : public std::basic_istream<char> {
 
   bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
   internal::HttpResponse Close();
+  std::string const& received_hash() const { return buf_->received_hash(); }
+  std::string const& computed_hash() const { return buf_->computed_hash(); }
 
  private:
   std::unique_ptr<internal::ObjectReadStreambuf> buf_;
