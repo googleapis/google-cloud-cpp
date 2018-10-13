@@ -16,6 +16,7 @@ var searchData=
   ['component_5fcount',['component_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ad7f50a0cf8f114d215f25ac5172f4b6b',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['composeobject',['ComposeObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a294901ed4bc568fd7b3934d42dc9b2e0',1,'google::cloud::storage::v0::Client']]],
   ['composesourceobject',['ComposeSourceObject',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html',1,'google::cloud::storage::v0']]],
+  ['computed_5fhash',['computed_hash',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#ab26bf2bd15105c6c401b22994f100067',1,'google::cloud::storage::v0::ObjectReadStream::computed_hash()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HashMismatchError.html#a3d50be3ddb3c88b43aaaa930c2ec89d0',1,'google::cloud::storage::v0::HashMismatchError::computed_hash()']]],
   ['computemd5hash',['ComputeMD5Hash',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0b814dbb970f58eeb290c891333bac3c',1,'google::cloud::storage::v0']]],
   ['condition',['condition',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['conditionconjunction',['ConditionConjunction',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495',1,'google::cloud::storage::v0::LifecycleRule']]],
