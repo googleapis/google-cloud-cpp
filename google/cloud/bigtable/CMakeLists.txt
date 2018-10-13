@@ -374,14 +374,9 @@ install(TARGETS bigtable_protos bigtable_common_options
 # Install proto generated files into include/google.
 google_cloud_cpp_install_headers(bigtable_protos include)
 
-# The exports can only be installed if all the dependencies are installed. CMake
-# needs to know where the submodules will be installed from,
-if (NOT ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER} STREQUAL "module")
-
-    # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT bigtable-targets
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
-endif ()
+# Export the CMake targets to make it easy to create configuration files.
+install(EXPORT bigtable-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
 
 install(TARGETS bigtable_client
         EXPORT bigtable-targets

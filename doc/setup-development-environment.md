@@ -75,7 +75,7 @@ And compile the code using:
 ```commandline
 C:\...> mkdir .build
 C:\...> cd .build
-C:\...> cmake -DCMAKE_TOOLCHAIN_FILE=C:/Users/%USERNAME%/vcpkg/scripts/buildsystems/vcpkg.cmake -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package ..
+C:\...> cmake -DCMAKE_TOOLCHAIN_FILE=C:/Users/%USERNAME%/vcpkg/scripts/buildsystems/vcpkg.cmake -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ..
 C:\...> cmake --build . -- /m
 ```
 
