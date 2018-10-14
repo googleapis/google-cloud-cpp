@@ -19,7 +19,7 @@ licenses(["notice"])  # Apache 2.0
 cc_binary(
     name = "bigtable_opencensus",
     srcs = ["bigtable_opencensus.cc"],
-    deps=[
+    deps = [
         "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_grpc_grpc//:grpc_opencensus_plugin",

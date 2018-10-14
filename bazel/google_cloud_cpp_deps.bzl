@@ -63,8 +63,8 @@ def google_cloud_cpp_deps():
             name = "io_opencensus_cpp",
             strip_prefix = "opencensus-cpp-893e0835a45d749221f049d0d167e157b67b6d9c",
             urls = [
-                "https://github.com/census-instrumentation/opencensus-cpp/archive"
-                + "/893e0835a45d749221f049d0d167e157b67b6d9c.tar.gz",
+                "https://github.com/census-instrumentation/opencensus-cpp/archive" +
+                "/893e0835a45d749221f049d0d167e157b67b6d9c.tar.gz",
             ],
             sha256 = "8e2bddd3ea6d747a8c4255c73dcea1b9fcdf1560f3bb9ff96bcb20d4d207235e",
         )
