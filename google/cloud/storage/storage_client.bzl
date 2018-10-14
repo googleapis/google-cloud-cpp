@@ -23,6 +23,7 @@ storage_client_HDRS = [
     "internal/default_object_acl_requests.h",
     "internal/empty_response.h",
     "internal/format_rfc3339.h",
+    "internal/generate_message_boundary.h",
     "internal/generic_object_request.h",
     "internal/generic_request.h",
     "internal/hash_validator.h",

@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
+#include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/object_stream.h"
 
 namespace google {
@@ -1154,12 +1155,8 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   };
   constexpr int INITIAL_CANDIDATE_SIZE = 16;
   constexpr int CANDIDATE_GROWTH_SIZE = 4;
-  std::string candidate = generate_candidate(INITIAL_CANDIDATE_SIZE);
-  for (std::string::size_type i = text_to_avoid.find(candidate, 0);
-       i != std::string::npos; text_to_avoid.find(candidate, i)) {
-    candidate += generate_candidate(CANDIDATE_GROWTH_SIZE);
-  }
-  return candidate;
+  return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
+                                 INITIAL_CANDIDATE_SIZE, CANDIDATE_GROWTH_SIZE);
 }
 
 }  // namespace internal
