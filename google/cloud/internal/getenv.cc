@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/internal/getenv.h"
 #ifdef _WIN32
-// We need _putenv_s()
+// We need _dupenv_s()
 #include <stdlib.h>
 #else
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
@@ -26,32 +26,22 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-void UnsetEnv(char const* variable) {
-#ifdef _WIN32
-  (void)_putenv_s(variable, "");
+optional<std::string> GetEnv(char const* variable) {
+#if _WIN32
+  // On Windows, std::getenv() is not thread-safe. It returns a pointer that
+  // can be invalidated by _putenv_s(). We must use the thread-safe alternative,
+  // which unfortunately allocates the buffer using malloc():
+  char* buffer;
+  std::size_t size;
+  _dupenv_s(&buffer, &size, variable);
+  std::unique_ptr<char, decltype(&free)> release(buffer, &free);
 #else
-  unsetenv(variable);
+  char* buffer = std::getenv(variable);
 #endif  // _WIN32
-}
-
-void SetEnv(char const* variable, char const* value) {
-  if (value == nullptr) {
-    UnsetEnv(variable);
-    return;
+  if (buffer == nullptr) {
+    return optional<std::string>();
   }
-#ifdef _WIN32
-  (void)_putenv_s(variable, value);
-#else
-  (void)setenv(variable, value, 1);
-#endif  // _WIN32
-}
-
-void SetEnv(char const* variable, optional<std::string> value) {
-  if (not value.has_value()) {
-    UnsetEnv(variable);
-    return;
-  }
-  SetEnv(variable, value->data());
+  return optional<std::string>(std::string{buffer});
 }
 
 }  // namespace internal

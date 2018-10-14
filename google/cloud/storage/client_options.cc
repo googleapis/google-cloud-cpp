@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
@@ -28,8 +29,8 @@ inline namespace STORAGE_CLIENT_NS {
 
 namespace {
 std::shared_ptr<oauth2::Credentials> StorageDefaultCredentials() {
-  char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (emulator != nullptr) {
+  auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  if (emulator.has_value()) {
     return oauth2::CreateAnonymousCredentials();
   }
   return oauth2::GoogleDefaultCredentials();
@@ -64,25 +65,28 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
       connection_pool_size_(DefaultConnectionPoolSize()),
       download_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE),
       upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE) {
-  char const* emulator = std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (emulator != nullptr) {
-    endpoint_ = emulator;
+  auto emulator =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  if (emulator.has_value()) {
+    endpoint_ = *emulator;
   }
   SetupFromEnvironment();
 }
 
 void ClientOptions::SetupFromEnvironment() {
-  char const* enable_clog = std::getenv("CLOUD_STORAGE_ENABLE_CLOG");
-  if (enable_clog != nullptr) {
+  auto enable_clog =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_CLOG");
+  if (enable_clog.has_value()) {
     google::cloud::LogSink::EnableStdClog();
   }
   // This is overkill right now, eventually we will have different components
   // that can be traced (http being the first), so we parse the environment
   // variable.
-  char const* tracing = std::getenv("CLOUD_STORAGE_ENABLE_TRACING");
-  if (tracing != nullptr) {
+  auto tracing =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
+  if (tracing.has_value()) {
     std::set<std::string> enabled;
-    std::istringstream is{std::string(tracing)};
+    std::istringstream is{*tracing};
     while (not is.eof()) {
       std::string token;
       std::getline(is, token, ',');
@@ -98,9 +102,9 @@ void ClientOptions::SetupFromEnvironment() {
     }
   }
 
-  char const* project_id = std::getenv("GOOGLE_CLOUD_PROJECT");
-  if (project_id != nullptr) {
-    project_id_ = project_id;
+  auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT");
+  if (project_id.has_value()) {
+    project_id_ = std::move(*project_id);
   }
 }
 

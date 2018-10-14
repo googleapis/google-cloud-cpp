@@ -12,36 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_
 
 #include "google/cloud/optional.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-/// Unset (remove) an environment variable.
-void UnsetEnv(char const* variable);
-
 /**
- * Set the @p variable environment variable to @p value.
+ * Return the value of an environment variable, or an unset optional.
  *
- * If @value is the null pointer then the variable is unset.
+ * On Windows `std::getenv()` is not thread safe. We must write a wrapper to
+ * portably get the value of the environment variables.
  */
-void SetEnv(char const* variable, char const* value);
-
-/**
- * Set the @p variable environment variable to @p value.
- *
- * If @value is an unset optional then the variable is unset.
- */
-void SetEnv(char const* variable, optional<std::string> value);
+optional<std::string> GetEnv(char const* variable);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_

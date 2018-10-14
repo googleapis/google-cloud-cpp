@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/log.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include <gmock/gmock.h>
@@ -28,11 +29,8 @@ namespace {
 using testing::HasSubstr;
 
 std::string HttpBinEndpoint() {
-  auto env = std::getenv("HTTPBIN_ENDPOINT");
-  if (env != nullptr) {
-    return env;
-  }
-  return "https://nghttp2.org/httpbin";
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
+      .value_or("https://nghttp2.org/httpbin");
 }
 
 TEST(CurlRequestTest, SimpleGET) {

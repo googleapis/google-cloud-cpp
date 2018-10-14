@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/internal/getenv.h"
 #include <thread>
 
 // Make the default pool size 4 because that is consistent with what Go does.
@@ -25,8 +26,8 @@
 
 namespace {
 std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
-  char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
-  if (emulator != nullptr) {
+  auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator.has_value()) {
     return grpc::InsecureChannelCredentials();
   }
   return grpc::GoogleDefaultCredentials();
@@ -60,16 +61,16 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
-  char const* emulator = std::getenv("BIGTABLE_EMULATOR_HOST");
-  if (emulator != nullptr) {
-    data_endpoint_ = emulator;
-    admin_endpoint_ = emulator;
-    instance_admin_endpoint_ = emulator;
+  auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator.has_value()) {
+    data_endpoint_ = *emulator;
+    admin_endpoint_ = *emulator;
+    instance_admin_endpoint_ = *emulator;
   }
-  char const* instance_admin_emulator =
-      std::getenv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
-  if (instance_admin_emulator != nullptr) {
-    instance_admin_endpoint_ = instance_admin_emulator;
+  auto instance_admin_emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
+  if (instance_admin_emulator.has_value()) {
+    instance_admin_endpoint_ = *instance_admin_emulator;
   }
 }
 

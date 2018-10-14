@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
@@ -123,7 +124,7 @@ int main(int argc, char* argv[]) try {
   Options options;
   options.ParseArgs(argc, argv);
 
-  if (std::getenv("GOOGLE_CLOUD_PROJECT") == nullptr) {
+  if (not google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").has_value()) {
     std::cerr << "GOOGLE_CLOUD_PROJECT environment variable must be set"
               << std::endl;
     return 1;
