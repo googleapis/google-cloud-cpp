@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
 
-#ifndef OPENCENSUS_DISABLED
 #include "opencensus/exporters/stats/stackdriver/stackdriver_exporter.h"
 #include "opencensus/exporters/stats/stdout/stdout_exporter.h"
 #include "opencensus/exporters/trace/stackdriver/stackdriver_exporter.h"
@@ -28,7 +27,6 @@
 #include "opencensus/trace/sampler.h"
 #include "opencensus/trace/trace_config.h"
 #include <grpcpp/opencensus.h>
-#endif  // OPENCENSUS_DISABLED
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -43,7 +41,6 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
 
-#ifndef OPENCENSUS_DISABLED
   // Register the OpenCensus gRPC plugin to enable stats and tracing in gRPC.
   grpc::RegisterOpenCensusPlugin();
 
@@ -57,8 +54,6 @@ int main(int argc, char* argv[]) try {
   opencensus::exporters::stats::StackdriverExporter::Register(
       project_id, "bigtable-opencensus-0@unspecified-host");
   opencensus::exporters::trace::StackdriverExporter::Register(project_id);
-
-#endif  // OPENCENSUS_DISABLED
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin]
@@ -145,7 +140,6 @@ int main(int argc, char* argv[]) try {
   table_admin.DeleteTable(table_id);
   //! [delete table]
 
-#ifndef OPENCENSUS_DISABLED
   // Stop tracing because the remaining RPCs are OpenCensus related.
   opencensus::trace::TraceConfig::SetCurrentTraceParams(
       {128, 128, 128, 128, opencensus::trace::ProbabilitySampler(0.0)});
@@ -156,7 +150,6 @@ int main(int argc, char* argv[]) try {
     std::cout << '.' << std::flush;
   }
   std::cout << " DONE" << std::endl;
-#endif  // OPENCENSUS_DISABLED
 
   return 0;
 } catch (std::exception const& ex) {
