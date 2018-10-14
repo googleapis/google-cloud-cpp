@@ -120,7 +120,8 @@ class InstanceAdmin {
   /**
    * Make an asynchronous request to get the instance.
    *
-   * @param mut the mutation to apply.
+   * @param instance_id the id of the instance in the project that needs to be
+   *     Retrieve.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.

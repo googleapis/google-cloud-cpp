@@ -78,8 +78,8 @@ bigtable::InstanceConfig IntegrationTestConfig(
 
 }  // anonymous namespace
 
-/// @test Verify that Instance CRUD operations work as expected.
-TEST_F(InstanceAdminAsyncIntegrationTest, CreateListGetDeleteInstanceTest) {
+/// @test Verify that Instance async CRUD operations work as expected.
+TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
@@ -114,21 +114,10 @@ TEST_F(InstanceAdminAsyncIntegrationTest, CreateListGetDeleteInstanceTest) {
   EXPECT_NE(npos, instance_result.name().find(instance_admin_->project_name()));
   EXPECT_NE(npos, instance_result.name().find(instance_id));
 
-  // update instance
-  btadmin::Instance instance_copy;
-  instance_copy.CopyFrom(instance);
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
-  auto const updated_display_name = instance_id + " updated";
-  instance_update_config.set_display_name(updated_display_name);
-  auto instance_after =
-      instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
-  auto instance_after_update = instance_admin_->GetInstance(instance_id);
-  EXPECT_EQ(updated_display_name, instance_after_update.display_name());
-
   // Delete instance
   instance_admin_->DeleteInstance(instance_id);
   auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance_copy.name()));
+  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
 
   cq.Shutdown();
