@@ -92,7 +92,10 @@ TEST(ExponentialBackoffPolicy, Clone) {
 TEST(ExponentialBackoffPolicy, Randomness) {
   ExponentialBackoffPolicy test_object1(ms(10), ms(1500), 2.0);
   ExponentialBackoffPolicy test_object2(ms(10), ms(1500), 2.0);
-  std::vector<int> output1, output2;
+  // The type used to represent a duration varies by platform, better to use
+  // the alias guaranteed by the standard that trying to guess the type or
+  // use a lot of casts.
+  std::vector<std::chrono::milliseconds::rep> output1, output2;
 
   auto delay = test_object1.OnCompletion();
   EXPECT_LE(ms(10), delay);
