@@ -93,6 +93,23 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         "abcdefghijklmnopqrstuvwxyz012456789");
   }
 
+  void GenerateRandomLines(std::ostream& upload, std::ostream& local) {
+    auto generate_random_line = [this] {
+      std::string const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+          "abcdefghijklmnopqrstuvwxyz"
+          "0123456789"
+          ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+      return google::cloud::internal::Sample(generator_, 200, characters);
+    };
+
+    for (int line = 0; line != 1000; ++line) {
+      std::string random = generate_random_line() + "\n";
+      upload << line << ": " << random;
+      local << line << ": " << random;
+    }
+  }
+
  protected:
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
@@ -449,25 +466,12 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  GenerateRandomLines(os, expected);
+
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -512,26 +516,14 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  GenerateRandomLines(os, expected);
+
   ObjectMetadata meta = os.Close();
   // When asking for an empty list of fields we should not expect any values:
   EXPECT_TRUE(meta.bucket().empty());
@@ -1493,26 +1485,13 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  GenerateRandomLines(os, expected);
+
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
@@ -1528,25 +1507,12 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  GenerateRandomLines(os, expected);
+
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
@@ -1562,26 +1528,13 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""), DisableMD5Hash(true));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  GenerateRandomLines(os, expected);
+
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
@@ -1597,26 +1550,13 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                DisableMD5Hash(true));
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  GenerateRandomLines(os, expected);
+
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
