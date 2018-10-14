@@ -12,17 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-workspace(name = "com_github_googlecloudplatform_google_cloud_cpp_example_opencensus")
+licenses(["notice"])  # Apache v2
 
-local_repository(
-    name="com_github_googlecloudplatform_google_cloud_cpp",
-    path="../../../../..",
-)
-
-load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
-google_cloud_cpp_deps()
-# Have to manually call the corresponding function for gRPC:
-#   https://github.com/bazelbuild/bazel/issues/1550
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-grpc_deps()
-
+package(default_visibility = ["//:__subpackages__"])
