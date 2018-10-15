@@ -86,7 +86,6 @@ matrix:
       os: linux
       compiler: gcc
       env:
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=no
         BUILD_TYPE=Coverage
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
