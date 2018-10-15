@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TERMINATE_HANDLER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TERMINATE_HANDLER_H_
 
+#include "google/cloud/version.h"
 #include <functional>
 
 namespace google {
