@@ -32,6 +32,7 @@ readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
-    "${IMAGE}:tip" /bin/bash -c "/bin/bash <(curl -s https://codecov.io/bash)"
+    "${IMAGE}:tip" /bin/bash -c \
+    "/bin/bash <(curl -s https://codecov.io/bash) -g './build-output/ccache/*'"
 
 dump_log codecov.log
