@@ -44,7 +44,7 @@ include(EnableCxxExceptions)
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
-# Add the gmock library if it does not exist.
+# Discover and add targets for the GTest::gtest and GTest::gmock libraries.
 include(IncludeGMock)
 
 if (${CMAKE_VERSION} VERSION_LESS "3.9")

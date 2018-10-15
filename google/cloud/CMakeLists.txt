@@ -119,7 +119,7 @@ add_library(google_cloud_cpp_testing
             testing_util/init_google_mock.h
             testing_util/init_google_mock.cc)
 target_link_libraries(google_cloud_cpp_testing
-                      PUBLIC google_cloud_cpp_common gmock)
+                      PUBLIC google_cloud_cpp_common GTest::gmock)
 
 create_bazel_config(google_cloud_cpp_testing)
 
@@ -150,7 +150,9 @@ foreach (fname ${google_cloud_cpp_common_unit_tests})
     target_link_libraries(${target}
                           PRIVATE google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   google_cloud_cpp_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()

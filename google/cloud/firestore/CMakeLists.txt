@@ -92,7 +92,9 @@ foreach (fname ${firestore_client_unit_tests})
                           PRIVATE firestore_client
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   firestore_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()

@@ -55,7 +55,9 @@ foreach (fname ${bigtable_benchmarks_unit_tests})
                                   bigtable_common_options
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
-                                  gmock
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
                                   gRPC::grpc++
                                   gRPC::grpc
                                   protobuf::libprotobuf)
