@@ -179,6 +179,13 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::iam::v1::TestIamPermissionsRequest const& request,
       google::iam::v1::TestIamPermissionsResponse* response) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Instance>>
+  AsyncGetInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{

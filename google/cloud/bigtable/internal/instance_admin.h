@@ -17,12 +17,14 @@
 
 #include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/iam_policy.h"
+#include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
 #include <sstream>
 #include <thread>
@@ -109,38 +111,86 @@ class InstanceAdmin {
    * `bigtable::InstanceAdmin` class, but do not raise exceptions on errors,
    * instead they return the error on the status parameter.
    */
-  std::vector<::google::bigtable::admin::v2::Instance> ListInstances(
+  std::vector<google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Instance GetInstance(
+  google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
+
+  /**
+   * Makes an asynchronous request to get the attributes of an instance.
+   *
+   * @param instance_id the id of the instance in the project that to be
+   *     retrieved.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        google::bigtable::admin::v2::Instance&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  void AsyncGetInstance(std::string const& instance_id, CompletionQueue& cq,
+                        Functor&& callback) {
+    google::bigtable::admin::v2::GetInstanceRequest request;
+    // Setting instance name.
+    request.set_name(project_name_ + "/instances/" + instance_id);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncGetInstance)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncGetInstance)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncGetInstance, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
 
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
 
-  std::vector<::google::bigtable::admin::v2::Cluster> ListClusters(
+  std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
       std::string const& instance_id, grpc::Status& status);
 
   void DeleteCluster(bigtable::InstanceId const& instance_id,
                      bigtable::ClusterId const& cluster_id,
                      grpc::Status& status);
 
-  ::google::bigtable::admin::v2::Cluster GetCluster(
+  google::bigtable::admin::v2::Cluster GetCluster(
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id, grpc::Status& status);
 
-  ::google::longrunning::Operation UpdateAppProfile(
+  google::longrunning::Operation UpdateAppProfile(
       bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
       AppProfileUpdateConfig config, grpc::Status& status);
 
-  ::google::bigtable::admin::v2::AppProfile CreateAppProfile(
+  google::bigtable::admin::v2::AppProfile CreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       grpc::Status& status);
 
-  ::google::bigtable::admin::v2::AppProfile GetAppProfile(
+  google::bigtable::admin::v2::AppProfile GetAppProfile(
       bigtable::InstanceId const& instance_id,
       bigtable::AppProfileId const& profile_id, grpc::Status& status);
 
-  std::vector<::google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+  std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& instance_id, grpc::Status& status);
 
   void DeleteAppProfile(bigtable::InstanceId const& instance_id,
