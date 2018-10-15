@@ -5,6 +5,7 @@ This example is for advance reading and writing opertions on bigtable data clien
 
 - Use ReadModifyWrite to append a string to a value.
 - Use ReadModifyWrite to increment a value.
+- Use the features to simplify reading bigendian64 values from Cloud Bigtable.
 
 ## Run the example
 
@@ -29,6 +30,10 @@ The example uses the following headers:
 ### Use ReadModifyWrite to increament a value and append a string to a value.
 
 @snippet data_snippets.cc read modify write
+
+### Use the features to simplify reading bigendian64 values from Cloud Bigtable.
+
+@snippet data_admin_snippets.cc read row
 
 ### Put it all together
 
