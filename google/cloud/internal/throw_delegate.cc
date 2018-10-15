@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/error.h"
 #include "google/cloud/internal/port_platform.h"
 #include <iostream>
 #include <sstream>
@@ -24,9 +25,7 @@ template <typename Exception>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw Exception(msg);
 #else
-  std::cerr << "Aborting because exceptions are disabled: " << msg << std::endl;
-  // TODO(#327) - make the call to std::abort() configurable.
-  std::abort();
+  google::cloud::Terminate(msg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 }  // namespace

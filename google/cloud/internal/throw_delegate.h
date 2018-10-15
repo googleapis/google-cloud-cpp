@@ -27,8 +27,9 @@ namespace internal {
  * @name Delete exception raising to hidden functions.
  *
  * The following functions raise the corresponding exception, unless the user
- * has disabled exception handling, in which case they print the error message
- * to std::cerr and call std::abort().
+ * has disabled exception handling, in which case they call the function set by
+ * google::cloud::SetTerminateHandler() (by default print the error message
+ * to std::cerr and call std::abort()).
  *
  * We copied this technique from Abseil.  Unfortunately we cannot use it
  * directly because it is not a public interface for Abseil.
