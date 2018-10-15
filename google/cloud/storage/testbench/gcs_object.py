@@ -44,6 +44,9 @@ class GcsObjectVersion(object):
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         self.media = media
+        instructions = request.headers.get('x-goog-testbench-instructions')
+        if instructions == 'inject-upload-data-error':
+            self.media = testbench_utils.corrupt_media(media)
 
         self.metadata = {
             'timeCreated': timestamp,

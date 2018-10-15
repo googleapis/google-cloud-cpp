@@ -78,11 +78,11 @@ struct ContentType
  * been updated to support them, or because
  */
 class CustomHeader
- : public internal::WellKnownHeader<CustomHeader, std::string> {
+    : public internal::WellKnownHeader<CustomHeader, std::string> {
  public:
   CustomHeader() = default;
   explicit CustomHeader(std::string name, std::string value)
-  : WellKnownHeader(std::move(value)), name_(std::move(name)) {}
+      : WellKnownHeader(std::move(value)), name_(std::move(name)) {}
 
   std::string const& custom_header_name() const { return name_; }
 

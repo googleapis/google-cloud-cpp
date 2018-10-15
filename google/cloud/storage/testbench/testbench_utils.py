@@ -18,6 +18,7 @@ import base64
 import error_response
 import hashlib
 import json
+import random
 import re
 
 
@@ -219,6 +220,46 @@ def extract_media(request):
     if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
         return request.environ.get('wsgi.input').read()
     return request.data
+
+
+def corrupt_media(media):
+    """Return a randomly modified version of a string.
+
+    :param media:str a string (typically some object media) to be modified.
+    :return: a string that is slightly different than media.
+    :rtype: str
+    """
+    # Deal with the boundary conditions.
+    if media is None or len(media) == 0:
+        return str(random.sample("abcdefghijklmnopqrstuvwxyz", 1))
+
+    if all([media[0] == media[k] for k in range(0, len(media))]):
+        # When all the characters in the source string are identical we need to
+        # generate the random characters from somewhere, but cannot use the
+        # string itself as a source, this is probably Okay.
+        def generator():
+            return random.sample("abcdefghijklmnopqrstuvwxyz", 1)
+    else:
+        # Pick one character from the original string, this is arbitrary, but it
+        # changes the string without introducing new characters.
+        def generator():
+            return random.sample(media, 1)
+
+    result = media
+    while True:
+        tmp = ''
+        for i in range(0, len(result)):
+            # Modify about 0.1% of the characters, this value is arbitrary, but
+            # it is high enough that it will change things, but not so high that
+            # it will change most characters.
+            c = result[i]
+            if random.random() < 0.001:
+                c = generator()
+            tmp = tmp + str(c)
+        result = tmp
+        if result != media:
+            break
+    return result
 
 
 # Define the collection of Buckets indexed by <bucket_name>

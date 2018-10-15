@@ -971,8 +971,13 @@ def objects_get(bucket_name, object_name):
     if media != 'media':
         raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
     revision.validate_encryption_for_read(flask.request)
-    response = flask.make_response(revision.media)
-    length = len(revision.media)
+    instructions = flask.request.headers.get('x-goog-testbench-instructions')
+    if instructions == 'return-corrupted-data':
+        response_payload = testbench_utils.corrupt_media(revision.media)
+    else:
+        response_payload = revision.media
+    response = flask.make_response(response_payload)
+    length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
     response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
@@ -1196,8 +1201,13 @@ def xmlapi_get_object(bucket_name, object_name):
     blob.check_preconditions_by_value(generation_match, None,
                                       metageneration_match, None)
     revision = blob.get_revision(flask.request)
-    response = flask.make_response(revision.media)
-    length = len(revision.media)
+    instructions = flask.request.headers.get('x-goog-testbench-instructions')
+    if instructions == 'return-corrupted-data':
+        response_payload = testbench_utils.corrupt_media(revision.media)
+    else:
+        response_payload = revision.media
+    response = flask.make_response(response_payload)
+    length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
     response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
