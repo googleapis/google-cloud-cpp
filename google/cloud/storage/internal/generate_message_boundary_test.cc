@@ -34,8 +34,8 @@ TEST(GenerateMessageBoundaryTest, Simple) {
     return google::cloud::internal::Sample(generator, n, chars);
   };
 
-  // The magic constants here are uninteresting, we just want a large message
-  // and a relatives short string to start searching for a boundary.
+  // The magic constants here are uninteresting. We just want a large message
+  // and a relatively short string to start searching for a boundary.
   auto message = string_generator(1024);
   auto boundary =
       GenerateMessageBoundary(message, std::move(string_generator), 16, 4);
@@ -76,7 +76,8 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
       GenerateMessageBoundary(message, std::move(string_generator),
           kMatchedStringLength / 2, kMatchedStringLength / 4);
   EXPECT_THAT(message, Not(HasSubstr(boundary)));
-  // We expect that
+
+  // We expect that the string is longer than the common characters.
   EXPECT_LT(kMatchedStringLength, boundary.size());
 }
 
