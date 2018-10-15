@@ -58,6 +58,10 @@ echo "Running GCS Object APIs integration tests."
 ./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
+echo "Running GCS Object download integration tests."
+./object_download_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
 echo "Running GCS multi-threaded integration test."
 ./thread_integration_test "${PROJECT_ID}" "${LOCATION}"
 
