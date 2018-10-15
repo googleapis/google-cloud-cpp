@@ -15,6 +15,13 @@
 # ~~~
 
 if (NOT TARGET protobuf_project)
+    # Give application developers a hook to configure the version and hash
+    # downloaded from GitHub.
+    set(GOOGLE_CLOUD_CPP_PROTOBUF_URL
+        "https://github.com/google/protobuf/archive/v3.5.2.tar.gz")
+    set(GOOGLE_CLOUD_CPP_PROTOBUF_SHA256
+        "4ffd420f39f226e96aebc3554f9c66a912f6cad6261f39f194f16af8a1f6dab2")
+
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
         include(ProcessorCount)
@@ -30,9 +37,8 @@ if (NOT TARGET protobuf_project)
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/protobuf"
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-        URL https://github.com/google/protobuf/archive/v3.5.2.tar.gz
-        URL_HASH
-            SHA256=4ffd420f39f226e96aebc3554f9c66a912f6cad6261f39f194f16af8a1f6dab2
+        URL ${GOOGLE_CLOUD_CPP_PROTOBUF_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_PROTOBUF_SHA256}
         CONFIGURE_COMMAND ${CMAKE_COMMAND}
                           -G${CMAKE_GENERATOR}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
