@@ -132,9 +132,6 @@ class TableAdmin {
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
-   *
-   * @return A handle to the asynchronous operation, applications can request
-   *   the operation to be canceled.
    */
   template <typename Functor,
             typename std::enable_if<
